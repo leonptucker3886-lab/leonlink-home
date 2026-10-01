@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Free Estimate Generator — make and print a quote, no signup | Leon Link</title>
+<meta name="description" content="Create a clean, professional estimate or quote in your browser and print or save it as a PDF. Free, no signup, no watermark. From Leon Link, makers of The Line field-service suite.">
+<meta property="og:title" content="Free Estimate Generator — print or save as PDF">
+<meta property="og:description" content="A clean professional quote in two minutes. Free, no signup, no watermark.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://www.leonlink.net/og.png">
+<meta property="og:url" content="https://www.leonlink.net/estimate-generator.html">
+<link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0c0c0e;--panel:#141417;--panel2:#191a1e;--line:#26262b;--ink:#f2f2f0;--muted:#a3a3ab;--faint:#77777f;--accent:#f2c14e;--accent-ink:#1a1a1a;--green:#183d2a;--green2:#1f4d35;--lime:#d9f16b;--rose:#e07a5f}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 "DM Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+h1,h2,h3{font-family:"Fraunces",Georgia,serif;letter-spacing:-.02em;line-height:1.12}
+h1{font-size:clamp(30px,5vw,44px)}
+h2{font-size:clamp(22px,3.4vw,30px)}
+header{position:sticky;top:0;z-index:20;background:rgba(12,12,14,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:56px}
+@media(min-width:720px){.nav{height:64px}}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;text-decoration:none}
+.brand img{width:30px;height:30px;border-radius:50%}
+.nav-links{display:flex;gap:14px;align-items:center}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:14.5px;font-weight:500}
+.nav-links a:hover{color:var(--ink)}
+.nav-links .cta{background:var(--accent);color:var(--accent-ink);padding:8px 14px;border-radius:99px;font-weight:700;font-size:13.5px}
+@media(max-width:720px){.nav-links a.hide-m{display:none}}
+.hero{padding:54px 0 30px;text-align:center}
+.hero p.lede{color:var(--muted);max-width:640px;margin:14px auto 0;font-size:17px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+.btn{display:inline-block;background:var(--accent);color:var(--accent-ink);border:0;border-radius:10px;padding:12px 20px;font:600 15px "DM Sans",sans-serif;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:var(--panel2);color:var(--ink);border:1px solid var(--line)}
+label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin:0 0 6px}
+input[type=text],input[type=email],textarea,select{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:9px;color:var(--ink);padding:10px 12px;font:15px "DM Sans",sans-serif}
+input:focus,textarea:focus,select:focus{outline:1px solid var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.funnel{background:linear-gradient(160deg,var(--green),var(--green2));border:1px solid rgba(242,193,78,.25);border-radius:14px;padding:26px;text-align:center;margin:40px 0}
+.funnel h2{margin-bottom:8px}
+.funnel p{color:#cfe0d2;max-width:560px;margin:0 auto 16px}
+footer{border-top:1px solid var(--line);padding:26px 0;color:var(--faint);font-size:13.5px;margin-top:50px}
+footer .wrap{display:grid;gap:12px;grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center}
+footer a{color:var(--muted);text-decoration:none}
+footer a:hover{color:var(--ink)}
+.crumb{font-size:13.5px;color:var(--faint);margin:18px 0 0}
+.crumb a{color:var(--muted);text-decoration:none}
+.tools-strip{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:22px}
+.tools-strip a{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:6px 13px;text-decoration:none}
+.tools-strip a:hover{color:var(--ink);border-color:var(--accent)}
+.items-table{width:100%;border-collapse:collapse;margin-top:6px}
+.items-table th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);padding:8px 6px}
+.items-table td{padding:6px}
+.items-table input{padding:8px 10px}
+.del{background:none;border:0;color:var(--rose);font-size:18px;cursor:pointer;padding:4px 8px}
+#invoice{display:none;background:#fff;color:#141417;border-radius:12px;padding:40px;max-width:760px;margin:30px auto;font:15px/1.55 "DM Sans",sans-serif}
+#invoice h2{font-family:"Fraunces",Georgia,serif;font-size:26px}
+#invoice .invhead{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-bottom:2px solid #141417;padding-bottom:16px;margin-bottom:20px}
+#invoice .meta{text-align:right}
+#invoice table{width:100%;border-collapse:collapse;margin:14px 0}
+#invoice th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.05em;border-bottom:1.5px solid #141417;padding:8px 6px}
+#invoice td{padding:9px 6px;border-bottom:1px solid #e4e4e4}
+#invoice .totals{margin-left:auto;width:260px}
+#invoice .totals div{display:flex;justify-content:space-between;padding:4px 6px}
+#invoice .totals .grand{border-top:2px solid #141417;font-weight:700;font-size:17px;margin-top:6px;padding-top:8px}
+#invoice .paynote{margin-top:22px;font-size:13.5px;color:#555}
+@media print{
+  body{background:#fff}
+  header,.no-print,.funnel,footer,.crumb,.tools-strip{display:none!important}
+  #invoice{display:block!important;padding:0;border-radius:0;max-width:none}
+}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Free Estimate Generator","url":"https://www.leonlink.net/estimate-generator.html","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"Leon Link","url":"https://www.leonlink.net"}}
+</script>
+</head>
+<body>
+<header><div class="wrap nav">
+  <a class="brand" href="/"><img src="/mascot.png" alt="Leon Link"><span>Leon Link</span></a>
+  <nav class="nav-links"><a class="hide-m" href="/#pricing">Pricing</a><a class="hide-m" href="/free-tools.html">Free tools</a><a class="cta" href="/#pricing">Get The Line</a></nav>
+</div></header>
+<main class="wrap">
+<p class="crumb no-print"><a href="/">leonlink.net</a> / <a href="/free-tools.html">free tools</a> / estimate generator</p>
+<section class="hero no-print">
+  <h1>Free estimate generator</h1>
+  <p class="lede">Fill in the job, set your prices, hit print. Customer signs off, you start work. No signup, no watermark, nothing stored — everything stays in your browser.</p>
+</section>
+
+<div class="panel no-print">
+  <div class="grid2">
+    <div><label>Your business name</label><input type="text" id="biz" placeholder="Tucker Chimney Sweeps"></div>
+    <div><label>Your details (phone, email, address)</label><input type="text" id="bizd" placeholder="(555) 123-4567 · you@example.com"></div>
+    <div><label>Customer name</label><input type="text" id="cust" placeholder="Jane Smith"></div>
+    <div><label>Customer address</label><input type="text" id="custd" placeholder="123 Oak St, Yourtown"></div>
+    <div><label>Estimate #</label><input type="text" id="invno" value="EST-001"></div>
+    <div><label>Date</label><input type="text" id="invdate"></div>
+  </div>
+
+  <table class="items-table" style="margin-top:20px">
+    <thead><tr><th style="width:50%">Description</th><th>Qty</th><th>Price</th><th></th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <button class="btn ghost" id="addrow" style="margin-top:10px">+ Add line</button>
+
+  <div class="grid3" style="margin-top:18px;align-items:end">
+    <div><label>Tax rate (%)</label><input type="number" id="tax" value="0" min="0" step="0.01"></div>
+    <div><label>Terms / notes</label><input type="text" id="paynote" placeholder="Valid for 30 days · 50% deposit to schedule"></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="make">Make estimate</button><button class="btn ghost" id="print">Print / Save PDF</button></div>
+  </div>
+</div>
+
+<div id="invoice" aria-live="polite">
+  <div class="invhead">
+    <div><h2 id="o-biz">Your Business</h2><div id="o-bizd"></div></div>
+    <div class="meta"><div><b id="o-invno">EST-001</b></div><div id="o-date"></div></div>
+  </div>
+  <div><b>Prepared for:</b> <span id="o-cust"></span><br><span id="o-custd"></span></div>
+  <table><thead><tr><th>Description</th><th style="text-align:right">Qty</th><th style="text-align:right">Price</th><th style="text-align:right">Amount</th></tr></thead><tbody id="o-rows"></tbody></table>
+  <div class="totals" id="o-totals"></div>
+  <div class="paynote" id="o-paynote"></div>
+</div>
+
+<div class="funnel no-print">
+  <h2>Quotes that turn into paid jobs?</h2>
+  <p>Ledgerline builds estimates on the truck, converts the approved ones to jobs and invoices in one tap, then takes card payments. Part of The Line, from $4.83/mo.</p>
+  <a class="btn" href="https://app.leonlink.net">See Ledgerline</a>
+</div>
+
+<div class="tools-strip no-print">
+  <a href="/free-tools.html">All free tools</a>
+  <a href="/qr-code-generator.html">QR code generator</a>
+  <a href="/invoice-generator.html">Invoice generator</a>
+  <a href="/before-after-viewer.html">Before/after photo tool</a>
+  <a href="/chimney-inspection-checklist.html">Chimney inspection checklist</a>
+</div>
+</main>
+<footer><div class="wrap no-print">
+  <img src="/mascot.png" alt="Leon Link — the boss and the dog" style="width:56px;height:56px;border-radius:50%;border:2px solid rgba(242,193,78,.5)">
+  <div>© 2026 Leon Link — every creation stars the same two, chained to whatever system they run next</div>
+  <div><a href="/">Home</a> · <a href="/free-tools.html">Free tools</a> · <a href="mailto:info@leonlink.net">info@leonlink.net</a></div>
+</div></footer>
+
+<script>
+var fmt=function(n){return '$'+n.toFixed(2)};
+document.getElementById('invdate').value=new Date().toLocaleDateString();
+function money(v){v=parseFloat(v);return isNaN(v)?0:v}
+function rowHtml(){var tr=document.createElement('tr');
+  tr.innerHTML='<td><input type="text" class="i-desc" placeholder="Chimney sweep — level 1 inspection"></td>'+
+  '<td><input type="number" class="i-qty" value="1" min="0" step="1" style="width:80px"></td>'+
+  '<td><input type="number" class="i-price" value="0" min="0" step="0.01" style="width:110px" placeholder="0.00"></td>'+
+  '<td><button class="del" type="button" title="Remove line">✕</button></td>';
+  tr.querySelector('.del').addEventListener('click',function(){tr.remove()});
+  return tr;}
+var rows=document.getElementById('rows');
+rows.appendChild(rowHtml());
+document.getElementById('addrow').addEventListener('click',function(){rows.appendChild(rowHtml())});
+document.getElementById('make').addEventListener('click',function(){
+  document.getElementById('o-biz').textContent=document.getElementById('biz').value||'Your Business';
+  document.getElementById('o-bizd').textContent=document.getElementById('bizd').value;
+  document.getElementById('o-cust').textContent=document.getElementById('cust').value;
+  document.getElementById('o-custd').textContent=document.getElementById('custd').value;
+  document.getElementById('o-invno').textContent=document.getElementById('invno').value;
+  document.getElementById('o-date').textContent=document.getElementById('invdate').value;
+  var ob=document.getElementById('o-rows'); ob.innerHTML='';
+  var sub=0;
+  rows.querySelectorAll('tr').forEach(function(tr){
+    var d=tr.querySelector('.i-desc').value, q=money(tr.querySelector('.i-qty').value), p=money(tr.querySelector('.i-price').value);
+    if(!d&&!q&&!p)return;
+    sub+=q*p;
+    var tdr=document.createElement('tr');
+    tdr.innerHTML='<td>'+d.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</td><td style="text-align:right">'+q+'</td><td style="text-align:right">'+fmt(p)+'</td><td style="text-align:right">'+fmt(q*p)+'</td>';
+    ob.appendChild(tdr);
+  });
+  var taxR=money(document.getElementById('tax').value), taxV=sub*taxR/100;
+  var ot=document.getElementById('o-totals');
+  ot.innerHTML='<div><span>Subtotal</span><span>'+fmt(sub)+'</span></div>'+
+    (taxR?'<div><span>Tax ('+taxR+'%)</span><span>'+fmt(taxV)+'</span></div>':'')+
+    '<div class="grand"><span>Total</span><span>'+fmt(sub+taxV)+'</span></div>';
+  document.getElementById('o-paynote').textContent=document.getElementById('paynote').value;
+  var inv=document.getElementById('invoice'); inv.style.display='block';
+  inv.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('print').addEventListener('click',function(){
+  if(document.getElementById('invoice').style.display!=='block')document.getElementById('make').click();
+  setTimeout(function(){window.print()},150);
+});
+</script>
+</body>
+</html>
