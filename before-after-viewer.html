@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Free Before &amp; After Photo Compare Tool — drag the slider | Leon Link</title>
+<meta name="description" content="Put two photos side by side with a drag-to-compare slider and download the result as one image. Free, no signup, nothing uploaded to any server. From Leon Link, makers of Proofline.">
+<meta property="og:title" content="Free Before &amp; After Photo Compare Tool">
+<meta property="og:description" content="Two photos, one slider. Show the customer what changed. Free, nothing uploaded.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://www.leonlink.net/og.png">
+<meta property="og:url" content="https://www.leonlink.net/before-after-viewer.html">
+<link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0c0c0e;--panel:#141417;--panel2:#191a1e;--line:#26262b;--ink:#f2f2f0;--muted:#a3a3ab;--faint:#77777f;--accent:#f2c14e;--accent-ink:#1a1a1a;--green:#183d2a;--green2:#1f4d35;--lime:#d9f16b;--rose:#e07a5f}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 "DM Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+h1,h2,h3{font-family:"Fraunces",Georgia,serif;letter-spacing:-.02em;line-height:1.12}
+h1{font-size:clamp(30px,5vw,44px)}
+h2{font-size:clamp(22px,3.4vw,30px)}
+header{position:sticky;top:0;z-index:20;background:rgba(12,12,14,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:56px}
+@media(min-width:720px){.nav{height:64px}}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;text-decoration:none}
+.brand img{width:30px;height:30px;border-radius:50%}
+.nav-links{display:flex;gap:14px;align-items:center}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:14.5px;font-weight:500}
+.nav-links a:hover{color:var(--ink)}
+.nav-links .cta{background:var(--accent);color:var(--accent-ink);padding:8px 14px;border-radius:99px;font-weight:700;font-size:13.5px}
+@media(max-width:720px){.nav-links a.hide-m{display:none}}
+.hero{padding:54px 0 30px;text-align:center}
+.hero p.lede{color:var(--muted);max-width:640px;margin:14px auto 0;font-size:17px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+.btn{display:inline-block;background:var(--accent);color:var(--accent-ink);border:0;border-radius:10px;padding:12px 20px;font:600 15px "DM Sans",sans-serif;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:var(--panel2);color:var(--ink);border:1px solid var(--line)}
+.btn.lime{background:var(--lime)}
+label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin:0 0 6px}
+input[type=text]{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:9px;color:var(--ink);padding:10px 12px;font:15px "DM Sans",sans-serif}
+input:focus{outline:1px solid var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.funnel{background:linear-gradient(160deg,var(--green),var(--green2));border:1px solid rgba(242,193,78,.25);border-radius:14px;padding:26px;text-align:center;margin:40px 0}
+.funnel h2{margin-bottom:8px}
+.funnel p{color:#cfe0d2;max-width:560px;margin:0 auto 16px}
+footer{border-top:1px solid var(--line);padding:26px 0;color:var(--faint);font-size:13.5px;margin-top:50px}
+footer .wrap{display:grid;gap:12px;grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center}
+footer a{color:var(--muted);text-decoration:none}
+footer a:hover{color:var(--ink)}
+.crumb{font-size:13.5px;color:var(--faint);margin:18px 0 0}
+.crumb a{color:var(--muted);text-decoration:none}
+.tools-strip{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:22px}
+.tools-strip a{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:6px 13px;text-decoration:none}
+.tools-strip a:hover{color:var(--ink);border-color:var(--accent)}
+.dropzone{border:2px dashed var(--line);border-radius:12px;padding:22px;text-align:center;cursor:pointer;transition:border-color .15s}
+.dropzone:hover,.dropzone.on{border-color:var(--accent)}
+.dropzone b{color:var(--ink)}
+.dropzone .hint{font-size:13px;color:var(--faint);margin-top:4px}
+.preview{max-width:120px;max-height:90px;border-radius:8px;margin-top:10px;display:none}
+#stage{position:relative;max-width:760px;margin:26px auto 0;border-radius:12px;overflow:hidden;user-select:none;touch-action:none;display:none}
+#stage canvas{display:block;width:100%;height:auto}
+#handle{position:absolute;top:0;bottom:0;width:3px;background:var(--accent);left:50%;pointer-events:none}
+#handle:after{content:'◂ ▸';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);border-radius:99px;padding:4px 10px;font-size:14px;font-weight:700;white-space:nowrap}
+.tag{position:absolute;top:12px;padding:4px 12px;border-radius:99px;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:rgba(12,12,14,.75);color:#fff;pointer-events:none}
+.tag.before{left:12px}.tag.after{right:12px}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Free Before and After Photo Compare Tool","url":"https://www.leonlink.net/before-after-viewer.html","applicationCategory":"MultimediaApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"Leon Link","url":"https://www.leonlink.net"}}
+</script>
+</head>
+<body>
+<header><div class="wrap nav">
+  <a class="brand" href="/"><img src="/mascot.png" alt="Leon Link"><span>Leon Link</span></a>
+  <nav class="nav-links"><a class="hide-m" href="/#pricing">Pricing</a><a class="hide-m" href="/free-tools.html">Free tools</a><a class="cta" href="/#pricing">Get The Line</a></nav>
+</div></header>
+<main class="wrap">
+<p class="crumb"><a href="/">leonlink.net</a> / <a href="/free-tools.html">free tools</a> / before &amp; after photo tool</p>
+<section class="hero">
+  <h1>Before &amp; after photo compare</h1>
+  <p class="lede">Drop in a before shot and an after shot, drag the slider, download the finished card. Nothing leaves your device — the photos are never uploaded anywhere.</p>
+</section>
+
+<div class="panel">
+  <div class="grid2">
+    <div class="dropzone" id="dz-b">
+      <label style="cursor:pointer"><input type="file" id="f-before" accept="image/*" hidden><b>Before photo</b><span class="hint">click or drop an image</span><br><img class="preview" id="pv-b" alt="before preview"></label>
+    </div>
+    <div class="dropzone" id="dz-a">
+      <label style="cursor:pointer"><input type="file" id="f-after" accept="image/*" hidden><b>After photo</b><span class="hint">click or drop an image</span><br><img class="preview" id="pv-a" alt="after preview"></label>
+    </div>
+  </div>
+  <div class="grid2" style="margin-top:16px">
+    <div><label for="lbl-b">Before label</label><input type="text" id="lbl-b" value="Before"></div>
+    <div><label for="lbl-a">After label</label><input type="text" id="lbl-a" value="After"></div>
+  </div>
+  <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+    <button class="btn" id="go">Build the slider</button>
+    <button class="btn lime" id="dl" style="display:none">Download image</button>
+  </div>
+</div>
+
+<div id="stage">
+  <canvas id="cv" width="1200" height="675"></canvas>
+  <div class="tag before" id="t-b">Before</div>
+  <div class="tag after" id="t-a">After</div>
+  <div id="handle"></div>
+</div>
+
+<div class="funnel">
+  <h2>This is one slide of a Proofline report</h2>
+  <p>Proofline builds the whole before/after report for you — photos from the job site, your branding, a share link the customer keeps forever. Part of The Line, from $4.83/mo.</p>
+  <a class="btn" href="https://proofline.leonlink.net">See Proofline</a>
+</div>
+
+<div class="tools-strip">
+  <a href="/free-tools.html">All free tools</a>
+  <a href="/qr-code-generator.html">QR code generator</a>
+  <a href="/invoice-generator.html">Invoice generator</a>
+  <a href="/estimate-generator.html">Estimate generator</a>
+  <a href="/chimney-inspection-checklist.html">Chimney inspection checklist</a>
+</div>
+</main>
+<footer><div class="wrap">
+  <img src="/mascot.png" alt="Leon Link — the boss and the dog" style="width:56px;height:56px;border-radius:50%;border:2px solid rgba(242,193,78,.5)">
+  <div>© 2026 Leon Link — every creation stars the same two, chained to whatever system they run next</div>
+  <div><a href="/">Home</a> · <a href="/free-tools.html">Free tools</a> · <a href="mailto:info@leonlink.net">info@leonlink.net</a></div>
+</div></footer>
+
+<script>
+(function(){
+  var imgB=null, imgA=null, pos=0.5, built=false;
+  var cv=document.getElementById('cv'), ctx=cv.getContext('2d');
+  function wirePair(fileId, dzId, pvId, setImg){
+    var inp=document.getElementById(fileId), dz=document.getElementById(dzId), pv=document.getElementById(pvId);
+    inp.addEventListener('change',function(){ if(inp.files[0]) load(inp.files[0]); });
+    ;['dragover','dragenter'].forEach(function(ev){dz.addEventListener(ev,function(e){e.preventDefault();dz.classList.add('on')})});
+    ;['dragleave','drop'].forEach(function(ev){dz.addEventListener(ev,function(e){e.preventDefault();dz.classList.remove('on')})});
+    dz.addEventListener('drop',function(e){ if(e.dataTransfer.files[0]) load(e.dataTransfer.files[0]); });
+    function load(f){
+      var url=URL.createObjectURL(f), im=new Image();
+      im.onload=function(){ pv.src=url; pv.style.display='block'; setImg(im); if(built)render(); };
+      im.src=url;
+    }
+  }
+  wirePair('f-before','dz-b','pv-b',function(im){imgB=im});
+  wirePair('f-after','dz-a','pv-a',function(im){imgA=im});
+  function fitDraw(im){
+    var W=cv.width,H=cv.height, r=Math.max(W/im.width,H/im.height);
+    var w=im.width*r,h=im.height*r;
+    ctx.drawImage(im,(W-w)/2,(H-h)/2,w,h);
+  }
+  function label(txt,x){
+    ctx.font='700 22px DM Sans, sans-serif';
+    var w=ctx.measureText(txt).width+28;
+    ctx.fillStyle='rgba(12,12,14,.75)';
+    ctx.beginPath();
+    if(ctx.roundRect)ctx.roundRect(x,18,w,38,19);else ctx.rect(x,18,w,38);
+    ctx.fill();
+    ctx.fillStyle='#fff'; ctx.fillText(txt,x+14,44);
+  }
+  function render(){
+    ctx.fillStyle='#141417'; ctx.fillRect(0,0,cv.width,cv.height);
+    if(imgA)fitDraw(imgA); 
+    ctx.save(); ctx.beginPath(); ctx.rect(0,0,cv.width*pos,cv.height); ctx.clip();
+    ctx.fillStyle='#0c0c0e'; ctx.fillRect(0,0,cv.width,cv.height);
+    if(imgB)fitDraw(imgB); ctx.restore();
+    // divider
+    ctx.fillStyle='#f2c14e'; ctx.fillRect(cv.width*pos-2,0,4,cv.height);
+    label(document.getElementById('lbl-b').value||'Before', 16);
+    var atxt=document.getElementById('lbl-a').value||'After';
+    ctx.font='700 22px DM Sans, sans-serif';
+    label(atxt, cv.width-ctx.measureText(atxt).width-44);
+  }
+  document.getElementById('go').addEventListener('click',function(){
+    if(!imgB||!imgA){ alert('Pick a before photo and an after photo first.'); return; }
+    built=true;
+    document.getElementById('stage').style.display='block';
+    document.getElementById('dl').style.display='inline-block';
+    render();
+    document.getElementById('stage').scrollIntoView({behavior:'smooth'});
+  });
+  function setPos(clientX){
+    var r=cv.getBoundingClientRect();
+    pos=Math.min(0.98,Math.max(0.02,(clientX-r.left)/r.width));
+    document.getElementById('handle').style.left=(pos*100)+'%';
+    render();
+  }
+  var dragging=false;
+  cv.addEventListener('pointerdown',function(e){dragging=true;setPos(e.clientX)});
+  window.addEventListener('pointermove',function(e){if(dragging)setPos(e.clientX)});
+  window.addEventListener('pointerup',function(){dragging=false});
+  document.getElementById('dl').addEventListener('click',function(){
+    var a=document.createElement('a'); a.href=cv.toDataURL('image/png'); a.download='before-after.png'; a.click();
+  });
+  // labels live-update
+  ;['lbl-b','lbl-a'].forEach(function(id){document.getElementById(id).addEventListener('input',function(){if(built)render()})});
+})();
+</script>
+</body>
+</html>
