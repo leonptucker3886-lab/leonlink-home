@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>What is Leon Link? — Leon Link</title>
+<meta name="description" content="Leon Link is a one-man chimney sweep who got fed up with overpriced field service software and became a one-man developer. The Line: Ledgerline, Reviewline, Proofline.">
+<meta property="og:title" content="What is Leon Link? — Leon Link">
+<meta property="og:description" content="One chimney sweep. One laptop. A grudge against overpriced software.">
+<meta property="og:image" content="https://www.leonlink.net/logo.png">
+<meta property="og:url" content="https://www.leonlink.net/what-is-leonlink.html">
+<meta name="theme-color" content="#0d1512">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0c0c0e;--panel:#141417;--panel2:#191a1e;--line:#26262b;--ink:#f2f2f0;--muted:#a3a3ab;--faint:#77777f;--accent:#f2c14e;--accent-ink:#1a1a1a;--green:#183d2a;--green2:#1f4d35;--lime:#d9f16b;--rose:#e07a5f}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 "DM Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+h1,h2{font-family:"Fraunces",Georgia,serif;letter-spacing:-.02em;line-height:1.12}
+header{position:sticky;top:0;z-index:20;background:rgba(13,21,18,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:56px}
+@media(min-width:720px){.nav{height:64px}}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;text-decoration:none}
+.brand span{font-size:17px}
+.nav-links{display:flex;gap:14px;align-items:center}
+@media(min-width:720px){.nav-links{gap:22px}}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:14.5px;font-weight:500}
+.nav-links a:hover{color:var(--ink)}
+.nav-links .cta{background:var(--accent);color:var(--accent-ink);padding:9px 14px;border-radius:99px;font-weight:700;font-size:13.5px}
+@media(min-width:720px){.nav-links .cta{padding:8px 16px;font-size:14.5px}}
+@media(max-width:720px){.nav-links a.hide-m{display:none}}
+.logo-badge{width:clamp(132px,34vw,170px);height:clamp(132px,34vw,170px);border-radius:50%;overflow:hidden;margin:0 auto 26px;border:3px solid rgba(242,193,78,.55);box-shadow:0 12px 44px rgba(242,193,78,.15);background:#0d1512}
+.logo-badge img{width:100%;height:100%;object-fit:cover;display:block}
+.hero{padding:clamp(52px,10vw,84px) 0 56px;text-align:center;background:radial-gradient(1100px 480px at 50% -120px,rgba(242,193,78,.07),transparent)}
+.eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(242,193,78,.4);border-radius:99px;padding:6px 14px;margin-bottom:22px}
+.hero h1{font-size:clamp(34px,6vw,56px);margin-bottom:18px}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p.lead{color:var(--muted);font-size:clamp(16px,2.4vw,19px);max-width:640px;margin:0 auto 30px}
+.hero-apps{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:36px}
+.hero-app{width:270px;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 20px 16px;transition:transform .15s,border-color .15s;display:block;text-decoration:none}
+.hero-app:hover{transform:translateY(-3px);border-color:var(--app-accent)}
+.hero-app .tag{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--app-accent);margin:0 0 6px}
+.hero-app strong{font-family:Fraunces,Georgia,serif;font-size:20px;color:#fff;display:block;margin-bottom:6px}
+.hero-app p{font-size:13.5px;line-height:1.5;color:var(--muted);margin:0 0 12px}
+.hero-app .open{font-size:13.5px;font-weight:700;color:var(--app-accent)}
+.creed{border:1px solid var(--line);background:var(--panel);border-radius:16px;padding:24px 20px;margin:44px auto;display:grid;gap:14px;text-align:left;max-width:1040px}
+@media(min-width:720px){.creed{border-radius:18px;padding:34px 30px;margin:56px auto}}
+.creed h2{font-size:clamp(22px,3.4vw,30px)}
+.creed p{color:var(--muted)}
+.creed .not b{color:var(--rose)}
+.creed .yes b{color:var(--accent)}
+.apps{padding:56px 0 8px}
+.apps>h2,.more>h2,.contact>h2{font-size:clamp(24px,3.6vw,34px);text-align:center;margin-bottom:10px}
+.sub{text-align:center;color:var(--muted);max-width:560px;margin:0 auto 36px;padding:0 22px}
+.spot{display:grid;grid-template-columns:1fr;gap:18px;align-items:stretch;max-width:1040px;margin:0 auto;padding:0 18px}
+@media(min-width:820px){.spot{grid-template-columns:1.15fr .85fr;gap:26px;padding:0 22px}}
+.spot-card{background:linear-gradient(160deg,var(--green),var(--green2));border:1px solid #2c5440;border-radius:16px;padding:26px 22px;display:flex;flex-direction:column;gap:14px}
+.spot-card .flag{align-self:flex-start;background:var(--lime);color:var(--green);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;border-radius:99px;padding:5px 12px}
+.spot-card h3{font-family:"Fraunces",Georgia,serif;font-size:clamp(24px,3.4vw,32px)}
+.spot-card p{color:#cfe0d3;font-size:15px}
+.spot-card ul{list-style:none;display:grid;gap:8px;font-size:14.5px;color:#dce8df}
+.spot-card li::before{content:"→";color:var(--lime);margin-right:8px;font-weight:700}
+.spot-card .go{margin-top:auto;display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding-top:8px}
+.btn{display:inline-block;text-decoration:none;font-weight:700;font-size:15px;border-radius:12px;padding:13px 22px;cursor:pointer;border:0;text-align:center}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:transparent;border:1px solid #3a6a50;color:#dce8df}
+.spot-side{display:grid;gap:14px}
+.mini{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px}
+.mini h4{font-size:16px;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.mini p{color:var(--muted);font-size:14px}
+.mini .tag{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.mini .tag.live{color:var(--accent)}
+.more{padding:64px 0}
+.roadmap{display:grid;grid-template-columns:1fr;gap:12px;max-width:1040px;margin:8px auto 0;padding:0 18px}
+@media(min-width:720px){.roadmap{grid-template-columns:repeat(3,1fr);gap:14px;padding:0 22px}}
+.road{background:var(--panel);border:1px dashed var(--line);border-radius:14px;padding:20px 18px}
+@media(min-width:720px){.road{border-radius:16px;padding:22px}}
+.road .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);display:inline-block;margin-bottom:10px}
+.road h4{font-size:15.5px;margin-bottom:4px}
+.road p{color:var(--muted);font-size:13.5px}
+.contact{padding:24px 0 80px}
+.form-card{max-width:620px;margin:0 auto;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 18px}
+@media(min-width:720px){.form-card{border-radius:20px;padding:30px}}
+.form-card label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin:14px 0 5px}
+.form-card input,.form-card textarea,.form-card select{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:10px;color:var(--ink);font:16px/1.4 "DM Sans",system-ui,sans-serif;padding:13px 14px;min-height:48px}
+.form-card input:focus,.form-card textarea:focus{outline:none;border-color:var(--accent)}
+.form-card .btn{width:100%;margin-top:20px}
+.form-note{text-align:center;color:var(--faint);font-size:12.5px;margin-top:12px}
+footer{border-top:1px solid var(--line);padding:30px 0;color:var(--faint);font-size:13.5px}
+footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center}
+footer a{color:var(--muted);text-decoration:none}
+footer a:hover{color:var(--ink)}
+.sent{display:none;background:rgba(242,193,78,.1);border:1px solid rgba(242,193,78,.4);color:var(--ink);border-radius:10px;padding:12px 14px;margin-top:14px;font-size:14px}
+
+.page{padding:24px 0 20px}
+.page h2{font-size:clamp(24px,3.6vw,32px);margin:44px 0 14px}
+.page p{color:var(--muted);margin-bottom:14px;line-height:1.7;max-width:680px}
+.page p b{color:var(--ink)}
+.story{max-width:1040px;margin:0 auto;padding:0 22px}
+.gripe{display:grid;grid-template-columns:1fr;gap:12px;margin:18px 0}
+@media(min-width:720px){.gripe{grid-template-columns:repeat(2,1fr);gap:14px}}
+.line-cards{display:grid;grid-template-columns:1fr;gap:12px;margin:18px 0}
+@media(min-width:720px){.line-cards{grid-template-columns:repeat(3,1fr);gap:14px}}
+.quote{border-left:3px solid var(--accent);padding:6px 0 6px 18px;margin:22px 0;font-family:Fraunces,Georgia,serif;font-size:clamp(19px,3vw,24px);color:var(--ink);line-height:1.4;max-width:680px}
+</style>
+</head>
+<body>
+<header><div class="wrap"><nav class="nav">
+<a href="/" class="brand"><img src="/logo.png" alt="Leon Link — the boss and the dog" style="width:30px;height:30px;border-radius:50%;border:2px solid rgba(242,193,78,.5)"><span>Leon Link</span></a>
+<nav class="nav-links">
+<a href="/#apps" class="hide-m">Apps</a>
+<a href="/#custom" class="hide-m">Custom apps</a>
+<a href="/what-is-leonlink.html" style="color:var(--accent)">About</a>
+<a href="https://blog.leonlink.net" class="hide-m">Blog</a>
+<a class="cta" href="/#work">Work together</a>
+</nav>
+</nav></div></header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="logo-badge"><img src="/logo.png" alt="Leon Link — the boss and the dog"></div>
+    <span class="eyebrow">The story</span>
+    <h1>What is <em>Leon Link</em>?</h1>
+    <p class="lead">One chimney sweep. One laptop. A grudge against overpriced software.</p>
+  </div>
+</section>
+
+<div class="story">
+  <h2>The short version</h2>
+  <p>I run a small chimney servicing company. One truck, one person, real customers, real soot. For years I did what every small operator does: paid for the software the internet told me I needed.</p>
+  <p>And every year it got worse. The price climbed. The features I actually used stayed the same. The add-ons multiplied. The support got a script instead of a person. I was paying more to be treated worse, and every alternative on the market was the same product with a different logo.</p>
+  <p>So I stopped waiting for someone to fix it. I taught myself to build software and became a <b>one-man developer</b> — to cut through the noise, drop the bloat, and give working people something that costs what it should.</p>
+  <div class="quote">The best software for a small crew shouldn't cost more than the truck payment.</div>
+
+  <h2>What I was up against</h2>
+  <p>None of this is a secret. It's just priced like one.</p>
+  <div class="gripe">
+    <div class="mini"><h4>Fees that grow with your ambition</h4><p>Per-seat pricing means every new hire costs you before he swings a hammer. Your growth is their revenue model.</p></div>
+    <div class="mini"><h4>A hundred identical choices</h4><p>Same features, same per-head math, same annual contract — a shelf of logos selling one product.</p></div>
+    <div class="mini"><h4>Support that evaporates</h4><p>Once you've paid, you're routed to a script. Try reaching a human who can actually change something.</p></div>
+    <div class="mini"><h4>Prices built for someone else</h4><p>Pricing aimed at companies with offices. The two-truck shop pays the same per head as the fifty-truck fleet and gets less.</p></div>
+  </div>
+
+  <h2>So I became the developer</h2>
+  <p>Leon Link is what happens when the customer gets a compiler. One person designs it, builds it, supports it, and answers the email. There is no sales team talking you into a tier you don't need, and no board pricing an add-on you didn't ask for.</p>
+  <p>Everything here runs on the same rules: <b>one flat price, whole crew included, no per-user fees, no lock-in</b> — and you can export your own data with one click, because a price you can't leave isn't a price.</p>
+
+  <h2>What I make — The Line</h2>
+  <div class="line-cards">
+    <div class="mini"><span class="tag live">Ledgerline</span><h4>Field service, handled</h4><p>Scheduling, estimates, invoicing, card payments and customer portals for the whole crew. From $4.83/mo.</p><a href="https://app.leonlink.net" style="color:var(--accent);font-size:14px;font-weight:700">Open Ledgerline →</a></div>
+    <div class="mini"><span class="tag live">Reviewline</span><h4>Reviews, the honest way</h4><p>Review requests that ask every customer the same question — no filters, no gating. From $4.83/mo.</p><a href="https://review.leonlink.net" style="color:var(--accent);font-size:14px;font-weight:700">Open Reviewline →</a></div>
+    <div class="mini"><span class="tag live">ProofLine</span><h4>Proof of the work</h4><p>Before-and-after photo reports your customers keep. From $4.83/mo.</p><a href="https://proofline.leonlink.net" style="color:var(--accent);font-size:14px;font-weight:700">Open ProofLine →</a></div>
+  </div>
+  <p>One subscription — <b>Ledgerline Command, $46.50/mo</b> — carries all three. The math I keep checking: the big-name suites run a three-person crew around $219–259 a month. The difference stays in your truck, where it belongs.</p>
+
+  <h2>Talk to me</h2>
+  <p>Questions, custom apps, or you just want to compare notes on running a crew — the address is real and so is the person reading it: <a href="mailto:info@leonlink.net" style="color:var(--accent)">info@leonlink.net</a>. Or read what I actually think on <a href="https://blog.leonlink.net" style="color:var(--accent)">the blog</a>, where no cow is safe.</p>
+</div>
+
+<footer><div class="wrap">
+  <span>&copy; 2026 Leon Link — every creation stars the same two</span>
+  <span><a href="/">Home</a> &nbsp;&middot;&nbsp; <a href="https://blog.leonlink.net">Blog</a> &nbsp;&middot;&nbsp; <a href="mailto:info@leonlink.net">info@leonlink.net</a></span>
+</div></footer>
+</body>
+</html>
