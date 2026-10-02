@@ -105,6 +105,26 @@ footer a:hover{color:var(--ink)}
 .line-cards{display:grid;grid-template-columns:1fr;gap:12px;margin:18px 0}
 @media(min-width:720px){.line-cards{grid-template-columns:repeat(3,1fr);gap:14px}}
 .quote{border-left:3px solid var(--accent);padding:6px 0 6px 18px;margin:22px 0;font-family:Fraunces,Georgia,serif;font-size:clamp(19px,3vw,24px);color:var(--ink);line-height:1.4;max-width:680px}
+/* mobile pass: tap targets, legible labels, no input zoom */
+.nav{gap:10px}
+.brand{min-height:44px;flex-shrink:0}
+.nav-links a{white-space:nowrap;display:inline-flex;align-items:center;min-height:44px}
+.nav-links .cta{padding-top:0;padding-bottom:0}
+@media(max-width:420px){.nav-links{gap:12px}.nav-links .cta{padding-left:12px;padding-right:12px}}
+@media(max-width:374px){.brand span{font-size:15.5px}.nav-links{gap:10px}.nav-links a{font-size:13.5px}.nav-links .cta{font-size:13px;padding-left:10px;padding-right:10px}}
+.eyebrow{font-size:12.5px}
+.hero-app .tag,.spot-card .flag,.mini .tag{font-size:12.5px}
+.crumb a,.tools-strip a{display:inline-flex;align-items:center;min-height:44px}
+.tools-strip a{font-size:13.5px}
+footer a[style*="display:block"]{padding:8.5px 0}
+footer a:not([style*="display:block"]){display:inline-flex;align-items:center;min-height:44px}
+input[type=text],input[type=email],input[type=number],input[type=tel],input[type=date],textarea,select{font-size:16px}
+input[type=text],input[type=email],input[type=number],input[type=tel],input[type=date],input[type=color],select{min-height:44px}
+.nav-links a,footer a:not([style*="display:block"]),.crumb a{min-width:44px;justify-content:center}
+.btn{min-height:44px}
+p a:not(.btn):not([style*="display:inline-block"]){padding:14px 0}
+.mini>a{display:inline-flex;align-items:center;min-height:44px}
+@media(max-width:480px){.nav-links a[href="/what-is-leonlink.html"]{display:none}}
 </style>
 </head>
 <body>

@@ -49,6 +49,25 @@ footer a{color:var(--muted);text-decoration:none}
 footer a:hover{color:var(--ink)}
 .crumb{font-size:13.5px;color:var(--faint);margin:18px 0 0}
 .crumb a{color:var(--muted);text-decoration:none}
+/* mobile pass: tap targets, legible labels, no input zoom */
+.nav{gap:10px}
+.brand{min-height:44px;flex-shrink:0}
+.nav-links a{white-space:nowrap;display:inline-flex;align-items:center;min-height:44px}
+.nav-links .cta{padding-top:0;padding-bottom:0}
+@media(max-width:420px){.nav-links{gap:12px}.nav-links .cta{padding-left:12px;padding-right:12px}}
+@media(max-width:374px){.brand span{font-size:15.5px}.nav-links{gap:10px}.nav-links a{font-size:13.5px}.nav-links .cta{font-size:13px;padding-left:10px;padding-right:10px}}
+.eyebrow{font-size:12.5px}
+.hero-app .tag,.spot-card .flag,.mini .tag{font-size:12.5px}
+.crumb a,.tools-strip a{display:inline-flex;align-items:center;min-height:44px}
+.tools-strip a{font-size:13.5px}
+footer a[style*="display:block"]{padding:8.5px 0}
+footer a:not([style*="display:block"]){display:inline-flex;align-items:center;min-height:44px}
+input[type=text],input[type=email],input[type=number],input[type=tel],input[type=date],textarea,select{font-size:16px}
+input[type=text],input[type=email],input[type=number],input[type=tel],input[type=date],input[type=color],select{min-height:44px}
+.nav-links a,footer a:not([style*="display:block"]),.crumb a{min-width:44px;justify-content:center}
+.btn{min-height:44px}
+p a:not(.btn):not([style*="display:inline-block"]){padding:14px 0}
+.mini>a{display:inline-flex;align-items:center;min-height:44px}
 </style>
 </head>
 <body>
