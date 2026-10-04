@@ -3,80 +3,207 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>LeonLink — software and games</title>
-<meta name="description" content="LeonLink builds software for small trades businesses, and games on the side. Ledgerline, Reviewline, Proofline, plus prototypes.">
-<meta name="theme-color" content="#183d2a">
+<title>LeonLink — machines for the trades, and games on the side</title>
+<meta name="description" content="LeonLink builds Ledgerline, Reviewline and Proofline for small trades crews, and plays with games in between.">
+<meta name="theme-color" content="#16110d">
 <link rel="icon" href="/favicon.png">
-<meta property="og:title" content="LeonLink — software and games">
-<meta property="og:description" content="Software for small trades businesses, and games on the side.">
+<meta property="og:title" content="LeonLink — machines for the trades">
+<meta property="og:description" content="Ledgerline, Reviewline, Proofline, plus games and prototypes.">
 <meta property="og:image" content="https://www.leonlink.net/og.png">
 <style>
-:root{--ink:#12211a;--deep:#183d2a;--cream:#f7f8f5;--line:#dfe4da;--muted:#5b6b60;--accent:#1f7a4d}
+:root{
+--ink:#16110d;--paper:#f6ecd9;--paper-2:#e9dcc2;--brass:#c9a227;--brass-hi:#f0d071;
+--brass-lo:#7d5f18;--copper:#b87333;--steel:#241d18;--steel-2:#332a22;--muted:#b7a88c;
+}
 *{box-sizing:border-box}
-body{margin:0;font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--cream);-webkit-text-size-adjust:100%}
-a{color:var(--accent)}
-.wrap{max-width:1000px;margin:0 auto;padding:0 18px}
-header.top{position:sticky;top:0;z-index:5;background:var(--deep);color:#eef6e8}
-header.top .wrap{display:flex;align-items:center;gap:14px;min-height:56px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:9px;font-weight:700;color:#eef6e8;text-decoration:none;font-size:18px}
-header.top nav{display:flex;gap:16px;margin-left:auto;flex-wrap:wrap}
-header.top nav a{color:#cfe3d3;text-decoration:none;font-size:15px;min-height:44px;display:inline-flex;align-items:center}
-header.top nav a:hover{color:#fff}
-.hero{padding:44px 0 26px}
-h1{font-size:clamp(30px,8vw,46px);line-height:1.1;margin:0 0 12px}
-.lede{font-size:clamp(16px,4.4vw,19px);color:var(--muted);margin:0 0 22px;max-width:34em}
-.cta{display:flex;gap:10px;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 18px;border-radius:11px;font-weight:650;text-decoration:none;border:1px solid var(--deep);background:var(--deep);color:#fff}
-.btn.ghost{background:transparent;color:var(--deep)}
-section{padding:26px 0 8px}
-h2{font-size:clamp(21px,5.4vw,26px);margin:0 0 4px}
-.sub{color:var(--muted);margin:0 0 18px}
-.cards{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));padding-bottom:8px}
-.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:8px;min-width:0}
-.card h3{margin:0;font-size:18px}
-.card p{margin:0;color:var(--muted);font-size:14.5px}
-.card .go{margin-top:auto;font-weight:650;text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
-.tag{display:inline-block;font-size:12px;letter-spacing:.4px;text-transform:uppercase;background:#eef3ea;color:#3c5346;border-radius:999px;padding:3px 9px;align-self:flex-start}
-footer{margin-top:34px;background:var(--deep);color:#cfe3d3;padding:26px 0}
-footer a{color:#fff}
-.f-grid{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;font-size:14.5px}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ink);color:var(--paper);
+font:16px/1.6 Georgia,"Times New Roman",serif;-webkit-text-size-adjust:100%;
+background-image:radial-gradient(120% 80% at 50% 0%,#3a2c1c 0%,#1d1610 45%,#0f0b08 100%);}
+a{color:var(--brass-hi)}
+.wrap{max-width:1060px;margin:0 auto;padding:0 18px}
+.plate{background:linear-gradient(180deg,#2c231b,#1d1712);border:1px solid var(--brass-lo);
+border-radius:12px;box-shadow:inset 0 1px 0 rgba(240,208,113,.18),0 10px 26px rgba(0,0,0,.5)}
+.rivets{position:relative}
+.rivets:before,.rivets:after{content:"";position:absolute;left:10px;right:10px;height:6px;
+background-image:radial-gradient(circle,var(--brass) 0 1.6px,transparent 2px);background-size:18px 6px;opacity:.85}
+.rivets:before{top:6px}.rivets:after{bottom:6px}
+header.top{position:sticky;top:0;z-index:20;backdrop-filter:blur(6px);
+background:linear-gradient(180deg,rgba(22,17,13,.96),rgba(22,17,13,.82));border-bottom:1px solid var(--brass-lo)}
+header.top .wrap{display:flex;align-items:center;gap:12px;min-height:60px;flex-wrap:wrap}
+.brand{font-size:20px;letter-spacing:2.5px;text-transform:uppercase;color:var(--brass-hi);text-decoration:none;font-weight:700}
+.brand small{display:block;font-size:10px;letter-spacing:3px;color:var(--muted);font-weight:400}
+nav{margin-left:auto;display:flex;gap:14px;flex-wrap:wrap}
+nav a{color:var(--paper);text-decoration:none;font-size:14px;letter-spacing:1px;text-transform:uppercase;
+min-height:44px;display:inline-flex;align-items:center;opacity:.85}
+nav a:hover{color:var(--brass-hi);opacity:1}
+.hero{position:relative;overflow:hidden;padding:54px 0 34px;text-align:center}
+.hero h1{font-size:clamp(34px,10vw,72px);line-height:1;margin:0 0 6px;letter-spacing:3px;
+background:linear-gradient(180deg,#fff3cf,var(--brass) 45%,#6d5214);-webkit-background-clip:text;background-clip:text;color:transparent;
+text-shadow:0 2px 0 rgba(0,0,0,.35)}
+.hero .kicker{font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--brass);margin-bottom:14px}
+.hero .lede{max-width:40em;margin:0 auto 22px;color:var(--paper-2);font-size:clamp(15px,4.2vw,18px)}
+.cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;position:relative;z-index:3}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;border-radius:10px;
+font-weight:700;letter-spacing:1.2px;text-transform:uppercase;font-size:13.5px;text-decoration:none;
+background:linear-gradient(180deg,var(--brass-hi),var(--brass) 40%,var(--brass-lo));color:#241a06;border:1px solid #5d4712;
+box-shadow:0 3px 0 #4a3810,0 8px 18px rgba(0,0,0,.45)}
+.btn.ghost{background:linear-gradient(180deg,#2e251d,#1c1610);color:var(--brass-hi);border-color:var(--brass-lo);box-shadow:0 3px 0 #100c08}
+.gear{position:absolute;z-index:0;opacity:.5;animation:spin 18s linear infinite}
+.gear.b{animation-duration:26s;animation-direction:reverse;opacity:.35}
+.gear.c{animation-duration:34s;opacity:.28}
+@keyframes spin{to{transform:rotate(360deg)}}
+.steam{position:absolute;bottom:-20px;width:70px;height:70px;border-radius:50%;z-index:0;
+background:radial-gradient(circle,rgba(246,236,217,.30),rgba(246,236,217,0) 70%);animation:rise 7s ease-in infinite}
+.steam.s2{animation-delay:2.3s;left:60%}.steam.s3{animation-delay:4.6s;left:75%}
+@keyframes rise{0%{transform:translateY(0) scale(.6);opacity:0}25%{opacity:.7}100%{transform:translateY(-320px) scale(1.7);opacity:0}}
+
+.band{padding:36px 0}
+h2{font-size:clamp(22px,6vw,32px);letter-spacing:2px;text-transform:uppercase;margin:0 0 4px;
+background:linear-gradient(180deg,#fff0c4,var(--brass) 55%,#7d5f18);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--muted);margin:0 0 20px;font-size:15px}
+.cards{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(248px,1fr))}
+.card{padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.card h3{margin:0;font-size:19px;letter-spacing:1px;color:var(--brass-hi)}
+.card p{margin:0;color:var(--paper-2);font-size:14.5px}
+.card .go{margin-top:auto;min-height:44px;display:inline-flex;align-items:center;font-weight:700;
+letter-spacing:1px;text-transform:uppercase;font-size:12.5px;text-decoration:none;color:var(--brass-hi)}
+.tag{align-self:flex-start;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:#20180a;
+background:linear-gradient(180deg,var(--brass-hi),var(--brass));border-radius:999px;padding:4px 10px;font-weight:700}
+.machine{margin-top:8px;padding:22px}
+.m-grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));align-items:center}
+.dialbox{position:relative;display:flex;justify-content:center;align-items:center;min-height:230px}
+.needle{transform-origin:100px 100px;animation:sweep 5.5s ease-in-out infinite}
+@keyframes sweep{0%,100%{transform:rotate(-42deg)}50%{transform:rotate(48deg)}}
+.wheel{transform-origin:100px 100px;animation:spin 9s linear infinite}
+.readouts{display:grid;gap:10px}
+.ro{display:flex;justify-content:space-between;gap:14px;border-bottom:1px dashed rgba(201,162,39,.35);padding:9px 2px;font-size:14.5px}
+.ro b{color:var(--brass-hi);letter-spacing:1px}
+.feats{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:9px}
+.feats li{padding-left:22px;position:relative;color:var(--paper-2);font-size:14.5px}
+.feats li:before{content:"";position:absolute;left:0;top:.55em;width:9px;height:9px;border-radius:2px;
+background:linear-gradient(180deg,var(--brass-hi),var(--brass-lo));transform:rotate(45deg)}
+.chase{position:relative;overflow:hidden;height:104px;border-top:1px solid rgba(201,162,39,.3);border-bottom:1px solid rgba(201,162,39,.3)}
+.runner{position:absolute;top:16px;left:-140px;animation:chase 13s linear infinite}
+.chick{position:absolute;top:38px;left:-90px;animation:chase 13s linear infinite}
+@keyframes chase{0%{transform:translateX(0)}100%{transform:translateX(calc(100vw + 220px))}}
+.bob{animation:bob .45s ease-in-out infinite alternate}
+@keyframes bob{to{transform:translateY(-6px) rotate(-2deg)}}
+.headwrap{position:fixed;right:8px;top:38%;z-index:15;pointer-events:none;opacity:.9;animation:drip 9s ease-in-out infinite}
+@keyframes drip{0%{transform:translateY(-24px) rotate(-3deg)}50%{transform:translateY(28px) rotate(4deg)}100%{transform:translateY(-24px) rotate(-3deg)}}
+.drop{position:absolute;left:50%;top:74px;width:9px;height:9px;border-radius:60% 60% 60% 60%/70% 70% 40% 40%;
+background:linear-gradient(180deg,var(--brass-hi),var(--brass));animation:plop 3.4s ease-in infinite}
+@keyframes plop{0%{transform:translateY(0) scale(.5);opacity:0}20%{opacity:1}100%{transform:translateY(190px) scale(1.25);opacity:0}}
+footer{margin-top:34px;border-top:1px solid var(--brass-lo);background:linear-gradient(180deg,#1b1511,#100c08);padding:28px 0}
+.f-grid{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;font-size:14px;color:var(--muted)}
+@media(max-width:600px){.headwrap{transform:scale(.8);right:-6px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <header class="top"><div class="wrap">
-<a class="brand" href="/">LeonLink</a>
+<a class="brand" href="/">LeonLink<small>works &amp; games</small></a>
 <nav><a href="#software">Software</a><a href="#games">Games</a><a href="https://app.leonlink.net/hub">Free tools</a><a href="mailto:info@leonlink.net">Contact</a></nav>
 </div></header>
 <main class="wrap">
-<div class="hero">
-<h1>Software for the trades, and games on the side.</h1>
-<p class="lede">LeonLink builds the tools a small crew runs a business on, and experiments with games in between. Everything here is made in the US.</p>
-<div class="cta"><a class="btn" href="#software">See the software</a><a class="btn ghost" href="#games">See the games</a></div>
+<section class="hero">
+<svg class="gear" style="left:-46px;top:26px" width="160" height="160" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="#c9a227"><circle cx="50" cy="50" r="41" stroke-width="11" stroke-dasharray="5 5.4"/><circle cx="50" cy="50" r="27" stroke-width="3"/><circle cx="50" cy="50" r="9" stroke-width="3"/></g></svg>
+<svg class="gear b" style="right:-30px;top:120px" width="120" height="120" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="#b87333"><circle cx="50" cy="50" r="41" stroke-width="11" stroke-dasharray="5 5.4"/><circle cx="50" cy="50" r="24" stroke-width="3"/><circle cx="50" cy="50" r="8" stroke-width="3"/></g></svg>
+<svg class="gear c" style="left:38%;bottom:-30px" width="110" height="110" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="#c9a227"><circle cx="50" cy="50" r="41" stroke-width="10" stroke-dasharray="5 5.4"/><circle cx="50" cy="50" r="26" stroke-width="3"/></g></svg>
+<span class="steam"></span><span class="steam s2"></span><span class="steam s3"></span>
+<p class="kicker">Est. in a chimney, run from a phone</p>
+<h1>LeonLink</h1>
+<p class="lede">Machines for the trades and amusements for the fun of it. One flat price per business, no per-user fees, and every gear turning in your pocket.</p>
+<div class="cta"><a class="btn" href="#software">See the machine</a><a class="btn ghost" href="#games">Play the games</a></div>
+</section>
+<section class="chase" aria-hidden="true">
+<svg class="runner" width="120" height="72" viewBox="0 0 120 72"><g class="bob">
+<circle cx="30" cy="16" r="13" fill="#e8c39a"/>
+<path d="M30 6c7 0 12 5 12 11 0-4-5-6-12-6s-12 2-12 6c0-6 5-11 12-11z" fill="#d8b48b" opacity=".7"/>
+<circle cx="25" cy="15" r="1.8" fill="#3a2a1a"/><circle cx="35" cy="15" r="1.8" fill="#3a2a1a"/>
+<path d="M26 22q4 4 8 0" stroke="#3a2a1a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+<path d="M18 30h24l4 20H14z" fill="#8c6d1f" stroke="#5d4712"/>
+<path d="M14 34 4 44M42 34l10 10" stroke="#c9a227" stroke-width="4" stroke-linecap="round"/>
+<path d="M20 50l-4 16M38 50l4 16" stroke="#3a2a1a" stroke-width="5" stroke-linecap="round"/>
+</g></svg>
+<svg class="chick" width="74" height="46" viewBox="0 0 74 46"><g class="bob">
+<ellipse cx="34" cy="26" rx="19" ry="13" fill="#f6ecd9"/>
+<circle cx="52" cy="15" r="9" fill="#f6ecd9"/>
+<path d="M52 5q4-6 8 0" fill="#c0392b"/>
+<path d="M61 15l8 4-8 3z" fill="#c9a227"/>
+<circle cx="54" cy="13" r="1.8" fill="#241d18"/>
+<path d="M26 39l-2 6M38 39l2 6" stroke="#c9a227" stroke-width="3" stroke-linecap="round"/>
+<path d="M14 24q-10-8-12 2 6 2 10-2z" fill="#e9dcc2"/>
+</g></svg>
+</section>
+<section class="band" id="software">
+<h2>The machine</h2>
+<p class="sub">Ledgerline. Built for one-man outfits and small crews, priced once per business.</p>
+<div class="plate rivets machine">
+<div class="m-grid">
+<div class="dialbox">
+<svg width="200" height="200" viewBox="0 0 200 200" aria-hidden="true">
+<circle cx="100" cy="100" r="92" fill="none" stroke="#5d4712" stroke-width="3"/>
+<circle cx="100" cy="100" r="82" fill="none" stroke="#c9a227" stroke-width="12" stroke-dasharray="4 9"/>
+<circle cx="100" cy="100" r="62" fill="none" stroke="#7d5f18" stroke-width="2"/>
+<g class="wheel" stroke="#b87333" stroke-width="4" stroke-linecap="round">
+<path d="M100 42v22M100 136v22M42 100h22M136 100h22M59 59l16 16M125 125l16 16M141 59l-16 16M75 125l-16 16"/>
+</g>
+<circle cx="100" cy="100" r="34" fill="none" stroke="#7d5f18" stroke-width="2"/>
+<path class="needle" d="M100 100V28" stroke="#f0d071" stroke-width="6" stroke-linecap="round"/>
+<circle cx="100" cy="100" r="10" fill="#c9a227" stroke="#5d4712" stroke-width="2"/>
+</svg>
 </div>
-<section id="software">
-<h2>The software</h2>
-<p class="sub">Built for one-man outfits and small crews. One flat price per business, no per-user fees.</p>
-<div class="cards">
-<div class="card"><span class="tag">For the trades</span><h3>Ledgerline</h3><p>Quotes, scheduling, invoices and card payments. Run the whole business from your phone.</p><a class="go" href="https://app.leonlink.net">Open Ledgerline &rarr;</a></div>
-<div class="card"><span class="tag">Reviews</span><h3>Reviewline</h3><p>Turn finished jobs into Google reviews. One-tap requests, QR kits, templates.</p><a class="go" href="https://review.leonlink.net">Open Reviewline &rarr;</a></div>
-<div class="card"><span class="tag">Proof</span><h3>Proofline</h3><p>Before and after photo proof on every job, sent as a branded page your customer keeps.</p><a class="go" href="https://proofline.leonlink.net">Open Proofline &rarr;</a></div>
+<div>
+<div class="readouts">
+<div class="ro"><span>Crew size</span><b>Unlimited, no per-user fees</b></div>
+<div class="ro"><span>Plans</span><b>Starter &middot; Growth &middot; Command</b></div>
+<div class="ro"><span>Monthly</span><b>$9.83 &middot; $29.83 &middot; $54.50</b></div>
+<div class="ro"><span>Prepaid 6 months</span><b>$29 &middot; $149 &middot; $279</b></div>
+</div>
+<ul class="feats">
+<li>Quotes, scheduling and invoices from your phone</li>
+<li>Card payments taken on the job</li>
+<li>Customer portal, approve and pay online</li>
+<li>Automatic reminders that chase late invoices</li>
+<li>Inspection reports with built-in checklists</li>
+<li>One-tap review request after every job</li>
+</ul>
+<div class="cta" style="justify-content:flex-start;margin-top:18px"><a class="btn" href="https://app.leonlink.net">Open Ledgerline</a></div>
+</div>
+</div>
+</div>
+<div class="cards" style="margin-top:20px">
+<div class="card plate"><span class="tag">Reviews</span><h3>Reviewline</h3><p>Turn finished jobs into Google reviews. One-tap requests, QR kits and templates.</p><a class="go" href="https://review.leonlink.net">Open Reviewline &rarr;</a></div>
+<div class="card plate"><span class="tag">Proof</span><h3>Proofline</h3><p>Before and after photo proof on every job, sent as a branded page your customer keeps.</p><a class="go" href="https://proofline.leonlink.net">Open Proofline &rarr;</a></div>
 </div>
 </section>
-<section id="games">
-<h2>Games and experiments</h2>
+<section class="band" id="games">
+<h2>The amusements</h2>
 <p class="sub">Prototypes. Playable now, rough edges included.</p>
 <div class="cards">
-<div class="card"><span class="tag">Prototype</span><h3>Escape Sun N Fun</h3><p>Sun N Fun, an escape game.</p><a class="go" href="https://sunnfun-play.vercel.app" target="_blank" rel="noopener">Play the prototype &rarr;</a></div>
-<div class="card"><span class="tag">Prototype &middot; Medical</span><h3>Vein Viz</h3><p>Don't Miss, a vein visualizer built for clinicians.</p><a class="go" href="https://veinviz.vercel.app" target="_blank" rel="noopener">Open the prototype &rarr;</a></div>
-<div class="card"><span class="tag">Prototype</span><h3>US vs Zombies</h3><p>You against the undead. The build is running privately for now.</p></div>
-<div class="card"><span class="tag">Prototype</span><h3>Ironclad</h3><p>Iron Shadows, Act 1. A story-driven prototype.</p><a class="go" href="https://iron-shadows.vercel.app" target="_blank" rel="noopener">Open the prototype &rarr;</a></div>
-<div class="card"><span class="tag">Prototype</span><h3>Clan Fire Dynasty</h3><p>Clanfire, Blood of the Glens.</p><a class="go" href="https://clanfire-dynasty.vercel.app" target="_blank" rel="noopener">Open the prototype &rarr;</a></div>
+<div class="card plate"><span class="tag">Prototype</span><h3>Escape Sun N Fun</h3><p>Sun N Fun, an escape game.</p><a class="go" href="https://sunnfun-play.vercel.app" target="_blank" rel="noopener">Play the prototype &rarr;</a></div>
+<div class="card plate"><span class="tag">Prototype &middot; Medical</span><h3>Vein Viz</h3><p>Don't Miss, a vein visualizer built for clinicians.</p><a class="go" href="https://veinviz.vercel.app" target="_blank" rel="noopener">Open the prototype &rarr;</a></div>
+<div class="card plate"><span class="tag">Prototype</span><h3>US vs Zombies</h3><p>You against the undead. The build is running privately for now.</p></div>
+<div class="card plate"><span class="tag">Prototype</span><h3>Ironclad</h3><p>Iron Shadows, Act 1. A story-driven prototype.</p><a class="go" href="https://iron-shadows.vercel.app" target="_blank" rel="noopener">Open the prototype &rarr;</a></div>
+<div class="card plate"><span class="tag">Prototype</span><h3>Clan Fire Dynasty</h3><p>Clanfire, Blood of the Glens.</p><a class="go" href="https://clanfire-dynasty.vercel.app" target="_blank" rel="noopener">Open the prototype &rarr;</a></div>
 </div>
 </section>
 </main>
 <footer><div class="wrap f-grid">
-<div><strong style="color:#fff">LeonLink</strong><br><span style="color:#a9c3b3">Software and games.</span></div>
-<div>Ledgerline &middot; Reviewline &middot; Proofline<br><a href="mailto:info@leonlink.net">info@leonlink.net</a> &middot; <a href="https://app.leonlink.net/hub">Free tools</a></div>
+<div><strong style="color:var(--brass-hi)">LeonLink</strong><br><span>Machines for the trades, amusements on the side.</span></div>
+<div>Ledgerline &middot; Reviewline &middot; Proofline<br><a href="mailto:info@leonlink.net">info@leonlink.net</a> &middot; <a href="https://app.leonlink.net/hub">Free tools</a><br>&copy; <span id="yr">2026</span> Leon Link</div>
 </div></footer>
+<svg class="headwrap" width="96" height="130" viewBox="0 0 96 130" aria-hidden="true">
+<ellipse cx="48" cy="42" rx="30" ry="34" fill="#e8c39a"/>
+<path d="M20 30q8-26 28-26t28 26" fill="none" stroke="#d8b48b" stroke-width="3"/>
+<circle cx="36" cy="42" r="3.4" fill="#3a2a1a"/><circle cx="60" cy="42" r="3.4" fill="#3a2a1a"/>
+<path d="M30 33q7-4 13 0M52 33q7-4 13 0" stroke="#3a2a1a" stroke-width="2.2" fill="none"/>
+<path d="M48 46v7" stroke="#c99a6a" stroke-width="2.2"/>
+<path d="M41 60q7 5 14 0" stroke="#3a2a1a" stroke-width="2.2" fill="none"/>
+<path d="M48 76q3 6 0 10" stroke="#c9a227" stroke-width="2.4" fill="none" opacity=".7"/>
+<span class="drop"></span>
+</svg>
+<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
 </body>
 </html>
