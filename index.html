@@ -2,290 +2,661 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>LeonLink — machines for the trades, and games on the side</title>
-<meta name="description" content="LeonLink builds Ledgerline, Reviewline and Proofline for small trades crews, and plays with games in between.">
-<meta name="theme-color" content="#16110d">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>LeonLink Store — software for the trades, games, labs and worlds</title>
+<meta name="description" content="Everything LeonLink builds in one storefront: Ledgerline, Reviewline and Proofline for trades crews, plus free-to-play games, early-access labs, worlds, shops and free tools.">
+<link rel="canonical" href="https://www.leonlink.net/">
+<meta name="theme-color" content="#171a21">
 <link rel="icon" href="/favicon.png">
-<meta property="og:title" content="LeonLink — machines for the trades">
-<meta property="og:description" content="Ledgerline, Reviewline, Proofline, plus games and prototypes.">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.leonlink.net/">
+<meta property="og:title" content="LeonLink Store — software, games, labs and worlds">
+<meta property="og:description" content="Ledgerline, Reviewline, Proofline, plus games like Ashfall and Sun N Fun, early-access labs and free tools.">
 <meta property="og:image" content="https://www.leonlink.net/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" as="image" href="/img/cards/ledgerline.jpg">
 <style>
 :root{
---ink:#16110d;--paper:#f6ecd9;--paper-2:#e9dcc2;--brass:#c9a227;--brass-hi:#f0d071;
---brass-lo:#7d5f18;--copper:#b87333;--steel:#241d18;--steel-2:#332a22;--muted:#b7a88c;
-}
+--bg:#1b2838;--bg2:#16202d;--top:#171a21;--panel:#0f1923;--panel2:#213245;--line:rgba(255,255,255,.08);
+--txt:#c7d5e0;--dim:#8f98a0;--hi:#fff;--blue:#66c0f4;--blue2:#1a9fff;--green:#beee11;--green-bg:#4c6b22;
+--btn:linear-gradient(90deg,#75b022 5%,#588a1b 95%);--btn-hi:linear-gradient(90deg,#8ed629 5%,#6aa621 95%);
+--tag:rgba(103,193,245,.2);--radius:3px}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--ink);color:var(--paper);
-font:16px/1.6 Georgia,"Times New Roman",serif;-webkit-text-size-adjust:100%;
-background-image:radial-gradient(120% 80% at 50% 0%,#3a2c1c 0%,#1d1610 45%,#0f0b08 100%);}
-a{color:var(--brass-hi)}
-.wrap{max-width:1060px;margin:0 auto;padding:0 18px}
-.plate{background:linear-gradient(180deg,#2c231b,#1d1712);border:1px solid var(--brass-lo);
-border-radius:12px;box-shadow:inset 0 1px 0 rgba(240,208,113,.18),0 10px 26px rgba(0,0,0,.5)}
-.rivets{position:relative}
-.rivets:before,.rivets:after{content:"";position:absolute;left:10px;right:10px;height:6px;
-background-image:radial-gradient(circle,var(--brass) 0 1.6px,transparent 2px);background-size:18px 6px;opacity:.85}
-.rivets:before{top:6px}.rivets:after{bottom:6px}
-header.top{position:sticky;top:0;z-index:20;backdrop-filter:blur(6px);
-background:linear-gradient(180deg,rgba(22,17,13,.96),rgba(22,17,13,.82));border-bottom:1px solid var(--brass-lo)}
-header.top .wrap{display:flex;align-items:center;gap:12px;min-height:60px;flex-wrap:wrap}
-.brand{font-size:20px;letter-spacing:2.5px;text-transform:uppercase;color:var(--brass-hi);text-decoration:none;font-weight:700}
-.brand small{display:block;font-size:10px;letter-spacing:3px;color:var(--muted);font-weight:400}
-nav{margin-left:auto;display:flex;gap:14px;flex-wrap:wrap}
-nav a{color:var(--paper);text-decoration:none;font-size:14px;letter-spacing:1px;text-transform:uppercase;
-min-height:44px;display:inline-flex;align-items:center;opacity:.85}
-nav a:hover{color:var(--brass-hi);opacity:1}
-.hero{position:relative;overflow:hidden;padding:54px 0 34px;text-align:center}
-.hero h1{font-size:clamp(34px,10vw,72px);line-height:1;margin:0 0 6px;letter-spacing:3px;
-background:linear-gradient(180deg,#fff3cf,var(--brass) 45%,#6d5214);-webkit-background-clip:text;background-clip:text;color:transparent;
-text-shadow:0 2px 0 rgba(0,0,0,.35)}
-.hero .kicker{font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--brass);margin-bottom:14px}
-.hero .lede{max-width:40em;margin:0 auto 22px;color:var(--paper-2);font-size:clamp(15px,4.2vw,18px)}
-.cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;position:relative;z-index:3}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;border-radius:10px;
-font-weight:700;letter-spacing:1.2px;text-transform:uppercase;font-size:13.5px;text-decoration:none;
-background:linear-gradient(180deg,var(--brass-hi),var(--brass) 40%,var(--brass-lo));color:#241a06;border:1px solid #5d4712;
-box-shadow:0 3px 0 #4a3810,0 8px 18px rgba(0,0,0,.45)}
-.btn.ghost{background:linear-gradient(180deg,#2e251d,#1c1610);color:var(--brass-hi);border-color:var(--brass-lo);box-shadow:0 3px 0 #100c08}
-.gear{position:absolute;z-index:0;opacity:.5;animation:spin 18s linear infinite}
-.gear.b{animation-duration:26s;animation-direction:reverse;opacity:.35}
-.gear.c{animation-duration:34s;opacity:.28}
-@keyframes spin{to{transform:rotate(360deg)}}
-.steam{position:absolute;bottom:-20px;width:70px;height:70px;border-radius:50%;z-index:0;
-background:radial-gradient(circle,rgba(246,236,217,.30),rgba(246,236,217,0) 70%);animation:rise 7s ease-in infinite}
-.steam.s2{animation-delay:2.3s;left:60%}.steam.s3{animation-delay:4.6s;left:75%}
-@keyframes rise{0%{transform:translateY(0) scale(.6);opacity:0}25%{opacity:.7}100%{transform:translateY(-320px) scale(1.7);opacity:0}}
+html{scroll-behavior:smooth;scroll-padding-top:110px}
+body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.45 "Motiva Sans","Segoe UI",Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased;
+background-image:radial-gradient(1200px 500px at 50% -80px,rgba(62,126,167,.35),transparent 70%);background-repeat:no-repeat}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 
-.band{padding:36px 0}
-h2{font-size:clamp(22px,6vw,32px);letter-spacing:2px;text-transform:uppercase;margin:0 0 4px;
-background:linear-gradient(180deg,#fff0c4,var(--brass) 55%,#7d5f18);-webkit-background-clip:text;background-clip:text;color:transparent}
-.sub{color:var(--muted);margin:0 0 20px;font-size:15px}
-.cards{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(248px,1fr))}
-.card{padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0}
-.card h3{margin:0;font-size:19px;letter-spacing:1px;color:var(--brass-hi)}
-.card p{margin:0;color:var(--paper-2);font-size:14.5px}
-.card .go{margin-top:auto;min-height:44px;display:inline-flex;align-items:center;font-weight:700;
-letter-spacing:1px;text-transform:uppercase;font-size:12.5px;text-decoration:none;color:var(--brass-hi)}
-.tag{align-self:flex-start;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:#20180a;
-background:linear-gradient(180deg,var(--brass-hi),var(--brass));border-radius:999px;padding:4px 10px;font-weight:700}
-.machine{margin-top:8px;padding:22px}
-.m-grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));align-items:center}
-.dialbox{position:relative;display:flex;justify-content:center;align-items:center;min-height:230px}
-.needle{transform-origin:100px 100px;animation:sweep 5.5s ease-in-out infinite}
-@keyframes sweep{0%,100%{transform:rotate(-42deg)}50%{transform:rotate(48deg)}}
-.wheel{transform-origin:100px 100px;animation:spin 9s linear infinite}
-.readouts{display:grid;gap:10px}
-.ro{display:flex;justify-content:space-between;gap:14px;border-bottom:1px dashed rgba(201,162,39,.35);padding:9px 2px;font-size:14.5px}
-.ro b{color:var(--brass-hi);letter-spacing:1px}
-.feats{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:9px}
-.feats li{padding-left:22px;position:relative;color:var(--paper-2);font-size:14.5px}
-.feats li:before{content:"";position:absolute;left:0;top:.55em;width:9px;height:9px;border-radius:2px;
-background:linear-gradient(180deg,var(--brass-hi),var(--brass-lo));transform:rotate(45deg)}
-.chase{position:relative;overflow:hidden;height:104px;border-top:1px solid rgba(201,162,39,.3);border-bottom:1px solid rgba(201,162,39,.3)}
-.runner{position:absolute;top:16px;left:-140px;animation:chase 13s linear infinite}
-.chick{position:absolute;top:38px;left:-90px;animation:chase 13s linear infinite}
-@keyframes chase{0%{transform:translateX(0)}100%{transform:translateX(calc(100vw + 220px))}}
-.bob{animation:bob .45s ease-in-out infinite alternate}
-@keyframes bob{to{transform:translateY(-6px) rotate(-2deg)}}
-.headwrap{position:fixed;right:8px;top:38%;z-index:15;pointer-events:none;opacity:.9;animation:drip 9s ease-in-out infinite}
-@keyframes drip{0%{transform:translateY(-24px) rotate(-3deg)}50%{transform:translateY(28px) rotate(4deg)}100%{transform:translateY(-24px) rotate(-3deg)}}
-.drop{position:absolute;left:50%;top:74px;width:9px;height:9px;border-radius:60% 60% 60% 60%/70% 70% 40% 40%;
-background:linear-gradient(180deg,var(--brass-hi),var(--brass));animation:plop 3.4s ease-in infinite}
-@keyframes plop{0%{transform:translateY(0) scale(.5);opacity:0}20%{opacity:1}100%{transform:translateY(190px) scale(1.25);opacity:0}}
-footer{margin-top:34px;border-top:1px solid var(--brass-lo);background:linear-gradient(180deg,#1b1511,#100c08);padding:28px 0}
-.f-grid{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;font-size:14px;color:var(--muted)}
-@media(max-width:600px){.headwrap{transform:scale(.8);right:-6px}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* global header */
+.gh{background:var(--top);position:sticky;top:0;z-index:50}
+.gh .in{max-width:1240px;margin:0 auto;padding:0 16px;height:64px;display:flex;align-items:center;gap:26px}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo img{width:36px;height:36px;border-radius:50%;border:1px solid rgba(102,192,244,.5)}
+.logo b{font-size:20px;letter-spacing:3px;color:var(--hi);font-weight:800}
+.logo b span{color:var(--blue)}
+.gnav{display:flex;gap:22px;flex:1}
+.gnav a{font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#dcdedf;padding:22px 0 18px;border-bottom:3px solid transparent}
+.gnav a:hover,.gnav a.on{color:var(--hi);border-bottom-color:var(--blue)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:0 16px;border:0;border-radius:2px;
+background:var(--btn);color:#d2efa9;font-weight:600;font-size:14px;white-space:nowrap;text-shadow:0 1px 0 rgba(0,0,0,.25)}
+.btn:hover{background:var(--btn-hi);color:#fff}
+.btn.blue{background:linear-gradient(90deg,#06bfff,#2d73ff);color:#fff}
+.btn.blue:hover{background:linear-gradient(90deg,#46d3ff,#5a8fff)}
+.btn.dark{background:rgba(103,193,245,.2);color:var(--blue)}
+.btn.dark:hover{background:linear-gradient(90deg,#66c0f4,#417a9b);color:#fff}
 
-.hero h1{background-size:200% 100%;animation:sheen 7s ease-in-out infinite}
-@keyframes sheen{0%{background-position:0% 50%}100%{background-position:200% 50%}}
-.glow{position:absolute;left:0;right:0;bottom:-10%;height:62%;pointer-events:none;
-background:radial-gradient(60% 100% at 50% 100%,rgba(240,208,113,.22),transparent 70%);animation:lamp 5.5s ease-in-out infinite}
-@keyframes lamp{0%,100%{opacity:.5}50%{opacity:1}}
-.ember{position:absolute;bottom:0;width:5px;height:5px;border-radius:50%;opacity:0;
-background:radial-gradient(circle,#ffd98a,#c9a227 60%,transparent);animation:float 9s linear infinite}
-@keyframes float{0%{transform:translateY(10px) scale(.6);opacity:0}15%{opacity:.9}100%{transform:translateY(-300px) translateX(20px) scale(.45);opacity:0}}
-.eye{transform-origin:center;animation:blink 5.4s ease-in-out infinite}
-@keyframes blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.12)}}
-.card{transition:transform .25s ease,box-shadow .25s ease}
-.card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,.55),inset 0 1px 0 rgba(240,208,113,.25)}
-.piston{animation:pump 2.4s ease-in-out infinite}
-@keyframes pump{0%,100%{transform:translateY(0)}50%{transform:translateY(-13px)}}
-.posts{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(255px,1fr))}
-.post{padding:16px;display:flex;flex-direction:column;gap:8px}
-.post .cat{font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--brass)}
-.post h3{margin:0;font-size:17.5px;line-height:1.3;color:var(--brass-hi);font-style:italic}
-.post .go{margin-top:auto;min-height:44px;display:inline-flex;align-items:center;font-weight:700;
-letter-spacing:1px;text-transform:uppercase;font-size:12.5px;text-decoration:none;color:var(--brass-hi)}
-@media(prefers-reduced-motion:reduce){.ember,.glow{display:none}}
+/* store nav */
+.snav-wrap{position:sticky;top:64px;z-index:40;padding:10px 16px 0;background:linear-gradient(180deg,var(--top) 0,rgba(23,26,33,0) 100%)}
+.snav{max-width:1208px;margin:0 auto;display:flex;align-items:center;gap:2px;height:40px;border-radius:2px;
+background:linear-gradient(90deg,rgba(62,103,150,.92) 11%,rgba(58,120,177,.92) 25%,rgba(15,33,110,.92) 100%);box-shadow:0 0 6px rgba(0,0,0,.4)}
+.snav .tabs{display:flex;flex:1;overflow-x:auto;scrollbar-width:none;height:100%}
+.snav .tabs::-webkit-scrollbar{display:none}
+.snav .tabs a{display:flex;align-items:center;padding:0 14px;color:#e5e5e5;font-size:13.5px;white-space:nowrap}
+.snav .tabs a:hover{background:linear-gradient(90deg,rgba(255,255,255,.18),rgba(255,255,255,.06));color:#fff}
+.search{position:relative;margin:0 4px;flex-shrink:0}
+.search input{width:230px;height:30px;border:0;border-radius:3px;background:#316282;color:#fff;padding:0 34px 0 10px;font-size:14px;
+box-shadow:inset 1px 1px 0 rgba(0,0,0,.25)}
+.search input::placeholder{color:#0e1c25;font-style:italic;opacity:.9}
+.search input:focus{outline:none;background:#3d7aa0}
+.search svg{position:absolute;right:8px;top:7px;pointer-events:none}
 
-:root{--neon:#39ffc8;--neon2:#ff4fd8;--neon3:#a86bff}
-.hero h1{text-shadow:0 0 26px rgba(57,255,200,.38),0 0 60px rgba(255,79,216,.20)}
-h2{filter:drop-shadow(0 0 14px rgba(57,255,200,.22))}
-.tag{border:1px solid rgba(57,255,200,.45);box-shadow:0 0 12px rgba(57,255,200,.22)}
-.card:hover{border-color:rgba(57,255,200,.55);box-shadow:0 14px 34px rgba(0,0,0,.6),0 0 22px rgba(57,255,200,.28)}
-.btn:hover{box-shadow:0 3px 0 #4a3810,0 0 22px rgba(57,255,200,.45)}
-.btn.ghost:hover{border-color:rgba(255,79,216,.55);box-shadow:0 3px 0 #100c08,0 0 18px rgba(255,79,216,.42)}
-.ro b{color:var(--neon);text-shadow:0 0 10px rgba(57,255,200,.35)}
-.chase{border-color:rgba(57,255,200,.32)}
-.lead{padding:22px;margin:4px 0}
-.lead p{margin:0 0 10px;color:var(--paper-2);font-size:16.5px}
-.lead .cta{justify-content:flex-start;margin-top:14px}
-.ember.n1{background:radial-gradient(circle,#9dfff0,#12e0c0 60%,transparent)}
-.ember.n2{background:radial-gradient(circle,#ffc2f2,#ff4fd8 60%,transparent)}
-.ember.n3{background:radial-gradient(circle,#d9c2ff,#a86bff 60%,transparent)}
-.glow{position:absolute;left:0;right:0;bottom:-10%;height:62%;pointer-events:none;
-background:radial-gradient(60% 100% at 50% 100%,rgba(57,255,200,.14),rgba(255,79,216,.07) 45%,transparent 72%);animation:lamp 5.5s ease-in-out infinite}
-@keyframes lamp{0%,100%{opacity:.5}50%{opacity:1}}
-.ember{position:absolute;bottom:0;width:5px;height:5px;border-radius:50%;opacity:0;
-background:radial-gradient(circle,#ffd98a,#c9a227 60%,transparent);animation:float 9s linear infinite}
-@keyframes float{0%{transform:translateY(10px) scale(.6);opacity:0}15%{opacity:.9}100%{transform:translateY(-300px) translateX(20px) scale(.45);opacity:0}}
-.eye{transform-origin:center;animation:blink 5.4s ease-in-out infinite}
-@keyframes blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.12)}}
-.girl{position:absolute;top:20px;left:-58px;animation:chase 13s linear infinite}
-.dog{position:absolute;top:34px;left:22px;animation:chase 13s linear infinite}
-.chase .runner{left:-152px}.chase .chick{left:112px}
-.posts{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(255px,1fr))}
-.post{padding:16px;display:flex;flex-direction:column;gap:8px}
-.post .cat{font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--neon)}
-.post h3{margin:0;font-size:17.5px;line-height:1.3;color:var(--brass-hi);font-style:italic}
-.post .go{margin-top:auto;min-height:44px;display:inline-flex;align-items:center;font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:12.5px;text-decoration:none;color:var(--brass-hi)}
-@media(prefers-reduced-motion:reduce){.ember,.glow{display:none}}
+/* layout */
+.page{max-width:1240px;margin:0 auto;padding:18px 16px 0;display:grid;grid-template-columns:200px minmax(0,1fr);gap:22px}
+.side{position:sticky;top:124px;align-self:start;font-size:13px;max-height:calc(100vh - 140px);overflow:auto;scrollbar-width:thin}
+.side h4{margin:16px 0 6px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#6f8ba3;font-weight:600}
+.side h4:first-child{margin-top:0}
+.side a,.side button{display:block;width:100%;text-align:left;background:none;border:0;padding:4px 8px;color:var(--blue);border-radius:2px}
+.side a:hover,.side button:hover{background:rgba(102,192,244,.15);color:#fff}
+.side .giftcard{display:block;margin-bottom:10px;border-radius:4px;overflow:hidden;position:relative;padding:0}
+.side .giftcard img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.side .giftcard span{position:absolute;left:0;right:0;bottom:0;padding:16px 8px 6px;font-size:12px;color:#fff;
+background:linear-gradient(180deg,transparent,rgba(0,0,0,.85))}
+main{min-width:0}
+
+/* section titles */
+.sec{margin:0 0 38px}
+.sh{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:10px}
+.sh h2{margin:0;font-size:14px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:#fff}
+.sh .more{font-size:12px;border:1px solid rgba(255,255,255,.35);border-radius:2px;padding:3px 10px;color:#fff;background:none}
+.sh .more:hover{border-color:var(--blue);color:var(--blue)}
+.sub{margin:-4px 0 12px;color:var(--dim);font-size:13px}
+
+/* featured carousel */
+.feat{position:relative}
+.fslides{position:relative;height:353px;box-shadow:0 0 10px rgba(0,0,0,.55)}
+.fslide{position:absolute;inset:0;display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);opacity:0;visibility:hidden;transition:opacity .45s,visibility .45s}
+.fslide.on{opacity:1;visibility:visible}
+.fmain{position:relative;background:#000;overflow:hidden}
+.fmain img{width:100%;height:100%;object-fit:cover;transition:opacity .25s}
+.fmain .shine{position:absolute;inset:0;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.07) 50%,transparent 60%);pointer-events:none}
+.finfo{background:linear-gradient(180deg,#0e1a24 0%,#0b141c 100%);padding:14px 14px 12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.finfo h3{margin:0;font-size:22px;font-weight:400;color:#fff;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fthumbs{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.fthumbs button{padding:0;border:0;background:#000;aspect-ratio:16/9;overflow:hidden;opacity:.75;transition:opacity .2s}
+.fthumbs button:hover,.fthumbs button.on{opacity:1}
+.fthumbs img{width:100%;height:100%;object-fit:cover}
+.finfo .why{font-size:13px;color:var(--txt);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.finfo .avail{font-size:18px;color:#fff;font-weight:300}
+.finfo .avail small{display:block;font-size:11px;color:var(--dim);letter-spacing:.06em;text-transform:uppercase;font-weight:400}
+.tags{display:flex;flex-wrap:wrap;gap:4px}
+.tag{font-size:11px;color:var(--blue);background:var(--tag);padding:2px 7px;border-radius:2px;white-space:nowrap;border:0}
+button.tag:hover{background:var(--blue);color:#fff}
+.frow{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.price{display:inline-flex;align-items:center;background:rgba(0,0,0,.3);padding:4px 8px;border-radius:2px;font-size:13px;color:#fff;white-space:nowrap}
+.price.free{color:var(--green)}
+.plat{display:flex;gap:6px;color:var(--dim)}
+.plat svg{width:14px;height:14px;fill:currentColor}
+.farrow{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:92px;border:0;z-index:3;display:flex;align-items:center;justify-content:center;
+background:linear-gradient(90deg,rgba(0,0,0,.35),rgba(0,0,0,0));border-radius:2px}
+.farrow{top:calc(50% + 12px)}.farrow.l{left:0}.farrow.r{left:calc(63.6% - 42px);transform:translateY(-50%) scaleX(-1)}
+.farrow:hover{background:linear-gradient(90deg,rgba(171,218,244,.3),rgba(171,218,244,0))}
+.dots{display:flex;justify-content:center;gap:4px;margin-top:10px}
+.dots button{width:15px;height:9px;border:0;border-radius:2px;background:hsla(202,60%,100%,.2);padding:0;transition:background .2s}
+.dots button.on{background:hsla(202,60%,100%,.5)}
+.dots button:hover{background:hsla(202,60%,100%,.4)}
+
+/* special offers bundle */
+.offers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.offer{background:linear-gradient(180deg,#3a6e8c 0%,#24425a 100%);border-radius:2px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+.offer:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.5)}
+.offer img{aspect-ratio:16/9;object-fit:cover;width:100%}
+.offer .ob{padding:10px 12px;display:flex;flex-direction:column;gap:6px;flex:1}
+.offer h3{margin:0;color:#fff;font-size:16px;font-weight:500}
+.offer p{margin:0;font-size:12.5px;color:#cfe3f1}
+.offer .incl{font-size:11.5px;color:#a8d3ee}
+.deal{margin-top:auto;display:flex;align-items:stretch;align-self:flex-end;font-size:13px}
+.deal .pct{background:var(--green-bg);color:var(--green);font-size:20px;font-weight:600;padding:0 8px;display:flex;align-items:center}
+.deal .pr{background:rgba(20,31,44,.9);padding:3px 8px;display:flex;flex-direction:column;align-items:flex-end;line-height:1.15}
+.deal s{color:#738895;font-size:11px}
+.deal b{color:var(--green);font-weight:400;font-size:14px}
+.deal .per{font-size:10.5px;color:#9db0bd}
+.offer-note{margin:8px 0 0;font-size:12px;color:var(--dim)}
+.offer-note b{color:var(--txt);font-weight:500}
+
+/* categories */
+.cats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.cat{position:relative;aspect-ratio:1/1.05;border-radius:4px;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;padding:12px;
+text-align:center;color:#fff;font-weight:700;font-size:15px;letter-spacing:.08em;text-transform:uppercase;border:0;background:#000;transition:transform .2s}
+.cat img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55;filter:saturate(1.2);transition:opacity .25s,transform .4s}
+.cat:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,var(--c,#2d73ff) 140%);mix-blend-mode:normal;opacity:.9}
+.cat span{position:relative;z-index:1;text-shadow:0 2px 6px rgba(0,0,0,.8)}
+.cat small{display:block;font-size:11px;font-weight:400;letter-spacing:0;text-transform:none;opacity:.85}
+.cat:hover img{opacity:.8;transform:scale(1.06)}
+
+/* library tabs */
+.lib{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:0}
+.ltabs{display:flex;gap:2px;margin-bottom:0;overflow-x:auto;scrollbar-width:none}
+.ltabs button{border:0;background:none;padding:8px 14px 9px;font-size:13.5px;color:#fff;white-space:nowrap;border-radius:2px 2px 0 0}
+.ltabs button:hover{background:rgba(42,71,94,.6)}
+.ltabs button.on{background:linear-gradient(180deg,#2a475e,#1f3549);color:#fff}
+.ltabs button.on{box-shadow:inset 0 2px 0 var(--blue)}
+.lcount{font-size:12px;color:var(--dim);margin-left:auto;align-self:center;padding-right:4px;white-space:nowrap}
+.rows{background:rgba(0,0,0,.2);min-height:200px}
+.row{display:grid;grid-template-columns:184px minmax(0,1fr) auto;gap:12px;align-items:center;padding:0 10px 0 0;margin-bottom:5px;
+background:rgba(0,0,0,.2);transition:background .15s}
+.row:hover,.row.on{background:linear-gradient(90deg,#95bbd3,#678ba5)}
+.row:hover .rt,.row.on .rt{color:#10161b}
+.row:hover .rm,.row.on .rm{color:#384959}
+.row:hover .tag,.row.on .tag{background:rgba(0,0,0,.18);color:#10161b}
+.row img{width:184px;height:69px;object-fit:cover}
+.rt{font-size:15.5px;color:#c7d5e0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rm{font-size:11.5px;color:#56707f;display:flex;gap:10px;align-items:center;margin-top:2px;white-space:nowrap;overflow:hidden}
+.row .tags{margin-top:4px;flex-wrap:nowrap;overflow:hidden}
+.rright{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.row .price{background:none;padding:0}
+.row:hover .price,.row.on .price{color:#10161b}
+.showmore{display:block;width:100%;border:0;background:rgba(0,0,0,.25);color:var(--blue);padding:10px;font-size:13px}
+.showmore:hover{background:rgba(102,192,244,.15);color:#fff}
+.empty{padding:40px 16px;text-align:center;color:var(--dim)}
+.preview{background:linear-gradient(180deg,#bdd1dd 0%,#95b0c2 100%);color:#1b2838;padding:14px;position:sticky;top:124px;align-self:start;min-height:200px}
+.preview h3{margin:0 0 4px;font-size:20px;font-weight:400;color:#263645;line-height:1.2}
+.preview .st{font-size:12px;color:#4c6475;margin-bottom:8px}
+.preview .st b{color:#2b4a62}
+.preview .tags .tag{background:rgba(255,255,255,.35);color:#263645}
+.preview .pd{font-size:12.5px;margin:8px 0;color:#263645}
+.preview .pshots{display:grid;gap:8px;margin-top:10px}
+.preview .pshots img{width:100%;aspect-ratio:16/9;object-fit:cover;box-shadow:0 0 4px rgba(0,0,0,.4)}
+.preview .btn{margin-top:10px;width:100%}
+
+/* capsule grids */
+.grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.grid.sm{grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}
+.cap{position:relative;display:flex;flex-direction:column;background:linear-gradient(135deg,#1e3245 0%,#14222f 100%);border-radius:2px;overflow:hidden;
+box-shadow:0 0 6px rgba(0,0,0,.35);transition:transform .2s,box-shadow .2s}
+.cap:hover{transform:translateY(-3px) scale(1.015);box-shadow:0 10px 24px rgba(0,0,0,.6),0 0 0 1px rgba(102,192,244,.45)}
+.cimg{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000}
+.cimg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .35s,transform .5s}
+.cimg img.b{opacity:0}
+.cap:hover .cimg img.b{opacity:1}
+.cap:hover .cimg img.a{transform:scale(1.04)}
+.ribbon{position:absolute;top:8px;left:0;z-index:2;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px 3px 6px;
+background:#4c6b22;color:var(--green);border-radius:0 2px 2px 0}
+.ribbon.ea{background:#6b4a22;color:#ffc56b}
+.ribbon.new{background:#1a9fff;color:#fff}
+.ribbon.read{background:#5c3a6b;color:#f1c9ff}
+.cb{padding:8px 10px 10px;display:flex;flex-direction:column;gap:5px;flex:1}
+.cb h3{margin:0;font-size:14.5px;font-weight:500;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cb p{margin:0;font-size:12px;color:var(--dim);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.9em}
+.cfoot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:6px}
+.cfoot .tags{flex-wrap:nowrap;overflow:hidden;min-width:0}
+.cfoot .tag{overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.hover-cta{position:absolute;inset:auto 0 0 0;z-index:2;padding:22px 10px 8px;display:flex;justify-content:center;opacity:0;transform:translateY(6px);
+transition:opacity .2s,transform .2s;background:linear-gradient(180deg,transparent,rgba(0,0,0,.8))}
+.cap:hover .hover-cta,.cap:focus-visible .hover-cta{opacity:1;transform:none}
+.hover-cta span{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--btn);padding:6px 14px;border-radius:2px}
+
+/* big spotlight row (games) */
+.spot{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:10px}
+.spot .cap .cb h3{font-size:18px}
+.spot .cap .cb p{-webkit-line-clamp:3;min-height:0}
+
+/* news */
+.news{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.post{background:linear-gradient(180deg,#22384c,#162433);border-radius:2px;padding:12px;display:flex;flex-direction:column;gap:6px;min-height:150px;transition:background .2s}
+.post:hover{background:linear-gradient(180deg,#2d4b66,#1b2d40)}
+.post .k{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue)}
+.post h3{margin:0;font-size:15.5px;color:#fff;font-weight:500;line-height:1.3}
+.post p{margin:0;font-size:12.5px;color:var(--dim)}
+.post .go{margin-top:auto;font-size:12px;color:var(--blue)}
+
+/* work together */
+.work{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:18px;background:linear-gradient(135deg,#1f3b55 0%,#132232 100%);padding:20px;border-radius:2px;box-shadow:0 0 8px rgba(0,0,0,.35)}
+.work h3{margin:0 0 8px;font-size:22px;color:#fff;font-weight:400}
+.work p{margin:0 0 10px;color:#b9c9d6}
+.work ul{margin:0;padding:0;list-style:none;display:grid;gap:6px;font-size:13px}
+.work li:before{content:"✓ ";color:var(--green)}
+form{display:grid;gap:8px}
+label{font-size:12px;color:var(--dim)}
+input,select,textarea{width:100%;font:16px/1.4 inherit;font-family:inherit;color:#fff;background:#0f1923;border:1px solid #2a3f5a;border-radius:2px;padding:10px 12px;min-height:44px}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sent{display:none;background:rgba(76,107,34,.35);border:1px solid #4c6b22;color:#d2efa9;padding:10px;border-radius:2px;font-size:13px}
+
+/* footer */
+footer{margin-top:40px;background:var(--top);padding:28px 16px 40px;color:var(--dim);font-size:12.5px}
+footer .in{max-width:1240px;margin:0 auto;display:grid;gap:22px}
+.fcols{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:20px}
+.fcols h5{margin:0 0 8px;color:#fff;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
+.fcols a{display:block;padding:3px 0;color:#c6d4df}
+.fcols a:hover{color:#fff}
+.fbar{border-top:1px solid #363c44;padding-top:16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+.fbar img{width:30px;height:30px;border-radius:50%}
+
+/* responsive */
+@media(hover:none){.farrow{display:none}}
+@media(max-width:1100px){.page{grid-template-columns:minmax(0,1fr)}.side{display:none}.cats{grid-template-columns:repeat(3,minmax(0,1fr))}.cat{aspect-ratio:16/9}}
+@media(max-width:960px){.lib{grid-template-columns:minmax(0,1fr)}.preview{display:none}.news{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:860px){
+ .gnav{display:none}
+ .farrow{display:none}
+ .fslides{height:auto}
+ .fslide{position:relative;display:none;grid-template-columns:1fr}
+ .fslide.on{display:grid}
+ .fmain{aspect-ratio:16/9}
+ .fthumbs{display:none}
+ .offers{grid-template-columns:minmax(0,1fr)}
+ .offer{display:grid;grid-template-columns:42% minmax(0,1fr)}
+ .offer img{height:100%}
+ .work{grid-template-columns:minmax(0,1fr)}
+ .spot{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:620px){
+ .gh .in{height:56px;gap:12px}
+ .gh .btn{padding:0 12px;font-size:13px}
+ .logo b{font-size:17px;letter-spacing:2px}
+ .snav-wrap{top:56px;padding:8px 10px 0}
+ .search input{width:120px}
+ .search input:focus{width:170px}
+ .page{padding:14px 10px 0}
+ .row{grid-template-columns:120px minmax(0,1fr) auto;gap:8px}
+ .row img{width:120px;height:45px}
+ .rt{font-size:14px}
+ .row .tags{display:none}
+ .cats{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .grid,.grid.sm{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .cb p{display:none}
+ .cfoot .tags{display:none}
+ .news{grid-template-columns:minmax(0,1fr)}
+ .offer{grid-template-columns:minmax(0,1fr)}
+ .two{grid-template-columns:minmax(0,1fr)}
+ .finfo h3{font-size:19px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap">
-<a class="brand" href="/">LeonLink<small>works &amp; games</small></a>
-<nav><a href="#software">Software</a><a href="#games">Games</a><a href="https://www.leonlink.net/hub">Free tools</a><a href="mailto:info@leonlink.net">Contact</a></nav>
+
+<header class="gh"><div class="in">
+  <a class="logo" href="/" aria-label="LeonLink home"><img src="/img/logo-128.png" alt="" width="36" height="36"><b>LEON<span>LINK</span></b></a>
+  <nav class="gnav" aria-label="Main">
+    <a href="#top" class="on">Store</a>
+    <a href="#library">Library</a>
+    <a href="https://blog.leonlink.net">Journal</a>
+    <a href="/what-is-leonlink.html">About</a>
+    <a href="#work">Contact</a>
+  </nav>
+  <a class="btn" href="https://app.leonlink.net">Get Ledgerline</a>
 </div></header>
-<main class="wrap">
-<section class="hero">
-<svg class="gear" style="left:-46px;top:26px" width="160" height="160" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="#c9a227"><circle cx="50" cy="50" r="41" stroke-width="11" stroke-dasharray="5 5.4"/><circle cx="50" cy="50" r="27" stroke-width="3"/><circle cx="50" cy="50" r="9" stroke-width="3"/></g></svg>
-<svg class="gear b" style="right:-30px;top:120px" width="120" height="120" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="#b87333"><circle cx="50" cy="50" r="41" stroke-width="11" stroke-dasharray="5 5.4"/><circle cx="50" cy="50" r="24" stroke-width="3"/><circle cx="50" cy="50" r="8" stroke-width="3"/></g></svg>
-<svg class="gear c" style="left:38%;bottom:-30px" width="110" height="110" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="#c9a227"><circle cx="50" cy="50" r="41" stroke-width="10" stroke-dasharray="5 5.4"/><circle cx="50" cy="50" r="26" stroke-width="3"/></g></svg>
-<span class="steam"></span><span class="steam s2"></span><span class="steam s3"></span>
-<p class="kicker">Est. in a chimney, run from a phone</p>
-<h1>LeonLink</h1>
-<p class="lede">Machines for the trades and amusements for the fun of it. One flat price per business, no per-user fees, and every gear turning in your pocket.</p>
-<div class="cta"><a class="btn" href="#software">See the machine</a><a class="btn ghost" href="#games">Play the games</a></div>
+
+<div class="snav-wrap" id="top"><nav class="snav" aria-label="Store">
+  <div class="tabs">
+    <a href="#featured">Your Store</a>
+    <a href="#line">Software</a>
+    <a href="#games">Games</a>
+    <a href="#labs">Labs</a>
+    <a href="#worlds">Worlds</a>
+    <a href="#shops">Shops</a>
+    <a href="#tools">Free Tools</a>
+    <a href="#news">News</a>
+  </div>
+  <div class="search">
+    <label class="sr" for="q">Search the store</label>
+    <input id="q" type="search" placeholder="search" autocomplete="off">
+    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M10 2a8 8 0 0 1 6.32 12.9l5.39 5.4-1.41 1.4-5.4-5.39A8 8 0 1 1 10 2zm0 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12z"/></svg>
+  </div>
+</nav></div>
+
+<div class="page">
+<aside class="side" aria-label="Browse">
+  <a class="giftcard" href="https://app.leonlink.net"><img src="/img/cards/ledgerline.jpg" alt="" loading="lazy"><span>Ledgerline, from $9.83/mo</span></a>
+  <a class="giftcard" href="https://ashfall-virid.vercel.app" target="_blank" rel="noopener"><img src="/img/cards/ashfall.jpg" alt="" loading="lazy"><span>Play ASHFALL free</span></a>
+  <h4>Recommended</h4>
+  <button data-tab="new">New &amp; Trending</button>
+  <button data-tab="free">Free to Play</button>
+  <button data-tab="ea">Early Access</button>
+  <h4>Browse categories</h4>
+  <a href="#line">The Line software</a>
+  <a href="#games">Games</a>
+  <a href="#labs">Labs &amp; prototypes</a>
+  <a href="#worlds">Worlds &amp; writing</a>
+  <a href="#shops">Shops</a>
+  <a href="#tools">Free tools</a>
+  <h4>Browse by tag</h4>
+  <div id="sidetags"></div>
+</aside>
+
+<main>
+
+<section class="sec feat" id="featured" aria-roledescription="carousel" aria-label="Featured and recommended">
+  <div class="sh"><h2>Featured &amp; Recommended</h2></div>
+  <div class="fslides" id="fslides"></div>
+  <button class="farrow l" id="fprev" aria-label="Previous"><svg width="20" height="36" viewBox="0 0 20 36"><path d="M18 2 3 18l15 16" stroke="#fff" stroke-width="3" fill="none"/></svg></button>
+  <button class="farrow r" id="fnext" aria-label="Next"><svg width="20" height="36" viewBox="0 0 20 36"><path d="M18 2 3 18l15 16" stroke="#fff" stroke-width="3" fill="none"/></svg></button>
+  <div class="dots" id="fdots"></div>
 </section>
-<section class="band"><div class="plate rivets lead">
-<h2>Ledgerline, the one to start with</h2>
-<p>Ledgerline runs a small trades business from a phone: quote it before you leave the driveway, let the customer approve and pay in their own portal, then take the card on the spot. It schedules the work, sends the invoices, and chases what is owed automatically, so nothing sits unpaid because you were busy.</p>
-<p>Pricing is one flat rate per business, not per person. Adding a second man or a third does not raise the bill. Inspection checklists with photo proof, and a one-tap review request after every job, sit on top of it.</p>
-<div class="cta"><a class="btn" href="https://app.leonlink.net">Open Ledgerline</a><a class="btn ghost" href="#software">See the plans</a></div>
-</div></section>
-<section class="chase" aria-hidden="true">
-<svg class="runner" width="112" height="72" viewBox="0 0 120 72"><g class="bob">
-<circle cx="30" cy="16" r="13" fill="#e8c39a"/>
-<path d="M30 6c7 0 12 5 12 11 0-4-5-6-12-6s-12 2-12 6c0-6 5-11 12-11z" fill="#d8b48b" opacity=".7"/>
-<circle class="eye" cx="25" cy="15" r="2" fill="#3a2a1a"/><circle class="eye" cx="35" cy="15" r="2" fill="#3a2a1a"/>
-<path d="M26 22q4 4 8 0" stroke="#3a2a1a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-<path d="M18 30h24l4 20H14z" fill="#8c6d1f" stroke="#5d4712"/>
-<path d="M14 34 4 44M42 34l10 10" stroke="#c9a227" stroke-width="4" stroke-linecap="round"/>
-<path d="M20 50l-4 16M38 50l4 16" stroke="#3a2a1a" stroke-width="5" stroke-linecap="round"/>
-</g></svg>
-<svg class="girl" width="104" height="72" viewBox="0 0 110 72"><g class="bob">
-<circle cx="30" cy="18" r="12" fill="#f0c9a0"/>
-<path d="M18 16q2-14 12-14t12 14q-6-6-12-6t-12 6z" fill="#4a2c1a"/>
-<circle cx="42" cy="10" r="6" fill="#4a2c1a"/>
-<circle cx="26" cy="18" r="1.7" fill="#3a2a1a"/><circle cx="35" cy="18" r="1.7" fill="#3a2a1a"/>
-<path d="M26 24q4 4 8 0" stroke="#3a2a1a" stroke-width="1.5" fill="none"/>
-<path d="M22 30h18l7 24H15z" fill="#c0392b"/>
-<path d="M15 40 4 50M40 40l11 10" stroke="#f0c9a0" stroke-width="4" stroke-linecap="round"/>
-<path d="M24 54l-3 14M36 54l3 14" stroke="#3a2a1a" stroke-width="4.5" stroke-linecap="round"/>
-</g></svg>
-<svg class="dog" width="100" height="60" viewBox="0 0 110 62"><g class="bob">
-<path d="M16 30q-12-6-12 6" stroke="#a9743f" stroke-width="5" stroke-linecap="round" fill="none"/>
-<ellipse cx="42" cy="34" rx="24" ry="12" fill="#a9743f"/>
-<circle cx="68" cy="26" r="10" fill="#b98249"/>
-<path d="M59 18q-3-9 4-9t4 9z" fill="#8a5a2c"/><path d="M73 18q3-9-4-9t-4 9z" fill="#8a5a2c"/>
-<circle cx="71" cy="24" r="1.8" fill="#241d18"/>
-<path d="M78 29q6 3 2 6" stroke="#c0392b" stroke-width="2.4" fill="none"/>
-<path d="M30 44l-1 12M48 44l1 12" stroke="#8a5a2c" stroke-width="4.5" stroke-linecap="round"/>
-</g></svg>
-<svg class="chick" width="74" height="46" viewBox="0 0 74 46"><g class="bob">
-<ellipse cx="34" cy="26" rx="19" ry="13" fill="#f6ecd9"/>
-<circle cx="52" cy="15" r="9" fill="#f6ecd9"/>
-<path d="M52 5q4-6 8 0" fill="#c0392b"/>
-<path d="M61 15l8 4-8 3z" fill="#c9a227"/>
-<circle cx="54" cy="13" r="1.8" fill="#241d18"/>
-<path d="M26 39l-2 6M38 39l2 6" stroke="#c9a227" stroke-width="3" stroke-linecap="round"/>
-<path d="M14 24q-10-8-12 2 6 2 10-2z" fill="#e9dcc2"/>
-</g></svg>
+
+<section class="sec" id="line"><span id="pricing"></span><span id="apps"></span>
+  <div class="sh"><h2>Special offers · The Line</h2><a class="more" href="https://app.leonlink.net/what-you-get">What you get</a></div>
+  <p class="sub">One flat price per business. The whole crew is included, with no per-user fees and no add-ons. Prepay 6 months and save.</p>
+  <div class="offers">
+    <a class="offer" href="https://app.leonlink.net">
+      <img src="/img/cards/ledgerline.jpg" alt="Ledgerline field service software" loading="lazy">
+      <div class="ob"><h3>Ledgerline · Starter</h3><p>Quotes, scheduling, invoices and card payments from your phone.</p><span class="incl">$9.83/mo month to month</span>
+      <div class="deal"><span class="pct">-51%</span><span class="pr"><s>$58.98</s><b>$29</b><span class="per">6 months</span></span></div></div>
+    </a>
+    <a class="offer" href="https://proofline.leonlink.net">
+      <img src="/img/cards/proofline.jpg" alt="Proofline before and after photo reports" loading="lazy">
+      <div class="ob"><h3>Growth · includes Proofline</h3><p>Everything in Starter, plus before and after photo proof on every job.</p><span class="incl">$29.83/mo month to month</span>
+      <div class="deal"><span class="pct">-17%</span><span class="pr"><s>$178.98</s><b>$149</b><span class="per">6 months</span></span></div></div>
+    </a>
+    <a class="offer" href="https://review.leonlink.net">
+      <img src="/img/cards/reviewline.jpg" alt="Reviewline Google review requests" loading="lazy">
+      <div class="ob"><h3>Command · the whole Line</h3><p>Adds the Reviewline review funnel and SMS reminders. Every product, one bill.</p><span class="incl">$54.50/mo month to month</span>
+      <div class="deal"><span class="pct">-15%</span><span class="pr"><s>$327.00</s><b>$279</b><span class="per">6 months</span></span></div></div>
+    </a>
+  </div>
+  <p class="offer-note">Savings are against six months at the monthly rate. <b>Try it free first</b> in the <a href="https://demo.leonlink.net" style="color:var(--blue)">live demo</a>.</p>
 </section>
-<section class="band" id="software">
-<h2>The machine</h2>
-<p class="sub">Ledgerline. Built for one-man outfits and small crews, priced once per business.</p>
-<div class="plate rivets machine">
-<div class="m-grid">
-<div class="dialbox">
-<svg width="200" height="200" viewBox="0 0 200 200" aria-hidden="true">
-<circle cx="100" cy="100" r="92" fill="none" stroke="#5d4712" stroke-width="3"/>
-<circle cx="100" cy="100" r="82" fill="none" stroke="#c9a227" stroke-width="12" stroke-dasharray="4 9"/>
-<circle cx="100" cy="100" r="62" fill="none" stroke="#7d5f18" stroke-width="2"/>
-<g class="wheel" stroke="#b87333" stroke-width="4" stroke-linecap="round">
-<path d="M100 42v22M100 136v22M42 100h22M136 100h22M59 59l16 16M125 125l16 16M141 59l-16 16M75 125l-16 16"/>
-</g>
-<circle cx="100" cy="100" r="34" fill="none" stroke="#7d5f18" stroke-width="2"/>
-<path class="needle" d="M100 100V28" stroke="#f0d071" stroke-width="6" stroke-linecap="round"/>
-<circle cx="100" cy="100" r="10" fill="#c9a227" stroke="#5d4712" stroke-width="2"/>
-</svg>
-</div>
-<div>
-<div class="readouts">
-<div class="ro"><span>Crew size</span><b>Unlimited, no per-user fees</b></div>
-<div class="ro"><span>Plans</span><b>Starter &middot; Growth &middot; Command</b></div>
-<div class="ro"><span>Monthly</span><b>$9.83 &middot; $29.83 &middot; $54.50</b></div>
-<div class="ro"><span>Prepaid 6 months</span><b>$29 &middot; $149 &middot; $279</b></div>
-</div>
-<ul class="feats">
-<li>Quotes, scheduling and invoices from your phone</li>
-<li>Card payments taken on the job</li>
-<li>Customer portal, approve and pay online</li>
-<li>Automatic reminders that chase late invoices</li>
-<li>Inspection reports with built-in checklists</li>
-<li>One-tap review request after every job</li>
-</ul>
-<div class="cta" style="justify-content:flex-start;margin-top:18px"><a class="btn" href="https://app.leonlink.net">Open Ledgerline</a></div>
-</div>
-</div>
-</div>
-<div class="cards" style="margin-top:20px">
-<div class="card plate"><span class="tag">Reviews</span><h3>Reviewline</h3><p>Turn finished jobs into Google reviews. One-tap requests, QR kits and templates.</p><a class="go" href="https://review.leonlink.net">Open Reviewline &rarr;</a></div>
-<div class="card plate"><span class="tag">Proof</span><h3>Proofline</h3><p>Before and after photo proof on every job, sent as a branded page your customer keeps.</p><a class="go" href="https://proofline.leonlink.net">Open Proofline &rarr;</a></div>
-</div>
+
+<section class="sec" id="cats">
+  <div class="sh"><h2>Browse by category</h2></div>
+  <div class="cats">
+    <a class="cat" href="#line" style="--c:#2d9b4f"><img src="/img/cards/ledgerline-2.jpg" alt="" loading="lazy"><span>Software<small>The Line</small></span></a>
+    <a class="cat" href="#games" style="--c:#c0392b"><img src="/img/cards/sunnfun.jpg" alt="" loading="lazy"><span>Games<small>Free to play</small></span></a>
+    <a class="cat" href="#labs" style="--c:#8e44ad"><img src="/img/cards/leonlens.jpg" alt="" loading="lazy"><span>Labs<small>Early access</small></span></a>
+    <a class="cat" href="#worlds" style="--c:#b7791f"><img src="/img/cards/longway.jpg" alt="" loading="lazy"><span>Worlds<small>Stories &amp; faiths</small></span></a>
+    <a class="cat" href="#shops" style="--c:#7f1d1d"><img src="/img/cards/reaper.jpg" alt="" loading="lazy"><span>Shops<small>Bandanas &amp; caps</small></span></a>
+    <a class="cat" href="#tools" style="--c:#1a6fb0"><img src="/img/cards/t-invoice.jpg" alt="" loading="lazy"><span>Free tools<small>No account</small></span></a>
+  </div>
 </section>
-<section class="band" id="games">
-<h2>The amusements</h2>
-<p class="sub">Prototypes. Playable now, rough edges included.</p>
-<div class="cards">
-<div class="card plate"><span class="tag">Prototype</span><h3>Escape Sun N Fun</h3><p>Sun N Fun, an escape game.</p><a class="go" href="https://sunnfun-play.vercel.app" target="_blank" rel="noopener">Play the prototype &rarr;</a></div>
-<div class="card plate"><span class="tag">Prototype &middot; Medical</span><h3>Vein Viz</h3><p>Don't Miss, a vein visualizer built for clinicians.</p><a class="go" href="https://veinviz.vercel.app" target="_blank" rel="noopener">Open the prototype &rarr;</a></div>
-<div class="card plate"><span class="tag">Prototype &middot; Relationship</span><h3>US vs Zombies</h3><p>A relationship app for couples, still in the workshop. Nothing public to show yet.</p></div>
-<div class="card plate"><span class="tag">Prototype</span><h3>Ironclad</h3><p>Iron Shadows, Act 1. A story-driven prototype.</p><a class="go" href="https://iron-shadows.vercel.app" target="_blank" rel="noopener">Open the prototype &rarr;</a></div>
-<div class="card plate"><span class="tag">Prototype</span><h3>Clan Fire Dynasty</h3><p>Clanfire, Blood of the Glens.</p><a class="go" href="https://clanfire-dynasty.vercel.app" target="_blank" rel="noopener">Open the prototype &rarr;</a></div>
-</div>
+
+<section class="sec" id="library">
+  <div class="sh"><h2>Browse the library</h2></div>
+  <div class="ltabs" role="tablist" id="ltabs">
+    <button role="tab" data-tab="new" class="on">New &amp; Trending</button>
+    <button role="tab" data-tab="games">Games</button>
+    <button role="tab" data-tab="software">Software</button>
+    <button role="tab" data-tab="ea">Early Access</button>
+    <button role="tab" data-tab="free">Free to Play</button>
+    <button role="tab" data-tab="all">Everything</button>
+    <span class="lcount" id="lcount"></span>
+  </div>
+  <div class="lib">
+    <div class="rows" id="rows" role="tabpanel"></div>
+    <aside class="preview" id="preview" aria-live="polite"></aside>
+  </div>
 </section>
-<section class="band" id="journal">
-<h2>The journal</h2>
-<p class="sub">No Sacred Cows. Plain talk about software, pricing, and whatever else is on my mind.</p>
-<div class="posts">
-<div class="post plate"><span class="cat">Business &middot; Pricing</span><h3>Per-seat pricing is dying</h3><a class="go" href="https://blog.leonlink.net/per-seat-pricing.html">Read it &rarr;</a></div>
-<div class="post plate"><span class="cat">Business &middot; Field service</span><h3>The trades software tax</h3><a class="go" href="https://blog.leonlink.net/trades-software-tax.html">Read it &rarr;</a></div>
-<div class="post plate"><span class="cat">Business &middot; Reputation</span><h3>Review gating is fraud with a smile</h3><a class="go" href="https://blog.leonlink.net/review-gating.html">Read it &rarr;</a></div>
-<div class="post plate"><span class="cat">Business &middot; Marketing</span><h3>SEO died and nobody held a funeral</h3><a class="go" href="https://blog.leonlink.net/seo-is-dead.html">Read it &rarr;</a></div>
-</div>
-<div class="cta" style="justify-content:flex-start;margin-top:18px"><a class="btn ghost" href="https://blog.leonlink.net">Read the whole journal</a></div>
+
+<section class="sec" id="games">
+  <div class="sh"><h2>Games · Free to play</h2><button class="more" data-jump="games">See all in library</button></div>
+  <p class="sub">Playable in the browser right now. Prototypes, so expect rough edges.</p>
+  <div class="spot" id="g-spot"></div>
+  <div class="grid" id="g-grid"></div>
 </section>
+
+<section class="sec" id="labs">
+  <div class="sh"><h2>Labs · Early access</h2><button class="more" data-jump="ea">See all in library</button></div>
+  <p class="sub">Apps, cameras and tools in the workshop. Try them and tell me what breaks.</p>
+  <div class="grid sm" id="labs-grid"></div>
+</section>
+
+<section class="sec" id="worlds">
+  <div class="sh"><h2>Worlds &amp; writing</h2></div>
+  <p class="sub">Interactive stories, original faiths and the No Sacred Cows journal.</p>
+  <div class="grid sm" id="worlds-grid"></div>
+</section>
+
+<section class="sec" id="shops">
+  <div class="sh"><h2>Shops</h2></div>
+  <p class="sub">Storefront builds: printed-to-order bandanas and headwear.</p>
+  <div class="grid" id="shops-grid"></div>
+</section>
+
+<section class="sec" id="tools">
+  <div class="sh"><h2>Free tools · No account needed</h2><a class="more" href="/free-tools.html">All free tools</a></div>
+  <div class="grid sm" id="tools-grid"></div>
+</section>
+
+<section class="sec" id="news">
+  <div class="sh"><h2>News · From the journal</h2><a class="more" href="https://blog.leonlink.net">Read the journal</a></div>
+  <div class="news">
+    <a class="post" href="https://blog.leonlink.net/per-seat-pricing.html"><span class="k">Business · Pricing</span><h3>Per-seat pricing is dying</h3><p>Why charging per head punishes the crews that grow.</p><span class="go">Read it →</span></a>
+    <a class="post" href="https://blog.leonlink.net/trades-software-tax.html"><span class="k">Business · Field service</span><h3>The trades software tax</h3><p>What small crews really pay for the big platforms.</p><span class="go">Read it →</span></a>
+    <a class="post" href="https://blog.leonlink.net/review-gating.html"><span class="k">Business · Reputation</span><h3>Review gating is fraud with a smile</h3><p>Ask everyone for a review, not just the happy ones.</p><span class="go">Read it →</span></a>
+    <a class="post" href="https://blog.leonlink.net/seo-is-dead.html"><span class="k">Business · Marketing</span><h3>SEO died and nobody held a funeral</h3><p>Where local customers actually find you now.</p><span class="go">Read it →</span></a>
+  </div>
+</section>
+
+<section class="sec" id="work"><span id="custom"></span>
+  <div class="sh"><h2>Work together</h2></div>
+  <div class="work">
+    <div>
+      <h3>Need something that doesn't exist yet?</h3>
+      <p>I build custom websites, web apps and tools for one business or many. Everything on this page was built that way.</p>
+      <ul>
+        <li>Software shaped around how you work</li>
+        <li>Reasonable rates, and you own what we build</li>
+        <li>Nominate the next overpriced category to tear down</li>
+      </ul>
+      <p style="margin-top:14px">Prefer email? <a href="mailto:info@leonlink.net" style="color:var(--blue)">info@leonlink.net</a></p>
+    </div>
+    <form id="cform">
+      <div class="two">
+        <div><label for="f-name">Name</label><input id="f-name" required autocomplete="name"></div>
+        <div><label for="f-email">Email</label><input id="f-email" type="email" required autocomplete="email"></div>
+      </div>
+      <label for="f-topic">What's this about?</label>
+      <select id="f-topic"><option>Build something with you</option><option>Ledgerline question</option><option>Feedback on a game or lab</option><option>Nominate the next overpriced category</option><option>Something else</option></select>
+      <label for="f-msg">Message</label>
+      <textarea id="f-msg" rows="4" required></textarea>
+      <button class="btn blue" type="submit" style="min-height:44px">Send it</button>
+      <div class="sent" id="f-ok" role="status">Your email app is opening with the message ready. Just hit send. Nothing is stored on this site.</div>
+    </form>
+  </div>
+</section>
+
 </main>
-<footer><div class="wrap f-grid">
-<div><strong style="color:var(--brass-hi)">LeonLink</strong><br><span>Machines for the trades, amusements on the side.</span></div>
-<div>Ledgerline &middot; Reviewline &middot; Proofline<br><a href="mailto:info@leonlink.net">info@leonlink.net</a> &middot; <a href="https://www.leonlink.net/hub">Free tools</a><br>&copy; <span id="yr">2026</span> Leon Link</div>
+</div>
+
+<footer><div class="in">
+  <div class="fcols">
+    <div><h5>The Line</h5><a href="https://app.leonlink.net">Ledgerline</a><a href="https://review.leonlink.net">Reviewline</a><a href="https://proofline.leonlink.net">Proofline</a><a href="https://demo.leonlink.net">Live demo</a><a href="https://app.leonlink.net/login?install=1">Download the app</a></div>
+    <div><h5>Free tools</h5><a href="/qr-code-generator.html">QR code generator</a><a href="/invoice-generator.html">Invoice generator</a><a href="/estimate-generator.html">Estimate generator</a><a href="/before-after-viewer.html">Before/after viewer</a><a href="/chimney-inspection-checklist.html">Chimney checklist</a></div>
+    <div><h5>Company</h5><a href="/what-is-leonlink.html">What is LeonLink?</a><a href="/affiliates.html">Affiliates, earn 25%</a><a href="https://blog.leonlink.net">No Sacred Cows journal</a><a href="#work">Work together</a><a href="mailto:info@leonlink.net">info@leonlink.net</a></div>
+  </div>
+  <div class="fbar"><span style="display:flex;align-items:center;gap:10px"><img src="/img/logo-128.png" alt="" width="30" height="30" loading="lazy">© <span id="yr">2026</span> Leon Link. Every creation stars the same two: the boss and the dog.</span><span>Flat prices. Your data walks out the door with you.</span></div>
 </div></footer>
 
-<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+<script>
+const I={
+web:'<svg viewBox="0 0 24 24" aria-label="Web"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm6.9 6h-2.9a15.7 15.7 0 0 0-1.4-3.6A8 8 0 0 1 18.9 8zM12 4c.8 1.2 1.5 2.5 1.9 4h-3.8c.4-1.5 1.1-2.8 1.9-4zM4.3 14a8 8 0 0 1 0-4h3.4a16 16 0 0 0 0 4H4.3zm.8 2h2.9c.3 1.3.8 2.5 1.4 3.6A8 8 0 0 1 5.1 16zM8 8H5.1a8 8 0 0 1 4.3-3.6C8.8 5.5 8.3 6.7 8 8zm4 12c-.8-1.2-1.5-2.5-1.9-4h3.8c-.4 1.5-1.1 2.8-1.9 4zm2.3-6H9.7a14 14 0 0 1 0-4h4.6a14 14 0 0 1 0 4zm.3 5.6c.6-1.1 1.1-2.3 1.4-3.6h2.9a8 8 0 0 1-4.3 3.6zm1.7-5.6a16 16 0 0 0 0-4h3.4a8 8 0 0 1 0 4h-3.4z"/></svg>',
+mob:'<svg viewBox="0 0 24 24" aria-label="Mobile"><path d="M7 1h10a2 2 0 0 1 2 2v18a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2zm0 3v14h10V4H7zm5 15.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></svg>'};
+
+// c: software|games|labs|worlds|shops|tools · s: live|ea|read|shop · d: last updated
+const DATA=[
+{id:'ledgerline',t:'Ledgerline',u:'https://app.leonlink.net',c:'software',s:'live',p:'$9.83/mo',d:'2026-10-04',plat:['web','mob'],
+ tags:['Field Service','Invoicing','Scheduling','Payments'],x:'Run a small trades business from a phone. Quote before you leave the driveway, let customers approve and pay in their own portal, take the card on the spot, and let reminders chase what is owed.'},
+{id:'reviewline',t:'Reviewline',u:'https://review.leonlink.net',c:'software',s:'live',p:'In Command',d:'2026-10-02',plat:['web','mob'],
+ tags:['Reviews','Automation','Google'],x:'Every finished job ends with a review ask. One-tap requests, QR kits and templates, with private feedback always open too.'},
+{id:'proofline',t:'Proofline',u:'https://proofline.leonlink.net',c:'software',s:'live',p:'In Growth',d:'2026-10-04',plat:['web','mob'],
+ tags:['Photo Proof','Reports','Trades'],x:'Before and after photos of every job in a branded report your customer keeps and shows the neighbors.'},
+{id:'ashfall',t:'ASHFALL: The Turning Years',u:'https://ashfall-virid.vercel.app',c:'games',s:'new',p:'Free to Play',d:'2026-10-06',plat:['web'],spot:1,
+ tags:['Survival','Story Rich','Post-apocalyptic','Character Creator'],x:'A fever out of Southeast Asia. Then the missiles. Now the ash, and a stranger sorting of the living. Build your survivor, wake up, and rule what is left. Expansion XI out now.'},
+{id:'sunnfun',t:'Sun N Fun: Escape the Trailer Park',u:'https://escapegame-zeta.vercel.app',c:'games',s:'ea',p:'Free to Play',d:'2026-08-20',plat:['web','mob'],spot:1,
+ tags:['Mystery','RPG','Comedy'],x:'A trailer-park mystery RPG. Someone snitched. Find them before the whole park comes down, or before Ax Man does.'},
+{id:'sporebound',t:'Sporebound: Forage Protocol',u:'https://sporebound-forage.vercel.app',c:'games',s:'ea',p:'Free to Play',d:'2026-08-22',plat:['web','mob'],
+ tags:['Cozy Horror','Foraging','Survival'],x:'A cozy-horror foraging game. Identify mushrooms. Harvest. Survive the anomalies.'},
+{id:'usvz',t:'Us vs Zombies',u:'https://us-app-99-psi.vercel.app',c:'games',s:'ea',p:'Free to Play',d:'2026-09-29',plat:['web','mob'],
+ tags:['Co-op','Couples','Relationship'],x:'The couple game. The relationship is the team, the zombies are the problems. Play together, get closer, defeat the relationship zombies.'},
+{id:'joshua',t:'Joshua: Dynasty of Israel',u:'https://joshua-dynasty.vercel.app',c:'games',s:'ea',p:'Free to Play',d:'2026-09-28',plat:['web'],
+ tags:['Strategy','Dynasty','Historical'],x:'Moses is dead and the Jordan lies before you. Lead the tribes, keep the covenant, and raise a house that lasts.'},
+{id:'clanfire',t:'Clanfire: Blood of the Glens',u:'https://clanfire-dynasty.vercel.app',c:'games',s:'ea',p:'Free to Play',d:'2026-09-25',plat:['web'],
+ tags:['Grand Strategy','Dynasty','Medieval'],x:'Highlands and Isles, 1420. Real places, real clans. Raid your neighbours, marry for alliances and keep the bloodline alive.'},
+{id:'wars',t:'Wars of the Nowhere',u:'https://wars-of-the-nowhere.vercel.app',c:'games',s:'ea',p:'Free to Play',d:'2026-09-25',plat:['web'],
+ tags:['Strategy','Kingdoms','Map'],x:'A map of petty kingdoms, standing armies, and thrones built on gossip. Choose your realm and take the rest.'},
+{id:'ashveil',t:'Realm of Ashveil',u:'https://house-of-ashveil.vercel.app',c:'games',s:'ea',p:'Free to Play',d:'2026-09-25',plat:['web'],
+ tags:['Kingdom Builder','Dynasty','Fantasy'],x:'Found a realm, name your house, and grow it through the generations.'},
+{id:'ironshadows',t:'Iron Shadows: Act 1',u:'https://iron-shadows.vercel.app',c:'games',s:'ea',p:'Free to Play',d:'2026-08-22',plat:['web'],
+ tags:['Action','Ancient Greece','Permadeath'],x:'A single Spartan. Climb from Hoplite to General, or play Leonidas mode with permadeath for the rank of Demi-God.'},
+{id:'leonlens',t:'LeonLens',u:'https://leonlens.vercel.app',c:'labs',s:'ea',p:'Free',d:'2026-09-29',plat:['mob','web'],
+ tags:['Camera','AR','Social'],x:'A mobile-first camera with live lenses, AR effects, Memories and social-ready sharing.'},
+{id:'brainstorm',t:'Brainstorm',u:'https://brainstorm-puce.vercel.app',c:'labs',s:'new',p:'Free',d:'2026-10-06',plat:['web','mob'],
+ tags:['Productivity','Ideas','Focus'],x:'Generate, break, chart and judge ideas. Gift ideas, names, problems. No judging until you say so.'},
+{id:'veinview',t:'Vein View',u:'https://dontmiss-sandy.vercel.app',c:'labs',s:'ea',p:'Free',d:'2026-08-30',plat:['mob'],
+ tags:['Camera','Medical Education'],x:'An educational camera tool that enhances how superficial veins look. Not a medical device.'},
+{id:'familyfilter',t:'Family Filter',u:'https://family-filter.vercel.app',c:'labs',s:'ea',p:'Free',d:'2026-08-22',plat:['web','mob'],
+ tags:['Camera','Face Filters','Fun'],x:'Real-time face filters with multi-face tracking and 35 characters. Start the camera or upload a photo.'},
+{id:'adbeast',t:'AD BEAST',u:'https://ad-beast-nine.vercel.app',c:'labs',s:'ea',p:'Free',d:'2026-08-28',plat:['web'],
+ tags:['Marketing','AI','Ads'],x:'Turn one product description into platform-optimized ads for Reddit, X, LinkedIn and TikTok in seconds.'},
+{id:'portal',t:'Customer Portal',u:'https://customer-portal-three-eta.vercel.app',c:'labs',s:'ea',p:'Free',d:'2026-09-24',plat:['web'],
+ tags:['SaaS','Billing','White Label'],x:'A self-service account and billing portal you can white-label per client: logo, colors and domain.'},
+{id:'caseback',t:'Caseback',u:'https://caseback-mu.vercel.app',c:'labs',s:'ea',p:'Free',d:'2026-09-04',plat:['web'],
+ tags:['Watches','Marketplace','Community'],x:'A marketplace for used watches, unbiased microbrand reviews and a gamified collector community.'},
+{id:'launchstack',t:'LaunchStack Pro',u:'https://launchstack-pro.vercel.app',c:'labs',s:'ea',p:'Free',d:'2026-09-18',plat:['web'],
+ tags:['SaaS','Starter Kit'],x:'Launch SaaS in days, not weeks. Auth, payments and a dashboard, ready to go.'},
+{id:'longway',t:'The Long Way Home',u:'https://leonlink-site.vercel.app',c:'worlds',s:'read',p:'Free',d:'2026-09-24',plat:['web'],
+ tags:['Interactive Story','Science','Cosmos'],x:'Pull the lever on a time machine: from the Big Bang to the Milky Way, the cooking fire and you.'},
+{id:'twofaiths',t:'Two Ways of Living in the Universe',u:'https://two-faiths.vercel.app',c:'worlds',s:'read',p:'Free',d:'2026-09-29',plat:['web'],
+ tags:['Philosophy','Original Faiths'],x:'Two original faiths, written for anyone who wants to try them for thirty days and keep only what holds weight.'},
+{id:'kinship',t:'The Long Kinship',u:'https://the-long-kinship.vercel.app',c:'worlds',s:'read',p:'Free',d:'2026-09-29',plat:['web'],
+ tags:['Philosophy','Cosmos','Liturgy'],x:'A faith that takes the universe as it actually is. Take the Walk of the Timeline, with sound.'},
+{id:'ashendoor',t:'The Ashen Door',u:'https://the-ashen-door.vercel.app',c:'worlds',s:'read',p:'Free',d:'2026-09-29',plat:['web'],
+ tags:['Philosophy','Mythology'],x:'A faith of gratitude, restraint and endurance for people who have been hurt and refuse to let it make them cruel.'},
+{id:'blog',t:'No Sacred Cows',u:'https://blog.leonlink.net',c:'worlds',s:'read',p:'Free',d:'2026-10-02',plat:['web'],
+ tags:['Essays','Business','Opinion'],x:'Plain talk about software, pricing, marketing, law and whatever else is on my mind.'},
+{id:'reaper',t:'REAPER RAGS',u:'https://reaper-rags.vercel.app',c:'shops',s:'shop',p:'Shop',d:'2026-09-11',plat:['web','mob'],
+ tags:['Apparel','Bandanas','Custom Print'],x:'Outlaw bandanas and headwear. Large format, sharp print, custom runs.'},
+{id:'hellbent',t:'HELLBENT',u:'https://hellbent-storefront.vercel.app',c:'shops',s:'shop',p:'Shop',d:'2026-09-11',plat:['web','mob'],
+ tags:['Apparel','Bandanas','Caps'],x:'Oversized, heavyweight bandanas and caps, printed to order and built for the ride.'},
+{id:'t-qr',t:'QR Code Generator',u:'/qr-code-generator.html',c:'tools',s:'live',p:'Free',d:'2026-10-01',plat:['web','mob'],one:1,tags:['Free Tool','QR'],x:'Make a QR code and download it as PNG or SVG. No account, no watermark.'},
+{id:'t-invoice',t:'Invoice Generator',u:'/invoice-generator.html',c:'tools',s:'live',p:'Free',d:'2026-10-01',plat:['web','mob'],one:1,tags:['Free Tool','Invoicing'],x:'Make and print a clean invoice in a minute. No account needed.'},
+{id:'t-estimate',t:'Estimate Generator',u:'/estimate-generator.html',c:'tools',s:'live',p:'Free',d:'2026-10-01',plat:['web','mob'],one:1,tags:['Free Tool','Quotes'],x:'Make and print a quote your customer can sign. No account needed.'},
+{id:'t-beforeafter',t:'Before & After Viewer',u:'/before-after-viewer.html',c:'tools',s:'live',p:'Free',d:'2026-10-01',plat:['web','mob'],one:1,tags:['Free Tool','Photos'],x:'Drop in two photos and drag the slider to compare.'},
+{id:'t-chimney',t:'Chimney Inspection Checklist',u:'/chimney-inspection-checklist.html',c:'tools',s:'live',p:'Free',d:'2026-10-01',plat:['web'],one:1,tags:['Free Tool','Printable','Trades'],x:'A printable Level 1 and Level 2 chimney inspection checklist.'}
+];
+const FEATURED=['ledgerline','ashfall','sunnfun','sporebound','leonlens','longway'];
+const RIB={live:['Live',''],ea:['Early Access','ea'],new:['Just updated','new'],read:['Read free','read'],shop:['Storefront','']};
+const CAT={software:'Software',games:'Game',labs:'Lab',worlds:'World',shops:'Shop',tools:'Free tool'};
+const byId=Object.fromEntries(DATA.map(o=>[o.id,o]));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ext=o=>o.u.startsWith('http')&&!/leonlink\.net/.test(o.u)?' target="_blank" rel="noopener"':'';
+const img=(o,v)=>`/img/cards/${o.id}${v||''}.jpg`;
+const plat=o=>`<span class="plat">${o.plat.map(p=>I[p]).join('')}</span>`;
+const priceEl=o=>`<span class="price${/free/i.test(o.p)?' free':''}">${esc(o.p)}</span>`;
+const tagsEl=(o,n,btn)=>`<span class="tags">${o.tags.slice(0,n||9).map(t=>btn?`<button class="tag" data-tag="${esc(t)}">${esc(t)}</button>`:`<span class="tag">${esc(t)}</span>`).join('')}</span>`;
+const fmtDate=d=>new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+
+function capsule(o){
+  const r=RIB[o.s];
+  return `<a class="cap" href="${o.u}"${ext(o)}>
+  <div class="cimg">${r?`<span class="ribbon ${r[1]}">${r[0]}</span>`:''}<img class="a" src="${img(o)}" alt="${esc(o.t)}" loading="lazy" width="640" height="360">${o.one?'':`<img class="b" src="${img(o,'-2')}" alt="" loading="lazy">`}
+  <span class="hover-cta"><span>${o.c==='games'?'Play now':o.c==='shops'?'Shop now':o.c==='worlds'?'Read now':'Open'}</span></span></div>
+  <div class="cb"><h3>${esc(o.t)}</h3><p>${esc(o.x)}</p><div class="cfoot">${tagsEl(o,1)}${priceEl(o)}</div></div></a>`;
+}
+function fill(id,list){document.getElementById(id).innerHTML=list.map(capsule).join('')}
+const games=DATA.filter(o=>o.c==='games');
+fill('g-spot',games.filter(o=>o.spot));
+fill('g-grid',games.filter(o=>!o.spot));
+fill('labs-grid',DATA.filter(o=>o.c==='labs'));
+fill('worlds-grid',DATA.filter(o=>o.c==='worlds'));
+fill('shops-grid',DATA.filter(o=>o.c==='shops'));
+fill('tools-grid',DATA.filter(o=>o.c==='tools'));
+
+// featured carousel
+const fs=document.getElementById('fslides'),fd=document.getElementById('fdots');
+fs.innerHTML=FEATURED.map((id,i)=>{const o=byId[id];return `<div class="fslide${i?'':' on'}" role="group" aria-roledescription="slide" aria-label="${i+1} of ${FEATURED.length}: ${esc(o.t)}">
+ <a class="fmain" href="${o.u}"${ext(o)}><img src="${img(o)}" alt="${esc(o.t)}" ${i?'loading="lazy"':''} width="640" height="360"><span class="shine"></span></a>
+ <div class="finfo"><h3>${esc(o.t)}</h3>
+  <div class="fthumbs"><button class="on" data-src="${img(o)}" aria-label="Screenshot 1"><img src="${img(o)}" alt="" loading="lazy"></button><button data-src="${img(o,'-2')}" aria-label="Screenshot 2"><img src="${img(o,'-2')}" alt="" loading="lazy"></button></div>
+  <p class="why" style="margin:0">${esc(o.x)}</p>
+  <div class="avail"><small>${o.s==='ea'?'Early Access':o.c==='software'?'Live now':'Now available'}</small>${o.c==='games'?'Play in your browser':o.c==='software'?'Flat price, whole crew':o.c==='worlds'?'Read it free':'Try it free'}</div>
+  ${tagsEl(o,4)}
+  <div class="frow">${plat(o)}${priceEl(o)}</div></div></div>`}).join('');
+fd.innerHTML=FEATURED.map((_,i)=>`<button class="${i?'':'on'}" aria-label="Show slide ${i+1}"></button>`).join('');
+let fi=0,ft;
+const slides=[...fs.children],dots=[...fd.children];
+function go(n){fi=(n+slides.length)%slides.length;slides.forEach((s,i)=>s.classList.toggle('on',i===fi));dots.forEach((d,i)=>d.classList.toggle('on',i===fi))}
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function auto(){clearInterval(ft);if(!reduce)ft=setInterval(()=>go(fi+1),7000)}
+document.getElementById('fprev').onclick=()=>{go(fi-1);auto()};
+document.getElementById('fnext').onclick=()=>{go(fi+1);auto()};
+dots.forEach((d,i)=>d.onclick=()=>{go(i);auto()});
+const feat=document.getElementById('featured');
+feat.addEventListener('mouseenter',()=>clearInterval(ft));feat.addEventListener('mouseleave',auto);
+feat.addEventListener('focusin',()=>clearInterval(ft));
+fs.addEventListener('mouseover',e=>{const b=e.target.closest('.fthumbs button');if(!b)return;
+  const s=b.closest('.fslide');s.querySelector('.fmain img').src=b.dataset.src;s.querySelectorAll('.fthumbs button').forEach(x=>x.classList.toggle('on',x===b))});
+fs.addEventListener('click',e=>{const b=e.target.closest('.fthumbs button');if(b)b.dispatchEvent(new MouseEvent('mouseover',{bubbles:true}))});
+let tx=0;fs.addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
+fs.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>45){go(fi+(dx<0?1:-1));auto()}});
+auto();
+
+// library list + preview
+const rows=document.getElementById('rows'),pv=document.getElementById('preview'),q=document.getElementById('q'),lc=document.getElementById('lcount');
+let tab='new',tagF='',expanded=false;
+const TABS={new:()=>[...DATA].filter(o=>o.c!=='tools').sort((a,b)=>b.d.localeCompare(a.d)),games:()=>games,software:()=>DATA.filter(o=>o.c==='software'||o.c==='tools'),
+ ea:()=>DATA.filter(o=>o.s==='ea'||o.s==='new'),free:()=>DATA.filter(o=>/free/i.test(o.p)),all:()=>DATA};
+function preview(o){
+  pv.innerHTML=`<h3>${esc(o.t)}</h3><div class="st">${CAT[o.c]} · <b>${RIB[o.s][0]}</b> · Updated ${fmtDate(o.d)}</div>${tagsEl(o)}
+  <p class="pd">${esc(o.x)}</p><div class="pshots"><img src="${img(o)}" alt="" loading="lazy">${o.one?'':`<img src="${img(o,'-2')}" alt="" loading="lazy">`}</div>
+  <a class="btn" href="${o.u}"${ext(o)}>${o.c==='games'?'Play now':o.c==='software'?'Open '+esc(o.t):'Open'}</a>`;
+}
+function render(){
+  const term=q.value.trim().toLowerCase();
+  let list=term?DATA:TABS[tab]();
+  if(tagF)list=DATA.filter(o=>o.tags.includes(tagF));
+  if(term)list=list.filter(o=>(o.t+' '+o.x+' '+o.tags.join(' ')+' '+CAT[o.c]).toLowerCase().includes(term));
+  lc.textContent=(tagF?`Tag: ${tagF} · `:'')+list.length+' item'+(list.length===1?'':'s');
+  if(!list.length){rows.innerHTML='<div class="empty">Nothing matches that. Try another word, or <button class="tag" id="clr">clear the search</button>.</div>';pv.innerHTML='';
+    document.getElementById('clr').onclick=()=>{q.value='';tagF='';render()};return}
+  const full=list.length;if(!expanded&&!term&&full>10)list=list.slice(0,10);
+  rows.innerHTML=list.map((o,i)=>`<a class="row${i?'':' on'}" href="${o.u}"${ext(o)} data-id="${o.id}">
+   <img src="${img(o)}" alt="" loading="lazy" width="184" height="69">
+   <div style="min-width:0"><div class="rt">${esc(o.t)}</div><div class="rm">${plat(o)}<span>${CAT[o.c]} · ${RIB[o.s][0]}</span></div>${tagsEl(o,4)}</div>
+   <div class="rright">${priceEl(o)}<span class="rm">${fmtDate(o.d)}</span></div></a>`).join('')+(list.length<full?`<button class="showmore" id="smore">Show all ${full} →</button>`:'');
+  const sm=document.getElementById('smore');if(sm)sm.onclick=()=>{expanded=true;render()};
+  preview(list[0]);
+}
+rows.addEventListener('mouseover',e=>{const r=e.target.closest('.row');if(!r||r.classList.contains('on'))return;
+  rows.querySelectorAll('.row.on').forEach(x=>x.classList.remove('on'));r.classList.add('on');preview(byId[r.dataset.id])});
+rows.addEventListener('focusin',e=>{const r=e.target.closest('.row');if(r)r.dispatchEvent(new MouseEvent('mouseover',{bubbles:true}))});
+function setTab(t){tab=t;tagF='';expanded=false;q.value='';document.querySelectorAll('#ltabs button').forEach(b=>{b.classList.toggle('on',b.dataset.tab===t);b.setAttribute('aria-selected',b.dataset.tab===t)});render()}
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{setTab(b.dataset.tab);if(b.closest('.side'))document.getElementById('library').scrollIntoView()}));
+document.querySelectorAll('[data-jump]').forEach(b=>b.onclick=()=>{setTab(b.dataset.jump);document.getElementById('library').scrollIntoView()});
+let qt;q.addEventListener('input',()=>{clearTimeout(qt);qt=setTimeout(()=>{tagF='';render()},120)});
+q.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();document.getElementById('library').scrollIntoView()}if(e.key==='Escape'){q.value='';render()}});
+document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='TEXTAREA'){e.preventDefault();q.focus()}});
+
+// sidebar tags
+const tagCount={};DATA.forEach(o=>o.tags.forEach(t=>tagCount[t]=(tagCount[t]||0)+1));
+document.getElementById('sidetags').innerHTML=Object.entries(tagCount).filter(([,n])=>n>1).sort((a,b)=>b[1]-a[1]).slice(0,14)
+ .map(([t])=>`<button data-tag="${esc(t)}">${esc(t)}</button>`).join('');
+document.addEventListener('click',e=>{const b=e.target.closest('button[data-tag]');if(!b)return;e.preventDefault();e.stopPropagation();
+  tagF=b.dataset.tag;q.value='';document.querySelectorAll('#ltabs button').forEach(x=>x.classList.remove('on'));render();document.getElementById('library').scrollIntoView()},true);
+render();
+
+document.getElementById('cform').addEventListener('submit',e=>{
+  e.preventDefault();const g=id=>document.getElementById(id).value.trim();
+  const s='['+g('f-topic')+'] from '+g('f-name'),b=g('f-msg')+'\n\n— '+g('f-name')+' ('+g('f-email')+')';
+  location.href='mailto:info@leonlink.net?subject='+encodeURIComponent(s)+'&body='+encodeURIComponent(b);
+  document.getElementById('f-ok').style.display='block';
+});
+document.getElementById('yr').textContent=new Date().getFullYear();
+</script>
 </body>
 </html>
