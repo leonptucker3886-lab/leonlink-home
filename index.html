@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>LeonLink — software for the trades, games and free tools</title>
+<title>LeonLink — software, games and free tools</title>
 <meta name="description" content="Everything LeonLink builds in one place: Ledgerline for trades crews, plus free browser games, the journal and free tools.">
 <link rel="canonical" href="https://www.leonlink.net/">
 <meta name="theme-color" content="#0d0c0a">
@@ -126,20 +126,6 @@ background:rgba(13,12,10,.7);border-radius:50%;backdrop-filter:blur(6px)}
 .dots button:hover{background:var(--dim)}
 
 /* plans */
-.offers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.offer{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:transform .25s,border-color .25s}
-.offer:hover{transform:translateY(-4px);border-color:var(--gold)}
-.offer.hl{background:linear-gradient(180deg,var(--forest) 0%,var(--panel) 70%);border-color:var(--forest2)}
-.offer img{aspect-ratio:16/9;object-fit:cover;width:100%;border-bottom:1px solid var(--line)}
-.offer .ob{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
-.offer h3{margin:0;font-family:var(--serif);color:var(--hi);font-size:21px;font-weight:600}
-.offer p{margin:0;font-size:14px;color:var(--dim)}
-.offer .incl{font-size:12.5px;color:var(--gold);font-weight:600;letter-spacing:.02em}
-.plan-price{margin-top:auto;padding-top:8px;display:flex;align-items:baseline;gap:6px}
-.plan-price b{font-family:var(--serif);font-size:34px;font-weight:700;color:var(--hi);line-height:1}
-.plan-price span{font-size:13.5px;color:var(--dim)}
-.offer-note{margin:14px 0 0;font-size:14px;color:var(--dim)}
-.offer-note a{color:var(--gold);font-weight:600}
 
 /* categories */
 .cats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
@@ -269,9 +255,6 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
  .fslide.on{display:grid}
  .fmain{aspect-ratio:16/9}
  .fthumbs{display:none}
- .offers{grid-template-columns:minmax(0,1fr)}
- .offer{display:grid;grid-template-columns:40% minmax(0,1fr)}
- .offer img{height:100%;border-bottom:0;border-right:1px solid var(--line)}
  .work{grid-template-columns:minmax(0,1fr);padding:22px}
  .spot{grid-template-columns:minmax(0,1fr)}
  .sh h2{font-size:25px}
@@ -297,8 +280,6 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
  .cb p{display:none}
  .cfoot .tags{display:none}
  .news{grid-template-columns:minmax(0,1fr)}
- .offer{grid-template-columns:minmax(0,1fr)}
- .offer img{border-right:0;border-bottom:1px solid var(--line)}
  .two{grid-template-columns:minmax(0,1fr)}
  .finfo{padding:18px}
  .finfo h3{font-size:22px}
@@ -324,7 +305,7 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 <div class="snav-wrap" id="top"><nav class="snav" aria-label="Store">
   <div class="tabs">
     <a href="#featured">Spotlight</a>
-    <a href="#line">Software</a>
+    <a href="#library" data-jump="software">Software</a>
     <a href="#games">Games</a>
     <a href="#tools">Free Tools</a>
     <a href="#journal">Journal</a>
@@ -344,7 +325,7 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
   <button data-tab="new">Latest</button>
   <button data-tab="free">Free</button>
   <h4>Browse categories</h4>
-  <a href="#line">The Line software</a>
+  <a href="#library" data-jump="software">Software</a>
   <a href="#games">Games</a>
   <a href="#journal">Journal</a>
   <a href="#tools">Free tools</a>
@@ -362,40 +343,17 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
   <div class="dots" id="fdots"></div>
 </section>
 
-<section class="sec" id="line"><span id="pricing"></span><span id="apps"></span>
-  <div class="sh"><h2>The Line <em>for trades crews</em></h2><a class="more" href="https://app.leonlink.net/what-you-get">What you get</a></div>
-  <p class="sub">One flat price per business. Everyone on the crew is included.</p>
-  <div class="offers">
-    <a class="offer" href="https://app.leonlink.net">
-      <img src="/img/cards/ledgerline.jpg" alt="Ledgerline field service software" loading="lazy">
-      <div class="ob"><span class="incl">Starter</span><h3>Run the business</h3><p>Quotes, scheduling, invoices and card payments from your phone.</p>
-      <div class="plan-price"><b>$9.83</b><span>/ month, whole crew</span></div></div>
-    </a>
-    <a class="offer hl" href="https://app.leonlink.net/what-you-get">
-      <img src="/img/cards/proofline.jpg" alt="Before and after photo proof" loading="lazy">
-      <div class="ob"><span class="incl">Growth</span><h3>Prove the work</h3><p>Everything in Starter, plus before and after photo proof on every job.</p>
-      <div class="plan-price"><b>$29.83</b><span>/ month, whole crew</span></div></div>
-    </a>
-    <a class="offer" href="https://app.leonlink.net/what-you-get">
-      <img src="/img/cards/reviewline.jpg" alt="Google review requests" loading="lazy">
-      <div class="ob"><span class="incl">Command</span><h3>Win the reviews</h3><p>Adds automatic Google review requests and SMS reminders. Everything, one bill.</p>
-      <div class="plan-price"><b>$54.50</b><span>/ month, whole crew</span></div></div>
-    </a>
-  </div>
-  <p class="offer-note">No per-user fees, no add-ons, cancel any time. Kick the tires in the <a href="https://demo.leonlink.net">live demo</a> first.</p>
-</section>
-
 <section class="sec" id="cats">
   <div class="sh"><h2>Pick a <em>corner</em></h2></div>
   <div class="cats">
-    <a class="cat" href="#line" style="--c:#2d9b4f"><img src="/img/cards/ledgerline-2.jpg" alt="" loading="lazy"><span>Software<small>The Line</small></span></a>
+    <a class="cat" href="#library" data-jump="software" style="--c:#2d9b4f"><img src="/img/cards/ledgerline-2.jpg" alt="" loading="lazy"><span>Software<small>The Line</small></span></a>
     <a class="cat" href="#games" style="--c:#c0392b"><img src="/img/cards/sunnfun.jpg" alt="" loading="lazy"><span>Games<small>Play in your browser</small></span></a>
     <a class="cat" href="#journal" style="--c:#b7791f"><img src="/img/cards/longway.jpg" alt="" loading="lazy"><span>Journal<small>Post #1 is live</small></span></a>
     <a class="cat" href="#tools" style="--c:#1a6fb0"><img src="/img/cards/t-invoice.jpg" alt="" loading="lazy"><span>Free tools<small>No account</small></span></a>
   </div>
 </section>
 
-<section class="sec" id="library">
+<section class="sec" id="library"><span id="line"></span><span id="pricing"></span><span id="apps"></span>
   <div class="sh"><h2>The <em>library</em></h2></div>
   <div class="ltabs" role="tablist" id="ltabs">
     <button role="tab" data-tab="new" class="on">Latest</button>
