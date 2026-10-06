@@ -12,7 +12,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.leonlink.net/">
 <meta property="og:title" content="LeonLink — software, games and free tools">
-<meta property="og:description" content="Ledgerline for trades crews, games like ASHFALL and Sun N Fun, and free tools.">
+<meta property="og:description" content="Ledgerline for trades crews, games like ASHFALL, Sun N Fun and the AFTERGLOW casino, and free tools.">
 <meta property="og:image" content="https://www.leonlink.net/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" as="image" href="/img/cards/ledgerline.jpg">
@@ -194,7 +194,7 @@ background:var(--panel);border:1px solid var(--line);border-radius:12px;transiti
 .hover-cta span{font-size:13px;font-weight:700;color:#03161a;background:var(--gold);padding:6px 14px;border-radius:999px;display:block}
 
 /* spotlight games */
-.spot{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:16px}
+.spot{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:16px}
 .spot .cap .cb h3{font-family:var(--serif);font-size:22px;font-weight:600;white-space:normal;line-height:1.15}
 .spot .cap .cb p{-webkit-line-clamp:3;min-height:0}
 
@@ -380,7 +380,7 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
   <div class="sh"><h2>Pick a <em>corner</em></h2></div>
   <div class="cats">
     <a class="cat" href="#library" data-jump="software" style="--c:#00b3c7"><img src="/img/cards/ledgerline-2.jpg" alt="" loading="lazy"><span>Software<small>The Line</small></span></a>
-    <a class="cat" href="#games" style="--c:#d6249f"><img src="/img/cards/sunnfun.jpg" alt="" loading="lazy"><span>Games<small>Play in your browser</small></span></a>
+    <a class="cat" href="#games" style="--c:#d6249f"><img src="/img/cards/sunnfun.jpg" alt="" loading="lazy"><span>Games<small>New: AFTERGLOW casino</small></span></a>
     <a class="cat" href="#journal" style="--c:#7b2cff"><img src="/img/cards/aliens.jpg" alt="" loading="lazy"><span>My Secrets<small>New: post #2</small></span></a>
     <a class="cat" href="#tools" style="--c:#5bbf1f"><img src="/img/cards/t-invoice.jpg" alt="" loading="lazy"><span>Free tools<small>No account</small></span></a>
   </div>
@@ -489,6 +489,8 @@ mob:'<svg viewBox="0 0 24 24" aria-label="Mobile"><path d="M7 1h10a2 2 0 0 1 2 2
 const DATA=[
 {id:'ledgerline',t:'Ledgerline',u:'https://app.leonlink.net',c:'software',s:'live',p:'$9.83/mo',d:'2026-10-04',plat:['web','mob'],
  tags:['Field Service','Invoicing','Scheduling','Payments'],x:'Run a small trades business from a phone. Quote before you leave the driveway, let customers approve and pay in their own portal, take the card on the spot, and let reminders chase what is owed.'},
+{id:'afterglow',t:'AFTERGLOW: Neon Social Casino',u:'https://afterglow.leonlink.net',c:'games',s:'new',p:'Free',d:'2026-10-06',plat:['web','mob'],spot:1,
+ tags:['Social Casino','Slots','Blackjack','Play Money'],x:'A neon casino that never closes. Seven games including Sun N Fun Slots, blackjack, roulette, Plinko and Liftoff, plus a daily wheel, levels and provably fair seeds. Play money only, 18+.'},
 {id:'ashfall',t:'ASHFALL: The Turning Years',u:'https://ashfall-virid.vercel.app',c:'games',s:'new',p:'Free',d:'2026-10-06',plat:['web'],spot:1,
  tags:['Survival','Story Rich','Post-apocalyptic','Character Creator'],x:'A fever out of Southeast Asia. Then the missiles. Now the ash, and a stranger sorting of the living. Build your survivor, wake up, and rule what is left. Expansion XI out now.'},
 {id:'sunnfun',t:'Sun N Fun: Escape the Trailer Park',u:'https://escapegame-zeta.vercel.app',c:'games',s:'ea',p:'Free',d:'2026-08-20',plat:['web','mob'],spot:1,
@@ -505,7 +507,7 @@ const DATA=[
 {id:'t-beforeafter',t:'Before & After Viewer',u:'/before-after-viewer.html',c:'tools',s:'live',p:'Free',d:'2026-10-01',plat:['web','mob'],one:1,tags:['Free Tool','Photos'],x:'Drop in two photos and drag the slider to compare.'},
 {id:'t-chimney',t:'Chimney Inspection Checklist',u:'/chimney-inspection-checklist.html',c:'tools',s:'live',p:'Free',d:'2026-10-01',plat:['web'],one:1,tags:['Free Tool','Printable','Trades'],x:'A printable Level 1 and Level 2 chimney inspection checklist.'}
 ];
-const FEATURED=['aliens','ledgerline','ashfall','sunnfun','sporebound','longway'];
+const FEATURED=['afterglow','aliens','ledgerline','ashfall','sunnfun','sporebound','longway'];
 const RIB={live:['Live',''],ea:['Beta','ea'],new:['New','new'],read:['Read','read']};
 const CAT={software:'Software',games:'Game',worlds:'My Secrets',tools:'Free tool'};
 const byId=Object.fromEntries(DATA.map(o=>[o.id,o]));
