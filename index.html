@@ -3,253 +3,263 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>LeonLink Store — software for the trades, games, labs and worlds</title>
-<meta name="description" content="Everything LeonLink builds in one storefront: Ledgerline, Reviewline and Proofline for trades crews, plus free-to-play games, early-access labs, worlds and free tools.">
+<title>LeonLink — software for the trades, games, labs and worlds</title>
+<meta name="description" content="Everything LeonLink builds in one place: Ledgerline, Reviewline and Proofline for trades crews, plus free-to-play games, early-access labs, worlds and free tools.">
 <link rel="canonical" href="https://www.leonlink.net/">
-<meta name="theme-color" content="#171a21">
+<meta name="theme-color" content="#0d0c0a">
 <link rel="icon" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.leonlink.net/">
-<meta property="og:title" content="LeonLink Store — software, games, labs and worlds">
+<meta property="og:title" content="LeonLink — software, games, labs and worlds">
 <meta property="og:description" content="Ledgerline, Reviewline, Proofline, plus games like Ashfall and Sun N Fun, early-access labs and free tools.">
 <meta property="og:image" content="https://www.leonlink.net/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" as="image" href="/img/cards/ledgerline.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&display=swap" rel="stylesheet">
 <style>
 :root{
---bg:#1b2838;--bg2:#16202d;--top:#171a21;--panel:#0f1923;--panel2:#213245;--line:rgba(255,255,255,.08);
---txt:#c7d5e0;--dim:#8f98a0;--hi:#fff;--blue:#66c0f4;--blue2:#1a9fff;--green:#beee11;--green-bg:#4c6b22;
---btn:linear-gradient(90deg,#75b022 5%,#588a1b 95%);--btn-hi:linear-gradient(90deg,#8ed629 5%,#6aa621 95%);
---tag:rgba(103,193,245,.2);--radius:3px}
+--bg:#0d0c0a;--bg2:#13110e;--top:#0d0c0a;--panel:#171511;--panel2:#1f1c17;--line:#2c2820;--line2:#3d3628;
+--txt:#e9e4da;--dim:#a39d90;--faint:#77715f;--hi:#fbf8f2;--gold:#f2c14e;--gold2:#e0a82e;--lime:#d9f16b;--rose:#e07a5f;--forest:#183d2a;--forest2:#225238;
+--radius:14px;--serif:"Fraunces",Georgia,serif}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:110px}
-body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.45 "Motiva Sans","Segoe UI",Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased;
-background-image:radial-gradient(1200px 500px at 50% -80px,rgba(62,126,167,.35),transparent 70%);background-repeat:no-repeat}
+html{scroll-behavior:smooth;scroll-padding-top:120px}
+body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.55 "DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;
+background-image:radial-gradient(900px 420px at 85% -120px,rgba(242,193,78,.10),transparent 70%),radial-gradient(800px 500px at 0% 0%,rgba(24,61,42,.55),transparent 70%);background-repeat:no-repeat}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
 button{font:inherit;color:inherit;cursor:pointer}
-:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 
-/* global header */
-.gh{background:var(--top);position:sticky;top:0;z-index:50}
-.gh .in{max-width:1240px;margin:0 auto;padding:0 16px;height:64px;display:flex;align-items:center;gap:26px}
+/* header */
+.gh{background:rgba(13,12,10,.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);position:sticky;top:0;z-index:50;border-bottom:1px solid var(--line)}
+.gh .in{max-width:1240px;margin:0 auto;padding:0 20px;height:66px;display:flex;align-items:center;gap:30px}
 .logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
-.logo img{width:36px;height:36px;border-radius:50%;border:1px solid rgba(102,192,244,.5)}
-.logo b{font-size:20px;letter-spacing:3px;color:var(--hi);font-weight:800}
-.logo b span{color:var(--blue)}
-.gnav{display:flex;gap:22px;flex:1}
-.gnav a{font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#dcdedf;padding:22px 0 18px;border-bottom:3px solid transparent}
-.gnav a:hover,.gnav a.on{color:var(--hi);border-bottom-color:var(--blue)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:0 16px;border:0;border-radius:2px;
-background:var(--btn);color:#d2efa9;font-weight:600;font-size:14px;white-space:nowrap;text-shadow:0 1px 0 rgba(0,0,0,.25)}
-.btn:hover{background:var(--btn-hi);color:#fff}
-.btn.blue{background:linear-gradient(90deg,#06bfff,#2d73ff);color:#fff}
-.btn.blue:hover{background:linear-gradient(90deg,#46d3ff,#5a8fff)}
-.btn.dark{background:rgba(103,193,245,.2);color:var(--blue)}
-.btn.dark:hover{background:linear-gradient(90deg,#66c0f4,#417a9b);color:#fff}
+.logo img{width:38px;height:38px;border-radius:50%;box-shadow:0 0 0 2px var(--gold)}
+.logo b{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--hi);letter-spacing:-.01em}
+.logo b span{color:var(--gold)}
+.gnav{display:flex;gap:4px;flex:1}
+.gnav a{font-size:14.5px;font-weight:500;color:var(--dim);padding:7px 14px;border-radius:999px;transition:background .2s,color .2s}
+.gnav a:hover{color:var(--hi);background:var(--panel2)}
+.gnav a.on{color:var(--bg);background:var(--txt)}
+.gh .btn{margin-left:auto}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:0 20px;border:0;border-radius:999px;
+background:var(--gold);color:#1a1405;font-weight:700;font-size:14.5px;white-space:nowrap;transition:background .2s,transform .2s}
+.btn:hover{background:#ffd56e;transform:translateY(-1px)}
+.btn.blue{background:var(--lime);color:#1a2005}
+.btn.blue:hover{background:#e6fa8a}
+.btn.dark{background:var(--panel2);color:var(--txt);box-shadow:inset 0 0 0 1px var(--line2)}
 
-/* store nav */
-.snav-wrap{position:sticky;top:64px;z-index:40;padding:10px 16px 0;background:linear-gradient(180deg,var(--top) 0,var(--top) 70%,rgba(23,26,33,0) 100%)}
-.snav{max-width:1208px;margin:0 auto;display:flex;align-items:center;gap:2px;height:40px;border-radius:2px;
-background:linear-gradient(90deg,rgba(62,103,150,1) 11%,rgba(58,120,177,1) 25%,rgba(15,33,110,1) 100%);box-shadow:0 0 6px rgba(0,0,0,.4)}
-.snav .tabs{display:flex;flex:1;overflow-x:auto;scrollbar-width:none;height:100%}
+/* category chip bar */
+.snav-wrap{position:sticky;top:66px;z-index:40;padding:12px 20px;background:linear-gradient(180deg,var(--bg) 65%,rgba(13,12,10,0))}
+.snav{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.snav .tabs{display:flex;gap:8px;flex:1;overflow-x:auto;scrollbar-width:none}
 .snav .tabs::-webkit-scrollbar{display:none}
-.snav .tabs a{display:flex;align-items:center;padding:0 14px;color:#e5e5e5;font-size:13.5px;white-space:nowrap}
-.snav .tabs a:hover{background:linear-gradient(90deg,rgba(255,255,255,.18),rgba(255,255,255,.06));color:#fff}
-.search{position:relative;margin:0 4px;flex-shrink:0}
-.search input{width:230px;height:30px;border:0;border-radius:3px;background:#316282;color:#fff;padding:0 34px 0 10px;font-size:14px;
-box-shadow:inset 1px 1px 0 rgba(0,0,0,.25)}
-.search input::placeholder{color:#0e1c25;font-style:italic;opacity:.9}
-.search input:focus{outline:none;background:#3d7aa0}
-.search svg{position:absolute;right:8px;top:7px;pointer-events:none}
+.snav .tabs a{display:flex;align-items:center;padding:7px 15px;color:var(--txt);font-size:14px;white-space:nowrap;border-radius:999px;border:1px solid var(--line2);background:var(--panel);transition:all .2s}
+.snav .tabs a:hover{border-color:var(--gold);color:var(--gold)}
+.search{position:relative;flex-shrink:0}
+.search input{width:250px;height:38px;border:1px solid var(--line2);border-radius:999px;background:var(--panel);color:var(--hi);padding:0 16px 0 38px;font-size:14.5px;min-height:0}
+.search input::placeholder{color:var(--faint)}
+.search input:focus{outline:none;border-color:var(--gold)}
+.search svg{position:absolute;left:14px;top:11px;pointer-events:none}
+.search svg path{fill:var(--dim)}
 
 /* layout */
-.page{max-width:1240px;margin:0 auto;padding:18px 16px 0;display:grid;grid-template-columns:200px minmax(0,1fr);gap:22px}
-.side{position:sticky;top:124px;align-self:start;font-size:13px;max-height:calc(100vh - 140px);overflow:auto;scrollbar-width:thin}
-.side h4{margin:16px 0 6px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#6f8ba3;font-weight:600}
+.page{max-width:1240px;margin:0 auto;padding:14px 20px 0;display:grid;grid-template-columns:210px minmax(0,1fr);gap:28px}
+.side{position:sticky;top:130px;align-self:start;font-size:14px;max-height:calc(100vh - 146px);overflow:auto;scrollbar-width:thin}
+.side h4{margin:20px 0 8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);font-weight:700}
 .side h4:first-child{margin-top:0}
-.side a,.side button{display:block;width:100%;text-align:left;background:none;border:0;padding:4px 8px;color:var(--blue);border-radius:2px}
-.side a:hover,.side button:hover{background:rgba(102,192,244,.15);color:#fff}
-.side .giftcard{display:block;margin-bottom:10px;border-radius:4px;overflow:hidden;position:relative;padding:0}
+.side a,.side button{display:block;width:100%;text-align:left;background:none;border:0;padding:5px 10px;color:var(--txt);border-radius:8px}
+.side a:hover,.side button:hover{background:var(--panel2);color:var(--gold)}
+#sidetags{display:flex;flex-wrap:wrap;gap:6px}
+#sidetags button{width:auto;font-size:12.5px;padding:3px 10px;border:1px solid var(--line2);border-radius:999px;color:var(--dim)}
+.side .giftcard{display:block;margin-bottom:12px;border-radius:12px;overflow:hidden;position:relative;padding:0;border:1px solid var(--line)}
 .side .giftcard img{width:100%;aspect-ratio:16/9;object-fit:cover}
-.side .giftcard span{position:absolute;left:0;right:0;bottom:0;padding:16px 8px 6px;font-size:12px;color:#fff;
-background:linear-gradient(180deg,transparent,rgba(0,0,0,.85))}
+.side .giftcard span{position:absolute;left:0;right:0;bottom:0;padding:18px 10px 8px;font-size:12.5px;font-weight:600;color:#fff;background:linear-gradient(180deg,transparent,rgba(0,0,0,.85))}
 main{min-width:0}
 
 /* section titles */
-.sec{margin:0 0 38px}
-.sh{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:10px}
-.sh h2{margin:0;font-size:14px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:#fff}
-.sh .more{font-size:12px;border:1px solid rgba(255,255,255,.35);border-radius:2px;padding:3px 10px;color:#fff;background:none}
-.sh .more:hover{border-color:var(--blue);color:var(--blue)}
-.sub{margin:-4px 0 12px;color:var(--dim);font-size:13px}
+.sec{margin:0 0 56px}
+.sh{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:8px}
+.sh h2{margin:0;font-family:var(--serif);font-size:30px;font-weight:600;letter-spacing:-.015em;color:var(--hi);line-height:1.1}
+.sh h2 em{font-style:italic;color:var(--gold);font-weight:500}
+.sh .more{font-size:13.5px;font-weight:600;border:0;border-radius:999px;padding:6px 14px;color:var(--gold);background:rgba(242,193,78,.1);white-space:nowrap}
+.sh .more:hover{background:rgba(242,193,78,.2)}
+.sub{margin:0 0 18px;color:var(--dim);font-size:15px;max-width:640px}
 
-/* featured carousel */
+/* spotlight carousel */
 .feat{position:relative}
-.fslides{position:relative;height:353px;box-shadow:0 0 10px rgba(0,0,0,.55)}
-.fslide{position:absolute;inset:0;display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);opacity:0;visibility:hidden;transition:opacity .45s,visibility .45s}
+.fslides{position:relative;height:370px;border-radius:20px;overflow:hidden;border:1px solid var(--line)}
+.fslide{position:absolute;inset:0;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);opacity:0;visibility:hidden;transition:opacity .5s,visibility .5s}
 .fslide.on{opacity:1;visibility:visible}
 .fmain{position:relative;background:#000;overflow:hidden}
 .fmain img{width:100%;height:100%;object-fit:cover;transition:opacity .25s}
-.fmain .shine{position:absolute;inset:0;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.07) 50%,transparent 60%);pointer-events:none}
-.finfo{background:linear-gradient(180deg,#0e1a24 0%,#0b141c 100%);padding:14px 14px 12px;display:flex;flex-direction:column;gap:8px;min-width:0}
-.finfo h3{margin:0;font-size:22px;font-weight:400;color:#fff;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.fthumbs{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.fthumbs button{padding:0;border:0;background:#000;aspect-ratio:16/9;overflow:hidden;opacity:.75;transition:opacity .2s}
-.fthumbs button:hover,.fthumbs button.on{opacity:1}
+.fmain .shine{display:none}
+.finfo{background:linear-gradient(160deg,var(--forest2) 0%,var(--forest) 55%,#10291c 100%);padding:22px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.finfo h3{margin:0;font-family:var(--serif);font-size:26px;font-weight:600;color:var(--hi);line-height:1.12;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.fthumbs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fthumbs button{padding:0;border:0;background:#000;aspect-ratio:16/9;overflow:hidden;opacity:.6;transition:opacity .2s;border-radius:8px}
+.fthumbs button:hover,.fthumbs button.on{opacity:1;box-shadow:0 0 0 2px var(--gold)}
 .fthumbs img{width:100%;height:100%;object-fit:cover}
-.finfo .why{font-size:13px;color:var(--txt);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.finfo .avail{font-size:18px;color:#fff;font-weight:300}
-.finfo .avail small{display:block;font-size:11px;color:var(--dim);letter-spacing:.06em;text-transform:uppercase;font-weight:400}
-.tags{display:flex;flex-wrap:wrap;gap:4px}
-.tag{font-size:11px;color:var(--blue);background:var(--tag);padding:2px 7px;border-radius:2px;white-space:nowrap;border:0}
-button.tag:hover{background:var(--blue);color:#fff}
+.finfo .why{font-size:14px;color:#d3dccf;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.finfo .avail{font-size:15px;color:var(--hi);font-weight:600}
+.finfo .avail small{display:block;font-size:11.5px;color:var(--lime);letter-spacing:.08em;text-transform:uppercase;font-weight:700}
+.finfo .tags{display:none}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:12px;color:var(--dim);background:transparent;padding:2px 10px;border-radius:999px;white-space:nowrap;border:1px solid var(--line2)}
+button.tag:hover{border-color:var(--gold);color:var(--gold)}
 .frow{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px}
-.price{display:inline-flex;align-items:center;background:rgba(0,0,0,.3);padding:4px 8px;border-radius:2px;font-size:13px;color:#fff;white-space:nowrap}
-.price.free{color:var(--green)}
-.plat{display:flex;gap:6px;color:var(--dim)}
-.plat svg{width:14px;height:14px;fill:currentColor}
-.farrow{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:92px;border:0;z-index:3;display:flex;align-items:center;justify-content:center;
-background:linear-gradient(90deg,rgba(0,0,0,.35),rgba(0,0,0,0));border-radius:2px}
-.farrow{top:calc(50% + 12px)}.farrow.l{left:0}.farrow.r{left:calc(63.6% - 42px);transform:translateY(-50%) scaleX(-1)}
-.farrow:hover{background:linear-gradient(90deg,rgba(171,218,244,.3),rgba(171,218,244,0))}
-.dots{display:flex;justify-content:center;gap:4px;margin-top:10px}
-.dots button{width:15px;height:9px;border:0;border-radius:2px;background:hsla(202,60%,100%,.2);padding:0;transition:background .2s}
-.dots button.on{background:hsla(202,60%,100%,.5)}
-.dots button:hover{background:hsla(202,60%,100%,.4)}
+.price{display:inline-flex;align-items:center;font-size:13.5px;font-weight:700;color:var(--hi);white-space:nowrap}
+.price.free{color:var(--lime)}
+.plat{display:flex;gap:6px;color:var(--faint)}
+.plat svg{width:15px;height:15px;fill:currentColor}
+.farrow{position:absolute;top:calc(50% + 20px);transform:translateY(-50%);width:44px;height:44px;border:0;z-index:3;display:flex;align-items:center;justify-content:center;
+background:rgba(13,12,10,.7);border-radius:50%;backdrop-filter:blur(6px)}
+.farrow svg{width:12px;height:20px}
+.farrow.l{left:14px}.farrow.r{left:calc(61.5% - 58px);transform:translateY(-50%) scaleX(-1)}
+.farrow:hover{background:var(--gold)}.farrow:hover path{stroke:#1a1405}
+.dots{display:flex;justify-content:center;gap:6px;margin-top:14px}
+.dots button{width:8px;height:8px;border:0;border-radius:999px;background:var(--line2);padding:0;transition:all .3s}
+.dots button.on{background:var(--gold);width:26px}
+.dots button:hover{background:var(--dim)}
 
-/* special offers bundle */
-.offers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.offer{background:linear-gradient(180deg,#3a6e8c 0%,#24425a 100%);border-radius:2px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
-.offer:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.5)}
-.offer img{aspect-ratio:16/9;object-fit:cover;width:100%}
-.offer .ob{padding:10px 12px;display:flex;flex-direction:column;gap:6px;flex:1}
-.offer h3{margin:0;color:#fff;font-size:16px;font-weight:500}
-.offer p{margin:0;font-size:12.5px;color:#cfe3f1}
-.offer .incl{font-size:11.5px;color:#a8d3ee}
-.deal{margin-top:auto;display:flex;align-items:stretch;align-self:flex-end;font-size:13px}
-.deal .pct{background:var(--green-bg);color:var(--green);font-size:20px;font-weight:600;padding:0 8px;display:flex;align-items:center}
-.deal .pr{background:rgba(20,31,44,.9);padding:3px 8px;display:flex;flex-direction:column;align-items:flex-end;line-height:1.15}
-.deal s{color:#738895;font-size:11px}
-.deal b{color:var(--green);font-weight:400;font-size:14px}
-.deal .per{font-size:10.5px;color:#9db0bd}
-.offer-note{margin:8px 0 0;font-size:12px;color:var(--dim)}
-.offer-note b{color:var(--txt);font-weight:500}
+/* plans */
+.offers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.offer{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:transform .25s,border-color .25s}
+.offer:hover{transform:translateY(-4px);border-color:var(--gold)}
+.offer.hl{background:linear-gradient(180deg,var(--forest) 0%,var(--panel) 70%);border-color:var(--forest2)}
+.offer img{aspect-ratio:16/9;object-fit:cover;width:100%;border-bottom:1px solid var(--line)}
+.offer .ob{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.offer h3{margin:0;font-family:var(--serif);color:var(--hi);font-size:21px;font-weight:600}
+.offer p{margin:0;font-size:14px;color:var(--dim)}
+.offer .incl{font-size:12.5px;color:var(--gold);font-weight:600;letter-spacing:.02em}
+.plan-price{margin-top:auto;padding-top:8px;display:flex;align-items:baseline;gap:6px}
+.plan-price b{font-family:var(--serif);font-size:34px;font-weight:700;color:var(--hi);line-height:1}
+.plan-price span{font-size:13.5px;color:var(--dim)}
+.offer-note{margin:14px 0 0;font-size:14px;color:var(--dim)}
+.offer-note a{color:var(--gold);font-weight:600}
 
 /* categories */
-.cats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
-.cat{position:relative;aspect-ratio:1/1.05;border-radius:4px;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;padding:12px;
-text-align:center;color:#fff;font-weight:700;font-size:15px;letter-spacing:.08em;text-transform:uppercase;border:0;background:#000;transition:transform .2s}
-.cat img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55;filter:saturate(1.2);transition:opacity .25s,transform .4s}
-.cat:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,var(--c,#2d73ff) 140%);mix-blend-mode:normal;opacity:.9}
-.cat span{position:relative;z-index:1;text-shadow:0 2px 6px rgba(0,0,0,.8)}
-.cat small{display:block;font-size:11px;font-weight:400;letter-spacing:0;text-transform:none;opacity:.85}
-.cat:hover img{opacity:.8;transform:scale(1.06)}
+.cats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+.cat{position:relative;aspect-ratio:4/5;border-radius:var(--radius);overflow:hidden;display:flex;align-items:flex-end;justify-content:flex-start;padding:16px;
+text-align:left;color:#fff;border:1px solid var(--line);background:#000;transition:transform .25s}
+.cat img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;filter:grayscale(.3);transition:opacity .3s,transform .5s,filter .3s}
+.cat:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 25%,color-mix(in srgb,var(--c) 85%,#000) 100%)}
+.cat span{position:relative;z-index:1;font-family:var(--serif);font-size:22px;font-weight:600;line-height:1.1}
+.cat small{display:block;font-family:"DM Sans",sans-serif;font-size:12.5px;font-weight:500;opacity:.85;margin-top:4px}
+.cat:hover{transform:translateY(-4px)}
+.cat:hover img{opacity:.8;transform:scale(1.06);filter:none}
 
-/* library tabs */
-.lib{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:0}
-.ltabs{display:flex;gap:2px;margin-bottom:0;overflow-x:auto;scrollbar-width:none}
-.ltabs button{border:0;background:none;padding:8px 14px 9px;font-size:13.5px;color:#fff;white-space:nowrap;border-radius:2px 2px 0 0}
-.ltabs button:hover{background:rgba(42,71,94,.6)}
-.ltabs button.on{background:linear-gradient(180deg,#2a475e,#1f3549);color:#fff}
-.ltabs button.on{box-shadow:inset 0 2px 0 var(--blue)}
-.lcount{font-size:12px;color:var(--dim);margin-left:auto;align-self:center;padding-right:4px;white-space:nowrap}
-.rows{background:rgba(0,0,0,.2);min-height:200px}
-.row{display:grid;grid-template-columns:184px minmax(0,1fr) auto;gap:12px;align-items:center;padding:0 10px 0 0;margin-bottom:5px;
-background:rgba(0,0,0,.2);transition:background .15s}
-.row:hover,.row.on{background:linear-gradient(90deg,#95bbd3,#678ba5)}
-.row:hover .rt,.row.on .rt{color:#10161b}
-.row:hover .rm,.row.on .rm{color:#384959}
-.row:hover .tag,.row.on .tag{background:rgba(0,0,0,.18);color:#10161b}
-.row img{width:184px;height:69px;object-fit:cover}
-.rt{font-size:15.5px;color:#c7d5e0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.rm{font-size:11.5px;color:#56707f;display:flex;gap:10px;align-items:center;margin-top:2px;white-space:nowrap;overflow:hidden}
-.row .tags{margin-top:4px;flex-wrap:nowrap;overflow:hidden}
+/* library */
+.lib{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px}
+.ltabs{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;scrollbar-width:none;padding:4px;background:var(--panel);border:1px solid var(--line);border-radius:999px;width:fit-content;max-width:100%}
+.ltabs button{border:0;background:none;padding:7px 16px;font-size:14px;font-weight:500;color:var(--dim);white-space:nowrap;border-radius:999px}
+.ltabs button:hover{color:var(--hi)}
+.ltabs button.on{background:var(--gold);color:#1a1405;font-weight:700}
+.lcount{font-size:13px;color:var(--faint);align-self:center;padding:0 12px;white-space:nowrap}
+.rows{min-height:200px;display:flex;flex-direction:column;gap:8px}
+.row{display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:16px;align-items:center;padding:8px 16px 8px 8px;
+background:var(--panel);border:1px solid var(--line);border-radius:12px;transition:border-color .15s,background .15s}
+.row:hover,.row.on{border-color:var(--gold);background:var(--panel2)}
+.row img{width:150px;height:84px;object-fit:cover;border-radius:8px}
+.rt{font-size:16px;font-weight:600;color:var(--hi);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rm{font-size:12.5px;color:var(--faint);display:flex;gap:10px;align-items:center;margin-top:2px;white-space:nowrap;overflow:hidden}
+.row .tags{margin-top:6px;flex-wrap:nowrap;overflow:hidden}
 .rright{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
-.row .price{background:none;padding:0}
-.row:hover .price,.row.on .price{color:#10161b}
-.showmore{display:block;width:100%;border:0;background:rgba(0,0,0,.25);color:var(--blue);padding:10px;font-size:13px}
-.showmore:hover{background:rgba(102,192,244,.15);color:#fff}
+.showmore{display:block;width:100%;border:1px dashed var(--line2);background:none;color:var(--gold);padding:12px;font-size:14px;font-weight:600;border-radius:12px}
+.showmore:hover{border-color:var(--gold);background:rgba(242,193,78,.06)}
 .empty{padding:40px 16px;text-align:center;color:var(--dim)}
-.preview{background:linear-gradient(180deg,#bdd1dd 0%,#95b0c2 100%);color:#1b2838;padding:14px;position:sticky;top:124px;align-self:start;min-height:200px}
-.preview h3{margin:0 0 4px;font-size:20px;font-weight:400;color:#263645;line-height:1.2}
-.preview .st{font-size:12px;color:#4c6475;margin-bottom:8px}
-.preview .st b{color:#2b4a62}
-.preview .tags .tag{background:rgba(255,255,255,.35);color:#263645}
-.preview .pd{font-size:12.5px;margin:8px 0;color:#263645}
+.preview{background:linear-gradient(180deg,var(--forest) 0%,#112a1d 100%);color:var(--txt);padding:18px;position:sticky;top:130px;align-self:start;min-height:200px;border-radius:var(--radius);border:1px solid var(--forest2)}
+.preview h3{margin:0 0 4px;font-family:var(--serif);font-size:22px;font-weight:600;color:var(--hi);line-height:1.2}
+.preview .st{font-size:12.5px;color:#b6c4b5;margin-bottom:10px}
+.preview .st b{color:var(--lime);font-weight:600}
+.preview .tag{border-color:rgba(255,255,255,.2);color:#d3dccf}
+.preview .pd{font-size:14px;margin:10px 0;color:#d3dccf}
 .preview .pshots{display:grid;gap:8px;margin-top:10px}
-.preview .pshots img{width:100%;aspect-ratio:16/9;object-fit:cover;box-shadow:0 0 4px rgba(0,0,0,.4)}
-.preview .btn{margin-top:10px;width:100%}
+.preview .pshots img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px}
+.preview .btn{margin-top:14px;width:100%}
 
-/* capsule grids */
-.grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
-.grid.sm{grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}
-.cap{position:relative;display:flex;flex-direction:column;background:linear-gradient(135deg,#1e3245 0%,#14222f 100%);border-radius:2px;overflow:hidden;
-box-shadow:0 0 6px rgba(0,0,0,.35);transition:transform .2s,box-shadow .2s}
-.cap:hover{transform:translateY(-3px) scale(1.015);box-shadow:0 10px 24px rgba(0,0,0,.6),0 0 0 1px rgba(102,192,244,.45)}
-.cimg{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000}
+/* cards */
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.grid.sm{grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.cap{position:relative;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:transform .25s,border-color .25s}
+.cap:hover{transform:translateY(-4px);border-color:var(--gold)}
+.cimg{position:relative;aspect-ratio:16/10;overflow:hidden;background:#000;margin:6px 6px 0;border-radius:10px}
 .cimg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .35s,transform .5s}
 .cimg img.b{opacity:0}
 .cap:hover .cimg img.b{opacity:1}
 .cap:hover .cimg img.a{transform:scale(1.04)}
-.ribbon{position:absolute;top:8px;left:0;z-index:2;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px 3px 6px;
-background:#4c6b22;color:var(--green);border-radius:0 2px 2px 0}
-.ribbon.ea{background:#6b4a22;color:#ffc56b}
-.ribbon.new{background:#1a9fff;color:#fff}
-.ribbon.read{background:#5c3a6b;color:#f1c9ff}
-.cb{padding:8px 10px 10px;display:flex;flex-direction:column;gap:5px;flex:1}
-.cb h3{margin:0;font-size:14.5px;font-weight:500;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cb p{margin:0;font-size:12px;color:var(--dim);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.9em}
-.cfoot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:6px}
+.ribbon{position:absolute;top:10px;left:10px;z-index:2;font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:999px;background:rgba(13,12,10,.82);color:var(--lime);backdrop-filter:blur(6px)}
+.ribbon:before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:currentColor;margin-right:6px;vertical-align:1px}
+.ribbon.ea{color:var(--gold)}
+.ribbon.new{color:var(--rose)}
+.ribbon.read{color:#cdb8ff}
+.cb{padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.cb h3{margin:0;font-size:16px;font-weight:700;color:var(--hi);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cb p{margin:0;font-size:13.5px;color:var(--dim);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.9em}
+.cfoot{margin-top:auto;padding-top:4px;display:flex;align-items:center;justify-content:space-between;gap:8px}
 .cfoot .tags{flex-wrap:nowrap;overflow:hidden;min-width:0}
 .cfoot .tag{overflow:hidden;text-overflow:ellipsis;max-width:100%}
-.hover-cta{position:absolute;inset:auto 0 0 0;z-index:2;padding:22px 10px 8px;display:flex;justify-content:center;opacity:0;transform:translateY(6px);
-transition:opacity .2s,transform .2s;background:linear-gradient(180deg,transparent,rgba(0,0,0,.8))}
+.hover-cta{position:absolute;right:10px;bottom:10px;z-index:2;opacity:0;transform:translateY(6px);transition:opacity .2s,transform .2s}
 .cap:hover .hover-cta,.cap:focus-visible .hover-cta{opacity:1;transform:none}
-.hover-cta span{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--btn);padding:6px 14px;border-radius:2px}
+.hover-cta span{font-size:13px;font-weight:700;color:#1a1405;background:var(--gold);padding:6px 14px;border-radius:999px;display:block}
 
-/* big spotlight row (games) */
-.spot{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:10px}
-.spot .cap .cb h3{font-size:18px}
+/* spotlight games */
+.spot{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:16px}
+.spot .cap .cb h3{font-family:var(--serif);font-size:22px;font-weight:600}
 .spot .cap .cb p{-webkit-line-clamp:3;min-height:0}
 
 /* news */
-.news{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-.post{background:linear-gradient(180deg,#22384c,#162433);border-radius:2px;padding:12px;display:flex;flex-direction:column;gap:6px;min-height:150px;transition:background .2s}
-.post:hover{background:linear-gradient(180deg,#2d4b66,#1b2d40)}
-.post .k{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue)}
-.post h3{margin:0;font-size:15.5px;color:#fff;font-weight:500;line-height:1.3}
-.post p{margin:0;font-size:12.5px;color:var(--dim)}
-.post .go{margin-top:auto;font-size:12px;color:var(--blue)}
+.news{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.post{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;display:flex;flex-direction:column;gap:8px;min-height:180px;transition:border-color .2s,transform .2s}
+.post:hover{border-color:var(--gold);transform:translateY(-3px)}
+.post .k{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--rose)}
+.post h3{margin:0;font-family:var(--serif);font-size:19px;color:var(--hi);font-weight:600;line-height:1.25}
+.post p{margin:0;font-size:14px;color:var(--dim)}
+.post .go{margin-top:auto;font-size:13.5px;font-weight:600;color:var(--gold)}
+
+/* journal */
+.jpost{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);background:var(--panel);border:1px solid var(--line);border-radius:20px;overflow:hidden;transition:border-color .25s,transform .25s}
+.jpost:hover{border-color:var(--gold);transform:translateY(-3px)}
+.jimg{position:relative;aspect-ratio:16/9;background:#000}
+.jimg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .4s}
+.jimg img.b{opacity:0}.jpost:hover .jimg img.b{opacity:1}
+.jb{padding:28px;display:flex;flex-direction:column;gap:10px;justify-content:center}
+.jb .k{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--rose)}
+.jb h3{margin:0;font-family:var(--serif);font-size:34px;font-weight:600;color:var(--hi);line-height:1.1}
+.jb p{margin:0;color:var(--dim);font-size:15.5px}
+.jb .go{margin-top:6px;font-weight:700;color:var(--gold)}
+@media(max-width:860px){.jpost{grid-template-columns:minmax(0,1fr)}.jb{padding:20px}.jb h3{font-size:26px}}
 
 /* work together */
-.work{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:18px;background:linear-gradient(135deg,#1f3b55 0%,#132232 100%);padding:20px;border-radius:2px;box-shadow:0 0 8px rgba(0,0,0,.35)}
-.work h3{margin:0 0 8px;font-size:22px;color:#fff;font-weight:400}
-.work p{margin:0 0 10px;color:#b9c9d6}
-.work ul{margin:0;padding:0;list-style:none;display:grid;gap:6px;font-size:13px}
-.work li:before{content:"✓ ";color:var(--green)}
+.work{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:28px;background:linear-gradient(135deg,var(--forest2) 0%,var(--forest) 45%,#0f2418 100%);padding:30px;border-radius:20px;border:1px solid var(--forest2)}
+.work h3{margin:0 0 10px;font-family:var(--serif);font-size:30px;color:var(--hi);font-weight:600;line-height:1.15}
+.work p{margin:0 0 12px;color:#cdd8cb}
+.work p a{color:var(--gold);font-weight:600}
+.work ul{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:14.5px}
+.work li:before{content:"→ ";color:var(--gold);font-weight:700}
 form{display:grid;gap:8px}
-label{font-size:12px;color:var(--dim)}
-input,select,textarea{width:100%;font:16px/1.4 inherit;font-family:inherit;color:#fff;background:#0f1923;border:1px solid #2a3f5a;border-radius:2px;padding:10px 12px;min-height:44px}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue)}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.sent{display:none;background:rgba(76,107,34,.35);border:1px solid #4c6b22;color:#d2efa9;padding:10px;border-radius:2px;font-size:13px}
+label{font-size:13px;font-weight:600;color:#cdd8cb}
+input,select,textarea{width:100%;font:16px/1.4 inherit;font-family:inherit;color:var(--hi);background:rgba(13,12,10,.55);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:10px 12px;min-height:46px}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sent{display:none;background:rgba(217,241,107,.12);border:1px solid rgba(217,241,107,.4);color:var(--lime);padding:10px 12px;border-radius:10px;font-size:13.5px}
 
 /* footer */
-footer{margin-top:40px;background:var(--top);padding:28px 16px 40px;color:var(--dim);font-size:12.5px}
-footer .in{max-width:1240px;margin:0 auto;display:grid;gap:22px}
-.fcols{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:20px}
-.fcols h5{margin:0 0 8px;color:#fff;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
-.fcols a{display:block;padding:3px 0;color:#c6d4df}
-.fcols a:hover{color:#fff}
-.fbar{border-top:1px solid #363c44;padding-top:16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+footer{margin-top:60px;background:var(--bg2);border-top:1px solid var(--line);padding:40px 20px 44px;color:var(--dim);font-size:13.5px}
+footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
+.fcols{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:24px}
+.fcols h5{margin:0 0 10px;color:var(--hi);font-family:var(--serif);font-size:17px;font-weight:600}
+.fcols a{display:block;padding:3px 0;color:var(--dim)}
+.fcols a:hover{color:var(--gold)}
+.fbar{border-top:1px solid var(--line);padding-top:18px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
 .fbar img{width:30px;height:30px;border-radius:50%}
 
 /* responsive */
 @media(hover:none){.farrow{display:none}}
-@media(max-width:1100px){.page{grid-template-columns:minmax(0,1fr)}.side{display:none}.cats{grid-template-columns:repeat(3,minmax(0,1fr))}.cat{aspect-ratio:16/9}}
+@media(max-width:1100px){.page{grid-template-columns:minmax(0,1fr)}.side{display:none}.cats{grid-template-columns:repeat(3,minmax(0,1fr))}.cat{aspect-ratio:16/10}}
 @media(max-width:960px){.lib{grid-template-columns:minmax(0,1fr)}.preview{display:none}.news{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:860px){
  .gnav{display:none}
@@ -260,31 +270,39 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:22px}
  .fmain{aspect-ratio:16/9}
  .fthumbs{display:none}
  .offers{grid-template-columns:minmax(0,1fr)}
- .offer{display:grid;grid-template-columns:42% minmax(0,1fr)}
- .offer img{height:100%}
- .work{grid-template-columns:minmax(0,1fr)}
+ .offer{display:grid;grid-template-columns:40% minmax(0,1fr)}
+ .offer img{height:100%;border-bottom:0;border-right:1px solid var(--line)}
+ .work{grid-template-columns:minmax(0,1fr);padding:22px}
  .spot{grid-template-columns:minmax(0,1fr)}
+ .sh h2{font-size:25px}
 }
 @media(max-width:620px){
- .gh .in{height:56px;gap:12px}
- .gh .btn{padding:0 12px;font-size:13px}
- .logo b{font-size:17px;letter-spacing:2px}
- .snav-wrap{top:56px;padding:8px 10px 0}
- .search input{width:120px}
- .search input:focus{width:170px}
- .page{padding:14px 10px 0}
- .row{grid-template-columns:120px minmax(0,1fr) auto;gap:8px}
- .row img{width:120px;height:45px}
- .rt{font-size:14px}
+ .gh .in{height:58px;gap:12px;padding:0 14px}
+ .gh .btn{padding:0 14px;font-size:13.5px;min-height:36px}
+ .logo b{font-size:19px}
+ .snav-wrap{top:58px;padding:10px 12px}
+ .snav{flex-wrap:wrap;gap:8px}
+ .search{order:-1;width:100%}
+ .search input{width:100%}
+ .page{padding:10px 12px 0}
+ .sec{margin-bottom:44px}
+ .row{grid-template-columns:96px minmax(0,1fr) auto;gap:10px;padding-right:12px}
+ .row img{width:96px;height:60px}
+ .rt{font-size:14.5px}
  .row .tags{display:none}
- .cats{grid-template-columns:repeat(2,minmax(0,1fr))}
- .grid,.grid.sm{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .cats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .grid,.grid.sm{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .cb{padding:10px 10px 12px}
+ .cb h3{font-size:14.5px}
  .cb p{display:none}
  .cfoot .tags{display:none}
  .news{grid-template-columns:minmax(0,1fr)}
  .offer{grid-template-columns:minmax(0,1fr)}
+ .offer img{border-right:0;border-bottom:1px solid var(--line)}
  .two{grid-template-columns:minmax(0,1fr)}
- .finfo h3{font-size:19px}
+ .finfo{padding:18px}
+ .finfo h3{font-size:22px}
+ .ltabs{border-radius:14px}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 </style>
@@ -294,9 +312,9 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:22px}
 <header class="gh"><div class="in">
   <a class="logo" href="/" aria-label="LeonLink home"><img src="/img/logo-128.png" alt="" width="36" height="36"><b>LEON<span>LINK</span></b></a>
   <nav class="gnav" aria-label="Main">
-    <a href="#top" class="on">Store</a>
+    <a href="#top" class="on">Home</a>
     <a href="#library">Library</a>
-    <a href="https://blog.leonlink.net">Journal</a>
+    <a href="#journal">Journal</a>
     <a href="/what-is-leonlink.html">About</a>
     <a href="#work">Contact</a>
   </nav>
@@ -305,18 +323,17 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:22px}
 
 <div class="snav-wrap" id="top"><nav class="snav" aria-label="Store">
   <div class="tabs">
-    <a href="#featured">Your Store</a>
+    <a href="#featured">Spotlight</a>
     <a href="#line">Software</a>
     <a href="#games">Games</a>
     <a href="#labs">Labs</a>
-    <a href="#worlds">Worlds</a>
     <a href="#tools">Free Tools</a>
-    <a href="#news">News</a>
+    <a href="#journal">Journal</a>
   </div>
   <div class="search">
-    <label class="sr" for="q">Search the store</label>
-    <input id="q" type="search" placeholder="search" autocomplete="off">
-    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M10 2a8 8 0 0 1 6.32 12.9l5.39 5.4-1.41 1.4-5.4-5.39A8 8 0 1 1 10 2zm0 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12z"/></svg>
+    <label class="sr" for="q">Search</label>
+    <input id="q" type="search" placeholder="Search everything LeonLink makes" autocomplete="off">
+    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 2a8 8 0 0 1 6.32 12.9l5.39 5.4-1.41 1.4-5.4-5.39A8 8 0 1 1 10 2zm0 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12z"/></svg>
   </div>
 </nav></div>
 
@@ -324,15 +341,15 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:22px}
 <aside class="side" aria-label="Browse">
   <a class="giftcard" href="https://app.leonlink.net"><img src="/img/cards/ledgerline.jpg" alt="" loading="lazy"><span>Ledgerline, from $9.83/mo</span></a>
   <a class="giftcard" href="https://ashfall-virid.vercel.app" target="_blank" rel="noopener"><img src="/img/cards/ashfall.jpg" alt="" loading="lazy"><span>Play ASHFALL free</span></a>
-  <h4>Recommended</h4>
-  <button data-tab="new">New &amp; Trending</button>
-  <button data-tab="free">Free to Play</button>
-  <button data-tab="ea">Early Access</button>
+  <h4>Quick picks</h4>
+  <button data-tab="new">Latest</button>
+  <button data-tab="free">Free</button>
+  <button data-tab="ea">In the workshop</button>
   <h4>Browse categories</h4>
   <a href="#line">The Line software</a>
   <a href="#games">Games</a>
   <a href="#labs">Labs &amp; prototypes</a>
-  <a href="#worlds">Worlds &amp; writing</a>
+  <a href="#journal">Journal</a>
   <a href="#tools">Free tools</a>
   <h4>Browse by tag</h4>
   <div id="sidetags"></div>
@@ -340,8 +357,8 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:22px}
 
 <main>
 
-<section class="sec feat" id="featured" aria-roledescription="carousel" aria-label="Featured and recommended">
-  <div class="sh"><h2>Featured &amp; Recommended</h2></div>
+<section class="sec feat" id="featured" aria-roledescription="carousel" aria-label="Spotlight">
+  <div class="sh"><h2>In the <em>spotlight</em></h2></div>
   <div class="fslides" id="fslides"></div>
   <button class="farrow l" id="fprev" aria-label="Previous"><svg width="20" height="36" viewBox="0 0 20 36"><path d="M18 2 3 18l15 16" stroke="#fff" stroke-width="3" fill="none"/></svg></button>
   <button class="farrow r" id="fnext" aria-label="Next"><svg width="20" height="36" viewBox="0 0 20 36"><path d="M18 2 3 18l15 16" stroke="#fff" stroke-width="3" fill="none"/></svg></button>
@@ -349,47 +366,47 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:22px}
 </section>
 
 <section class="sec" id="line"><span id="pricing"></span><span id="apps"></span>
-  <div class="sh"><h2>Special offers · The Line</h2><a class="more" href="https://app.leonlink.net/what-you-get">What you get</a></div>
-  <p class="sub">One flat price per business. The whole crew is included, with no per-user fees and no add-ons. Prepay 6 months and save.</p>
+  <div class="sh"><h2>The Line <em>for trades crews</em></h2><a class="more" href="https://app.leonlink.net/what-you-get">What you get</a></div>
+  <p class="sub">One flat price per business. Everyone on the crew is included.</p>
   <div class="offers">
     <a class="offer" href="https://app.leonlink.net">
       <img src="/img/cards/ledgerline.jpg" alt="Ledgerline field service software" loading="lazy">
-      <div class="ob"><h3>Ledgerline · Starter</h3><p>Quotes, scheduling, invoices and card payments from your phone.</p><span class="incl">$9.83/mo month to month</span>
-      <div class="deal"><span class="pct">-51%</span><span class="pr"><s>$58.98</s><b>$29</b><span class="per">6 months</span></span></div></div>
+      <div class="ob"><span class="incl">Starter · Ledgerline</span><h3>Run the business</h3><p>Quotes, scheduling, invoices and card payments from your phone.</p>
+      <div class="plan-price"><b>$9.83</b><span>/ month, whole crew</span></div></div>
     </a>
-    <a class="offer" href="https://proofline.leonlink.net">
+    <a class="offer hl" href="https://proofline.leonlink.net">
       <img src="/img/cards/proofline.jpg" alt="Proofline before and after photo reports" loading="lazy">
-      <div class="ob"><h3>Growth · includes Proofline</h3><p>Everything in Starter, plus before and after photo proof on every job.</p><span class="incl">$29.83/mo month to month</span>
-      <div class="deal"><span class="pct">-17%</span><span class="pr"><s>$178.98</s><b>$149</b><span class="per">6 months</span></span></div></div>
+      <div class="ob"><span class="incl">Growth · adds Proofline</span><h3>Prove the work</h3><p>Everything in Starter, plus before and after photo proof on every job.</p>
+      <div class="plan-price"><b>$29.83</b><span>/ month, whole crew</span></div></div>
     </a>
     <a class="offer" href="https://review.leonlink.net">
       <img src="/img/cards/reviewline.jpg" alt="Reviewline Google review requests" loading="lazy">
-      <div class="ob"><h3>Command · the whole Line</h3><p>Adds the Reviewline review funnel and SMS reminders. Every product, one bill.</p><span class="incl">$54.50/mo month to month</span>
-      <div class="deal"><span class="pct">-15%</span><span class="pr"><s>$327.00</s><b>$279</b><span class="per">6 months</span></span></div></div>
+      <div class="ob"><span class="incl">Command · the whole Line</span><h3>Win the reviews</h3><p>Adds the Reviewline review funnel and SMS reminders. Every product, one bill.</p>
+      <div class="plan-price"><b>$54.50</b><span>/ month, whole crew</span></div></div>
     </a>
   </div>
-  <p class="offer-note">Savings are against six months at the monthly rate. <b>Try it free first</b> in the <a href="https://demo.leonlink.net" style="color:var(--blue)">live demo</a>.</p>
+  <p class="offer-note">No per-user fees, no add-ons, cancel any time. Kick the tires in the <a href="https://demo.leonlink.net">live demo</a> first.</p>
 </section>
 
 <section class="sec" id="cats">
-  <div class="sh"><h2>Browse by category</h2></div>
+  <div class="sh"><h2>Pick a <em>corner</em></h2></div>
   <div class="cats">
     <a class="cat" href="#line" style="--c:#2d9b4f"><img src="/img/cards/ledgerline-2.jpg" alt="" loading="lazy"><span>Software<small>The Line</small></span></a>
-    <a class="cat" href="#games" style="--c:#c0392b"><img src="/img/cards/sunnfun.jpg" alt="" loading="lazy"><span>Games<small>Free to play</small></span></a>
-    <a class="cat" href="#labs" style="--c:#8e44ad"><img src="/img/cards/leonlens.jpg" alt="" loading="lazy"><span>Labs<small>Early access</small></span></a>
-    <a class="cat" href="#worlds" style="--c:#b7791f"><img src="/img/cards/longway.jpg" alt="" loading="lazy"><span>Worlds<small>Stories &amp; faiths</small></span></a>
+    <a class="cat" href="#games" style="--c:#c0392b"><img src="/img/cards/sunnfun.jpg" alt="" loading="lazy"><span>Games<small>Play in your browser</small></span></a>
+    <a class="cat" href="#labs" style="--c:#8e44ad"><img src="/img/cards/leonlens.jpg" alt="" loading="lazy"><span>Labs<small>Works in progress</small></span></a>
+    <a class="cat" href="#journal" style="--c:#b7791f"><img src="/img/cards/longway.jpg" alt="" loading="lazy"><span>Journal<small>Post #1 is live</small></span></a>
     <a class="cat" href="#tools" style="--c:#1a6fb0"><img src="/img/cards/t-invoice.jpg" alt="" loading="lazy"><span>Free tools<small>No account</small></span></a>
   </div>
 </section>
 
 <section class="sec" id="library">
-  <div class="sh"><h2>Browse the library</h2></div>
+  <div class="sh"><h2>The <em>library</em></h2></div>
   <div class="ltabs" role="tablist" id="ltabs">
-    <button role="tab" data-tab="new" class="on">New &amp; Trending</button>
+    <button role="tab" data-tab="new" class="on">Latest</button>
     <button role="tab" data-tab="games">Games</button>
     <button role="tab" data-tab="software">Software</button>
-    <button role="tab" data-tab="ea">Early Access</button>
-    <button role="tab" data-tab="free">Free to Play</button>
+    <button role="tab" data-tab="ea">In the workshop</button>
+    <button role="tab" data-tab="free">Free</button>
     <button role="tab" data-tab="all">Everything</button>
     <span class="lcount" id="lcount"></span>
   </div>
@@ -400,41 +417,36 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:22px}
 </section>
 
 <section class="sec" id="games">
-  <div class="sh"><h2>Games · Free to play</h2><button class="more" data-jump="games">See all in library</button></div>
-  <p class="sub">Playable in the browser right now. Prototypes, so expect rough edges.</p>
+  <div class="sh"><h2>Games <em>you can play now</em></h2><button class="more" data-jump="games">See all in library</button></div>
+  <p class="sub">They run in your browser, nothing to install. These are prototypes, so expect rough edges.</p>
   <div class="spot" id="g-spot"></div>
   <div class="grid" id="g-grid"></div>
 </section>
 
 <section class="sec" id="labs">
-  <div class="sh"><h2>Labs · Early access</h2><button class="more" data-jump="ea">See all in library</button></div>
+  <div class="sh"><h2>Labs <em>in the workshop</em></h2><button class="more" data-jump="ea">See all in library</button></div>
   <p class="sub">Apps, cameras and tools in the workshop. Try them and tell me what breaks.</p>
   <div class="grid sm" id="labs-grid"></div>
 </section>
 
-<section class="sec" id="worlds">
-  <div class="sh"><h2>Worlds &amp; writing</h2></div>
-  <p class="sub">Interactive stories, original faiths and the No Sacred Cows journal.</p>
-  <div class="grid sm" id="worlds-grid"></div>
-</section>
-
 <section class="sec" id="tools">
-  <div class="sh"><h2>Free tools · No account needed</h2><a class="more" href="/free-tools.html">All free tools</a></div>
+  <div class="sh"><h2>Free tools <em>no signup</em></h2><a class="more" href="/free-tools.html">All free tools</a></div>
   <div class="grid sm" id="tools-grid"></div>
 </section>
 
-<section class="sec" id="news">
-  <div class="sh"><h2>News · From the journal</h2><a class="more" href="https://blog.leonlink.net">Read the journal</a></div>
-  <div class="news">
-    <a class="post" href="https://blog.leonlink.net/per-seat-pricing.html"><span class="k">Business · Pricing</span><h3>Per-seat pricing is dying</h3><p>Why charging per head punishes the crews that grow.</p><span class="go">Read it →</span></a>
-    <a class="post" href="https://blog.leonlink.net/trades-software-tax.html"><span class="k">Business · Field service</span><h3>The trades software tax</h3><p>What small crews really pay for the big platforms.</p><span class="go">Read it →</span></a>
-    <a class="post" href="https://blog.leonlink.net/review-gating.html"><span class="k">Business · Reputation</span><h3>Review gating is fraud with a smile</h3><p>Ask everyone for a review, not just the happy ones.</p><span class="go">Read it →</span></a>
-    <a class="post" href="https://blog.leonlink.net/seo-is-dead.html"><span class="k">Business · Marketing</span><h3>SEO died and nobody held a funeral</h3><p>Where local customers actually find you now.</p><span class="go">Read it →</span></a>
-  </div>
+<section class="sec" id="journal"><span id="news"></span><span id="worlds"></span>
+  <div class="sh"><h2>The <em>journal</em></h2></div>
+  <p class="sub">Stories, ideas and experiments. It starts here, with post number one.</p>
+  <a class="jpost" href="https://leonlink-site.vercel.app" target="_blank" rel="noopener">
+    <div class="jimg"><img src="/img/cards/longway.jpg" alt="The Long Way Home" loading="lazy"><img class="b" src="/img/cards/longway-2.jpg" alt="" loading="lazy"></div>
+    <div class="jb"><span class="k">Post #1 · Interactive story</span><h3>The Long Way Home</h3>
+    <p>Pull the lever on a time machine: from the Big Bang to the Milky Way, the cooking fire and you. Read it, then play with it.</p>
+    <span class="go">Read post #1 →</span></div>
+  </a>
 </section>
 
 <section class="sec" id="work"><span id="custom"></span>
-  <div class="sh"><h2>Work together</h2></div>
+  <div class="sh"><h2>Work <em>together</em></h2></div>
   <div class="work">
     <div>
       <h3>Need something that doesn't exist yet?</h3>
@@ -444,7 +456,7 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:22px}
         <li>Reasonable rates, and you own what we build</li>
         <li>Nominate the next overpriced category to tear down</li>
       </ul>
-      <p style="margin-top:14px">Prefer email? <a href="mailto:info@leonlink.net" style="color:var(--blue)">info@leonlink.net</a></p>
+      <p style="margin-top:14px">Prefer email? <a href="mailto:info@leonlink.net" >info@leonlink.net</a></p>
     </div>
     <form id="cform">
       <div class="two">
@@ -468,7 +480,7 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:22px}
   <div class="fcols">
     <div><h5>The Line</h5><a href="https://app.leonlink.net">Ledgerline</a><a href="https://review.leonlink.net">Reviewline</a><a href="https://proofline.leonlink.net">Proofline</a><a href="https://demo.leonlink.net">Live demo</a><a href="https://app.leonlink.net/login?install=1">Download the app</a></div>
     <div><h5>Free tools</h5><a href="/qr-code-generator.html">QR code generator</a><a href="/invoice-generator.html">Invoice generator</a><a href="/estimate-generator.html">Estimate generator</a><a href="/before-after-viewer.html">Before/after viewer</a><a href="/chimney-inspection-checklist.html">Chimney checklist</a></div>
-    <div><h5>Company</h5><a href="/what-is-leonlink.html">What is LeonLink?</a><a href="/affiliates.html">Affiliates, earn 25%</a><a href="https://blog.leonlink.net">No Sacred Cows journal</a><a href="#work">Work together</a><a href="mailto:info@leonlink.net">info@leonlink.net</a></div>
+    <div><h5>Company</h5><a href="/what-is-leonlink.html">What is LeonLink?</a><a href="/affiliates.html">Affiliates, earn 25%</a><a href="#journal">Journal</a><a href="#work">Work together</a><a href="mailto:info@leonlink.net">info@leonlink.net</a></div>
   </div>
   <div class="fbar"><span style="display:flex;align-items:center;gap:10px"><img src="/img/logo-128.png" alt="" width="30" height="30" loading="lazy">© <span id="yr">2026</span> Leon Link. Every creation stars the same two: the boss and the dog.</span><span>Flat prices. Your data walks out the door with you.</span></div>
 </div></footer>
@@ -486,21 +498,21 @@ const DATA=[
  tags:['Reviews','Automation','Google'],x:'Every finished job ends with a review ask. One-tap requests, QR kits and templates, with private feedback always open too.'},
 {id:'proofline',t:'Proofline',u:'https://proofline.leonlink.net',c:'software',s:'live',p:'In Growth',d:'2026-10-04',plat:['web','mob'],
  tags:['Photo Proof','Reports','Trades'],x:'Before and after photos of every job in a branded report your customer keeps and shows the neighbors.'},
-{id:'ashfall',t:'ASHFALL: The Turning Years',u:'https://ashfall-virid.vercel.app',c:'games',s:'new',p:'Free to Play',d:'2026-10-06',plat:['web'],spot:1,
+{id:'ashfall',t:'ASHFALL: The Turning Years',u:'https://ashfall-virid.vercel.app',c:'games',s:'new',p:'Free',d:'2026-10-06',plat:['web'],spot:1,
  tags:['Survival','Story Rich','Post-apocalyptic','Character Creator'],x:'A fever out of Southeast Asia. Then the missiles. Now the ash, and a stranger sorting of the living. Build your survivor, wake up, and rule what is left. Expansion XI out now.'},
-{id:'sunnfun',t:'Sun N Fun: Escape the Trailer Park',u:'https://escapegame-zeta.vercel.app',c:'games',s:'ea',p:'Free to Play',d:'2026-08-20',plat:['web','mob'],spot:1,
+{id:'sunnfun',t:'Sun N Fun: Escape the Trailer Park',u:'https://escapegame-zeta.vercel.app',c:'games',s:'ea',p:'Free',d:'2026-08-20',plat:['web','mob'],spot:1,
  tags:['Mystery','RPG','Comedy'],x:'A trailer-park mystery RPG. Someone snitched. Find them before the whole park comes down, or before Ax Man does.'},
-{id:'sporebound',t:'Sporebound: Forage Protocol',u:'https://sporebound-forage.vercel.app',c:'games',s:'ea',p:'Free to Play',d:'2026-08-22',plat:['web','mob'],
+{id:'sporebound',t:'Sporebound: Forage Protocol',u:'https://sporebound-forage.vercel.app',c:'games',s:'ea',p:'Free',d:'2026-08-22',plat:['web','mob'],
  tags:['Cozy Horror','Foraging','Survival'],x:'A cozy-horror foraging game. Identify mushrooms. Harvest. Survive the anomalies.'},
-{id:'joshua',t:'Joshua: Dynasty of Israel',u:'https://joshua-dynasty.vercel.app',c:'games',s:'ea',p:'Free to Play',d:'2026-09-28',plat:['web'],
+{id:'joshua',t:'Joshua: Dynasty of Israel',u:'https://joshua-dynasty.vercel.app',c:'games',s:'ea',p:'Free',d:'2026-09-28',plat:['web'],
  tags:['Strategy','Dynasty','Historical'],x:'Moses is dead and the Jordan lies before you. Lead the tribes, keep the covenant, and raise a house that lasts.'},
-{id:'clanfire',t:'Clanfire: Blood of the Glens',u:'https://clanfire-dynasty.vercel.app',c:'games',s:'ea',p:'Free to Play',d:'2026-09-25',plat:['web'],
+{id:'clanfire',t:'Clanfire: Blood of the Glens',u:'https://clanfire-dynasty.vercel.app',c:'games',s:'ea',p:'Free',d:'2026-09-25',plat:['web'],
  tags:['Grand Strategy','Dynasty','Medieval'],x:'Highlands and Isles, 1420. Real places, real clans. Raid your neighbours, marry for alliances and keep the bloodline alive.'},
-{id:'wars',t:'Wars of the Nowhere',u:'https://wars-of-the-nowhere.vercel.app',c:'games',s:'ea',p:'Free to Play',d:'2026-09-25',plat:['web'],
+{id:'wars',t:'Wars of the Nowhere',u:'https://wars-of-the-nowhere.vercel.app',c:'games',s:'ea',p:'Free',d:'2026-09-25',plat:['web'],
  tags:['Strategy','Kingdoms','Map'],x:'A map of petty kingdoms, standing armies, and thrones built on gossip. Choose your realm and take the rest.'},
-{id:'ashveil',t:'Realm of Ashveil',u:'https://house-of-ashveil.vercel.app',c:'games',s:'ea',p:'Free to Play',d:'2026-09-25',plat:['web'],
+{id:'ashveil',t:'Realm of Ashveil',u:'https://house-of-ashveil.vercel.app',c:'games',s:'ea',p:'Free',d:'2026-09-25',plat:['web'],
  tags:['Kingdom Builder','Dynasty','Fantasy'],x:'Found a realm, name your house, and grow it through the generations.'},
-{id:'ironshadows',t:'Iron Shadows: Act 1',u:'https://iron-shadows.vercel.app',c:'games',s:'ea',p:'Free to Play',d:'2026-08-22',plat:['web'],
+{id:'ironshadows',t:'Iron Shadows: Act 1',u:'https://iron-shadows.vercel.app',c:'games',s:'ea',p:'Free',d:'2026-08-22',plat:['web'],
  tags:['Action','Ancient Greece','Permadeath'],x:'A single Spartan. Climb from Hoplite to General, or play Leonidas mode with permadeath for the rank of Demi-God.'},
 {id:'leonlens',t:'LeonLens',u:'https://leonlens.vercel.app',c:'labs',s:'ea',p:'Free',d:'2026-09-29',plat:['mob','web'],
  tags:['Camera','AR','Social'],x:'A mobile-first camera with live lenses, AR effects, Memories and social-ready sharing.'},
@@ -510,14 +522,6 @@ const DATA=[
  tags:['Camera','Medical Education'],x:'An educational camera tool that enhances how superficial veins look. Not a medical device.'},
 {id:'longway',t:'The Long Way Home',u:'https://leonlink-site.vercel.app',c:'worlds',s:'read',p:'Free',d:'2026-09-24',plat:['web'],
  tags:['Interactive Story','Science','Cosmos'],x:'Pull the lever on a time machine: from the Big Bang to the Milky Way, the cooking fire and you.'},
-{id:'twofaiths',t:'Two Ways of Living in the Universe',u:'https://two-faiths.vercel.app',c:'worlds',s:'read',p:'Free',d:'2026-09-29',plat:['web'],
- tags:['Philosophy','Original Faiths'],x:'Two original faiths, written for anyone who wants to try them for thirty days and keep only what holds weight.'},
-{id:'kinship',t:'The Long Kinship',u:'https://the-long-kinship.vercel.app',c:'worlds',s:'read',p:'Free',d:'2026-09-29',plat:['web'],
- tags:['Philosophy','Cosmos','Liturgy'],x:'A faith that takes the universe as it actually is. Take the Walk of the Timeline, with sound.'},
-{id:'ashendoor',t:'The Ashen Door',u:'https://the-ashen-door.vercel.app',c:'worlds',s:'read',p:'Free',d:'2026-09-29',plat:['web'],
- tags:['Philosophy','Mythology'],x:'A faith of gratitude, restraint and endurance for people who have been hurt and refuse to let it make them cruel.'},
-{id:'blog',t:'No Sacred Cows',u:'https://blog.leonlink.net',c:'worlds',s:'read',p:'Free',d:'2026-10-02',plat:['web'],
- tags:['Essays','Business','Opinion'],x:'Plain talk about software, pricing, marketing, law and whatever else is on my mind.'},
 {id:'t-qr',t:'QR Code Generator',u:'/qr-code-generator.html',c:'tools',s:'live',p:'Free',d:'2026-10-01',plat:['web','mob'],one:1,tags:['Free Tool','QR'],x:'Make a QR code and download it as PNG or SVG. No account, no watermark.'},
 {id:'t-invoice',t:'Invoice Generator',u:'/invoice-generator.html',c:'tools',s:'live',p:'Free',d:'2026-10-01',plat:['web','mob'],one:1,tags:['Free Tool','Invoicing'],x:'Make and print a clean invoice in a minute. No account needed.'},
 {id:'t-estimate',t:'Estimate Generator',u:'/estimate-generator.html',c:'tools',s:'live',p:'Free',d:'2026-10-01',plat:['web','mob'],one:1,tags:['Free Tool','Quotes'],x:'Make and print a quote your customer can sign. No account needed.'},
@@ -525,8 +529,8 @@ const DATA=[
 {id:'t-chimney',t:'Chimney Inspection Checklist',u:'/chimney-inspection-checklist.html',c:'tools',s:'live',p:'Free',d:'2026-10-01',plat:['web'],one:1,tags:['Free Tool','Printable','Trades'],x:'A printable Level 1 and Level 2 chimney inspection checklist.'}
 ];
 const FEATURED=['ledgerline','ashfall','sunnfun','sporebound','leonlens','longway'];
-const RIB={live:['Live',''],ea:['Early Access','ea'],new:['Just updated','new'],read:['Read free','read']};
-const CAT={software:'Software',games:'Game',labs:'Lab',worlds:'World',tools:'Free tool'};
+const RIB={live:['Live',''],ea:['Beta','ea'],new:['New','new'],read:['Read','read']};
+const CAT={software:'Software',games:'Game',labs:'Lab',worlds:'Journal',tools:'Free tool'};
 const byId=Object.fromEntries(DATA.map(o=>[o.id,o]));
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const ext=o=>o.u.startsWith('http')&&!/leonlink\.net/.test(o.u)?' target="_blank" rel="noopener"':'';
@@ -548,7 +552,6 @@ const games=DATA.filter(o=>o.c==='games');
 fill('g-spot',games.filter(o=>o.spot));
 fill('g-grid',games.filter(o=>!o.spot));
 fill('labs-grid',DATA.filter(o=>o.c==='labs'));
-fill('worlds-grid',DATA.filter(o=>o.c==='worlds'));
 fill('tools-grid',DATA.filter(o=>o.c==='tools'));
 
 // featured carousel
@@ -558,7 +561,7 @@ fs.innerHTML=FEATURED.map((id,i)=>{const o=byId[id];return `<div class="fslide${
  <div class="finfo"><h3>${esc(o.t)}</h3>
   <div class="fthumbs"><button class="on" data-src="${img(o)}" aria-label="Screenshot 1"><img src="${img(o)}" alt="" loading="lazy"></button><button data-src="${img(o,'-2')}" aria-label="Screenshot 2"><img src="${img(o,'-2')}" alt="" loading="lazy"></button></div>
   <p class="why" style="margin:0">${esc(o.x)}</p>
-  <div class="avail"><small>${o.s==='ea'?'Early Access':o.c==='software'?'Live now':'Now available'}</small>${o.c==='games'?'Play in your browser':o.c==='software'?'Flat price, whole crew':o.c==='worlds'?'Read it free':'Try it free'}</div>
+  <div class="avail"><small>${o.s==='ea'?'Beta':o.c==='software'?'Live now':'Now available'}</small>${o.c==='games'?'Play in your browser':o.c==='software'?'Flat price, whole crew':o.c==='worlds'?'Journal post #1':'Try it free'}</div>
   ${tagsEl(o,4)}
   <div class="frow">${plat(o)}${priceEl(o)}</div></div></div>`}).join('');
 fd.innerHTML=FEATURED.map((_,i)=>`<button class="${i?'':'on'}" aria-label="Show slide ${i+1}"></button>`).join('');
