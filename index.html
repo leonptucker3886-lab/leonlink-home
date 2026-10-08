@@ -222,13 +222,6 @@ background:var(--panel);border:1px solid var(--line);border-radius:12px;transiti
 .jpost.alt{border-color:var(--line)}
 @media(max-width:860px){.jpost{grid-template-columns:minmax(0,1fr)}.jb{padding:20px}.jb h3{font-size:26px}}
 
-/* work together */
-.work{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:28px;background:linear-gradient(135deg,var(--forest2) 0%,var(--forest) 45%,#0a0718 100%);padding:30px;border-radius:20px;border:1px solid var(--forest2)}
-.work h3{margin:0 0 10px;font-family:var(--serif);font-size:30px;color:var(--hi);font-weight:600;line-height:1.15}
-.work p{margin:0 0 12px;color:#cfd1e8}
-.work p a{color:var(--gold);font-weight:600}
-.work ul{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:14.5px}
-.work li:before{content:"→ ";color:var(--gold);font-weight:700}
 form{display:grid;gap:8px}
 label{font-size:13px;font-weight:600;color:#cfd1e8}
 input,select,textarea{width:100%;font:16px/1.4 inherit;font-family:inherit;color:var(--hi);background:rgba(6,6,11,.55);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:10px 12px;min-height:46px}
@@ -330,7 +323,7 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
     <a href="#library">Library</a>
     <a href="#journal">My Secrets</a>
     <a href="/what-is-leonlink.html">About</a>
-    <a href="#work">Contact</a>
+    <a href="mailto:info@leonlink.net">Contact</a>
   </nav>
   <a class="btn" href="https://app.leonlink.net">Get Ledgerline</a>
 </div></header>
@@ -438,42 +431,14 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
   </div>
 </section>
 
-<section class="sec" id="work"><span id="custom"></span>
-  <div class="sh"><h2>Work <em>together</em></h2></div>
-  <div class="work">
-    <div>
-      <h3>Need something that doesn't exist yet?</h3>
-      <p>I build custom websites, web apps and tools for one business or many. Everything on this page was built that way.</p>
-      <ul>
-        <li>Software shaped around how you work</li>
-        <li>Reasonable rates, and you own what we build</li>
-        <li>Nominate the next overpriced category to tear down</li>
-      </ul>
-      <p style="margin-top:14px">Prefer email? <a href="mailto:info@leonlink.net" >info@leonlink.net</a></p>
-    </div>
-    <form id="cform">
-      <div class="two">
-        <div><label for="f-name">Name</label><input id="f-name" required autocomplete="name"></div>
-        <div><label for="f-email">Email</label><input id="f-email" type="email" required autocomplete="email"></div>
-      </div>
-      <label for="f-topic">What's this about?</label>
-      <select id="f-topic"><option>Build something with you</option><option>Ledgerline question</option><option>Feedback on a game</option><option>Nominate the next overpriced category</option><option>Something else</option></select>
-      <label for="f-msg">Message</label>
-      <textarea id="f-msg" rows="4" required></textarea>
-      <button class="btn blue" type="submit" style="min-height:44px">Send it</button>
-      <div class="sent" id="f-ok" role="status">Your email app is opening with the message ready. Just hit send. Nothing is stored on this site.</div>
-    </form>
-  </div>
-</section>
-
-</main>
+</main></main>
 </div>
 
 <footer><div class="in">
   <div class="fcols">
     <div><h5>The Line</h5><a href="https://app.leonlink.net">Ledgerline</a><a href="https://demo.leonlink.net">Live demo</a><a href="https://app.leonlink.net/login?install=1">Download the app</a></div>
     <div><h5>Free tools</h5><a href="/qr-code-generator.html">QR code generator</a><a href="/invoice-generator.html">Invoice generator</a><a href="/estimate-generator.html">Estimate generator</a><a href="/before-after-viewer.html">Before/after viewer</a><a href="/chimney-inspection-checklist.html">Chimney checklist</a></div>
-    <div><h5>Company</h5><a href="/what-is-leonlink.html">What is LeonLink?</a><a href="/affiliates.html">Affiliates, earn 25%</a><a href="#journal">My Secrets</a><a href="#work">Work together</a><a href="mailto:info@leonlink.net">info@leonlink.net</a></div>
+    <div><h5>Company</h5><a href="/what-is-leonlink.html">What is LeonLink?</a><a href="/affiliates.html">Affiliates, earn 25%</a><a href="#journal">My Secrets</a><a href="mailto:info@leonlink.net">info@leonlink.net</a></div>
   </div>
   <div class="fbar"><span style="display:flex;align-items:center;gap:10px"><img src="/img/logo-128.png" alt="" width="30" height="30" loading="lazy">© <span id="yr">2026</span> Leon Link. Every creation stars the same two: the boss and the dog.</span><span>Flat prices. Your data walks out the door with you.</span></div>
 </div></footer>
@@ -483,7 +448,7 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
   <a href="#games" data-s="games"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 11v3M5.5 12.5h3M15.5 12h.01M18 13.5h.01"/></svg>Games</a>
   <a href="#library" data-s="library"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Library</a>
   <a href="#journal" data-s="journal" class="sec-pink"><svg viewBox="0 0 24 24"><path d="M12 3c-4 0-7 3-7 7v4l-2 3h18l-2-3v-4c0-4-3-7-7-7z"/><circle cx="9.5" cy="10.5" r="1.2"/><circle cx="14.5" cy="10.5" r="1.2"/></svg>Secrets</a>
-  <a href="#work" data-s="work"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/></svg>Contact</a>
+  <a href="mailto:info@leonlink.net"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/></svg>Contact</a>
 </nav>
 
 <script>
@@ -616,16 +581,10 @@ document.addEventListener('click',e=>{const b=e.target.closest('button[data-tag]
   tagF=b.dataset.tag;q.value='';document.querySelectorAll('#ltabs button').forEach(x=>x.classList.remove('on'));render();document.getElementById('library').scrollIntoView()},true);
 render();
 
-document.getElementById('cform').addEventListener('submit',e=>{
-  e.preventDefault();const g=id=>document.getElementById(id).value.trim();
-  const s='['+g('f-topic')+'] from '+g('f-name'),b=g('f-msg')+'\n\n— '+g('f-name')+' ('+g('f-email')+')';
-  location.href='mailto:info@leonlink.net?subject='+encodeURIComponent(s)+'&body='+encodeURIComponent(b);
-  document.getElementById('f-ok').style.display='block';
-});
 document.getElementById('yr').textContent=new Date().getFullYear();
 const bn=[...document.querySelectorAll('.bnav a')];
 if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const id=e.target.id==='featured'||e.target.id==='cats'?'top':e.target.id;bn.forEach(a=>a.classList.toggle('on',a.dataset.s===id))}}),{rootMargin:'-45% 0px -50% 0px'});
-['featured','cats','library','games','tools','journal','work'].forEach(i=>{const el=document.getElementById(i);el&&io.observe(el)})}
+['featured','cats','library','games','tools','journal'].forEach(i=>{const el=document.getElementById(i);el&&io.observe(el)})}
 
 </script>
 </body>
