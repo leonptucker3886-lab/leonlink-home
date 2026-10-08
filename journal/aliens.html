@@ -89,9 +89,13 @@ blockquote cite{display:block;font:normal .8rem system-ui;color:var(--mut);margi
 :focus-visible{outline:3px solid #fff;outline-offset:2px}
 @media(min-width:720px){body{font-size:18px}section{padding-top:64px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.sharebtn{background:#0b1018;border:1px solid var(--line2);color:var(--ink);border-radius:999px;padding:8px 16px;min-height:36px;font:600 .82rem system-ui,sans-serif;cursor:pointer;white-space:nowrap;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.sharebtn:hover{border-color:var(--g)}
+header .sharebtn{margin-left:auto}
+.backrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 </style></head><body>
 <canvas id="radar" aria-hidden="true"></canvas>
-<header><a class="home" href="/#journal">← My Secrets</a><a href="#file">The file</a><a href="#oath">Under oath</a><a href="#quiz">House or Senate?</a><a href="#claims">Claims</a><a href="#blips">Blips</a><a href="#y2026">2026</a><a href="#drake">Odds</a><a href="#science">Science</a><a href="#secret">My secret</a></header>
+<header><a class="home" href="/#journal">← My Secrets</a><a href="#file">The file</a><a href="#oath">Under oath</a><a href="#quiz">House or Senate?</a><a href="#claims">Claims</a><a href="#blips">Blips</a><a href="#y2026">2026</a><a href="#drake">Odds</a><a href="#science">Science</a><a href="#secret">My secret</a><button class="sharebtn" type="button">Share</button></header>
 <main>
 <section id="top">
 <span class="kick">My Secrets · Post #2 · October 6, 2026</span>
@@ -193,7 +197,7 @@ blockquote cite{display:block;font:normal .8rem system-ui;color:var(--mut);margi
 <button data-v="2"><span>🔭 Life is out there, but it hasn't come here</span></button>
 <button data-v="3"><span>🎈 It's balloons, drones and satellites</span></button>
 <div id="pout" class="ui" aria-live="polite"></div></div>
-<p style="margin-top:28px"><a class="back" href="/#journal">← Back to My Secrets</a></p>
+<p style="margin-top:28px" class="backrow"><a class="back" href="/#journal">← Back to My Secrets</a><button class="sharebtn" type="button">Share this post</button></p>
 </section>
 
 <section id="sources"><h3>Sources</h3>
@@ -317,4 +321,19 @@ const PM=["You're with David Grusch and much of Congress's UFO caucus. The burde
 function vote(v){try{localStorage.setItem("ll-aliens-vote",v)}catch(e){}document.querySelectorAll("#poll button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v==v));$("pout").innerHTML=`<p style="margin:.6em 0 0"><b>You picked: ${PL[v]}.</b> ${PM[v]}</p>`}
 document.querySelectorAll("#poll button").forEach(b=>b.onclick=()=>vote(+b.dataset.v));
 try{const v=localStorage.getItem("ll-aliens-vote");if(v!==null)vote(+v)}catch(e){}
-</script></body></html>
+</script><script>
+(function(){
+function sharePage(btn){
+  var url=location.href;
+  var title=document.title;
+  var m=document.querySelector('meta[property="og:description"]');
+  var text=m?m.content:'';
+  function done(ok){if(!btn)return;var o=btn.dataset.label||btn.textContent;btn.dataset.label=o;btn.textContent=ok?'Copied!':o;if(ok)setTimeout(function(){btn.textContent=o;},1600);}
+  if(navigator.share){navigator.share({title:title,text:text,url:url}).catch(function(){});}
+  else if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(function(){done(true);},function(){done(false);});}
+  else{window.prompt('Copy this link:',url);}
+}
+document.querySelectorAll('.sharebtn').forEach(function(b){b.addEventListener('click',function(){sharePage(b);});});
+})();
+</script>
+</body></html>
