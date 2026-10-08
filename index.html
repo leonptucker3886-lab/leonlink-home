@@ -241,6 +241,13 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold)}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .sent{display:none;background:rgba(217,241,107,.12);border:1px solid rgba(217,241,107,.4);color:var(--lime);padding:10px 12px;border-radius:10px;font-size:13.5px}
 
+/* newsletter */
+.nl{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:28px;border-radius:20px;border:1px solid var(--line2);background:linear-gradient(120deg,rgba(34,240,255,.07),rgba(255,61,200,.05)),var(--panel)}
+.nl h2{margin:0;font-family:var(--serif);font-size:28px;font-weight:600;color:var(--hi)}
+.nl h2 em{font-style:italic;color:var(--gold)}
+.nlform{display:flex;gap:10px;flex-wrap:wrap}
+.nlform input[type=email]{min-width:240px;background:#0a0d14;border:1px solid var(--line2);border-radius:999px;padding:12px 18px;color:var(--txt);font-size:15px}
+.nlform input[type=email]:focus{outline:none;border-color:var(--gold)}
 /* footer */
 footer .fcols a{color:#c9cde6}
 footer .fcols a:hover{color:var(--gold)}
@@ -346,11 +353,10 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 <div class="snav-wrap" id="top"><nav class="snav" aria-label="Store">
   <div class="tabs">
     <a href="/hire-me.html">Hire me</a>
-    <a href="#library" data-jump="software">Software</a>
-    <a href="#library" data-jump="games">Games</a>
-    <a href="#library" data-jump="secrets">Blog</a>
-    <a href="#library" data-jump="casino">Casino</a>
-    <a href="#library" data-jump="freetools">Free Tools</a>
+    <a href="#software">Software</a>
+    <a href="#games">Games</a>
+    <a href="#journal">Blog</a>
+    <a href="#tools">Free Tools</a>
   </div>
   <div class="search">
     <label class="sr" for="q">Search</label>
@@ -365,11 +371,11 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 <aside class="side" aria-label="Browse">
   <a class="giftcard" href="https://app.leonlink.net"><img src="/img/cards/ledgerline.jpg" alt="" loading="lazy"><span>Ledgerline, from $9.83/mo</span></a>
   <a class="giftcard" href="https://ashfall-virid.vercel.app" target="_blank" rel="noopener"><img src="/img/cards/ashfall.jpg" alt="" loading="lazy"><span>Play ASHFALL free</span></a>
-  <h4>Browse categories</h4>
-  <a href="#library" data-jump="software">Software</a>
-  <a href="#library" data-jump="games">Games</a>
-  <a href="#library" data-jump="secrets">Blog</a>
-  <a href="#library" data-jump="freetools">Free Tools</a>
+  <h4>Browse</h4>
+  <a href="#software">Software</a>
+  <a href="#games">Games</a>
+  <a href="#journal">Blog</a>
+  <a href="#tools">Free tools</a>
   <h4>Browse by tag</h4>
   <div id="sidetags"></div>
 </aside>
@@ -385,20 +391,13 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 </section>
 
 <section class="sec hire-banner"><div class="hb-in">
-  <div><h2>Need something <em>built?</em></h2><p>Websites, stores, games, apps — 50% off right now.</p></div>
+  <div><h2>Need something <em>built?</em></h2><p>Websites, stores, games, apps — 50% off until Oct 31.</p></div>
   <a class="btn" href="/hire-me.html">Hire me</a>
 </div></section>
 
 <section class="sec" id="library"><span id="line"></span><span id="pricing"></span><span id="apps"></span>
   <div class="sh"><h2>The <em>library</em></h2></div>
-  <div class="ltabs" role="tablist" id="ltabs">
-    <button role="tab" data-tab="software" class="on">Software</button>
-    <button role="tab" data-tab="games">Games</button>
-    <button role="tab" data-tab="secrets">Blog</button>
-    <button role="tab" data-tab="casino">Casino</button>
-    <button role="tab" data-tab="freetools">Free Tools</button>
-    <span class="lcount" id="lcount"></span>
-  </div>
+  <p class="lcount" id="lcount" style="margin:0 0 12px"></p>
   <div class="lib">
     <div class="rows" id="rows" role="tabpanel"></div>
     <aside class="preview" id="preview" aria-live="polite"></aside>
@@ -406,13 +405,13 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 </section>
 
 <section class="sec" id="games">
-  <div class="sh"><h2>Games <em>you can play now</em></h2><button class="more" data-jump="games">See all in library</button></div>
+  <div class="sh"><h2>Games <em>you can play now</em></h2><a class="more" href="#library">See all</a></div>
   <p class="sub">They run in your browser, nothing to install. These are prototypes, so expect rough edges.</p>
   <div class="spot" id="g-spot"></div>
 </section>
 
 <section class="sec" id="software">
-  <div class="sh"><h2>Software <em>built by Leon</em></h2><button class="more" data-jump="software">See all in library</button></div>
+  <div class="sh"><h2>Software <em>built by Leon</em></h2><a class="more" href="#library">See all</a></div>
   <div class="grid sm" id="software-grid"></div>
 </section>
 
@@ -425,6 +424,18 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
   <div class="sh"><h2>The <em>blog</em></h2></div>
   <p class="sub">The things I stay up at night reading about. Every post is something you can play with, not just read.</p>
   <div class="jlist">
+  <a class="jpost" href="/journal/website-audit.html">
+    <div class="jimg"><img src="/img/cards/audit.jpg" alt="The 5-minute website audit" loading="lazy"><img class="b" src="/img/cards/audit-2.jpg" alt="" loading="lazy"></div>
+    <div class="jb"><span class="k">Post #5 · New · Interactive guide</span><h3>The 5-Minute Website Audit</h3>
+    <p>Ten checks, five minutes, one score. Grade any website — including your own — and see exactly what is costing you customers.</p>
+    <span class="go">Read post #5 →</span></div>
+  </a>
+  <a class="jpost" href="/journal/flat-prices.html">
+    <div class="jimg"><img src="/img/cards/flatprices.jpg" alt="Flat: why I charge flat prices" loading="lazy"><img class="b" src="/img/cards/flatprices-2.jpg" alt="" loading="lazy"></div>
+    <div class="jb"><span class="k">Post #4 · New · Business</span><h3>Flat.</h3>
+    <p>Why every project on this site has one price, agreed up front — and why hourly billing is a scam against the customer. Drag the slider, do the math.</p>
+    <span class="go">Read post #4 →</span></div>
+  </a>
   <a class="jpost" href="/journal/Watches Under $3K.html">
     <div class="jimg"><img src="/img/cards/watches.jpg" alt="Watches under $3K that hold their value" loading="lazy"><img class="b" src="/img/cards/watches-2.jpg" alt="" loading="lazy"></div>
     <div class="jb"><span class="k">Post #3 · New · Guide</span><h3>Watches Under $3K</h3>
@@ -443,6 +454,18 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
     <p>Pull the lever on a time machine: from the Big Bang to the Milky Way, the cooking fire and you. Read it, then play with it.</p>
     <span class="go">Read post #1 →</span></div>
   </a>
+  </div>
+</section>
+
+<section class="sec" id="updates">
+  <div class="nl">
+    <div><h2>New builds, <em>monthly</em></h2><p class="sub" style="margin:6px 0 0">One email when something new drops. No spam, unsubscribe anytime.</p></div>
+    <form class="nlform" action="https://formsubmit.co/info@leonlink.net" method="POST">
+      <input type="email" name="email" placeholder="you@email.com" required aria-label="Email">
+      <input type="hidden" name="_subject" value="New LeonLink subscriber">
+      <input type="hidden" name="_captcha" value="false">
+      <button class="btn" type="submit">Sign up</button>
+    </form>
   </div>
 </section>
 
@@ -488,12 +511,18 @@ const DATA=[
  tags:['Mystery','RPG','Comedy'],x:'A trailer-park mystery RPG. Someone snitched. Find them before the whole park comes down, or before Ax Man does.'},
 {id:'sporebound',t:'Sporebound: Forage Protocol',u:'https://sporebound-forage.vercel.app',c:'games',s:'ea',p:'Free',d:'2026-08-22',plat:['web','mob'],spot:1,
  tags:['Cozy Horror','Foraging','Survival'],x:'A cozy-horror foraging game. Identify mushrooms. Harvest. Survive the anomalies.'},
+{id:'audit',t:'The 5-Minute Website Audit',u:'/journal/website-audit.html',c:'worlds',s:'new',p:'Free',d:'2026-10-08',plat:['web','mob'],n:5,one:1,
+ tags:['Guide','Websites','Interactive'],x:'Ten checks, five minutes, one score. Grade any website and see exactly what is costing you customers.'},
+{id:'flatprices',t:'Flat: Why I Charge Flat Prices',u:'/journal/flat-prices.html',c:'worlds',s:'new',p:'Free',d:'2026-10-08',plat:['web','mob'],n:4,one:1,
+ tags:['Business','Pricing','Interactive'],x:'Why every project has one price, agreed up front — and why hourly billing is a scam against the customer.'},
 {id:'watches',t:'Watches Under $3K',u:'/journal/Watches Under $3K.html',c:'worlds',s:'new',p:'Free',d:'2026-10-08',plat:['web','mob'],n:3,one:1,
  tags:['Watches','Value','Buying Guide'],x:'Thirty-one watches under three grand, ranked by how much of their price they keep. Retail vs gray market, opportunist buy targets, microbrands, tritium lume and the sales numbers behind the hype.'},
 {id:'aliens',t:'Not Alone? What We Actually Know About Aliens',u:'/journal/aliens.html',c:'worlds',s:'new',p:'Free',d:'2026-10-06',plat:['web','mob'],n:2,
  tags:['Interactive','UFOs','Science'],x:'The hearings under oath, the Navy videos, the Pentagon\'s answer and the science that could settle it. Scrub the timeline, judge the claims, run the numbers.'},
 {id:'longway',t:'The Long Way Home',u:'https://leonlink-site.vercel.app',c:'worlds',s:'read',p:'Free',d:'2026-09-24',plat:['web'],n:1,
  tags:['Interactive Story','Science','Cosmos'],x:'Pull the lever on a time machine: from the Big Bang to the Milky Way, the cooking fire and you.'},
+{id:'stopfighting',t:'Stop Z Fighting',u:'https://stop-z-fighting.vercel.app',c:'software',s:'new',p:'Free',d:'2026-10-08',plat:['web','mob'],one:1,
+ tags:['Couples','No Account','Sync'],x:'A private app for couples: file grievances, set hard rules, burn what is over, and log zombies when rules break. Two phones sync anywhere with a 4-word code \u2014 no accounts, no server.'},
 {id:'ghostcall',t:'Ghost Call',u:'/ghost-call.html',c:'software',s:'new',p:'Free',d:'2026-10-08',plat:['web','mob'],one:1,
  tags:['Prank','Fake Call','Escape'],x:'Your phone rings on command. Pick a caller, set the delay, and get a full-screen fake incoming call to escape anything. Accept it and you are in a fake call with a live timer.'},
 {id:'stage',t:'Stage — Spoken Poetry',u:'https://stage-pi-umber.vercel.app',c:'software',s:'live',p:'Free',d:'2026-10-08',plat:['web','mob'],one:1,
@@ -564,10 +593,7 @@ auto();
 
 // library list + preview
 const rows=document.getElementById('rows'),pv=document.getElementById('preview'),q=document.getElementById('q'),lc=document.getElementById('lcount');
-let tab='software',tagF='',expanded=false;
-const TABS={software:()=>DATA.filter(o=>o.c==='software'),games:()=>games,
- secrets:()=>DATA.filter(o=>o.c==='worlds'),casino:()=>DATA.filter(o=>o.tags.some(t=>/casino/i.test(t))),
- freetools:()=>DATA.filter(o=>o.c==='tools')};
+let tagF='',expanded=false;
 function preview(o){
   pv.innerHTML=`<h3>${esc(o.t)}</h3><div class="st">${CAT[o.c]} · <b>${(rib(o)||['Live'])[0]}</b> · Updated ${fmtDate(o.d)}</div>${tagsEl(o)}
   <p class="pd">${esc(o.x)}</p><div class="pshots"><img src="${img(o)}" alt="" loading="lazy">${o.one?'':`<img src="${img(o,'-2')}" alt="" loading="lazy">`}</div>
@@ -575,7 +601,7 @@ function preview(o){
 }
 function render(){
   const term=q.value.trim().toLowerCase();
-  let list=term?DATA:TABS[tab]();
+  let list=DATA;
   if(tagF)list=DATA.filter(o=>o.tags.includes(tagF));
   if(term)list=list.filter(o=>(o.t+' '+o.x+' '+o.tags.join(' ')+' '+CAT[o.c]).toLowerCase().includes(term));
   lc.textContent=(tagF?`Tag: ${tagF} · `:'')+list.length+' item'+(list.length===1?'':'s');
@@ -592,9 +618,7 @@ function render(){
 rows.addEventListener('mouseover',e=>{const r=e.target.closest('.row');if(!r||r.classList.contains('on'))return;
   rows.querySelectorAll('.row.on').forEach(x=>x.classList.remove('on'));r.classList.add('on');preview(byId[r.dataset.id])});
 rows.addEventListener('focusin',e=>{const r=e.target.closest('.row');if(r)r.dispatchEvent(new MouseEvent('mouseover',{bubbles:true}))});
-function setTab(t){tab=t;tagF='';expanded=false;q.value='';document.querySelectorAll('#ltabs button').forEach(b=>{b.classList.toggle('on',b.dataset.tab===t);b.setAttribute('aria-selected',b.dataset.tab===t)});render()}
-document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{setTab(b.dataset.tab);if(b.closest('.side'))document.getElementById('library').scrollIntoView()}));
-document.querySelectorAll('[data-jump]').forEach(b=>b.onclick=()=>{setTab(b.dataset.jump);document.getElementById('library').scrollIntoView()});
+
 let qt;q.addEventListener('input',()=>{clearTimeout(qt);qt=setTimeout(()=>{tagF='';render()},120)});
 q.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();document.getElementById('library').scrollIntoView()}if(e.key==='Escape'){q.value='';render()}});
 document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='TEXTAREA'){e.preventDefault();q.focus()}});
@@ -604,13 +628,13 @@ const tagCount={};DATA.forEach(o=>o.tags.forEach(t=>tagCount[t]=(tagCount[t]||0)
 document.getElementById('sidetags').innerHTML=Object.entries(tagCount).filter(([,n])=>n>1).sort((a,b)=>b[1]-a[1]).slice(0,14)
  .map(([t])=>`<button data-tag="${esc(t)}">${esc(t)}</button>`).join('');
 document.addEventListener('click',e=>{const b=e.target.closest('button[data-tag]');if(!b)return;e.preventDefault();e.stopPropagation();
-  tagF=b.dataset.tag;q.value='';document.querySelectorAll('#ltabs button').forEach(x=>x.classList.remove('on'));render();document.getElementById('library').scrollIntoView()},true);
+  tagF=b.dataset.tag;q.value='';render();document.getElementById('library').scrollIntoView()},true);
 render();
 
 document.getElementById('yr').textContent=new Date().getFullYear();
 const bn=[...document.querySelectorAll('.bnav a')];
 if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const id=e.target.id==='featured'?'top':e.target.id;bn.forEach(a=>a.classList.toggle('on',a.dataset.s===id))}}),{rootMargin:'-45% 0px -50% 0px'});
-['featured','library','games','tools','journal'].forEach(i=>{const el=document.getElementById(i);el&&io.observe(el)})}
+['featured','library','software','games','tools','journal'].forEach(i=>{const el=document.getElementById(i);el&&io.observe(el)})}
 
 </script>
 </body>
