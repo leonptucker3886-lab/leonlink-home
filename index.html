@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>LeonLink — software, games and free tools</title>
-<meta name="description" content="Everything LeonLink builds in one place: Ledgerline for trades crews, plus free browser games, My Secrets and free tools.">
+<title>LeonLink — websites, stores, games, apps</title>
+<meta name="description" content="I build websites, stores, games and apps — 50% off right now. Plus Ledgerline for trades crews, free games, blog and tools.">
 <link rel="canonical" href="https://www.leonlink.net/">
 <meta name="theme-color" content="#06060b">
 <link rel="icon" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.leonlink.net/">
-<meta property="og:title" content="LeonLink — software, games and free tools">
-<meta property="og:description" content="Ledgerline for trades crews, games like ASHFALL, Sun N Fun and the AFTERGLOW casino, and free tools.">
+<meta property="og:title" content="LeonLink — websites, stores, games, apps">
+<meta property="og:description" content="Websites, stores, games and apps — 50% off. Plus Ledgerline, free games, blog and tools.">
 <meta property="og:image" content="https://www.leonlink.net/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" as="image" href="/img/cards/ledgerline.jpg">
@@ -67,6 +67,10 @@ background:var(--gold);color:#03161a;font-weight:700;font-size:14.5px;white-spac
 .search svg{position:absolute;left:14px;top:11px;pointer-events:none}
 .search svg path{fill:var(--dim)}
 
+.tagline{max-width:1240px;margin:20px auto 0;padding:0 20px;font-family:var(--serif);font-size:clamp(26px,4.2vw,42px);line-height:1.1;letter-spacing:-.015em;color:var(--hi)}
+.tagline em{font-style:italic;color:var(--gold);text-shadow:0 0 18px rgba(34,240,255,.5)}
+@media(max-width:700px){.tagline{margin-top:12px}}
+
 /* layout */
 .page{max-width:1240px;margin:0 auto;padding:14px 20px 0;display:grid;grid-template-columns:210px minmax(0,1fr);gap:28px}
 .side{position:sticky;top:130px;align-self:start;font-size:14px;max-height:calc(100vh - 146px);overflow:auto;scrollbar-width:thin}
@@ -89,6 +93,13 @@ main{min-width:0}
 .sh .more{font-size:13.5px;font-weight:600;border:0;border-radius:999px;padding:6px 14px;color:var(--gold);background:rgba(34,240,255,.1);white-space:nowrap}
 .sh .more:hover{background:rgba(34,240,255,.2)}
 .sub{margin:0 0 18px;color:var(--dim);font-size:15px;max-width:640px}
+
+.hire-banner{margin:0 0 56px}
+.hb-in{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:24px 28px;border-radius:20px;border:1px solid var(--line2);background:linear-gradient(120deg,rgba(57,255,136,.09),rgba(34,240,255,.06)),var(--panel)}
+.hb-in h2{margin:0;font-family:var(--serif);font-size:26px;font-weight:600;color:var(--hi);letter-spacing:-.01em}
+.hb-in h2 em{font-style:italic;color:var(--gold)}
+.hb-in p{margin:4px 0 0;color:var(--dim)}
+@media(max-width:640px){.hb-in{flex-direction:column;text-align:center}}
 
 /* spotlight carousel */
 .feat{position:relative}
@@ -321,7 +332,7 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
   <nav class="gnav" aria-label="Main">
     <a href="#top" class="on">Home</a>
     <a href="#library">Library</a>
-    <a href="#journal">My Secrets</a>
+    <a href="#journal">Blog</a>
     <a href="/what-is-leonlink.html">About</a>
     <a href="mailto:info@leonlink.net">Contact</a>
     <a href="/hire-me.html">Hire me</a>
@@ -334,7 +345,7 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
     <a href="/hire-me.html">Hire me</a>
     <a href="#library" data-jump="software">Software</a>
     <a href="#library" data-jump="games">Games</a>
-    <a href="#library" data-jump="secrets">Secrets</a>
+    <a href="#library" data-jump="secrets">Blog</a>
     <a href="#library" data-jump="casino">Casino</a>
     <a href="#library" data-jump="freetools">Free Tools</a>
   </div>
@@ -345,21 +356,17 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
   </div>
 </nav></div>
 
+<p class="tagline">Everything I <em>build</em>, in one place.</p>
+
 <div class="page">
 <aside class="side" aria-label="Browse">
   <a class="giftcard" href="https://app.leonlink.net"><img src="/img/cards/ledgerline.jpg" alt="" loading="lazy"><span>Ledgerline, from $9.83/mo</span></a>
   <a class="giftcard" href="https://ashfall-virid.vercel.app" target="_blank" rel="noopener"><img src="/img/cards/ashfall.jpg" alt="" loading="lazy"><span>Play ASHFALL free</span></a>
-  <h4>Quick picks</h4>
-  <button data-tab="software">Software</button>
-  <button data-tab="games">Games</button>
-  <button data-tab="secrets">Secrets</button>
-  <button data-tab="casino">Casino</button>
-  <button data-tab="freetools">Free tools</button>
   <h4>Browse categories</h4>
   <a href="#library" data-jump="software">Software</a>
-  <a href="#games">Games</a>
-  <a href="#journal">My Secrets</a>
-  <a href="#tools">Free tools</a>
+  <a href="#library" data-jump="games">Games</a>
+  <a href="#library" data-jump="secrets">Blog</a>
+  <a href="#library" data-jump="freetools">Free Tools</a>
   <h4>Browse by tag</h4>
   <div id="sidetags"></div>
 </aside>
@@ -374,14 +381,19 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
   <div class="dots" id="fdots"></div>
 </section>
 
+<section class="sec hire-banner"><div class="hb-in">
+  <div><h2>Need something <em>built?</em></h2><p>Websites, stores, games, apps — 50% off right now.</p></div>
+  <a class="btn" href="/hire-me.html">Hire me</a>
+</div></section>
+
 <section class="sec" id="library"><span id="line"></span><span id="pricing"></span><span id="apps"></span>
   <div class="sh"><h2>The <em>library</em></h2></div>
   <div class="ltabs" role="tablist" id="ltabs">
     <button role="tab" data-tab="software" class="on">Software</button>
     <button role="tab" data-tab="games">Games</button>
-    <button role="tab" data-tab="secrets">Secrets</button>
+    <button role="tab" data-tab="secrets">Blog</button>
     <button role="tab" data-tab="casino">Casino</button>
-    <button role="tab" data-tab="freetools">Free tools</button>
+    <button role="tab" data-tab="freetools">Free Tools</button>
     <span class="lcount" id="lcount"></span>
   </div>
   <div class="lib">
@@ -397,12 +409,12 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 </section>
 
 <section class="sec" id="tools">
-  <div class="sh"><h2>Free tools <em>no signup</em></h2><a class="more" href="/free-tools.html">All free tools</a></div>
+  <div class="sh"><h2>Free Tools <em>no signup</em></h2><a class="more" href="/free-tools.html">All free tools</a></div>
   <div class="grid sm" id="tools-grid"></div>
 </section>
 
 <section class="sec" id="journal"><span id="news"></span><span id="worlds"></span><span id="secrets"></span>
-  <div class="sh"><h2>My <em>secrets</em></h2></div>
+  <div class="sh"><h2>The <em>blog</em></h2></div>
   <p class="sub">The things I stay up at night reading about. Every post is something you can play with, not just read.</p>
   <div class="jlist">
   <a class="jpost" href="/journal/Watches Under $3K.html">
@@ -433,7 +445,7 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
   <div class="fcols">
     <div><h5>The Line</h5><a href="https://app.leonlink.net">Ledgerline</a><a href="https://demo.leonlink.net">Live demo</a><a href="https://app.leonlink.net/login?install=1">Download the app</a></div>
     <div><h5>Free tools</h5><a href="/qr-code-generator.html">QR code generator</a><a href="/invoice-generator.html">Invoice generator</a><a href="/estimate-generator.html">Estimate generator</a><a href="/before-after-viewer.html">Before/after viewer</a><a href="/chimney-inspection-checklist.html">Chimney checklist</a></div>
-    <div><h5>Company</h5><a href="/what-is-leonlink.html">What is LeonLink?</a><a href="/affiliates.html">Affiliates, earn 25%</a><a href="#journal">My Secrets</a><a href="mailto:info@leonlink.net">info@leonlink.net</a></div>
+    <div><h5>Company</h5><a href="/what-is-leonlink.html">What is LeonLink?</a><a href="/affiliates.html">Affiliates, earn 25%</a><a href="#journal">Blog</a><a href="mailto:info@leonlink.net">info@leonlink.net</a></div>
   </div>
   <div class="fbar"><span style="display:flex;align-items:center;gap:10px"><img src="/img/logo-128.png" alt="" width="30" height="30" loading="lazy">© <span id="yr">2026</span> Leon Link. Every creation stars the same two: the boss and the dog.</span><span>Flat prices. Your data walks out the door with you.</span></div>
 </div></footer>
@@ -442,7 +454,8 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
   <a href="#top" class="on" data-s="top"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</a>
   <a href="#games" data-s="games"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 11v3M5.5 12.5h3M15.5 12h.01M18 13.5h.01"/></svg>Games</a>
   <a href="#library" data-s="library"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Library</a>
-  <a href="#journal" data-s="journal" class="sec-pink"><svg viewBox="0 0 24 24"><path d="M12 3c-4 0-7 3-7 7v4l-2 3h18l-2-3v-4c0-4-3-7-7-7z"/><circle cx="9.5" cy="10.5" r="1.2"/><circle cx="14.5" cy="10.5" r="1.2"/></svg>Secrets</a>
+  <a href="/hire-me.html"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Hire me</a>
+  <a href="#journal" data-s="journal" class="sec-pink"><svg viewBox="0 0 24 24"><path d="M12 3c-4 0-7 3-7 7v4l-2 3h18l-2-3v-4c0-4-3-7-7-7z"/><circle cx="9.5" cy="10.5" r="1.2"/><circle cx="14.5" cy="10.5" r="1.2"/></svg>Blog</a>
   <a href="mailto:info@leonlink.net"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/></svg>Contact</a>
 </nav>
 
@@ -485,8 +498,10 @@ const DATA=[
 ];
 const FEATURED=['ledgerline','proofline','reviewline'];
 const RIB={live:['Live',''],ea:['Beta','ea'],new:['New','new'],read:['Read','read']};
-const CAT={software:'Software',games:'Game',worlds:'My Secrets',tools:'Free tool'};
+const AVAILS={ledgerline:'Flat price, whole crew',proofline:'Part of the Line suite',reviewline:'Part of the Line suite'};
+const CAT={software:'Software',games:'Game',worlds:'Blog',tools:'Free Tool'};
 const byId=Object.fromEntries(DATA.map(o=>[o.id,o]));
+const rib=o=>o.s==='new'&&Date.now()-new Date(o.d+'T12:00:00').getTime()>30*864e5?null:RIB[o.s];
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const ext=o=>o.u.startsWith('http')&&!/leonlink\.net/.test(o.u)?' target="_blank" rel="noopener"':'';
 const img=(o,v)=>`/img/cards/${o.id}${v||''}.jpg`;
@@ -496,7 +511,7 @@ const tagsEl=(o,n,btn)=>`<span class="tags">${o.tags.slice(0,n||9).map(t=>btn?`<
 const fmtDate=d=>new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
 
 function capsule(o){
-  const r=RIB[o.s];
+  const r=rib(o);
   return `<a class="cap" href="${o.u}"${ext(o)}>
   <div class="cimg">${r?`<span class="ribbon ${r[1]}">${r[0]}</span>`:''}<img class="a" src="${img(o)}" alt="${esc(o.t)}" loading="lazy" width="640" height="360">${o.one?'':`<img class="b" src="${img(o,'-2')}" alt="" loading="lazy">`}
   <span class="hover-cta"><span>${o.c==='games'?'Play now':o.c==='worlds'?'Read now':'Open'}</span></span></div>
@@ -514,7 +529,7 @@ fs.innerHTML=FEATURED.map((id,i)=>{const o=byId[id];return `<div class="fslide${
  <div class="finfo"><h3>${esc(o.t)}</h3>
   <div class="fthumbs"><button class="on" data-src="${img(o)}" aria-label="Screenshot 1"><img src="${img(o)}" alt="" loading="lazy"></button><button data-src="${img(o,'-2')}" aria-label="Screenshot 2"><img src="${img(o,'-2')}" alt="" loading="lazy"></button></div>
   <p class="why" style="margin:0">${esc(o.x)}</p>
-  <div class="avail"><small>${o.s==='ea'?'Beta':o.c==='software'?'Live now':'Now available'}</small>${o.c==='games'?'Play in your browser':o.c==='software'?'Flat price, whole crew':o.c==='worlds'?'My Secrets, post #'+o.n:'Try it free'}</div>
+  <div class="avail"><small>${o.s==='ea'?'Beta':o.c==='software'?'Live now':'Now available'}</small>${o.c==='games'?'Play in your browser':o.c==='software'?(AVAILS[o.id]||'Live now'):o.c==='worlds'?'Blog, post #'+o.n:'Try it free'}</div>
   ${tagsEl(o,4)}
   <div class="frow">${plat(o)}${priceEl(o)}</div></div></div>`}).join('');
 fd.innerHTML=FEATURED.map((_,i)=>`<button class="${i?'':'on'}" aria-label="Show slide ${i+1}"></button>`).join('');
@@ -522,7 +537,7 @@ let fi=0,ft;
 const slides=[...fs.children],dots=[...fd.children];
 function go(n){fi=(n+slides.length)%slides.length;slides.forEach((s,i)=>s.classList.toggle('on',i===fi));dots.forEach((d,i)=>d.classList.toggle('on',i===fi))}
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-function auto(){clearInterval(ft);if(!reduce)ft=setInterval(()=>go(fi+1),7000)}
+function auto(){clearInterval(ft)}
 document.getElementById('fprev').onclick=()=>{go(fi-1);auto()};
 document.getElementById('fnext').onclick=()=>{go(fi+1);auto()};
 dots.forEach((d,i)=>d.onclick=()=>{go(i);auto()});
@@ -543,7 +558,7 @@ const TABS={software:()=>DATA.filter(o=>o.c==='software'),games:()=>games,
  secrets:()=>DATA.filter(o=>o.c==='worlds'),casino:()=>DATA.filter(o=>o.tags.some(t=>/casino/i.test(t))),
  freetools:()=>DATA.filter(o=>o.c==='tools')};
 function preview(o){
-  pv.innerHTML=`<h3>${esc(o.t)}</h3><div class="st">${CAT[o.c]} · <b>${RIB[o.s][0]}</b> · Updated ${fmtDate(o.d)}</div>${tagsEl(o)}
+  pv.innerHTML=`<h3>${esc(o.t)}</h3><div class="st">${CAT[o.c]} · <b>${(rib(o)||['Live'])[0]}</b> · Updated ${fmtDate(o.d)}</div>${tagsEl(o)}
   <p class="pd">${esc(o.x)}</p><div class="pshots"><img src="${img(o)}" alt="" loading="lazy">${o.one?'':`<img src="${img(o,'-2')}" alt="" loading="lazy">`}</div>
   <a class="btn" href="${o.u}"${ext(o)}>${o.c==='games'?'Play now':o.c==='software'?'Open '+esc(o.t):'Open'}</a>`;
 }
@@ -558,7 +573,7 @@ function render(){
   const full=list.length;if(!expanded&&!term&&full>10)list=list.slice(0,10);
   rows.innerHTML=list.map((o,i)=>`<a class="row${i?'':' on'}" href="${o.u}"${ext(o)} data-id="${o.id}">
    <img src="${img(o)}" alt="" loading="lazy" width="184" height="69">
-   <div style="min-width:0"><div class="rt">${esc(o.t)}</div><div class="rm">${plat(o)}<span>${CAT[o.c]} · ${RIB[o.s][0]}</span></div>${tagsEl(o,4)}</div>
+   <div style="min-width:0"><div class="rt">${esc(o.t)}</div><div class="rm">${plat(o)}<span>${CAT[o.c]} · ${(rib(o)||['Live'])[0]}</span></div>${tagsEl(o,4)}</div>
    <div class="rright">${priceEl(o)}<span class="rm">${fmtDate(o.d)}</span></div></a>`).join('')+(list.length<full?`<button class="showmore" id="smore">Show all ${full} →</button>`:'');
   const sm=document.getElementById('smore');if(sm)sm.onclick=()=>{expanded=true;render()};
   preview(list[0]);
