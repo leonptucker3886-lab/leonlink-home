@@ -180,6 +180,13 @@ background:var(--panel);border:1px solid var(--line);border-radius:12px;transiti
 .preview .pshots img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px}
 .preview .btn{margin-top:14px;width:100%}
 
+/* expandable software cards */
+.soft{cursor:pointer}
+.soft .xbody{display:none}
+.soft.open .xbody{display:block;animation:fadein .25s}
+.soft .xbody p{display:block;-webkit-line-clamp:unset;min-height:0;white-space:normal}
+.soft .xopen{margin-top:12px;width:100%}
+@keyframes fadein{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 /* cards */
 .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
 .grid.sm{grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
@@ -491,7 +498,6 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
   <a href="#library" data-s="library"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Library</a>
   <a href="/hire-me.html"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Hire me</a>
   <a href="#journal" data-s="journal" class="sec-pink"><svg viewBox="0 0 24 24"><path d="M12 3c-4 0-7 3-7 7v4l-2 3h18l-2-3v-4c0-4-3-7-7-7z"/><circle cx="9.5" cy="10.5" r="1.2"/><circle cx="14.5" cy="10.5" r="1.2"/></svg>Blog</a>
-  <a href="mailto:info@leonlink.net"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/></svg>Contact</a>
 </nav>
 
 <script>
@@ -555,6 +561,14 @@ const priceEl=o=>`<span class="price${/free/i.test(o.p)?' free':''}">${esc(o.p)}
 const tagsEl=(o,n,btn)=>`<span class="tags">${o.tags.slice(0,n||9).map(t=>btn?`<button class="tag" data-tag="${esc(t)}">${esc(t)}</button>`:`<span class="tag">${esc(t)}</span>`).join('')}</span>`;
 const fmtDate=d=>new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
 
+function softCard(o){
+  const r=rib(o);
+  return `<div class="cap soft" data-id="${o.id}" tabindex="0" role="button" aria-expanded="false">
+  <div class="cimg">${r?`<span class="ribbon ${r[1]}">${r[0]}</span>`:''}<img class="a" src="${img(o)}" alt="${esc(o.t)}" loading="lazy" width="640" height="360">
+  <span class="hover-cta"><span>About</span></span></div>
+  <div class="cb"><h3>${esc(o.t)}</h3><div class="cfoot">${tagsEl(o,1)}${priceEl(o)}</div>
+  <div class="xbody"><p>${esc(o.x)}</p>${tagsEl(o)}<a class="btn xopen" href="${o.u}"${ext(o)}>Open ${esc(o.t)} →</a></div></div></div>`;
+}
 function capsule(o){
   const r=rib(o);
   return `<a class="cap" href="${o.u}"${ext(o)}>
@@ -565,7 +579,17 @@ function capsule(o){
 function fill(id,list){document.getElementById(id).innerHTML=list.map(capsule).join('')}
 const games=DATA.filter(o=>o.c==='games');
 fill('g-spot',games.filter(o=>o.spot));
-fill('software-grid',DATA.filter(o=>o.c==='software'));
+document.getElementById('software-grid').innerHTML=DATA.filter(o=>o.c==='software').map(softCard).join('');
+document.getElementById('software-grid').addEventListener('click',e=>{
+  if(e.target.closest('a'))return;
+  const c=e.target.closest('.soft');if(!c)return;
+  const was=c.classList.contains('open');
+  document.querySelectorAll('#software-grid .soft.open').forEach(x=>{x.classList.remove('open');x.setAttribute('aria-expanded','false')});
+  if(!was){c.classList.add('open');c.setAttribute('aria-expanded','true')}
+});
+document.getElementById('software-grid').addEventListener('keydown',e=>{
+  if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('soft')){e.preventDefault();e.target.click()}
+});
 fill('tools-grid',DATA.filter(o=>o.c==='tools'));
 
 // featured carousel
