@@ -373,6 +373,17 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 .pillar .pk svg{width:14px;height:14px}
 @media(max-width:700px){.pillars{grid-template-columns:1fr}}
 
+
+/* front jump cards */
+.jump3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.jcard{display:block;border:1px solid var(--line);border-radius:18px;padding:22px 20px;background:var(--panel);text-decoration:none;transition:border-color .2s,transform .2s}
+.jcard:hover{border-color:var(--cy);transform:translateY(-2px)}
+.jcard .jk{display:block;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+.jcard b{display:block;font-size:clamp(22px,4vw,28px);color:var(--hi);margin-bottom:8px;letter-spacing:-.01em}
+.jcard .jd{color:var(--dim);font-size:14px;line-height:1.5}
+.jcard .go2{display:inline-block;margin-top:12px;font-size:14px;font-weight:700;color:var(--cy)}
+@media(max-width:700px){.jump3{grid-template-columns:1fr}}
+
 </style>
 <script type="application/ld+json">
 {
@@ -470,10 +481,10 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 <div class="snav-wrap" id="top"><nav class="snav" aria-label="Store">
   <div class="tabs">
     <a href="/hire-me.html">Hire me</a>
-    <a href="#software">Software</a>
+    <a href="#lineup">Starting Lineup</a>
     <a href="#games">Games</a>
+    <a href="#software">Software</a>
     <a href="#journal">Blog</a>
-    <a href="#lineup">Top 5</a>
     <a href="#tools">Free Tools</a>
   </div>
   <div class="search">
@@ -488,8 +499,9 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
   <a class="giftcard" href="https://app.leonlink.net"><img src="/img/cards/ledgerline.jpg" alt="" loading="lazy"><span>Ledgerline, from $9.83/mo</span></a>
   <a class="giftcard" href="https://ashfall-virid.vercel.app" target="_blank" rel="noopener"><img src="/img/cards/ashfall.jpg" alt="" loading="lazy"><span>Play ASHFALL free</span></a>
   <h4>Browse</h4>
-  <a href="#software">Software</a>
+  <a href="#lineup">Starting Lineup</a>
   <a href="#games">Games</a>
+  <a href="#software">Software</a>
   <a href="#journal">Blog</a>
   <a href="#tools">Free tools</a>
   <h4>Browse by tag</h4>
@@ -512,71 +524,19 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
   <a class="btn" href="/hire-me.html">Hire me</a>
 </div></section>
 
+<section class="sec" id="start">
+  <div class="jump3">
+    <a class="jcard" href="#journal"><span class="jk">Essays & guides</span><b>Blog</b><span class="jd">Things I stay up at night writing about.</span><span class="go2">Read →</span></a>
+    <a class="jcard" href="#software"><span class="jk">Built by Leon</span><b>Software</b><span class="jd">Apps and tools that do the job.</span><span class="go2">Browse →</span></a>
+    <a class="jcard" href="#lineup"><span class="jk">11 lists · $0 from reviews</span><b>Starting Lineup</b><span class="jd">The top 5 of everything worth owning.</span><span class="go2">See the five →</span></a>
+  </div>
+</section>
 <section class="sec" id="library"><span id="line"></span><span id="pricing"></span><span id="apps"></span>
   <div class="sh"><h2>The <em>library</em></h2></div>
   <p class="lcount" id="lcount" style="margin:0 0 12px"></p>
   <div class="lib">
     <div class="rows" id="rows" role="tabpanel"></div>
     <aside class="preview" id="preview" aria-live="polite"></aside>
-  </div>
-</section>
-
-<section class="sec" id="games">
-  <div class="sh"><h2>Games <em>you can play now</em></h2><a class="more" href="#library">See all</a></div>
-  <p class="sub">They run in your browser, nothing to install. These are prototypes, so expect rough edges.</p>
-  <div class="spot" id="g-spot"></div>
-</section>
-
-<section class="sec" id="software">
-  <div class="sh"><h2>Software <em>built by Leon</em></h2><a class="more" href="#library">See all</a></div>
-  <div class="grid sm" id="software-grid"></div>
-</section>
-
-<section class="sec" id="tools">
-  <div class="sh"><h2>Free Tools <em>no signup</em></h2><a class="more" href="/free-tools.html">All free tools</a></div>
-  <div class="grid sm" id="tools-grid"></div>
-</section>
-
-<section class="sec" id="journal"><span id="news"></span><span id="worlds"></span>
-  <div class="sh"><h2>The <em>blog</em></h2></div>
-  <p class="sub">The things I stay up at night reading about. Every post is something you can play with, not just read.</p>
-  <div class="jlist">
-  <a class="jpost" href="/journal/world-vs-usa.html">
-    <div class="jimg"><img src="/img/cards/war.jpg" alt="1 vs 195: could the world beat America?" loading="lazy"><img class="b" src="/img/cards/war-2.jpg" alt="" loading="lazy"></div>
-    <div class="jb"><span class="k">Post #6 · New · Geopolitics</span><h3>1 vs 195</h3>
-    <p>The top 5 military budgets on Earth, the world-vs-USA math, six honest ways America could lose — and why it still wins.</p>
-    <span class="go">Read post #6 →</span></div>
-  </a>
-  <a class="jpost" href="/journal/website-audit.html">
-    <div class="jimg"><img src="/img/cards/audit.jpg" alt="The 5-minute website audit" loading="lazy"><img class="b" src="/img/cards/audit-2.jpg" alt="" loading="lazy"></div>
-    <div class="jb"><span class="k">Post #5 · New · Interactive guide</span><h3>The 5-Minute Website Audit</h3>
-    <p>Fifteen checks, five minutes, one score. Grade any website — including your own — and see exactly what is costing you customers.</p>
-    <span class="go">Read post #5 →</span></div>
-  </a>
-  <a class="jpost" href="/journal/flat-prices.html">
-    <div class="jimg"><img src="/img/cards/flatprices.jpg" alt="Flat: why I charge flat prices" loading="lazy"><img class="b" src="/img/cards/flatprices-2.jpg" alt="" loading="lazy"></div>
-    <div class="jb"><span class="k">Post #4 · New · Business</span><h3>Flat.</h3>
-    <p>Why every project on this site has one price, agreed up front — and why hourly billing is a scam against the customer. Drag the slider, do the math.</p>
-    <span class="go">Read post #4 →</span></div>
-  </a>
-  <a class="jpost" href="/journal/watches-under-3k.html">
-    <div class="jimg"><img src="/img/cards/watches.jpg" alt="Watches under $3K that hold their value" loading="lazy"><img class="b" src="/img/cards/watches-2.jpg" alt="" loading="lazy"></div>
-    <div class="jb"><span class="k">Post #3 · New · Guide</span><h3>Watches Under $3K</h3>
-    <p>Thirty-one watches under three grand, ranked by how much of their price they keep — retail vs gray market, opportunist buy targets, microbrands and lume.</p>
-    <span class="go">Read post #3 →</span></div>
-  </a>
-  <a class="jpost" href="/journal/aliens.html">
-    <div class="jimg"><img src="/img/cards/aliens.jpg" alt="Not Alone? What we actually know about aliens" loading="lazy"><img class="b" src="/img/cards/aliens-2.jpg" alt="" loading="lazy"></div>
-    <div class="jb"><span class="k">Post #2 · New · Interactive</span><h3>Not Alone?</h3>
-    <p>What we actually know about aliens: the hearings under oath, the videos, the Pentagon's answer and the science that could settle it. Scrub the timeline, judge the claims, run the numbers.</p>
-    <span class="go">Read post #2 →</span></div>
-  </a>
-  <a class="jpost alt" href="https://leonlink-site.vercel.app" target="_blank" rel="noopener">
-    <div class="jimg"><img src="/img/cards/longway.jpg" alt="The Long Way Home" loading="lazy"><img class="b" src="/img/cards/longway-2.jpg" alt="" loading="lazy"></div>
-    <div class="jb"><span class="k">Post #1 · Interactive story</span><h3>The Long Way Home</h3>
-    <p>Pull the lever on a time machine: from the Big Bang to the Milky Way, the cooking fire and you. Read it, then play with it.</p>
-    <span class="go">Read post #1 →</span></div>
-  </a>
   </div>
 </section>
 <section class="sec" id="lineup">
@@ -674,6 +634,66 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
     </div>
   </div>
 </section>
+
+<section class="sec" id="games">
+  <div class="sh"><h2>Games <em>you can play now</em></h2><a class="more" href="#library">See all</a></div>
+  <p class="sub">They run in your browser, nothing to install. These are prototypes, so expect rough edges.</p>
+  <div class="spot" id="g-spot"></div>
+</section>
+
+<section class="sec" id="software">
+  <div class="sh"><h2>Software <em>built by Leon</em></h2><a class="more" href="#library">See all</a></div>
+  <div class="grid sm" id="software-grid"></div>
+</section>
+
+<section class="sec" id="tools">
+  <div class="sh"><h2>Free Tools <em>no signup</em></h2><a class="more" href="/free-tools.html">All free tools</a></div>
+  <div class="grid sm" id="tools-grid"></div>
+</section>
+
+<section class="sec" id="journal"><span id="news"></span><span id="worlds"></span>
+  <div class="sh"><h2>The <em>blog</em></h2></div>
+  <p class="sub">The things I stay up at night reading about. Every post is something you can play with, not just read.</p>
+  <div class="jlist">
+  <a class="jpost" href="/journal/world-vs-usa.html">
+    <div class="jimg"><img src="/img/cards/war.jpg" alt="1 vs 195: could the world beat America?" loading="lazy"><img class="b" src="/img/cards/war-2.jpg" alt="" loading="lazy"></div>
+    <div class="jb"><span class="k">Post #6 · New · Geopolitics</span><h3>1 vs 195</h3>
+    <p>The top 5 military budgets on Earth, the world-vs-USA math, six honest ways America could lose — and why it still wins.</p>
+    <span class="go">Read post #6 →</span></div>
+  </a>
+  <a class="jpost" href="/journal/website-audit.html">
+    <div class="jimg"><img src="/img/cards/audit.jpg" alt="The 5-minute website audit" loading="lazy"><img class="b" src="/img/cards/audit-2.jpg" alt="" loading="lazy"></div>
+    <div class="jb"><span class="k">Post #5 · New · Interactive guide</span><h3>The 5-Minute Website Audit</h3>
+    <p>Fifteen checks, five minutes, one score. Grade any website — including your own — and see exactly what is costing you customers.</p>
+    <span class="go">Read post #5 →</span></div>
+  </a>
+  <a class="jpost" href="/journal/flat-prices.html">
+    <div class="jimg"><img src="/img/cards/flatprices.jpg" alt="Flat: why I charge flat prices" loading="lazy"><img class="b" src="/img/cards/flatprices-2.jpg" alt="" loading="lazy"></div>
+    <div class="jb"><span class="k">Post #4 · New · Business</span><h3>Flat.</h3>
+    <p>Why every project on this site has one price, agreed up front — and why hourly billing is a scam against the customer. Drag the slider, do the math.</p>
+    <span class="go">Read post #4 →</span></div>
+  </a>
+  <a class="jpost" href="/journal/watches-under-3k.html">
+    <div class="jimg"><img src="/img/cards/watches.jpg" alt="Watches under $3K that hold their value" loading="lazy"><img class="b" src="/img/cards/watches-2.jpg" alt="" loading="lazy"></div>
+    <div class="jb"><span class="k">Post #3 · New · Guide</span><h3>Watches Under $3K</h3>
+    <p>Thirty-one watches under three grand, ranked by how much of their price they keep — retail vs gray market, opportunist buy targets, microbrands and lume.</p>
+    <span class="go">Read post #3 →</span></div>
+  </a>
+  <a class="jpost" href="/journal/aliens.html">
+    <div class="jimg"><img src="/img/cards/aliens.jpg" alt="Not Alone? What we actually know about aliens" loading="lazy"><img class="b" src="/img/cards/aliens-2.jpg" alt="" loading="lazy"></div>
+    <div class="jb"><span class="k">Post #2 · New · Interactive</span><h3>Not Alone?</h3>
+    <p>What we actually know about aliens: the hearings under oath, the videos, the Pentagon's answer and the science that could settle it. Scrub the timeline, judge the claims, run the numbers.</p>
+    <span class="go">Read post #2 →</span></div>
+  </a>
+  <a class="jpost alt" href="https://leonlink-site.vercel.app" target="_blank" rel="noopener">
+    <div class="jimg"><img src="/img/cards/longway.jpg" alt="The Long Way Home" loading="lazy"><img class="b" src="/img/cards/longway-2.jpg" alt="" loading="lazy"></div>
+    <div class="jb"><span class="k">Post #1 · Interactive story</span><h3>The Long Way Home</h3>
+    <p>Pull the lever on a time machine: from the Big Bang to the Milky Way, the cooking fire and you. Read it, then play with it.</p>
+    <span class="go">Read post #1 →</span></div>
+  </a>
+  </div>
+</section>
+
 
 <section class="sec" id="updates">
   <div class="nl">
