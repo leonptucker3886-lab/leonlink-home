@@ -97,9 +97,9 @@ header .sharebtn{margin-left:auto}
 <header><a class="home" href="/#journal">← Blog</a><a href="#how">How it works</a><a href="#checks">The 10 checks</a><a href="#score">Your score</a><button class="sharebtn" type="button">Share</button></header>
 <main>
 <section id="top">
-<div class="kick">Post #5 · Guide</div>
+<div class="kick">Post #5 · Interactive guide</div>
 <h1>Audit <span>yourself.</span></h1>
-<p class="n">Ten checks, five minutes, one score. This is the exact list I run on every site before I call it done — run it on yours.</p>
+<p class="n">Fifteen checks, five minutes, one score. This is the exact list I run on every site before I call it done — run it on yours.</p>
 </section>
 
 <section id="how">
@@ -109,61 +109,93 @@ header .sharebtn{margin-left:auto}
 </section>
 
 <section id="checks">
-<div class="when">The 10 checks</div>
+<div class="when">The 15 checks</div>
 <h2>Tick what passes</h2>
-<div class="card"><label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-family:system-ui">
-<input type="checkbox" data-chk style="width:26px;height:26px;margin-top:2px;accent-color:var(--g);flex-shrink:0">
+<p class="n">Fifteen checks in five categories. Be honest — the score only helps if it's real.</p>
+<div class="when" style="margin-top:26px"><span class="chip c-v">SPEED</span></div><div class="card"><label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-family:system-ui">
+<input type="checkbox" data-chk data-cat="SPEED" style="width:26px;height:26px;margin-top:2px;accent-color:var(--g);flex-shrink:0">
 <span><b style="font-size:1.02rem">1. Loads fast</b><br><span style="color:var(--mut);font-size:.9rem">Open it on your phone, on data, not wifi. If you are still waiting after 3 seconds, so is every customer.</span></span></label>
-<p class="n" style="margin:.5em 0 0 .0em;font-size:.88rem">Slow pages lose half their visitors before the first pixel. Compress images, skip the video background.</p></div><div class="card"><label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-family:system-ui">
-<input type="checkbox" data-chk style="width:26px;height:26px;margin-top:2px;accent-color:var(--g);flex-shrink:0">
+<p class="n" style="margin:.5em 0 0 .0em;font-size:.88rem">Slow pages lose half their visitors before the first pixel. Compress images, skip the video background.</p></div><div class="when" style="margin-top:26px"><span class="chip c-c">FIRST IMPRESSION</span></div><div class="card"><label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-family:system-ui">
+<input type="checkbox" data-chk data-cat="FIRST IMPRESSION" style="width:26px;height:26px;margin-top:2px;accent-color:var(--g);flex-shrink:0">
 <span><b style="font-size:1.02rem">2. Says what you do</b><br><span style="color:var(--mut);font-size:.9rem">A stranger lands on your homepage. In 5 seconds, can they say what you sell and to whom?</span></span></label>
-<p class="n" style="margin:.5em 0 0 .0em;font-size:.88rem">If the headline is 'Welcome to our website', you failed. Mine says: <i>Everything I build, in one place.</i></p></div><div class="card"><label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-family:system-ui">
-<input type="checkbox" data-chk style="width:26px;height:26px;margin-top:2px;accent-color:var(--g);flex-shrink:0">
+<p class="n" style="margin:.5em 0 0 .0em;font-size:.88rem">If the headline is 'Welcome to our website', you failed. One line: what you do, for whom.</p></div><div class="card"><label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-family:system-ui">
+<input type="checkbox" data-chk data-cat="FIRST IMPRESSION" style="width:26px;height:26px;margin-top:2px;accent-color:var(--g);flex-shrink:0">
 <span><b style="font-size:1.02rem">3. One clear action</b><br><span style="color:var(--mut);font-size:.9rem">Is there exactly one thing you want the visitor to do? Call, buy, book, sign up — one.</span></span></label>
 <p class="n" style="margin:.5em 0 0 .0em;font-size:.88rem">Two equal buttons is zero decisions. Pick the one that pays and make it the biggest thing on the page.</p></div><div class="card"><label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-family:system-ui">
-<input type="checkbox" data-chk style="width:26px;height:26px;margin-top:2px;accent-color:var(--g);flex-shrink:0">
-<span><b style="font-size:1.02rem">4. Phone number taps to call</b><br><span style="color:var(--mut);font-size:.9rem">On a phone, does tapping your number actually dial? (It should be a link, not text.)</span></span></label>
-<p class="n" style="margin:.5em 0 0 .0em;font-size:.88rem">On mobile, more than half your visitors are one thumb-tap from calling you. Do not make them memorize digits.</p></div><div class="card"><label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-family:system-ui">
-<input type="checkbox" data-chk style="width:26px;height:26px;margin-top:2px;accent-color:var(--g);flex-shrink:0">
-<span><b style="font-size:1.02rem">5. Works on a phone</b><br><span style="color:var(--mut);font-size:.9rem">Not 'has a mobile version'. Open every page on a real phone. Can you read it without pinching?</span></span></label>
-<p class="n" style="margin:.5em 0 0 .0em;font-size:.88rem">Google ranks the phone version first. If your site is desktop-only, you are invisible to most of the internet.</p></div><div class="card"><label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-family:system-ui">
-<input type="checkbox" data-chk style="width:26px;height:26px;margin-top:2px;accent-color:var(--g);flex-shrink:0">
-<span><b style="font-size:1.02rem">6. Secure lock</b><br><span style="color:var(--mut);font-size:.9rem">The little padlock in the address bar. No 'Not secure' warning.</span></span></label>
-<p class="n" style="margin:.5em 0 0 .0em;font-size:.88rem">Browsers now shame non-secure sites in front of your customers. Free certificates exist. There is no excuse left.</p></div><div class="card"><label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-family:system-ui">
-<input type="checkbox" data-chk style="width:26px;height:26px;margin-top:2px;accent-color:var(--g);flex-shrink:0">
-<span><b style="font-size:1.02rem">7. Real photos</b><br><span style="color:var(--mut);font-size:.9rem">Are the photos of your actual work, your actual shop, your actual face?</span></span></label>
+<input type="checkbox" data-chk data-cat="FIRST IMPRESSION" style="width:26px;height:26px;margin-top:2px;accent-color:var(--g);flex-shrink:0">
+<span><b style="font-size:1.02rem">4. Real photos</b><br><span style="color:var(--mut);font-size:.9rem">Are the photos of your actual work, your actual shop, your actual face?</span></span></label>
 <p class="n" style="margin:.5em 0 0 .0em;font-size:.88rem">Stock photos of handshakes smell like a scam. One real photo beats ten perfect fakes.</p></div><div class="card"><label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-family:system-ui">
-<input type="checkbox" data-chk style="width:26px;height:26px;margin-top:2px;accent-color:var(--g);flex-shrink:0">
-<span><b style="font-size:1.02rem">8. No lorem ipsum</b><br><span style="color:var(--mut);font-size:.9rem">Search the site for lorem ipsum, 'coming soon', and 2019 copyright dates.</span></span></label>
-<p class="n" style="margin:.5em 0 0 .0em;font-size:.88rem">Nothing says 'abandoned' like placeholder text. Dead pages are worse than no pages.</p></div><div class="card"><label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-family:system-ui">
-<input type="checkbox" data-chk style="width:26px;height:26px;margin-top:2px;accent-color:var(--g);flex-shrink:0">
-<span><b style="font-size:1.02rem">9. Google knows you exist</b><br><span style="color:var(--mut);font-size:.9rem">Search your business name. Do you own the first result? Is the map listing claimed?</span></span></label>
-<p class="n" style="margin:.5em 0 0 .0em;font-size:.88rem">For local work, the Google listing matters more than the website. Claim it, fill it, feed it photos.</p></div><div class="card"><label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-family:system-ui">
-<input type="checkbox" data-chk style="width:26px;height:26px;margin-top:2px;accent-color:var(--g);flex-shrink:0">
-<span><b style="font-size:1.02rem">10. Contact is effortless</b><br><span style="color:var(--mut);font-size:.9rem">Can a customer reach you in one tap from any page — call, text, or email?</span></span></label>
-<p class="n" style="margin:.5em 0 0 .0em;font-size:.88rem">Every extra step halves the people who finish. Put the contact where thumbs already are.</p></div>
+<input type="checkbox" data-chk data-cat="FIRST IMPRESSION" style="width:26px;height:26px;margin-top:2px;accent-color:var(--g);flex-shrink:0">
+<span><b style="font-size:1.02rem">5. No lorem ipsum</b><br><span style="color:var(--mut);font-size:.9rem">Search the site for lorem ipsum, 'coming soon', and 2019 copyright dates.</span></span></label>
+<p class="n" style="margin:.5em 0 0 .0em;font-size:.88rem">Nothing says 'abandoned' like placeholder text. Dead pages are worse than no pages.</p></div><div class="when" style="margin-top:26px"><span class="chip c-h">MOBILE</span></div><div class="card"><label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-family:system-ui">
+<input type="checkbox" data-chk data-cat="MOBILE" style="width:26px;height:26px;margin-top:2px;accent-color:var(--g);flex-shrink:0">
+<span><b style="font-size:1.02rem">6. Phone number taps to call</b><br><span style="color:var(--mut);font-size:.9rem">On a phone, does tapping your number actually dial? (It should be a link, not text.)</span></span></label>
+<p class="n" style="margin:.5em 0 0 .0em;font-size:.88rem">On mobile, more than half your visitors are one thumb-tap from calling you. Do not make them memorize digits.</p></div><div class="card"><label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-family:system-ui">
+<input type="checkbox" data-chk data-cat="MOBILE" style="width:26px;height:26px;margin-top:2px;accent-color:var(--g);flex-shrink:0">
+<span><b style="font-size:1.02rem">7. Works on a phone</b><br><span style="color:var(--mut);font-size:.9rem">Not 'has a mobile version'. Open every page on a real phone. Can you read it without pinching?</span></span></label>
+<p class="n" style="margin:.5em 0 0 .0em;font-size:.88rem">Google ranks the phone version first. If your site is desktop-only, you are invisible to most of the internet.</p></div><div class="card"><label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-family:system-ui">
+<input type="checkbox" data-chk data-cat="MOBILE" style="width:26px;height:26px;margin-top:2px;accent-color:var(--g);flex-shrink:0">
+<span><b style="font-size:1.02rem">8. Menu fits on mobile</b><br><span style="color:var(--mut);font-size:.9rem">Open the menu on a phone. Can you reach every page without hunting or horizontal scrolling?</span></span></label>
+<p class="n" style="margin:.5em 0 0 .0em;font-size:.88rem">If the menu needs its own user manual, the menu is the problem.</p></div><div class="when" style="margin-top:26px"><span class="chip c-s">TRUST</span></div><div class="card"><label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-family:system-ui">
+<input type="checkbox" data-chk data-cat="TRUST" style="width:26px;height:26px;margin-top:2px;accent-color:var(--g);flex-shrink:0">
+<span><b style="font-size:1.02rem">9. Secure lock</b><br><span style="color:var(--mut);font-size:.9rem">The little padlock in the address bar. No 'Not secure' warning.</span></span></label>
+<p class="n" style="margin:.5em 0 0 .0em;font-size:.88rem">Browsers now shame non-secure sites in front of your customers. Free certificates exist. There is no excuse left.</p></div><div class="card"><label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-family:system-ui">
+<input type="checkbox" data-chk data-cat="TRUST" style="width:26px;height:26px;margin-top:2px;accent-color:var(--g);flex-shrink:0">
+<span><b style="font-size:1.02rem">10. Social proof</b><br><span style="color:var(--mut);font-size:.9rem">Reviews, testimonials, photos of real customers — visible without scrolling?</span></span></label>
+<p class="n" style="margin:.5em 0 0 .0em;font-size:.88rem">Nobody wants to be your first customer. Show them they won't be.</p></div><div class="card"><label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-family:system-ui">
+<input type="checkbox" data-chk data-cat="TRUST" style="width:26px;height:26px;margin-top:2px;accent-color:var(--g);flex-shrink:0">
+<span><b style="font-size:1.02rem">11. Google knows you exist</b><br><span style="color:var(--mut);font-size:.9rem">Search your business name. Do you own the first result? Is the map listing claimed?</span></span></label>
+<p class="n" style="margin:.5em 0 0 .0em;font-size:.88rem">For local work, the Google listing matters more than the website. Claim it, fill it, feed it photos.</p></div><div class="when" style="margin-top:26px"><span class="chip c-d">FRICTION</span></div><div class="card"><label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-family:system-ui">
+<input type="checkbox" data-chk data-cat="FRICTION" style="width:26px;height:26px;margin-top:2px;accent-color:var(--g);flex-shrink:0">
+<span><b style="font-size:1.02rem">12. Contact is effortless</b><br><span style="color:var(--mut);font-size:.9rem">Can a customer reach you in one tap from any page — call, text, or email?</span></span></label>
+<p class="n" style="margin:.5em 0 0 .0em;font-size:.88rem">Every extra step halves the people who finish. Put the contact where thumbs already are.</p></div><div class="card"><label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-family:system-ui">
+<input type="checkbox" data-chk data-cat="FRICTION" style="width:26px;height:26px;margin-top:2px;accent-color:var(--g);flex-shrink:0">
+<span><b style="font-size:1.02rem">13. Forms are short</b><br><span style="color:var(--mut);font-size:.9rem">Count the fields on your contact form. Name, contact, message — that's plenty.</span></span></label>
+<p class="n" style="margin:.5em 0 0 .0em;font-size:.88rem">Every field past three is a customer you talked out of contacting you.</p></div><div class="card"><label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-family:system-ui">
+<input type="checkbox" data-chk data-cat="FRICTION" style="width:26px;height:26px;margin-top:2px;accent-color:var(--g);flex-shrink:0">
+<span><b style="font-size:1.02rem">14. No popups on arrival</b><br><span style="color:var(--mut);font-size:.9rem">Nothing blocks the visitor in the first 10 seconds. No newsletter popup before they've read a word.</span></span></label>
+<p class="n" style="margin:.5em 0 0 .0em;font-size:.88rem">You haven't earned the interruption yet. Earn it first, then ask.</p></div><div class="card"><label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-family:system-ui">
+<input type="checkbox" data-chk data-cat="FRICTION" style="width:26px;height:26px;margin-top:2px;accent-color:var(--g);flex-shrink:0">
+<span><b style="font-size:1.02rem">15. 404 helps</b><br><span style="color:var(--mut);font-size:.9rem">Type a bad URL on purpose. Does the error page guide visitors home, or strand them?</span></span></label>
+<p class="n" style="margin:.5em 0 0 .0em;font-size:.88rem">Dead ends should have signposts. A good 404 keeps the visit alive.</p></div>
 </section>
 
 <section id="score">
 <div class="when">Your score</div>
 <h2>The verdict</h2>
 <div class="card" style="text-align:center">
-<div class="nbig"><span id="sc">0</span>/10</div>
+<div class="nbig"><span id="sc">0</span>/15</div>
 <div class="prog"><i id="bar" style="width:0%"></i></div>
 <p id="grade" style="font-family:system-ui"></p>
+<div id="cats" style="text-align:left;margin-top:14px"></div>
+<button class="sharebtn" id="copy" type="button" style="margin-top:14px">Copy my score</button>
 </div>
-<p>Score under 7? <a href="/hire-me.html">I build websites for a flat $150</a> — every one of these checks included, 50% off until Oct 31.</p>
+<p>Score under 10? <a href="/hire-me.html">I build websites for a flat $150</a> — every one of these checks included, 50% off until Oct 31.</p>
 <div class="backrow" style="margin-top:26px"><a class="back" href="/hire-me.html">Get the $150 website</a><a class="back" style="background:var(--c);box-shadow:0 0 20px #22f0ff77" href="/#journal">← Back to the blog</a></div>
 </section>
 </main>
 <script>
 (function(){
 var boxes=[...document.querySelectorAll('[data-chk]')],sc=document.getElementById('sc'),
-    bar=document.getElementById('bar'),grade=document.getElementById('grade');
-var G=["A parked domain with dreams. Call me.",["Needs work — the fixes are an afternoon.",0][0],"Needs work — the fixes are an afternoon.","Getting there. Finish the last few.","Solid. You are ahead of most.","Excellent. Go sell something."];
-function upd(){var n=boxes.filter(b=>b.checked).length;sc.textContent=n;bar.style.width=(n*10)+'%';
-  grade.innerHTML=n<=2?'<b style="color:var(--p)">'+G[0]+'</b>':n<=4?'<b style="color:var(--y)">'+G[2]+'</b>':n<=6?G[3]:n<=8?'<b style="color:var(--c)">'+G[4]+'</b>':'<b style="color:var(--g)">'+G[5]+'</b>';}
+    bar=document.getElementById('bar'),grade=document.getElementById('grade'),cats=document.getElementById('cats');
+var CN=[...new Set(boxes.map(b=>b.dataset.cat))];
+function upd(){
+  var n=boxes.filter(b=>b.checked).length;sc.textContent=n;bar.style.width=(n/15*100)+'%';
+  grade.innerHTML=n<=3?'<b style="color:var(--p)">A parked domain with dreams. Call me.</b>'
+    :n<=6?'<b style="color:var(--y)">Needs work — the fixes are an afternoon.</b>'
+    :n<=9?'<b style="color:var(--y)">Getting there. Finish the last few.</b>'
+    :n<=12?'<b style="color:var(--c)">Solid. You are ahead of most.</b>'
+    :'<b style="color:var(--g)">Excellent. Go sell something.</b>';
+  cats.innerHTML=CN.map(c=>{var t=boxes.filter(b=>b.dataset.cat===c),d=t.filter(b=>b.checked).length;
+    return `<div class="kv"><span>${c}</span><span><b style="color:${d===t.length?'var(--g)':'var(--c)'}">${d}/${t.length}</b></span></div>`;}).join('');
+}
 boxes.forEach(b=>b.addEventListener('change',upd));upd();
+document.getElementById('copy').onclick=function(btn){
+  var t='I scored '+sc.textContent+'/15 on the 5-minute website audit: '+location.href;
+  function done(ok){var b=document.getElementById('copy');b.textContent=ok?'Copied!':'Copy my score';if(ok)setTimeout(()=>b.textContent='Copy my score',1600);}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(()=>done(true),()=>done(false));}
+  else{window.prompt('Copy your score:',t);done(false);}
+};
 })();
 </script>
 <script>

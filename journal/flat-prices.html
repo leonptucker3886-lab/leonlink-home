@@ -94,7 +94,7 @@ blockquote cite{display:block;font:normal .8rem system-ui;color:var(--mut);margi
 header .sharebtn{margin-left:auto}
 .backrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 </style></head><body>
-<header><a class="home" href="/#journal">← Blog</a><a href="#trap">The trap</a><a href="#math">The math</a><a href="#deal">The deal</a><a href="#fine">The fine print</a><button class="sharebtn" type="button">Share</button></header>
+<header><a class="home" href="/#journal">← Blog</a><a href="#trap">The trap</a><a href="#math">The math</a><a href="#stories">Horror stories</a><a href="#deal">The deal</a><a href="#faq">Questions</a><a href="#fine">The fine print</a><button class="sharebtn" type="button">Share</button></header>
 <main>
 <section id="top">
 <div class="kick">Post #4 · Business</div>
@@ -117,14 +117,29 @@ header .sharebtn{margin-left:auto}
 <section id="math">
 <div class="when">The math</div>
 <h2>Drag it yourself</h2>
-<p>Move the slider. This is what happens to your bill when the builder is slower than promised.</p>
+<p>Move the sliders. This is what happens to your bill when the builder is slower than promised — or just expensive.</p>
 <div class="card">
 <label for="hrs" style="font-family:system-ui;font-size:.9rem;color:var(--mut)">Builder's hours: <output id="hrsout" style="color:var(--c);font-weight:700">20</output></label>
 <input type="range" id="hrs" min="5" max="60" value="20" step="1">
-<div class="kv"><span>Hourly ($100/hr)</span><span id="hourly" class="big">$2,000</span></div>
+<label for="rate" style="font-family:system-ui;font-size:.9rem;color:var(--mut)">Agency rate: $<output id="rateout" style="color:var(--c);font-weight:700">100</output>/hr</label>
+<input type="range" id="rate" min="50" max="300" value="100" step="5">
+<div class="kv"><span>Hourly total</span><span id="hourly" class="big">$2,000</span></div>
 <div class="kv"><span>Flat (my price)</span><span class="big">$150</span></div>
 <p class="n" id="verdict" style="margin:.6em 0 0"></p>
 </div>
+</section>
+
+<section id="stories">
+<div class="when">Horror stories</div>
+<h2>True stories, names withheld</h2>
+<p>Every one of these happened to someone who emailed me after. The details are changed; the invoices were real.</p>
+<div class="card"><h3 style="margin:0 0 .3em;color:var(--p)">The $9,000 landing page</h3>
+<p style="margin:0">Quoted "about $2,000" hourly. Three months later: 90 hours at $100/hr. The page had five sections and a contact form. <b>You could buy sixty of my websites for that.</b></p></div>
+<div class="card"><h3 style="margin:0 0 .3em;color:var(--p)">The discovery phase</h3>
+<p style="margin:0">$4,500 for "discovery" — meetings about what the website should say. No website was built. Discovery discovered that discovery was the product.</p></div>
+<div class="card"><h3 style="margin:0 0 .3em;color:var(--p)">The hostage redesign</h3>
+<p style="margin:0">Two years of $300/month "maintenance" for a site that never changed. When they asked to leave, the agency said the design was licensed, not sold. The ransom to keep their own website: $5,000.</p></div>
+<p class="n">Hourly isn't the villain in every story. But every one of these stories needed hourly to happen.</p>
 </section>
 
 <section id="deal">
@@ -139,6 +154,19 @@ header .sharebtn{margin-left:auto}
 <p>Websites <b>$150</b>. Stores <b>$300</b>. Games <b>$450</b>. Apps <b>$500</b>. That is 50% off until Oct 31. <a href="/hire-me.html">Hire me →</a></p>
 </section>
 
+<section id="faq">
+<div class="when">Questions</div>
+<h2>Asked a lot</h2>
+<div class="card"><h3 style="margin:0 0 .3em">What if the project grows halfway through?</h3>
+<p style="margin:0">Then we talk about it like adults and agree a new flat price for the new work — before I do it. The original price still doesn't move.</p></div>
+<div class="card"><h3 style="margin:0 0 .3em">What if you finish in a day?</h3>
+<p style="margin:0">Then you got a great deal and I got a great day. The price was for the result, not my calendar. This is the whole point.</p></div>
+<div class="card"><h3 style="margin:0 0 .3em">Do you do hourly for small fixes?</h3>
+<p style="margin:0">No. Small fixes get small flat prices. "Thirty minutes of work" shouldn't require a contract and a timesheet.</p></div>
+<div class="card"><h3 style="margin:0 0 .3em">Why should I trust a flat price this low?</h3>
+<p style="margin:0">Try a prototype first — there are six working ones on <a href="/hire-me.html">the hire page</a>. The price is low because there's no agency between us, not because the work is cheap.</p></div>
+</section>
+
 <section id="fine">
 <div class="when">The fine print</div>
 <h2>There is none</h2>
@@ -149,12 +177,14 @@ header .sharebtn{margin-left:auto}
 <script>
 (function(){
 var hrs=document.getElementById('hrs'),out=document.getElementById('hrsout'),
+    rate=document.getElementById('rate'),rout=document.getElementById('rateout'),
     hourly=document.getElementById('hourly'),verdict=document.getElementById('verdict');
-function upd(){var h=+hrs.value;out.textContent=h;var cost=h*100;
+function upd(){var h=+hrs.value,r=+rate.value;out.textContent=h;rout.textContent=r;var cost=h*r;
   hourly.textContent='$'+cost.toLocaleString();
-  verdict.innerHTML=cost>150?'At <b>'+h+' hours</b> you would pay <b>$'+cost.toLocaleString()+'</b> by the hour. Flat: <b>$150</b>. You save <b>$'+(cost-150).toLocaleString()+'</b>.'
-    :'Even at a lightning <b>'+h+' hours</b>, hourly costs <b>$'+cost.toLocaleString()+'</b>. Flat is still <b>$150</b>.';}
-hrs.addEventListener('input',upd);upd();
+  var save=cost-150;
+  verdict.innerHTML=save>0?'At <b>'+h+' hours × $'+r+'/hr</b> you would pay <b>$'+cost.toLocaleString()+'</b>. Flat: <b>$150</b>. You save <b>$'+save.toLocaleString()+'</b>.'
+    :'At <b>$'+r+'/hr</b> the hourly math almost works — until the hours slip. Flat is still <b>$150</b>, no matter what.';}
+hrs.addEventListener('input',upd);rate.addEventListener('input',upd);upd();
 })();
 </script>
 <script>
