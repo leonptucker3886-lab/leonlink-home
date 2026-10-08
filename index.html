@@ -352,6 +352,7 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
   <button data-tab="games">Games</button>
   <button data-tab="secrets">Secrets</button>
   <button data-tab="casino">Casino</button>
+  <button data-tab="freetools">Free tools</button>
   <h4>Browse categories</h4>
   <a href="#library" data-jump="software">Software</a>
   <a href="#games">Games</a>
@@ -388,6 +389,7 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
     <button role="tab" data-tab="games">Games</button>
     <button role="tab" data-tab="secrets">Secrets</button>
     <button role="tab" data-tab="casino">Casino</button>
+    <button role="tab" data-tab="freetools">Free tools</button>
     <span class="lcount" id="lcount"></span>
   </div>
   <div class="lib">
@@ -541,8 +543,9 @@ auto();
 // library list + preview
 const rows=document.getElementById('rows'),pv=document.getElementById('preview'),q=document.getElementById('q'),lc=document.getElementById('lcount');
 let tab='software',tagF='',expanded=false;
-const TABS={software:()=>DATA.filter(o=>o.c==='software'||o.c==='tools'),games:()=>games,
- secrets:()=>DATA.filter(o=>o.c==='worlds'),casino:()=>DATA.filter(o=>o.tags.some(t=>/casino/i.test(t)))};
+const TABS={software:()=>DATA.filter(o=>o.c==='software'),games:()=>games,
+ secrets:()=>DATA.filter(o=>o.c==='worlds'),casino:()=>DATA.filter(o=>o.tags.some(t=>/casino/i.test(t))),
+ freetools:()=>DATA.filter(o=>o.c==='tools')};
 function preview(o){
   pv.innerHTML=`<h3>${esc(o.t)}</h3><div class="st">${CAT[o.c]} · <b>${RIB[o.s][0]}</b> · Updated ${fmtDate(o.d)}</div>${tagsEl(o)}
   <p class="pd">${esc(o.x)}</p><div class="pshots"><img src="${img(o)}" alt="" loading="lazy">${o.one?'':`<img src="${img(o,'-2')}" alt="" loading="lazy">`}</div>
