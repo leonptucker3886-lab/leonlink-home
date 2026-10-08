@@ -348,8 +348,10 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
   <a class="giftcard" href="https://app.leonlink.net"><img src="/img/cards/ledgerline.jpg" alt="" loading="lazy"><span>Ledgerline, from $9.83/mo</span></a>
   <a class="giftcard" href="https://ashfall-virid.vercel.app" target="_blank" rel="noopener"><img src="/img/cards/ashfall.jpg" alt="" loading="lazy"><span>Play ASHFALL free</span></a>
   <h4>Quick picks</h4>
-  <button data-tab="new">Latest</button>
-  <button data-tab="free">Free</button>
+  <button data-tab="software">Software</button>
+  <button data-tab="games">Games</button>
+  <button data-tab="secrets">Secrets</button>
+  <button data-tab="casino">Casino</button>
   <h4>Browse categories</h4>
   <a href="#library" data-jump="software">Software</a>
   <a href="#games">Games</a>
@@ -382,11 +384,10 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 <section class="sec" id="library"><span id="line"></span><span id="pricing"></span><span id="apps"></span>
   <div class="sh"><h2>The <em>library</em></h2></div>
   <div class="ltabs" role="tablist" id="ltabs">
-    <button role="tab" data-tab="new" class="on">Latest</button>
+    <button role="tab" data-tab="software" class="on">Software</button>
     <button role="tab" data-tab="games">Games</button>
-    <button role="tab" data-tab="software">Software</button>
-    <button role="tab" data-tab="free">Free</button>
-    <button role="tab" data-tab="all">Everything</button>
+    <button role="tab" data-tab="secrets">Secrets</button>
+    <button role="tab" data-tab="casino">Casino</button>
     <span class="lcount" id="lcount"></span>
   </div>
   <div class="lib">
@@ -539,9 +540,9 @@ auto();
 
 // library list + preview
 const rows=document.getElementById('rows'),pv=document.getElementById('preview'),q=document.getElementById('q'),lc=document.getElementById('lcount');
-let tab='new',tagF='',expanded=false;
-const TABS={new:()=>[...DATA].filter(o=>o.c!=='tools').sort((a,b)=>b.d.localeCompare(a.d)),games:()=>games,software:()=>DATA.filter(o=>o.c==='software'||o.c==='tools'),
- ea:()=>DATA.filter(o=>o.s==='ea'||o.s==='new'),free:()=>DATA.filter(o=>/free/i.test(o.p)),all:()=>DATA};
+let tab='software',tagF='',expanded=false;
+const TABS={software:()=>DATA.filter(o=>o.c==='software'||o.c==='tools'),games:()=>games,
+ secrets:()=>DATA.filter(o=>o.c==='worlds'),casino:()=>DATA.filter(o=>o.tags.some(t=>/casino/i.test(t)))};
 function preview(o){
   pv.innerHTML=`<h3>${esc(o.t)}</h3><div class="st">${CAT[o.c]} · <b>${RIB[o.s][0]}</b> · Updated ${fmtDate(o.d)}</div>${tagsEl(o)}
   <p class="pd">${esc(o.x)}</p><div class="pshots"><img src="${img(o)}" alt="" loading="lazy">${o.one?'':`<img src="${img(o,'-2')}" alt="" loading="lazy">`}</div>
