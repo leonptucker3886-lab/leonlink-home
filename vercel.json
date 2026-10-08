@@ -4,5 +4,73 @@
       "source": "/hub",
       "destination": "/hub.html"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/journal/top5-backpacks.html",
+      "destination": "/lineup/backpacks.html",
+      "permanent": true
+    },
+    {
+      "source": "/journal/top5-benchmade.html",
+      "destination": "/lineup/benchmade-knives.html",
+      "permanent": true
+    },
+    {
+      "source": "/journal/top5-drills.html",
+      "destination": "/lineup/drills.html",
+      "permanent": true
+    },
+    {
+      "source": "/journal/top5-earbuds.html",
+      "destination": "/lineup/earbuds.html",
+      "permanent": true
+    },
+    {
+      "source": "/journal/top5-flashlights.html",
+      "destination": "/lineup/flashlights.html",
+      "permanent": true
+    },
+    {
+      "source": "/journal/top5-motorbikes.html",
+      "destination": "/lineup/motorbikes.html",
+      "permanent": true
+    },
+    {
+      "source": "/journal/top5-multitools.html",
+      "destination": "/lineup/multitools.html",
+      "permanent": true
+    },
+    {
+      "source": "/journal/top5-pcp.html",
+      "destination": "/lineup/pcp-air-rifles.html",
+      "permanent": true
+    },
+    {
+      "source": "/journal/top5-smartwatches.html",
+      "destination": "/lineup/smartwatches.html",
+      "permanent": true
+    },
+    {
+      "source": "/journal/top5-sunglasses.html",
+      "destination": "/lineup/sunglasses.html",
+      "permanent": true
+    },
+    {
+      "source": "/journal/tactical-under-700.html",
+      "destination": "/lineup/watches.html",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/film-room.html",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    }
   ]
 }
