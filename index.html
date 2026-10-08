@@ -463,6 +463,10 @@ mob:'<svg viewBox="0 0 24 24" aria-label="Mobile"><path d="M7 1h10a2 2 0 0 1 2 2
 const DATA=[
 {id:'ledgerline',t:'Ledgerline',u:'https://app.leonlink.net',c:'software',s:'live',p:'$9.83/mo',d:'2026-10-04',plat:['web','mob'],
  tags:['Field Service','Invoicing','Scheduling','Payments'],x:'Run a small trades business from a phone. Quote before you leave the driveway, let customers approve and pay in their own portal, take the card on the spot, and let reminders chase what is owed.'},
+{id:'proofline',t:'Proofline',u:'https://proofline.leonlink.net',c:'software',s:'live',p:'Included with Command',d:'2026-10-08',plat:['web','mob'],
+ tags:['Before & After','Photo Reports','Proof'],x:'Before-and-after photo reports that prove the work. Snap it, stamp it, send the customer a report they can\'t argue with.'},
+{id:'reviewline',t:'Reviewline',u:'https://review.leonlink.net',c:'software',s:'live',p:'Included with Command',d:'2026-10-08',plat:['web','mob'],
+ tags:['Google Reviews','Automation','Reputation'],x:'Google review requests on autopilot. Every finished job triggers a polite ask at the right moment \u2014 happy customers go to Google, unhappy ones come to you first.'},
 {id:'afterglow',t:'AFTERGLOW: Neon Social Casino',u:'https://afterglow.leonlink.net',c:'games',s:'new',p:'Free',d:'2026-10-06',plat:['web','mob'],spot:1,
  tags:['Social Casino','Slots','Poker','Play Money'],x:'A neon casino that never closes. 19 games including 9 slots (Zeus, buffalo, fireball hold-and-spin, fishing, diamonds, joker, pigs), Heads or Tails, video poker, keno, baccarat, blackjack and roulette, plus a daily wheel, levels and provably fair seeds. Play money only, 18+.'},
 {id:'ashfall',t:'ASHFALL: The Turning Years',u:'https://ashfall-virid.vercel.app',c:'games',s:'new',p:'Free',d:'2026-10-06',plat:['web'],spot:1,
@@ -487,7 +491,7 @@ const DATA=[
 {id:'t-beforeafter',t:'Before & After Viewer',u:'/before-after-viewer.html',c:'tools',s:'live',p:'Free',d:'2026-10-01',plat:['web','mob'],one:1,tags:['Free Tool','Photos'],x:'Drop in two photos and drag the slider to compare.'},
 {id:'t-chimney',t:'Chimney Inspection Checklist',u:'/chimney-inspection-checklist.html',c:'tools',s:'live',p:'Free',d:'2026-10-01',plat:['web'],one:1,tags:['Free Tool','Printable','Trades'],x:'A printable Level 1 and Level 2 chimney inspection checklist.'}
 ];
-const FEATURED=['afterglow','aliens','ledgerline','ashfall','sunnfun','sporebound','longway'];
+const FEATURED=['ledgerline','proofline','reviewline'];
 const RIB={live:['Live',''],ea:['Beta','ea'],new:['New','new'],read:['Read','read']};
 const CAT={software:'Software',games:'Game',worlds:'My Secrets',tools:'Free tool'};
 const byId=Object.fromEntries(DATA.map(o=>[o.id,o]));
