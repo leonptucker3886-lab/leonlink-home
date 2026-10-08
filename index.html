@@ -623,7 +623,7 @@ auto();
 
 // library list + preview
 const rows=document.getElementById('rows'),pv=document.getElementById('preview'),q=document.getElementById('q'),lc=document.getElementById('lcount');
-let tagF='',expanded=false;
+let tagF='',expanded=false;const LIB=DATA.filter(o=>o.c!=='worlds');
 function preview(o){
   pv.innerHTML=`<h3>${esc(o.t)}</h3><div class="st">${CAT[o.c]} · <b>${(rib(o)||['Live'])[0]}</b> · Updated ${fmtDate(o.d)}</div>${tagsEl(o)}
   <p class="pd">${esc(o.x)}</p><div class="pshots"><img src="${img(o)}" alt="" loading="lazy">${o.one?'':`<img src="${img(o,'-2')}" alt="" loading="lazy">`}</div>
@@ -631,8 +631,8 @@ function preview(o){
 }
 function render(){
   const term=q.value.trim().toLowerCase();
-  let list=DATA;
-  if(tagF)list=DATA.filter(o=>o.tags.includes(tagF));
+  let list=LIB;
+  if(tagF)list=LIB.filter(o=>o.tags.includes(tagF));
   if(term)list=list.filter(o=>(o.t+' '+o.x+' '+o.tags.join(' ')+' '+CAT[o.c]).toLowerCase().includes(term));
   lc.textContent=(tagF?`Tag: ${tagF} · `:'')+list.length+' item'+(list.length===1?'':'s');
   if(!list.length){rows.innerHTML='<div class="empty">Nothing matches that. Try another word, or <button class="tag" id="clr">clear the search</button>.</div>';pv.innerHTML='';
@@ -654,7 +654,7 @@ q.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();document
 document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='TEXTAREA'){e.preventDefault();q.focus()}});
 
 // sidebar tags
-const tagCount={};DATA.forEach(o=>o.tags.forEach(t=>tagCount[t]=(tagCount[t]||0)+1));
+const tagCount={};LIB.forEach(o=>o.tags.forEach(t=>tagCount[t]=(tagCount[t]||0)+1));
 document.getElementById('sidetags').innerHTML=Object.entries(tagCount).filter(([,n])=>n>1).sort((a,b)=>b[1]-a[1]).slice(0,14)
  .map(([t])=>`<button data-tag="${esc(t)}">${esc(t)}</button>`).join('');
 document.addEventListener('click',e=>{const b=e.target.closest('button[data-tag]');if(!b)return;e.preventDefault();e.stopPropagation();
