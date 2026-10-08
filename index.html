@@ -372,16 +372,6 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
   <div class="dots" id="fdots"></div>
 </section>
 
-<section class="sec" id="cats">
-  <div class="sh"><h2>Pick a <em>corner</em></h2></div>
-  <div class="cats">
-    <a class="cat" href="#library" data-jump="software" style="--c:#00b3c7"><img src="/img/cards/ledgerline-2.jpg" alt="" loading="lazy"><span>Software<small>The Line</small></span></a>
-    <a class="cat" href="#games" style="--c:#d6249f"><img src="/img/cards/sunnfun.jpg" alt="" loading="lazy"><span>Games<small>New: AFTERGLOW casino</small></span></a>
-    <a class="cat" href="#journal" style="--c:#7b2cff"><img src="/img/cards/aliens.jpg" alt="" loading="lazy"><span>My Secrets<small>New: post #3</small></span></a>
-    <a class="cat" href="#tools" style="--c:#5bbf1f"><img src="/img/cards/t-invoice.jpg" alt="" loading="lazy"><span>Free tools<small>No account</small></span></a>
-  </div>
-</section>
-
 <section class="sec" id="library"><span id="line"></span><span id="pricing"></span><span id="apps"></span>
   <div class="sh"><h2>The <em>library</em></h2></div>
   <div class="ltabs" role="tablist" id="ltabs">
@@ -591,8 +581,8 @@ render();
 
 document.getElementById('yr').textContent=new Date().getFullYear();
 const bn=[...document.querySelectorAll('.bnav a')];
-if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const id=e.target.id==='featured'||e.target.id==='cats'?'top':e.target.id;bn.forEach(a=>a.classList.toggle('on',a.dataset.s===id))}}),{rootMargin:'-45% 0px -50% 0px'});
-['featured','cats','library','games','tools','journal'].forEach(i=>{const el=document.getElementById(i);el&&io.observe(el)})}
+if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const id=e.target.id==='featured'?'top':e.target.id;bn.forEach(a=>a.classList.toggle('on',a.dataset.s===id))}}),{rootMargin:'-45% 0px -50% 0px'});
+['featured','library','games','tools','journal'].forEach(i=>{const el=document.getElementById(i);el&&io.observe(el)})}
 
 </script>
 </body>
