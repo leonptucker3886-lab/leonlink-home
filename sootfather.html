@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>Sootfather — a mafia chimney-sweep RPG | LeonLink Games</title>
+<meta name="description" content="Sootfather: a mafia chimney-sweep RPG. Take jobs from the Don, sweep turf, talk or fight your way up. Free, mobile-friendly.">
+<link rel="canonical" href="https://www.leonlink.net/sootfather.html">
+<meta property="og:title" content="Sootfather — a LeonLink RPG">
+<meta property="og:description" content="A chimney sweep. A family business. Free RPG.">
+<meta property="og:image" content="https://www.leonlink.net/img/cards/sootfather.jpg">
+<meta name="theme-color" content="#0b0b12">
+<style>
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:#060609;overflow:hidden;overscroll-behavior:none}
+body{font-family:Georgia,"Times New Roman",serif;color:#f0e9d8;user-select:none;-webkit-user-select:none}
+#wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#060609}
+#stage{position:relative;width:min(100vw,56.25vh);height:min(100vh,177.78vw);aspect-ratio:9/16;max-height:100vh;background:#0b0b12;overflow:hidden}
+@media(min-aspect-ratio:9/16){#stage{border-left:1px solid #2a2a3a;border-right:1px solid #2a2a3a}}
+#art{position:absolute;top:0;left:0;right:0;height:42%;display:block}
+#hud{position:absolute;top:0;left:0;right:0;z-index:6;display:flex;gap:6px;align-items:center;padding:calc(8px + env(safe-area-inset-top)) 10px 8px;font-family:"DM Sans",system-ui,sans-serif;font-size:13px;font-weight:700}
+#hud .pill{background:rgba(8,8,14,.78);border:1px solid #3a3a4e;border-radius:999px;padding:5px 11px;white-space:nowrap;color:#fff}
+#hud .pill small{color:#9a937e;font-weight:600}
+#hud .sp{flex:1}
+#hud button{background:rgba(8,8,14,.78);border:1px solid #3a3a4e;color:#fff;border-radius:50%;width:34px;height:34px;font-size:15px}
+#panel{position:absolute;left:0;right:0;bottom:0;height:58%;background:linear-gradient(180deg,#14141d 0%,#0d0d15 100%);border-top:2px solid #c9a227;display:flex;flex-direction:column;padding:14px 16px calc(14px + env(safe-area-inset-bottom));z-index:5}
+#who{font-size:13px;letter-spacing:.22em;color:#c9a227;font-family:"DM Sans",system-ui,sans-serif;font-weight:700;margin-bottom:6px}
+#text{font-size:19px;line-height:1.55;flex:0 1 auto;overflow-y:auto;min-height:84px;margin-bottom:10px}
+#text .tap{color:#6b6b80;font-size:13px;font-family:"DM Sans",system-ui,sans-serif}
+#choices{display:flex;flex-direction:column;gap:10px;overflow-y:auto;padding-bottom:4px}
+.cbtn{font-family:"DM Sans",system-ui,sans-serif;font-size:17px;font-weight:700;text-align:left;color:#f0e9d8;background:#1d1d29;border:1px solid #4a4a5e;border-radius:12px;padding:15px 16px;cursor:pointer;min-height:58px}
+.cbtn:active{background:#2b2b3d;transform:scale(.985)}
+.cbtn .req{float:right;color:#c9a227;font-size:13px;font-weight:600}
+.cbtn.gold{background:linear-gradient(180deg,#3a2f10,#241d08);border-color:#c9a227;color:#ffe9a8}
+.cbtn.danger{border-color:#7a2a2a}
+.cbtn:disabled{opacity:.45}
+#combatbar{display:none;gap:8px;margin-bottom:10px}
+#combatbar .hpbar{flex:1;background:#22222e;border:1px solid #4a4a5e;border-radius:8px;height:26px;position:relative;overflow:hidden}
+#combatbar .hpfill{position:absolute;inset:0;background:linear-gradient(90deg,#a32727,#e04040);width:100%;transition:width .3s}
+#combatbar .hpfill.you{background:linear-gradient(90deg,#1e7a3a,#37c25e)}
+#combatbar .hplabel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:"DM Sans",system-ui,sans-serif;font-size:12px;font-weight:700;color:#fff;text-shadow:0 1px 2px #000}
+.ov{position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:24px;background:rgba(5,5,10,.9)}
+.ov[hidden]{display:none}
+.ov h1{font-size:52px;letter-spacing:.06em;color:#f0e9d8;text-shadow:0 0 30px #c9a22788;font-weight:400}
+.ov h1 .r{color:#c9a227;font-style:italic}
+.ov .sub{font-style:italic;color:#9a937e;font-size:17px}
+.btn{font-family:"DM Sans",system-ui,sans-serif;font-weight:800;font-size:20px;color:#141005;background:linear-gradient(180deg,#e8c84a,#c9a227);border:0;border-radius:999px;padding:16px 52px;cursor:pointer;min-height:60px;box-shadow:0 0 26px #c9a22755}
+.btn:active{transform:scale(.96)}
+.btn.ghost{background:transparent;border:1px solid #4a4a5e;color:#f0e9d8;box-shadow:none;font-size:16px;padding:12px 30px;min-height:52px}
+.shoprow{display:flex;align-items:center;gap:10px;background:#1d1d29;border:1px solid #4a4a5e;border-radius:12px;padding:12px;margin-bottom:10px;font-family:"DM Sans",system-ui,sans-serif}
+.shoprow .nm{flex:1}.shoprow .nm b{display:block;font-size:16px}.shoprow .nm span{font-size:13px;color:#9a937e}
+.shoprow button{background:#c9a227;border:0;border-radius:10px;font-weight:800;padding:12px 16px;font-size:15px;min-height:50px}
+#float{position:absolute;top:44%;left:0;right:0;text-align:center;z-index:15;pointer-events:none;font-family:"DM Sans",system-ui,sans-serif;font-weight:800;font-size:22px;color:#ffe9a8;text-shadow:0 2px 8px #000;opacity:0;transition:opacity .4s}
+#ovWasted h1{font-size:64px;color:#8a8a8a;text-shadow:0 0 40px #000;letter-spacing:.14em;font-family:"DM Sans",system-ui,sans-serif;font-weight:800}
+.credit{position:absolute;bottom:6px;right:10px;font-size:10px;color:#55556a;z-index:4;letter-spacing:.12em;font-family:"DM Sans",system-ui,sans-serif}
+</style>
+</head>
+<body>
+<div id="wrap"><div id="stage">
+<canvas id="art"></canvas>
+<div id="hud" hidden>
+  <div class="pill">❤ <span id="hHP">24</span></div>
+  <div class="pill">💵 <span id="hCash">40</span></div>
+  <div class="pill">★ <span id="hResp">0</span></div>
+  <div class="pill">🔥 <span id="hHeat">0</span></div>
+  <div class="pill"><small>LV</small> <span id="hLvl">1</span></div>
+  <div class="sp"></div>
+  <button id="bMute" aria-label="Sound">🔊</button>
+</div>
+<div id="float"></div>
+<div id="panel" hidden>
+  <div id="combatbar"><div class="hpbar"><div class="hpfill you" id="hpYou"></div><div class="hplabel" id="hpYouT"></div></div><div class="hpbar"><div class="hpfill" id="hpFoe"></div><div class="hplabel" id="hpFoeT"></div></div></div>
+  <div id="who"></div>
+  <div id="text"></div>
+  <div id="choices"></div>
+</div>
+<div class="ov" id="ovTitle">
+  <h1>THE <span class="r">SOOTFATHER</span></h1>
+  <div class="sub">A chimney sweep. A family business.</div>
+  <div class="sub" style="font-size:14px">An RPG. Your choices matter. Your brush matters more.</div>
+  <button class="btn" id="bNew">New game</button>
+  <button class="btn ghost" id="bCont" hidden>Continue</button>
+</div>
+<div class="ov" id="ovWasted" hidden><h1>WASTED</h1></div>
+<div class="ov" id="ovEnd" hidden>
+  <h1 id="endTitle">MADE MAN</h1>
+  <div class="sub" id="endText"></div>
+  <button class="btn" id="bAgain">New game+</button>
+</div>
+<div class="credit">A LEONLINK GAME</div>
+</div></div>
+<script>
+"use strict";
+/* ================= THE SOOTFATHER ================= */
+const stage=document.getElementById('stage'),art=document.getElementById('art'),ax=art.getContext('2d');
+const $=id=>document.getElementById(id);
+const clamp=(v,a,b)=>v<a?a:v>b?b:v, rnd=(a,b)=>a+Math.random()*(b-a), rndi=(a,b)=>Math.floor(rnd(a,b+1));
+function sizeArt(){const r=stage.getBoundingClientRect();art.width=Math.max(2,r.width);art.height=Math.max(2,r.height*.42)}
+window.addEventListener('resize',sizeArt);
+
+let screen='title';
+let P=null,NG=false,scene='club',sceneT=0,foePortrait=null;
+
+/* ---------- audio ---------- */
+let AC=null,muted=false;try{muted=localStorage.getItem('ll-soot-mute')==='1'}catch(e){}
+function ac(){if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){}}return AC}
+function tone(f,dur,type,vol,delay,slide){if(muted)return;const a=ac();if(!a)return;const t0=a.currentTime+(delay||0);
+  const o=a.createOscillator(),g=a.createGain();o.type=type||'triangle';o.frequency.setValueAtTime(f,t0);
+  if(slide)o.frequency.exponentialRampToValueAtTime(Math.max(30,slide),t0+dur);
+  g.gain.setValueAtTime(vol||.05,t0);g.gain.exponentialRampToValueAtTime(.0001,t0+dur);
+  o.connect(g);g.connect(a.destination);o.start(t0);o.stop(t0+dur+.02)}
+const sTap=()=>tone(500,.06,'triangle',.04);
+let lastTap=0;
+function tapTo(fn){return()=>{const n=Date.now();if(n-lastTap<400)return;lastTap=n;sTap();fn()}}
+const sCoin=()=>{tone(950,.07,'triangle',.05);tone(1420,.1,'triangle',.05,.07)};
+const sHit=()=>tone(180,.15,'sawtooth',.07,0,60);
+const sWin=()=>{[392,523,659].forEach((f,i)=>tone(f,.16,'triangle',.06,i*.11))};
+const sLose=()=>tone(300,.4,'sawtooth',.06,0,90);
+const sLvl=()=>{[523,659,784,1046].forEach((f,i)=>tone(f,.14,'triangle',.06,i*.09))};
+
+/* ---------- state ---------- */
+function newPlayer(){return{hp:24,maxhp:24,mus:3,cha:3,lck:3,cash:40,resp:0,xp:0,lvl:1,
+  gear:[],ch:0,mi:0,done:[],heat:0}}
+function save(){try{localStorage.setItem('ll-soot-save',JSON.stringify({P,NG}))}catch(e){}}
+function load(){try{const s=JSON.parse(localStorage.getItem('ll-soot-save'));if(s&&s.P){P=s.P;NG=!!s.NG;return true}}catch(e){}return false}
+function wipe(){try{localStorage.removeItem('ll-soot-save')}catch(e){}}
+
+/* ---------- portraits ---------- */
+function drawBust(who,x,y,s){
+  ax.save();ax.translate(x,y);ax.scale(s,s);
+  const skin='#e8b98d';
+  if(who==='you'){ // bald, red backwards cap, goatee
+    ax.fillStyle=skin;ax.beginPath();ax.arc(0,0,34,0,7);ax.fill();
+    ax.fillStyle='#ffffff55';ax.beginPath();ax.ellipse(-8,-12,10,6,-.5,0,7);ax.fill();
+    ax.fillStyle='#c22f2f';ax.beginPath();ax.arc(-3,-6,32,Math.PI*.85,Math.PI*2.02);ax.fill();
+    ax.fillRect(-52,-16,30,13);ax.fillStyle='#8f1f1f';ax.fillRect(-52,-6,30,5);
+    ax.fillStyle='#4a3a30';ax.beginPath();ax.ellipse(6,22,10,8,0,0,7);ax.fill();
+    ax.fillStyle='#1a1a22';ax.beginPath();ax.arc(12,-4,4.5,0,7);ax.fill();
+    ax.strokeStyle='#c9a227';ax.lineWidth=3;ax.beginPath();ax.arc(0,0,38,0,7);ax.stroke();
+  }else if(who==='sal'){ // the Don: silver hair, suit, cigar
+    ax.fillStyle=skin;ax.beginPath();ax.arc(0,0,34,0,7);ax.fill();
+    ax.fillStyle='#cfcfcf';ax.beginPath();ax.arc(0,-14,33,Math.PI,0);ax.fill();
+    ax.fillStyle='#1c1c24';ax.fillRect(-34,22,68,40);
+    ax.fillStyle='#8f1f2f';ax.beginPath();ax.moveTo(0,24);ax.lineTo(-8,50);ax.lineTo(8,50);ax.fill();
+    ax.fillStyle='#1a1a22';ax.beginPath();ax.arc(-11,-4,4,0,7);ax.arc(11,-4,4,0,7);ax.fill();
+    ax.fillStyle='#6b4a2a';ax.fillRect(18,12,22,7);ax.fillStyle='#e07020';ax.beginPath();ax.arc(42,15,3,0,7);ax.fill();
+  }else if(who==='vin'){ // consigliere: glasses, thin
+    ax.fillStyle=skin;ax.beginPath();ax.arc(0,0,32,0,7);ax.fill();
+    ax.fillStyle='#3a2c1c';ax.beginPath();ax.arc(0,-16,31,Math.PI,0);ax.fill();ax.fillRect(-31,-16,10,22);ax.fillRect(21,-16,10,22);
+    ax.strokeStyle='#111';ax.lineWidth=2.5;ax.beginPath();ax.arc(-11,-2,9,0,7);ax.arc(11,-2,9,0,7);ax.moveTo(-2,-2);ax.lineTo(2,-2);ax.stroke();
+    ax.fillStyle='#1a1a22';ax.beginPath();ax.arc(-11,-2,3,0,7);ax.arc(11,-2,3,0,7);ax.fill();
+    ax.fillStyle='#2a2a34';ax.fillRect(-32,24,64,36);
+  }else if(who==='punk'){ // punk kid: mohawk
+    ax.fillStyle='#d8a37d';ax.beginPath();ax.arc(0,0,30,0,7);ax.fill();
+    ax.fillStyle='#c22f8f';for(let i=-2;i<=2;i++){ax.beginPath();ax.moveTo(i*10-4,-24);ax.lineTo(i*10+4,-24);ax.lineTo(i*10,-52);ax.fill()}
+    ax.fillStyle='#1a1a22';ax.beginPath();ax.arc(-10,-2,4,0,7);ax.arc(10,-2,4,0,7);ax.fill();
+    ax.strokeStyle='#1a1a22';ax.lineWidth=3;ax.beginPath();ax.arc(0,12,10,.3,Math.PI-.3);ax.stroke();
+  }else if(who==='brick'){ // brick: huge jaw
+    ax.fillStyle='#c89878';ax.beginPath();ax.arc(0,-4,30,0,7);ax.fill();
+    ax.fillStyle='#c89878';ax.fillRect(-22,6,44,26);
+    ax.fillStyle='#241a12';ax.fillRect(-30,-26,60,12);
+    ax.fillStyle='#a02020';ax.beginPath();ax.arc(-10,-6,4,0,7);ax.arc(10,-6,4,0,7);ax.fill();
+    ax.strokeStyle='#5a2a1a';ax.lineWidth=4;ax.beginPath();ax.moveTo(-14,22);ax.lineTo(14,22);ax.stroke();
+  }else if(who==='ash'){ // rival boss: scar, slick hair
+    ax.fillStyle='#d8a37d';ax.beginPath();ax.arc(0,0,33,0,7);ax.fill();
+    ax.fillStyle='#14141c';ax.beginPath();ax.arc(0,-12,32,Math.PI*1.02,Math.PI*1.98);ax.fill();
+    ax.strokeStyle='#a02020';ax.lineWidth=3;ax.beginPath();ax.moveTo(-16,-14);ax.lineTo(-6,8);ax.stroke();
+    ax.fillStyle='#1a1a22';ax.beginPath();ax.arc(-11,-2,4,0,7);ax.arc(11,-2,4,0,7);ax.fill();
+    ax.fillStyle='#0f0f16';ax.beginPath();ax.ellipse(0,24,12,5,0,0,7);ax.fill();
+  }else if(who==='goon'){ // task force: cap + sunglasses
+    ax.fillStyle='#c89878';ax.beginPath();ax.arc(0,0,32,0,7);ax.fill();
+    ax.fillStyle='#1c2a44';ax.beginPath();ax.arc(0,-8,31,Math.PI,0);ax.fill();ax.fillRect(-31,-12,62,8);
+    ax.fillStyle='#0a0a10';ax.fillRect(-24,-6,48,12);
+    ax.fillStyle='#2a2a34';ax.fillRect(-32,24,64,36);
+  }else if(who==='grey'){ // councilman: grey suit, fake smile
+    ax.fillStyle='#d8b08d';ax.beginPath();ax.arc(0,0,33,0,7);ax.fill();
+    ax.fillStyle='#888';ax.beginPath();ax.arc(-14,-16,10,0,7);ax.arc(14,-16,10,0,7);ax.fill();
+    ax.fillStyle='#3a3a48';ax.fillRect(-33,22,66,40);
+    ax.fillStyle='#c9a227';ax.beginPath();ax.moveTo(0,24);ax.lineTo(-7,48);ax.lineTo(7,48);ax.fill();
+    ax.strokeStyle='#1a1a22';ax.lineWidth=3;ax.beginPath();ax.arc(0,6,14,.25,Math.PI-.25);ax.stroke();
+  }
+  ax.restore();
+}
+
+/* ---------- scenes ---------- */
+let rain=[];
+function drawScene(dt){
+  sceneT+=dt;
+  const w=art.width,h=art.height;
+  const g=ax.createLinearGradient(0,0,0,h);
+  if(scene==='club'){g.addColorStop(0,'#141020');g.addColorStop(1,'#241a10')}
+  else if(scene==='roof'){g.addColorStop(0,'#0b0b1e');g.addColorStop(.7,'#3a1f4d');g.addColorStop(1,'#141020')}
+  else{g.addColorStop(0,'#0a0a16');g.addColorStop(.75,'#1c1c34');g.addColorStop(1,'#0e0e18')}
+  ax.fillStyle=g;ax.fillRect(0,0,w,h);
+  // moon
+  ax.fillStyle='#f5f0d8';ax.beginPath();ax.arc(w*.82,h*.2,Math.min(w,h)*.055,0,7);ax.fill();
+  ax.fillStyle='#ffffff66';for(let i=0;i<24;i++)ax.fillRect((i*197)%w,(i*131)%(h*.4),2,2);
+  const horizon=h*.72;
+  if(scene==='club'){
+    ax.fillStyle='#1d1626';ax.fillRect(0,horizon,w,h-horizon);
+    ax.fillStyle='#c9a22733';ax.fillRect(0,horizon,w,3);
+    // card table
+    ax.fillStyle='#1e3a24';ax.beginPath();ax.ellipse(w/2,h*.88,w*.3,h*.1,0,0,7);ax.fill();
+    ax.fillStyle='#f0e9d8';for(let i=0;i<5;i++)ax.fillRect(w/2-w*.2+i*w*.09,h*.86,22,30);
+    // hanging lamp
+    ax.strokeStyle='#444';ax.lineWidth=3;ax.beginPath();ax.moveTo(w/2,0);ax.lineTo(w/2,h*.3);ax.stroke();
+    ax.fillStyle='#e8c84a';ax.beginPath();ax.moveTo(w/2-26,h*.38);ax.lineTo(w/2+26,h*.38);ax.lineTo(w/2,h*.28);ax.fill();
+    const lg=ax.createRadialGradient(w/2,h*.4,10,w/2,h*.4,120);lg.addColorStop(0,'#e8c84a22');lg.addColorStop(1,'transparent');
+    ax.fillStyle=lg;ax.fillRect(0,0,w,h);
+  }else if(scene==='map'){
+    ax.fillStyle='#0d0d16';ax.fillRect(0,0,w,h);
+    ax.strokeStyle='#1c3a5c';ax.lineWidth=w*.08;ax.beginPath();
+    ax.moveTo(w*.64,0);ax.quadraticCurveTo(w*.5,h*.5,w*.74,h);ax.stroke();
+    ax.strokeStyle='#22222e';ax.lineWidth=2;
+    for(let i=1;i<6;i++){ax.beginPath();ax.moveTo(w*i/6,0);ax.lineTo(w*i/6,h);ax.stroke();
+      ax.beginPath();ax.moveTo(0,h*i/6);ax.lineTo(w,h*i/6);ax.stroke()}
+    ax.textAlign='center';
+    ax.fillStyle='#c9a227';ax.font='bold '+Math.round(w*.055)+'px Georgia,serif';
+    ax.fillText('SOOT CITY',w*.5,h*.07);
+    ax.fillStyle='#4a4a5e';ax.font=Math.round(w*.032)+'px sans-serif';
+    ax.fillText('LITTLE SOOTY',w*.24,h*.14);
+    ax.fillText('THE DOCKS',w*.82,h*.47);
+    ax.fillText('UPTOWN',w*.3,h*.92);
+    for(const pn of pins){
+      const px=pn.x*w,py=pn.y*h;
+      if(pn.label==='!'){
+        const pl=1+Math.sin(sceneT*5)*.18;
+        ax.fillStyle='#e8c84a';ax.beginPath();ax.arc(px,py,17*pl,0,7);ax.fill();
+        ax.fillStyle='#141005';ax.font='bold 22px sans-serif';ax.fillText('!',px,py+8);
+      }else{
+        ax.fillStyle=pn.cls;ax.beginPath();ax.arc(px,py,14,0,7);ax.fill();
+        ax.fillStyle='#0b0b12';ax.font='bold 15px sans-serif';ax.fillText(pn.label,px,py+5);
+      }
+    }
+  }else{
+    // rooftops + chimneys silhouette
+    ax.fillStyle='#101018';
+    const off=(sceneT*8)%(w*.3);
+    for(let x=-off;x<w;x+=w*.3){
+      const bh=h*rnd(.12,.2);
+      ax.fillRect(x,horizon-bh,w*.24,bh);
+      ax.fillRect(x+w*.05,horizon-bh-h*.09,w*.05,h*.09); // chimney
+      ax.fillRect(x+w*.15,horizon-bh-h*.06,w*.04,h*.06);
+    }
+    ax.fillStyle='#0a0a12';ax.fillRect(0,horizon,w,h-horizon);
+    // street lamps
+    for(let x=w*.1;x<w;x+=w*.4){
+      ax.strokeStyle='#2c2c40';ax.lineWidth=4;ax.beginPath();ax.moveTo(x,horizon);ax.lineTo(x,horizon-h*.16);ax.stroke();
+      ax.fillStyle='#ffe9a8';ax.beginPath();ax.arc(x,horizon-h*.16,6,0,7);ax.fill();
+    }
+    // rain
+    if(rain.length<60&&Math.random()<.6)rain.push({x:rnd(0,w),y:-10,v:rnd(300,500)});
+    ax.strokeStyle='#ffffff22';ax.lineWidth=1.5;ax.beginPath();
+    for(const r of rain){ax.moveTo(r.x,r.y);ax.lineTo(r.x-4,r.y+14);r.y+=r.v*dt;if(r.y>h)r.y=-10}
+    ax.stroke();
+  }
+  // smoke wisps on roof scenes
+  if(scene==='roof'){
+    ax.fillStyle='#ffffff10';
+    for(let i=0;i<4;i++){const sx=w*(.15+i*.22)+Math.sin(sceneT+i)*10;
+      ax.beginPath();ax.arc(sx,h*.3-((sceneT*20+i*40)%(h*.25)),14,0,7);ax.fill()}
+  }
+  // busts (not on the map)
+  if(scene!=='map'){
+    if(foePortrait)drawBust(foePortrait,w*.72,h*.52,Math.min(w,h)/300);
+    drawBust('you',w*.26,h*.55,Math.min(w,h)/330);
+  }
+  // letterbox fade into panel
+  const fg=ax.createLinearGradient(0,h*.8,0,h);fg.addColorStop(0,'transparent');fg.addColorStop(1,'#0b0b12');
+  ax.fillStyle=fg;ax.fillRect(0,h*.8,w,h*.2);
+}
+
+/* ---------- UI engine ---------- */
+function hud(){
+  $('hHP').textContent=P.hp+'/'+P.maxhp;$('hCash').textContent=P.cash;
+  $('hResp').textContent=P.resp;$('hLvl').textContent=P.lvl;$('hHeat').textContent=P.heat;
+}
+function setScene(s,foe){scene=s;foePortrait=foe||null}
+function showPanel(v){$('panel').hidden=!v;$('hud').hidden=!v}
+function say(who,text,choices){
+  $('who').textContent=who||'';
+  const t=$('text');t.innerHTML=text+'<br><span class="tap">tap to continue ▸</span>';
+  const c=$('choices');c.innerHTML='';
+  t.onclick=tapTo(()=>next());
+  t.style.cursor='pointer';
+  if(choices){t.onclick=null;t.style.cursor='default';t.innerHTML=text;
+    choices.forEach(ch=>addChoice(ch.label,ch.fn,ch.req,ch.cls));}
+}
+function addChoice(label,fn,req,cls){
+  const b=document.createElement('button');b.className='cbtn'+(cls?' '+cls:'');
+  b.innerHTML=(req?'<span class="req">'+req+'</span>':'')+label;
+  b.onclick=()=>{sTap();fn()};
+  $('choices').appendChild(b);
+}
+function clearChoices(){$('choices').innerHTML='';$('text').onclick=null;$('text').style.cursor='default'}
+function float2(txt){const f=$('float');f.textContent=txt;f.style.opacity=1;setTimeout(()=>f.style.opacity=0,1100)}
+function gain(e){
+  let s=[];
+  if(e.cash){P.cash+=e.cash;s.push((e.cash>0?'+':'')+'$'+e.cash);if(e.cash>0)sCoin()}
+  if(e.resp){P.resp=Math.max(0,P.resp+e.resp);s.push((e.resp>0?'+':'')+e.resp+' ★')}
+  if(e.hp){P.hp=clamp(P.hp+e.hp,0,P.maxhp);s.push((e.hp>0?'+':'')+e.hp+' ❤')}
+  if(e.heat){P.heat=clamp(P.heat+e.heat,0,5);s.push('🔥'+(e.heat>0?'+':'')+e.heat)}
+  if(e.xp){P.xp+=e.xp;checkLvl()}
+  if(s.length)float2(s.join('  '));
+  hud();save();
+}
+function checkLvl(){
+  let need=P.lvl*100;
+  while(P.xp>=need){
+    P.xp-=need;P.lvl++;need=P.lvl*100;P.maxhp+=4;P.hp=P.maxhp;sLvl();
+    levelUpScreen();return;
+  }
+}
+function levelUpScreen(){
+  say('','<b>LEVEL UP.</b> The family notices you.<br>Pick what grows:',[
+    {label:'💪 Muscle +1',fn:()=>{P.mus++;afterLvl()}},
+    {label:'🗣️ Charm +1',fn:()=>{P.cha++;afterLvl()}},
+    {label:'🍀 Luck +1',fn:()=>{P.lck++;afterLvl()}},
+  ]);
+}
+function afterLvl(){hud();save();next()}
+
+/* script runner: array of beats */
+let script=[],si=0,afterScript=null;
+function runScript(beats,after){script=beats;si=0;afterScript=after||null;next()}
+function next(){
+  clearChoices();
+  if(si>=script.length){const a=afterScript;afterScript=null;if(a)a();return}
+  const b=script[si++];
+  if(b.t==='say'){setScene(b.scene||scene,b.foe);say(b.who,b.text)}
+  else if(b.t==='choice'){
+    setScene(b.scene||scene,b.foe);
+    say(b.who,b.text,b.opts.map(o=>({label:o.label,req:o.req,cls:o.cls,fn:()=>{
+      if(o.check){
+        const st=P[o.check.stat],roll=st+rndi(0,4);
+        if(roll>=o.check.need){say('',o.win.text);gain(o.win.g||{});script.splice(si,0,...(o.win.then||[]))}
+        else{say('',o.lose.text);gain(o.lose.g||{});script.splice(si,0,...(o.lose.then||[]))}
+      }else{if(o.g)gain(o.g);if(o.text)say('',o.text);if(o.then)script.splice(si,0,...o.then);else next()}
+    }})));
+  }
+  else if(b.t==='fight'){startCombat(b.foe,b.scene)}
+  else if(b.t==='gain'){gain(b.g);next()}
+  else if(b.t==='fn'){b.fn();next()}
+}
+
+/* ---------- combat ---------- */
+let foe=null,foeEnraged=false;
+function foeHp(f){return NG?Math.round(f.hp*1.5):f.hp}
+function startCombat(f,sc){
+  foe=Object.assign({},f);foe.hp=foe.maxhp=foeHp(f);foe.atk=NG?f.atk+2:f.atk;
+  foeEnraged=false;
+  setScene(sc||'street',foe.art);
+  say('','<b>'+foe.name+'</b> blocks your way.<br><i>'+foe.line+'</i>');
+  $('text').onclick=tapTo(()=>{combatMenu()});
+  $('text').style.cursor='pointer';
+}
+function combatMenu(){
+  clearChoices();
+  combatBar(true);
+  say('',foe.name+' — what do you do?');
+  $('text').onclick=null;
+  const dmg=3+P.mus*2+(P.gear.includes('brush')?4:0);
+  addChoice('🧹 Swing the brush <span class="req">~'+dmg+' dmg</span>',()=>playerHit(dmg));
+  addChoice('🗣️ Sweet-talk',()=>playerTalk(),P.cha>=foe.will?'CHA '+P.cha+' vs '+foe.will:null);
+  addChoice('💵 Bribe <span class="req">$'+foe.bribe+'</span>',()=>playerBribe(),null,foe.boss?'danger':null);
+  if(!foe.boss)addChoice('💨 Smoke bomb',()=>playerRun());
+}
+function combatBar(v){$('combatbar').style.display=v?'flex':'none';combatHud()}
+function combatHud(){
+  if(!foe)return;
+  $('hpYou').style.width=(100*P.hp/P.maxhp)+'%';$('hpYouT').textContent='YOU '+P.hp+'/'+P.maxhp;
+  $('hpFoe').style.width=Math.max(0,100*foe.hp/foe.maxhp)+'%';$('hpFoeT').textContent=foe.name.toUpperCase()+' '+Math.max(0,foe.hp);
+}
+function playerHit(dmg){
+  const d=dmg+rndi(-2,2);foe.hp-=d;sHit();combatHud();
+  say('','You catch '+foe.name+' with the brush for <b>'+d+'</b>.');
+  $('text').onclick=tapTo(()=>{if(foe.hp<=0)winFight();else foeTurn()});
+  $('text').style.cursor='pointer';
+}
+function playerTalk(){
+  const roll=P.cha+rndi(0,4)+(P.gear.includes('suit')?2:0);
+  if(roll>=foe.will){
+    sWin();say('','"'+foe.convinced+'"<br>'+foe.name+' steps aside.');
+    $('text').onclick=tapTo(()=>{winFight(true)});$('text').style.cursor='pointer';
+  }else{
+    foeEnraged=true;foe.atk+=2;sLose();
+    say('','That landed wrong. '+foe.name+' sees red.');
+    $('text').onclick=tapTo(()=>{foeTurn()});$('text').style.cursor='pointer';
+  }
+}
+function playerBribe(){
+  if(P.cash<foe.bribe){say('',"You don't have the cash. "+foe.name+" laughs.");
+    $('text').onclick=tapTo(()=>{foeTurn()});$('text').style.cursor='pointer';return}
+  P.cash-=foe.bribe;sCoin();hud();
+  say('',"Money talks. "+foe.name+" walks.");
+  $('text').onclick=tapTo(()=>{winFight(true)});$('text').style.cursor='pointer';
+}
+function playerRun(){
+  const roll=P.lck+rndi(0,4)+(P.gear.includes('coin')?2:0);
+  if(roll>=6){say('',"Smoke bomb. Gone.");
+    $('text').onclick=tapTo(()=>{combatBar(false);next()});$('text').style.cursor='pointer'}
+  else{say('',"The bomb fizzles. No way out but through.");
+    $('text').onclick=tapTo(()=>{foeTurn()});$('text').style.cursor='pointer'}
+}
+function foeTurn(){
+  clearChoices();
+  const d=Math.max(1,foe.atk+rndi(-2,2)-(P.gear.includes('suit')?1:0));
+  P.hp-=d;sHit();combatHud();hud();
+  if(P.hp<=0){knockedOut();return}
+  say('',foe.name+' hits you for <b>'+d+'</b>.');
+  $('text').onclick=tapTo(()=>{combatMenu()});$('text').style.cursor='pointer';
+}
+function winFight(talked){
+  combatBar(false);sWin();
+  const xp=foe.boss?100:25, cash=foe.cash||rndi(15,30), resp=foe.boss?3:1;
+  say('',(talked?'Handled with words. ':'Handled.')+'<br>The family hears about it.');
+  gain({xp,cash:cash,respect:resp});
+  $('text').onclick=tapTo(()=>{next()});$('text').style.cursor='pointer';
+}
+function knockedOut(){
+  combatBar(false);sLose();screen='wasted';showPanel(false);
+  $('ovWasted').hidden=false;
+  const lost=Math.floor(P.cash/2);P.cash-=lost;P.hp=P.maxhp;P.resp=Math.max(0,P.resp-1);
+  P.heat=Math.max(0,P.heat-2);
+  hud();save();
+  setTimeout(()=>{$('ovWasted').hidden=true;
+    hub("You wake up at Doc's. Ribs taped. Wallet lighter.<br>(-$"+lost+", -1 ★)");
+  },2100);
+}
+
+/* ---------- story ---------- */
+let lvlUpShown=false;
+checkLvl=function(){
+  let need=P.lvl*100;
+  while(P.xp>=need){
+    P.xp-=need;P.lvl++;need=P.lvl*100;P.maxhp+=4;P.hp=P.maxhp;sLvl();
+    lvlUpShown=true;levelUpScreen();return;
+  }
+};
+afterLvl=function(){lvlUpShown=false;hud();save();checkLvl();
+  if(!lvlUpShown&&(si>=script.length&&!afterScript))hub();else next()};
+const _next=next;
+next=function(){if(lvlUpShown)return;_next()};
+
+const FOES={
+  punk:{name:'Punk Kid',art:'punk',hp:16,atk:4,will:3,bribe:20,cash:25,line:'"Toll\'s a dollar, sweep."',convinced:'"Okay okay! Family business, I get it!"'},
+  greaser:{name:'Greaser',art:'punk',hp:26,atk:7,will:4,bribe:40,cash:40,line:'"Ash sends his regards."',convinced:'"Tell Ash... actually don\'t tell Ash."'},
+  brick:{name:'Brick',art:'brick',hp:42,atk:8,will:5,bribe:120,cash:90,boss:true,line:'"I\'M the chimney now."',convinced:'"Brick... respects the brush."'},
+  goon:{name:'Task Force Goon',art:'goon',hp:36,atk:9,will:6,bribe:70,cash:50,line:'"Cease and desist, citizen."',convinced:'"My pension ain\'t worth this."'},
+  ash:{name:'Ash Morano',art:'ash',hp:62,atk:11,will:7,bribe:200,cash:150,boss:true,line:'"This town ain\'t big enough for two sweeps."',convinced:'"Fine. The east side is yours. ...For now."'},
+  grey:{name:'Councilman Grey',art:'grey',hp:85,atk:12,will:9,bribe:300,cash:300,boss:true,line:'"Sweeps are a relic. The future is electric."',convinced:'"...Perhaps the future has room for tradition."'},
+};
+const CHAPTERS=[
+{title:'CHAPTER 1 — TRIBUTE DAY',missions:[
+ {name:'The Rounds',beats:[
+  {t:'say',who:'VINNIE',scene:'club',text:'Sal runs every flue in this town. Bakeries, barbers, brownstones — they all pay the sweep.'},
+  {t:'say',who:'SAL',text:'The chimneys pay. The shops pay. <i>You</i> collect. That\'s the business, kid. Don\'t embarrass me.'},
+  {t:'say',who:'',scene:'street',text:'<b>Luigi\'s Bakery.</b> The fee is $40. Luigi is "counting".'},
+  {t:'choice',who:'',text:'How do you collect?',opts:[
+    {label:'🗣️ Talk nice',req:'CHA 5',check:{stat:'cha',need:5},
+     win:{text:'Luigi laughs, pays $50, throws in a cannoli. "For the family!"',g:{cash:50,resp:1,xp:10}},
+     lose:{text:'Luigi shrugs. "$40. Take it."',g:{cash:40,xp:5}}},
+    {label:'💪 Talk loud',req:'MUS 5',check:{stat:'mus',need:5},
+     win:{text:'You lean on the counter. It creaks. Luigi pays $60 fast.',g:{cash:60,resp:-1,xp:10}},
+     lose:{text:'Luigi calls your bluff. "$40."',g:{cash:40,xp:5}}},
+    {label:'🤝 Just take the $40',g:{cash:40,xp:5},then:[{t:'say',who:'',text:'Clean. Boring. The family likes boring.'}]},
+  ]},
+  {t:'say',who:'',scene:'street',text:'An alley. A punk kid is shaking down the delivery boy. <b>Family turf.</b>'},
+  {t:'fight',foe:FOES.punk,scene:'street'},
+  {t:'say',who:'YOU',text:'Not on our street.'},
+  {t:'say',who:'',scene:'street',text:'<b>The barber.</b> He counts the $40 twice. Slowly. Too slowly.'},
+  {t:'choice',who:'',text:'Something\'s short.',opts:[
+    {label:'🍀 Trust your gut',req:'LCK 5',check:{stat:'lck',need:5},
+     win:{text:'You catch the short count. He pays double and apologizes to your brush.',g:{cash:80,resp:1,xp:10}},
+     lose:{text:'False alarm. He pays $40 and you feel silly.',g:{cash:40,xp:5}}},
+    {label:'🤝 Let it slide',g:{cash:40,xp:5},then:[{t:'say',who:'VINNIE',text:'Soft. But the money\'s right. Sal notices restraint.'}]},
+  ]},
+ ],reward:{cash:40,resp:1,xp:40}},
+ {name:'Brick',boss:true,beats:[
+  {t:'say',who:'VINNIE',scene:'club',text:'Ash Morano\'s crew is sweeping OUR chimneys. Brick is their muscle. Docks. Tonight.'},
+  {t:'say',who:'BRICK',scene:'street',foe:'brick',text:'"You\'re the new broom? I\'M the chimney now."'},
+  {t:'fight',foe:FOES.brick,scene:'street'},
+  {t:'say',who:'SAL',scene:'club',text:'Brick sweeps no more. Ash knows our name now. <i>Good work, kid.</i>'},
+ ],reward:{cash:80,resp:2,xp:60}},
+]},
+{title:'CHAPTER 2 — THE ASH WAR',missions:[
+ {name:'Smoke Signals',beats:[
+  {t:'say',who:'VINNIE',scene:'club',text:'Ash hit three of our shops last night. Soot everywhere. Send a message.'},
+  {t:'say',who:'',scene:'street',text:'A greaser guards Ash\'s supply shed. Brushes, ladders, <i>our</i> brushes.'},
+  {t:'fight',foe:FOES.greaser,scene:'street'},
+  {t:'choice',who:'',text:'The shed. What\'s the message?',opts:[
+    {label:'💪 Torch it',req:'MUS 6',check:{stat:'mus',need:6},
+     win:{text:'The shed burns beautifully. Ash\'s crew sweeps with sticks now.',g:{cash:50,resp:2,xp:15,heat:1}},
+     lose:{text:'The lock holds. You leave a dent and your dignity.',g:{xp:5}}},
+    {label:'🗣️ Turn his guy',req:'CHA 6',check:{stat:'cha',need:6},
+     win:{text:'The greaser flips. "Ash never paid on time anyway." New ear on the inside.',g:{resp:2,xp:15}},
+     lose:{text:'"Nice try, pretty boy." He spits at your shoes.',g:{xp:5}}},
+    {label:'🚶 Walk away',g:{xp:5},then:[{t:'say',who:'YOU',text:'Message sent. The brush did the talking.'}]},
+  ]},
+ ],reward:{cash:60,resp:1,xp:50}},
+ {name:'Ash Morano',boss:true,beats:[
+  {t:'say',who:'ASH',scene:'roof',foe:'ash',text:'"So. The new broom. This town ain\'t big enough for two sweeps, pretty boy."'},
+  {t:'fight',foe:FOES.ash,scene:'roof'},
+  {t:'say',who:'SAL',scene:'club',text:'The war is over. Ash pays tribute now. Or Ash pays in teeth. <i>You did this.</i>'},
+ ],reward:{cash:100,resp:3,xp:70}},
+]},
+{title:'CHAPTER 3 — CLEAN AIR',missions:[
+ {name:'Paperwork',beats:[
+  {t:'say',who:'VINNIE',scene:'club',text:'Councilman Grey. "Clean Air Task Force." Fines. Padlocks. Inspectors at every flue. He\'s coming for us.'},
+  {t:'choice',who:'',scene:'street',text:'An inspector eyes your brushes. Clipboard out.',opts:[
+    {label:'🍀 Dodge the paperwork',req:'LCK 6',check:{stat:'lck',need:6},
+     win:{text:'You\'re gone before the ink dries. The inspector fines a pigeon.',g:{resp:1,xp:15}},
+     lose:{text:'Fined on the spot. The city thanks you for your contribution.',g:{cash:-40,xp:5,heat:1}}},
+    {label:'🗣️ Charm offensive',req:'CHA 7',check:{stat:'cha',need:7},
+     win:{text:'"My grandmother had a sweep," he sighs, and walks away.',g:{resp:1,xp:15}},
+     lose:{text:'He is immune to charm. It\'s in the job description.',g:{cash:-40,xp:5}}},
+  ]},
+  {t:'say',who:'',scene:'street',text:'A Task Force goon padlocks Sal\'s favorite flue.'},
+  {t:'fight',foe:FOES.goon,scene:'street'},
+ ],reward:{cash:80,resp:2,xp:60}},
+ {name:'The Councilman',boss:true,beats:[
+  {t:'say',who:'GREY',scene:'club',foe:'grey',text:'"Sweeps are a relic, my boy. The future is electric. And fined."'},
+  {t:'fight',foe:FOES.grey,scene:'club'},
+  {t:'say',who:'SAL',scene:'club',text:'Grey withdrew the task force this morning. Funny how that works.'},
+ ],reward:{cash:200,resp:4,xp:80}},
+]},
+];
+
+/* ---------- city map ---------- */
+let pins=[];
+function buildPins(){
+  pins=[];
+  const ch=CHAPTERS[P.ch];
+  const spots=[[.24,.32],[.7,.26],[.42,.58],[.76,.62],[.26,.8]];
+  let locked=false;
+  ch.missions.forEach((m,mi)=>{
+    const id=missionId(P.ch,mi),done=P.done.includes(id);
+    let label='\uD83D\uDD12',fn=null,cls='#55556a';
+    if(done){label='\u2713';cls='#37c25e'}
+    else if(!locked){label='!';cls='#e8c84a';fn=(()=>{const c=P.ch,i=mi;return()=>startMission(c,i)})();locked=true}
+    const s=spots[mi%spots.length];
+    pins.push({x:s[0],y:s[1],label,fn,cls});
+  });
+  pins.push({x:.84,y:.84,label:'$',fn:()=>shop(),cls:'#37c25e'});
+}
+art.addEventListener('pointerdown',e=>{
+  if(screen!=='hub')return;
+  const r=art.getBoundingClientRect();
+  const x=(e.clientX-r.left)/r.width*art.width, y=(e.clientY-r.top)/r.height*art.height;
+  for(const pn of pins){
+    const px=pn.x*art.width,py=pn.y*art.height,dx=x-px,dy=y-py;
+    if(dx*dx+dy*dy<32*32&&pn.fn){pn.fn();return}
+  }
+});
+
+/* ---------- hub & shop ---------- */
+function missionId(ch,mi){return ch+'-'+mi}
+function hub(msg){
+  screen='hub';combatBar(false);showPanel(true);
+  setScene('map');hud();buildPins();
+  const ch=CHAPTERS[P.ch];
+  say(ch.title,(msg||'Soot City. Your town. Your flues.')+'<br><span class="tap">Tap a marker on the map, or pick below.</span>');
+  $('text').onclick=null;
+  let locked=false;
+  ch.missions.forEach((m,mi)=>{
+    const id=missionId(P.ch,mi),done=P.done.includes(id);
+    if(!locked){
+      if(done)addChoice('✓ '+m.name+' — done',()=>{});
+      else{addChoice((m.boss?'🔥 ':'💼 ')+m.name+' <span class="req">GO</span>',()=>startMission(P.ch,mi),'',m.boss?'danger':'gold');locked=true}
+    }else addChoice('🔒 '+m.name,()=>{},null);
+  });
+  addChoice("🏪 Luigi's Pawn (shop)",()=>shop());
+  if(P.heat>0)addChoice('🔥 Lay Low <span class="req">$'+(P.heat*30)+'</span>',()=>{
+    if(P.cash<P.heat*30){say('','Not enough cash to disappear.');return}
+    P.cash-=P.heat*30;P.heat=0;sCoin();hud();save();hub('Heat\'s off. You\'re a ghost again.');
+  });
+  if(P.ch<CHAPTERS.length-1&&ch.missions.every((m,mi)=>P.done.includes(missionId(P.ch,mi))))
+    addChoice('Next chapter →',()=>{P.ch++;P.mi=0;save();hub()},'','gold');
+}
+function startMission(ch,mi){
+  const m=CHAPTERS[ch].missions[mi];
+  P.mi=mi;save();
+  let beats=m.beats.slice();
+  if(P.heat>=2&&!m.boss&&Math.random()<P.heat*0.12){
+    const amb=P.ch>=2?FOES.goon:FOES.greaser;
+    beats=[{t:'say',who:'',scene:'street',foe:amb.art,text:'<b>AMBUSH.</b> The heat brought them straight to you.'},
+           {t:'fight',foe:amb,scene:'street'},
+           {t:'gain',g:{heat:-1}},
+           {t:'say',who:'',text:'They won\'t follow. For now.'}].concat(beats);
+  }
+  say('','<b>'+m.name+'.</b>');
+  $('text').onclick=tapTo(()=>{runScript(beats.concat([
+    {t:'fn',fn:()=>{P.done.push(missionId(ch,mi));save()}},
+    {t:'say',who:'',text:'<b style="color:#c9a227;letter-spacing:.1em">MISSION PASSED</b><br>The family eats tonight.'},
+    {t:'gain',g:m.reward},
+    {t:'fn',fn:()=>{if(m.boss&&ch===CHAPTERS.length-1)ending();else hub()}},
+  ]))});
+  $('text').style.cursor='pointer';
+}
+function pScore(){return P.lvl*200+P.resp*75+P.cash+P.xp}
+const SHOP=[
+ {id:'brush',n:'Brass-Bristle Brush',d:'+2 💪 Muscle',c:60},
+ {id:'suit',n:'Silk Suit',d:'+2 🗣️ Charm',c:60},
+ {id:'coin',n:"St. Florian's Coin",d:'+2 🍀 Luck',c:50},
+ {id:'tonic',n:"Doc's Tonic",d:'+10 max ❤, heal full',c:80,rep:true},
+ {id:'heal',n:'Patch Up',d:'Heal to full',c:25,rep:true},
+];
+function shop(){
+  setScene('club');
+  say("LUIGI'S PAWN",'Luigi counts your money twice. "For luck."<br>You have <b>$'+P.cash+'</b>.');
+  $('text').onclick=null;
+  const c=$('choices');
+  SHOP.forEach(it=>{
+    const owned=P.gear.includes(it.id)&&!it.rep;
+    const row=document.createElement('div');row.className='shoprow';
+    row.innerHTML='<div class="nm"><b>'+it.n+'</b><span>'+it.d+'</span></div>';
+    const b=document.createElement('button');
+    b.textContent=owned?'OWNED':'$'+it.c;
+    b.disabled=owned||P.cash<it.c;
+    b.onclick=()=>{sTap();buy(it)};
+    row.appendChild(b);c.appendChild(row);
+  });
+  addChoice('← Back to the club',()=>hub());
+}
+function buy(it){
+  P.cash-=it.c;sCoin();
+  if(it.id==='tonic'){P.maxhp+=10;P.hp=P.maxhp}
+  else if(it.id==='heal'){P.hp=P.maxhp}
+  else{P.gear.push(it.id);if(it.id==='brush')P.mus+=2;if(it.id==='suit')P.cha+=2;if(it.id==='coin')P.lck+=2}
+  float2('Bought '+it.n);hud();save();shop();
+}
+function ending(){
+  screen='end';showPanel(false);
+  $('ovEnd').hidden=false;
+  $('endTitle').innerHTML='MADE <span class="r">MAN</span>';
+  $('endText').innerHTML='Sal slides the ring across the table.<br><br>"Capo of Chimneys."<br><br>The town breathes. The family eats.<br><br>Score: <b>'+pScore()+'</b> · Level '+P.lvl+' · ★ '+P.resp;
+  sWin();wipe();
+}
+$('bAgain').onclick=()=>{$('ovEnd').hidden=true;NG=true;
+  const stats={mus:P.mus,cha:P.cha,lck:P.lck,lvl:P.lvl,gear:P.gear.slice(),maxhp:P.maxhp};
+  P=newPlayer();Object.assign(P,stats);P.hp=P.maxhp;P.ch=0;save();hub()};
+$('bNew').onclick=()=>{sTap();if(ac()&&ac().state==='suspended')ac().resume();wipe();P=newPlayer();NG=false;save();
+  $('ovTitle').hidden=true;hub()};
+$('bCont').onclick=()=>{sTap();if(ac()&&ac().state==='suspended')ac().resume();$('ovTitle').hidden=true;hub()};
+$('bMute').onclick=()=>{muted=!muted;try{localStorage.setItem('ll-soot-mute',muted?'1':'0')}catch(e){}$('bMute').textContent=muted?'🔇':'🔊'};
+$('bMute').textContent=muted?'🔇':'🔊';
+if(load())$('bCont').hidden=false;
+
+/* ---------- main loop ---------- */
+let last=0;
+function frame(t){
+  requestAnimationFrame(frame);
+  const dt=Math.min(.05,(t-last)/1000||0);last=t;
+  if(!$('ovTitle').hidden||!$('ovEnd').hidden){drawScene(dt);return}
+  drawScene(dt);
+}
+sizeArt();
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
