@@ -2,11 +2,11 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Hire me | LeonLink</title>
-<meta name="description" content="Websites, online stores, games and apps — built fast, priced low, 50% off. Flat price, you own everything.">
+<meta name="description" content="I can build you anything: websites, stores, games, apps, white-label SaaS. Working prototypes below. No branding, you own everything. 50% off until Oct 31.">
 <link rel="canonical" href="https://www.leonlink.net/hire-me.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Hire me — LeonLink">
-<meta property="og:description" content="Websites, stores, games and apps. Built fast, priced low — 50% off right now.">
+<meta property="og:title" content="Hire me — I can build you anything">
+<meta property="og:description" content="Websites, stores, games, apps, white-label SaaS. Try the working prototypes. No LeonLink branding — it's yours.">
 <meta property="og:url" content="https://www.leonlink.net/hire-me.html">
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#04060a">
@@ -19,21 +19,30 @@ a{color:var(--c)}
 header{position:sticky;top:0;z-index:5;background:#04060ae0;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px;padding:10px 16px;font:600 .86rem system-ui,sans-serif}
 header .home{color:var(--g);text-decoration:none;text-shadow:0 0 10px #39ff8899}
 main{max-width:820px;margin:0 auto;padding:0 18px 70px}
-.hero{padding:60px 0 26px;text-align:center}
+.hero{padding:48px 0 26px;text-align:center}
 .kick{display:inline-block;background:var(--p);color:#fff;font:700 .78rem system-ui;letter-spacing:.12em;text-transform:uppercase;padding:6px 14px;border-radius:999px;box-shadow:0 0 18px #ff3dc866;margin-bottom:14px}
-h1{font-size:clamp(2.8rem,10vw,4.6rem);line-height:1.02;margin:.15em 0 .3em;letter-spacing:-.01em}
+h1{font-size:clamp(2.6rem,11vw,4.6rem);line-height:1.02;margin:.15em 0 .3em;letter-spacing:-.01em}
 h1 span{color:var(--g);text-shadow:0 0 22px #39ff8877}
-.dek{font-size:1.3rem;color:var(--mut);max-width:32em;margin:0 auto}
-.btn{display:inline-block;background:var(--g);color:#02170b;font:700 1.05rem system-ui;padding:15px 36px;border-radius:999px;text-decoration:none;box-shadow:0 0 24px #39ff8888;min-height:52px;margin-top:26px}
+.dek{font-size:1.25rem;color:var(--mut);max-width:30em;margin:0 auto}
+.btn{display:inline-block;background:var(--g);color:#02170b;font:700 1.05rem system-ui;padding:15px 36px;border-radius:999px;text-decoration:none;box-shadow:0 0 24px #39ff8888;min-height:56px;margin-top:26px}
 .btn:hover{filter:brightness(1.08)}
-.proof{border:1px solid var(--line2);border-radius:14px;background:var(--pan);padding:22px;margin:36px 0;text-align:center;color:var(--mut)}
-.proof b{color:var(--ink)}
-.proof a{color:var(--g)}
+@media(max-width:600px){.btn{display:block;text-align:center;padding:17px 20px}}
 h2.sec{font-size:clamp(1.8rem,6vw,2.4rem);margin:54px 0 6px;letter-spacing:-.01em}
 h2.sec span{color:var(--g);text-shadow:0 0 16px #39ff8855}
 .sub{color:var(--mut);margin:0 0 20px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
-@media(max-width:600px){.grid{grid-template-columns:1fr}}
+/* prototypes: mobile-first single column */
+.proto{display:grid;grid-template-columns:1fr;gap:14px;margin:22px 0}
+@media(min-width:640px){.proto{grid-template-columns:1fr 1fr}}
+.pcard{display:block;background:var(--pan);border:1px solid var(--line2);border-radius:14px;overflow:hidden;text-decoration:none;transition:border-color .2s,transform .2s}
+.pcard:hover{border-color:var(--g);transform:translateY(-3px)}
+.pcard img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.pcard .pb{padding:14px 16px 16px}
+.pcard h3{margin:0 0 4px;font-size:1.15rem;color:var(--ink);font-family:system-ui}
+.pcard p{margin:0;color:var(--mut);font-size:.92rem}
+.pcard .try{display:inline-block;margin-top:10px;font:700 .9rem system-ui;color:var(--g)}
+/* pricing: mobile-first */
+.grid{display:grid;grid-template-columns:1fr;gap:14px;margin:22px 0}
+@media(min-width:640px){.grid{grid-template-columns:1fr 1fr}}
 .card{background:var(--pan);border:1px solid var(--line2);border-radius:14px;padding:24px;box-shadow:0 10px 30px #0008;position:relative}
 .card h3{margin:6px 0 4px;font-size:1.4rem;color:var(--g);text-shadow:0 0 14px #39ff8855}
 .card .from{font:700 1.9rem/1.15 system-ui;margin:8px 0 2px}
@@ -44,19 +53,23 @@ h2.sec span{color:var(--g);text-shadow:0 0 16px #39ff8855}
 .card ul li{margin:6px 0;padding-left:20px;position:relative}
 .card ul li::before{content:"✓";color:var(--g);position:absolute;left:0}
 .off{display:inline-block;background:var(--p);color:#fff;font:700 .72rem system-ui;letter-spacing:.08em;padding:4px 10px;border-radius:999px;box-shadow:0 0 14px #ff3dc866}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0}
-@media(max-width:600px){.steps{grid-template-columns:1fr}}
+.saas{margin-top:14px;border:1px solid var(--g);background:linear-gradient(120deg,rgba(57,255,136,.08),transparent),var(--pan);border-radius:14px;padding:26px;box-shadow:0 0 30px #39ff8822}
+.saas h3{margin:0 0 6px;font-size:1.5rem;color:var(--g);text-shadow:0 0 14px #39ff8855}
+.saas p{margin:0 0 6px;color:var(--mut)}
+.saas .from{font:700 1.6rem system-ui;color:var(--ink)}
+.steps{display:grid;grid-template-columns:1fr;gap:14px;margin:22px 0}
+@media(min-width:640px){.steps{grid-template-columns:repeat(3,1fr)}}
 .step{background:var(--pan);border:1px solid var(--line2);border-radius:14px;padding:20px;text-align:center}
 .step .n{font:700 2rem system-ui;color:var(--c);text-shadow:0 0 14px #22f0ff66}
 .step h3{margin:8px 0 4px;font-size:1.1rem}
 .step p{margin:0;color:var(--mut);font-size:.92rem}
-.why{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:22px 0}
-@media(max-width:600px){.why{grid-template-columns:1fr}}
+.why{display:grid;grid-template-columns:1fr;gap:10px;margin:22px 0}
+@media(min-width:640px){.why{grid-template-columns:1fr 1fr}}
 .why div{border-left:3px solid var(--g);padding:4px 0 4px 14px;color:var(--mut)}
 .why b{color:var(--ink);display:block}
 .faq{margin:22px 0}
 .faq details{background:var(--pan);border:1px solid var(--line2);border-radius:10px;margin:8px 0;padding:14px 18px}
-.faq summary{cursor:pointer;font-weight:700;color:var(--ink);font-family:system-ui}
+.faq summary{cursor:pointer;font-weight:700;color:var(--ink);font-family:system-ui;min-height:44px;display:flex;align-items:center}
 .faq p{margin:10px 0 2px;color:var(--mut)}
 .cta{text-align:center;margin:54px 0 10px}
 .note{margin-top:22px;color:var(--mut);font-size:.9rem}
@@ -69,12 +82,21 @@ footer a{color:var(--g);text-decoration:none}
 
 <section class="hero">
 <span class="kick">50% off — ends Oct 31</span>
-<h1>I build it.<br><span>You keep it.</span></h1>
-<p class="dek">Websites, stores, games, apps. Built fast, priced low, yours outright.</p>
+<h1>I can build you <span>anything.</span></h1>
+<p class="dek">Websites, stores, games, apps, white-label SaaS. Working prototypes below — try them. No LeonLink branding on your product. You own everything.</p>
 <a class="btn" href="mailto:info@leonlink.net?subject=Build%20something%20with%20me">Start a project</a>
 </section>
 
-<div class="proof"><b>Don't take my word for it.</b> This whole site — the store, the games, the casino, the free tools, the journal — I built all of it. Click around. <a href="/">That's the portfolio.</a></div>
+<h2 class="sec">Working <span>prototypes</span></h2>
+<p class="sub">Don't take my word for it. I built all of these — tap through them.</p>
+<section class="proto">
+<a class="pcard" href="/ghost-call.html"><img src="/img/cards/ghostcall.jpg" alt="Ghost Call" loading="lazy"><div class="pb"><h3>Ghost Call</h3><p>Fake incoming calls on command. Pick a caller, set the delay.</p><span class="try">Try it →</span></div></a>
+<a class="pcard" href="https://stop-z-fighting.vercel.app" target="_blank" rel="noopener"><img src="/img/cards/stopfighting.jpg" alt="Stop Z Fighting" loading="lazy"><div class="pb"><h3>Stop Z Fighting</h3><p>Couples app — grievances, rules, burn ritual. Two phones sync, no accounts.</p><span class="try">Try it →</span></div></a>
+<a class="pcard" href="https://stage-pi-umber.vercel.app" target="_blank" rel="noopener"><img src="/img/cards/stage.jpg" alt="Stage" loading="lazy"><div class="pb"><h3>Stage</h3><p>Spoken-poetry trainer. Slam timer, memorization, mic recording, scoring.</p><span class="try">Try it →</span></div></a>
+<a class="pcard" href="https://n-umber-one.vercel.app" target="_blank" rel="noopener"><img src="/img/cards/numbers.jpg" alt="Numbers" loading="lazy"><div class="pb"><h3>Numbers</h3><p>Numerology engine. Life path, compatibility, daily predictions.</p><span class="try">Try it →</span></div></a>
+<a class="pcard" href="https://afterglow.leonlink.net" target="_blank" rel="noopener"><img src="/img/cards/afterglow.jpg" alt="Afterglow casino" loading="lazy"><div class="pb"><h3>Afterglow Casino</h3><p>Neon social casino. 19 games, daily wheel, provably fair.</p><span class="try">Try it →</span></div></a>
+<a class="pcard" href="/invoice-generator.html"><img src="/img/cards/t-invoice.jpg" alt="Invoice generator" loading="lazy"><div class="pb"><h3>Invoice Generator</h3><p>Clean invoices in a minute. No account, print-ready.</p><span class="try">Try it →</span></div></a>
+</section>
 
 <h2 class="sec">What I <span>build</span></h2>
 <p class="sub">Flat price up front. The price we agree is the price you pay.</p>
@@ -84,9 +106,24 @@ footer a{color:var(--g);text-decoration:none}
 <div class="card"><span class="off">50% OFF</span><h3>Stores</h3><div class="from"><small>from</small> <s>$599</s> <span class="now">$300</span></div>
 <ul><li>Sell online, day one</li><li>Products, checkout, payments</li><li>Yours — no monthly platform cut</li></ul></div>
 <div class="card"><span class="off">50% OFF</span><h3>Games</h3><div class="from"><small>from</small> <s>$899</s> <span class="now">$450</span></div>
-<ul><li>Playable in the browser</li><li>Slots, arcade, RPGs</li><li>Try AFTERGLOW on this site — I built that</li></ul></div>
+<ul><li>Playable in the browser</li><li>Slots, arcade, RPGs</li><li>Try Afterglow above — I built that</li></ul></div>
 <div class="card"><span class="off">50% OFF</span><h3>Apps</h3><div class="from"><small>from</small> <s>$999</s> <span class="now">$500</span></div>
 <ul><li>Web apps that feel native</li><li>No app store, no gatekeepers</li><li>Works on every phone</li></ul></div>
+</section>
+<div class="saas">
+<h3>White-label SaaS</h3>
+<div class="from">Custom flat quote</div>
+<p>Your product, your brand, your customers, your revenue. I build the whole thing — dashboards, billing, logins — and hand you the keys. Nobody ever sees my name on it.</p>
+<p><a href="mailto:info@leonlink.net?subject=White-label%20SaaS%20project">Tell me about your SaaS →</a></p>
+</div>
+
+<h2 class="sec">White <span>label.</span></h2>
+<p class="sub">Your product. Your name. No trace of me.</p>
+<section class="why">
+<div><b>No LeonLink branding</b>Nothing says my name. No logos, no "powered by".</div>
+<div><b>Your domain</b>It lives at your address, under your brand.</div>
+<div><b>You own the code</b>All of it. Forever. Walk away anytime.</div>
+<div><b>Your customers never see me</b>I build it, you launch it, it's yours.</div>
 </section>
 
 <h2 class="sec">How it <span>works</span></h2>
@@ -102,13 +139,14 @@ footer a{color:var(--g);text-decoration:none}
 <section class="why">
 <div><b>No hourly billing</b>Quoted once, paid once.</div>
 <div><b>No per-user fees</b>Your price doesn't grow with your team.</div>
-<div><b>You own the code</b>All of it. Forever.</div>
+<div><b>No branding</b>It's your product, not my billboard.</div>
 <div><b>No lock-in</b>Walk away anytime, take everything.</div>
 </section>
 
 <h2 class="sec">Quick <span>answers</span></h2>
 <section class="faq">
 <details><summary>How fast?</summary><p>Days, not months. Most projects ship in under two weeks.</p></details>
+<details><summary>Will anyone know you built it?</summary><p>No. White-label means white-label: no branding, no credits, nothing with my name on it. It's yours.</p></details>
 <details><summary>What if I don't like it?</summary><p>You approve the price before I start, and you see it as it's built. No surprises.</p></details>
 <details><summary>Do I really own everything?</summary><p>Yes. Code, design, all of it — yours outright.</p></details>
 <details><summary>Why so cheap?</summary><p>No agency overhead. No account managers. Just me, building.</p></details>
@@ -116,7 +154,7 @@ footer a{color:var(--g);text-decoration:none}
 
 <div class="cta">
 <a class="btn" href="mailto:info@leonlink.net?subject=Build%20something%20with%20me">Start a project</a>
-<p class="note">Tell me what you want built. I reply fast.<br>50% off ends when I say it ends.</p>
+<p class="note">Tell me what you want built. I reply fast.<br>50% off ends Oct 31.</p>
 </div>
 
 </main>
