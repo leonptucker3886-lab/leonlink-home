@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Can You Control Your Feelings? | Blog #11</title>
-<meta name="description" content="You cannot choose your first feeling — but you get a vote on the second. Reappraisal, affect labeling, and the body levers, with peer-reviewed sources.">
-<link rel="canonical" href="https://www.leonlink.net/journal/can-you-control-your-feelings.html">
+<title>Help or Harm? | Blog #13</title>
+<meta name="description" content="AlphaFold vs misalignment, jobs vs leverage, and what the experts actually predict — with peer-reviewed sources.">
+<link rel="canonical" href="https://www.leonlink.net/journal/ai-help-or-harm.html">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Can You Control Your Feelings? The science of emotional regulation">
-<meta property="og:description" content="You cannot choose your first feeling — but you get a vote on the second. Reappraisal, affect labeling, and the body levers, with peer-reviewed sources.">
-<meta property="og:url" content="https://www.leonlink.net/journal/can-you-control-your-feelings.html">
-<meta property="og:image" content="https://www.leonlink.net/img/cards/control.jpg">
+<meta property="og:title" content="AI: Help or Harm? The honest case for both">
+<meta property="og:description" content="AlphaFold vs misalignment, jobs vs leverage, and what the experts actually predict — with peer-reviewed sources.">
+<meta property="og:url" content="https://www.leonlink.net/journal/ai-help-or-harm.html">
+<meta property="og:image" content="https://www.leonlink.net/img/cards/ai-harm.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#04060a">
 <link rel="icon" href="/favicon.png">
@@ -101,88 +101,74 @@ header .sharebtn{margin-left:auto}
 
 
 </style></head><body>
-<header><a class="home" href="/blog.html">← Blog</a><a href="#reframe">Reframe</a><a href="#nameit">Name it</a><a href="#body">Body levers</a><a href="#verdict">My take</a><button class="sharebtn" type="button">Share</button></header>
+<header><a class="home" href="/blog.html">← Blog</a><a href="#help">The case for help</a><a href="#harm">The case for harm</a><a href="#experts">What experts think</a><a href="#verdict">My take</a><button class="sharebtn" type="button">Share</button></header>
 <main>
 <section id="top">
-<span class="kick">Blog · Post #11 · The Science Behind Feelings, Part 4</span>
-<h1>Can you control your <span>feelings?</span></h1>
-<p>Three posts in, you know the machinery: feelings are predictions built from body signals, assembled seconds before "you" arrive, running on dopamine and ancient alarms. So here is the only question that matters now: can you steer any of it?</p>
-<p>The short answer from the research is yes — but not the way you would think. You do not control feelings by force. You control them by editing the inputs.</p>
+<span class="kick">Blog · Post #13 · The Science Behind Feelings, Part 2</span>
+<h1>Help or <span>harm?</span></h1>
+<p>Every powerful technology arrives with two brochures. The printing press spread knowledge and propaganda. Electricity lit homes and battlefields. AI is no different — except it might be the last brochure we get to write ourselves.</p>
+<p>Here is the honest version of both cases, from the peer-reviewed literature.</p>
 <p class="n">Every claim below comes from peer-reviewed research. Sources are listed at the bottom.</p>
 </section>
-<section id="reframe"><h2>1. Reframe, don't suppress</h2>
-<p>James Gross's process model of emotion regulation (Gross, 1998) maps every point where you can intervene. The most studied fork: <b>reappraisal</b> versus <b>suppression</b>.</p>
-<p>Reappraisal means changing the story: "this interview is a conversation, not a trial." Suppression means hiding the expression: "just don't look nervous." Reappraisal lowers the emotional response and the stress hormones. Suppression keeps the feeling, spikes blood pressure, and impairs memory (Gross &amp; John, 2003). One works. The other just looks like it works. Try both.</p>
-<div class="card"><h3 style="margin-top:0">Your boss says: "We need to talk."</h3>
-<p class="n">Pick a strategy.</p>
-<div class="qbtns" id="stratbtns" style="grid-template-columns:1fr">
-<button type="button" data-i="0">Suppress — keep a straight face, feel nothing</button>
-<button type="button" data-i="1">Reappraise — "probably about the project timeline"</button>
+<section id="help"><h2>1. The case for help</h2>
+<p>Start with the optimists, because their evidence is concrete and already here. Tap each.</p>
+<div class="tabs" id="helptabs"><button type="button" data-i="0" aria-pressed="true">Medicine</button><button type="button" data-i="1">Science</button><button type="button" data-i="2">Everyone's leverage</button></div>
+<div class="card" id="helpout" aria-live="polite"></div></section><section id="harm"><h2>2. The case for harm</h2>
+<p>Now the pessimists — and theirs is not science fiction, it is incentives plus scale. Tap each.</p>
+<div class="tabs" id="harmtabs"><button type="button" data-i="0" aria-pressed="true">Misuse</button><button type="button" data-i="1">Misalignment</button><button type="button" data-i="2">Concentration</button></div>
+<div class="card" id="harmout" aria-live="polite"></div></section><section id="experts"><h2>3. What the experts think</h2>
+<p>Grace et al. (2018) surveyed hundreds of AI researchers on when machines beat humans at everything. The median answer: <b>45 years</b> — with enormous disagreement. Move the sliders: how fast does capability grow, and how fast does safety keep up?</p>
+<div class="card">
+<div class="dr"><label for="hc">Capability growth</label><output id="hcv">50%</output><input type="range" id="hc" min="0" max="100" value="50">
+<label for="hs">Safety progress</label><output id="hsv">50%</output><input type="range" id="hs" min="0" max="100" value="50"></div>
+<div class="meter" aria-hidden="true"><b id="harmneedle" style="left:50%"></b></div>
+<div class="mlab"><span>Net good</span><span>Net bad</span></div>
+<p class="n" id="harmlabel" style="margin-top:8px"></p>
 </div>
-<p class="score" id="stratout"></p>
-</div>
-</section><section id="nameit"><h2>2. Name it to tame it</h2>
-<p>Lieberman and colleagues (2007) put people in a brain scanner, showed them angry faces, and asked them to label the emotion: "that's anger." The simple act of labeling <b>reduced amygdala activity</b> and increased prefrontal control. Putting the feeling into words literally moves processing from the alarm to the analyst.</p>
-<p>Precision matters. "I feel bad" does almost nothing. "I feel disrespected" gives the brain a specific prediction to work with — and specific predictions are easier to update. Journaling works for the same reason. Get precise.</p>
-<div class="card"><h3 style="margin-top:0">Get precise</h3>
-<p class="n">Your friend canceled plans — again. Tap the vaguest label, then the most precise.</p>
-<div class="qbtns" id="labelbtns" style="grid-template-columns:1fr">
-<button type="button" data-i="0">"I feel bad"</button>
-<button type="button" data-i="1">"I feel annoyed"</button>
-<button type="button" data-i="2">"I feel unimportant to them"</button>
-</div>
-<p class="score" id="labelout"></p>
-</div>
-</section><section id="body"><h2>3. The body levers</h2>
-<p>You cannot think your way out of a sleep-deprived, sedentary nervous system. Feelings are body predictions — so change the body and the predictions change. These are the four levers with the strongest evidence. Tap each.</p>
-<div class="tabs" id="levertabs"><button type="button" data-i="0" aria-pressed="true">Sleep</button><button type="button" data-i="1">Move</button><button type="button" data-i="2">Breathe</button><button type="button" data-i="3">Light</button></div>
-<div class="card" id="leverout" aria-live="polite"></div></section><section id="verdict"><h2>4. My take</h2>
-<p>You cannot choose your first feeling. Nobody can — it is constructed before you arrive. But you get a vote on the second one: the story you tell, the label you choose, the body you maintain. Control is not suppression. It is editing.</p>
+</section><section id="verdict"><h2>4. My take</h2>
+<p>Help or harm was always the wrong question. Fire helps and harms; the question is who holds the extinguisher. With AI, the extinguisher is alignment research, and it is currently losing the race against capability. That is not a reason to panic. It is a reason to fund the firefighters.</p>
 <div class="card">
 <h3 style="margin:0 0 .4em">Your turn</h3>
-<p class="n" style="margin:0 0 .6em">What actually works for you?</p>
-<div class="qbtns" id="ctrlpoll">
-<button type="button" data-v="0">Reframing</button>
-<button type="button" data-v="1">Naming it</button>
-<button type="button" data-v="2">Exercise</button>
-<button type="button" data-v="3">Sleep</button>
+<p class="n" style="margin:0 0 .6em">Net good or net bad?</p>
+<div class="qbtns" id="harmpoll">
+<button type="button" data-v="0">Net good</button>
+<button type="button" data-v="1">Net bad</button>
+<button type="button" data-v="2">Too early to call</button>
 </div>
-<p class="score" id="ctrlout" style="margin:.4em 0 0"></p>
+<p class="score" id="harmout" style="margin:.4em 0 0"></p>
 </div>
-<p class="src">This post summarizes peer-reviewed findings for a general audience. It is not therapy, diagnosis, or medical advice.</p>
-<div class="backrow" style="margin-top:26px"><a class="back" href="/journal/what-is-ai.html">Read next: What Is AI? →</a><a class="back" href="/blog.html">← Back to Blog</a></div>
+<p class="src">This post summarizes peer-reviewed findings for a general audience.</p>
+<div class="backrow" style="margin-top:26px"><a class="back" href="/journal/ai-life-without-money.html">Read next: Life Without Money →</a><a class="back" href="/blog.html">← Back to Blog</a></div>
 </section><section id="sources"><h3>Sources</h3>
 <ul class="srcs">
-<li>Gross, J. J. (1998). The emerging field of emotion regulation: An integrative review. <i>Review of General Psychology</i>, 2(3), 271–299.</li><li>Gross, J. J., &amp; John, O. P. (2003). Individual differences in two emotion regulation processes: Implications for affect, relationships, and well-being. <i>Journal of Personality and Social Psychology</i>, 85(2), 348–362.</li><li>Lieberman, M. D., Eisenberger, N. I., Crockett, M. J., Tom, S. M., Pfeifer, J. H., &amp; Way, B. M. (2007). Putting feelings into words: Affect labeling disrupts amygdala activity in response to affective stimuli. <i>Psychological Science</i>, 18(5), 421–428.</li><li>Blumenthal, J. A., Babyak, M. A., Doraiswamy, P. M., Watkins, L., Hoffman, B. M., Barbour, K. A., et al. (2007). Exercise and pharmacotherapy in the treatment of major depressive disorder. <i>Psychosomatic Medicine</i>, 69(7), 587–596.</li><li>Yoo, S.-S., Gujar, N., Hu, P., Jolesz, F. A., &amp; Walker, M. P. (2007). The human emotional brain without sleep — a prefrontal amygdala disconnect. <i>Current Biology</i>, 17(20), R877–R878.</li>
+<li>Jumper, J., et al. (2021). Highly accurate protein structure prediction with AlphaFold. <i>Nature</i>, 596(7873), 583–589.</li><li>Amodei, D., Olah, C., Steinhardt, J., Christiano, P., Schulman, J., &amp; Mané, D. (2016). Concrete problems in AI safety. <i>arXiv:1606.06565</i>.</li><li>Frey, C. B., &amp; Osborne, M. A. (2017). The future of employment: How susceptible are jobs to computerisation? <i>Technological Forecasting and Social Change</i>, 114, 254–280.</li><li>Grace, K., Salvatier, J., Dafoe, A., Zhang, B., &amp; Evans, O. (2018). When will AI exceed human performance? Evidence from AI experts. <i>Journal of Artificial Intelligence Research</i>, 62, 729–754.</li>
 </ul></section>
 </main>
 <script>
 (function(){
-var N=["The editor. Strong pick.","The labeler. Precise.","The mover. Evidence-backed.","The sleeper. Underrated."];
-function v(i){try{localStorage.setItem("ll-ctrl-vote",i)}catch(e){}
- document.querySelectorAll("#ctrlpoll button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.v==i)});
- document.getElementById("ctrlout").textContent=N[i];}
-document.querySelectorAll("#ctrlpoll button").forEach(function(b){b.onclick=function(){v(+b.dataset.v)}});
-try{var x=localStorage.getItem("ll-ctrl-vote");if(x!==null)v(+x)}catch(e){}
+var N=["The optimist. Noted.","The pessimist. Heard.","The honest one. Most experts agree."];
+function v(i){try{localStorage.setItem("ll-harm2-vote",i)}catch(e){}
+ document.querySelectorAll("#harm2poll button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.v==i)});
+ document.getElementById("harm2out").textContent=N[i];}
+document.querySelectorAll("#harm2poll button").forEach(function(b){b.onclick=function(){v(+b.dataset.v)}});
+try{var x=localStorage.getItem("ll-harm2-vote");if(x!==null)v(+x)}catch(e){}
 document.querySelector(".sharebtn").onclick=function(){
- var d={title:document.title,text:"Can you control your feelings? The science says yes — by editing",url:location.href};
+ var d={title:document.title,text:"AI: help or harm? The honest case for both",url:location.href};
  if(navigator.share)navigator.share(d).catch(function(){});else if(navigator.clipboard)navigator.clipboard.writeText(location.href);};
 
-var STRAT=["<b>Suppression.</b> You look calm. Inside: heart rate up, cortisol up — and tomorrow you won't remember half the meeting. The feeling didn't leave; it just went underground. (Gross & John, 2003)",
-"<b>Reappraisal.</b> Heart rate steadier, stress hormones lower, memory intact. You edited the prediction before the alarm fully fired. Same boss, same sentence — different nervous system."];
-document.querySelectorAll("#stratbtns button").forEach(function(b){b.onclick=function(){
-document.querySelectorAll("#stratbtns button").forEach(function(x){x.setAttribute("aria-pressed",x===b)});
-document.getElementById("stratout").innerHTML="<p>"+STRAT[+b.dataset.i]+"</p>";}});
-var LAB=["Vague. The brain keeps the old prediction — 'something is wrong' — and the alarm stays on.",
-"Better. 'Annoyed' narrows it, but it's still a weather report, not a diagnosis.",
-"Precise. Now the brain has something actionable: a story about the relationship, not a fog. This is the label that lets reappraisal in. (Barrett: emotional granularity predicts regulation.)"];
-document.querySelectorAll("#labelbtns button").forEach(function(b){b.onclick=function(){
-document.querySelectorAll("#labelbtns button").forEach(function(x){x.setAttribute("aria-pressed",x===b)});
-document.getElementById("labelout").innerHTML="<p>"+LAB[+b.dataset.i]+"</p>";}});
-var Dlever={0:["Sleep","One bad night amplifies amygdala reactivity by about 60% (Yoo et al., 2007). You cannot regulate what a sleep-deprived brain exaggerates. 7–9 hours is not wellness advice — it's emotional armor.","The cheapest mood drug ever discovered."],1:["Move","Exercise rivals antidepressants for mild-to-moderate depression (Blumenthal et al., 2007). It burns off stress hormones and grows new neurons. 30 minutes, most days.","Your body expects to move. A sedentary nervous system idles anxious."],2:["Breathe","Slow exhales stimulate the vagus nerve and downshift arousal in under two minutes. Box breathing (4-4-4-4) is the manual override for the low road.","The fastest lever you own. Always with you."],3:["Light","Daylight anchors your circadian rhythm, which anchors serotonin and sleep. Morning light within an hour of waking beats any supplement.","Depression has a season for a reason."]};
-function showlever(i){document.querySelectorAll("#levertabs button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.i==i)});
-var d=Dlever[i];document.getElementById("leverout").innerHTML="<h3 style=\"margin-top:0\">"+d[0]+"</h3><p>"+d[1]+"</p><p class=\"n\">"+d[2]+"</p>";}
-document.querySelectorAll("#levertabs button").forEach(function(b){b.onclick=function(){showlever(+b.dataset.i)}});showlever(0);
+var Dhelp={0:["Medicine","AlphaFold predicted the structure of nearly every known protein (Jumper et al., 2021, Nature) — a 50-year grand challenge in biology, solved in months. Drug discovery that took decades now takes afternoons.","This alone may save more lives than any invention this century."],1:["Science","AI reads papers faster than any human, finds patterns in climate data, designs materials atom by atom. It's a telescope for every field at once.","The bottleneck in science was never ideas — it was reading speed."],2:["Everyone's leverage","One person with AI does the work of a team: code, design, writing, analysis. The productivity jump rivals the spreadsheet — or the steam engine.","Frey & Osborne (2017) estimated 47% of US jobs at risk of automation. Leverage cuts both ways."]};
+function showhelp(i){document.querySelectorAll("#helptabs button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.i==i)});
+var d=Dhelp[i];document.getElementById("helpout").innerHTML="<h3 style=\"margin-top:0\">"+d[0]+"</h3><p>"+d[1]+"</p><p class=\"n\">"+d[2]+"</p>";}
+document.querySelectorAll("#helptabs button").forEach(function(b){b.onclick=function(){showhelp(+b.dataset.i)}});showhelp(0);
+var Dharm={0:["Misuse","The same models that write essays write phishing campaigns, deepfakes, and malware. Capability doesn't check intent at the door.","Every helpful feature is a harmful feature with different targeting."],1:["Misalignment","Amodei et al. (2016) formalized the core worry: we train AI on proxy goals (clicks, scores, 'helpfulness') and hope the real goal comes along. A superintelligent optimizer pursuing the wrong objective is the textbook catastrophe.","Not malice — indifference. You don't hate ants when you build a highway."],2:["Concentration","The benefits pool at the top: whoever owns the models owns the leverage. The Industrial Revolution took a century to share its gains.","Power concentrates faster than policy moves."]};
+function showharm(i){document.querySelectorAll("#harmtabs button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.i==i)});
+var d=Dharm[i];document.getElementById("harmout").innerHTML="<h3 style=\"margin-top:0\">"+d[0]+"</h3><p>"+d[1]+"</p><p class=\"n\">"+d[2]+"</p>";}
+document.querySelectorAll("#harmtabs button").forEach(function(b){b.onclick=function(){showharm(+b.dataset.i)}});showharm(0);
+function harm(){var c=+document.getElementById("hc").value,s=+document.getElementById("hs").value;
+document.getElementById("hcv").textContent=c+"%";document.getElementById("hsv").textContent=s+"%";
+var r=Math.round(c*0.6+(100-s)*0.4);document.getElementById("harmneedle").style.left=r+"%";
+document.getElementById("harmlabel").textContent=r<35?"Optimist's world: capability with guardrails. This is the outcome safety research is racing toward.":r<65?"The coin-flip zone — where most experts actually live. Help and harm arrive together.":"Pessimist's world: capability outruns control. This is the scenario Amodei et al. warned about in 2016.";}
+["hc","hs"].forEach(function(id){document.getElementById(id).oninput=harm});harm();
 })();
 </script>
 <script>(function(){try{var p=location.pathname;fetch("/api/track?p="+encodeURIComponent(p)+"&r="+encodeURIComponent(document.referrer||""),{mode:"no-cors",keepalive:true}).catch(function(){})}catch(e){}})();</script>
