@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Are Feelings Real? | Blog #10</title>
+<meta name="description" content="Your brain decides seconds before "you" do. Libet, Soon, Barrett, Damasio — the science of who is really driving, with peer-reviewed sources.">
+<link rel="canonical" href="https://www.leonlink.net/journal/are-feelings-real.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Are Feelings Real? Conscious vs unconscious">
+<meta property="og:description" content="Your brain decides seconds before "you" do. Libet, Soon, Barrett, Damasio — the science of who is really driving, with peer-reviewed sources.">
+<meta property="og:url" content="https://www.leonlink.net/journal/are-feelings-real.html">
+<meta property="og:image" content="https://www.leonlink.net/img/cards/feelings.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#04060a">
+<link rel="icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+
+
+:root{--bg:#04060a;--pan:#0b1018d9;--ink:#e6edf5;--mut:#8e9bb0;--g:#39ff88;--c:#22f0ff;--p:#ff3dc8;--y:#ffe14d;--line:#1b2636;--line2:#26364c}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:60px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 Georgia,"Iowan Old Style",serif;padding-bottom:env(safe-area-inset-bottom)}
+#radar{position:fixed;inset:0;width:100%;height:100%;z-index:-1;opacity:.55}
+#rain{position:fixed;inset:0;width:100%;height:100%;z-index:-1;opacity:.5;pointer-events:none}
+a{color:var(--c)}
+header{position:sticky;top:0;z-index:5;background:#04060ae0;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px;padding:10px 16px;font:600 .86rem "DM Sans",system-ui,sans-serif;overflow-x:auto;scrollbar-width:none;white-space:nowrap}
+header::-webkit-scrollbar{display:none}
+header .home{color:var(--g);text-decoration:none;text-shadow:0 0 10px #39ff8899}header a{color:var(--mut);text-decoration:none}header a:hover{color:var(--ink)}
+main{max-width:700px;margin:0 auto;padding:0 18px 70px}
+section{padding:54px 0 6px}
+.kick{font:700 .74rem "DM Sans",system-ui;letter-spacing:.14em;text-transform:uppercase;color:var(--p);text-shadow:0 0 12px #ff3dc888}
+h1{font-family:"Fraunces",Georgia,serif;font-size:clamp(2.4rem,9vw,3.6rem);line-height:1.02;margin:.25em 0 .3em;letter-spacing:-.01em}
+h1 span{color:var(--g);text-shadow:0 0 22px #39ff8877}
+h2{font-family:"Fraunces",Georgia,serif;font-size:1.6rem;line-height:1.2;margin:0 0 .4em;color:var(--g);text-shadow:0 0 16px #39ff8855}
+h3{font-size:1.15rem;margin:1.4em 0 .3em}
+p.n,.n{color:var(--mut);font-style:italic}
+.ui,button{font-family:"DM Sans",system-ui,sans-serif}
+.card{background:var(--pan);border:1px solid var(--line2);border-radius:14px;padding:16px;margin:16px 0;box-shadow:0 0 0 1px #39ff880d,0 10px 30px #0008}
+input[type=range]{width:100%;accent-color:var(--g);height:44px;margin:4px 0}
+.tabs{display:flex;gap:8px;margin:10px 0;overflow-x:auto;scrollbar-width:none;padding:2px 2px 6px;scroll-snap-type:x proximity}
+.tabs::-webkit-scrollbar{display:none}
+button{background:#0b1018;border:1px solid var(--line2);color:var(--ink);border-radius:999px;padding:10px 16px;min-height:44px;font-size:.9rem;cursor:pointer;white-space:nowrap;scroll-snap-align:start;transition:all .2s;-webkit-tap-highlight-color:transparent}
+button:hover{border-color:var(--g)}
+button[aria-pressed=true]{background:var(--g);color:#02170b;border-color:var(--g);font-weight:700;box-shadow:0 0 18px #39ff8888}
+.big{font:700 1.5rem/1.2 "DM Sans",system-ui;color:var(--g);text-shadow:0 0 14px #39ff8866}
+.when{font:700 .8rem "DM Sans",system-ui;letter-spacing:.1em;text-transform:uppercase;color:var(--c)}
+.kv{display:flex;justify-content:space-between;gap:12px;font:.92rem/1.45 "DM Sans",system-ui;padding:7px 0;border-bottom:1px solid var(--line)}
+.kv span:first-child{color:var(--mut);flex-shrink:0}.kv span:last-child{text-align:right}
+.chip{display:inline-block;font:700 .72rem "DM Sans",system-ui;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid currentColor;margin:6px 6px 0 0}
+.c-v{color:var(--g)}.c-c{color:var(--y)}.c-d{color:var(--p)}.c-h{color:var(--c)}.c-s{color:var(--y)}
+.prog{height:6px;background:var(--line);border-radius:4px;margin:12px 0 4px;overflow:hidden}.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--c),var(--g));box-shadow:0 0 10px var(--g);transition:width .35s}
+small,.src{color:var(--mut);font:.82rem/1.5 "DM Sans",system-ui}
+.voice{border-left:3px solid var(--p);padding:2px 0 2px 14px;margin:16px 0}.voice b{font-family:"DM Sans",system-ui;color:var(--p)}
+blockquote{margin:12px 0;padding:10px 14px;border-left:3px solid var(--c);background:#22f0ff0d;border-radius:0 10px 10px 0;font-style:italic}
+blockquote cite{display:block;font:normal .8rem "DM Sans",system-ui;color:var(--mut);margin-top:4px}
+.stamp{display:inline-block;transform:rotate(-4deg);border:2px solid var(--p);color:var(--p);font:800 .8rem "DM Sans",system-ui;letter-spacing:.2em;padding:4px 10px;border-radius:6px;text-shadow:0 0 10px #ff3dc8aa;box-shadow:0 0 14px #ff3dc844 inset}
+/* timeline */
+.tdots{display:flex;justify-content:space-between;gap:2px;margin:2px 4px 10px}.tdots i{flex:1;height:5px;border-radius:3px;background:var(--line2);transition:background .3s}.tdots i.on{background:var(--g);box-shadow:0 0 8px var(--g)}
+.tnav{display:flex;gap:8px;margin-top:12px}.tnav button{flex:1}
+/* quiz */
+.qbtns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.qbtns button{border-radius:12px;font-weight:700;min-height:52px}
+.qbtns button.ok{background:var(--g);color:#02170b;border-color:var(--g);box-shadow:0 0 18px #39ff8888}
+.qbtns button.no{background:#ff3dc822;border-color:var(--p);color:var(--p)}
+.score{font:700 .9rem "DM Sans",system-ui;color:var(--c)}
+/* meter */
+.meter{position:relative;height:14px;border-radius:8px;background:linear-gradient(90deg,#ff3dc8,#ffe14d 50%,#39ff88);margin:28px 4px 6px}
+.meter b{position:absolute;top:-9px;width:6px;height:32px;margin-left:-3px;background:#fff;border-radius:3px;box-shadow:0 0 12px #fff;transition:left .6s cubic-bezier(.3,1.4,.5,1)}
+.mlab{display:flex;justify-content:space-between;font:.72rem "DM Sans",system-ui;color:var(--mut)}
+/* blips */
+#scope{max-width:340px;margin:0 auto}
+#scope .blip{cursor:pointer}
+#scope .blip circle.d{fill:var(--g);filter:drop-shadow(0 0 6px #39ff88)}
+#scope .blip.res circle.d{fill:var(--c)}#scope .blip.arc circle.d{fill:#56637a;filter:none}#scope .blip.open circle.d{fill:var(--p);filter:drop-shadow(0 0 8px #ff3dc8)}
+#scope .blip circle.h{fill:transparent}
+#sweep{transform-origin:150px 150px;animation:sw 4s linear infinite}@keyframes sw{to{transform:rotate(360deg)}}
+.tally{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;text-align:center;font-family:"DM Sans",system-ui}
+.tally div{border:1px solid var(--line2);border-radius:10px;padding:8px 4px}.tally b{display:block;font-size:1.4rem}.tally small{font-size:.72rem}
+/* drake */
+.dr{display:grid;grid-template-columns:1fr auto;gap:0 10px;align-items:center;font-family:"DM Sans",system-ui;font-size:.88rem}
+.dr label{color:var(--mut)}.dr output{color:var(--c);font-weight:700;min-width:64px;text-align:right}
+.dr input{grid-column:1/-1;height:36px;margin:0 0 6px}
+.nbig{font:800 clamp(2rem,10vw,3rem)/1 "DM Sans",system-ui;color:var(--g);text-shadow:0 0 24px #39ff8888;text-align:center;margin:14px 0 4px}
+/* bill tracker */
+.steps{list-style:none;padding:0;margin:8px 0;font-family:"DM Sans",system-ui;font-size:.92rem}
+.steps li{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}
+.steps li i{flex:0 0 26px;height:26px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:.8rem}
+.steps .y i{background:var(--g);color:#02170b;box-shadow:0 0 10px var(--g)}.steps .x i{background:var(--p);color:#fff}.steps .w i{border:2px dashed var(--y);color:var(--y)}
+/* poll */
+.poll button{display:block;width:100%;text-align:left;border-radius:12px;margin:8px 0;white-space:normal;position:relative;overflow:hidden}
+.poll button span{position:relative;z-index:1}
+.srcs{font:.8rem/1.6 "DM Sans",system-ui;color:var(--mut);padding-left:18px}.srcs li{margin:4px 0;word-break:break-word}
+.back{display:inline-flex;align-items:center;gap:8px;font:700 .9rem "DM Sans",system-ui;color:#02170b;background:var(--g);padding:12px 20px;border-radius:999px;text-decoration:none;box-shadow:0 0 20px #39ff8877;min-height:44px}
+:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media(min-width:720px){body{font-size:18px}section{padding-top:64px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.sharebtn{background:#0b1018;border:1px solid var(--line2);color:var(--ink);border-radius:999px;padding:8px 16px;min-height:36px;font:600 .82rem "DM Sans",system-ui,sans-serif;cursor:pointer;white-space:nowrap;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.sharebtn:hover{border-color:var(--g)}
+header .sharebtn{margin-left:auto}
+.backrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+
+
+</style></head><body>
+<header><a class="home" href="/blog.html">← Blog</a><a href="#early">Seven seconds early</a><a href="#predict">Predictions</a><a href="#tworoads">Two roads</a><a href="#verdict">My take</a><button class="sharebtn" type="button">Share</button></header>
+<main>
+<section id="top">
+<span class="kick">Blog · Post #10 · The Science Behind Feelings, Part 3</span>
+<h1>Are feelings <span>real?</span></h1>
+<p>In 2008, neuroscientists did something rude: they predicted people's "free" choices seven to ten seconds before the people themselves knew what they had chosen. Your brain voted. You just got the press release.</p>
+<p>So here is the question this whole series has been circling: if one part of your brain decides before the "you" part knows — are your feelings real? Or is one part of your brain manipulating the other?</p>
+<p class="n">Every claim below comes from peer-reviewed research. Sources are listed at the bottom.</p>
+</section>
+<section id="early"><h2>1. Seven seconds early</h2>
+<p>In 1983, Benjamin Libet found that the brain's <b>readiness potential</b> — the electrical ramp-up before a movement — begins about half a second before you consciously "decide" to move (Libet et al., 1983).</p>
+<p>Soon and colleagues (2008) pushed it much further with fMRI: patterns in the prefrontal cortex predicted whether someone would press a left or right button <b>up to ten seconds</b> before they reported deciding. The conscious "you" was not deciding. It was being informed. Walk the timeline.</p>
+<div class="card">
+<div class="tdots" id="libdots"><i class="on"></i><i></i><i></i><i></i></div>
+<div id="libout" aria-live="polite"></div>
+<div class="tnav"><button type="button" id="libprev">← Back</button><button type="button" id="libnext">Next →</button></div>
+</div>
+</section><section id="predict"><h2>2. Your brain guesses first</h2>
+<p>Neuroscientist Lisa Feldman Barrett argues emotions are not reactions — they are <b>predictions</b> (Barrett, 2017). Your brain receives noisy body signals — racing heart, tight chest — and asks: given the situation and everything I have learned, what is this?</p>
+<p>Same racing heart at a job interview: anxiety. Same racing heart on a roller coaster: thrill. The body sends static. The brain writes the story. Try it — one body, three stories.</p>
+<div class="card"><h3 style="margin-top:0">Label the feeling</h3>
+<p class="n">Your body: pounding heart, sweaty palms, shallow breath. Tap a context.</p>
+<div class="qbtns" id="ctxbtns" style="grid-template-columns:1fr">
+<button type="button" data-i="0">Job interview, waiting room</button>
+<button type="button" data-i="1">First date, they're smiling</button>
+<button type="button" data-i="2">Alone, midnight, strange noise</button>
+</div>
+<p class="score" id="ctxout"></p>
+</div>
+</section><section id="tworoads"><h2>3. Two roads to fear</h2>
+<p>Joseph LeDoux showed that fear takes two neural paths. The fast one reacts before consciousness; the slow one understands after. And Antonio Damasio's <b>somatic marker hypothesis</b> adds the punchline: those gut feelings are data. Patients with damage to emotion circuits cannot make decisions at all — pure logic paralyzes. Feelings are not the enemy of reason. They are its engine.</p>
+<div class="tabs" id="roadtabs"><button type="button" data-i="0" aria-pressed="true">Low road</button><button type="button" data-i="1">High road</button></div>
+<div class="card" id="roadout" aria-live="polite"></div></section><section id="verdict"><h2>4. My take</h2>
+<p>So are feelings real? The signals are real — your body is genuinely reporting. But the story your brain tells about them is a construction: built from memory and context, assembled seconds before "you" arrive. You are not being manipulated by your brain. You <i>are</i> your brain — all of it, including the parts that vote early.</p>
+<div class="card">
+<h3 style="margin:0 0 .4em">Your turn</h3>
+<p class="n" style="margin:0 0 .6em">Who's driving?</p>
+<div class="qbtns" id="feelpoll">
+<button type="button" data-v="0">Conscious me</button>
+<button type="button" data-v="1">Unconscious me</button>
+<button type="button" data-v="2">It's a partnership</button>
+</div>
+<p class="score" id="feelout" style="margin:.4em 0 0"></p>
+</div>
+<p class="src">This post summarizes peer-reviewed findings for a general audience. It is not therapy, diagnosis, or medical advice.</p>
+<div class="backrow" style="margin-top:26px"><a class="back" href="/journal/simulation.html">Read next: Simulation? →</a><a class="back" href="/blog.html">← Back to Blog</a></div>
+</section><section id="sources"><h3>Sources</h3>
+<ul class="srcs">
+<li>Libet, B., Gleason, C. A., Wright, E. W., &amp; Pearl, D. K. (1983). Time of conscious intention to act in relation to onset of cerebral activity (readiness-potential). <i>Brain</i>, 106(3), 623–642.</li><li>Soon, C. S., Brass, M., Heinze, H.-J., &amp; Haynes, J.-D. (2008). Unconscious determinants of free decisions in the human brain. <i>Nature Neuroscience</i>, 11(5), 543–545.</li><li>Barrett, L. F. (2017). The theory of constructed emotion: An active inference account of interoception and categorization. <i>Social Cognitive and Affective Neuroscience</i>, 12(11), 1833–1838.</li><li>Damasio, A. R. (1994). <i>Descartes' Error: Emotion, Reason, and the Human Brain</i>. Putnam.</li><li>LeDoux, J. E. (1996). <i>The Emotional Brain</i>. Simon &amp; Schuster.</li>
+</ul></section>
+</main>
+<script>
+(function(){
+var N=["The captain. Bold claim.","The autopilot. Honest answer.","Both. The wise answer."];
+function v(i){try{localStorage.setItem("ll-feel-vote",i)}catch(e){}
+ document.querySelectorAll("#feelpoll button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.v==i)});
+ document.getElementById("feelout").textContent=N[i];}
+document.querySelectorAll("#feelpoll button").forEach(function(b){b.onclick=function(){v(+b.dataset.v)}});
+try{var x=localStorage.getItem("ll-feel-vote");if(x!==null)v(+x)}catch(e){}
+document.querySelector(".sharebtn").onclick=function(){
+ var d={title:document.title,text:"Are feelings real? Conscious vs unconscious",url:location.href};
+ if(navigator.share)navigator.share(d).catch(function(){});else if(navigator.clipboard)navigator.clipboard.writeText(location.href);};
+
+var LIB=["<b>−10s.</b> Deep in your prefrontal cortex, activity patterns already lean left or right. You feel perfectly undecided.","<b>−0.5s.</b> The readiness potential ramps up. Your motor cortex is preparing — still nothing in awareness.","<b>0s.</b> You 'decide' to press the button. This is the moment you experience as free will.","<b>+0.2s.</b> Your finger moves. The press release goes out: 'I chose this.' The vote happened ten seconds ago."];
+var li=0;function libshow(){document.querySelectorAll("#libdots i").forEach(function(d,i){d.className=i<=li?"on":""});
+document.getElementById("libout").innerHTML="<p>"+LIB[li]+"</p>";}
+document.getElementById("libnext").onclick=function(){li=Math.min(3,li+1);libshow()};
+document.getElementById("libprev").onclick=function(){li=Math.max(0,li-1);libshow()};libshow();
+var CTX=["<b>Anxiety.</b> Same body, different story. Your brain predicted threat — an evaluation that could cost you.",
+"<b>Excitement.</b> Identical signals, opposite label. Your brain predicted reward — this could go well.",
+"<b>Fear.</b> Same static again. Your brain predicted danger — something might be wrong. Three feelings, one body. The feeling was constructed, not detected."];
+document.querySelectorAll("#ctxbtns button").forEach(function(b){b.onclick=function(){
+document.querySelectorAll("#ctxbtns button").forEach(function(x){x.setAttribute("aria-pressed",x===b)});
+document.getElementById("ctxout").innerHTML="<p>"+CTX[+b.dataset.i]+"</p>";}});
+var Droad={0:["Low road","Thalamus → amygdala, in about 12 milliseconds. You jump before you see the snake. Fast, crude, unconscious — and it fires before 'you' know anything happened.","LeDoux (1996): the quick-and-dirty path. Survival doesn't wait for analysis."],1:["High road","Thalamus → cortex → amygdala. Slower, detailed, conscious. It figures out it was a stick, not a snake — and stands the alarm down.","The cortex gets the full picture, half a second later. Wisdom arrives late."]};
+function showRoad(i){document.querySelectorAll("#roadtabs button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.i==i)});
+var d=DRoad[i];document.getElementById("roadout").innerHTML="<h3 style=\"margin-top:0\">"+d[0]+"</h3><p>"+d[1]+"</p><p class=\"n\">"+d[2]+"</p>";}
+document.querySelectorAll("#roadtabs button").forEach(function(b){b.onclick=function(){showRoad(+b.dataset.i)}});showRoad(0);
+})();
+</script>
+<script>(function(){try{var p=location.pathname;fetch("/api/track?p="+encodeURIComponent(p)+"&r="+encodeURIComponent(document.referrer||""),{mode:"no-cors",keepalive:true}).catch(function(){})}catch(e){}})();</script>
+</body></html>

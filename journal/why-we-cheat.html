@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why We Cheat | Blog #8</title>
+<meta name="description" content="Infidelity is not a malfunction of love. Three brain systems, the mate-switching hypothesis, and the affair equation — with peer-reviewed sources.">
+<link rel="canonical" href="https://www.leonlink.net/journal/why-we-cheat.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Why We Cheat: the science of infidelity">
+<meta property="og:description" content="Infidelity is not a malfunction of love. Three brain systems, the mate-switching hypothesis, and the affair equation — with peer-reviewed sources.">
+<meta property="og:url" content="https://www.leonlink.net/journal/why-we-cheat.html">
+<meta property="og:image" content="https://www.leonlink.net/img/cards/cheat.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#04060a">
+<link rel="icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+
+
+:root{--bg:#04060a;--pan:#0b1018d9;--ink:#e6edf5;--mut:#8e9bb0;--g:#39ff88;--c:#22f0ff;--p:#ff3dc8;--y:#ffe14d;--line:#1b2636;--line2:#26364c}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:60px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 Georgia,"Iowan Old Style",serif;padding-bottom:env(safe-area-inset-bottom)}
+#radar{position:fixed;inset:0;width:100%;height:100%;z-index:-1;opacity:.55}
+#rain{position:fixed;inset:0;width:100%;height:100%;z-index:-1;opacity:.5;pointer-events:none}
+a{color:var(--c)}
+header{position:sticky;top:0;z-index:5;background:#04060ae0;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px;padding:10px 16px;font:600 .86rem "DM Sans",system-ui,sans-serif;overflow-x:auto;scrollbar-width:none;white-space:nowrap}
+header::-webkit-scrollbar{display:none}
+header .home{color:var(--g);text-decoration:none;text-shadow:0 0 10px #39ff8899}header a{color:var(--mut);text-decoration:none}header a:hover{color:var(--ink)}
+main{max-width:700px;margin:0 auto;padding:0 18px 70px}
+section{padding:54px 0 6px}
+.kick{font:700 .74rem "DM Sans",system-ui;letter-spacing:.14em;text-transform:uppercase;color:var(--p);text-shadow:0 0 12px #ff3dc888}
+h1{font-family:"Fraunces",Georgia,serif;font-size:clamp(2.4rem,9vw,3.6rem);line-height:1.02;margin:.25em 0 .3em;letter-spacing:-.01em}
+h1 span{color:var(--g);text-shadow:0 0 22px #39ff8877}
+h2{font-family:"Fraunces",Georgia,serif;font-size:1.6rem;line-height:1.2;margin:0 0 .4em;color:var(--g);text-shadow:0 0 16px #39ff8855}
+h3{font-size:1.15rem;margin:1.4em 0 .3em}
+p.n,.n{color:var(--mut);font-style:italic}
+.ui,button{font-family:"DM Sans",system-ui,sans-serif}
+.card{background:var(--pan);border:1px solid var(--line2);border-radius:14px;padding:16px;margin:16px 0;box-shadow:0 0 0 1px #39ff880d,0 10px 30px #0008}
+input[type=range]{width:100%;accent-color:var(--g);height:44px;margin:4px 0}
+.tabs{display:flex;gap:8px;margin:10px 0;overflow-x:auto;scrollbar-width:none;padding:2px 2px 6px;scroll-snap-type:x proximity}
+.tabs::-webkit-scrollbar{display:none}
+button{background:#0b1018;border:1px solid var(--line2);color:var(--ink);border-radius:999px;padding:10px 16px;min-height:44px;font-size:.9rem;cursor:pointer;white-space:nowrap;scroll-snap-align:start;transition:all .2s;-webkit-tap-highlight-color:transparent}
+button:hover{border-color:var(--g)}
+button[aria-pressed=true]{background:var(--g);color:#02170b;border-color:var(--g);font-weight:700;box-shadow:0 0 18px #39ff8888}
+.big{font:700 1.5rem/1.2 "DM Sans",system-ui;color:var(--g);text-shadow:0 0 14px #39ff8866}
+.when{font:700 .8rem "DM Sans",system-ui;letter-spacing:.1em;text-transform:uppercase;color:var(--c)}
+.kv{display:flex;justify-content:space-between;gap:12px;font:.92rem/1.45 "DM Sans",system-ui;padding:7px 0;border-bottom:1px solid var(--line)}
+.kv span:first-child{color:var(--mut);flex-shrink:0}.kv span:last-child{text-align:right}
+.chip{display:inline-block;font:700 .72rem "DM Sans",system-ui;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid currentColor;margin:6px 6px 0 0}
+.c-v{color:var(--g)}.c-c{color:var(--y)}.c-d{color:var(--p)}.c-h{color:var(--c)}.c-s{color:var(--y)}
+.prog{height:6px;background:var(--line);border-radius:4px;margin:12px 0 4px;overflow:hidden}.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--c),var(--g));box-shadow:0 0 10px var(--g);transition:width .35s}
+small,.src{color:var(--mut);font:.82rem/1.5 "DM Sans",system-ui}
+.voice{border-left:3px solid var(--p);padding:2px 0 2px 14px;margin:16px 0}.voice b{font-family:"DM Sans",system-ui;color:var(--p)}
+blockquote{margin:12px 0;padding:10px 14px;border-left:3px solid var(--c);background:#22f0ff0d;border-radius:0 10px 10px 0;font-style:italic}
+blockquote cite{display:block;font:normal .8rem "DM Sans",system-ui;color:var(--mut);margin-top:4px}
+.stamp{display:inline-block;transform:rotate(-4deg);border:2px solid var(--p);color:var(--p);font:800 .8rem "DM Sans",system-ui;letter-spacing:.2em;padding:4px 10px;border-radius:6px;text-shadow:0 0 10px #ff3dc8aa;box-shadow:0 0 14px #ff3dc844 inset}
+/* timeline */
+.tdots{display:flex;justify-content:space-between;gap:2px;margin:2px 4px 10px}.tdots i{flex:1;height:5px;border-radius:3px;background:var(--line2);transition:background .3s}.tdots i.on{background:var(--g);box-shadow:0 0 8px var(--g)}
+.tnav{display:flex;gap:8px;margin-top:12px}.tnav button{flex:1}
+/* quiz */
+.qbtns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.qbtns button{border-radius:12px;font-weight:700;min-height:52px}
+.qbtns button.ok{background:var(--g);color:#02170b;border-color:var(--g);box-shadow:0 0 18px #39ff8888}
+.qbtns button.no{background:#ff3dc822;border-color:var(--p);color:var(--p)}
+.score{font:700 .9rem "DM Sans",system-ui;color:var(--c)}
+/* meter */
+.meter{position:relative;height:14px;border-radius:8px;background:linear-gradient(90deg,#ff3dc8,#ffe14d 50%,#39ff88);margin:28px 4px 6px}
+.meter b{position:absolute;top:-9px;width:6px;height:32px;margin-left:-3px;background:#fff;border-radius:3px;box-shadow:0 0 12px #fff;transition:left .6s cubic-bezier(.3,1.4,.5,1)}
+.mlab{display:flex;justify-content:space-between;font:.72rem "DM Sans",system-ui;color:var(--mut)}
+/* blips */
+#scope{max-width:340px;margin:0 auto}
+#scope .blip{cursor:pointer}
+#scope .blip circle.d{fill:var(--g);filter:drop-shadow(0 0 6px #39ff88)}
+#scope .blip.res circle.d{fill:var(--c)}#scope .blip.arc circle.d{fill:#56637a;filter:none}#scope .blip.open circle.d{fill:var(--p);filter:drop-shadow(0 0 8px #ff3dc8)}
+#scope .blip circle.h{fill:transparent}
+#sweep{transform-origin:150px 150px;animation:sw 4s linear infinite}@keyframes sw{to{transform:rotate(360deg)}}
+.tally{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;text-align:center;font-family:"DM Sans",system-ui}
+.tally div{border:1px solid var(--line2);border-radius:10px;padding:8px 4px}.tally b{display:block;font-size:1.4rem}.tally small{font-size:.72rem}
+/* drake */
+.dr{display:grid;grid-template-columns:1fr auto;gap:0 10px;align-items:center;font-family:"DM Sans",system-ui;font-size:.88rem}
+.dr label{color:var(--mut)}.dr output{color:var(--c);font-weight:700;min-width:64px;text-align:right}
+.dr input{grid-column:1/-1;height:36px;margin:0 0 6px}
+.nbig{font:800 clamp(2rem,10vw,3rem)/1 "DM Sans",system-ui;color:var(--g);text-shadow:0 0 24px #39ff8888;text-align:center;margin:14px 0 4px}
+/* bill tracker */
+.steps{list-style:none;padding:0;margin:8px 0;font-family:"DM Sans",system-ui;font-size:.92rem}
+.steps li{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}
+.steps li i{flex:0 0 26px;height:26px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:.8rem}
+.steps .y i{background:var(--g);color:#02170b;box-shadow:0 0 10px var(--g)}.steps .x i{background:var(--p);color:#fff}.steps .w i{border:2px dashed var(--y);color:var(--y)}
+/* poll */
+.poll button{display:block;width:100%;text-align:left;border-radius:12px;margin:8px 0;white-space:normal;position:relative;overflow:hidden}
+.poll button span{position:relative;z-index:1}
+.srcs{font:.8rem/1.6 "DM Sans",system-ui;color:var(--mut);padding-left:18px}.srcs li{margin:4px 0;word-break:break-word}
+.back{display:inline-flex;align-items:center;gap:8px;font:700 .9rem "DM Sans",system-ui;color:#02170b;background:var(--g);padding:12px 20px;border-radius:999px;text-decoration:none;box-shadow:0 0 20px #39ff8877;min-height:44px}
+:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media(min-width:720px){body{font-size:18px}section{padding-top:64px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.sharebtn{background:#0b1018;border:1px solid var(--line2);color:var(--ink);border-radius:999px;padding:8px 16px;min-height:36px;font:600 .82rem "DM Sans",system-ui,sans-serif;cursor:pointer;white-space:nowrap;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.sharebtn:hover{border-color:var(--g)}
+header .sharebtn{margin-left:auto}
+.backrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+
+
+</style></head><body>
+<header><a class="home" href="/blog.html">← Blog</a><a href="#systems">Three systems</a><a href="#switch">Built to switch</a><a href="#who">Who cheats</a><a href="#verdict">My take</a><button class="sharebtn" type="button">Share</button></header>
+<main>
+<section id="top">
+<span class="kick">Blog · Post #8 · The Science Behind Feelings, Part 1</span>
+<h1>Why we <span>cheat</span></h1>
+<p>In 2017, evolutionary psychologist David Buss published a paper with an uncomfortable thesis: affairs are not a malfunction of love. They are a feature of a mating system that was built, in part, for switching partners.</p>
+<p>This is not an excuse. It is an explanation. And it starts with a strange fact about your brain: the circuitry for lust, the circuitry for romance, and the circuitry for attachment are three separate systems. They can run at the same time — aimed at different people.</p>
+<p class="n">Every claim below comes from peer-reviewed research. Sources are listed at the bottom.</p>
+</section>
+<section id="systems"><h2>1. Three systems, one brain</h2>
+<p>Anthropologist Helen Fisher proposed that mammals run three independent emotion systems for mating (Fisher, 1998). The critical part: <b>they operate independently</b>. Deep attachment to your partner, intense attraction to a coworker, raw lust for a stranger — all in the same week. That is not hypocrisy. That is neurochemistry. Tap each system.</p>
+<div class="tabs" id="systabs"><button type="button" data-i="0" aria-pressed="true">Lust</button><button type="button" data-i="1">Attraction</button><button type="button" data-i="2">Attachment</button></div>
+<div class="card" id="sysout" aria-live="polite"></div></section><section id="switch"><h2>2. Built to switch</h2>
+<p>In 2017, Buss and colleagues formalized the <b>mate switching hypothesis</b> (Buss et al., 2017): humans evolved not only to choose mates, but to replace them when a better option appears. An affair is often not about the current partner failing — it is about a new option clearing a threshold.</p>
+<p>The research keeps finding the same three ingredients. Move the sliders — this is the affair equation.</p>
+<div class="card">
+<div class="dr"><label for="rs">Relationship satisfaction</label><output id="rsv">50%</output><input type="range" id="rs" min="0" max="100" value="50">
+<label for="ro">Opportunity (proximity + privacy)</label><output id="rov">50%</output><input type="range" id="ro" min="0" max="100" value="50">
+<label for="ra">Alternative mate quality</label><output id="rav">50%</output><input type="range" id="rav2" min="0" max="100" value="50"></div>
+<div class="meter" aria-hidden="true"><b id="affneedle" style="left:50%"></b></div>
+<div class="mlab"><span>Safe</span><span>Danger</span></div>
+<p class="n" id="afflabel" style="margin-top:8px">Remove any one of the three and the affair usually never happens.</p>
+</div>
+<p>Most affairs are boring, not passionate: a coworker, a long timeline, a slow drift. Opportunity does more work than desire.</p>
+</section><section id="who"><h2>3. Who actually cheats</h2>
+<p>A national random sample (Atkins, Baucom &amp; Jacobson, 2001) found the strongest predictors of infidelity. Answer honestly — four questions, then your attachment profile.</p>
+<div class="card"><h3 style="margin-top:0">Attachment check</h3>
+<p class="n">For each, tap the answer closest to you.</p>
+<div id="aq"></div>
+<div class="qbtns" id="aqbtns" style="grid-template-columns:1fr"></div>
+<p class="score" id="aqout"></p>
+</div>
+<p>It is not the unhappy ones, necessarily. It is the ones with the doors open: prior infidelity is the single strongest predictor, and avoidant attachers — uncomfortable with closeness — stray more than anyone.</p>
+</section><section id="verdict"><h2>4. My take</h2>
+<p>Cheating is not proof that love is fake. It is proof that love is three systems sharing one skull — and they do not always vote the same way. Knowing which system is talking is the closest thing to a defense.</p>
+<div class="card">
+<h3 style="margin:0 0 .4em">Your turn</h3>
+<p class="n" style="margin:0 0 .6em">Which system runs you?</p>
+<div class="qbtns" id="cheatpoll">
+<button type="button" data-v="0">Lust</button>
+<button type="button" data-v="1">Attraction</button>
+<button type="button" data-v="2">Attachment</button>
+</div>
+<p class="score" id="cheatout" style="margin:.4em 0 0"></p>
+</div>
+<p class="src">This post summarizes peer-reviewed findings for a general audience. It is not therapy, diagnosis, or relationship advice.</p>
+<div class="backrow" style="margin-top:26px"><a class="back" href="/journal/why-breakups-hurt.html">Read next: Why Breakups Hurt →</a><a class="back" href="/blog.html">← Back to Blog</a></div>
+</section><section id="sources"><h3>Sources</h3>
+<ul class="srcs">
+<li>Fisher, H. E. (1998). Lust, attraction, and attachment in mammalian reproduction. <i>Human Nature</i>, 9(1), 23–52.</li><li>Buss, D. M., Goetz, C., Duntley, J. D., Asao, K., &amp; Conroy-Beam, D. (2017). The mate switching hypothesis. <i>Personality and Individual Differences</i>, 104, 143–149.</li><li>Atkins, D. C., Baucom, D. H., &amp; Jacobson, N. S. (2001). Understanding infidelity: Correlates in a national random sample. <i>Journal of Family Psychology</i>, 15(4), 735–749.</li><li>Schmitt, D. P. (2004). The Big Five related to risky sexual behaviour across 10 world regions. <i>Personality and Individual Differences</i>, 34(1), 3–12.</li>
+</ul></section>
+</main>
+<script>
+(function(){
+var N=["Honest. The oldest system.","Focused. The dopamine talking.","Loyal. The long game."];
+function v(i){try{localStorage.setItem("ll-cheat-vote",i)}catch(e){}
+ document.querySelectorAll("#cheatpoll button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.v==i)});
+ document.getElementById("cheatout").textContent=N[i];}
+document.querySelectorAll("#cheatpoll button").forEach(function(b){b.onclick=function(){v(+b.dataset.v)}});
+try{var x=localStorage.getItem("ll-cheat-vote");if(x!==null)v(+x)}catch(e){}
+document.querySelector(".sharebtn").onclick=function(){
+ var d={title:document.title,text:"Why we cheat — the science of infidelity",url:location.href};
+ if(navigator.share)navigator.share(d).catch(function(){});else if(navigator.clipboard)navigator.clipboard.writeText(location.href);};
+
+var Dsys={0:["Lust","Testosterone and estrogen. The 'anyone will do' system — its job is to get you mating, partner optional.","Runs on sex hormones. Fast, broad, indiscriminate."],1:["Attraction","Dopamine, norepinephrine, crashing serotonin. The 'this one, specifically' system — focused, obsessive, euphoric.","The same cocktail as a cocaine high. That's why new love feels like a drug."],2:["Attachment","Oxytocin and vasopressin. The 'stay' system — calm, warm, bonded. Its job is keeping you together long enough to raise kids.","Built for the long haul. Quiet, not thrilling — which is exactly the problem."]};
+function showSys(i){document.querySelectorAll("#systabs button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.i==i)});
+var d=DSys[i];document.getElementById("sysout").innerHTML="<h3 style=\"margin-top:0\">"+d[0]+"</h3><p>"+d[1]+"</p><p class=\"n\">"+d[2]+"</p>";}
+document.querySelectorAll("#systabs button").forEach(function(b){b.onclick=function(){showSys(+b.dataset.i)}});showSys(0);
+function aff(){var s=+document.getElementById("rs").value,o=+document.getElementById("ro").value,a=+document.getElementById("rav2").value;
+document.getElementById("rsv").textContent=s+"%";document.getElementById("rov").textContent=o+"%";document.getElementById("rav").textContent=a+"%";
+var r=Math.round(((100-s)*0.4+o*0.35+a*0.25));document.getElementById("affneedle").style.left=r+"%";
+document.getElementById("afflabel").textContent=r<30?"Low risk. The equation doesn't close.":r<60?"Elevated. Two of the three ingredients are present.":"High risk. All three ingredients are in place — this is how most affairs start.";}
+["rs","ro","rav2"].forEach(function(id){document.getElementById(id).oninput=aff});aff();
+var AQ=["Closeness makes me:","When my partner needs me, I:","I think about past relationships:","Commitment feels:"];
+var AO=[["Warm and easy","Uneasy — I need space","I worry they'll leave"],["Show up fully","Pull back a little","Panic quietly"],["Fondly, no threat","Like unfinished business","Like proof people leave"],["Safe","Trapping","Fragile"]];
+var AS=[[0,2,1],[0,2,1],[0,1,2],[0,2,1]];var ai=0,sc=[0,0,0];
+function aqrender(){document.getElementById("aq").innerHTML="<p><b>Q"+(ai+1)+".</b> "+AQ[ai]+"</p>";
+document.getElementById("aqbtns").innerHTML=AO[ai].map(function(o,i){return '<button type="button" data-i="'+i+'">'+o+'</button>'}).join("");
+document.querySelectorAll("#aqbtns button").forEach(function(b){b.onclick=function(){sc[AS[ai][+b.dataset.i]]++;ai++;
+if(ai<AQ.length)aqrender();else{var m=Math.max(sc[0],sc[1],sc[2]);var t=m===0?["Secure","You bond easily and stay. Research says secure attachers cheat least — the doors stay closed."]:m===1?["Avoidant","Closeness feels costly. Studies link avoidant attachment to higher infidelity — cheating can be an exit strategy."]:["Anxious","You fear abandonment. Anxious attachers cheat less for novelty, more from insecurity."];
+document.getElementById("aq").innerHTML="";document.getElementById("aqbtns").innerHTML="";
+document.getElementById("aqout").textContent=t[0]+". "+t[1];}}});}
+aqrender();
+})();
+</script>
+<script>(function(){try{var p=location.pathname;fetch("/api/track?p="+encodeURIComponent(p)+"&r="+encodeURIComponent(document.referrer||""),{mode:"no-cors",keepalive:true}).catch(function(){})}catch(e){}})();</script>
+</body></html>
