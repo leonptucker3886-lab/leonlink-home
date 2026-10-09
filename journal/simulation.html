@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Simulation? | Blog #7</title>
+<meta name="description" content="Elon Musk puts the odds we're in base reality at one in billions. Bostrom's trilemma, the famous quotes, the evidence for and against — and your own odds calculator.">
+<link rel="canonical" href="https://www.leonlink.net/journal/simulation.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Simulation? Are we living in one?">
+<meta property="og:description" content="The trilemma, the quotes, the evidence — tap through it and run your own odds.">
+<meta property="og:url" content="https://www.leonlink.net/journal/simulation.html">
+<meta property="og:image" content="https://www.leonlink.net/img/cards/simulation.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#04060a">
+<link rel="icon" href="/favicon.png">
+<style>
+
+:root{--bg:#04060a;--pan:#0b1018d9;--ink:#e6edf5;--mut:#8e9bb0;--g:#39ff88;--c:#22f0ff;--p:#ff3dc8;--y:#ffe14d;--line:#1b2636;--line2:#26364c}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:60px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 Georgia,"Iowan Old Style",serif;padding-bottom:env(safe-area-inset-bottom)}
+#radar{position:fixed;inset:0;width:100%;height:100%;z-index:-1;opacity:.55}
+a{color:var(--c)}
+header{position:sticky;top:0;z-index:5;background:#04060ae0;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px;padding:10px 16px;font:600 .86rem system-ui,sans-serif;overflow-x:auto;scrollbar-width:none;white-space:nowrap}
+header::-webkit-scrollbar{display:none}
+header .home{color:var(--g);text-decoration:none;text-shadow:0 0 10px #39ff8899}header a{color:var(--mut);text-decoration:none}header a:hover{color:var(--ink)}
+main{max-width:700px;margin:0 auto;padding:0 18px 70px}
+section{padding:54px 0 6px}
+.kick{font:700 .74rem system-ui;letter-spacing:.14em;text-transform:uppercase;color:var(--p);text-shadow:0 0 12px #ff3dc888}
+h1{font-size:clamp(2.4rem,9vw,3.6rem);line-height:1.02;margin:.25em 0 .3em;letter-spacing:-.01em}
+h1 span{color:var(--g);text-shadow:0 0 22px #39ff8877}
+h2{font-size:1.6rem;line-height:1.2;margin:0 0 .4em;color:var(--g);text-shadow:0 0 16px #39ff8855}
+h3{font-size:1.15rem;margin:1.4em 0 .3em}
+p.n,.n{color:var(--mut);font-style:italic}
+.ui,button{font-family:system-ui,sans-serif}
+.card{background:var(--pan);border:1px solid var(--line2);border-radius:14px;padding:16px;margin:16px 0;box-shadow:0 0 0 1px #39ff880d,0 10px 30px #0008}
+input[type=range]{width:100%;accent-color:var(--g);height:44px;margin:4px 0}
+.tabs{display:flex;gap:8px;margin:10px 0;overflow-x:auto;scrollbar-width:none;padding:2px 2px 6px;scroll-snap-type:x proximity}
+.tabs::-webkit-scrollbar{display:none}
+button{background:#0b1018;border:1px solid var(--line2);color:var(--ink);border-radius:999px;padding:10px 16px;min-height:44px;font-size:.9rem;cursor:pointer;white-space:nowrap;scroll-snap-align:start;transition:all .2s;-webkit-tap-highlight-color:transparent}
+button:hover{border-color:var(--g)}
+button[aria-pressed=true]{background:var(--g);color:#02170b;border-color:var(--g);font-weight:700;box-shadow:0 0 18px #39ff8888}
+.big{font:700 1.5rem/1.2 system-ui;color:var(--g);text-shadow:0 0 14px #39ff8866}
+.when{font:700 .8rem system-ui;letter-spacing:.1em;text-transform:uppercase;color:var(--c)}
+.kv{display:flex;justify-content:space-between;gap:12px;font:.92rem/1.45 system-ui;padding:7px 0;border-bottom:1px solid var(--line)}
+.kv span:first-child{color:var(--mut);flex-shrink:0}.kv span:last-child{text-align:right}
+.chip{display:inline-block;font:700 .72rem system-ui;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid currentColor;margin:6px 6px 0 0}
+.c-v{color:var(--g)}.c-c{color:var(--y)}.c-d{color:var(--p)}.c-h{color:var(--c)}.c-s{color:var(--y)}
+.prog{height:6px;background:var(--line);border-radius:4px;margin:12px 0 4px;overflow:hidden}.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--c),var(--g));box-shadow:0 0 10px var(--g);transition:width .35s}
+small,.src{color:var(--mut);font:.82rem/1.5 system-ui}
+.voice{border-left:3px solid var(--p);padding:2px 0 2px 14px;margin:16px 0}.voice b{font-family:system-ui;color:var(--p)}
+blockquote{margin:12px 0;padding:10px 14px;border-left:3px solid var(--c);background:#22f0ff0d;border-radius:0 10px 10px 0;font-style:italic}
+blockquote cite{display:block;font:normal .8rem system-ui;color:var(--mut);margin-top:4px}
+.stamp{display:inline-block;transform:rotate(-4deg);border:2px solid var(--p);color:var(--p);font:800 .8rem system-ui;letter-spacing:.2em;padding:4px 10px;border-radius:6px;text-shadow:0 0 10px #ff3dc8aa;box-shadow:0 0 14px #ff3dc844 inset}
+/* timeline */
+.tdots{display:flex;justify-content:space-between;gap:2px;margin:2px 4px 10px}.tdots i{flex:1;height:5px;border-radius:3px;background:var(--line2);transition:background .3s}.tdots i.on{background:var(--g);box-shadow:0 0 8px var(--g)}
+.tnav{display:flex;gap:8px;margin-top:12px}.tnav button{flex:1}
+/* quiz */
+.qbtns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.qbtns button{border-radius:12px;font-weight:700;min-height:52px}
+.qbtns button.ok{background:var(--g);color:#02170b;border-color:var(--g);box-shadow:0 0 18px #39ff8888}
+.qbtns button.no{background:#ff3dc822;border-color:var(--p);color:var(--p)}
+.score{font:700 .9rem system-ui;color:var(--c)}
+/* meter */
+.meter{position:relative;height:14px;border-radius:8px;background:linear-gradient(90deg,#ff3dc8,#ffe14d 50%,#39ff88);margin:28px 4px 6px}
+.meter b{position:absolute;top:-9px;width:6px;height:32px;margin-left:-3px;background:#fff;border-radius:3px;box-shadow:0 0 12px #fff;transition:left .6s cubic-bezier(.3,1.4,.5,1)}
+.mlab{display:flex;justify-content:space-between;font:.72rem system-ui;color:var(--mut)}
+/* blips */
+#scope{max-width:340px;margin:0 auto}
+#scope .blip{cursor:pointer}
+#scope .blip circle.d{fill:var(--g);filter:drop-shadow(0 0 6px #39ff88)}
+#scope .blip.res circle.d{fill:var(--c)}#scope .blip.arc circle.d{fill:#56637a;filter:none}#scope .blip.open circle.d{fill:var(--p);filter:drop-shadow(0 0 8px #ff3dc8)}
+#scope .blip circle.h{fill:transparent}
+#sweep{transform-origin:150px 150px;animation:sw 4s linear infinite}@keyframes sw{to{transform:rotate(360deg)}}
+.tally{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;text-align:center;font-family:system-ui}
+.tally div{border:1px solid var(--line2);border-radius:10px;padding:8px 4px}.tally b{display:block;font-size:1.4rem}.tally small{font-size:.72rem}
+/* drake */
+.dr{display:grid;grid-template-columns:1fr auto;gap:0 10px;align-items:center;font-family:system-ui;font-size:.88rem}
+.dr label{color:var(--mut)}.dr output{color:var(--c);font-weight:700;min-width:64px;text-align:right}
+.dr input{grid-column:1/-1;height:36px;margin:0 0 6px}
+.nbig{font:800 clamp(2rem,10vw,3rem)/1 system-ui;color:var(--g);text-shadow:0 0 24px #39ff8888;text-align:center;margin:14px 0 4px}
+/* bill tracker */
+.steps{list-style:none;padding:0;margin:8px 0;font-family:system-ui;font-size:.92rem}
+.steps li{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}
+.steps li i{flex:0 0 26px;height:26px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:.8rem}
+.steps .y i{background:var(--g);color:#02170b;box-shadow:0 0 10px var(--g)}.steps .x i{background:var(--p);color:#fff}.steps .w i{border:2px dashed var(--y);color:var(--y)}
+/* poll */
+.poll button{display:block;width:100%;text-align:left;border-radius:12px;margin:8px 0;white-space:normal;position:relative;overflow:hidden}
+.poll button span{position:relative;z-index:1}
+.srcs{font:.8rem/1.6 system-ui;color:var(--mut);padding-left:18px}.srcs li{margin:4px 0;word-break:break-word}
+.back{display:inline-flex;align-items:center;gap:8px;font:700 .9rem system-ui;color:#02170b;background:var(--g);padding:12px 20px;border-radius:999px;text-decoration:none;box-shadow:0 0 20px #39ff8877;min-height:44px}
+:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media(min-width:720px){body{font-size:18px}section{padding-top:64px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.sharebtn{background:#0b1018;border:1px solid var(--line2);color:var(--ink);border-radius:999px;padding:8px 16px;min-height:36px;font:600 .82rem system-ui,sans-serif;cursor:pointer;white-space:nowrap;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.sharebtn:hover{border-color:var(--g)}
+header .sharebtn{margin-left:auto}
+.backrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+
+</style></head><body>
+<canvas id="rain" aria-hidden="true"></canvas>
+<header><a class="home" href="/blog.html">← Blog</a><a href="#trilemma">The trilemma</a><a href="#voices">Who said it</a><a href="#evidence">The evidence</a><a href="#odds">Your odds</a><a href="#verdict">My take</a><button class="sharebtn" type="button">Share</button></header>
+<main>
+<section id="top">
+<span class="kick">Blog · Post #7 · October 9, 2026</span>
+<h1>Are we <span>simulated?</span></h1>
+<p><span class="stamp">RED PILL AVAILABLE</span></p>
+<p>In 2016, Elon Musk stood on a stage and said the odds that we're living in "base reality" — the real, physical, un-simulated world — are <b>one in billions</b>. Not a joke, not a tweet. His actual stated position, on the record, twice.</p>
+<p>He's not alone. An Oxford philosopher proved the logic in 2003. Neil deGrasse Tyson has given it 50/50. A Nobel physicist, a famous sci-fi author, and the man who wrote the book on consciousness all say some version of: <i>you can't rule it out</i>.</p>
+<p>So let's do what this blog does. The argument, the quotes, the evidence for and against — then you run your own numbers and vote.</p>
+<p class="n">Quotes below are from public interviews, debates and papers, and sources are listed at the bottom.</p>
+</section>
+
+<section id="trilemma"><h2>1. The trilemma</h2>
+<p>In 2003, Oxford philosopher Nick Bostrom published <i>"Are You Living in a Computer Simulation?"</i> His argument is a trilemma: one of these three must be true. Tap each door.</p>
+<div class="tabs" id="ttabs"></div>
+<div class="card" id="tout" aria-live="polite"></div>
+</section>
+
+<section id="voices"><h2>2. Who said it</h2>
+<p>Tap a name. These are their words, shortened but not softened.</p>
+<div class="tabs" id="vtabs"></div>
+<div class="card" id="vout" aria-live="polite"></div>
+</section>
+
+<section id="evidence"><h2>3. Weigh the evidence</h2>
+<p>Switch sides, then tap a claim to see how strong it really is. <span class="chip c-v">Backed</span> means there's something real behind it. <span class="chip c-c">Thin</span> means it's suggestive at best.</p>
+<div class="tabs" id="etabs"><button data-s="for" aria-pressed="true">The case for</button><button data-s="against">The case against</button></div>
+<div class="card"><div class="meter" aria-hidden="true"><b id="needle"></b></div>
+<div class="mlab"><span>Weak</span><span>Strong</span></div>
+<div class="tabs" id="ctabs" style="margin-top:10px"></div>
+<div id="cout" aria-live="polite" style="margin-top:8px"></div></div>
+</section>
+
+<section id="odds"><h2>4. Run your own odds</h2>
+<p>Bostrom's math, simplified. If civilizations can build ancestor simulations, and some do, and they run a lot of them — then most minds like yours are simulated ones. Move the sliders, or try a preset.</p>
+<div class="tabs" id="opre"><button data-p="skep">Skeptic</button><button data-p="mid" aria-pressed="true">Middle</button><button data-p="bel">Believer</button></div>
+<div class="card"><div class="dr" id="odr"></div>
+<div class="nbig" id="on"></div><p id="otxt" style="text-align:center;margin:.2em 0 0" class="ui"></p></div>
+<div class="voice"><b>How the math works:</b> take the chance a civilization reaches simulation tech, times the chance such civilizations actually run ancestor simulations, times how many each one runs. Divide that by itself-plus-one (the one base reality). That's your odds of being simulated.</div>
+</section>
+
+<section id="verdict"><h2>5. My take</h2>
+<p>Here's where I've landed. Musk's Pong argument is the one I can't shake: forty years from two rectangles and a dot to photorealistic worlds with millions of players. Whatever the rate of progress from here, "indistinguishable from reality" is downstream of it — unless we wipe ourselves out first, which is Bostrom's whole point.</p>
+<p>But Chalmers has the other half of it: you can't prove we're <i>not</i> in one, because any evidence could be simulated. An unfalsifiable idea is a fun idea, not a proven one. I put it where Tyson ended up: somewhere around a coin flip, and the coin is still in the air.</p>
+<p>And honestly? If we are in a simulation, the programmer has a weird sense of humor — and I still have to pay rent. Base reality or not, the move is the same: <b>build things</b>.</p>
+<div class="card poll" id="poll"><b class="ui">Your turn. Are we in a simulation?</b><small style="display:block">Your answer stays on this device. I don't collect it.</small>
+<button data-v="0"><span>Yes — hand me the red pill</span></button>
+<button data-v="1"><span>Probably, but it changes nothing</span></button>
+<button data-v="2"><span>No — this is base reality</span></button>
+<button data-v="3"><span>No idea. Pass the popcorn</span></button>
+<div id="pout" class="ui" aria-live="polite"></div></div>
+<p style="margin-top:28px" class="backrow"><a class="back" href="/journal/aliens.html">Read next: Not Alone? →</a><a class="back" href="/blog.html">← Back to Blog</a><button class="sharebtn" type="button">Share this post</button></p>
+</section>
+
+<section id="sources"><h3>Sources</h3>
+<ol class="srcs">
+<li>Nick Bostrom, "Are You Living in a Computer Simulation?", Philosophical Quarterly (2003): simulation-argument.com</li>
+<li>Elon Musk at Recode's Code Conference (June 1, 2016), answering Joshua Topolsky: "the odds that we're in base reality is one in billions" — The Verge, Vox, IFLScience coverage</li>
+<li>Elon Musk on The Joe Rogan Experience (Sept 2018): "if you assume any rate of improvement at all then games will be indistinguishable from reality, or civilization will end... Therefore, we are most likely in a simulation, because we exist" — ScienceAlert</li>
+<li>Elon Musk on the Lex Fridman Podcast (2019): "What's outside the simulation?" — Inverse</li>
+<li>2016 Isaac Asimov Memorial Debate, "Is the Universe a Simulation?", American Museum of Natural History; Neil deGrasse Tyson: likelihood "may be very high"; Lisa Randall: effectively zero — Business Insider, AMNH</li>
+<li>Neil deGrasse Tyson, later 50/50 framing of the argument — StarTalk / Diary of a CEO appearances</li>
+<li>David Chalmers, Reality+ (2022): "You're not going to get proof that we're not in a simulation, because any evidence that we get could be simulated" — W.W. Norton</li>
+<li>Philip K. Dick, "If You Find This World Bad, You Should See Some of the Others" (Metz, 1977)</li>
+<li>Max Tegmark on the mathematical universe — 2016 Asimov debate coverage</li>
+<li>James Gates on error-correcting codes in supersymmetry equations — reported in science press</li>
+<li>Zohar Ringel &amp; Dmitry Kovrizhin, "Quantized gravitational responses, the sign problem, and quantum complexity", Science Advances (2017)</li>
+<li>Rizwan Virk, The Simulation Hypothesis (2019)</li>
+</ol></section>
+</main>
+<script>
+const $=i=>document.getElementById(i),RM=matchMedia("(prefers-reduced-motion:reduce)").matches,el=(t,a={},h="")=>{const e=document.createElement(t);Object.assign(e,a);if(h)e.innerHTML=h;return e};
+/* digital rain background */
+const cv=$("rain"),cx=cv.getContext("2d");let W,H;const CH="01<>{}[]=+*#$%&";
+const rs=()=>{const d=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*d;cv.height=H*d;cx.setTransform(d,0,0,d,0,0)};addEventListener("resize",rs);rs();
+let cols=[],fs=15;
+function seed(){cols=[];const n=Math.ceil(W/fs);for(let i=0;i<n;i++)cols.push({y:Math.random()*-H,sp:2+Math.random()*4,ch:CH[Math.random()*CH.length|0]})}
+seed();addEventListener("resize",seed);
+cx.fillStyle="#04060a";cx.fillRect(0,0,W,H);cx.font=fs+"px monospace";
+function rain(){cx.fillStyle="rgba(4,6,10,.08)";cx.fillRect(0,0,W,H);
+for(const c of cols){const g=c.y/H>.75;c.ch=CH[Math.random()*CH.length|0];
+cx.fillStyle=g?"rgba(57,255,136,.5)":"rgba(57,255,136,.22)";cx.fillText(c.ch,cols.indexOf(c)*fs,c.y);
+c.y+=c.sp*fs/10;if(c.y>H&&Math.random()>.975){c.y=Math.random()*-200;c.sp=2+Math.random()*4}}
+if(!RM)requestAnimationFrame(rain)}
+rain();
+/* trilemma */
+const TR=[
+["Door 1","We go extinct first","Humanity almost never reaches the stage where we <i>could</i> run ancestor simulations. We wipe ourselves out, stall out, or lose interest before the tech arrives. If this is true, the simulation question is moot — nobody ever builds one."],
+["Door 2","We could, but we don't","We reach god-tier computing and then... choose not to run simulations of our ancestors. Maybe it's unethical, maybe it's illegal, maybe posthumans just have better things to do. Possible — but it requires <i>every</i> advanced civilization, forever, to agree."],
+["Door 3","We're in one","If even a fraction of civilizations reach the tech and run lots of ancestor simulations, simulated minds outnumber real ones by billions to one. Then the odds are overwhelming that you — reading this — are simulated."]];
+TR.forEach((t,i)=>{const b=el("button",{textContent:t[0]});b.onclick=()=>tri(i);$("ttabs").append(b)});
+function tri(i){[...$("ttabs").children].forEach((b,j)=>b.setAttribute("aria-pressed",i==j));const t=TR[i];
+$("tout").innerHTML=`<div class="when">Bostrom's trilemma · ${t[0]}</div><div class="big">${t[1]}</div><p style="margin:.4em 0 0">${t[2]}</p>
+<p class="n" style="margin:.6em 0 0">Bostrom's point: you can't reject all three. Pick the one you can live with.</p>`}
+tri(2);
+/* voices */
+const VQ=[
+["Elon Musk","SpaceX / Tesla, 2016",
+"<blockquote>Given that we're clearly on a trajectory to have games that are indistinguishable from reality, and those games could be played on any set-top box or on a PC or whatever, and there would probably be billions of such computers or set-top boxes, it would seem to follow that the odds that we're in base reality is one in billions.<cite>Elon Musk, Code Conference 2016</cite></blockquote><p>Two years later, on Joe Rogan, he sharpened it: <blockquote>If you assume any rate of improvement at all then games will be indistinguishable from reality, or civilization will end... Therefore, we are most likely in a simulation, because we exist.<cite>Elon Musk, 2018</cite></blockquote>And when Lex Fridman asked what he'd ask a superintelligent AI, Musk paused 14 seconds and said: <i>\"What's outside the simulation?\"</i></p>"],
+["Neil deGrasse Tyson","Astrophysicist, 2016",
+"<p>Hosting the Isaac Asimov Memorial Debate on exactly this question, Tyson said the likelihood the universe is a simulation <b>\"may be very high.\"</b> His reasoning is pure statistics: on an infinite timeline, <i>someone</i> builds a perfect simulation, then those simulated beings build their own — and suddenly base reality is one needle in an infinite haystack.</p><p>Later he tightened it to a coin flip: since we <i>can't</i> build such simulations yet, maybe we're the originals — or just early in the chain. Fifty-fifty.</p>"],
+["Nick Bostrom","Oxford philosopher, 2003",
+"<p>Bostrom doesn't claim we're simulated. He claims the logic forces a choice (see the trilemma above). His paper's kicker is statistical: <i>if</i> posthuman civilizations run many ancestor simulations, then simulated observers vastly outnumber real ones — so any given observer, including you, is almost certainly simulated.</p><p>The paper turned a dorm-room debate into a peer-reviewed argument. Everything since is footnotes.</p>"],
+["David Chalmers","Philosopher, NYU",
+"<blockquote>You're not going to get proof that we're not in a simulation, because any evidence that we get could be simulated.<cite>David Chalmers</cite></blockquote><p>In <i>Reality+</i> (2022), Chalmers goes further: even if we <i>are</i> simulated, that doesn't make our lives unreal. Virtual doesn't mean fake — it means implemented differently. A simulated steak dinner still tastes like dinner.</p>"],
+["Philip K. Dick","Sci-fi author, 1977",
+"<blockquote>We are living in a computer-programmed reality, and the only clue we have to it is when some variable is changed, and some alteration in our reality occurs.<cite>Philip K. Dick, Metz speech, 1977</cite></blockquote><p>Decades before Bostrom's paper, the man who wrote the stories behind <i>Blade Runner</i>, <i>Total Recall</i> and <i>Minority Report</i> told a room full of sci-fi fans that reality was programmed — and that déjà vu was a variable being changed.</p>"],
+["Lisa Randall","Physicist, skeptic",
+"<p>At the same 2016 debate where Tyson went bullish, Harvard physicist Lisa Randall said the odds the universe isn't real are <b>\"effectively zero.\"</b> Her position: the simulation argument is philosophy dressed as statistics, and it mistakes \"we can't disprove it\" for \"it's likely.\"</p><p>She's the designated driver of this debate. Somebody has to be.</p>"]];
+VQ.forEach((v,i)=>{const b=el("button",{textContent:v[0]});b.onclick=()=>voi(i);$("vtabs").append(b)});
+function voi(i){[...$("vtabs").children].forEach((b,j)=>b.setAttribute("aria-pressed",i==j));const v=VQ[i];
+$("vout").innerHTML=`<div class="when">${v[1]}</div><div class="big" style="margin:.15em 0 .3em">${v[0]}</div>${v[2]}`}
+voi(0);
+/* evidence */
+const EV={
+for:[["The Pong trajectory",90,"<b>Musk's core argument.</b> In 40 years we went from two rectangles and a dot to photorealistic 3D worlds with millions of players. Assume <i>any</i> continued progress and games become indistinguishable from reality. The only exits are extinction or refusal."],
+["Bostrom's numbers game",85,"<b>The statistical hammer.</b> Billions of simulated universes, one base reality. If simulations happen at all at scale, you are overwhelmingly likely to be in one. This is the part nobody has refuted — only the premises get argued."],
+["The universe looks like math",60,"<b>Tegmark's observation.</b> MIT cosmologist Max Tegmark notes that simulated characters would find their world's rules 'completely rigid and mathematical' — which is exactly what physics keeps finding. Suggestive, not proof."],
+["Error-correcting codes in physics",45,"<b>A real finding, debated meaning.</b> Physicist James Gates found structures resembling error-correcting codes — the kind browsers use — inside supersymmetry equations. Weird? Yes. Proof of a simulation? The physicists are split."],
+["Quantum weirdness",40,"<b>Suggestive, heavily debated.</b> Particles behave differently when observed, as if reality only renders what you're looking at — like a video game saving processing power. Cute analogy. Physicists will fight you over it."],
+["The speed of light as a render limit",35,"<b>Fun speculation.</b> Nothing moves faster than light — conveniently, exactly what you'd expect if the universe had a maximum processing speed. There's no physics behind this reading. It's just... tidy."]],
+against:[["You can't test it",80,"<b>Chalmers' trap, reversed.</b> Any evidence against the simulation could itself be simulated. That makes the hypothesis <i>unfalsifiable</i> — and unfalsifiable ideas, from Russell's teapot onward, don't earn belief just because they're possible."],
+["Quantum systems may be un-simulatable",65,"<b>A real physics result.</b> In 2017, Ringel and Kovrizhin showed that certain quantum systems can't be efficiently simulated by classical computers — a fundamental complexity wall, not just a bigger-hard-drive problem. A simulator would need tricks we don't understand."],
+["We haven't built one yet",55,"<b>Tyson's filter.</b> If simulated civilizations eventually simulate their own universes, the chain should be full of simulators. We can't simulate so much as a conscious ant. Either we're the originals, or we're very early in the chain — both push the odds back toward 50/50."],
+["Occam's razor",50,"<b>The simplest reading.</b> Base reality requires one universe. The simulation hypothesis requires a base universe <i>plus</i> simulators <i>plus</i> motives <i>plus</i> physics we can't see. Simplicity isn't proof, but it's undefeated as a tiebreaker."],
+["Expert priors say no",30,"<b>Lisa Randall: effectively zero.</b> Not evidence, exactly — a physicist's calibrated gut. Worth including because when the people who understand the math best aren't buying it, that should at least slow you down."]]};
+let eside="for";
+document.querySelectorAll("#etabs button").forEach(b=>b.onclick=()=>{eside=b.dataset.s;
+document.querySelectorAll("#etabs button").forEach(x=>x.setAttribute("aria-pressed",x===b));eclaim(0)});
+function eload(){const L=EV[eside];$("ctabs").innerHTML="";L.forEach((c,i)=>{const b=el("button",{textContent:c[0]});b.onclick=()=>eclaim(i);$("ctabs").append(b)})}
+function eclaim(i){[...$("ctabs").children].forEach((b,j)=>b.setAttribute("aria-pressed",i==j));const c=EV[eside][i];
+$("needle").style.left=c[1]+"%";$("cout").innerHTML=`<b class="ui">${c[0]}.</b> ${c[2]}`}
+eload();eclaim(0);
+/* odds */
+const OK=[["fp","Civilizations that reach simulation tech",1,100,1,v=>Math.round(v)+"%"],
+["fi","Of those, share that run ancestor sims",.1,100,.1,v=>(+v).toPrecision(2)+"%"],
+["ns","Simulations each one runs",0,9,1,v=>"10^"+Math.round(v)+" ("+(Math.pow(10,Math.round(v))).toLocaleString()+")"]];
+const OP={skep:[5,1,1],mid:[50,10,4],bel:[99,50,9]};
+OK.forEach((d,i)=>{const lab=el("label",{htmlFor:"ok"+i,textContent:d[1]});const o=el("output",{id:"oo"+i});const r=el("input",{type:"range",id:"ok"+i,min:d[2],max:d[3],step:d[4]});r.oninput=()=>{[...$("opre").children].forEach(b=>b.setAttribute("aria-pressed",false));odds()};$("odr").append(lab,o,r)});
+function opreset(k){OP[k].forEach((v,i)=>$("ok"+i).value=v);[...$("opre").children].forEach(b=>b.setAttribute("aria-pressed",b.dataset.p==k));odds()}
+function odds(){const fp=+$("ok0").value/100,fi=+$("ok1").value/100,N=Math.pow(10,+$("ok2").value);
+$("oo0").textContent=Math.round(fp*100)+"%";$("oo1").textContent=(fi*100).toPrecision(2)+"%";$("oo2").textContent="10^"+Math.round(+$("ok2").value);
+const sims=fp*fi*N,P=sims/(sims+1),pct=P*100;
+$("on").textContent=pct<.01?pct.toPrecision(2)+"%":pct<10?pct.toFixed(1)+"%":Math.round(pct)+"%";
+$("otxt").textContent=pct<1?"Basically base reality. You're with Lisa Randall.":pct<25?"Probably real, but the door is open.":pct<60?"Coin flip territory — Tyson's neighborhood.":pct<99?"You're likely simulated. Start acting like the main character.":"One in billions, just like Musk said. Nothing is real and everything is permitted."}
+document.querySelectorAll("[data-p]").forEach(b=>b.onclick=()=>opreset(b.dataset.p));opreset("mid");
+/* poll */
+const PL=["Red pill, please","Probably, changes nothing","Base reality","No idea, popcorn"];
+const PM=["You're with Musk. Strongest version of the argument: the Pong trajectory doesn't care about your feelings.",
+"You're with Chalmers. Simulated or not, dinner still tastes like dinner — so live like it matters.",
+"You're with Randall. Effectively zero. The burden of proof is on the simulators.",
+"Honestly? Same. It's the most fun unanswerable question we've got."];
+function vote(v){try{localStorage.setItem("ll-sim-vote",v)}catch(e){}document.querySelectorAll("#poll button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v==v));$("pout").innerHTML=`<p style="margin:.6em 0 0"><b>You picked: ${PL[v]}.</b> ${PM[v]}</p>`}
+document.querySelectorAll("#poll button").forEach(b=>b.onclick=()=>vote(+b.dataset.v));
+try{const v=localStorage.getItem("ll-sim-vote");if(v!==null)vote(+v)}catch(e){}
+</script><script>
+(function(){
+function sharePage(btn){
+  var url=location.href;
+  var title=document.title;
+  var m=document.querySelector('meta[property="og:description"]');
+  var text=m?m.content:'';
+  function done(ok){if(!btn)return;var o=btn.dataset.label||btn.textContent;btn.dataset.label=o;btn.textContent=ok?'Copied!':o;if(ok)setTimeout(function(){btn.textContent=o;},1600);}
+  if(navigator.share){navigator.share({title:title,text:text,url:url}).catch(function(){});}
+  else if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(function(){done(true);},function(){done(false);});}
+  else{window.prompt('Copy this link:',url);}
+}
+document.querySelectorAll('.sharebtn').forEach(function(b){b.addEventListener('click',function(){sharePage(b);});});
+})();
+</script>
+<script>(function(){try{var p=location.pathname;fetch("/api/track?p="+encodeURIComponent(p)+"&r="+encodeURIComponent(document.referrer||""),{mode:"no-cors",keepalive:true}).catch(function(){})}catch(e){}})();</script>
+</body>
+</html>
