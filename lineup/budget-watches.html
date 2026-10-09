@@ -106,13 +106,20 @@ header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;ba
 .bnav{display:none}
 @media(max-width:860px){
  body{padding-bottom:calc(68px + env(safe-area-inset-bottom))}
- .bnav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:60;height:58px;background:rgba(10,10,18,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid #2c2c4a;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.6)}
- .bnav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10.5px;font-weight:600;color:#9b9dba;border-radius:14px;margin:4px;text-decoration:none}
+ .bnav{display:grid;grid-template-columns:repeat(6,1fr);position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:60;height:58px;background:rgba(10,10,18,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid #2c2c4a;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.6)}
+ .bnav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10px;font-weight:600;color:#9b9dba;border-radius:14px;margin:4px;text-decoration:none}
  .bnav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
  .bnav a.on{color:#22f0ff;text-shadow:0 0 10px rgba(34,240,255,.7)}
  .bnav a.on svg{filter:drop-shadow(0 0 6px rgba(34,240,255,.8))}
  .bnav a.sec-pink.on{color:#ff3dc8;text-shadow:0 0 10px rgba(255,61,200,.7)}
 }
+.sfoot{border-top:1px solid #1b2636;margin-top:44px;padding:26px 18px}
+.sfoot .fin{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.sfoot .flogo{display:flex;align-items:center;gap:8px;font-weight:800;color:#e6edf5;text-decoration:none}
+.sfoot nav{display:flex;gap:14px;flex-wrap:wrap}
+.sfoot nav a{color:#8e9bb0;text-decoration:none;font-size:13.5px}
+.sfoot .fcopy{margin-left:auto;color:#8e9bb0;font-size:12.5px}
+@media(max-width:700px){.sfoot .fcopy{margin-left:0}}
 </style>
 </head>
 <body>
@@ -185,6 +192,12 @@ header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;ba
 <div class="backrow" style="margin-top:26px"><a class="back" href="/journal/watches-under-3k.html">Read next: Watches Under $3K →</a><a class="back" href="/lineup/clocks-corner/">← Back to Clocks Corner</a></div>
 </section>
 </main>
+<footer class="sfoot"><div class="fin">
+<a class="flogo" href="/"><img src="/img/logo-128.png" alt="" width="26" height="26" loading="lazy">LeonLink</a>
+<nav><a href="/games.html">Games</a><a href="/software.html">Software</a><a href="/lineup/">Lineup</a><a href="/lineup/clocks-corner/">Clocks Corner</a><a href="/blog.html">Blog</a><a href="/hire-me.html">Hire me</a></nav>
+<span class="fcopy">© 2026 LeonLink · $0 from reviews</span>
+</div></footer>
+
 <script>
 (function(){
 var N=["Twenty dollars. Correct.", "Does everything. Smart.", "Retro. Nice.", "Loud tick. Charm.", "Swiss. History."];
@@ -202,6 +215,7 @@ document.querySelector(".sharebtn").onclick=function(){
 <nav class="bnav" aria-label="Quick navigation">
   <a href="/" class=""><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</a>
   <a href="/games.html" class=""><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 11v3M5.5 12.5h3M15.5 12h.01M18 13.5h.01"/></svg>Games</a>
+  <a href="/software.html" class=""><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Software</a>
   <a href="/lineup/" class="on"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg>Lineup</a>
   <a href="/blog.html" class="sec-pink "><svg viewBox="0 0 24 24"><path d="M12 3c-4 0-7 3-7 7v4l-2 3h18l-2-3v-4c0-4-3-7-7-7z"/><circle cx="9.5" cy="10.5" r="1.2"/><circle cx="14.5" cy="10.5" r="1.2"/></svg>Blog</a>
   <a href="/hire-me.html" class=""><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1 2-2z"/></svg>Hire me</a>
