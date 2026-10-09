@@ -297,13 +297,10 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
  .row{grid-template-columns:96px minmax(0,1fr) auto;gap:10px;padding-right:12px}
  .row img{width:96px;height:60px}
  .rt{font-size:14.5px}
- .row .tags{display:none}
  .cats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
  .grid,.grid.sm{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
  .cb{padding:10px 10px 12px}
  .cb h3{font-size:14.5px}
- .cb p{display:none}
- .cfoot .tags{display:none}
  .news{grid-template-columns:minmax(0,1fr)}
  .two{grid-template-columns:minmax(0,1fr)}
  .finfo{padding:18px}
@@ -318,9 +315,9 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
  body{padding-bottom:calc(68px + env(safe-area-inset-bottom))}
  .snav-wrap{position:relative;top:0;background:none}
  .snav .tabs a{min-height:40px;padding:8px 16px}
- .bnav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:60;height:58px;
+ .bnav{display:grid;grid-template-columns:repeat(6,1fr);position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:60;height:58px;
   background:rgba(10,10,18,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line2);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.6),0 0 0 1px rgba(34,240,255,.08)}
- .bnav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10.5px;font-weight:600;color:var(--dim);border-radius:14px;margin:4px}
+ .bnav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10px;font-weight:600;color:var(--dim);border-radius:14px;margin:4px}
  .bnav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
  .bnav a.on{color:var(--gold);text-shadow:0 0 10px rgba(34,240,255,.7)}
  .bnav a.on svg{filter:drop-shadow(0 0 6px rgba(34,240,255,.8))}
@@ -400,6 +397,7 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
   <nav class="gnav" aria-label="Main">
     <a href="/">Home</a>
     <a href="/games.html" class="on">Games</a>
+  <a href="/software.html" class=""><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Software</a>
     <a href="/software.html">Software</a>
     <a href="/blog.html">Blog</a>
     <a href="/what-is-leonlink.html">About</a>
@@ -429,7 +427,7 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
   <a href="/free-tools.html">Free tools</a>
 </aside>
 <main>
-<h1 class="sr">Games you can play now | LeonLink</h1>
+<h1 class="sr">Games | LeonLink</h1>
 <section class="sec">
   <div class="sh"><h2>Games <em>you can play now</em></h2></div>
   <p class="sub">They run in your browser, nothing to install. These are prototypes, so expect rough edges.</p>
@@ -573,7 +571,7 @@ function fill(id,list){document.getElementById(id).innerHTML=list.map(capsule).j
 fill('g-grid',DATA.filter(o=>o.c==='games'));
 // library: single searchable list, no tabs
 const rows=document.getElementById('rows'),pv=document.getElementById('preview'),q=document.getElementById('libq'),lc=document.getElementById('lcount');
-let tagF='',expanded=false;const LIB=DATA.filter(o=>o.c!=='worlds');
+let tagF='',expanded=false;const LIB=DATA.filter(o=>o.c==='games');
 function preview(o){
   pv.innerHTML=`<h3>${esc(o.t)}</h3><div class="st">${CAT[o.c]} · <b>${(rib(o)||['Live'])[0]}</b> · Updated ${fmtDate(o.d)}</div>${tagsEl(o)}
   <p class="pd">${esc(o.x)}</p><div class="pshots"><img src="${img(o)}" alt="" loading="lazy">${o.one?'':`<img src="${img(o,'-2')}" alt="" loading="lazy">`}</div>
