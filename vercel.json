@@ -7,6 +7,11 @@
   ],
   "redirects": [
     {
+      "source": "/lineup/watches.html",
+      "destination": "/lineup/",
+      "permanent": true
+    },
+    {
       "source": "/journal/top5-backpacks.html",
       "destination": "/lineup/backpacks.html",
       "permanent": true
@@ -58,7 +63,7 @@
     },
     {
       "source": "/journal/tactical-under-700.html",
-      "destination": "/lineup/watches.html",
+      "destination": "/lineup/",
       "permanent": true
     }
   ],
