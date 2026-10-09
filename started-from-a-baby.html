@@ -167,7 +167,7 @@ function render(){
   document.getElementById('hName').textContent=p.name+(p.prison>0?' (in prison)':'');
   document.getElementById('hSub').textContent=`Age ${p.age} · ${p.job?p.job.title:'Unemployed'}`+(p.partner?` · 💘 ${p.partner.name.split(' ')[0]}`:'');
   document.getElementById('hMoney').textContent=fmt$(p.money);
-  document.getElementById('hGen').textContent=`Gen ${S.gen} · ${S.surname}s`;
+  document.getElementById('hGen').textContent=`Gen ${S.gen} · House ${S.surname}`;
   document.getElementById('bars').innerHTML=BARS.map(([k,ic,nm,c])=>
     `<div class="bar"><span class="ic">${ic}</span><span class="nm">${nm}</span><div class="tr"><div class="fl" style="width:${clamp(Math.round(p[k]))}%;background:${c}"></div></div><span class="vl">${Math.round(clamp(p[k]))}</span></div>`).join('')
     +`<div class="bar"><span class="ic">🌟</span><span class="nm">Fame</span><div class="tr"><div class="fl" style="width:${clamp(Math.round(p.fame))}%;background:#fff"></div></div><span class="vl">${Math.round(clamp(p.fame))}</span></div>`
@@ -359,12 +359,12 @@ function fireEvent(ev){
     const r=ev.c[+b.dataset.c].f(p);
     document.getElementById('evres').innerHTML=r;
     document.querySelectorAll('#mbox [data-c]').forEach(x=>x.disabled=true);
-    setTimeout(()=>{closeModal();render();},1400);
     const btn=document.createElement('button');btn.textContent='Continue →';btn.style.cssText='margin-top:14px;width:100%;padding:14px;border-radius:14px;border:1px solid var(--c);background:#0e1424;color:var(--ink);font-weight:800;font-size:16px;cursor:pointer';
-    btn.onclick=()=>{closeModal();render();};
+    btn.onclick=()=>{closeModal();render();drainEvents();};
     document.getElementById('evres').appendChild(btn);
   });
 }
+function drainEvents(){if(pendingEvents.length&&S.p.alive)fireEvent(pendingEvents.shift());}
 const EV=[];
 function E(o){EV.push(o);}
 function dmg(p,n){p.health=clamp(p.health-n);}
@@ -500,7 +500,7 @@ function ageUp(){
     p.money+=pay;
     S.peak=Math.max(S.peak,p.money);
     p.happy=clamp(p.happy-2);
-  }else{
+  }else if(p.age>=16){
     p.money-=R(8000,15000); // living costs
   }
   // emperor assassination risk
@@ -594,7 +594,7 @@ function die(){
 
 /* ================= INIT ================= */
 document.getElementById('startBtn').onclick=()=>newGame();
-document.getElementById('ageBtn').onclick=()=>{if(!pendingEvents.length)ageUp();};
+document.getElementById('ageBtn').onclick=()=>{if(!pendingEvents.length&&!document.getElementById('modal').classList.contains('on'))ageUp();};
 
 </script>
 </body></html>
