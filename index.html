@@ -454,16 +454,19 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 @media(max-width:700px){.pillars{grid-template-columns:1fr}}
 
 
-/* front jump cards */
-.jump3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.jcard{display:block;border:1px solid var(--line);border-radius:18px;padding:22px 20px;background:var(--panel);text-decoration:none;transition:border-color .2s,transform .2s}
-.jcard:hover{border-color:var(--cy);transform:translateY(-2px)}
-.jcard .jk{display:block;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
-.jcard b{display:block;font-size:clamp(22px,4vw,28px);color:var(--hi);margin-bottom:8px;letter-spacing:-.01em}
-.jcard .jd{color:var(--dim);font-size:14px;line-height:1.5}
-.jcard .go2{display:inline-block;margin-top:12px;font-size:14px;font-weight:700;color:var(--cy)}
-@media(max-width:700px){.jump3{grid-template-columns:1fr}}
 
+.hblocks{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 20px 14px;margin:0 -20px;scrollbar-width:none}
+.hblocks::-webkit-scrollbar{display:none}
+.hblock{flex:0 0 150px;scroll-snap-align:start;border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:14px 12px;cursor:pointer;transition:border-color .2s,flex-basis .25s;-webkit-tap-highlight-color:transparent}
+.hblock .hk{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+.hblock b{display:block;font-family:var(--serif);font-size:17px;font-weight:600;color:var(--hi);margin-top:5px;line-height:1.2}
+.hblock .hx{display:none;margin-top:10px}
+.hblock.open{flex-basis:230px;border-color:var(--gold)}
+.hblock.open .hx{display:block}
+.hblock .hx p{font-size:13px;color:var(--dim);margin:0 0 10px;line-height:1.5}
+.hblock .hx a{font-size:13.5px;font-weight:700;color:var(--gold)}
+@media(min-width:760px){.hblocks{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));overflow:visible;margin:0;padding:6px 2px 14px}.hblock,.hblock.open{flex:none}}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 </style>
 </head>
 <body>
@@ -523,14 +526,14 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 
 <section class="sec" id="start">
   <div class="sh"><h2>Everything <em>LeonLink</em></h2></div>
-  <p class="sub">Pick a lane. Each one is its own page.</p>
-  <div class="jump3">
-    <a class="jcard" href="/games.html"><span class="jk">Play in your browser</span><b>Games</b><span class="jd">Free games, no install. Mafia RPGs, platformers, life sims.</span><span class="go2">Play →</span></a>
-    <a class="jcard" href="/software.html"><span class="jk">Built by Leon</span><b>Software</b><span class="jd">Apps and tools that do the job, from field service to fun.</span><span class="go2">Browse →</span></a>
-    <a class="jcard" href="/lineup/"><span class="jk">16 lists · $0 from reviews</span><b>Starting Lineup</b><span class="jd">The top 5 of everything worth owning. No sponsored picks.</span><span class="go2">See the five →</span></a>
-    <a class="jcard" href="/blog.html"><span class="jk">Essays & guides</span><b>Blog</b><span class="jd">Things I stay up at night writing about. Play with every post.</span><span class="go2">Read →</span></a>
-    <a class="jcard" href="/free-tools.html"><span class="jk">No signup</span><b>Free Tools</b><span class="jd">Small tools, free forever. QR codes, invoices, estimates.</span><span class="go2">Use →</span></a>
-    <a class="jcard" href="/hire-me.html"><span class="jk">50% off until Oct 31</span><b>Hire me</b><span class="jd">Websites, stores, games, apps — flat prices, agreed up front.</span><span class="go2">Hire →</span></a>
+  <p class="sub">Tap one to see more.</p>
+  <div class="hblocks" id="hblocks">
+    <div class="hblock" tabindex="0" role="button" aria-expanded="false"><span class="hk">Play in your browser</span><b>Games</b><div class="hx"><p>Free games, no install. Mafia RPGs, platformers, life sims.</p><a href="/games.html">Play →</a></div></div>
+    <div class="hblock" tabindex="0" role="button" aria-expanded="false"><span class="hk">Built by Leon</span><b>Software</b><div class="hx"><p>Apps and tools that do the job, from field service to fun.</p><a href="/software.html">Browse →</a></div></div>
+    <div class="hblock" tabindex="0" role="button" aria-expanded="false"><span class="hk">16 lists · $0 from reviews</span><b>Starting Lineup</b><div class="hx"><p>The top 5 of everything worth owning. No sponsored picks.</p><a href="/lineup/">See the five →</a></div></div>
+    <div class="hblock" tabindex="0" role="button" aria-expanded="false"><span class="hk">Essays &amp; guides</span><b>Blog</b><div class="hx"><p>Things I stay up at night writing about. Play with every post.</p><a href="/blog.html">Read →</a></div></div>
+    <div class="hblock" tabindex="0" role="button" aria-expanded="false"><span class="hk">No signup</span><b>Free Tools</b><div class="hx"><p>Small tools, free forever. QR codes, invoices, estimates.</p><a href="/free-tools.html">Use →</a></div></div>
+    <div class="hblock" tabindex="0" role="button" aria-expanded="false"><span class="hk">50% off until Oct 31</span><b>Hire me</b><div class="hx"><p>Websites, stores, games, apps — flat prices, agreed up front.</p><a href="/hire-me.html">Hire →</a></div></div>
   </div>
 </section>
 <section class="sec" id="updates">
@@ -689,6 +692,16 @@ let tx=0;fs.addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:tr
 fs.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>45){go(fi+(dx<0?1:-1));auto()}});
 auto();
 
+document.getElementById('hblocks').addEventListener('click',e=>{
+  if(e.target.closest('a'))return;
+  const b=e.target.closest('.hblock');if(!b)return;
+  const was=b.classList.contains('open');
+  document.querySelectorAll('.hblock.open').forEach(x=>{x.classList.remove('open');x.setAttribute('aria-expanded','false')});
+  if(!was){b.classList.add('open');b.setAttribute('aria-expanded','true')}
+});
+document.getElementById('hblocks').addEventListener('keydown',e=>{
+  if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('hblock')){e.preventDefault();e.target.click()}
+});
 document.getElementById('yr').textContent=new Date().getFullYear();
 </script>
 <script>(function(){try{var p=location.pathname;fetch("/api/track?p="+encodeURIComponent(p)+"&r="+encodeURIComponent(document.referrer||""),{mode:"no-cors",keepalive:true}).catch(function(){})}catch(e){}})();</script>
