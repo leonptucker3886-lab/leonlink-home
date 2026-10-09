@@ -204,12 +204,23 @@ main{min-width:0}
 .sh .more:hover{background:rgba(34,240,255,.2)}
 .sub{margin:0 0 18px;color:var(--dim);font-size:15px;max-width:640px}
 
-.hire-banner{margin:0 0 56px}
-.hb-in{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:24px 28px;border-radius:20px;border:1px solid var(--line2);background:linear-gradient(120deg,rgba(57,255,136,.09),rgba(34,240,255,.06)),var(--panel)}
-.hb-in h2{margin:0;font-family:var(--serif);font-size:26px;font-weight:600;color:var(--hi);letter-spacing:-.01em}
-.hb-in h2 em{font-style:italic;color:var(--gold)}
-.hb-in p{margin:4px 0 0;color:var(--dim)}
-@media(max-width:640px){.hb-in{flex-direction:column;text-align:center}}
+.hire-banner{margin:0 0 40px}
+.hb-in{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:15px 22px;border-radius:16px;border:1px solid var(--line2);background:var(--panel)}
+.hb-in h2{margin:0;font-size:16.5px;font-weight:700;color:var(--hi)}
+.hb-in h2 em{font-style:normal;color:var(--gold)}
+.hb-in .btn{padding:10px 22px;font-size:14px;flex:0 0 auto}
+@media(max-width:640px){.hb-in h2{font-size:14.5px}}
+.dropwrap{margin:0 0 44px}
+.drop{position:relative;display:block;border-radius:20px;overflow:hidden;border:1px solid var(--line);min-height:360px;background:#000}
+.drop img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.drop::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,rgba(4,6,10,.94) 15%,rgba(4,6,10,.6) 50%,rgba(4,6,10,.12) 80%)}
+.drop-in{position:relative;z-index:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;min-height:360px;padding:48px 40px;max-width:560px}
+.dkick{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--lime);margin-bottom:12px}
+.drop-in h2{margin:0 0 10px;font-family:var(--serif);font-size:clamp(2.4rem,7vw,3.8rem);font-weight:600;line-height:1.02;color:#fff;letter-spacing:-.015em}
+.drop-in h2 em{font-style:italic;color:var(--gold)}
+.drop-in p{margin:0 0 24px;color:#c9ccdf;font-size:16px;max-width:420px}
+.dbtn{display:inline-block;background:var(--gold);color:#041014;font-weight:800;font-size:15px;padding:13px 28px;border-radius:999px}
+@media(max-width:640px){.drop,.drop-in{min-height:300px}.drop-in{padding:36px 24px}}
 
 /* spotlight carousel */
 .feat{position:relative}
@@ -515,16 +526,20 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 <main>
 <h1 class="sr">LeonLink — websites, stores, games, apps</h1>
 
-<section class="sec feat" id="featured" aria-roledescription="carousel" aria-label="Spotlight">
-  <div class="sh"><h2>In the <em>spotlight</em></h2></div>
-  <div class="fslides" id="fslides"></div>
-  <button class="farrow l" id="fprev" aria-label="Previous"><svg width="20" height="36" viewBox="0 0 20 36"><path d="M18 2 3 18l15 16" stroke="#fff" stroke-width="3" fill="none"/></svg></button>
-  <button class="farrow r" id="fnext" aria-label="Next"><svg width="20" height="36" viewBox="0 0 20 36"><path d="M18 2 3 18l15 16" stroke="#fff" stroke-width="3" fill="none"/></svg></button>
-  <div class="dots" id="fdots"></div>
+<section class="sec dropwrap" id="featured">
+  <a class="drop" href="/started-from-a-baby.html">
+    <img src="/img/cards/lifesim.jpg" alt="Started From a Baby" fetchpriority="high">
+    <div class="drop-in">
+      <span class="dkick">Latest drop</span>
+      <h2>Started From <em>a Baby</em></h2>
+      <p>Born a baby, die a legend &mdash; then play as your heir.</p>
+      <span class="dbtn">Play free &rarr;</span>
+    </div>
+  </a>
 </section>
 
 <section class="sec hire-banner"><div class="hb-in">
-  <div><h2>Need something <em>built?</em></h2><p>Websites, stores, games, apps — 50% off until Oct 31.</p></div>
+  <h2>Need something <em>built?</em> 50% off until Oct 31.</h2>
   <a class="btn" href="/hire-me.html">Hire me</a>
 </div></section>
 
@@ -691,34 +706,6 @@ const tagsEl=(o,n,btn)=>`<span class="tags">${o.tags.slice(0,n||9).map(t=>btn?`<
 const fmtDate=d=>new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
 
 
-// featured carousel
-const fs=document.getElementById('fslides'),fd=document.getElementById('fdots');
-fs.innerHTML=FEATURED.map((id,i)=>{const o=byId[id];return `<div class="fslide${i?'':' on'}" role="group" aria-roledescription="slide" aria-label="${i+1} of ${FEATURED.length}: ${esc(o.t)}">
- <a class="fmain" href="${o.u}"${ext(o)}><img src="${img(o)}" alt="${esc(o.t)}" ${i?'loading="lazy"':''} width="640" height="360"><span class="shine"></span></a>
- <div class="finfo"><h3>${esc(o.t)}</h3>
-  <div class="fthumbs"><button class="on" data-src="${img(o)}" aria-label="Screenshot 1"><img src="${img(o)}" alt="" loading="lazy"></button><button data-src="${img(o,'-2')}" aria-label="Screenshot 2"><img src="${img(o,'-2')}" alt="" loading="lazy"></button></div>
-  <p class="why" style="margin:0">${esc(o.x)}</p>
-  <div class="avail"><small>${o.s==='ea'?'Beta':o.c==='software'?'Live now':'Now available'}</small>${o.c==='games'?'Play in your browser':o.c==='software'?(AVAILS[o.id]||'Live now'):o.c==='worlds'?'Blog, post #'+o.n:'Try it free'}</div>
-  ${tagsEl(o,4)}
-  <div class="frow">${plat(o)}${priceEl(o)}</div></div></div>`}).join('');
-fd.innerHTML=FEATURED.map((_,i)=>`<button class="${i?'':'on'}" aria-label="Show slide ${i+1}"></button>`).join('');
-let fi=0,ft;
-const slides=[...fs.children],dots=[...fd.children];
-function go(n){fi=(n+slides.length)%slides.length;slides.forEach((s,i)=>s.classList.toggle('on',i===fi));dots.forEach((d,i)=>d.classList.toggle('on',i===fi))}
-const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-function auto(){clearInterval(ft)}
-document.getElementById('fprev').onclick=()=>{go(fi-1);auto()};
-document.getElementById('fnext').onclick=()=>{go(fi+1);auto()};
-dots.forEach((d,i)=>d.onclick=()=>{go(i);auto()});
-const feat=document.getElementById('featured');
-feat.addEventListener('mouseenter',()=>clearInterval(ft));feat.addEventListener('mouseleave',auto);
-feat.addEventListener('focusin',()=>clearInterval(ft));
-fs.addEventListener('mouseover',e=>{const b=e.target.closest('.fthumbs button');if(!b)return;
-  const s=b.closest('.fslide');s.querySelector('.fmain img').src=b.dataset.src;s.querySelectorAll('.fthumbs button').forEach(x=>x.classList.toggle('on',x===b))});
-fs.addEventListener('click',e=>{const b=e.target.closest('.fthumbs button');if(b)b.dispatchEvent(new MouseEvent('mouseover',{bubbles:true}))});
-let tx=0;fs.addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
-fs.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>45){go(fi+(dx<0?1:-1));auto()}});
-auto();
 
 document.getElementById('hblocks').addEventListener('click',e=>{
   if(e.target.closest('a'))return;
