@@ -563,17 +563,19 @@ const DATA=[
  tags:['Top 5','Gear'],x:'Timex, Bertucci, Seiko, Vaer, Hamilton — the one-watch answer.'},{id:'budgetwatches',t:'Top 5 Budget Watches',u:'/lineup/budget-watches.html',c:'worlds',s:'new',p:'Free',d:'2026-10-08',plat:['web','mob'],n:7,one:1,
  tags:['Top 5','Gear'],x:'Casio, Timex, Swatch — all under $100, zero regrets.'},{id:'partyspeakers',t:'Top 5 Party Speakers',u:'/lineup/party-speakers.html',c:'worlds',s:'new',p:'Free',d:'2026-10-08',plat:['web','mob'],n:7,one:1,
  tags:['Top 5','Gear'],x:'JBL, Sony, UE, Tribit, Turtlebox — loud enough to feel.'},
-{id:'war',t:'1 vs 195: Could the World Beat America?',u:'/journal/world-vs-usa.html',c:'worlds',s:'new',p:'Free',d:'2026-10-08',plat:['web','mob'],n:6,one:1,
+{id:'war',t:'1 vs 195: Could the World Beat America?',u:'/journal/world-vs-usa.html',c:'blog',s:'new',p:'Free',d:'2026-10-08',plat:['web','mob'],n:6,one:1,
  tags:['Geopolitics','Military','Interactive'],x:'Top 5 military budgets, the world-vs-USA math, six ways America could lose — and why it still wins.'},
-{id:'audit',t:'The 5-Minute Website Audit',u:'/journal/website-audit.html',c:'worlds',s:'new',p:'Free',d:'2026-10-08',plat:['web','mob'],n:5,one:1,
+{id:'audit',t:'The 5-Minute Website Audit',u:'/journal/website-audit.html',c:'blog',s:'new',p:'Free',d:'2026-10-08',plat:['web','mob'],n:5,one:1,
  tags:['Guide','Websites','Interactive'],x:'Fifteen checks, five minutes, one score. Grade any website and see exactly what is costing you customers.'},
-{id:'flatprices',t:'Flat: Why I Charge Flat Prices',u:'/journal/flat-prices.html',c:'worlds',s:'new',p:'Free',d:'2026-10-08',plat:['web','mob'],n:4,one:1,
+{id:'flatprices',t:'Flat: Why I Charge Flat Prices',u:'/journal/flat-prices.html',c:'blog',s:'new',p:'Free',d:'2026-10-08',plat:['web','mob'],n:4,one:1,
  tags:['Business','Pricing','Interactive'],x:'Why every project has one price, agreed up front — and why hourly billing is a scam against the customer.'},
-{id:'watches',t:'Watches Under $3K',u:'/journal/watches-under-3k.html',c:'worlds',s:'new',p:'Free',d:'2026-10-08',plat:['web','mob'],n:3,one:1,
+{id:'watches',t:'Watches Under $3K',u:'/journal/watches-under-3k.html',c:'blog',s:'new',p:'Free',d:'2026-10-08',plat:['web','mob'],n:3,one:1,
  tags:['Watches','Value','Buying Guide'],x:'Thirty-one watches under three grand, ranked by how much of their price they keep. Retail vs gray market, opportunist buy targets, microbrands, tritium lume and the sales numbers behind the hype.'},
-{id:'aliens',t:'Not Alone? What We Actually Know About Aliens',u:'/journal/aliens.html',c:'worlds',s:'new',p:'Free',d:'2026-10-06',plat:['web','mob'],n:2,
+{id:'aliens',t:'Not Alone? What We Actually Know About Aliens',u:'/journal/aliens.html',c:'blog',s:'new',p:'Free',d:'2026-10-06',plat:['web','mob'],n:2,
  tags:['Interactive','UFOs','Science'],x:'The hearings under oath, the Navy videos, the Pentagon\'s answer and the science that could settle it. Scrub the timeline, judge the claims, run the numbers.'},
-{id:'longway',t:'The Long Way Home',u:'https://leonlink-site.vercel.app',c:'worlds',s:'read',p:'Free',d:'2026-09-24',plat:['web'],n:1,
+{id:'simulation',t:'Simulation?',u:'/journal/simulation.html',c:'blog',s:'new',p:'Free',d:'2026-10-09',plat:['web','mob'],n:7,one:1,
+ tags:['Blog','Simulation','Interactive'],x:'Elon Musk puts the odds we are in base reality at one in billions. The trilemma, the famous quotes, the evidence for and against — tap through it and run your own odds.'},
+{id:'longway',t:'The Long Way Home',u:'https://leonlink-site.vercel.app',c:'blog',s:'read',p:'Free',d:'2026-09-24',plat:['web'],n:1,
  tags:['Interactive Story','Science','Cosmos'],x:'Pull the lever on a time machine: from the Big Bang to the Milky Way, the cooking fire and you.'},
 {id:'stopfighting',t:'Stop Z Fighting',u:'https://stop-z-fighting.vercel.app',c:'software',s:'new',p:'Free',d:'2026-10-08',plat:['web','mob'],one:1,
  tags:['Couples','No Account','Sync'],x:'A private app for couples: file grievances, set hard rules, burn what is over, and log zombies when rules break. Two phones sync anywhere with a 4-word code \u2014 no accounts, no server.'},
@@ -592,7 +594,7 @@ const DATA=[
 const FEATURED=['ledgerline','proofline','reviewline'];
 const RIB={live:['Live',''],ea:['Beta','ea'],new:['New','new'],read:['Read','read']};
 const AVAILS={ledgerline:'Flat price, whole crew',proofline:'Part of the Line suite',reviewline:'Part of the Line suite'};
-const CAT={software:'Software',games:'Game',worlds:'Blog',tools:'Free Tool'};
+const CAT={software:'Software',games:'Game',worlds:'Blog',tools:'Free Tool',blog:'Blog'};
 const byId=Object.fromEntries(DATA.map(o=>[o.id,o]));
 const rib=o=>o.s==='new'&&Date.now()-new Date(o.d+'T12:00:00').getTime()>30*864e5?null:RIB[o.s];
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -606,11 +608,11 @@ const fmtDate=d=>new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'shor
 
 // library: single searchable list, no tabs
 const rows=document.getElementById('rows'),pv=document.getElementById('preview'),q=document.getElementById('libq'),lc=document.getElementById('lcount');
-let tagF='',expanded=false;const LIB=DATA.filter(o=>o.c!=='worlds');
+let tagF='',expanded=false;const LIB=DATA.filter(o=>o.c==='blog');
 function preview(o){
   pv.innerHTML=`<h3>${esc(o.t)}</h3><div class="st">${CAT[o.c]} · <b>${(rib(o)||['Live'])[0]}</b> · Updated ${fmtDate(o.d)}</div>${tagsEl(o)}
   <p class="pd">${esc(o.x)}</p><div class="pshots"><img src="${img(o)}" alt="" loading="lazy">${o.one?'':`<img src="${img(o,'-2')}" alt="" loading="lazy">`}</div>
-  <a class="btn" href="${o.u}"${ext(o)}>${o.c==='games'?'Play now':o.c==='software'?'Open '+esc(o.t):'Open'}</a>`;
+  <a class="btn" href="${o.u}"${ext(o)}>${o.c==='games'?'Play now':o.c==='software'?'Open '+esc(o.t):o.c==='blog'?'Read':'Open'}</a>`;
 }
 function render(){
   const term=q.value.trim().toLowerCase();
