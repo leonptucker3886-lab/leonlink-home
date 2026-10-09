@@ -12,7 +12,7 @@ html,body{margin:0;padding:0}
 body{background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,sans-serif;max-width:520px;margin:0 auto;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom)}
 .hud{position:sticky;top:0;z-index:10;background:#0b0f1af2;backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:10px 14px}
 .hud .row1{display:flex;align-items:center;gap:10px}
-.avatar{font-size:34px}
+.avatar{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#fff;flex-shrink:0;background:linear-gradient(135deg,#22f0ff,#39ff88)}
 .who{flex:1;min-width:0}
 .who b{font-size:17px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .who span{font-size:12px;color:var(--mut)}
@@ -26,7 +26,7 @@ main{flex:1;padding:14px;overflow-y:auto}
 .bars{display:grid;gap:8px;margin-bottom:14px}
 .bar{display:flex;align-items:center;gap:10px}
 .bar .ic{font-size:18px;width:26px;text-align:center}
-.bar .nm{font-size:12px;color:var(--mut);width:52px}
+.bar .nm{font-size:12px;font-weight:700;color:var(--mut);width:56px;letter-spacing:.02em}
 .bar .tr{flex:1;height:12px;background:#1a2338;border-radius:7px;overflow:hidden}
 .bar .fl{height:100%;border-radius:7px;transition:width .4s}
 .bar .vl{font-size:12px;font-weight:800;width:34px;text-align:right}
@@ -36,7 +36,7 @@ main{flex:1;padding:14px;overflow-y:auto}
 .ev.good{border-color:#1f5c38}.ev.bad{border-color:#5c2222}.ev.wild{border-color:#5c4a1f}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .act{border:1px solid var(--line);background:var(--pan);border-radius:16px;padding:16px 10px;color:var(--ink);cursor:pointer;text-align:center}
-.act .e{font-size:26px;display:block;margin-bottom:6px}
+.act{border-top:3px solid var(--ac,#22f0ff)}
 .act b{font-size:14px;display:block}
 .act small{color:var(--mut);font-size:11px}
 .act:disabled{opacity:.35}
@@ -75,6 +75,21 @@ main{flex:1;padding:14px;overflow-y:auto}
 #startBtn{margin-top:26px;border:none;border-radius:18px;padding:18px 44px;font-size:20px;font-weight:900;background:linear-gradient(135deg,var(--g),var(--c));color:#04140a;cursor:pointer}
 .feat{color:var(--mut);font-size:13px;line-height:1.9;margin-top:22px}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:110px;background:#1a2338;border:1px solid var(--c);color:var(--ink);padding:10px 18px;border-radius:999px;font-size:13px;font-weight:700;z-index:60;display:none}
+
+.modal.on .mbox{animation:pop .28s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:scale(.85) translateY(20px);opacity:0}to{transform:none;opacity:1}}
+.modal{background:#04060ad9;backdrop-filter:blur(4px)}
+.mbox .big{font-size:30px;display:block;margin-bottom:4px;opacity:.9}
+#ageBtn{transition:transform .1s}
+#ageBtn.pulse{animation:apulse .5s ease}
+@keyframes apulse{0%{transform:scale(1)}40%{transform:scale(1.04)}100%{transform:scale(1)}}
+.mutebtn{background:none;border:1px solid var(--line);border-radius:10px;color:var(--mut);font-size:16px;padding:6px 10px;cursor:pointer}
+.confetti{position:fixed;top:-12px;width:10px;height:14px;z-index:100;pointer-events:none;border-radius:2px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+.ev{animation:slidein .3s ease}
+@keyframes slidein{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.deadtomb{font-size:64px;filter:grayscale(1)}
+
 </style>
 </head>
 <body>
@@ -82,8 +97,8 @@ main{flex:1;padding:14px;overflow-y:auto}
   <div class="kick">LEONLINK PRESENTS</div>
   <h1>Started<br>From a <em>Baby</em></h1>
   <p style="color:var(--mut)">One life. Every choice matters.<br>Die, and your heir carries the name.</p>
-  <button id="startBtn">Be Born 👶</button>
-  <div class="feat">🍼 baby → 🎓 school → 💼 career → 💘 love → 👶 heirs → ⚰️ legacy<br>
+  <button id="startBtn">Be Born</button><div id="contWrap"></div>
+  <div class="feat">baby → school → career → love → heirs → legacy<br>
   cop · dealer · woodworker · doctor · <b>emperor</b> · and 20 more fates<br>
   snake bites · lottery wins · prison · miracles · tragedy</div>
 </div>
@@ -93,13 +108,13 @@ main{flex:1;padding:14px;overflow-y:auto}
     <div class="row1">
       <div class="avatar" id="hAv">👶</div>
       <div class="who"><b id="hName">—</b><span id="hSub">Age 0</span></div>
-      <div class="money"><span id="hMoney">$0</span><small id="hGen">Gen 1</small></div>
+      <div class="money"><span id="hMoney">$0</span><small id="hGen">Gen 1</small></div><button class="mutebtn" id="muteBtn" title="Sound">♪</button>
     </div>
     <div class="tabs">
-      <button data-tab="life" class="on">📰 Life</button>
-      <button data-tab="do">⚡ Do</button>
-      <button data-tab="work">💼 Work</button>
-      <button data-tab="love">💘 Love</button>
+      <button data-tab="life" class="on">Life</button>
+      <button data-tab="do">Do</button>
+      <button data-tab="work">Work</button>
+      <button data-tab="love">Love</button>
     </div>
   </div>
   <main>
@@ -159,19 +174,22 @@ function log(html, cls){
 }
 
 /* ================= UI ================= */
-const BARS=[['health','❤️','Health','#ff5d5d'],['happy','🙂','Happy','#ffe14d'],['smarts','🧠','Smarts','#22f0ff'],['looks','✨','Looks','#ff3dc8'],['fit','💪','Fit','#39ff88'],['karma','☯️','Karma','#b48cff'],['spirit','🕊️','Spirit','#ffd9a0']];
+const BARS=[['health','Health','#ff5d5d'],['happy','Happy','#ffe14d'],['smarts','Smarts','#22f0ff'],['looks','Looks','#ff3dc8'],['fit','Fit','#39ff88'],['karma','Karma','#b48cff'],['spirit','Spirit','#ffd9a0']];
 function stage(){const a=S.p.age;return a<3?'baby':a<13?'child':a<20?'teen':a<60?'adult':'senior';}
 function render(){
   const p=S.p;
-  document.getElementById('hAv').textContent=p.prison>0?'⛓️':AV[stage()];
+  const _ini=p.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  const _av=document.getElementById('hAv');_av.textContent=_ini;
+  _av.style.background=p.prison>0?'linear-gradient(135deg,#555,#222)':({baby:'linear-gradient(135deg,#22f0ff,#39ff88)',child:'linear-gradient(135deg,#39ff88,#ffe14d)',teen:'linear-gradient(135deg,#ff3dc8,#b48cff)',adult:'linear-gradient(135deg,#22f0ff,#7a5cff)',senior:'linear-gradient(135deg,#b48cff,#ff9f1c)'})[stage()];
+  _av.title=p.prison>0?'In prison':stage();
   document.getElementById('hName').textContent=p.name+(p.prison>0?' (in prison)':'');
   document.getElementById('hSub').textContent=`Age ${p.age} · ${p.job?p.job.title:'Unemployed'}`+(p.partner?` · 💘 ${p.partner.name.split(' ')[0]}`:'');
   document.getElementById('hMoney').textContent=fmt$(p.money);
   document.getElementById('hGen').textContent=`Gen ${S.gen} · House ${S.surname}`;
-  document.getElementById('bars').innerHTML=BARS.map(([k,ic,nm,c])=>
-    `<div class="bar"><span class="ic">${ic}</span><span class="nm">${nm}</span><div class="tr"><div class="fl" style="width:${clamp(Math.round(p[k]))}%;background:${c}"></div></div><span class="vl">${Math.round(clamp(p[k]))}</span></div>`).join('')
-    +`<div class="bar"><span class="ic">🌟</span><span class="nm">Fame</span><div class="tr"><div class="fl" style="width:${clamp(Math.round(p.fame))}%;background:#fff"></div></div><span class="vl">${Math.round(clamp(p.fame))}</span></div>`
-    +(p.street>0?`<div class="bar"><span class="ic">🎲</span><span class="nm">Street</span><div class="tr"><div class="fl" style="width:${clamp(Math.round(p.street))}%;background:#ff9f1c"></div></div><span class="vl">${Math.round(clamp(p.street))}</span></div>`:'');
+  document.getElementById('bars').innerHTML=BARS.map(([k,nm,c])=>
+    `<div class="bar"><span class="nm">${nm}</span><div class="tr"><div class="fl" style="width:${clamp(Math.round(p[k]))}%;background:${c}"></div></div><span class="vl">${Math.round(clamp(p[k]))}</span></div>`).join('')
+    +`<div class="bar"><span class="nm">Fame</span><div class="tr"><div class="fl" style="width:${clamp(Math.round(p.fame))}%;background:#fff"></div></div><span class="vl">${Math.round(clamp(p.fame))}</span></div>`
+    +(p.street>0?`<div class="bar"><span class="nm">Street</span><div class="tr"><div class="fl" style="width:${clamp(Math.round(p.street))}%;background:#ff9f1c"></div></div><span class="vl">${Math.round(clamp(p.street))}</span></div>`:'');
   document.getElementById('log').innerHTML=S.log.map(e=>`<div class="ev ${e.cls}"><div class="yr">AGE ${e.age}</div>${e.html}</div>`).join('');
   renderActs(); renderWork(); renderLove();
 }
@@ -225,7 +243,8 @@ function renderActs(){
     if(Math.random()<0.7){p.addicted=false;p.health=clamp(p.health+10);log('💊 <b>Clean!</b> A new chapter.','good');return 'Clean. One day at a time.';}
     p.happy=clamp(p.happy-10);return 'Relapsed. Try again.';
   },true);
-  document.getElementById('acts').innerHTML=L.map((a,i)=>`<button class="act" data-i="${i}" ${a.ok?'':'disabled'}><span class="e">${a.e}</span><b>${a.t}</b><small>${a.sub}</small></button>`).join('');
+  const _pal=['#22f0ff','#39ff88','#ff3dc8','#ffe14d','#b48cff','#ff9f1c','#7a5cff'];
+  document.getElementById('acts').innerHTML=L.map((a,i)=>`<button class="act" data-i="${i}" ${a.ok?'':'disabled'} style="--ac:${_pal[i%_pal.length]}"><b>${a.t}</b><small>${a.sub}</small></button>`).join('');
   document.querySelectorAll('#acts .act').forEach(b=>b.onclick=()=>{
     const a=L[+b.dataset.i]; const r=a.fn(); if(r)toast(r); render();
   });
@@ -455,6 +474,38 @@ E({e:'🤧',min:30,max:99,w:6,t:()=>'A cough that won\'t quit. The doctor looks 
 E({e:'💒',min:20,max:60,w:4,cond:p=>!!p.partner,t:p=>`${p.partner.name} is staring at a ring in a shop window...`,c:[
  {t:'Propose!',f:p=>{if(Math.random()<0.7){p.happy=clamp(p.happy+20);log('💒 <b>Married!</b>','good');return 'They said YES!';}p.happy=clamp(p.happy-15);log('💒 Proposal rejected.','bad');return 'Awkward.';}},
  {t:'Not yet',f:p=>{return 'Someday.';}}]});
+
+E({e:'🗣️',min:1,max:3,w:6,t:()=>'Your first word is coming...',c:[
+ {t:'"Mama"',f:p=>{p.happy=clamp(p.happy+10);log('🗣️ First word: "Mama"!','good');return 'Mama cries.';}},
+ {t:'"No!"',f:p=>{p.happy=clamp(p.happy+8);log('🗣️ First word: "No!" Iconic.','good');return 'A contrarian already.';}}]});
+E({e:'🔬',min:7,max:12,w:6,t:()=>'Science fair. Volcano or robot?',c:[
+ {t:'Volcano',f:p=>{p.smarts=clamp(p.smarts+4);log('🔬 Volcano erupted on cue. 2nd place.','good');return 'Classic.';}},
+ {t:'Robot',f:p=>{if(p.smarts>55){p.smarts=clamp(p.smarts+8);p.fame=clamp(p.fame+3);log('🔬 Robot won the fair!','good');return '1st place!';}p.smarts=clamp(p.smarts+3);return 'It moved. Mostly.';}}]});
+E({e:'🎤',min:14,max:22,w:5,t:()=>'Karaoke night. The mic is yours.',c:[
+ {t:'Belt it out',f:p=>{if(p.looks>55||p.spirit>60){p.fame=clamp(p.fame+8);p.happy=clamp(p.happy+10);log('🎤 Karaoke legend born.','good');return 'Standing ovation!';}p.happy=clamp(p.happy-6);log('🎤 Karaoke disaster.','bad');return 'Never again.';}},
+ {t:'Pass the mic',f:p=>{return 'Wisdom.';}}]});
+E({e:'🎟️',min:16,max:24,w:5,t:()=>'Prom. Nobody asked you yet.',c:[
+ {t:'Ask your crush',f:p=>{if(Math.random()<0.5+p.looks/200){p.happy=clamp(p.happy+16);log('🎟️ Prom night magic.','good');return 'Yes!';}p.happy=clamp(p.happy-10);log('🎟️ Prom rejection.','bad');return 'Stag it is.';}},
+ {t:'Go with friends',f:p=>{p.happy=clamp(p.happy+8);return 'Better anyway.';}}]});
+E({e:'🚔',min:18,max:99,w:5,t:()=>'Blue lights. You were doing 90 in a 55.',c:[
+ {t:'Accept ticket ($250)',f:p=>{p.money=Math.max(0,p.money-250);p.karma=clamp(p.karma+2);log('🚔 Speeding ticket. -$250.','bad');return 'Expensive lesson.';}},
+ {t:'Charm the officer',f:p=>{if(p.looks>65||p.street>50){log('🚔 Talked your way out of a ticket!','good');return 'Warning only. Smooth.';}p.money=Math.max(0,p.money-400);log('🚔 Charm failed. Bigger fine.','bad');return 'That backfired.';}}]});
+E({e:'📈',min:22,max:70,w:5,t:()=>`A coworker whispers a "guaranteed" stock tip.`,c:[
+ {t:'YOLO $5k',f:p=>{if(p.money<5000)return 'Need $5k.';p.money-=5000;if(Math.random()<0.3){const w=R(8000,40000);p.money+=w;log(`📈 Stock tip mooned: +${fmt$(w)}!`,'wild');return 'To the moon!';}log('📈 Stock tip was a pump and dump.','bad');return 'Rugged.';}},
+ {t:'Hard pass',f:p=>{p.karma=clamp(p.karma+1);return 'Boring. Rich-adjacent.';}}]});
+E({e:'🏃',min:20,max:60,w:5,t:()=>'The city marathon. 26.2 miles of regret.',c:[
+ {t:'Run it',f:p=>{if(p.fit>65){p.fit=clamp(p.fit+8);p.fame=clamp(p.fame+5);p.happy=clamp(p.happy+12);log('🏃 <b>Finished the marathon!</b>','good');return 'Finisher medal!';}dmg(p,12);log('🏃 Marathon DNF at mile 18.','bad');return 'Your knees filed a complaint.';}},
+ {t:'Cheer instead',f:p=>{p.happy=clamp(p.happy+3);return 'Cowbell duty.';}}]});
+E({e:'👶',min:22,max:45,w:4,cond:p=>!p.kids.length,t:()=>'The orphanage fundraiser tugs at you. Adoption is an option.',c:[
+ {t:'Adopt',f:p=>{const male=Math.random()<0.5;const kid={name:pick(male?MALE:FEMALE)+' '+S.surname,male,age:R(1,5),alive:true};p.kids.push(kid);p.happy=clamp(p.happy+18);p.karma=clamp(p.karma+15);log(`👶 Adopted <b>${kid.name}</b>! An heir!`,'wild');return 'Family grows.';}},
+ {t:'Donate $1k instead',f:p=>{if(p.money<1000)return 'Need $1k.';p.money-=1000;p.karma=clamp(p.karma+8);return 'Generous.';}}]});
+E({e:'🎳',min:55,max:99,w:5,t:()=>'The senior center bowling league needs a ringer.',c:[
+ {t:'Join league',f:p=>{p.happy=clamp(p.happy+12);p.fit=clamp(p.fit+3);log('🎳 Bowling league champion (65+ division).','good');return 'Turkey! (three strikes)';}},
+ {t:'Pass',f:p=>{return 'Your knees thank you.';}}]});
+E({e:'🌪️',min:10,max:99,w:4,t:()=>'Tornado sirens! Take cover NOW.',c:[
+ {t:'Basement!',f:p=>{if(Math.random()<0.8){log('🌪️ Rode out the tornado safely.','good');return 'That was close.';}dmg(p,20);p.money=Math.max(0,p.money-10000);log('🌪️ <b>Tornado hit the house!</b>','bad');return 'Roof: gone.';}},
+ {t:'Chase it (content)',f:p=>{if(Math.random()<0.3){p.fame=clamp(p.fame+12);log('🌪️ Tornado footage went viral!','wild');return 'Viral storm chaser!';}dmg(p,30);log('🌪️ <b>Chasing was a mistake.</b>','bad');return 'Debris. Everywhere.';}}]});
+
 /* ---- SENIOR ---- */
 E({e:'📖',min:60,max:99,w:5,t:()=>'A publisher wants your memoir. "Just tell the truth."',c:[
  {t:'Write it',f:p=>{p.fame=clamp(p.fame+20);p.money+=R(10000,60000);log('📖 <b>Memoir published!</b>','good');return 'Bestseller (locally).';}},
@@ -525,7 +576,7 @@ function ageUp(){
     const tw=pool.reduce((s,e)=>s+e.w,0);let r=Math.random()*tw,ev=pool[0];
     for(const e of pool){r-=e.w;if(r<=0){ev=e;break;}}
     // don't stack modals: queue
-    pendingEvents.push(ev);
+    S.fired[ev._i]=p.age;pendingEvents.push(ev);
   }
   if(checkDeath())return;
   render();
@@ -551,7 +602,7 @@ function die(){
   const p=S.p;p.alive=false;
   const heirs=p.kids.filter(k=>k.alive);
   const worth=fmt$(p.money);
-  let html=`<div class="big">⚰️</div><h2 class="dead">${p.name} died</h2>
+  let html=`<div class="big deadtomb">✝</div><h2 class="dead">${p.name} died</h2>
   <p>Age ${p.age} · ${p.cause||'Unknown causes'}</p>
   <div style="text-align:left;margin:14px 0">
   <div class="kv"><span>Net worth</span><b>${worth}</b></div>
@@ -582,7 +633,7 @@ function die(){
   const eb=document.getElementById('endBtn');
   if(eb)eb.onclick=()=>{
     const gens=S.gen;
-    modal(`<div class="big">🏛️</div><h2>Dynasty Complete</h2>
+    modal(`<h2 style="font-size:30px;margin-bottom:6px">Dynasty Complete</h2>
     <p>The ${S.surname} line lasted <b>${gens} generation${gens>1?'s':''}</b>.</p>
     <div style="text-align:left;margin:14px 0">
     <div class="kv"><span>Peak wealth</span><b>${fmt$(S.peak)}</b></div>
@@ -596,6 +647,69 @@ function die(){
 /* ================= INIT ================= */
 document.getElementById('startBtn').onclick=()=>newGame();
 document.getElementById('ageBtn').onclick=()=>{if(!pendingEvents.length&&!document.getElementById('modal').classList.contains('on'))ageUp();};
+
+</script>
+<script>
+"use strict";
+/* ================= POLISH: sound, confetti, save ================= */
+let AC=null, MUTED=false;
+function ac(){if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){}}if(AC&&AC.state==='suspended')AC.resume();return AC;}
+function tone(f,d,type,vol,when){if(MUTED)return;const c=ac();if(!c)return;const t=c.currentTime+(when||0);
+  const o=c.createOscillator(),g=c.createGain();o.type=type||'sine';o.frequency.value=f;
+  g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(vol||0.12,t+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+d);
+  o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+d+0.05);}
+function sfx(n){
+  if(n==='click')tone(600,0.06,'square',0.05);
+  else if(n==='age'){tone(440,0.08,'triangle',0.08);tone(660,0.1,'triangle',0.06,0.07);}
+  else if(n==='good'){tone(523,0.12,'sine',0.1);tone(659,0.12,'sine',0.1,0.1);tone(784,0.2,'sine',0.1,0.2);}
+  else if(n==='bad'){tone(180,0.25,'sawtooth',0.08);tone(120,0.3,'sawtooth',0.08,0.12);}
+  else if(n==='win'){[523,659,784,1047,1319].forEach((f,i)=>tone(f,0.25,'triangle',0.12,i*0.11));}
+  else if(n==='death'){tone(220,0.8,'sine',0.12);tone(110,1.2,'sine',0.1,0.3);}
+  else if(n==='birth'){tone(660,0.15,'sine',0.1);tone(880,0.25,'sine',0.1,0.12);}
+}
+function confetti(n){
+  const colors=['#39ff88','#22f0ff','#ff3dc8','#ffe14d','#fff'];
+  for(let i=0;i<(n||50);i++){
+    const d=document.createElement('div');d.className='confetti';
+    d.style.left=Math.random()*100+'vw';
+    d.style.background=colors[i%colors.length];
+    d.style.animationDuration=(1.8+Math.random()*1.6)+'s';
+    document.body.appendChild(d);
+    setTimeout(()=>d.remove(),3600);
+  }
+}
+function celebrate(big){sfx('win');confetti(big?90:45);}
+/* hook sounds into existing flows */
+const _fireEvent=fireEvent;
+fireEvent=function(ev){const good=/good|wild/.test('');_fireEvent(ev);};
+document.getElementById('muteBtn').onclick=function(){MUTED=!MUTED;this.textContent=MUTED?'✕':'♪';this.style.opacity=MUTED?.4:1;if(!MUTED)sfx('click');};
+/* save / load */
+const SAVE_KEY='sfab-save-v1';
+function save(){try{if(S&&S.p.alive){const c=JSON.parse(JSON.stringify(S));localStorage.setItem(SAVE_KEY,JSON.stringify(c));}}catch(e){}}
+function load(){try{const raw=localStorage.getItem(SAVE_KEY);if(!raw)return null;const c=JSON.parse(raw);if(!c||!c.p||!c.p.alive)return null;c.log=c.log||[];c.fired=c.fired||{};return c;}catch(e){return null;}}
+function clearSave(){try{localStorage.removeItem(SAVE_KEY);}catch(e){}}
+/* age button pulse + save hook */
+const _ageUp=ageUp;
+ageUp=function(){sfx('age');_ageUp();save();
+  const b=document.getElementById('ageBtn');b.classList.remove('pulse');void b.offsetWidth;b.classList.add('pulse');};
+/* celebrate big moments */
+const _log=log;
+log=function(html,cls){_log(html,cls);
+  if(/JACKPOT|LOTTERY WIN|CROWNED EMPEROR|VIRAL/.test(html))celebrate(true);
+  else if(cls==='good'&&/PROMOTED|Married|degree|Clean/.test(html))celebrate(false);};
+/* death sting */
+const _die=die;
+die=function(){sfx('death');_die();clearSave();};
+/* continue button on title */
+(function(){
+  const s=load();
+  if(s){const w=document.getElementById('contWrap');
+    w.innerHTML=`<button id="contBtn" style="margin-top:12px;border:1px solid var(--c);background:#0e1424;color:var(--ink);border-radius:18px;padding:16px 40px;font-size:17px;font-weight:800;cursor:pointer">Continue: ${s.p.name}, age ${s.p.age} (Gen ${s.gen})</button>`;
+    document.getElementById('contBtn').onclick=()=>{S=s;pendingEvents=[];log('💾 Dynasty restored.','good');show('game');render();sfx('birth');};}
+  const sb=document.getElementById('startBtn');
+  const _s=sb.onclick; sb.onclick=()=>{clearSave();_s();sfx('birth');};
+})();
+document.addEventListener('pointerdown',()=>ac(),{once:true});
 
 </script>
 </body></html>
