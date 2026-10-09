@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>Started From a Baby — Life Sim</title>
+<meta name="description" content="A complete life simulator. Born a baby, die a legend — then play as your heir. Drugs, badges, thrones, sawdust: every life is different.">
+<meta name="theme-color" content="#0b0f1a">
+<link rel="icon" href="/favicon.png">
+<style>
+:root{--bg:#0b0f1a;--pan:#121828;--ink:#eef2ff;--mut:#8b95b3;--g:#39ff88;--c:#22f0ff;--p:#ff3dc8;--y:#ffe14d;--r:#ff5d5d;--line:#1e2a44}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,sans-serif;max-width:520px;margin:0 auto;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom)}
+.hud{position:sticky;top:0;z-index:10;background:#0b0f1af2;backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:10px 14px}
+.hud .row1{display:flex;align-items:center;gap:10px}
+.avatar{font-size:34px}
+.who{flex:1;min-width:0}
+.who b{font-size:17px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.who span{font-size:12px;color:var(--mut)}
+.money{font-weight:800;color:var(--g);font-size:15px;text-align:right}
+.money small{display:block;color:var(--mut);font-weight:600;font-size:11px}
+.tabs{display:flex;gap:6px;margin-top:10px}
+.tabs button{flex:1;border:1px solid var(--line);background:var(--pan);color:var(--mut);border-radius:12px;padding:10px 4px;font-size:13px;font-weight:700;cursor:pointer}
+.tabs button.on{background:var(--c);color:#03222a;border-color:var(--c)}
+main{flex:1;padding:14px;overflow-y:auto}
+.screen{display:none}.screen.on{display:block}
+.bars{display:grid;gap:8px;margin-bottom:14px}
+.bar{display:flex;align-items:center;gap:10px}
+.bar .ic{font-size:18px;width:26px;text-align:center}
+.bar .nm{font-size:12px;color:var(--mut);width:52px}
+.bar .tr{flex:1;height:12px;background:#1a2338;border-radius:7px;overflow:hidden}
+.bar .fl{height:100%;border-radius:7px;transition:width .4s}
+.bar .vl{font-size:12px;font-weight:800;width:34px;text-align:right}
+.log{display:flex;flex-direction:column;gap:8px}
+.ev{background:var(--pan);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:14px;line-height:1.5}
+.ev .yr{font-size:11px;color:var(--mut);font-weight:700;letter-spacing:.06em}
+.ev.good{border-color:#1f5c38}.ev.bad{border-color:#5c2222}.ev.wild{border-color:#5c4a1f}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.act{border:1px solid var(--line);background:var(--pan);border-radius:16px;padding:16px 10px;color:var(--ink);cursor:pointer;text-align:center}
+.act .e{font-size:26px;display:block;margin-bottom:6px}
+.act b{font-size:14px;display:block}
+.act small{color:var(--mut);font-size:11px}
+.act:disabled{opacity:.35}
+.act.wide{grid-column:1/-1}
+.jobcard{background:var(--pan);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.jobcard h3{margin:0 0 4px;font-size:18px}
+.jobcard p{margin:4px 0;color:var(--mut);font-size:13px}
+.jobcard .pay{color:var(--g);font-weight:800}
+.jlist{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.jlist button{border:1px solid var(--line);background:#0e1424;color:var(--ink);border-radius:12px;padding:12px;text-align:left;cursor:pointer}
+.jlist button b{display:block;font-size:15px}
+.jlist button small{color:var(--mut)}
+.jlist button:disabled{opacity:.4}
+.agebar{position:sticky;bottom:0;background:#0b0f1af2;backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:12px 14px calc(12px + env(safe-area-inset-bottom))}
+#ageBtn{width:100%;border:none;border-radius:18px;padding:18px;font-size:22px;font-weight:900;letter-spacing:.04em;background:linear-gradient(135deg,var(--g),var(--c));color:#04140a;cursor:pointer;box-shadow:0 6px 24px #39ff8844}
+#ageBtn:active{transform:scale(.98)}
+.modal{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;background:#04060acc;padding:18px}
+.modal.on{display:flex}
+.mbox{background:var(--pan);border:1px solid var(--line2,#2a3a5c);border-radius:22px;padding:24px 20px;max-width:440px;width:100%;max-height:86vh;overflow-y:auto;text-align:center}
+.mbox h2{margin:0 0 8px;font-size:24px}
+.mbox p{color:var(--mut);font-size:14px;line-height:1.6}
+.mbox .big{font-size:52px}
+.choices{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.choices button{border:1px solid var(--line);background:#0e1424;color:var(--ink);border-radius:14px;padding:14px;font-size:15px;font-weight:700;cursor:pointer}
+.choices button:hover{border-color:var(--c)}
+.result{margin-top:14px;font-size:15px;line-height:1.6}
+.dead{color:var(--r)}
+.kv{display:flex;justify-content:space-between;font-size:14px;padding:6px 0;border-bottom:1px solid var(--line)}
+.kv span:first-child{color:var(--mut)}
+.fam{display:flex;flex-direction:column;gap:8px}
+.member{background:var(--pan);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:14px;display:flex;justify-content:space-between;align-items:center}
+.title-screen{text-align:center;padding:40px 20px}
+.title-screen h1{font-size:clamp(2.2rem,10vw,3.4rem);margin:.3em 0;line-height:1.05}
+.title-screen h1 em{font-style:normal;color:var(--g);text-shadow:0 0 24px #39ff8877}
+.title-screen .kick{font-size:.75rem;letter-spacing:.24em;color:var(--y);font-weight:800}
+#startBtn{margin-top:26px;border:none;border-radius:18px;padding:18px 44px;font-size:20px;font-weight:900;background:linear-gradient(135deg,var(--g),var(--c));color:#04140a;cursor:pointer}
+.feat{color:var(--mut);font-size:13px;line-height:1.9;margin-top:22px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:110px;background:#1a2338;border:1px solid var(--c);color:var(--ink);padding:10px 18px;border-radius:999px;font-size:13px;font-weight:700;z-index:60;display:none}
+</style>
+</head>
+<body>
+<div id="title" class="title-screen">
+  <div class="kick">LEONLINK PRESENTS</div>
+  <h1>Started<br>From a <em>Baby</em></h1>
+  <p style="color:var(--mut)">One life. Every choice matters.<br>Die, and your heir carries the name.</p>
+  <button id="startBtn">Be Born 👶</button>
+  <div class="feat">🍼 baby → 🎓 school → 💼 career → 💘 love → 👶 heirs → ⚰️ legacy<br>
+  cop · dealer · woodworker · doctor · <b>emperor</b> · and 20 more fates<br>
+  snake bites · lottery wins · prison · miracles · tragedy</div>
+</div>
+
+<div id="game" style="display:none;flex:1;flex-direction:column">
+  <div class="hud">
+    <div class="row1">
+      <div class="avatar" id="hAv">👶</div>
+      <div class="who"><b id="hName">—</b><span id="hSub">Age 0</span></div>
+      <div class="money"><span id="hMoney">$0</span><small id="hGen">Gen 1</small></div>
+    </div>
+    <div class="tabs">
+      <button data-tab="life" class="on">📰 Life</button>
+      <button data-tab="do">⚡ Do</button>
+      <button data-tab="work">💼 Work</button>
+      <button data-tab="love">💘 Love</button>
+    </div>
+  </div>
+  <main>
+    <div class="screen on" id="s-life">
+      <div class="bars" id="bars"></div>
+      <div class="log" id="log"></div>
+    </div>
+    <div class="screen" id="s-do"><div class="grid" id="acts"></div></div>
+    <div class="screen" id="s-work"><div id="workbox"></div></div>
+    <div class="screen" id="s-love"><div id="lovebox"></div></div>
+  </main>
+  <div class="agebar"><button id="ageBtn">AGE +1 →</button></div>
+</div>
+
+<div class="modal" id="modal"><div class="mbox" id="mbox"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+/* ================= UTIL ================= */
+const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const clamp=(v,a=0,b=100)=>Math.max(a,Math.min(b,v));
+const fmt$=n=>{const neg=n<0;n=Math.abs(Math.round(n));let s=n>=1e9?(n/1e9).toFixed(2)+'B':n>=1e6?(n/1e6).toFixed(2)+'M':n>=1e3?(n/1e3).toFixed(1)+'K':''+n;return (neg?'-$':'$')+s;};
+const MALE=['James','Marcus','Leo','Dre','Tommy','Kai','Malik','Rico','Sam','Theo','Jay','Chris','Dev','Tony','Ray'];
+const FEMALE=['Maya','Zoe','Nia','Ava','Lena','Ruby','Ivy','Noor','Tiana','Gia','Wren','Alba','Suki','Demi','Rosa'];
+const SURN=['Carter','Reyes','Okafor','Lindqvist','Marsh','Delacroix','Ashford','Vane','Kowalski','Rivers','Stone','Blackwood','Ferro','Quill','Holloway'];
+const AV={baby:'👶',child:'🧒',teen:'🧑',adult:'🧔',senior:'🧓'};
+function toast(t){const e=document.getElementById('toast');e.textContent=t;e.style.display='block';clearTimeout(e._t);e._t=setTimeout(()=>e.style.display='none',2200);}
+
+/* ================= STATE ================= */
+let S=null;
+function newPerson(gen, surname, inherit){
+  const male=Math.random()<0.5;
+  const p={
+    name:pick(male?MALE:FEMALE)+' '+surname, male,
+    age:0, gen,
+    health:R(70,95), happy:R(60,90), smarts:R(20,80), looks:R(20,80), fit:R(30,80),
+    karma:R(40,60), spirit:R(20,60), fame:0, street:0,
+    money:inherit||0, edu:'none', eduYears:0,
+    job:null, jobYears:0, heat:0, prison:0,
+    partner:null, kids:[], pets:[],
+    addicted:false, inCollege:false,
+    alive:true, cause:''
+  };
+  return p;
+}
+function newGame(){
+  const surname=pick(SURN);
+  S={surname, gen:1, p:newPerson(1,surname,0), log:[], peak:0, legends:[]};
+  log(`👶 <b>${S.p.name}</b> is born. The ${surname} dynasty begins.`,'wild');
+  show('game'); render();
+}
+function log(html, cls){
+  S.log.unshift({age:S.p.age, html, cls:cls||''});
+  if(S.log.length>60)S.log.pop();
+}
+
+/* ================= UI ================= */
+const BARS=[['health','❤️','Health','#ff5d5d'],['happy','🙂','Happy','#ffe14d'],['smarts','🧠','Smarts','#22f0ff'],['looks','✨','Looks','#ff3dc8'],['fit','💪','Fit','#39ff88'],['karma','☯️','Karma','#b48cff'],['spirit','🕊️','Spirit','#ffd9a0']];
+function stage(){const a=S.p.age;return a<3?'baby':a<13?'child':a<20?'teen':a<60?'adult':'senior';}
+function render(){
+  const p=S.p;
+  document.getElementById('hAv').textContent=p.prison>0?'⛓️':AV[stage()];
+  document.getElementById('hName').textContent=p.name+(p.prison>0?' (in prison)':'');
+  document.getElementById('hSub').textContent=`Age ${p.age} · ${p.job?p.job.title:'Unemployed'}`+(p.partner?` · 💘 ${p.partner.name.split(' ')[0]}`:'');
+  document.getElementById('hMoney').textContent=fmt$(p.money);
+  document.getElementById('hGen').textContent=`Gen ${S.gen} · ${S.surname}s`;
+  document.getElementById('bars').innerHTML=BARS.map(([k,ic,nm,c])=>
+    `<div class="bar"><span class="ic">${ic}</span><span class="nm">${nm}</span><div class="tr"><div class="fl" style="width:${clamp(Math.round(p[k]))}%;background:${c}"></div></div><span class="vl">${Math.round(clamp(p[k]))}</span></div>`).join('')
+    +`<div class="bar"><span class="ic">🌟</span><span class="nm">Fame</span><div class="tr"><div class="fl" style="width:${clamp(Math.round(p.fame))}%;background:#fff"></div></div><span class="vl">${Math.round(clamp(p.fame))}</span></div>`
+    +(p.street>0?`<div class="bar"><span class="ic">🎲</span><span class="nm">Street</span><div class="tr"><div class="fl" style="width:${clamp(Math.round(p.street))}%;background:#ff9f1c"></div></div><span class="vl">${Math.round(clamp(p.street))}</span></div>`:'');
+  document.getElementById('log').innerHTML=S.log.map(e=>`<div class="ev ${e.cls}"><div class="yr">AGE ${e.age}</div>${e.html}</div>`).join('');
+  renderActs(); renderWork(); renderLove();
+}
+function show(id){
+  document.getElementById('title').style.display='none';
+  const g=document.getElementById('game'); g.style.display='flex';
+}
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  document.getElementById('s-'+b.dataset.tab).classList.add('on');
+});
+</script>
+<script>
+"use strict";
+/* ================= ACTIONS ================= */
+function addAct(list,e,t,sub,fn,ok){list.push({e,t,sub,fn,ok:ok===undefined?true:ok});}
+function renderActs(){
+  const p=S.p, L=[];
+  const locked=p.age<6, teen=p.age>=6;
+  addAct(L,'📚','Study','+smarts',()=>{p.smarts=clamp(p.smarts+R(2,6));p.happy=clamp(p.happy-R(1,4));p.karma=clamp(p.karma+1);return 'Hit the books.';},teen);
+  addAct(L,'🏋️','Work out','+fitness',()=>{p.fit=clamp(p.fit+R(3,7));p.health=clamp(p.health+R(1,4));p.looks=clamp(p.looks+R(0,3));p.happy=clamp(p.happy+R(0,3));return 'Gym session crushed.';},p.age>=8);
+  addAct(L,'🧘','Meditate','+spirit',()=>{p.spirit=clamp(p.spirit+R(3,8));p.happy=clamp(p.happy+R(2,5));p.karma=clamp(p.karma+1);return 'Mind like still water.';},p.age>=8);
+  addAct(L,'🙏','Pray','luck',()=>{p.spirit=clamp(p.spirit+R(2,6));if(Math.random()<0.12+p.spirit/1000){const g=R(50,500);p.money+=g;log(`🙏 Answered prayer: found <b>${fmt$(g)}</b>!`,'good');return 'You feel watched over.';}p.happy=clamp(p.happy+R(1,4));return 'A quiet moment.';},p.age>=6);
+  addAct(L,'🎉','Party','+happy',()=>{p.happy=clamp(p.happy+R(5,12));p.health=clamp(p.health-R(2,6));if(Math.random()<0.15){p.addicted=true;log('🍺 The partying turned into a <b>habit</b>.','bad');}return 'Good times.';},p.age>=14);
+  addAct(L,'🏥','Doctor','$500',()=>{if(p.money<500)return 'No money for the doctor.';p.money-=500;p.health=clamp(p.health+R(8,18));return 'Checkup: all good.';},p.age>=6);
+  addAct(L,'💪','Therapy','+$300',()=>{if(p.money<300)return 'Therapy costs money.';p.money-=300;p.happy=clamp(p.happy+R(8,15));return 'Talked it out.';},p.age>=12);
+  addAct(L,'🎰','Lottery','$10',()=>{
+    if(p.money<10)return 'Not even $10 to spare.';
+    p.money-=10;
+    const r=Math.random();
+    if(r<0.001){p.money+=1000000;log('🎰 <b>JACKPOT! $1,000,000!</b>','wild');return 'JACKPOT!!! $1,000,000!';}
+    if(r<0.02){const w=R(100,2000);p.money+=w;return `Won ${fmt$(w)}!`;}
+    p.happy=clamp(p.happy-2);return 'Lost. Again.';
+  },p.age>=18);
+  addAct(L,'🏕️','Hike','risk',()=>{
+    p.fit=clamp(p.fit+R(1,4));p.happy=clamp(p.happy+R(2,6));
+    if(Math.random()<0.06){p.health=clamp(p.health-R(15,30));log('🐍 <b>Snake bite on the trail!</b> Rushed to hospital.','bad');return 'SNAKE BITE! You survive, barely.';}
+    return 'Fresh air. No snakes today.';
+  },p.age>=10);
+  addAct(L,'📖','Read','+smarts',()=>{p.smarts=clamp(p.smarts+R(1,5));p.happy=clamp(p.happy+R(1,3));return 'A chapter a day.';},teen);
+  addAct(L,'🎨','Create','fame?',()=>{
+    p.happy=clamp(p.happy+R(2,6));
+    if(Math.random()<0.05+p.smarts/2000){p.fame=clamp(p.fame+R(5,20));log('🎨 Your creation <b>went viral</b>!','good');return 'VIRAL! Fame rising.';}
+    return 'Made something beautiful.';
+  },p.age>=8);
+  if(p.addicted)addAct(L,'💊','Rehab','$2,000',()=>{
+    if(p.money<2000)return 'Rehab costs $2,000.';
+    p.money-=2000;
+    if(Math.random()<0.7){p.addicted=false;p.health=clamp(p.health+10);log('💊 <b>Clean!</b> A new chapter.','good');return 'Clean. One day at a time.';}
+    p.happy=clamp(p.happy-10);return 'Relapsed. Try again.';
+  },true);
+  document.getElementById('acts').innerHTML=L.map((a,i)=>`<button class="act" data-i="${i}" ${a.ok?'':'disabled'}><span class="e">${a.e}</span><b>${a.t}</b><small>${a.sub}</small></button>`).join('');
+  document.querySelectorAll('#acts .act').forEach(b=>b.onclick=()=>{
+    const a=L[+b.dataset.i]; const r=a.fn(); if(r)toast(r); render();
+  });
+}
+
+/* ================= WORK ================= */
+const JOBS=[
+ {t:'Woodworker',pay:34000,need:{edu:'hs'},d:'Honest work. Sawdust smells like pride.'},
+ {t:'Barista',pay:26000,need:{},d:'Espresso yourself.'},
+ {t:'Warehouse Clerk',pay:30000,need:{},d:'Boxes. So many boxes.'},
+ {t:'Police Officer',pay:58000,need:{edu:'hs',fit:55},d:'Serve and protect. Danger included.'},
+ {t:'Detective',pay:82000,need:{job:'Police Officer',years:4,smarts:60},d:'Follow the evidence.'},
+ {t:'Police Chief',pay:120000,need:{job:'Detective',years:5},d:'The badge gets heavy.'},
+ {t:'Nurse',pay:72000,need:{edu:'college'},d:'Long shifts, big heart.'},
+ {t:'Teacher',pay:52000,need:{edu:'college'},d:'Mold young minds.'},
+ {t:'Engineer',pay:115000,need:{edu:'college',smarts:60},d:'Build the future.'},
+ {t:'Lawyer',pay:160000,need:{edu:'grad'},d:'Objection! Sustained.'},
+ {t:'Doctor',pay:290000,need:{edu:'grad',smarts:70},d:'Do no harm. Bill plenty.'},
+ {t:'CEO',pay:450000,need:{edu:'college',smarts:75,fame:20},d:'Corner office energy.'},
+ {t:'Drug Dealer',pay:0,need:{street:10},crime:true,d:'Fast money. Faster consequences.'},
+ {t:'Emperor',pay:1000000,need:{},special:true,d:'All hail.'},
+];
+const CRIME_RANKS=[['Corner Dealer',40000],['Distributor',120000],['Kingpin',400000]];
+function canDo(j){
+  const p=S.p,n=j.need||{};
+  if(j.special)return false;
+  if(n.edu){const order={none:0,hs:1,college:2,grad:3};if(order[p.edu]<order[n.edu])return false;}
+  if(n.fit&&p.fit<n.fit)return false;
+  if(n.smarts&&p.smarts<n.smarts)return false;
+  if(n.street&&p.street<n.street)return false;
+  if(n.job&&(!p.job||p.job.title!==n.job))return false;
+  if(n.years&&p.jobYears<n.years)return false;
+  return true;
+}
+function renderWork(){
+  const p=S.p,box=document.getElementById('workbox');
+  let html='';
+  if(p.prison>0){box.innerHTML=`<div class="jobcard"><h3>⛓️ In prison</h3><p>${p.prison} years left. Keep your head down.</p></div>`;return;}
+  if(p.age<16){box.innerHTML=`<div class="jobcard"><h3>🧒 Too young</h3><p>Enjoy childhood. It ends.</p></div>`;return;}
+  // education
+  const order={none:0,hs:1,college:2,grad:3};
+  let edu=`<div class="jobcard"><h3>🎓 Education: ${p.edu==='none'?'None':p.edu.toUpperCase()}</h3>`;
+  if(p.age>=18&&p.edu==='none')edu+=`<button class="act wide" id="gedBtn" style="width:100%;margin-top:8px"><b>📜 Get GED / finish high school</b></button>`;
+  if(p.age>=18&&p.age<=30&&p.edu==='hs')edu+=`<button class="act wide" id="colBtn" style="width:100%;margin-top:8px"><b>🎓 College ($40k, 4 yrs)</b></button>`;
+  if(p.edu==='college'&&p.age<=35)edu+=`<button class="act wide" id="gradBtn" style="width:100%;margin-top:8px"><b>🎓 Grad school ($60k, 3 yrs)</b></button>`;
+  edu+=`</div>`;
+  html+=edu;
+  if(p.job){
+    const j=p.job;
+    html+=`<div class="jobcard"><h3>💼 ${j.title}</h3><p class="pay">${fmt$(j.pay)}/yr · ${p.jobYears} yrs</p><p>${j.d||''}</p>
+    <div style="display:flex;gap:8px;margin-top:10px"><button class="act" id="hardBtn" style="flex:1"><b>🔥 Work hard</b></button><button class="act" id="quitBtn" style="flex:1"><b>🚪 Quit</b></button></div></div>`;
+  }else{
+    html+=`<div class="jobcard"><h3>🔍 Find work</h3><div class="jlist">`+
+      JOBS.filter(j=>!j.special).map(j=>{const ok=canDo(j)&&p.age>=16;
+        return `<button data-j="${j.t}" ${ok?'':'disabled'}><b>${j.t}</b><small>${j.crime?'💀 crime':fmt$(j.pay)+'/yr'} — ${j.d}</small></button>`;}).join('')+`</div></div>`;
+  }
+  box.innerHTML=html;
+  const gb=document.getElementById('gedBtn');if(gb)gb.onclick=()=>{p.edu='hs';log('📜 <b>High school diploma earned.</b>','good');toast('Diploma!');render();};
+  const cb=document.getElementById('colBtn');if(cb)cb.onclick=()=>{
+    if(p.money<40000){toast('Need $40k for college.');return;}
+    p.money-=40000;p.edu='college';p.smarts=clamp(p.smarts+15);log('🎓 <b>College degree!</b> -$40k.','good');render();};
+  const grb=document.getElementById('gradBtn');if(grb)grb.onclick=()=>{
+    if(p.money<60000){toast('Need $60k.');return;}
+    p.money-=60000;p.edu='grad';p.smarts=clamp(p.smarts+12);log('🎓 <b>Graduate degree!</b> -$60k.','good');render();};
+  const hb=document.getElementById('hardBtn');if(hb)hb.onclick=()=>{
+    p.jobYears++; // counts double below? no—year tick adds 1; this adds effort
+    if(Math.random()<0.25+p.smarts/400){promote();}else{p.happy=clamp(p.happy-4);toast('Nobody noticed.');}render();};
+  const qb=document.getElementById('quitBtn');if(qb)qb.onclick=()=>{log(`🚪 Quit as ${p.job.title}.`);p.job=null;p.jobYears=0;render();};
+  box.querySelectorAll('[data-j]').forEach(b=>b.onclick=()=>{
+    const j=JOBS.find(x=>x.t===b.dataset.j);
+    if(j.crime){p.job={title:'Corner Dealer',pay:40000,crime:true,rank:0,d:'Fast money. Faster consequences.'};}
+    else p.job={title:j.t,pay:j.pay,d:j.d};
+    p.jobYears=0;log(`💼 Became <b>${p.job.title}</b> (${fmt$(p.job.pay)}/yr).`,'good');render();
+  });
+}
+function promote(){
+  const p=S.p,order=['Police Officer','Detective','Police Chief'];
+  const i=order.indexOf(p.job.title);
+  if(i>=0&&i<order.length-1){
+    const nj=JOBS.find(j=>j.t===order[i+1]);
+    if(canDo(nj)){p.job={title:nj.t,pay:nj.pay,d:nj.d};p.jobYears=0;log(`🎖️ <b>PROMOTED to ${nj.t}!</b> ${fmt$(nj.pay)}/yr.`,'good');toast('Promoted!');return;}
+  }
+  const raise=Math.round(p.job.pay*R(3,10)/100);
+  p.job.pay+=raise;p.happy=clamp(p.happy+4);log(`📈 Raise! +${fmt$(raise)}/yr.`,'good');toast('Raise!');
+}
+
+/* ================= LOVE & FAMILY ================= */
+function renderLove(){
+  const p=S.p,box=document.getElementById('lovebox');
+  let html='';
+  if(p.partner){
+    html+=`<div class="jobcard"><h3>💘 ${p.partner.name}</h3><p>Partner · together ${p.partner.years}y</p>
+    <div style="display:flex;gap:8px;margin-top:10px">
+    <button class="act" id="kidBtn" style="flex:1"><b>👶 Have child</b></button>
+    <button class="act" id="dumpBtn" style="flex:1"><b>💔 Break up</b></button></div></div>`;
+  }else if(p.age>=16){
+    html+=`<div class="jobcard"><h3>💘 Single</h3><p>Love is out there. Probably.</p><button class="act wide" id="dateBtn" style="width:100%;margin-top:8px"><b>💌 Find love</b></button></div>`;
+  }else html+=`<div class="jobcard"><h3>💘 Too young</h3><p>Focus on cooties first.</p></div>`;
+  if(p.kids.length){
+    html+=`<h3 style="margin:14px 0 8px">👶 Children (${p.kids.length})</h3><div class="fam">`+
+      p.kids.map(k=>`<div class="member"><span>${k.male?'👦':'👧'} ${k.name}, ${k.age}</span><span>${k.alive?'💚':'🪦'}</span></div>`).join('')+`</div>`;
+  }
+  box.innerHTML=html;
+  const db=document.getElementById('dateBtn');
+  if(db)db.onclick=()=>{
+    if(Math.random()<0.3+p.looks/200+p.fame/400){
+      const male=!p.male;
+      p.partner={name:pick(male?MALE:FEMALE)+' '+pick(SURN),years:0};
+      p.happy=clamp(p.happy+15);log(`💘 <b>${p.partner.name}</b> said yes to a date. Then another. Then forever (maybe).`,'good');
+    }else{p.happy=clamp(p.happy-8);log('💔 Rejected. Their loss.','bad');}
+    render();};
+  const kb=document.getElementById('kidBtn');
+  if(kb)kb.onclick=()=>{
+    if(p.kids.length>=6){toast('The house is full!');return;}
+    const male=Math.random()<0.5;
+    const kid={name:pick(male?MALE:FEMALE)+' '+S.surname,male,age:0,alive:true};
+    p.kids.push(kid);p.happy=clamp(p.happy+12);p.money-=5000;
+    log(`👶 <b>${kid.name}</b> is born! Heir #${p.kids.length}.`,'wild');render();};
+  const ub=document.getElementById('dumpBtn');
+  if(ub)ub.onclick=()=>{log(`💔 Split with ${p.partner.name}.`,'bad');p.partner=null;p.happy=clamp(p.happy-12);render();};
+}
+
+/* ================= EVENTS ================= */
+function modal(html){const m=document.getElementById('modal');document.getElementById('mbox').innerHTML=html;m.classList.add('on');}
+function closeModal(){document.getElementById('modal').classList.remove('on');}
+function fireEvent(ev){
+  const p=S.p;
+  const ch=ev.c.map((c,i)=>`<button data-c="${i}">${c.t}</button>`).join('');
+  modal(`<div class="big">${ev.e||'📣'}</div><h2>${ev.title||'Life happens'}</h2><p>${ev.t(p)}</p><div class="choices">${ch}</div><div class="result" id="evres"></div>`);
+  document.querySelectorAll('#mbox [data-c]').forEach(b=>b.onclick=()=>{
+    const r=ev.c[+b.dataset.c].f(p);
+    document.getElementById('evres').innerHTML=r;
+    document.querySelectorAll('#mbox [data-c]').forEach(x=>x.disabled=true);
+    setTimeout(()=>{closeModal();render();},1400);
+    const btn=document.createElement('button');btn.textContent='Continue →';btn.style.cssText='margin-top:14px;width:100%;padding:14px;border-radius:14px;border:1px solid var(--c);background:#0e1424;color:var(--ink);font-weight:800;font-size:16px;cursor:pointer';
+    btn.onclick=()=>{closeModal();render();};
+    document.getElementById('evres').appendChild(btn);
+  });
+}
+const EV=[];
+function E(o){EV.push(o);}
+function dmg(p,n){p.health=clamp(p.health-n);}
+/* ---- BABY/CHILD ---- */
+E({e:'🪙',min:0,max:4,w:8,t:()=>'You swallowed a coin. It is not passing quietly.',c:[
+ {t:'Wait it out',f:p=>{dmg(p,8);log('🪙 Swallowed a coin. It passed.','bad');return 'It passed. Eventually.';}},
+ {t:'Doctor ($200)',f:p=>{if(p.money>=200){p.money-=200;dmg(p,2);return 'Doctor: totally fine.';}dmg(p,8);log('🪙 Swallowed a coin. No doctor money.','bad');return 'No money. It passed anyway.';}}]});
+E({e:'🐕',min:1,max:8,w:7,t:()=>'A stray puppy follows you home. Those eyes.',c:[
+ {t:'Keep it',f:p=>{p.pets.push('dog');p.happy=clamp(p.happy+15);log('🐕 Adopted a stray puppy!','good');return 'Best decision ever.';}},
+ {t:'Shoo it',f:p=>{p.happy=clamp(p.happy-6);p.karma=clamp(p.karma-4);return 'You monster. (It found a better home.)';}}]});
+E({e:'🤒',min:0,max:10,w:8,t:()=>'A raging fever. 104°F.',c:[
+ {t:'Hospital ($800)',f:p=>{if(p.money>=800){p.money-=800;p.health=clamp(p.health+5);return 'Treated. Fine now.';}dmg(p,15);log('🤒 Fever with no hospital money.','bad');return 'Rough week, but you pull through.';}},
+ {t:'Tough it out',f:p=>{dmg(p,14);log('🤒 Beat a bad fever naturally.','bad');return 'Miserable, but alive.';}}]});
+E({e:'👣',min:1,max:3,w:6,t:()=>'First steps! The whole family is watching.',c:[
+ {t:'Walk to mama',f:p=>{p.happy=clamp(p.happy+12);p.fit=clamp(p.fit+5);log('👣 First steps!','good');return 'You did it!';}},
+ {t:'Face-plant',f:p=>{p.happy=clamp(p.happy+6);dmg(p,3);log('👣 First steps ended in a face-plant. Funny though.','good');return 'Everyone laughed. Including you.';}}]});
+E({e:'🥊',min:6,max:12,w:9,t:()=>`${pick(['A bigger kid','The class bully','A rival'])} shoves you at recess.`,c:[
+ {t:'Fight back',f:p=>{if(p.fit>55){p.street=clamp(p.street+8);p.happy=clamp(p.happy+8);log('🥊 Won the playground fight. Legend status.','good');return 'You won!';}dmg(p,10);p.happy=clamp(p.happy-8);log('🥊 Lost a playground fight.','bad');return 'You lost. Badly.';}},
+ {t:'Tell a teacher',f:p=>{p.karma=clamp(p.karma+3);log('🥊 Told a teacher. Bully suspended.','good');return 'Justice served.';}},
+ {t:'Run',f:p=>{p.fit=clamp(p.fit+2);p.happy=clamp(p.happy-4);return 'Lived to run another day.';}}]});
+E({e:'🍋',min:6,max:12,w:6,t:()=>'Hot day. A lemonade stand could print money.',c:[
+ {t:'Open stand',f:p=>{const m=R(20,120);p.money+=m;p.smarts=clamp(p.smarts+3);log(`🍋 Lemonade empire: +${fmt$(m)}.`,'good');return `Made ${fmt$(m)}!`;}},
+ {t:'Nah',f:p=>{return 'Missed opportunity.';}}]});
+E({e:'🐍',min:5,max:60,w:5,t:()=>'A rattlesnake on the path. It strikes!',c:[
+ {t:'Hospital NOW ($1,500)',f:p=>{if(p.money>=1500){p.money-=1500;dmg(p,12);log('🐍 <b>Snake bite!</b> Antivenom saved you. -$1,500.','bad');return 'Antivenom works. Barely.';}dmg(p,30);log('🐍 <b>Snake bite, no hospital money!</b>','bad');return 'You survive on spite.';}},
+ {t:'Suck out venom (movies)',f:p=>{dmg(p,25);log('🐍 Snake bite. Movies lied.','bad');return 'That is not how venom works.';}}]});
+E({e:'🧠',min:6,max:12,w:6,t:()=>'The gifted program wants you. Bigger homework, bigger brain.',c:[
+ {t:'Join',f:p=>{p.smarts=clamp(p.smarts+12);p.happy=clamp(p.happy-4);log('🧠 Joined the gifted program.','good');return 'Nerd power +12.';}},
+ {t:'Pass',f:p=>{p.happy=clamp(p.happy+4);return 'Recess > homework.';}}]});
+/* ---- TEEN ---- */
+E({e:'🎓',min:13,max:17,w:8,t:()=>'Final exams. You studied... some.',c:[
+ {t:'Study hard',f:p=>{p.smarts=clamp(p.smarts+6);return 'Aced them.';}},
+ {t:'Cheat',f:p=>{if(Math.random()<0.6){p.smarts=clamp(p.smarts+4);p.karma=clamp(p.karma-8);return 'Got away with it.';}p.smarts=clamp(p.smarts-4);p.happy=clamp(p.happy-10);log('🎓 Caught cheating. Suspended.','bad');return 'CAUGHT. Suspended.';}}]});
+E({e:'🌿',min:13,max:25,w:7,t:()=>'A friend offers you weed behind the bleachers.',c:[
+ {t:'Just once',f:p=>{p.happy=clamp(p.happy+6);if(Math.random()<0.3){p.addicted=true;log('🌿 It wasn\'t just once. <b>Addicted.</b>','bad');return 'It wasn\'t just once.';}return 'Once. Never again. Probably.';}},
+ {t:'Deal it instead',f:p=>{p.street=clamp(p.street+15);p.money+=R(200,800);p.karma=clamp(p.karma-10);log('🌿 Started dealing. Fast money.','wild');return 'Money flows. So does risk.';}},
+ {t:'Refuse',f:p=>{p.karma=clamp(p.karma+4);p.spirit=clamp(p.spirit+3);return 'Clear head. Clear conscience.';}}]});
+E({e:'💘',min:13,max:19,w:7,t:()=>'Your crush smiled at you. Your heart is doing cardio.',c:[
+ {t:'Confess',f:p=>{if(p.looks>50||Math.random()<0.4){p.happy=clamp(p.happy+18);log('💘 First love!','good');return 'They said yes!!';}p.happy=clamp(p.happy-12);log('💘 Rejected by your crush.','bad');return 'They said "as a friend".';}},
+ {t:'Admire silently',f:p=>{return 'Safe. Lonely. Safe.';}}]});
+E({e:'🏋️',min:13,max:19,w:6,t:()=>'The school gym is empty. Transformation montage time?',c:[
+ {t:'Grind',f:p=>{p.fit=clamp(p.fit+12);p.looks=clamp(p.looks+8);log('🏋️ Glow-up arc complete.','good');return 'Beast mode.';}},
+ {t:'Nah',f:p=>{p.happy=clamp(p.happy+3);return 'Couch it is.';}}]});
+E({e:'🚗',min:16,max:25,w:6,t:()=>'You borrow the car. Rain. A sharp turn...',c:[
+ {t:'Brake!',f:p=>{dmg(p,8);log('🚗 Fender bender in the rain.','bad');return 'Shook, but fine.';}},
+ {t:'Floor it',f:p=>{dmg(p,22);p.money-=2000;log('🚗 <b>Wrapped the car around a pole.</b>','bad');return 'Hospital. And a bill.';}}]});
+/* ---- ADULT ---- */
+E({e:'🎰',min:18,max:99,w:4,t:()=>'A $10 lottery ticket glints at the checkout.',c:[
+ {t:'Buy it',f:p=>{p.money-=10;if(Math.random()<0.002){p.money+=1000000;log('🎰 <b>LOTTERY WIN: $1,000,000!</b>','wild');return 'MILLIONAIRE!';}return 'Worthless paper.';}},
+ {t:'Walk away',f:p=>{p.karma=clamp(p.karma+1);return 'Smart.';}}]});
+E({e:'🔫',min:16,max:60,w:6,t:()=>'A guy in an alley shows a knife. "Wallet. Now."',c:[
+ {t:'Hand it over',f:p=>{const l=Math.min(p.money,R(50,500));p.money-=l;p.happy=clamp(p.happy-8);log(`🔫 Mugged! Lost ${fmt$(l)}.`,'bad');return 'Alive. Poorer.';}},
+ {t:'Fight',f:p=>{if(p.fit>65){p.street=clamp(p.street+10);log('🔫 Fought off a mugger! Street legend.','good');return 'He ran!';}dmg(p,20);p.money=Math.max(0,p.money-300);log('🔫 Mugger beat you up AND took cash.','bad');return 'Bad idea.';}}]});
+E({e:'💡',min:20,max:55,w:5,t:()=>'3 AM idea: an app that rates sandwiches. It could be huge.',c:[
+ {t:'Invest $10k',f:p=>{if(p.money<10000)return 'Need $10k.';p.money-=10000;if(Math.random()<0.15){const w=R(100000,900000);p.money+=w;p.fame=clamp(p.fame+15);log(`💡 Sandwich app sold for <b>${fmt$(w)}</b>!`,'wild');return 'EXIT! You genius!';}p.karma=clamp(p.karma+2);log('💡 Sandwich app flopped.','bad');return 'Nobody rated sandwiches.';}},
+ {t:'Sleep on it',f:p=>{return 'Probably wise.';}}]});
+E({e:'👴',min:25,max:99,w:5,t:()=>`Distant Uncle ${pick(SURN)} died. The will is being read...`,c:[
+ {t:'Attend reading',f:p=>{const w=R(5000,80000);p.money+=w;log(`👴 Inherited <b>${fmt$(w)}</b> from Uncle.`,'good');return `You got ${fmt$(w)}!`;}},
+ {t:'Skip it',f:p=>{return 'Family drama avoided.';}}]});
+E({e:'🛐',min:16,max:99,w:5,t:()=>'A serene monk invites you to a mountain retreat. Free. Silent.',c:[
+ {t:'Go (1 year of peace)',f:p=>{p.spirit=clamp(p.spirit+25);p.happy=clamp(p.happy+15);p.karma=clamp(p.karma+8);log('🛐 A year of silence. Transformed.','good');return 'Enlightenment speedrun.';}},
+ {t:'Too busy',f:p=>{return 'The mountain waits.';}}]});
+E({e:'🔥',min:18,max:99,w:4,t:()=>'You smell smoke. The kitchen is on FIRE.',c:[
+ {t:'Grab extinguisher',f:p=>{if(p.smarts>50){p.money-=2000;log('🔥 Kitchen fire contained. -$2k damage.','bad');return 'Contained!';}dmg(p,15);p.money-=8000;log('🔥 <b>House fire!</b> Half the house gone.','bad');return 'Everything smells like smoke now.';}},
+ {t:'Call 911, run',f:p=>{p.money-=5000;log('🔥 Firefighters saved the house. -$5k.','bad');return 'Professionals handle it.';}}]});
+E({e:'📼',min:16,max:50,w:4,t:()=>'Your dumb video just hit 10M views overnight.',c:[
+ {t:'Ride the fame',f:p=>{p.fame=clamp(p.fame+30);p.money+=R(5000,30000);log('📼 <b>VIRAL!</b> Brand deals incoming.','wild');return 'Influencer arc begins.';}},
+ {t:'Stay private',f:p=>{p.spirit=clamp(p.spirit+5);return 'Fame is a trap.';}}]});
+E({e:'🏛️',min:25,max:80,w:3,cond:p=>!p.job||p.job.title!=='Emperor',t:()=>'The government collapses! Chaos in the streets. A crowd looks to YOU.',c:[
+ {t:'👑 SEIZE THE PALACE',f:p=>{
+    if(p.smarts>65&&p.street>40){p.job={title:'Emperor',pay:1000000,special:true,d:'All hail.'};p.fame=100;p.money+=500000;log('👑 <b>CROWNED EMPEROR!</b> The palace is yours!','wild');return 'ALL HAIL!';}
+    p.prison=10;p.happy=0;log('👑 Coup failed. <b>10 years in prison.</b>','bad');return 'The guards were ready.';}},
+ {t:'Hide',f:p=>{p.happy=clamp(p.happy-5);return 'Wise. Probably.';}}]});
+E({e:'👮',min:18,max:35,w:5,t:()=>'A police recruiter: "You look like you could wear the badge."',c:[
+ {t:'Join academy',f:p=>{if(p.fit>=55){p.job={title:'Police Officer',pay:58000,d:'Serve and protect.'};p.jobYears=0;log('👮 <b>Joined the police force!</b>','good');return 'Badge earned.';}return 'Not fit enough. Train first.';}},
+ {t:'Decline',f:p=>{return 'The streets keep you.';}}]});
+E({e:'🪓',min:16,max:70,w:5,t:()=>'Old Man Hemlock the woodworker offers an apprenticeship. Sawdust and wisdom.',c:[
+ {t:'Apprentice',f:p=>{p.job={title:'Woodworker',pay:34000,d:'Honest work.'};p.jobYears=0;p.spirit=clamp(p.spirit+8);log('🪓 <b>Woodworking apprentice!</b>','good');return 'Smells like pine and pride.';}},
+ {t:'Pass',f:p=>{return 'The workshop door closes.';}}]});
+E({e:'💊',min:16,max:60,w:6,t:()=>'A connect whispers: real weight, real money. One run.',c:[
+ {t:'Run it',f:p=>{const m=R(5000,30000);p.money+=m;p.street=clamp(p.street+20);p.heat=clamp((p.heat||0)+25);p.karma=clamp(p.karma-12);
+    if(Math.random()<0.25){const y=R(3,10);p.prison=y;p.money=Math.max(0,p.money-20000);log(`💊 <b>BUSTED! ${y} years.</b>`,'bad');return 'BUSTED!';}
+    log(`💊 One run: +${fmt$(m)}. Heat rising.`,'wild');return 'Clean getaway. This time.';}},
+ {t:'Walk away',f:p=>{p.karma=clamp(p.karma+5);return 'Not your life.';}}]});
+E({e:'🤧',min:30,max:99,w:6,t:()=>'A cough that won\'t quit. The doctor looks serious.',c:[
+ {t:'Treatment ($15k)',f:p=>{if(p.money>=15000){p.money-=15000;dmg(p,10);log('🤧 Treated. You\'ll make it.','good');return 'Caught early.';}dmg(p,35);log('🤧 <b>Couldn\'t afford treatment.</b>','bad');return 'It gets worse.';}},
+ {t:'Ignore it',f:p=>{dmg(p,30);log('🤧 Ignored it. Mistake.','bad');return 'Denial is not medicine.';}}]});
+E({e:'💒',min:20,max:60,w:4,cond:p=>!!p.partner,t:p=>`${p.partner.name} is staring at a ring in a shop window...`,c:[
+ {t:'Propose!',f:p=>{if(Math.random()<0.7){p.happy=clamp(p.happy+20);log('💒 <b>Married!</b>','good');return 'They said YES!';}p.happy=clamp(p.happy-15);log('💒 Proposal rejected.','bad');return 'Awkward.';}},
+ {t:'Not yet',f:p=>{return 'Someday.';}}]});
+/* ---- SENIOR ---- */
+E({e:'📖',min:60,max:99,w:5,t:()=>'A publisher wants your memoir. "Just tell the truth."',c:[
+ {t:'Write it',f:p=>{p.fame=clamp(p.fame+20);p.money+=R(10000,60000);log('📖 <b>Memoir published!</b>','good');return 'Bestseller (locally).';}},
+ {t:'Decline',f:p=>{p.spirit=clamp(p.spirit+5);return 'Some stories stay yours.';}}]});
+E({e:'👴',min:65,max:99,w:6,t:()=>'Your grandchild asks: "Were you cool?"',c:[
+ {t:'Tell war stories',f:p=>{p.happy=clamp(p.happy+15);p.fame=clamp(p.fame+5);log('👴 Grandkids think you\'re a legend.','good');return 'Legend status: confirmed.';}},
+ {t:'Show scars',f:p=>{p.happy=clamp(p.happy+8);return 'Every scar has a story.';}}]});
+E({e:'🕊️',min:50,max:99,w:4,t:()=>'A quiet urge: make peace with everyone.',c:[
+ {t:'Forgive all',f:p=>{p.karma=100;p.spirit=clamp(p.spirit+20);p.happy=clamp(p.happy+10);log('🕊️ <b>At peace with the world.</b>','good');return 'Weight lifted.';}},
+ {t:'Hold grudges',f:p=>{p.karma=clamp(p.karma-5);return 'They know what they did.';}}]});
+
+/* ================= YEAR TICK ================= */
+function ageUp(){
+  const p=S.p;
+  if(!p.alive)return;
+  p.age++;
+  // kids age
+  p.kids.forEach(k=>{if(k.alive)k.age++;});
+  if(p.partner)p.partner.years++;
+  // prison
+  if(p.prison>0){
+    p.prison--;p.happy=clamp(p.happy-8);dmg(p,3);
+    log(`⛓️ Prison year. ${p.prison} left.`,'bad');
+    if(p.prison===0){log('⛓️ <b>Free!</b>','good');p.job=null;}
+    if(checkDeath())return;
+    render();return;
+  }
+  // income
+  if(p.job){
+    p.jobYears++;
+    let pay=p.job.pay;
+    if(p.job.crime){
+      const rank=Math.min(2,Math.floor(p.street/40));
+      pay=CRIME_RANKS[rank][1];
+      p.job.title=CRIME_RANKS[rank][0];p.job.pay=pay;
+      p.heat=clamp(p.heat+R(5,20));
+      if(Math.random()<p.heat/400){
+        const y=R(4,12);p.prison=y;p.heat=0;p.money=Math.max(0,p.money*0.4);
+        log(`🚔 <b>BUSTED as ${p.job.title}! ${y} years in prison.</b> 60% of cash seized.`,'bad');
+        p.job=null;p.jobYears=0;
+      }else if(Math.random()<0.08){p.alive=false;p.cause='Rival crew hit';return die();}
+    }
+    p.money+=pay;
+    S.peak=Math.max(S.peak,p.money);
+    p.happy=clamp(p.happy-2);
+  }else{
+    p.money-=R(8000,15000); // living costs
+  }
+  // emperor assassination risk
+  if(p.job&&p.job.title==='Emperor'&&Math.random()<0.05){p.alive=false;p.cause='Assassinated';return die();}
+  // addiction drain
+  if(p.addicted){dmg(p,6);p.happy=clamp(p.happy-8);p.money=Math.max(0,p.money-3000);if(Math.random()<0.05){p.alive=false;p.cause='Overdose';return die();}}
+  // age drift
+  if(p.age>40)dmg(p,R(1,3));
+  if(p.age>60)dmg(p,R(2,5));
+  if(p.age>80)dmg(p,R(4,8));
+  p.happy=clamp(p.happy+R(-3,3));
+  // milestones
+  if(p.age===6)log('🎒 Started school.','good');
+  if(p.age===13)log('🧑 Teenager now. Good luck.','wild');
+  if(p.age===18){p.edu=p.edu==='none'?'hs':p.edu;log('🎓 <b>Turned 18.</b> The world is yours. High school done.','good');}
+  if(p.age===65&&p.job)log('👴 Retirement age. The rocking chair beckons.');
+  // random events: 1-2
+  const nEvs=1+(Math.random()<0.35?1:0);
+  for(let i=0;i<nEvs;i++){
+    const pool=EV.filter(e=>p.age>=e.min&&p.age<=e.max&&(!e.cond||e.cond(p)));
+    if(!pool.length)continue;
+    const tw=pool.reduce((s,e)=>s+e.w,0);let r=Math.random()*tw,ev=pool[0];
+    for(const e of pool){r-=e.w;if(r<=0){ev=e;break;}}
+    // don't stack modals: queue
+    pendingEvents.push(ev);
+  }
+  if(checkDeath())return;
+  render();
+  if(pendingEvents.length)fireEvent(pendingEvents.shift());
+}
+let pendingEvents=[];
+function checkDeath(){
+  const p=S.p;
+  if(!p.alive){die();return true;}
+  let risk=0.002;
+  if(p.age>50)risk+=(p.age-50)*0.004;
+  if(p.age>70)risk+=(p.age-70)*0.01;
+  if(p.age>90)risk+=0.15;
+  if(p.health<25)risk+=0.08;
+  if(p.health<10)risk+=0.2;
+  if(Math.random()<risk){
+    p.cause=pick(['Old age','Heart failure','A freak accident','Pneumonia','A peaceful sleep']);
+    die();return true;
+  }
+  return false;
+}
+function die(){
+  const p=S.p;p.alive=false;
+  const heirs=p.kids.filter(k=>k.alive);
+  const worth=fmt$(p.money);
+  let html=`<div class="big">⚰️</div><h2 class="dead">${p.name} died</h2>
+  <p>Age ${p.age} · ${p.cause||'Unknown causes'}</p>
+  <div style="text-align:left;margin:14px 0">
+  <div class="kv"><span>Net worth</span><b>${worth}</b></div>
+  <div class="kv"><span>Career</span><b>${p.job?p.job.title:'—'}</b></div>
+  <div class="kv"><span>Children</span><b>${p.kids.length}</b></div>
+  <div class="kv"><span>Fame</span><b>${Math.round(p.fame)}</b></div>
+  <div class="kv"><span>Karma</span><b>${Math.round(p.karma)}</b></div></div>`;
+  if(p.fame>60||p.money>1000000||(p.job&&p.job.title==='Emperor')){S.legends.push(p.name);html+=`<p>🌟 <b>LEGEND.</b> Songs will be sung.</p>`;}
+  if(heirs.length){
+    html+=`<p>The ${S.surname} line continues. Choose your heir:</p><div class="choices">`+
+      heirs.map((k,i)=>`<button data-h="${i}">${k.male?'👦':'👧'} ${k.name}, ${k.age}</button>`).join('')+`</div>`;
+  }else{
+    html+=`<p class="dead"><b>No heirs. The ${S.surname} dynasty ends here.</b></p>
+    <div class="choices"><button id="endBtn">See dynasty legacy →</button></div>`;
+  }
+  modal(html);
+  document.querySelectorAll('#mbox [data-h]').forEach(b=>b.onclick=()=>{
+    const heir=heirs[+b.dataset.h];
+    S.gen++;
+    const inherit=Math.round(p.money*0.6);
+    S.p=newPerson(S.gen,S.surname,inherit);
+    S.p.age=Math.max(18,heir.age);S.p.name=heir.name;S.p.male=heir.male;
+    closeModal();
+    log(`👶 <b>${heir.name}</b> takes up the mantle. Generation ${S.gen}. Inherits ${fmt$(inherit)}.`,'wild');
+    render();
+  });
+  const eb=document.getElementById('endBtn');
+  if(eb)eb.onclick=()=>{
+    const gens=S.gen;
+    modal(`<div class="big">🏛️</div><h2>Dynasty Complete</h2>
+    <p>The ${S.surname} line lasted <b>${gens} generation${gens>1?'s':''}</b>.</p>
+    <div style="text-align:left;margin:14px 0">
+    <div class="kv"><span>Peak wealth</span><b>${fmt$(S.peak)}</b></div>
+    <div class="kv"><span>Legends</span><b>${S.legends.length?S.legends.join(', '):'none'}</b></div></div>
+    <div class="choices"><button id="againBtn">🔄 Start a new bloodline</button></div>`);
+    document.getElementById('againBtn').onclick=()=>{closeModal();newGame();};
+  };
+  render();
+}
+
+/* ================= INIT ================= */
+document.getElementById('startBtn').onclick=()=>newGame();
+document.getElementById('ageBtn').onclick=()=>{if(!pendingEvents.length)ageUp();};
+
+</script>
+</body></html>
