@@ -210,17 +210,23 @@ main{min-width:0}
 .hb-in h2 em{font-style:normal;color:var(--gold)}
 .hb-in .btn{padding:10px 22px;font-size:14px;flex:0 0 auto}
 @media(max-width:640px){.hb-in h2{font-size:14.5px}}
-.dropwrap{margin:0 0 44px}
-.drop{position:relative;display:block;border-radius:20px;overflow:hidden;border:1px solid var(--line);min-height:360px;background:#000}
-.drop img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.drop::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,rgba(4,6,10,.94) 15%,rgba(4,6,10,.6) 50%,rgba(4,6,10,.12) 80%)}
-.drop-in{position:relative;z-index:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;min-height:360px;padding:48px 40px;max-width:560px}
-.dkick{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--lime);margin-bottom:12px}
-.drop-in h2{margin:0 0 10px;font-family:var(--serif);font-size:clamp(2.4rem,7vw,3.8rem);font-weight:600;line-height:1.02;color:#fff;letter-spacing:-.015em}
-.drop-in h2 em{font-style:italic;color:var(--gold)}
-.drop-in p{margin:0 0 24px;color:#c9ccdf;font-size:16px;max-width:420px}
-.dbtn{display:inline-block;background:var(--gold);color:#041014;font-weight:800;font-size:15px;padding:13px 28px;border-radius:999px}
-@media(max-width:640px){.drop,.drop-in{min-height:300px}.drop-in{padding:36px 24px}}
+.drops{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 8px}
+.dropc{display:block;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--panel);transition:border-color .2s}
+.dropc:hover{border-color:var(--gold)}
+.dimg{aspect-ratio:16/9;overflow:hidden;background:#000}
+.dimg img{width:100%;height:100%;object-fit:cover;display:block}
+.db{padding:14px 16px 16px}
+.db .hk{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.db b{display:block;font-size:17px;font-weight:700;color:var(--hi);margin:4px 0 4px}
+.db p{margin:0;font-size:13.5px;color:var(--dim);line-height:1.5}
+@media(max-width:640px){.drops{grid-template-columns:1fr}}
+.words{display:flex;flex-direction:column;gap:30px;max-width:780px;margin-top:6px}
+.wcat h3{margin:0 0 10px;font-family:var(--serif);font-size:clamp(22px,4.5vw,28px);font-weight:600;color:var(--hi);letter-spacing:-.01em}
+.wcat h3 a{color:inherit}
+.wcat h3 a:hover{color:var(--gold)}
+.wcat p{margin:0;color:var(--dim);font-size:17px;line-height:1.75}
+.wcat p b{color:var(--txt);font-weight:600}
+.wcat p a{color:var(--gold);font-weight:600}
 
 /* spotlight carousel */
 .feat{position:relative}
@@ -466,9 +472,8 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 
 
 
-.hblocks{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 20px 14px;margin:0 -20px;scrollbar-width:none}
-.hblocks::-webkit-scrollbar{display:none}
-.hblock{flex:0 0 168px;scroll-snap-align:start;border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden;cursor:pointer;transition:border-color .2s,flex-basis .25s;-webkit-tap-highlight-color:transparent}
+.hblocks{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:6px 0 14px;margin:0}
+.hblock{scroll-snap-align:start;border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden;cursor:pointer;transition:border-color .2s;-webkit-tap-highlight-color:transparent}
 .hblock:hover{border-color:var(--line2)}
 .himg{aspect-ratio:16/10;overflow:hidden;background:#000}
 .himg img{width:100%;height:100%;object-fit:cover;display:block}
@@ -476,11 +481,11 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 .hb .hk{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
 .hb b{display:block;font-size:15px;font-weight:600;color:var(--hi);margin-top:3px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hblock .hx{display:none;padding:0 12px 14px}
-.hblock.open{flex-basis:250px;border-color:var(--gold)}
+.hblock.open{grid-column:1/-1;border-color:var(--gold)}
 .hblock.open .hx{display:block}
 .hblock .hx p{font-size:13px;color:var(--dim);margin:0 0 10px;line-height:1.5}
 .hblock .hx a{font-size:13.5px;font-weight:700;color:var(--gold)}
-@media(min-width:760px){.hblocks{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));overflow:visible;margin:0;padding:6px 2px 14px}.hblock,.hblock.open{flex:none}}
+
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 </style>
 </head>
@@ -526,16 +531,26 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 <main>
 <h1 class="sr">LeonLink — websites, stores, games, apps</h1>
 
-<section class="sec dropwrap" id="featured">
-  <a class="drop" href="/started-from-a-baby.html">
-    <img src="/img/cards/lifesim.jpg" alt="Started From a Baby" fetchpriority="high">
-    <div class="drop-in">
-      <span class="dkick">Latest drop</span>
-      <h2>Started From <em>a Baby</em></h2>
-      <p>Born a baby, die a legend &mdash; then play as your heir.</p>
-      <span class="dbtn">Play free &rarr;</span>
-    </div>
-  </a>
+<section class="sec" id="featured">
+  <div class="sh"><h2>Fresh <em>drops</em></h2></div>
+  <div class="drops">
+    <a class="dropc" href="/started-from-a-baby.html">
+      <div class="dimg"><img src="/img/cards/lifesim.jpg" alt="Started From a Baby" loading="lazy"></div>
+      <div class="db"><span class="hk">Latest drop &middot; Game</span><b>Started From a Baby</b><p>Born a baby, die a legend &mdash; then play as your heir.</p></div>
+    </a>
+    <a class="dropc" href="/journal/simulation.html">
+      <div class="dimg"><img src="/img/cards/simulation.jpg" alt="Simulation?" loading="lazy"></div>
+      <div class="db"><span class="hk">New post &middot; Blog</span><b>Simulation?</b><p>Are we living in one? Doors, quotes, and an odds calculator.</p></div>
+    </a>
+    <a class="dropc" href="/sootfather.html">
+      <div class="dimg"><img src="/img/cards/sootfather.jpg" alt="Sootfather" loading="lazy"></div>
+      <div class="db"><span class="hk">Flagship &middot; Game</span><b>Sootfather</b><p>A GTA-vibed mafia RPG. You sweep chimneys for the family.</p></div>
+    </a>
+    <a class="dropc" href="https://app.leonlink.net">
+      <div class="dimg"><img src="/img/cards/ledgerline.jpg" alt="Ledgerline" loading="lazy"></div>
+      <div class="db"><span class="hk">Flagship &middot; Software</span><b>Ledgerline</b><p>Run a small trades business from your phone.</p></div>
+    </a>
+  </div>
 </section>
 
 <section class="sec hire-banner"><div class="hb-in">
@@ -577,6 +592,18 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
       <div class="hb"><span class="hk">50% off until Oct 31</span><b>Hire me</b></div>
       <div class="hx"><p>Websites, stores, games, apps — flat prices, agreed up front.</p><a href="/hire-me.html">Hire →</a></div>
     </div>
+  </div>
+</section>
+<section class="sec" id="inwords">
+  <div class="sh"><h2>The whole site, <em>in words</em></h2></div>
+  <p class="sub">Everything on LeonLink, described plainly. No clicking required.</p>
+  <div class="words">
+    <div class="wcat"><h3><a href="/games.html">Games</a></h3><p>Eight games, all free, all playable in your browser. <b>Sootfather</b> is a GTA-vibed mafia RPG where you are a chimney sweep for the family &mdash; take jobs, manage your heat, talk or fight your way up. <b>Chimney Run</b> is a Mario-style platformer starring a bald guy in a backwards hat, stomping soot gremlins across the rooftops. <b>Started From a Baby</b> is a life sim: born a baby, die a legend, then play as your heir &mdash; cop, dealer, woodworker, even emperor. <b>Paper Route</b> is the old paperboy run, neon edition. <b>Afterglow</b> is a neon social casino with 19 games, play money only. <b>Ashfall</b> is a post-apocalyptic survival story. <b>Sun N Fun</b> is a trailer-park mystery RPG. <b>Sporebound</b> is cozy-horror mushroom foraging.</p></div>
+    <div class="wcat"><h3><a href="/software.html">Software</a></h3><p>Seven apps, built for real life. <b>Ledgerline</b> runs a small trades business from a phone &mdash; quotes, scheduling, invoices, payments, the card on the spot. <b>Proofline</b> makes before-and-after photo reports that prove the work. <b>Reviewline</b> asks every customer for a Google review, the same way, no filtering. <b>Stop Z Fighting</b> is a private app for couples: file grievances, set hard rules, burn what is over. <b>Ghost Call</b> makes your phone ring on command, full fake incoming-call screen. <b>Stage</b> trains spoken poetry &mdash; write, rehearse, record, score. <b>Numbers</b> reads your life path, destiny, and chemistry with someone else.</p></div>
+    <div class="wcat"><h3><a href="/lineup/">Starting Lineup</a></h3><p>Sixteen top-5 lists of everything worth owning. Five watch lists &mdash; tactical, dive, dress, field, budget &mdash; plus smartwatches. Then wireless earbuds, party speakers, EDC backpacks, multitools, battery drills, flashlights, Benchmade knives, motorbikes, sunglasses, and PCP air rifles. Real prices, no filler, and <b>$0 earned from reviews</b>: no affiliate links, no sponsored picks, no paid placements.</p></div>
+    <div class="wcat"><h3><a href="/blog.html">Blog</a></h3><p>Seven posts, each one interactive. <b>Simulation?</b> &mdash; the odds we are living in one, with tappable doors, quotes from Musk to Bostrom, and an odds calculator. <b>1 vs 195</b> &mdash; could the world beat America, by the military-budget math. <b>The 5-Minute Website Audit</b> &mdash; fifteen checks, five minutes, one score. <b>Flat</b> &mdash; why I charge flat prices and why hourly billing is a scam. <b>Watches Under $3K</b> &mdash; thirty-one watches ranked by how much of their price they keep. <b>Not Alone?</b> &mdash; what we actually know about aliens. <b>The Long Way Home</b> &mdash; a time machine from the Big Bang to the Milky Way.</p></div>
+    <div class="wcat"><h3><a href="/free-tools.html">Free Tools</a></h3><p>Five tools, no signup, no watermark. A <b>QR code generator</b> with PNG and SVG download. An <b>invoice generator</b> and an <b>estimate generator</b> that print clean in a minute. A <b>before-and-after viewer</b> with a drag slider. And a printable <b>chimney inspection checklist</b>, Level 1 and Level 2.</p></div>
+    <div class="wcat"><h3><a href="/hire-me.html">Hire me</a></h3><p>I build <b>websites ($150)</b>, <b>stores ($300)</b>, <b>games ($450)</b>, and <b>apps ($500)</b>. One flat price, agreed up front, no hourly meter running. <b>50% off until October 31.</b></p></div>
   </div>
 </section>
 <section class="sec" id="updates">
