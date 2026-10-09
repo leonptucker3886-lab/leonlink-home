@@ -166,9 +166,9 @@ document.querySelector(".sharebtn").onclick=function(){
  if(navigator.share)navigator.share(d).catch(function(){});else if(navigator.clipboard)navigator.clipboard.writeText(location.href);};
 
 var Dsys={0:["Lust","Testosterone and estrogen. The 'anyone will do' system — its job is to get you mating, partner optional.","Runs on sex hormones. Fast, broad, indiscriminate."],1:["Attraction","Dopamine, norepinephrine, crashing serotonin. The 'this one, specifically' system — focused, obsessive, euphoric.","The same cocktail as a cocaine high. That's why new love feels like a drug."],2:["Attachment","Oxytocin and vasopressin. The 'stay' system — calm, warm, bonded. Its job is keeping you together long enough to raise kids.","Built for the long haul. Quiet, not thrilling — which is exactly the problem."]};
-function showSys(i){document.querySelectorAll("#systabs button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.i==i)});
-var d=DSys[i];document.getElementById("sysout").innerHTML="<h3 style=\"margin-top:0\">"+d[0]+"</h3><p>"+d[1]+"</p><p class=\"n\">"+d[2]+"</p>";}
-document.querySelectorAll("#systabs button").forEach(function(b){b.onclick=function(){showSys(+b.dataset.i)}});showSys(0);
+function showsys(i){document.querySelectorAll("#systabs button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.i==i)});
+var d=Dsys[i];document.getElementById("sysout").innerHTML="<h3 style=\"margin-top:0\">"+d[0]+"</h3><p>"+d[1]+"</p><p class=\"n\">"+d[2]+"</p>";}
+document.querySelectorAll("#systabs button").forEach(function(b){b.onclick=function(){showsys(+b.dataset.i)}});showsys(0);
 function aff(){var s=+document.getElementById("rs").value,o=+document.getElementById("ro").value,a=+document.getElementById("rav2").value;
 document.getElementById("rsv").textContent=s+"%";document.getElementById("rov").textContent=o+"%";document.getElementById("rav").textContent=a+"%";
 var r=Math.round(((100-s)*0.4+o*0.35+a*0.25));document.getElementById("affneedle").style.left=r+"%";

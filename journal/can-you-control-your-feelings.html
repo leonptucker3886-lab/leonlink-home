@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Are Feelings Real? | Blog #10</title>
-<meta name="description" content="Your brain decides seconds before "you" do. Libet, Soon, Barrett, Damasio — the science of who is really driving, with peer-reviewed sources.">
-<link rel="canonical" href="https://www.leonlink.net/journal/are-feelings-real.html">
+<title>Can You Control Your Feelings? | Blog #11</title>
+<meta name="description" content="You cannot choose your first feeling — but you get a vote on the second. Reappraisal, affect labeling, and the body levers, with peer-reviewed sources.">
+<link rel="canonical" href="https://www.leonlink.net/journal/can-you-control-your-feelings.html">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Are Feelings Real? Conscious vs unconscious">
-<meta property="og:description" content="Your brain decides seconds before "you" do. Libet, Soon, Barrett, Damasio — the science of who is really driving, with peer-reviewed sources.">
-<meta property="og:url" content="https://www.leonlink.net/journal/are-feelings-real.html">
-<meta property="og:image" content="https://www.leonlink.net/img/cards/feelings.jpg">
+<meta property="og:title" content="Can You Control Your Feelings? The science of emotional regulation">
+<meta property="og:description" content="You cannot choose your first feeling — but you get a vote on the second. Reappraisal, affect labeling, and the body levers, with peer-reviewed sources.">
+<meta property="og:url" content="https://www.leonlink.net/journal/can-you-control-your-feelings.html">
+<meta property="og:image" content="https://www.leonlink.net/img/cards/control.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#04060a">
 <link rel="icon" href="/favicon.png">
@@ -101,84 +101,88 @@ header .sharebtn{margin-left:auto}
 
 
 </style></head><body>
-<header><a class="home" href="/blog.html">← Blog</a><a href="#early">Seven seconds early</a><a href="#predict">Predictions</a><a href="#tworoads">Two roads</a><a href="#verdict">My take</a><button class="sharebtn" type="button">Share</button></header>
+<header><a class="home" href="/blog.html">← Blog</a><a href="#reframe">Reframe</a><a href="#nameit">Name it</a><a href="#body">Body levers</a><a href="#verdict">My take</a><button class="sharebtn" type="button">Share</button></header>
 <main>
 <section id="top">
-<span class="kick">Blog · Post #10 · The Science Behind Feelings, Part 3</span>
-<h1>Are feelings <span>real?</span></h1>
-<p>In 2008, neuroscientists did something rude: they predicted people's "free" choices seven to ten seconds before the people themselves knew what they had chosen. Your brain voted. You just got the press release.</p>
-<p>So here is the question this whole series has been circling: if one part of your brain decides before the "you" part knows — are your feelings real? Or is one part of your brain manipulating the other?</p>
+<span class="kick">Blog · Post #11 · The Science Behind Feelings, Part 4</span>
+<h1>Can you control your <span>feelings?</span></h1>
+<p>Three posts in, you know the machinery: feelings are predictions built from body signals, assembled seconds before "you" arrive, running on dopamine and ancient alarms. So here is the only question that matters now: can you steer any of it?</p>
+<p>The short answer from the research is yes — but not the way you would think. You do not control feelings by force. You control them by editing the inputs.</p>
 <p class="n">Every claim below comes from peer-reviewed research. Sources are listed at the bottom.</p>
 </section>
-<section id="early"><h2>1. Seven seconds early</h2>
-<p>In 1983, Benjamin Libet found that the brain's <b>readiness potential</b> — the electrical ramp-up before a movement — begins about half a second before you consciously "decide" to move (Libet et al., 1983).</p>
-<p>Soon and colleagues (2008) pushed it much further with fMRI: patterns in the prefrontal cortex predicted whether someone would press a left or right button <b>up to ten seconds</b> before they reported deciding. The conscious "you" was not deciding. It was being informed. Walk the timeline.</p>
-<div class="card">
-<div class="tdots" id="libdots"><i class="on"></i><i></i><i></i><i></i></div>
-<div id="libout" aria-live="polite"></div>
-<div class="tnav"><button type="button" id="libprev">← Back</button><button type="button" id="libnext">Next →</button></div>
+<section id="reframe"><h2>1. Reframe, don't suppress</h2>
+<p>James Gross's process model of emotion regulation (Gross, 1998) maps every point where you can intervene. The most studied fork: <b>reappraisal</b> versus <b>suppression</b>.</p>
+<p>Reappraisal means changing the story: "this interview is a conversation, not a trial." Suppression means hiding the expression: "just don't look nervous." Reappraisal lowers the emotional response and the stress hormones. Suppression keeps the feeling, spikes blood pressure, and impairs memory (Gross &amp; John, 2003). One works. The other just looks like it works. Try both.</p>
+<div class="card"><h3 style="margin-top:0">Your boss says: "We need to talk."</h3>
+<p class="n">Pick a strategy.</p>
+<div class="qbtns" id="stratbtns" style="grid-template-columns:1fr">
+<button type="button" data-i="0">Suppress — keep a straight face, feel nothing</button>
+<button type="button" data-i="1">Reappraise — "probably about the project timeline"</button>
 </div>
-</section><section id="predict"><h2>2. Your brain guesses first</h2>
-<p>Neuroscientist Lisa Feldman Barrett argues emotions are not reactions — they are <b>predictions</b> (Barrett, 2017). Your brain receives noisy body signals — racing heart, tight chest — and asks: given the situation and everything I have learned, what is this?</p>
-<p>Same racing heart at a job interview: anxiety. Same racing heart on a roller coaster: thrill. The body sends static. The brain writes the story. Try it — one body, three stories.</p>
-<div class="card"><h3 style="margin-top:0">Label the feeling</h3>
-<p class="n">Your body: pounding heart, sweaty palms, shallow breath. Tap a context.</p>
-<div class="qbtns" id="ctxbtns" style="grid-template-columns:1fr">
-<button type="button" data-i="0">Job interview, waiting room</button>
-<button type="button" data-i="1">First date, they're smiling</button>
-<button type="button" data-i="2">Alone, midnight, strange noise</button>
+<p class="score" id="stratout"></p>
 </div>
-<p class="score" id="ctxout"></p>
+</section><section id="nameit"><h2>2. Name it to tame it</h2>
+<p>Lieberman and colleagues (2007) put people in a brain scanner, showed them angry faces, and asked them to label the emotion: "that's anger." The simple act of labeling <b>reduced amygdala activity</b> and increased prefrontal control. Putting the feeling into words literally moves processing from the alarm to the analyst.</p>
+<p>Precision matters. "I feel bad" does almost nothing. "I feel disrespected" gives the brain a specific prediction to work with — and specific predictions are easier to update. Journaling works for the same reason. Get precise.</p>
+<div class="card"><h3 style="margin-top:0">Get precise</h3>
+<p class="n">Your friend canceled plans — again. Tap the vaguest label, then the most precise.</p>
+<div class="qbtns" id="labelbtns" style="grid-template-columns:1fr">
+<button type="button" data-i="0">"I feel bad"</button>
+<button type="button" data-i="1">"I feel annoyed"</button>
+<button type="button" data-i="2">"I feel unimportant to them"</button>
 </div>
-</section><section id="tworoads"><h2>3. Two roads to fear</h2>
-<p>Joseph LeDoux showed that fear takes two neural paths. The fast one reacts before consciousness; the slow one understands after. And Antonio Damasio's <b>somatic marker hypothesis</b> adds the punchline: those gut feelings are data. Patients with damage to emotion circuits cannot make decisions at all — pure logic paralyzes. Feelings are not the enemy of reason. They are its engine.</p>
-<div class="tabs" id="roadtabs"><button type="button" data-i="0" aria-pressed="true">Low road</button><button type="button" data-i="1">High road</button></div>
-<div class="card" id="roadout" aria-live="polite"></div></section><section id="verdict"><h2>4. My take</h2>
-<p>So are feelings real? The signals are real — your body is genuinely reporting. But the story your brain tells about them is a construction: built from memory and context, assembled seconds before "you" arrive. You are not being manipulated by your brain. You <i>are</i> your brain — all of it, including the parts that vote early.</p>
+<p class="score" id="labelout"></p>
+</div>
+</section><section id="body"><h2>3. The body levers</h2>
+<p>You cannot think your way out of a sleep-deprived, sedentary nervous system. Feelings are body predictions — so change the body and the predictions change. These are the four levers with the strongest evidence. Tap each.</p>
+<div class="tabs" id="levertabs"><button type="button" data-i="0" aria-pressed="true">Sleep</button><button type="button" data-i="1">Move</button><button type="button" data-i="2">Breathe</button><button type="button" data-i="3">Light</button></div>
+<div class="card" id="leverout" aria-live="polite"></div></section><section id="verdict"><h2>4. My take</h2>
+<p>You cannot choose your first feeling. Nobody can — it is constructed before you arrive. But you get a vote on the second one: the story you tell, the label you choose, the body you maintain. Control is not suppression. It is editing.</p>
 <div class="card">
 <h3 style="margin:0 0 .4em">Your turn</h3>
-<p class="n" style="margin:0 0 .6em">Who's driving?</p>
-<div class="qbtns" id="feelpoll">
-<button type="button" data-v="0">Conscious me</button>
-<button type="button" data-v="1">Unconscious me</button>
-<button type="button" data-v="2">It's a partnership</button>
+<p class="n" style="margin:0 0 .6em">What actually works for you?</p>
+<div class="qbtns" id="ctrlpoll">
+<button type="button" data-v="0">Reframing</button>
+<button type="button" data-v="1">Naming it</button>
+<button type="button" data-v="2">Exercise</button>
+<button type="button" data-v="3">Sleep</button>
 </div>
-<p class="score" id="feelout" style="margin:.4em 0 0"></p>
+<p class="score" id="ctrlout" style="margin:.4em 0 0"></p>
 </div>
 <p class="src">This post summarizes peer-reviewed findings for a general audience. It is not therapy, diagnosis, or medical advice.</p>
-<div class="backrow" style="margin-top:26px"><a class="back" href="/journal/can-you-control-your-feelings.html">Read next: Can You Control Your Feelings? →</a><a class="back" href="/blog.html">← Back to Blog</a></div>
+<div class="backrow" style="margin-top:26px"><a class="back" href="/journal/simulation.html">Read next: Simulation? →</a><a class="back" href="/blog.html">← Back to Blog</a></div>
 </section><section id="sources"><h3>Sources</h3>
 <ul class="srcs">
-<li>Libet, B., Gleason, C. A., Wright, E. W., &amp; Pearl, D. K. (1983). Time of conscious intention to act in relation to onset of cerebral activity (readiness-potential). <i>Brain</i>, 106(3), 623–642.</li><li>Soon, C. S., Brass, M., Heinze, H.-J., &amp; Haynes, J.-D. (2008). Unconscious determinants of free decisions in the human brain. <i>Nature Neuroscience</i>, 11(5), 543–545.</li><li>Barrett, L. F. (2017). The theory of constructed emotion: An active inference account of interoception and categorization. <i>Social Cognitive and Affective Neuroscience</i>, 12(11), 1833–1838.</li><li>Damasio, A. R. (1994). <i>Descartes' Error: Emotion, Reason, and the Human Brain</i>. Putnam.</li><li>LeDoux, J. E. (1996). <i>The Emotional Brain</i>. Simon &amp; Schuster.</li>
+<li>Gross, J. J. (1998). The emerging field of emotion regulation: An integrative review. <i>Review of General Psychology</i>, 2(3), 271–299.</li><li>Gross, J. J., &amp; John, O. P. (2003). Individual differences in two emotion regulation processes: Implications for affect, relationships, and well-being. <i>Journal of Personality and Social Psychology</i>, 85(2), 348–362.</li><li>Lieberman, M. D., Eisenberger, N. I., Crockett, M. J., Tom, S. M., Pfeifer, J. H., &amp; Way, B. M. (2007). Putting feelings into words: Affect labeling disrupts amygdala activity in response to affective stimuli. <i>Psychological Science</i>, 18(5), 421–428.</li><li>Blumenthal, J. A., Babyak, M. A., Doraiswamy, P. M., Watkins, L., Hoffman, B. M., Barbour, K. A., et al. (2007). Exercise and pharmacotherapy in the treatment of major depressive disorder. <i>Psychosomatic Medicine</i>, 69(7), 587–596.</li><li>Yoo, S.-S., Gujar, N., Hu, P., Jolesz, F. A., &amp; Walker, M. P. (2007). The human emotional brain without sleep — a prefrontal amygdala disconnect. <i>Current Biology</i>, 17(20), R877–R878.</li>
 </ul></section>
 </main>
 <script>
 (function(){
-var N=["The captain. Bold claim.","The autopilot. Honest answer.","Both. The wise answer."];
-function v(i){try{localStorage.setItem("ll-feel-vote",i)}catch(e){}
- document.querySelectorAll("#feelpoll button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.v==i)});
- document.getElementById("feelout").textContent=N[i];}
-document.querySelectorAll("#feelpoll button").forEach(function(b){b.onclick=function(){v(+b.dataset.v)}});
-try{var x=localStorage.getItem("ll-feel-vote");if(x!==null)v(+x)}catch(e){}
+var N=["The editor. Strong pick.","The labeler. Precise.","The mover. Evidence-backed.","The sleeper. Underrated."];
+function v(i){try{localStorage.setItem("ll-ctrl-vote",i)}catch(e){}
+ document.querySelectorAll("#ctrlpoll button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.v==i)});
+ document.getElementById("ctrlout").textContent=N[i];}
+document.querySelectorAll("#ctrlpoll button").forEach(function(b){b.onclick=function(){v(+b.dataset.v)}});
+try{var x=localStorage.getItem("ll-ctrl-vote");if(x!==null)v(+x)}catch(e){}
 document.querySelector(".sharebtn").onclick=function(){
- var d={title:document.title,text:"Are feelings real? Conscious vs unconscious",url:location.href};
+ var d={title:document.title,text:"Can you control your feelings? The science says yes — by editing",url:location.href};
  if(navigator.share)navigator.share(d).catch(function(){});else if(navigator.clipboard)navigator.clipboard.writeText(location.href);};
 
-var LIB=["<b>−10s.</b> Deep in your prefrontal cortex, activity patterns already lean left or right. You feel perfectly undecided.","<b>−0.5s.</b> The readiness potential ramps up. Your motor cortex is preparing — still nothing in awareness.","<b>0s.</b> You 'decide' to press the button. This is the moment you experience as free will.","<b>+0.2s.</b> Your finger moves. The press release goes out: 'I chose this.' The vote happened ten seconds ago."];
-var li=0;function libshow(){document.querySelectorAll("#libdots i").forEach(function(d,i){d.className=i<=li?"on":""});
-document.getElementById("libout").innerHTML="<p>"+LIB[li]+"</p>";}
-document.getElementById("libnext").onclick=function(){li=Math.min(3,li+1);libshow()};
-document.getElementById("libprev").onclick=function(){li=Math.max(0,li-1);libshow()};libshow();
-var CTX=["<b>Anxiety.</b> Same body, different story. Your brain predicted threat — an evaluation that could cost you.",
-"<b>Excitement.</b> Identical signals, opposite label. Your brain predicted reward — this could go well.",
-"<b>Fear.</b> Same static again. Your brain predicted danger — something might be wrong. Three feelings, one body. The feeling was constructed, not detected."];
-document.querySelectorAll("#ctxbtns button").forEach(function(b){b.onclick=function(){
-document.querySelectorAll("#ctxbtns button").forEach(function(x){x.setAttribute("aria-pressed",x===b)});
-document.getElementById("ctxout").innerHTML="<p>"+CTX[+b.dataset.i]+"</p>";}});
-var Droad={0:["Low road","Thalamus → amygdala, in about 12 milliseconds. You jump before you see the snake. Fast, crude, unconscious — and it fires before 'you' know anything happened.","LeDoux (1996): the quick-and-dirty path. Survival doesn't wait for analysis."],1:["High road","Thalamus → cortex → amygdala. Slower, detailed, conscious. It figures out it was a stick, not a snake — and stands the alarm down.","The cortex gets the full picture, half a second later. Wisdom arrives late."]};
-function showroad(i){document.querySelectorAll("#roadtabs button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.i==i)});
-var d=Droad[i];document.getElementById("roadout").innerHTML="<h3 style=\"margin-top:0\">"+d[0]+"</h3><p>"+d[1]+"</p><p class=\"n\">"+d[2]+"</p>";}
-document.querySelectorAll("#roadtabs button").forEach(function(b){b.onclick=function(){showroad(+b.dataset.i)}});showroad(0);
+var STRAT=["<b>Suppression.</b> You look calm. Inside: heart rate up, cortisol up — and tomorrow you won't remember half the meeting. The feeling didn't leave; it just went underground. (Gross & John, 2003)",
+"<b>Reappraisal.</b> Heart rate steadier, stress hormones lower, memory intact. You edited the prediction before the alarm fully fired. Same boss, same sentence — different nervous system."];
+document.querySelectorAll("#stratbtns button").forEach(function(b){b.onclick=function(){
+document.querySelectorAll("#stratbtns button").forEach(function(x){x.setAttribute("aria-pressed",x===b)});
+document.getElementById("stratout").innerHTML="<p>"+STRAT[+b.dataset.i]+"</p>";}});
+var LAB=["Vague. The brain keeps the old prediction — 'something is wrong' — and the alarm stays on.",
+"Better. 'Annoyed' narrows it, but it's still a weather report, not a diagnosis.",
+"Precise. Now the brain has something actionable: a story about the relationship, not a fog. This is the label that lets reappraisal in. (Barrett: emotional granularity predicts regulation.)"];
+document.querySelectorAll("#labelbtns button").forEach(function(b){b.onclick=function(){
+document.querySelectorAll("#labelbtns button").forEach(function(x){x.setAttribute("aria-pressed",x===b)});
+document.getElementById("labelout").innerHTML="<p>"+LAB[+b.dataset.i]+"</p>";}});
+var Dlever={0:["Sleep","One bad night amplifies amygdala reactivity by about 60% (Yoo et al., 2007). You cannot regulate what a sleep-deprived brain exaggerates. 7–9 hours is not wellness advice — it's emotional armor.","The cheapest mood drug ever discovered."],1:["Move","Exercise rivals antidepressants for mild-to-moderate depression (Blumenthal et al., 2007). It burns off stress hormones and grows new neurons. 30 minutes, most days.","Your body expects to move. A sedentary nervous system idles anxious."],2:["Breathe","Slow exhales stimulate the vagus nerve and downshift arousal in under two minutes. Box breathing (4-4-4-4) is the manual override for the low road.","The fastest lever you own. Always with you."],3:["Light","Daylight anchors your circadian rhythm, which anchors serotonin and sleep. Morning light within an hour of waking beats any supplement.","Depression has a season for a reason."]};
+function showlever(i){document.querySelectorAll("#levertabs button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.i==i)});
+var d=Dlever[i];document.getElementById("leverout").innerHTML="<h3 style=\"margin-top:0\">"+d[0]+"</h3><p>"+d[1]+"</p><p class=\"n\">"+d[2]+"</p>";}
+document.querySelectorAll("#levertabs button").forEach(function(b){b.onclick=function(){showlever(+b.dataset.i)}});showlever(0);
 })();
 </script>
 <script>(function(){try{var p=location.pathname;fetch("/api/track?p="+encodeURIComponent(p)+"&r="+encodeURIComponent(document.referrer||""),{mode:"no-cors",keepalive:true}).catch(function(){})}catch(e){}})();</script>

@@ -161,9 +161,9 @@ document.querySelector(".sharebtn").onclick=function(){
  if(navigator.share)navigator.share(d).catch(function(){});else if(navigator.clipboard)navigator.clipboard.writeText(location.href);};
 
 var Dbrain={0:["dACC","The dorsal anterior cingulate cortex. Your brain's alarm bell — it fires for a hot stove, a broken bone, and being left out of a ball-toss game.","Eisenberger et al., 2003: social exclusion activated it just like physical pain."],1:["Anterior insula","The body's distress monitor. It tracks how bad things feel inside — nausea, dread, heartbreak. It cannot tell a breakup from an injury.","Overlaps with physical pain processing in every major study."],2:["Somatosensory cortex","The touch map. Kross et al. (2011) found it represents the pain of rejection — your brain files heartbreak under 'bodily harm.'","Not 'like' pain. The same hardware."]};
-function showBrain(i){document.querySelectorAll("#braintabs button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.i==i)});
-var d=DBrain[i];document.getElementById("brainout").innerHTML="<h3 style=\"margin-top:0\">"+d[0]+"</h3><p>"+d[1]+"</p><p class=\"n\">"+d[2]+"</p>";}
-document.querySelectorAll("#braintabs button").forEach(function(b){b.onclick=function(){showBrain(+b.dataset.i)}});showBrain(0);
+function showbrain(i){document.querySelectorAll("#braintabs button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.i==i)});
+var d=Dbrain[i];document.getElementById("brainout").innerHTML="<h3 style=\"margin-top:0\">"+d[0]+"</h3><p>"+d[1]+"</p><p class=\"n\">"+d[2]+"</p>";}
+document.querySelectorAll("#braintabs button").forEach(function(b){b.onclick=function(){showbrain(+b.dataset.i)}});showbrain(0);
 var WD=["Week 1: dopamine circuits screaming. Craving peaks — this is the hardest part, and it's chemical, not character.",
 "Month 1: the reward system is still hijacked. Every notification feels like it could be them. It usually isn't.",
 "Month 3: neuroplasticity kicks in. New routines are literally rewiring the craving. The pain comes in waves now, not weather.",
