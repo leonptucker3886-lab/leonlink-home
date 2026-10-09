@@ -89,6 +89,25 @@ main{flex:1;padding:14px;overflow-y:auto}
 .ev{animation:slidein .3s ease}
 @keyframes slidein{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
 .deadtomb{font-size:64px;filter:grayscale(1)}
+.chal{background:linear-gradient(135deg,#1a1030,#0e1a2e);border:1px solid var(--c);border-radius:16px;padding:14px 16px;margin:18px 0 0;max-width:420px}
+.chal small{color:var(--mut);font-size:11px;letter-spacing:.14em;font-weight:800}
+.chal b{display:block;font-size:17px;margin-top:4px}
+.chal .done{color:var(--good);font-weight:800}
+.achbtn{margin-top:12px;background:none;border:1px solid #2a3550;color:var(--mut);border-radius:14px;padding:10px 22px;font-size:14px;font-weight:700;cursor:pointer}
+.achgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;text-align:left}
+.ach{border:1px solid #232c44;border-radius:12px;padding:10px;font-size:12px}
+.ach.got{border-color:var(--good);background:#0c1a12}
+.ach b{display:block;font-size:13px}
+.ach span{color:var(--mut)}
+.ribbon{display:inline-block;background:linear-gradient(135deg,#ffd700,#ff9f1c);color:#221a05;font-weight:900;letter-spacing:.12em;font-size:13px;border-radius:999px;padding:8px 20px;margin:8px 0}
+.obit{font-style:italic;color:var(--mut);font-size:14px;line-height:1.55;margin:10px 0;text-align:left}
+.wform input,.wform textarea,.wform select{width:100%;margin:6px 0;padding:12px;border-radius:12px;border:1px solid #2a3550;background:#0b1120;color:var(--ink);font-size:15px;font-family:inherit}
+.wform label{font-size:12px;color:var(--mut);font-weight:700;display:block;margin-top:8px;text-align:left}
+.sharebtn{margin-top:10px;width:100%;padding:14px;border-radius:14px;border:1px solid var(--c);background:#0e1424;color:var(--ink);font-weight:800;font-size:16px;cursor:pointer}
+.rewindbtn{background:#141b30;border:1px solid #2a3550;color:var(--ink);border-radius:16px;padding:0 18px;font-size:15px;font-weight:800;cursor:pointer}
+.rewindbtn:disabled{opacity:.3}
+.agebar{display:flex;gap:10px;padding:14px 16px calc(16px + env(safe-area-inset-bottom))}
+#ageBtn{flex:1}
 
 </style>
 </head>
@@ -98,6 +117,8 @@ main{flex:1;padding:14px;overflow-y:auto}
   <h1>Started<br>From a <em>Baby</em></h1>
   <p style="color:var(--mut)">One life. Every choice matters.<br>Die, and your heir carries the name.</p>
   <button id="startBtn">Be Born</button><div id="contWrap"></div>
+  <div class="chal" id="chalBanner"></div>
+  <div><button class="achbtn" id="achBtn">Achievements</button></div>
   <div class="feat">baby → school → career → love → heirs → legacy<br>
   cop · dealer · woodworker · doctor · <b>emperor</b> · and 20 more fates<br>
   snake bites · lottery wins · prison · miracles · tragedy</div>
@@ -126,7 +147,7 @@ main{flex:1;padding:14px;overflow-y:auto}
     <div class="screen" id="s-work"><div id="workbox"></div></div>
     <div class="screen" id="s-love"><div id="lovebox"></div></div>
   </main>
-  <div class="agebar"><button id="ageBtn">AGE +1 →</button></div>
+  <div class="agebar"><button class="rewindbtn" id="rewindBtn" title="Rewind one year">↺</button><button id="ageBtn">AGE +1 →</button></div>
 </div>
 
 <div class="modal" id="modal"><div class="mbox" id="mbox"></div></div>
@@ -158,13 +179,16 @@ function newPerson(gen, surname, inherit){
     job:null, jobYears:0, heat:0, prison:0,
     partner:null, kids:[], pets:[],
     addicted:false, inCollege:false,
-    alive:true, cause:''
+    alive:true, cause:'',
+    office:null, given:0, foundation:false, excon:false, legacy:0,
+    rewinds:1, highlights:[]
   };
   return p;
 }
 function newGame(){
   const surname=pick(SURN);
-  S={surname, gen:1, p:newPerson(1,surname,0), log:[], peak:0, legends:[], fired:{}};
+  S={surname, gen:1, p:newPerson(1,surname,0), log:[], peak:0, legends:[], fired:{}, era:pick(ERAS)[0]};
+  applyGift(dailyGift());
   log(`👶 <b>${S.p.name}</b> is born. The ${surname} dynasty begins.`,'wild');
   show('game'); render();
 }
@@ -183,7 +207,7 @@ function render(){
   _av.style.background=p.prison>0?'linear-gradient(135deg,#555,#222)':({baby:'linear-gradient(135deg,#22f0ff,#39ff88)',child:'linear-gradient(135deg,#39ff88,#ffe14d)',teen:'linear-gradient(135deg,#ff3dc8,#b48cff)',adult:'linear-gradient(135deg,#22f0ff,#7a5cff)',senior:'linear-gradient(135deg,#b48cff,#ff9f1c)'})[stage()];
   _av.title=p.prison>0?'In prison':stage();
   document.getElementById('hName').textContent=p.name+(p.prison>0?' (in prison)':'');
-  document.getElementById('hSub').textContent=`Age ${p.age} · ${p.job?p.job.title:'Unemployed'}`+(p.partner?` · 💘 ${p.partner.name.split(' ')[0]}`:'');
+  document.getElementById('hSub').textContent=`Age ${p.age} · ${p.job?p.job.title:'Unemployed'} · ${S.era||'Peace'}`+(p.partner?` · 💘 ${p.partner.name.split(' ')[0]}`:'');
   document.getElementById('hMoney').textContent=fmt$(p.money);
   document.getElementById('hGen').textContent=`Gen ${S.gen} · House ${S.surname}`;
   document.getElementById('bars').innerHTML=BARS.map(([k,nm,c])=>
@@ -191,7 +215,8 @@ function render(){
     +`<div class="bar"><span class="nm">Fame</span><div class="tr"><div class="fl" style="width:${clamp(Math.round(p.fame))}%;background:#fff"></div></div><span class="vl">${Math.round(clamp(p.fame))}</span></div>`
     +(p.street>0?`<div class="bar"><span class="nm">Street</span><div class="tr"><div class="fl" style="width:${clamp(Math.round(p.street))}%;background:#ff9f1c"></div></div><span class="vl">${Math.round(clamp(p.street))}</span></div>`:'');
   document.getElementById('log').innerHTML=S.log.map(e=>`<div class="ev ${e.cls}"><div class="yr">AGE ${e.age}</div>${e.html}</div>`).join('');
-  renderActs(); renderWork(); renderLove();
+  renderActs(); renderWork(); renderLove(); checkAch();
+  const rb=document.getElementById('rewindBtn');if(rb)rb.disabled=!(SNAP&&S.p.rewinds>0&&S.p.alive);
 }
 function show(id){
   document.getElementById('title').style.display='none';
@@ -218,11 +243,11 @@ function renderActs(){
   addAct(L,'🎉','Party','+happy',()=>{p.happy=clamp(p.happy+R(5,12));p.health=clamp(p.health-R(2,6));if(Math.random()<0.15){p.addicted=true;log('🍺 The partying turned into a <b>habit</b>.','bad');}return 'Good times.';},p.age>=14);
   addAct(L,'🏥','Doctor','$500',()=>{if(p.money<500)return 'No money for the doctor.';p.money-=500;p.health=clamp(p.health+R(8,18));return 'Checkup: all good.';},p.age>=6);
   addAct(L,'💪','Therapy','+$300',()=>{if(p.money<300)return 'Therapy costs money.';p.money-=300;p.happy=clamp(p.happy+R(8,15));return 'Talked it out.';},p.age>=12);
-  addAct(L,'🎰','Lottery','$10',()=>{
+  addAct(L,'Lottery','Play','$10 · odds 1:200',()=>{
     if(p.money<10)return 'Not even $10 to spare.';
     p.money-=10;
     const r=Math.random();
-    if(r<0.001){p.money+=1000000;log('🎰 <b>JACKPOT! $1,000,000!</b>','wild');return 'JACKPOT!!! $1,000,000!';}
+    if(r<0.005){p.money+=1000000;log('🎰 <b>JACKPOT! $1,000,000!</b>','wild');hi('Won the $1,000,000 lottery');unlock('jackpot');return 'JACKPOT!!! $1,000,000!';}
     if(r<0.02){const w=R(100,2000);p.money+=w;return `Won ${fmt$(w)}!`;}
     p.happy=clamp(p.happy-2);return 'Lost. Again.';
   },p.age>=18);
@@ -237,6 +262,12 @@ function renderActs(){
     if(Math.random()<0.05+p.smarts/2000){p.fame=clamp(p.fame+R(5,20));log('🎨 Your creation <b>went viral</b>!','good');return 'VIRAL! Fame rising.';}
     return 'Made something beautiful.';
   },p.age>=8);
+  if(p.age>=3&&p.age<13){
+    addAct(L,'Play','Outside','+happy',()=>{p.happy=clamp(p.happy+R(4,10));if(Math.random()<0.05){p.health=clamp(p.health-10);log('<b>Scraped knee.</b> A badge of honor.','bad');return 'Scraped knee. Worth it.';}return 'Tag. Hide and seek. Pure joy.';},true);
+    addAct(L,'Read','Comics','+smarts',()=>{p.smarts=clamp(p.smarts+R(2,5));p.happy=clamp(p.happy+R(1,4));return 'Pow! Zap! Knowledge!';},p.age>=6);
+  }
+  if(p.money>=100000)addAct(L,'Give','Donate $25k','+karma',()=>{p.money-=25000;p.given+=25000;p.legacy+=25;p.karma=clamp(p.karma+8);p.happy=clamp(p.happy+5);log('<b>Donated $25,000</b> to people who needed it more.','good');return 'Money well spent.';},p.age>=18);
+  if(p.money>=500000&&!p.foundation)addAct(L,'Build','Foundation','$500k',()=>{p.money-=500000;p.given+=500000;p.foundation=true;p.legacy+=200;p.fame=clamp(p.fame+25);p.karma=clamp(p.karma+20);log('<b>Founded the '+p.name.split(' ')[1]+' Foundation.</b> Your name on a building.','good');hi('Started a charitable foundation');return 'Your name on a building. Immortality, sort of.';},p.age>=25);
   if(p.addicted)addAct(L,'💊','Rehab','$2,000',()=>{
     if(p.money<2000)return 'Rehab costs $2,000.';
     p.money-=2000;
@@ -244,10 +275,12 @@ function renderActs(){
     p.happy=clamp(p.happy-10);return 'Relapsed. Try again.';
   },true);
   const _pal=['#22f0ff','#39ff88','#ff3dc8','#ffe14d','#b48cff','#ff9f1c','#7a5cff'];
-  document.getElementById('acts').innerHTML=L.map((a,i)=>`<button class="act" data-i="${i}" ${a.ok?'':'disabled'} style="--ac:${_pal[i%_pal.length]}"><b>${a.t}</b><small>${a.sub}</small></button>`).join('');
+  document.getElementById('acts').innerHTML=L.map((a,i)=>`<button class="act" data-i="${i}" ${a.ok?'':'disabled'} style="--ac:${_pal[i%_pal.length]}"><b>${a.t}</b><small>${a.sub}</small></button>`).join('')
+  +`<button class="act" id="wsBtn" style="--ac:#8b98b8"><b>Write</b><small>create an event</small></button>`;
   document.querySelectorAll('#acts .act').forEach(b=>b.onclick=()=>{
     const a=L[+b.dataset.i]; const r=a.fn(); if(r)toast(r); render();
   });
+  const wb=document.getElementById('wsBtn');if(wb)wb.onclick=openWorkshop;
 }
 
 /* ================= WORK ================= */
@@ -292,9 +325,21 @@ function renderWork(){
   if(p.edu==='college'&&p.age<=35)edu+=`<button class="act wide" id="gradBtn" style="width:100%;margin-top:8px"><b>🎓 Grad school ($60k, 3 yrs)</b></button>`;
   edu+=`</div>`;
   html+=edu;
+  // politics ladder
+  if(p.age>=30&&p.prison===0&&!(p.job&&p.job.crime)){
+    const off=p.office;
+    let pol=`<div class="jobcard"><h3>Run for office${off?': '+off:''}</h3>`;
+    const winC=Math.min(0.9,0.25+p.smarts/200+p.fame/200);
+    const camp=(title,cost,need,ok)=>`<button class="act wide" data-pol="${title}" ${ok?'':'disabled'} style="width:100%;margin-top:8px"><b>${title} — ${fmt$(cost)}</b><small>${need} · win ~${Math.round(winC*100)}%</small></button>`;
+    if(!off)pol+=camp('Mayor',50000,'Smarts 55+',p.smarts>=55&&p.money>=50000);
+    else if(off==='Mayor')pol+=camp('Governor',250000,'Fame 40+',p.fame>=40&&p.money>=250000);
+    else if(off==='Governor'&&p.age>=40)pol+=camp('President',1000000,'Fame 65+',p.fame>=65&&p.money>=1000000);
+    else if(off==='President')pol+=`<p style="color:var(--good)">The highest office. Now: legacy.</p>`;
+    pol+=`</div>`;html+=pol;
+  }
   if(p.job){
     const j=p.job;
-    html+=`<div class="jobcard"><h3>💼 ${j.title}</h3><p class="pay">${fmt$(j.pay)}/yr · ${p.jobYears} yrs</p><p>${j.d||''}</p>
+    html+=`<div class="jobcard"><h3>💼 ${j.title}</h3><p class="pay">${fmt$(j.pay)}/yr · ${p.jobYears} yrs</p><p>${j.d||''}</p>${j.crime?`<p style="color:var(--bad)">Heat ${Math.round(p.heat)}% · bust risk ~${Math.round(p.heat/(S.era==='Crime Wave'?3:4))}%/yr</p>`:''}
     <div style="display:flex;gap:8px;margin-top:10px"><button class="act" id="hardBtn" style="flex:1"><b>🔥 Work hard</b></button><button class="act" id="quitBtn" style="flex:1"><b>🚪 Quit</b></button></div></div>`;
   }else{
     html+=`<div class="jobcard"><h3>🔍 Find work</h3><div class="jlist">`+
@@ -309,6 +354,16 @@ function renderWork(){
   const grb=document.getElementById('gradBtn');if(grb)grb.onclick=()=>{
     if(p.money<60000){toast('Need $60k.');return;}
     p.money-=60000;p.edu='grad';p.smarts=clamp(p.smarts+12);log('🎓 <b>Graduate degree!</b> -$60k.','good');render();};
+  box.querySelectorAll('[data-pol]').forEach(b=>b.onclick=()=>{
+    const t=b.dataset.pol;
+    const spec={Mayor:[50000,'Mayor',120000],Governor:[250000,'Governor',220000],President:[1000000,'President',500000]}[t];
+    if(p.money<spec[0]){toast('Need '+fmt$(spec[0]));return;}
+    p.money-=spec[0];
+    const winC=Math.min(0.9,0.25+p.smarts/200+p.fame/200);
+    if(Math.random()<winC){p.office=t;p.job={title:t,pay:spec[2],d:'Elected by the people.'};p.jobYears=0;p.fame=clamp(p.fame+20);p.happy=clamp(p.happy+15);
+      log(`<b>ELECTED ${t.toUpperCase()}!</b> The people have spoken.`,'wild');hi('Elected '+t);if(t==='President')unlock('prez');celebrate(true);}
+    else{p.happy=clamp(p.happy-12);log(`Lost the race for <b>${t}</b>. ${fmt$(spec[0])} down the drain.`,'bad');}
+    render();});
   const hb=document.getElementById('hardBtn');if(hb)hb.onclick=()=>{
     p.jobYears++; // counts double below? no—year tick adds 1; this adds effort
     if(Math.random()<0.25+p.smarts/400){promote();}else{p.happy=clamp(p.happy-4);toast('Nobody noticed.');}render();};
@@ -339,6 +394,7 @@ function renderLove(){
     html+=`<div class="jobcard"><h3>💘 ${p.partner.name}</h3><p>Partner · together ${p.partner.years}y</p>
     <div style="display:flex;gap:8px;margin-top:10px">
     <button class="act" id="kidBtn" style="flex:1"><b>👶 Have child</b></button>
+    ${p.partner.married?'':`<button class="act" id="propBtn" style="flex:1"><b>💍 Propose</b></button>`}
     <button class="act" id="dumpBtn" style="flex:1"><b>💔 Break up</b></button></div></div>`;
   }else if(p.age>=16){
     html+=`<div class="jobcard"><h3>💘 Single</h3><p>Love is out there. Probably.</p><button class="act wide" id="dateBtn" style="width:100%;margin-top:8px"><b>💌 Find love</b></button></div>`;
@@ -363,6 +419,13 @@ function renderLove(){
     const kid={name:pick(male?MALE:FEMALE)+' '+S.surname,male,age:0,alive:true};
     p.kids.push(kid);p.happy=clamp(p.happy+12);p.money-=5000;
     log(`👶 <b>${kid.name}</b> is born! Heir #${p.kids.length}.`,'wild');render();};
+  const pb=document.getElementById('propBtn');
+  if(pb)pb.onclick=()=>{
+    if(p.money<5000){toast('Need $5k for a ring.');return;}
+    p.money-=5000;
+    if(Math.random()<0.6+p.happy/250){p.partner.married=true;p.happy=clamp(p.happy+20);log(`💍 <b>Married ${p.partner.name}!</b>`,'good');hi('Got married');unlock('wed');celebrate(false);}
+    else{p.happy=clamp(p.happy-15);log('💔 The proposal was declined. Awkward.','bad');}
+    render();};
   const ub=document.getElementById('dumpBtn');
   if(ub)ub.onclick=()=>{log(`💔 Split with ${p.partner.name}.`,'bad');p.partner=null;p.happy=clamp(p.happy-12);render();};
 }
@@ -454,7 +517,7 @@ E({e:'📼',once:true,min:16,max:50,w:4,t:()=>'Your dumb video just hit 10M view
  {t:'Stay private',f:p=>{p.spirit=clamp(p.spirit+5);return 'Fame is a trap.';}}]});
 E({e:'🏛️',once:true,min:25,max:80,w:3,cond:p=>!p.job||p.job.title!=='Emperor',t:()=>'The government collapses! Chaos in the streets. A crowd looks to YOU.',c:[
  {t:'👑 SEIZE THE PALACE',f:p=>{
-    if(p.smarts>65&&p.street>40){p.job={title:'Emperor',pay:1000000,special:true,d:'All hail.'};p.fame=100;p.money+=500000;log('👑 <b>CROWNED EMPEROR!</b> The palace is yours!','wild');return 'ALL HAIL!';}
+    if(p.smarts>65&&p.street>40){p.job={title:'Emperor',pay:1000000,special:true,d:'All hail.'};p.fame=100;p.money+=500000;log('👑 <b>CROWNED EMPEROR!</b> The palace is yours!','wild');unlock('emperor');hi('Seized power and became Emperor');return 'ALL HAIL!';}
     p.prison=10;p.happy=0;log('👑 Coup failed. <b>10 years in prison.</b>','bad');return 'The guards were ready.';}},
  {t:'Hide',f:p=>{p.happy=clamp(p.happy-5);return 'Wise. Probably.';}}]});
 E({e:'👮',min:18,max:35,w:5,t:()=>'A police recruiter: "You look like you could wear the badge."',c:[
@@ -518,9 +581,11 @@ E({e:'🕊️',min:50,max:99,w:4,t:()=>'A quiet urge: make peace with everyone.'
  {t:'Hold grudges',f:p=>{p.karma=clamp(p.karma-5);return 'They know what they did.';}}]});
 
 /* ================= YEAR TICK ================= */
+let SNAP=null;
 function ageUp(){
   const p=S.p;
   if(!p.alive)return;
+  try{SNAP=JSON.stringify(S);}catch(e){SNAP=null;}
   p.age++;
   // kids age
   p.kids.forEach(k=>{if(k.alive)k.age++;});
@@ -529,20 +594,20 @@ function ageUp(){
   if(p.prison>0){
     p.prison--;p.happy=clamp(p.happy-8);dmg(p,3);
     log(`⛓️ Prison year. ${p.prison} left.`,'bad');
-    if(p.prison===0){log('⛓️ <b>Free!</b>','good');p.job=null;}
+    if(p.prison===0){log('⛓️ <b>Free!</b>','good');p.job=null;p.excon=true;}
     if(checkDeath())return;
     render();return;
   }
   // income
   if(p.job){
     p.jobYears++;
-    let pay=p.job.pay;
+    let pay=Math.round(p.job.pay*payMult());
     if(p.job.crime){
       const rank=Math.min(2,Math.floor(p.street/40));
-      pay=CRIME_RANKS[rank][1];
+      pay=Math.round(CRIME_RANKS[rank][1]*crimeMult());
       p.job.title=CRIME_RANKS[rank][0];p.job.pay=pay;
       p.heat=clamp(p.heat+R(5,20));
-      if(Math.random()<p.heat/400){
+      if(Math.random()<p.heat/(S.era==='Crime Wave'?300:400)){
         const y=R(4,12);p.prison=y;p.heat=0;p.money=Math.max(0,p.money*0.4);
         log(`🚔 <b>BUSTED as ${p.job.title}! ${y} years in prison.</b> 60% of cash seized.`,'bad');
         p.job=null;p.jobYears=0;
@@ -559,7 +624,8 @@ function ageUp(){
   // addiction drain
   if(p.addicted){dmg(p,6);p.happy=clamp(p.happy-8);p.money=Math.max(0,p.money-3000);if(Math.random()<0.05){p.alive=false;p.cause='Overdose';return die();}}
   // age drift
-  if(p.age>40)dmg(p,R(1,3));
+  if(S.era==='Pandemic')dmg(p,2);
+  if(p.age>40)dmg(p,S.era==='Peace'?R(0,2):R(1,3));
   if(p.age>60)dmg(p,R(2,5));
   if(p.age>80)dmg(p,R(4,8));
   p.happy=clamp(p.happy+R(-3,3));
@@ -600,16 +666,26 @@ function checkDeath(){
 }
 function die(){
   const p=S.p;p.alive=false;
+  checkAch();
+  const r=ribbonFor(p), ob=obituary(p,r);
+  const [cid,cname]=weeklyChal();
+  let chalHtml='';
+  if(META.chal.week!==weekId()||!META.chal.done){
+    if(chalDone(cid,p)){META.chal={week:weekId(),done:1};saveMeta();chalHtml=`<p style="color:var(--good)"><b>Weekly challenge complete:</b> ${cname}!</p>`;celebrate(true);}
+  }
   const heirs=p.kids.filter(k=>k.alive);
   const worth=fmt$(p.money);
   let html=`<div class="big deadtomb">✝</div><h2 class="dead">${p.name} died</h2>
-  <p>Age ${p.age} · ${p.cause||'Unknown causes'}</p>
+  <div class="ribbon">${r}</div>
+  <p class="obit">${ob}</p>
+  ${chalHtml}
   <div style="text-align:left;margin:14px 0">
   <div class="kv"><span>Net worth</span><b>${worth}</b></div>
   <div class="kv"><span>Career</span><b>${p.job?p.job.title:'—'}</b></div>
   <div class="kv"><span>Children</span><b>${p.kids.length}</b></div>
   <div class="kv"><span>Fame</span><b>${Math.round(p.fame)}</b></div>
-  <div class="kv"><span>Karma</span><b>${Math.round(p.karma)}</b></div></div>`;
+  <div class="kv"><span>Karma</span><b>${Math.round(p.karma)}</b></div></div>
+  <button class="sharebtn" id="shareBtn">Share this life</button>`;
   if(p.fame>60||p.money>1000000||(p.job&&p.job.title==='Emperor')){S.legends.push(p.name);html+=`<p>🌟 <b>LEGEND.</b> Songs will be sung.</p>`;}
   if(heirs.length){
     html+=`<p>The ${S.surname} line continues. Choose your heir:</p><div class="choices">`+
@@ -619,15 +695,16 @@ function die(){
     <div class="choices"><button id="endBtn">See dynasty legacy →</button></div>`;
   }
   modal(html);
+  document.getElementById('shareBtn').onclick=shareLife;
   document.querySelectorAll('#mbox [data-h]').forEach(b=>b.onclick=()=>{
     const heir=heirs[+b.dataset.h];
     S.gen++;
     const inherit=Math.round(p.money*0.6);
     S.p=newPerson(S.gen,S.surname,inherit);
-    S.fired={};
+    S.fired={};S.era=pick(ERAS)[0];S.p.rewinds=1;
     S.p.age=Math.max(18,heir.age);S.p.name=heir.name;S.p.male=heir.male;
     closeModal();
-    log(`👶 <b>${heir.name}</b> takes up the mantle. Generation ${S.gen}. Inherits ${fmt$(inherit)}.`,'wild');
+    log(`👶 <b>${heir.name}</b> takes up the mantle. Generation ${S.gen}. Inherits ${fmt$(inherit)}. Era: <b>${S.era}</b>.`,'wild');
     render();
   });
   const eb=document.getElementById('endBtn');
@@ -637,12 +714,244 @@ function die(){
     <p>The ${S.surname} line lasted <b>${gens} generation${gens>1?'s':''}</b>.</p>
     <div style="text-align:left;margin:14px 0">
     <div class="kv"><span>Peak wealth</span><b>${fmt$(S.peak)}</b></div>
-    <div class="kv"><span>Legends</span><b>${S.legends.length?S.legends.join(', '):'none'}</b></div></div>
+    <div class="kv"><span>Legends</span><b>${S.legends.length?S.legends.join(', '):'none'}</b></div>
+    <div class="kv"><span>Dynasty score</span><b>${dynastyScore()}</b></div></div>
+    <button class="sharebtn" id="shareBtn2">Share this dynasty</button>
     <div class="choices"><button id="againBtn">🔄 Start a new bloodline</button></div>`);
+    const _sc=dynastyScore();if(_sc>(META.best||0)){META.best=_sc;saveMeta();}
+    document.getElementById('shareBtn2').onclick=shareLife;
     document.getElementById('againBtn').onclick=()=>{closeModal();newGame();};
   };
   render();
 }
+
+
+/* ================= RESEARCH SYSTEMS ================= */
+const META_KEY='sfab-meta-v1';
+let META={ach:{},best:0,gift:'',custom:[],chal:{}};
+try{const _m=JSON.parse(localStorage.getItem(META_KEY));if(_m)META=Object.assign(META,_m);}catch(e){}
+function saveMeta(){try{localStorage.setItem(META_KEY,JSON.stringify(META));}catch(e){}}
+const ACH=[
+ ['jackpot','Jackpot','Win the lottery'],['emperor','All Hail','Become Emperor'],
+ ['tycoon','Tycoon','$1M net worth'],['century','Centenarian','Reach 100'],
+ ['scholar','Scholar','Graduate school'],['kingpin','Kingpin','Top the crime ladder'],
+ ['jailbird','Jailbird','Do prison time'],['star','Superstar','100 fame'],
+ ['saint','Saint','Reach 100 karma'],['sinner','Villain','Hit 0 karma'],
+ ['parent5','Full House','Have 5 kids'],['wed','Married','Tie the knot'],
+ ['chief','Top Cop','Become Police Chief'],['ceo','Corner Office','Become CEO'],
+ ['prez','President','Win the presidency'],['monk','Enlightened','100 spirit'],
+ ['old90','Nonagenarian','Reach 90'],['gen5','Bloodline','Reach generation 5'],
+ ['giver','Philanthropist','Donate $500k total'],['founder','Founder','Start a foundation']];
+function unlock(id){if(!S||!S.p||META.ach[id])return;const a=ACH.find(x=>x[0]===id);if(!a)return;META.ach[id]=1;saveMeta();toast('Achievement unlocked: '+a[1]);sfx('win');confetti(30);}
+function checkAch(){if(!S||!S.p||!S.p.alive)return;const p=S.p;
+ if(p.money>=1e6)unlock('tycoon');if(p.fame>=100)unlock('star');
+ if(p.karma>=100)unlock('saint');if(p.karma<=0)unlock('sinner');
+ if(p.spirit>=100)unlock('monk');if(p.kids.length>=5)unlock('parent5');
+ if(p.age>=90)unlock('old90');if(p.age>=100)unlock('century');
+ if(p.edu==='grad')unlock('scholar');if(p.prison>0||p.excon)unlock('jailbird');
+ if(p.job&&p.job.title==='Police Chief')unlock('chief');
+ if(p.job&&p.job.title==='CEO')unlock('ceo');if(p.office==='President')unlock('prez');
+ if(p.street>=80)unlock('kingpin');if(p.given>=500000)unlock('giver');
+ if(p.foundation)unlock('founder');if(p.partner&&p.partner.married)unlock('wed');
+ if(S.gen>=5)unlock('gen5');}
+function ribbonFor(p){
+ if(p.job&&p.job.title==='Emperor')return 'ROYAL';
+ if(p.office==='President')return 'COMMANDER';
+ if(p.money>=5000000)return 'TYCOON';
+ if(p.fame>=90)return 'STAR';
+ if(p.excon||p.prison>0)return 'OUTLAW';
+ if(p.karma>=90)return 'SAINT';
+ if(p.karma<=10)return 'VILLAIN';
+ if(p.kids.length>=5)return 'FAMILY';
+ if(p.age>=100)return 'CENTURY';
+ if(p.edu==='grad')return 'SCHOLAR';
+ return 'ORDINARY';}
+function obituary(p,r){
+ const job=p.office||(p.job?p.job.title:null);
+ let o=p.name+', dead at '+p.age+' of '+(p.cause||'unknown causes')+'. ';
+ if(r==='ROYAL')o+='Seized a nation and ruled it. History will argue about the rest. ';
+ else if(r==='TYCOON')o+='Turned pocket change into an empire worth '+fmt$(p.money)+'. ';
+ else if(r==='STAR')o+='Lived loud, died famous. The cameras never really left. ';
+ else if(r==='OUTLAW')o+='Lived by the streets, paid the price on the streets. ';
+ else if(r==='SAINT')o+='Gave more than they took. Rare, and everyone knew it. ';
+ else if(r==='VILLAIN')o+='Feared by many, mourned by few. ';
+ else if(r==='FAMILY')o+='Leaves behind '+p.kids.length+' children and a very full photo album. ';
+ else if(r==='CENTURY')o+='A hundred years of mornings. Imagine the stories. ';
+ else o+=(job?('Spent the working years as a '+job.toLowerCase()+'. '):'')+'A life lived. ';
+ if(p.given>0)o+='Gave away '+fmt$(p.given)+' to make the world slightly less terrible.';
+ return o;}
+const CHALS=[['emperor','Become Emperor'],['tycoon','Reach $1M net worth'],['parent5','Have 5 children'],['star','Reach 100 fame'],['prez','Become President'],['century','Live to 100'],['kingpin','Become Kingpin'],['scholar','Earn a graduate degree']];
+function weekId(){const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()+3-((d.getDay()+6)%7));const w1=new Date(d.getFullYear(),0,4);return d.getFullYear()+'-W'+(1+Math.round(((d-w1)/864e5-3+((w1.getDay()+6)%7))/7));}
+function hashStr(s){let x=0;for(let i=0;i<s.length;i++)x=(x*31+s.charCodeAt(i))>>>0;return x;}
+function weeklyChal(){return CHALS[hashStr(weekId())%CHALS.length];}
+function chalDone(id,p){
+ if(id==='emperor')return p.job&&p.job.title==='Emperor';
+ if(id==='tycoon')return p.money>=1e6;
+ if(id==='parent5')return p.kids.length>=5;
+ if(id==='star')return p.fame>=100;
+ if(id==='prez')return p.office==='President';
+ if(id==='century')return p.age>=100;
+ if(id==='kingpin')return p.street>=80;
+ if(id==='scholar')return p.edu==='grad';
+ return false;}
+function dailyGift(){const t=new Date().toDateString();if(META.gift===t)return null;META.gift=t;saveMeta();
+ return pick([['cash',500,'$500'],['health',8,'+8 Health'],['happy',10,'+10 Happy'],['smarts',5,'+5 Smarts']]);}
+function applyGift(g){if(!g||!S||!S.p)return;const p=S.p;
+ if(g[0]==='cash')p.money+=g[1];else p[g[0]]=clamp(p[g[0]]+g[1]);
+ toast('Daily gift: '+g[2]);log('<b>Daily gift:</b> '+g[2]+'.','good');}
+const ERAS=[['Boom','Salaries up'],['Recession','Pay down, crime pays'],['Peace','Steady'],['Crime Wave','Streets pay, heat rises'],['Pandemic','Health is everything']];
+function payMult(){return S.era==='Boom'?1.25:S.era==='Recession'?0.75:1;}
+function crimeMult(){return S.era==='Crime Wave'?1.5:S.era==='Recession'?1.3:1;}
+function hi(t){if(!S||!S.p)return;S.p.highlights=S.p.highlights||[];if(S.p.highlights.length<6)S.p.highlights.push(t);}
+function shareLife(){
+ const p=S.p,r=ribbonFor(p);
+ const c=document.createElement('canvas');c.width=900;c.height=1200;const x=c.getContext('2d');
+ const g=x.createLinearGradient(0,0,0,1200);g.addColorStop(0,'#0b1020');g.addColorStop(1,'#141b30');
+ x.fillStyle=g;x.fillRect(0,0,900,1200);
+ x.textAlign='center';x.fillStyle='#5b6b8c';x.font='800 26px system-ui';
+ x.fillText('L E O N L I N K   P R E S E N T S',450,90);
+ x.fillStyle='#fff';x.font='900 64px system-ui';x.fillText('STARTED FROM',450,180);x.fillText('A BABY',450,250);
+ x.fillStyle='#ffd700';x.font='900 40px system-ui';x.fillText(r,450,330);
+ x.fillStyle='#fff';x.font='700 44px system-ui';x.fillText(p.name,450,420);
+ x.fillStyle='#8b98b8';x.font='400 32px system-ui';x.fillText('Age '+p.age+'  ·  Gen '+S.gen+'  ·  '+(p.office||(p.job?p.job.title:'Unemployed')),450,470);
+ const bars=[['Health',p.health,'#ff5d5d'],['Happy',p.happy,'#ffe14d'],['Smarts',p.smarts,'#22f0ff'],['Wealth',Math.min(100,p.money/100000),'#39ff88'],['Fame',p.fame,'#ffffff']];
+ bars.forEach((b,i)=>{const y=560+i*80;x.fillStyle='#8b98b8';x.font='700 26px system-ui';x.textAlign='left';x.fillText(b[0],90,y+28);
+  x.fillStyle='#1c2440';x.fillRect(280,y,530,26);x.fillStyle=b[2];x.fillRect(280,y,530*Math.max(0,Math.min(100,b[1]))/100,26);});
+ x.textAlign='center';x.fillStyle='#5b6b8c';x.font='800 24px system-ui';x.fillText('WILDEST MOMENT',450,1010);
+ const mom=String((p.highlights&&p.highlights[0])||'A quiet life. Suspiciously quiet.').replace(/<[^>]+>/g,'');
+ x.fillStyle='#fff';x.font='italic 30px system-ui';
+ const words=mom.split(' ');let line='',yy=1055;
+ for(const w of words){if((line+' '+w).length>42){x.fillText(line,450,yy);yy+=42;line=w;}else line=line?line+' '+w:w;}
+ x.fillText(line,450,yy);
+ x.fillStyle='#5b6b8c';x.font='400 24px system-ui';x.fillText('leonlink.net',450,1150);
+ c.toBlob(b=>{const f=new File([b],'my-life.png',{type:'image/png'});
+  if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],title:'My life in Started From a Baby'}).catch(()=>{});}
+  else{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='started-from-a-baby.png';a.click();toast('Life card saved');}});}
+function openWorkshop(){
+ modal('<h2>Write an event</h2><p style="color:var(--mut);font-size:14px">It joins your world immediately.</p>'+
+ '<div class="wform"><label>Title</label><input id="wT" maxlength="60" placeholder="The pigeon incident">'+
+ '<label>Story</label><textarea id="wS" rows="2" maxlength="220" placeholder="A pigeon lands on your head and refuses to leave."></textarea>'+
+ '<label>Choice A</label><input id="wA" maxlength="40" placeholder="Adopt it"><label>What happens (A)</label><input id="wRA" maxlength="140" placeholder="You name him Gerald. Best friends forever.">'+
+ '<label>Choice B</label><input id="wB" maxlength="40" placeholder="Shoo it"><label>What happens (B)</label><input id="wRB" maxlength="140" placeholder="It leaves. You feel oddly empty.">'+
+ '<label>Minimum age</label><input id="wAge" type="number" value="6" min="0" max="100" style="width:90px"></div>'+
+ '<div class="choices"><button id="wSave">Add to my world</button><button id="wCancel">Cancel</button></div>');
+ document.getElementById('wCancel').onclick=closeModal;
+ document.getElementById('wSave').onclick=()=>{
+  const v=id=>document.getElementById(id).value.trim();
+  if(!v('wT')||!v('wS')||!v('wA')||!v('wB')){toast('Fill every field');return;}
+  const ev={t:v('wT'),story:v('wS'),a:v('wA'),ra:v('wRA')||'Nothing happened.',b:v('wB'),rb:v('wRB')||'Nothing happened.',min:Math.max(0,Math.min(100,+v('wAge')||0))};
+  META.custom.push(ev);saveMeta();injectCustom(ev);closeModal();toast('Event added to your world');sfx('good');};}
+function injectCustom(ev){
+ E({e:'✏️',min:ev.min,max:99,w:3,t:()=>ev.story,title:ev.t,custom:true,c:[
+  {t:ev.a,f:p=>{p.happy=clamp(p.happy+R(-2,6));return ev.ra;}},
+  {t:ev.b,f:p=>{p.happy=clamp(p.happy+R(-2,6));return ev.rb;}}]});}
+function dynastyScore(){return S.gen*100+Math.floor(S.peak/20000)+S.legends.length*500+Object.keys(META.ach).length*25;}
+
+/* ================= RESEARCH BATCH: 30 new events ================= */
+// kid chaos
+E({e:'🛝',min:4,max:11,w:5,t:()=>'The playground slide is lava-hot from the sun. The other kids are watching.',c:[
+ {t:'Go anyway',f:p=>{if(Math.random()<0.3){p.health=clamp(p.health-12);log('🛝 <b>Slide burn.</b> A legend is forged in pain.','bad');return 'You screamed the whole way down. Respect +10.';}p.happy=clamp(p.happy+10);return 'Perfect landing. The crowd goes mild.';}},
+ {t:'Wait for shade',f:p=>{p.smarts=clamp(p.smarts+3);return 'Patience. A rare childhood virtue.';}}]});
+E({e:'🦷',min:5,max:12,w:5,t:()=>'Your tooth is hanging by a thread. The Tooth Fairy economy awaits.',c:[
+ {t:'Yank it',f:p=>{const m=R(1,20);p.money+=m;p.happy=clamp(p.happy+8);return `Out it comes! The fairy leaves $${m}. Inflation is real.`;}},
+ {t:'Wiggle it for weeks',f:p=>{p.happy=clamp(p.happy-4);return 'It falls out during lunch. Anticlimax.';}}]});
+E({e:'👾',min:6,max:14,w:5,t:()=>'A kid at school claims he can beat anyone at the arcade fighter. Winner gets lunch money.',c:[
+ {t:'Accept the duel',f:p=>{if(Math.random()<0.4+p.smarts/250){const w=R(5,25);p.money+=w;p.happy=clamp(p.happy+12);log('👾 <b>Arcade champion!</b> Lunch money secured.','good');return `Flawless victory. +$${w}.`;}p.money=Math.max(0,p.money-5);p.happy=clamp(p.happy-6);return 'You got perfected. Twice. In front of everyone.';}},
+ {t:'Decline gracefully',f:p=>{p.karma=clamp(p.karma+3);return 'You keep your $5 and your dignity. Mostly.';}}]});
+// teen absurdity
+E({e:'🤖',min:13,max:19,w:4,t:()=>'Your phone suggests you might enjoy "extreme ironing." The algorithm knows you too well.',c:[
+ {t:'Try extreme ironing',f:p=>{p.fame=clamp(p.fame+8);p.happy=clamp(p.happy+10);log('🤖 <b>Extreme ironing influencer arc begins.</b>','wild');return 'You iron a shirt on a cliffside. 40k views.';}},
+ {t:'Touch grass instead',f:p=>{p.health=clamp(p.health+5);p.happy=clamp(p.happy+4);return 'The algorithm is disappointed in you.';}}]});
+E({e:'🍕',min:14,max:30,w:4,t:()=>'A pizza place offers you $200 to eat a 5-pound "Mount Vesuvius" calzone on camera.',c:[
+ {t:'Accept the challenge',f:p=>{if(Math.random()<0.5){p.money+=200;p.fame=clamp(p.fame+6);log('🍕 <b>Conquered the Mount Vesuvius.</b>','wild');return '$200 and mild stomach damage. Worth it.';}p.health=clamp(p.health-15);p.happy=clamp(p.happy-5);return 'You tapped out at pound three. The internet saw.';}},
+ {t:'Hard pass',f:p=>{p.health=clamp(p.health+3);return 'Your arteries thank you.';}}]});
+E({e:'👽',min:8,max:99,w:2,t:()=>'You wake up at 3am. There is a humming light outside your window. Classic.',c:[
+ {t:'Investigate',f:p=>{const r=Math.random();if(r<0.3){p.smarts=clamp(p.smarts+10);p.fame=clamp(p.fame+15);log('👽 <b>Abducted. Returned with forbidden knowledge (and a probe story).</b>','wild');hi('Abducted by aliens at 3am');return 'They were surprisingly polite. You now understand taxes.';}if(r<0.6){p.happy=clamp(p.happy-8);return 'It was a drone. A kid\'s drone. You screamed at a child\'s toy.';}p.spirit=clamp(p.spirit+10);return 'You wave at the light. It blinks back. Beautiful.';}},
+ {t:'Go back to sleep',f:p=>{p.health=clamp(p.health+4);return 'Whatever it was, it can wait until morning.';}}]});
+E({e:'🎤',min:16,max:40,w:4,t:()=>'A street interviewer shoves a mic in your face: "What\'s your biggest red flag?"',c:[
+ {t:'Answer honestly',f:p=>{p.fame=clamp(p.fame+10);p.happy=clamp(p.happy+6);log('🎤 <b>"I rehearse arguments in the shower." — 2M views.</b>','wild');return '"I rehearse arguments in the shower." 2M views overnight.';}},
+ {t:'Run away',f:p=>{p.fit=clamp(p.fit+3);return 'Cardio and dignity, preserved.';}}]});
+// adult chaos
+E({e:'🦜',min:18,max:99,w:4,t:()=>'A parrot at the pet store looks you dead in the eye and says your full name. It is not for sale. It chooses you.',c:[
+ {t:'Take the parrot',f:p=>{if(p.money<300)return 'The parrot costs $300. It judges your finances.';p.money-=300;p.pets.push('parrot');p.happy=clamp(p.happy+15);log('🦜 <b>Adopted a parrot that knows your name.</b> Concerning.','wild');return 'It already knows your secrets. Too late now.';}},
+ {t:'Back away slowly',f:p=>{p.spirit=clamp(p.spirit-3);return 'You will think about that parrot forever.';}}]});
+E({e:'📦',min:20,max:60,w:4,t:()=>'A package arrives. You ordered nothing. The return address is your own handwriting.',c:[
+ {t:'Open it',f:p=>{const r=Math.random();if(r<0.4){const m=R(100,2000);p.money+=m;log('📦 <b>Mystery box contained cash.</b> Do not ask questions.','wild');return `Inside: $${m} and a note saying "you\'ll understand soon."`;}if(r<0.7){p.happy=clamp(p.happy+8);return 'Inside: a single perfect burrito. Still warm. Impossible. Delicious.';}p.happy=clamp(p.happy-6);return 'Inside: 400 packing peanuts and regret.';}},
+ {t:'Return to sender (you)',f:p=>{p.karma=clamp(p.karma+4);return 'You mail it back to yourself. The loop continues.';}}]});
+E({e:'💼',min:22,max:60,w:4,t:()=>'A recruiter offers you a job with an incredible salary. The company name is "Synergy Dynamics Solutions." Nobody knows what they do.',c:[
+ {t:'Take the mystery job',f:p=>{const r=Math.random();if(r<0.5){const s=R(90000,180000);p.job={title:'Synergy Consultant',pay:s,d:'Nobody knows what you do. Including you.'};p.jobYears=0;log(`💼 <b>Hired at Synergy Dynamics Solutions: ${fmt$(s)}/yr.</b>`,'good');return `Salary: ${fmt$(s)}. Duties: unknown. Vibes: immaculate.`;}p.happy=clamp(p.happy-10);return 'It was a pyramid scheme. The pyramid had great branding though.';}},
+ {t:'Ask what they actually do',f:p=>{p.smarts=clamp(p.smarts+4);return '"We leverage synergistic paradigms." You walk away.';}}]});
+E({e:'🧛',min:18,max:99,w:3,t:()=>'Your new neighbor only comes out at night, never ages, and keeps inviting you to "dinner."',c:[
+ {t:'Accept dinner',f:p=>{const r=Math.random();if(r<0.5){p.health=clamp(p.health-20);p.spirit=clamp(p.spirit+10);log('🧛 <b>Survived dinner with the neighbor.</b> Barely.','bad');return 'You wake up dizzy with two tiny marks and a great story.';}p.fame=clamp(p.fame+8);return 'Turns out they\'re just a night-shift nurse who loves garlic bread. Anticlimax.';}},
+ {t:'Install garlic wreath',f:p=>{p.money=Math.max(0,p.money-40);p.happy=clamp(p.happy+4);return '$40 of garlic. Your house smells incredible. Neighbor unfazed.';}}]});
+E({e:'🎰',min:25,max:70,w:3,t:()=>'A casino host comps you a suite because you "have the look." You have never gambled.',c:[
+ {t:'Play it cool, bet $100',f:p=>{if(p.money<100)return 'You don\'t even have $100. The look fades.';p.money-=100;if(Math.random()<0.3){const w=R(500,5000);p.money+=w;log(`🎰 <b>Beginner's luck: won ${fmt$(w)}.</b>`,'good');return `Won ${fmt$(w)}! The host nods respectfully.`;}p.happy=clamp(p.happy-5);return 'Lost it in four minutes. The look is gone.';}},
+ {t:'Take the suite, skip the tables',f:p=>{p.happy=clamp(p.happy+12);return 'Free suite, room service, zero losses. The real jackpot.';}}]});
+E({e:'🐝',min:10,max:99,w:4,t:()=>'You have been chosen. By bees. A whole swarm, following you like a furry tornado.',c:[
+ {t:'Become the bee person',f:p=>{p.fame=clamp(p.fame+12);p.happy=clamp(p.happy+8);log('🐝 <b>Became locally famous as "the bee person."</b>','wild');hi('Became the local bee person');return 'Local news covers it. Kids want your autograph. The bees stay.';}},
+ {t:'Run flailing',f:p=>{p.health=clamp(p.health-10);p.fit=clamp(p.fit+4);return 'Stung 6 times. The bees found it hilarious.';}}]});
+E({e:'🏚️',min:25,max:70,w:4,t:()=>'A "haunted" Victorian is selling for almost nothing. The listing says "motivated seller (deceased)."',c:[
+ {t:'Buy the haunted house',f:p=>{if(p.money<30000)return 'You can\'t afford the ghosts.';p.money-=30000;const r=Math.random();if(r<0.5){p.money+=120000;p.fame=clamp(p.fame+10);log('🏚️ <b>Flipped the haunted house for a fortune.</b> The ghosts got a cut.','good');return 'Renovated, flipped, +$120k. The ghosts asked for a percentage. Fair.';}p.happy=clamp(p.happy-8);return 'The pipes scream at 2am. Worth it? Unclear.';}},
+ {t:'Ghosts don\'t pay rent',f:p=>{p.karma=clamp(p.karma+2);return 'Someone braver buys it. You watch from across the street.';}}]});
+E({e:'📈',min:20,max:60,w:4,t:()=>'Your cousin\'s friend\'s barber says a coin called "MoonDogeElon" is going to 100x. He seems trustworthy. He is not.',c:[
+ {t:'YOLO $1,000',f:p=>{if(p.money<1000)return 'You don\'t have $1,000 to vaporize.';p.money-=1000;const r=Math.random();if(r<0.12){const w=R(20000,90000);p.money+=w;log(`📈 <b>MoonDogeElon MOONED. +${fmt$(w)}.</b>`,'wild');hi('Got rich off a meme coin');return `It 50x'd. You are a genius (this time). +${fmt$(w)}.`;}p.happy=clamp(p.happy-8);return 'Rug pulled. The barber has stopped answering texts.';}},
+ {t:'Lecture him about index funds',f:p=>{p.smarts=clamp(p.smarts+3);return 'He buys anyway. You were right. It changes nothing.';}}]});
+E({e:'🦞',min:18,max:80,w:3,t:()=>'At a seafood restaurant, a lobster in the tank makes direct eye contact and raises one claw. A challenge? A plea?',c:[
+ {t:'Order the lobster',f:p=>{p.happy=clamp(p.happy-6);p.karma=clamp(p.karma-8);return 'You eat it. It haunts your dreams. Worth it? No.';}},
+ {t:'Buy its freedom ($80)',f:p=>{if(p.money<80)return 'Freedom costs $80. You don\'t have it.';p.money-=80;p.karma=clamp(p.karma+12);p.happy=clamp(p.happy+10);log('🦞 <b>Freed a lobster. It waved goodbye.</b>','good');return 'Released at the pier. It waved. You cried a little.';}}]});
+E({e:'🎪',min:18,max:50,w:3,t:()=>'A traveling circus needs an emergency lion tamer. The last one "retired." Pay is cash, daily.',c:[
+ {t:'Tame lions',f:p=>{const r=Math.random();if(r<0.4){const w=R(300,900);p.money+=w;p.fame=clamp(p.fame+10);p.fit=clamp(p.fit+6);log('🎪 <b>Joined the circus as lion tamer.</b>','wild');hi('Ran away with the circus');return `You stare down a lion named Kevin. +$${w}. Legend.`;}p.health=clamp(p.health-25);return 'Kevin was not in the mood. Hospital. Great story.';}},
+ {t:'Decline (wisely)',f:p=>{p.smarts=clamp(p.smarts+2);return 'The circus leaves town. Kevin waves with his tail.';}}]});
+// midlife & senior
+E({e:'🚗',min:40,max:99,w:4,t:()=>'A teenager in a sports car challenges your sedan at a red light. Your knees say no. Your pride says yes.',c:[
+ {t:'Race them',f:p=>{const r=Math.random();if(r<0.4){p.fame=clamp(p.fame+8);p.happy=clamp(p.happy+15);log('🚗 <b>Smoked a teenager at a red light.</b> Midlife: thriving.','wild');return 'You win by half a car. The teen is humbled. You feel 25 again.';}p.money=Math.max(0,p.money-400);p.happy=clamp(p.happy-8);return 'Speeding ticket: $400. Your knees were right.';}},
+ {t:'Smile and wave',f:p=>{p.karma=clamp(p.karma+4);p.happy=clamp(p.happy+3);return 'Maturity looks good on you.';}}]});
+E({e:'🧶',min:55,max:99,w:4,t:()=>'The senior center knitting circle is actually a front for an underground poker ring. They want fresh blood.',c:[
+ {t:'Join the ring',f:p=>{const r=Math.random();if(r<0.5){const w=R(200,3000);p.money+=w;p.happy=clamp(p.happy+12);log('🧶 <b>Cleaned out the knitting-circle poker ring.</b>','wild');return `Mildred goes all-in on a bluff. You call. +$${w}.`;}p.money=Math.max(0,p.money-200);return 'Ethel took your $200 and your pride.';}},
+ {t:'Just knit',f:p=>{p.happy=clamp(p.happy+6);p.spirit=clamp(p.spirit+4);return 'You make a scarf. It is lopsided. It is perfect.';}}]});
+E({e:'📻',min:60,max:99,w:4,t:()=>'A local radio station wants you to host "Stories from the best generation." They will pay in exposure and pie.',c:[
+ {t:'Become a radio legend',f:p=>{p.fame=clamp(p.fame+20);p.happy=clamp(p.happy+14);log('📻 <b>Hosting a radio show at the senior center of life.</b>','good');return 'Your catchphrase trends locally. The pie is excellent.';}},
+ {t:'Retire quietly',f:p=>{p.happy=clamp(p.happy+4);return 'The porch. The sunset. Enough.';}}]});
+E({e:'🪂',min:50,max:99,w:3,t:()=>'Your bucket list has one unchecked box: skydive. The instructor looks 19. The parachute looks older.',c:[
+ {t:'Jump',f:p=>{const r=Math.random();if(r<0.85){p.happy=clamp(p.happy+25);p.spirit=clamp(p.spirit+10);log('🪂 <b>Skydived. Screamed the whole way. 10/10.</b>','wild');hi('Went skydiving');return 'Best 60 seconds of the decade. You scream-sing the whole way down.';}p.alive=false;p.cause='Skydiving at an advanced age';return 'The chute had other plans.';}},
+ {t:'Watch from the ground',f:p=>{p.happy=clamp(p.happy+5);return 'You cheer for strangers. Surprisingly fulfilling.';}}]});
+// work & money absurdity
+E({e:'🖨️',min:18,max:65,w:4,t:()=>'The office printer has jammed again. Someone has written "it knows what it did" on it in sharpie.',c:[
+ {t:'Fix it yourself',f:p=>{if(Math.random()<0.6){p.happy=clamp(p.happy+6);p.karma=clamp(p.karma+3);return 'Paper clip, prayer, persistence. It prints. You are a hero.';}p.happy=clamp(p.happy-6);return 'It ate your tie. HR got involved.';}},
+ {t:'Sacrifice it to IT',f:p=>{p.happy=clamp(p.happy+2);return 'IT exorcises it with a firmware update.';}}]});
+E({e:'💸',min:25,max:70,w:3,t:()=>'A Nigerian prince emails you personally. But this one includes a photo ID, a video call offer, and suspiciously good grammar.',c:[
+ {t:'Video call the prince',f:p=>{const r=Math.random();if(r<0.2){const w=R(5000,40000);p.money+=w;log('💸 <b>The prince was real. THE PRINCE WAS REAL.</b>','wild');hi('The prince was real');return `He wires you $${w} "for your belief." Unbelievable.`;}p.money=Math.max(0,p.money-500);p.smarts=clamp(p.smarts+5);return 'Scam, but an elaborate one. Tuition: $500.';}},
+ {t:'Delete',f:p=>{p.smarts=clamp(p.smarts+2);return 'Somewhere, a real prince weeps.';}}]});
+E({e:'🧠',min:30,max:80,w:3,t:()=>'A tech startup wants to upload your brain "for science and also profit." Compensation: $250,000.',c:[
+ {t:'Sell your mind',f:p=>{p.money+=250000;p.happy=clamp(p.happy-10);p.spirit=clamp(p.spirit-15);log('🧠 <b>Sold a copy of your brain for $250k.</b>','wild');hi('Sold a copy of their brain');return '$250k. Somewhere, a server dreams your dreams. Unsettling.';}},
+ {t:'My thoughts are priceless',f:p=>{p.spirit=clamp(p.spirit+8);return 'The startup pivots to dog brain uploads instead.';}}]});
+// love & family absurdity
+E({e:'💍',min:20,max:60,w:4,t:()=>'Your partner proposes... at your own surprise birthday party... in front of your ex. Bold strategy.',c:[
+ {t:'Say yes',f:p=>{p.partner.married=true;p.happy=clamp(p.happy+20);p.money-=8000;log('💍 <b>Married! In front of the ex. Power move.</b>','good');hi('Got married');return 'You say yes. The ex claps through tears. Iconic.';}},
+ {t:'Say "let\'s talk later"',f:p=>{p.happy=clamp(p.happy-12);return 'The silence was louder than the DJ.';}}],cond:p=>p.partner&&!p.partner.married});
+E({e:'🍼',min:22,max:50,w:4,t:()=>'Your toddler has learned exactly one word and it is "no." They use it with the confidence of a CEO.',c:[
+ {t:'Respect the boundary',f:p=>{p.happy=clamp(p.happy+6);p.karma=clamp(p.karma+3);return '"No." Fair enough. You back away from the cookie jar.';}},
+ {t:'Negotiate',f:p=>{p.smarts=clamp(p.smarts+2);p.happy=clamp(p.happy-3);return 'Negotiations fail. The toddler has leverage (cuteness).';}}],cond:p=>p.kids.some(k=>k.alive&&k.age<5)});
+E({e:'👰',min:25,max:70,w:3,t:()=>'You are invited to your 8th wedding this year. The gift table has a spreadsheet. There are tiers.',c:[
+ {t:'Give generously ($500)',f:p=>{if(p.money<500)return 'Tier: "Acquaintance." You bring a card.';p.money-=500;p.karma=clamp(p.karma+6);p.happy=clamp(p.happy+5);return 'Tier: "Inner Circle." The couple cries. Worth it.';}},
+ {t:'Bring a card',f:p=>{p.money=Math.max(0,p.money-10);return 'Tier: "Acquaintance." The spreadsheet judges you.';}}]});
+// fame & weird
+E({e:'📱',min:14,max:45,w:4,t:()=>'Your embarrassing childhood photo just leaked. It is everywhere. You look like a haunted potato.',c:[
+ {t:'Lean into it',f:p=>{p.fame=clamp(p.fame+18);p.happy=clamp(p.happy+8);log('📱 <b>Haunted potato meme goes mega-viral.</b>','wild');hi('Became a meme');return 'Merch deals incoming. The potato is now a brand.';}},
+ {t:'Lawyer up',f:p=>{if(p.money<2000)return 'Lawyers cost money. The potato remains.';p.money-=2000;p.happy=clamp(p.happy-5);return 'The photos stay up. Streisand effect. Classic.';}}]});
+E({e:'🏆',min:18,max:99,w:3,t:()=>'You have been nominated for "Citizen of the Year" by someone who may have confused you with someone else.',c:[
+ {t:'Accept the honor',f:p=>{p.fame=clamp(p.fame+15);p.happy=clamp(p.happy+12);log('🏆 <b>Citizen of the Year (probably by mistake).</b>','good');return 'Your speech thanks "whoever nominated me, mistakenly or not." Standing ovation.';}},
+ {t:'Correct the mistake',f:p=>{p.karma=clamp(p.karma+10);return 'Honesty. The real winner sends you a fruit basket.';}}]});
+/* seasonal */
+E({e:'🎃',min:5,max:99,w:4,t:()=>"It's Halloween. Someone's handing out full-size candy bars three streets over. This is the big leagues.",cond:()=>new Date().getMonth()===9,c:[
+ {t:'Suit up and go',f:p=>{p.happy=clamp(p.happy+12);if(Math.random()<0.2){p.health=clamp(p.health-8);return 'Full-size bars acquired. Stomach: destroyed. Worth it.';}return 'Record haul. You are the neighborhood legend tonight.';}},
+ {t:'Hand out candy instead',f:p=>{if(p.money<30)return 'No candy budget. The kids can tell.';p.money-=30;p.karma=clamp(p.karma+6);p.happy=clamp(p.happy+6);return 'You become "the good house." Kids remember.';}}]});
+E({e:'🎄',min:5,max:99,w:4,t:()=>'Holiday season. Your family group chat is planning a reunion. 47 people. One bathroom.',cond:()=>new Date().getMonth()===11,c:[
+ {t:'Host it',f:p=>{if(p.money<1000)return 'Hosting costs money you don\'t have. Blame the economy.';p.money-=1000;p.happy=clamp(p.happy+10);p.karma=clamp(p.karma+5);return 'Chaos. Laughter. Someone deep-fries a turkey. Perfect.';}},
+ {t:'"Maybe next year"',f:p=>{p.happy=clamp(p.happy-4);return 'The group chat goes quiet. Guilt: acquired.';}}]});
+E({e:'🎆',min:10,max:99,w:4,t:()=>'New Year\'s Eve. Everyone is making resolutions. Yours needs to be legendary.',cond:()=>new Date().getMonth()===0,c:[
+ {t:'"Learn to juggle chainsaws"',f:p=>{p.happy=clamp(p.happy+8);p.fame=clamp(p.fame+5);return 'Bold. Concerning. Unforgettable.';}},
+ {t:'"Drink more water"',f:p=>{p.health=clamp(p.health+6);return 'Achievable. Boring. Effective.';}}]});
 
 /* ================= INIT ================= */
 document.getElementById('startBtn').onclick=()=>newGame();
@@ -686,7 +995,9 @@ document.getElementById('muteBtn').onclick=function(){MUTED=!MUTED;this.textCont
 /* save / load */
 const SAVE_KEY='sfab-save-v1';
 function save(){try{if(S&&S.p.alive){const c=JSON.parse(JSON.stringify(S));localStorage.setItem(SAVE_KEY,JSON.stringify(c));}}catch(e){}}
-function load(){try{const raw=localStorage.getItem(SAVE_KEY);if(!raw)return null;const c=JSON.parse(raw);if(!c||!c.p||!c.p.alive)return null;c.log=c.log||[];c.fired=c.fired||{};return c;}catch(e){return null;}}
+function load(){try{const raw=localStorage.getItem(SAVE_KEY);if(!raw)return null;const c=JSON.parse(raw);if(!c||!c.p||!c.p.alive)return null;c.log=c.log||[];c.fired=c.fired||{};
+c.era=c.era||'Peace';const q=c.p;q.rewinds=q.rewinds==null?1:q.rewinds;q.highlights=q.highlights||[];q.given=q.given||0;q.legacy=q.legacy||0;q.excon=!!q.excon;q.foundation=!!q.foundation;
+return c;}catch(e){return null;}}
 function clearSave(){try{localStorage.removeItem(SAVE_KEY);}catch(e){}}
 /* age button pulse + save hook */
 const _ageUp=ageUp;
@@ -700,12 +1011,28 @@ log=function(html,cls){_log(html,cls);
 /* death sting */
 const _die=die;
 die=function(){sfx('death');_die();clearSave();};
-/* continue button on title */
+/* rewind button */
+document.getElementById('rewindBtn').onclick=()=>{
+  if(!S||!S.p.rewinds||!SNAP){toast('Nothing to rewind');return;}
+  try{S=JSON.parse(SNAP);}catch(e){return;}
+  S.p.rewinds--;pendingEvents=[];closeModal();save();render();toast('Rewound one year');sfx('good');};
+/* challenge banner + achievements on title */
 (function(){
+  const [cid,cname]=weeklyChal();
+  const done=META.chal.week===weekId()&&META.chal.done;
+  document.getElementById('chalBanner').innerHTML=`<small>WEEKLY CHALLENGE</small><b>${cname}</b>`+(done?`<span class="done">Complete ✓</span>`:`<span style="color:var(--mut);font-size:13px">Finish it in any life this week</span>`);
+  document.getElementById('achBtn').onclick=()=>{
+    const got=Object.keys(META.ach).length;
+    modal(`<h2>Achievements (${got}/${ACH.length})</h2><div class="achgrid">`+
+      ACH.map(a=>`<div class="ach ${META.ach[a[0]]?'got':''}"><b>${META.ach[a[0]]?'✓ ':''}${a[1]}</b><span>${a[2]}</span></div>`).join('')+
+      `</div><div class="choices"><button onclick="closeModal()">Close</button></div>`);};
+  // inject player-written events
+  (META.custom||[]).forEach(injectCustom);
+  /* continue button on title */
   const s=load();
   if(s){const w=document.getElementById('contWrap');
     w.innerHTML=`<button id="contBtn" style="margin-top:12px;border:1px solid var(--c);background:#0e1424;color:var(--ink);border-radius:18px;padding:16px 40px;font-size:17px;font-weight:800;cursor:pointer">Continue: ${s.p.name}, age ${s.p.age} (Gen ${s.gen})</button>`;
-    document.getElementById('contBtn').onclick=()=>{S=s;pendingEvents=[];log('💾 Dynasty restored.','good');show('game');render();sfx('birth');};}
+    document.getElementById('contBtn').onclick=()=>{S=s;pendingEvents=[];applyGift(dailyGift());log('💾 Dynasty restored.','good');show('game');render();sfx('birth');};}
   const sb=document.getElementById('startBtn');
   const _s=sb.onclick; sb.onclick=()=>{clearSave();_s();sfx('birth');};
 })();
