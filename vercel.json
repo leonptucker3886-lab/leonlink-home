@@ -7,6 +7,11 @@
   ],
   "redirects": [
     {
+      "source": "/journal/watches-under-3k.html",
+      "destination": "/lineup/watches-under-3k.html",
+      "permanent": true
+    },
+    {
       "source": "/lineup/watches.html",
       "destination": "/lineup/",
       "permanent": true
