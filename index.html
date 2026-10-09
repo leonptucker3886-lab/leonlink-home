@@ -457,11 +457,15 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 
 .hblocks{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 20px 14px;margin:0 -20px;scrollbar-width:none}
 .hblocks::-webkit-scrollbar{display:none}
-.hblock{flex:0 0 150px;scroll-snap-align:start;border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:14px 12px;cursor:pointer;transition:border-color .2s,flex-basis .25s;-webkit-tap-highlight-color:transparent}
-.hblock .hk{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
-.hblock b{display:block;font-family:var(--serif);font-size:17px;font-weight:600;color:var(--hi);margin-top:5px;line-height:1.2}
-.hblock .hx{display:none;margin-top:10px}
-.hblock.open{flex-basis:230px;border-color:var(--gold)}
+.hblock{flex:0 0 168px;scroll-snap-align:start;border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden;cursor:pointer;transition:border-color .2s,flex-basis .25s;-webkit-tap-highlight-color:transparent}
+.hblock:hover{border-color:var(--line2)}
+.himg{aspect-ratio:16/10;overflow:hidden;background:#000}
+.himg img{width:100%;height:100%;object-fit:cover;display:block}
+.hb{padding:10px 12px 12px}
+.hb .hk{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+.hb b{display:block;font-size:15px;font-weight:600;color:var(--hi);margin-top:3px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hblock .hx{display:none;padding:0 12px 14px}
+.hblock.open{flex-basis:250px;border-color:var(--gold)}
 .hblock.open .hx{display:block}
 .hblock .hx p{font-size:13px;color:var(--dim);margin:0 0 10px;line-height:1.5}
 .hblock .hx a{font-size:13.5px;font-weight:700;color:var(--gold)}
@@ -528,12 +532,36 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
   <div class="sh"><h2>Everything <em>LeonLink</em></h2></div>
   <p class="sub">Tap one to see more.</p>
   <div class="hblocks" id="hblocks">
-    <div class="hblock" tabindex="0" role="button" aria-expanded="false"><span class="hk">Play in your browser</span><b>Games</b><div class="hx"><p>Free games, no install. Mafia RPGs, platformers, life sims.</p><a href="/games.html">Play →</a></div></div>
-    <div class="hblock" tabindex="0" role="button" aria-expanded="false"><span class="hk">Built by Leon</span><b>Software</b><div class="hx"><p>Apps and tools that do the job, from field service to fun.</p><a href="/software.html">Browse →</a></div></div>
-    <div class="hblock" tabindex="0" role="button" aria-expanded="false"><span class="hk">16 lists · $0 from reviews</span><b>Starting Lineup</b><div class="hx"><p>The top 5 of everything worth owning. No sponsored picks.</p><a href="/lineup/">See the five →</a></div></div>
-    <div class="hblock" tabindex="0" role="button" aria-expanded="false"><span class="hk">Essays &amp; guides</span><b>Blog</b><div class="hx"><p>Things I stay up at night writing about. Play with every post.</p><a href="/blog.html">Read →</a></div></div>
-    <div class="hblock" tabindex="0" role="button" aria-expanded="false"><span class="hk">No signup</span><b>Free Tools</b><div class="hx"><p>Small tools, free forever. QR codes, invoices, estimates.</p><a href="/free-tools.html">Use →</a></div></div>
-    <div class="hblock" tabindex="0" role="button" aria-expanded="false"><span class="hk">50% off until Oct 31</span><b>Hire me</b><div class="hx"><p>Websites, stores, games, apps — flat prices, agreed up front.</p><a href="/hire-me.html">Hire →</a></div></div>
+    <div class="hblock" tabindex="0" role="button" aria-expanded="false">
+      <div class="himg"><img src="/img/cards/sootfather.jpg" alt="Sootfather" loading="lazy"></div>
+      <div class="hb"><span class="hk">Play in your browser</span><b>Games</b></div>
+      <div class="hx"><p>Free games, no install. Mafia RPGs, platformers, life sims.</p><a href="/games.html">Play →</a></div>
+    </div>
+    <div class="hblock" tabindex="0" role="button" aria-expanded="false">
+      <div class="himg"><img src="/img/cards/ledgerline.jpg" alt="Ledgerline" loading="lazy"></div>
+      <div class="hb"><span class="hk">Built by Leon</span><b>Software</b></div>
+      <div class="hx"><p>Apps and tools that do the job, from field service to fun.</p><a href="/software.html">Browse →</a></div>
+    </div>
+    <div class="hblock" tabindex="0" role="button" aria-expanded="false">
+      <div class="himg"><img src="/img/cards/tactical-watches.jpg" alt="Top 5 Tactical Watches" loading="lazy"></div>
+      <div class="hb"><span class="hk">16 lists · $0 from reviews</span><b>Starting Lineup</b></div>
+      <div class="hx"><p>The top 5 of everything worth owning. No sponsored picks.</p><a href="/lineup/">See the five →</a></div>
+    </div>
+    <div class="hblock" tabindex="0" role="button" aria-expanded="false">
+      <div class="himg"><img src="/img/cards/simulation.jpg" alt="Simulation?" loading="lazy"></div>
+      <div class="hb"><span class="hk">Essays & guides</span><b>Blog</b></div>
+      <div class="hx"><p>Things I stay up at night writing about. Play with every post.</p><a href="/blog.html">Read →</a></div>
+    </div>
+    <div class="hblock" tabindex="0" role="button" aria-expanded="false">
+      <div class="himg"><img src="/img/cards/t-qr.jpg" alt="QR Code Generator" loading="lazy"></div>
+      <div class="hb"><span class="hk">No signup</span><b>Free Tools</b></div>
+      <div class="hx"><p>Small tools, free forever. QR codes, invoices, estimates.</p><a href="/free-tools.html">Use →</a></div>
+    </div>
+    <div class="hblock" tabindex="0" role="button" aria-expanded="false">
+      <div class="himg"><img src="/img/cards/hireme.jpg" alt="Hire Leon" loading="lazy"></div>
+      <div class="hb"><span class="hk">50% off until Oct 31</span><b>Hire me</b></div>
+      <div class="hx"><p>Websites, stores, games, apps — flat prices, agreed up front.</p><a href="/hire-me.html">Hire →</a></div>
+    </div>
   </div>
 </section>
 <section class="sec" id="updates">
