@@ -460,6 +460,17 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 .lchips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
 .lchips a{font-size:13px;font-weight:600;padding:9px 15px;border:1px solid var(--line);border-radius:999px;color:var(--hi);text-decoration:none;background:var(--panel);transition:border-color .2s}
 .lchips a:hover{border-color:var(--cy)}
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px;margin-top:22px}
+.lpost{display:block;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--panel);text-decoration:none;color:var(--txt);transition:border-color .2s,transform .2s}
+.lpost:hover{border-color:var(--gold);transform:translateY(-2px)}
+.limg{aspect-ratio:16/9;overflow:hidden;background:#060a10}
+.limg img{width:100%;height:100%;object-fit:cover;display:block}
+.lb{padding:18px}
+.lb .k{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.lb h3{margin:6px 0 5px;font-size:20px;color:var(--hi);letter-spacing:-.01em}
+.lb p{color:var(--dim);font-size:14.5px;margin:0;line-height:1.5}
+.lb .go{display:inline-block;margin-top:12px;font-size:14px;font-weight:700;color:var(--gold)}
+@media(max-width:700px){.lgrid{grid-template-columns:1fr}}
 .lmeta{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:12.5px;color:var(--dim);margin:10px 0 12px}
 .zmicro{display:inline-flex;align-items:center;gap:5px;color:#4ade80;font-weight:700;font-size:12px;letter-spacing:.04em}
 .zmicro svg{width:12px;height:12px}
@@ -569,8 +580,104 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
   <div class="zero-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>$0 FROM REVIEWS</div>
   <p class="sub">The starting five of everything worth owning. No affiliate links. No sponsored picks. No paid placements.</p>
   <div class="trust-strip"><span><b>16</b>lists</span><span><b>80</b>picks ranked</span><span class="z"><b class="z">$0</b>earned from reviews</span></div>
-  <div class="lchips"><a href="/lineup/#watches">Watches · 5</a><a href="/lineup/#audio">Audio · 2</a><a href="/lineup/#carry">Carry</a><a href="/lineup/#tools">Tools · 3</a><a href="/lineup/#blades">Blades</a><a href="/lineup/#wheels">Wheels</a><a href="/lineup/#optics">Optics</a><a href="/lineup/#shooting">Shooting</a><a href="/lineup/#wrist-tech">Wrist Tech</a></div>
-  <a class="btn" href="/lineup/" style="margin-top:6px">Browse all 16 lists →</a>
+<div class="lgrid">
+<a class="lpost" href="/lineup/tactical-watches.html">
+  <div class="limg"><img src="/img/cards/tactical-watches.jpg" alt="Top 5 Tactical Watches" loading="lazy"></div>
+  <div class="lb"><span class="k">Starting Lineup · Watches</span><h3>Top 5 Tactical Watches</h3>
+  <p>G-Shock, Marathon, Suunto, Seiko, Luminox — built for bad days.</p>
+  <span class="go">See the five →</span></div>
+</a>
+<a class="lpost" href="/lineup/dive-watches.html">
+  <div class="limg"><img src="/img/cards/dive-watches.jpg" alt="Top 5 Dive Watches" loading="lazy"></div>
+  <div class="lb"><span class="k">Starting Lineup · Watches</span><h3>Top 5 Dive Watches</h3>
+  <p>Duro, Promaster, Kamasu, Seiko — 200 meters, real lume.</p>
+  <span class="go">See the five →</span></div>
+</a>
+<a class="lpost" href="/lineup/dress-watches.html">
+  <div class="limg"><img src="/img/cards/dress-watches.jpg" alt="Top 5 Dress Watches" loading="lazy"></div>
+  <div class="lb"><span class="k">Starting Lineup · Watches</span><h3>Top 5 Dress Watches</h3>
+  <p>Marlin, Bambino, Tissot, Seiko — thin, simple, quiet.</p>
+  <span class="go">See the five →</span></div>
+</a>
+<a class="lpost" href="/lineup/field-watches.html">
+  <div class="limg"><img src="/img/cards/field-watches.jpg" alt="Top 5 Field Watches" loading="lazy"></div>
+  <div class="lb"><span class="k">Starting Lineup · Watches</span><h3>Top 5 Field Watches</h3>
+  <p>Timex, Bertucci, Seiko, Vaer, Hamilton — the one-watch answer.</p>
+  <span class="go">See the five →</span></div>
+</a>
+<a class="lpost" href="/lineup/budget-watches.html">
+  <div class="limg"><img src="/img/cards/budget-watches.jpg" alt="Top 5 Budget Watches" loading="lazy"></div>
+  <div class="lb"><span class="k">Starting Lineup · Watches</span><h3>Top 5 Budget Watches</h3>
+  <p>Casio, Timex, Swatch — all under $100, zero regrets.</p>
+  <span class="go">See the five →</span></div>
+</a>
+<a class="lpost" href="/lineup/earbuds.html">
+  <div class="limg"><img src="/img/cards/top5buds.jpg" alt="Top 5 Wireless Earbuds" loading="lazy"></div>
+  <div class="lb"><span class="k">Starting Lineup · Audio</span><h3>Top 5 Wireless Earbuds</h3>
+  <p>Sony, Apple, Bose, Samsung — the five earbuds worth your ears.</p>
+  <span class="go">See the five →</span></div>
+</a>
+<a class="lpost" href="/lineup/party-speakers.html">
+  <div class="limg"><img src="/img/cards/party-speakers.jpg" alt="Top 5 Party Speakers" loading="lazy"></div>
+  <div class="lb"><span class="k">Starting Lineup · Audio</span><h3>Top 5 Party Speakers</h3>
+  <p>JBL, Sony, UE, Tribit, Turtlebox — loud enough to feel.</p>
+  <span class="go">See the five →</span></div>
+</a>
+<a class="lpost" href="/lineup/backpacks.html">
+  <div class="limg"><img src="/img/cards/top5pack.jpg" alt="Top 5 EDC Backpacks" loading="lazy"></div>
+  <div class="lb"><span class="k">Starting Lineup · Carry</span><h3>Top 5 EDC Backpacks</h3>
+  <p>GoRuck, Aer, Peak Design, 5.11, Bellroy — the five bags worth carrying daily.</p>
+  <span class="go">See the five →</span></div>
+</a>
+<a class="lpost" href="/lineup/multitools.html">
+  <div class="limg"><img src="/img/cards/top5multi.jpg" alt="Top 5 Multitools" loading="lazy"></div>
+  <div class="lb"><span class="k">Starting Lineup · Tools</span><h3>Top 5 Multitools</h3>
+  <p>Leatherman, Victorinox, Gerber — the five multitools worth carrying.</p>
+  <span class="go">See the five →</span></div>
+</a>
+<a class="lpost" href="/lineup/drills.html">
+  <div class="limg"><img src="/img/cards/top5drills.jpg" alt="Top 5 Battery Drills" loading="lazy"></div>
+  <div class="lb"><span class="k">Starting Lineup · Tools</span><h3>Top 5 Battery Drills</h3>
+  <p>Milwaukee, DeWalt, Makita, Bosch, Ryobi — the cordless kits worth buying.</p>
+  <span class="go">See the five →</span></div>
+</a>
+<a class="lpost" href="/lineup/flashlights.html">
+  <div class="limg"><img src="/img/cards/top5light.jpg" alt="Top 5 Flashlights" loading="lazy"></div>
+  <div class="lb"><span class="k">Starting Lineup · Tools</span><h3>Top 5 Flashlights</h3>
+  <p>Fenix, Streamlight, SureFire, Olight — real lumens, real prices.</p>
+  <span class="go">See the five →</span></div>
+</a>
+<a class="lpost" href="/lineup/benchmade-knives.html">
+  <div class="limg"><img src="/img/cards/top5bench.jpg" alt="Top 5 Benchmades" loading="lazy"></div>
+  <div class="lb"><span class="k">Starting Lineup · Blades</span><h3>Top 5 Benchmades</h3>
+  <p>Bugout ELMAX, Bailout S90V, Osborne — Benchmade's 2026 releases ranked.</p>
+  <span class="go">See the five →</span></div>
+</a>
+<a class="lpost" href="/lineup/motorbikes.html">
+  <div class="limg"><img src="/img/cards/top5moto.jpg" alt="Top 5 Motorbikes" loading="lazy"></div>
+  <div class="lb"><span class="k">Starting Lineup · Wheels</span><h3>Top 5 Motorbikes</h3>
+  <p>Naked, adventure, cruiser, sport, retro — the five 2026 bikes that matter.</p>
+  <span class="go">See the five →</span></div>
+</a>
+<a class="lpost" href="/lineup/sunglasses.html">
+  <div class="limg"><img src="/img/cards/top5shades.jpg" alt="Top 5 Sunglasses" loading="lazy"></div>
+  <div class="lb"><span class="k">Starting Lineup · Optics</span><h3>Top 5 Sunglasses</h3>
+  <p>Oakley, Ray-Ban, Maui Jim, Costa, goodr — the five shades worth wearing.</p>
+  <span class="go">See the five →</span></div>
+</a>
+<a class="lpost" href="/lineup/pcp-air-rifles.html">
+  <div class="limg"><img src="/img/cards/top5pcp.jpg" alt="Top 5 PCP Air Rifles" loading="lazy"></div>
+  <div class="lb"><span class="k">Starting Lineup · Shooting</span><h3>Top 5 PCP Air Rifles</h3>
+  <p>Pre-charged pneumatic rifles ranked, from $350 to the Swedish endgame.</p>
+  <span class="go">See the five →</span></div>
+</a>
+<a class="lpost" href="/lineup/smartwatches.html">
+  <div class="limg"><img src="/img/cards/top5smart.jpg" alt="Top 5 Smartwatches" loading="lazy"></div>
+  <div class="lb"><span class="k">Starting Lineup · Wrist Tech</span><h3>Top 5 Smartwatches</h3>
+  <p>Apple, Samsung, Garmin, Google — the five smartwatches worth wearing.</p>
+  <span class="go">See the five →</span></div>
+</a>
+</div>
 </section>
 
 <section class="sec" id="games">
