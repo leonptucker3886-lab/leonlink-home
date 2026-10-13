@@ -456,7 +456,7 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 </aside>
 <main>
 <h1 class="sr">Software | LeonLink</h1>
-<section class="sec"><div class="sh"><h2>Software</h2></div><p class="sub">Business-level software. Tap one to open it.</p><div class="stabs" role="tablist"><button class="on" data-f="all">All</button><button data-f="paid">Paid</button><button data-f="freemium">Freemium</button><button data-f="free">Free</button></div><div class="srow" data-k="paid"><div class="srh"><h3>Paid apps</h3><span>Pro tools for crews and businesses</span></div><div class="plist" id="plist-paid"></div></div><div class="srow" data-k="freemium"><div class="srh"><h3>Freemium apps</h3><span>Free to start, upgrade when you need more</span></div><div class="plist" id="plist-fm"></div></div><div class="srow" data-k="free"><div class="srh"><h3>Free apps</h3><span>Free to use, no catch</span></div><div class="plist" id="plist"></div></div></section>
+<section class="sec"><div class="sh"><h2>Software</h2></div><p class="sub">Business-level software. Tap one to open it.</p><div class="stabs" role="tablist"><button class="on" data-f="all">All</button><button data-f="paid">Paid</button><button data-f="free">Free</button></div><div class="srow" data-k="paid"><div class="srh"><h3>Paid apps</h3><span>Pro tools for crews and businesses</span></div><div class="plist" id="plist-paid"></div></div><div class="srow" data-k="free"><div class="srh"><h3>Free apps</h3><span>Free to use, no catch</span></div><div class="plist" id="plist"></div></div></section>
 <div hidden><input id="libq"><p id="lcount"></p><div id="rows"></div><aside id="preview"></aside><div id="software-grid"></div><div id="g-grid"></div></div>
 </main>
 </div>
@@ -630,10 +630,9 @@ render();
 <script>(function(){try{var p=location.pathname;fetch("/api/track?p="+encodeURIComponent(p)+"&r="+encodeURIComponent(document.referrer||""),{mode:"no-cors",keepalive:true}).catch(function(){})}catch(e){}})();</script>
 <script>(function(){try{var L=DATA.filter(function(o){return ['software','tools'].indexOf(o.c)>-1});
 var E=function(x){return String(x).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
-var FM=function(o){return o.p==='Freemium'};var PAID=function(o){return o.p&&o.p!=='Free'&&o.p!=='Freemium'};var card=function(o){var ex=/^http/.test(o.u)&&!/leonlink\.net/.test(o.u)?' target="_blank" rel="noopener"':'';
-return '<a class="pitem" href="'+o.u+'"'+ex+'><div class="pim"><img src="'+img(o)+'" alt="'+E(o.t)+'" loading="lazy"></div><div class="pbd"><span class="pbadge '+(PAID(o)?'paid">Paid':FM(o)?'fm">Freemium':'free">Free')+'</span><h3>'+E(o.t)+'</h3><p>'+E(o.x)+'</p><span class="pgo">Open \u2192</span></div></a>'};
-document.getElementById('plist-paid').innerHTML=L.filter(PAID).map(card).join('');
-document.getElementById('plist-fm').innerHTML=L.filter(FM).map(card).join('');
-document.getElementById('plist').innerHTML=L.filter(function(o){return !PAID(o)&&!FM(o)}).map(card).join('');
+var FM=function(o){return o.p==='Freemium'};var PAID=function(o){return o.p&&o.p!=='Free'&&o.p!=='Freemium'};var card=function(o,m){var ex=/^http/.test(o.u)&&!/leonlink\.net/.test(o.u)?' target="_blank" rel="noopener"':'';
+return '<a class="pitem" href="'+o.u+'"'+ex+'><div class="pim"><img src="'+img(o)+'" alt="'+E(o.t)+'" loading="lazy"></div><div class="pbd"><span class="pbadge '+(m==='paid'?'paid">Paid':'free">Free')+'</span><h3>'+E(o.t)+'</h3><p>'+E(o.x)+'</p><span class="pgo">'+(m==='free'&&FM(o)?'Get started free':'Open')+' \u2192</span></div></a>'};
+document.getElementById('plist-paid').innerHTML=L.filter(function(o){return PAID(o)||FM(o)}).map(function(o){return card(o,'paid')}).join('');
+document.getElementById('plist').innerHTML=L.filter(function(o){return !PAID(o)}).sort(function(a,b){return FM(b)-FM(a)}).map(function(o){return card(o,'free')}).join('');
 var rows=document.querySelectorAll('.srow');document.querySelectorAll('.stabs button').forEach(function(b){b.onclick=function(){document.querySelectorAll('.stabs button').forEach(function(x){x.classList.toggle('on',x===b)});var f=b.dataset.f;rows.forEach(function(r){r.hidden=f!=='all'&&r.dataset.k!==f;r.classList.toggle('solo',f!=='all')})}});}catch(e){console.error(e)}})();</script></body>
 </html>
