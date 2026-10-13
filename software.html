@@ -417,7 +417,7 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 .srow .pitem{scroll-snap-align:start}
 .srow.solo .plist{grid-auto-flow:row;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));overflow:visible}
 .pbadge{align-self:flex-start;font-size:12px;font-weight:800;padding:3px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.05em}
-.pbadge.paid{background:#ffb02e;color:#1a1000}.pbadge.free{background:#2ee59d;color:#00140b}
+.pbadge.fm{background:#b388ff;color:#14002e}.pbadge.paid{background:#ffb02e;color:#1a1000}.pbadge.free{background:#2ee59d;color:#00140b}
 @media(max-width:700px){.srow .plist{grid-auto-columns:82%}}
 </style></head>
 <body>
@@ -456,7 +456,7 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 </aside>
 <main>
 <h1 class="sr">Software | LeonLink</h1>
-<section class="sec"><div class="sh"><h2>Software</h2></div><p class="sub">Business-level software. Tap one to open it.</p><div class="stabs" role="tablist"><button class="on" data-f="all">All</button><button data-f="paid">Paid</button><button data-f="free">Free</button></div><div class="srow" data-k="paid"><div class="srh"><h3>Paid apps</h3><span>Pro tools for crews and businesses</span></div><div class="plist" id="plist-paid"></div></div><div class="srow" data-k="free"><div class="srh"><h3>Free apps</h3><span>Free to use, no catch</span></div><div class="plist" id="plist"></div></div></section>
+<section class="sec"><div class="sh"><h2>Software</h2></div><p class="sub">Business-level software. Tap one to open it.</p><div class="stabs" role="tablist"><button class="on" data-f="all">All</button><button data-f="paid">Paid</button><button data-f="freemium">Freemium</button><button data-f="free">Free</button></div><div class="srow" data-k="paid"><div class="srh"><h3>Paid apps</h3><span>Pro tools for crews and businesses</span></div><div class="plist" id="plist-paid"></div></div><div class="srow" data-k="freemium"><div class="srh"><h3>Freemium apps</h3><span>Free to start, upgrade when you need more</span></div><div class="plist" id="plist-fm"></div></div><div class="srow" data-k="free"><div class="srh"><h3>Free apps</h3><span>Free to use, no catch</span></div><div class="plist" id="plist"></div></div></section>
 <div hidden><input id="libq"><p id="lcount"></p><div id="rows"></div><aside id="preview"></aside><div id="software-grid"></div><div id="g-grid"></div></div>
 </main>
 </div>
@@ -485,9 +485,9 @@ mob:'<svg viewBox="0 0 24 24" aria-label="Mobile"><path d="M7 1h10a2 2 0 0 1 2 2
 const DATA=[
 {id:'ledgerline',t:'Ledgerline',u:'https://app.leonlink.net',c:'software',s:'live',p:'$9.83/mo',d:'2026-10-04',plat:['web','mob'],
  tags:['Field Service','Invoicing','Scheduling','Payments','Proofline','Reviewline'],x:'Run a small trades business from a phone. Includes Proofline before-and-after photo reports and Reviewline automatic Google review requests. Quote before you leave the driveway, let customers approve and pay in their own portal, take the card on the spot, and let reminders chase what is owed.'},
-{id:'dashline',t:'Dashline',u:'https://dashboard.leonlink.net',c:'software',s:'new',p:'Free',d:'2026-10-13',plat:['web','mob'],
+{id:'dashline',t:'Dashline',u:'https://dashboard.leonlink.net',c:'software',s:'new',p:'Freemium',d:'2026-10-13',plat:['web','mob'],
  tags:['Freelancers','Invoicing','Payments','Contracts','Client Portal','Time Tracking','Line Suite'],x:'The simple business dashboard for freelancers. Track clients, projects, time and invoices on one clean screen. Email invoices with Stripe pay links, send automatic overdue reminders, get contracts e-signed, and give every client a portal to view and pay. Free to start; Pro $9/mo, Business $19/mo.'},
-{id:'linkline',t:'Linkline',u:'https://linkline.leonlink.net',c:'software',s:'new',p:'Free',d:'2026-10-13',plat:['web','mob'],
+{id:'linkline',t:'Linkline',u:'https://linkline.leonlink.net',c:'software',s:'new',p:'Freemium',d:'2026-10-13',plat:['web','mob'],
  tags:['Line Suite','Link in Bio','15 Themes','QR + NFC'],x:'Premium link-in-bio pages for business, free. Pick from 15 designer themes or set your own colours, fonts and buttons, then add video, music, galleries, maps and scheduled links with a live phone preview. Share it by QR code or NFC card, back it up in one click, and remove the Built with Linkline badge with a one-time Premium key, no monthly plan.'},
 {id:'rhymeline',t:'Rhymeline',u:'https://rhymeline.vercel.app',c:'software',s:'live',p:'Free',d:'2026-10-13',plat:['web','mob'],
  tags:['Line Suite','Writing','Lyrics','Rap','Rhymes'],x:'Write a line, hit Help, finish the rhyme. Get ranked perfect and near rhymes for your last word, three ways to finish your line, or a full 16-bar verse in AABB, ABAB, ABBA or AAAA, written by AI. A live syllable counter keeps your bars tight, tap any line to re-roll it, and copy the whole verse in one tap. Free, no sign-up, and your work stays on your device.'},
@@ -564,7 +564,7 @@ const DATA=[
 ];
 const FEATURED=['ledgerline','dashline','linkline'];
 const RIB={live:['Live',''],ea:['Beta','ea'],new:['New','new'],read:['Read','read']};
-const AVAILS={ledgerline:'Flat price, whole crew',dashline:'Free plan, Pro from $9/mo',linkline:'Part of the Line suite',rhymeline:'Free, no sign-up'};
+const AVAILS={ledgerline:'Flat price, whole crew',dashline:'Free plan, Pro from $9/mo',linkline:'Free plan, premium upgrades',rhymeline:'Free, no sign-up'};
 const CAT={software:'Software',games:'Game',worlds:'Blog',tools:'Free Tool'};
 const byId=Object.fromEntries(DATA.map(o=>[o.id,o]));
 const rib=o=>o.s==='new'&&Date.now()-new Date(o.d+'T12:00:00').getTime()>30*864e5?null:RIB[o.s];
@@ -630,9 +630,10 @@ render();
 <script>(function(){try{var p=location.pathname;fetch("/api/track?p="+encodeURIComponent(p)+"&r="+encodeURIComponent(document.referrer||""),{mode:"no-cors",keepalive:true}).catch(function(){})}catch(e){}})();</script>
 <script>(function(){try{var L=DATA.filter(function(o){return ['software','tools'].indexOf(o.c)>-1});
 var E=function(x){return String(x).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
-var PAID=function(o){return o.p&&o.p!=='Free'};var card=function(o){var ex=/^http/.test(o.u)&&!/leonlink\.net/.test(o.u)?' target="_blank" rel="noopener"':'';
-return '<a class="pitem" href="'+o.u+'"'+ex+'><div class="pim"><img src="'+img(o)+'" alt="'+E(o.t)+'" loading="lazy"></div><div class="pbd"><span class="pbadge '+(PAID(o)?'paid">Paid':'free">Free')+'</span><h3>'+E(o.t)+'</h3><p>'+E(o.x)+'</p><span class="pgo">Open \u2192</span></div></a>'};
+var FM=function(o){return o.p==='Freemium'};var PAID=function(o){return o.p&&o.p!=='Free'&&o.p!=='Freemium'};var card=function(o){var ex=/^http/.test(o.u)&&!/leonlink\.net/.test(o.u)?' target="_blank" rel="noopener"':'';
+return '<a class="pitem" href="'+o.u+'"'+ex+'><div class="pim"><img src="'+img(o)+'" alt="'+E(o.t)+'" loading="lazy"></div><div class="pbd"><span class="pbadge '+(PAID(o)?'paid">Paid':FM(o)?'fm">Freemium':'free">Free')+'</span><h3>'+E(o.t)+'</h3><p>'+E(o.x)+'</p><span class="pgo">Open \u2192</span></div></a>'};
 document.getElementById('plist-paid').innerHTML=L.filter(PAID).map(card).join('');
-document.getElementById('plist').innerHTML=L.filter(function(o){return !PAID(o)}).map(card).join('');
+document.getElementById('plist-fm').innerHTML=L.filter(FM).map(card).join('');
+document.getElementById('plist').innerHTML=L.filter(function(o){return !PAID(o)&&!FM(o)}).map(card).join('');
 var rows=document.querySelectorAll('.srow');document.querySelectorAll('.stabs button').forEach(function(b){b.onclick=function(){document.querySelectorAll('.stabs button').forEach(function(x){x.classList.toggle('on',x===b)});var f=b.dataset.f;rows.forEach(function(r){r.hidden=f!=='all'&&r.dataset.k!==f;r.classList.toggle('solo',f!=='all')})}});}catch(e){console.error(e)}})();</script></body>
 </html>
