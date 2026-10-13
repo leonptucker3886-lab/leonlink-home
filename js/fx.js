@@ -58,6 +58,6 @@ function confetti(){var cv=D.createElement("canvas");cv.id="lfx-cf";D.body.appen
   if(++f<110)requestAnimationFrame(lp);else cv.remove()})()}
 function challenge(){var r=D.getElementById("tdR");if(!r||RM||!("MutationObserver" in window))return;var done=0;
  new MutationObserver(function(){var t=r.textContent.toLowerCase();if(!done&&/correct|right|nice|✓|✅/.test(t)&&!/not|wrong|incorrect|✗|❌/.test(t)){done=1;confetti()}}).observe(r,{childList:true,characterData:true,subtree:true})}
-function go(){try{reveal();progress();tilt();hero();ripple();counters();challenge();setTimeout(tilt,2500)}catch(e){}}
+function go(){try{progress();hero();ripple();counters();challenge()}catch(e){}}
 if(D.readyState=="loading")D.addEventListener("DOMContentLoaded",go);else go();
 })();
