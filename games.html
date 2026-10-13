@@ -482,7 +482,7 @@ const DATA=[
 {id:'afterglow',t:'AFTERGLOW: Neon Social Casino',u:'https://afterglow.leonlink.net',c:'games',s:'new',p:'Free',d:'2026-10-06',plat:['web','mob'],spot:1,
  tags:['Social Casino','Slots','Poker','Play Money'],x:'A neon casino that never closes. 19 games including 9 slots (Zeus, buffalo, fireball hold-and-spin, fishing, diamonds, joker, pigs), Heads or Tails, video poker, keno, baccarat, blackjack and roulette, plus a daily wheel, levels and provably fair seeds. Play money only, 18+.'},
 {id:'arcadeline',t:'Arcadeline',u:'https://arcadeline.leonlink.net',c:'games',s:'new',p:'Free',d:'2026-10-13',plat:['web','mob'],spot:1,
- tags:['Arcade','Leaderboards','High Score'],x:'Original arcade games inspired by the classics: Serpentine, Brickfall, Drift, Skyline Siege and Stackline, plus Chimney Run and Paper Route. Free account, global top-20 leaderboards, personal bests and server-checked scores.'},
+ tags:['Arcade','Leaderboards','High Score'],x:'Original arcade games inspired by the classics: Serpentine, Brickfall, Drift, Skyline Siege, Stackline and Knockout Queens, plus Chimney Run and Paper Route. Free account, global top-20 leaderboards, personal bests and server-checked scores.'},
 {id:'sootfather',t:'Sootfather',u:'/sootfather.html',c:'games',s:'new',p:'Free',d:'2026-10-08',plat:['web','mob'],spot:1,one:1,
  tags:['RPG','Mafia','Story'],x:'A GTA-vibed mafia RPG: you\'re a chimney sweep for the family. Take jobs from the Don, manage your heat, talk or fight your way to Made Man.'},
 {id:'chimneyrun',t:'Chimney Run',u:'/chimney-run.html',c:'games',s:'new',p:'Free',d:'2026-10-08',plat:['web','mob'],spot:1,one:1,
@@ -501,6 +501,8 @@ const DATA=[
  tags:['Arcade','Invaders-style','Leaderboard'],x:'Hold the line against descending waves from above. Space Invaders-style shooter with server-checked high scores.'},
 {id:'stackline',t:'Stackline',u:'https://arcadeline.leonlink.net/#blocks',c:'games',s:'new',p:'Free',d:'2026-10-13',plat:['web','mob'],spot:1,one:1,
  tags:['Arcade','Block Puzzle','Leaderboard'],x:'Rotate, drop and clear lines before the well fills. A classic falling-block puzzle with a global top-20 leaderboard.'},
+{id:'knockoutqueens',t:'Knockout Queens',u:'https://arcadeline.leonlink.net/#boxing',c:'games',s:'new',p:'Free',d:'2026-10-13',plat:['web','mob'],spot:1,one:1,
+ tags:['Arcade','Boxing','Leaderboard'],x:'Punch-Out-style boxing. Read the tells, dodge, counter and land Star Punches to KO six original women champions up to Queen Seraphine.'},
 {id:'ashfall',t:'ASHFALL: The Turning Years',u:'https://ashfall-virid.vercel.app',c:'games',s:'new',p:'Free',d:'2026-10-06',plat:['web'],spot:1,
  tags:['Survival','Story Rich','Post-apocalyptic','Character Creator'],x:'A fever out of Southeast Asia. Then the missiles. Now the ash, and a stranger sorting of the living. Build your survivor, wake up, and rule what is left. Expansion XI out now.'},
 {id:'sunnfun',t:'Sun N Fun: Escape the Trailer Park',u:'https://escapegame-zeta.vercel.app',c:'games',s:'ea',p:'Free',d:'2026-08-20',plat:['web','mob'],spot:1,
@@ -618,6 +620,6 @@ render();
 <script>(function(){try{var p=location.pathname;fetch("/api/track?p="+encodeURIComponent(p)+"&r="+encodeURIComponent(document.referrer||""),{mode:"no-cors",keepalive:true}).catch(function(){})}catch(e){}})();</script>
 <script>(function(){try{var L=DATA.filter(function(o){return ['games'].indexOf(o.c)>-1});
 var E=function(x){return String(x).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
-var G={casino:['afterglow','arcadeline'],arcade:['chimneyrun','paperroute','serpentine','brickfall','drift','skylinesiege','stackline']};var K=function(o){return G.casino.indexOf(o.id)>-1?'casino':G.arcade.indexOf(o.id)>-1?'arcade':'story'};var card=function(o){var ex=/^http/.test(o.u)&&!/leonlink\.net/.test(o.u)?' target="_blank" rel="noopener"':'';
+var G={casino:['afterglow','arcadeline'],arcade:['chimneyrun','paperroute','serpentine','brickfall','drift','skylinesiege','stackline','knockoutqueens']};var K=function(o){return G.casino.indexOf(o.id)>-1?'casino':G.arcade.indexOf(o.id)>-1?'arcade':'story'};var card=function(o){var ex=/^http/.test(o.u)&&!/leonlink\.net/.test(o.u)?' target="_blank" rel="noopener"':'';
 return '<a class="pitem" href="'+o.u+'"'+ex+'><div class="pim"><img src="'+img(o)+'" alt="'+E(o.t)+'" loading="lazy"></div><div class="pbd"><h3>'+E(o.t)+'</h3><p>'+E(o.x)+'</p><span class="pgo">Play \u2192</span></div></a>'};document.getElementById('plist-all').innerHTML=['casino','story','arcade'].map(function(k){return L.filter(function(o){return K(o)===k}).map(card).join('')}).join('');var rows=document.querySelectorAll('.srow');document.querySelectorAll('.stabs button').forEach(function(b){b.onclick=function(){document.querySelectorAll('.stabs button').forEach(function(x){x.classList.toggle('on',x===b)});var f=b.dataset.f;rows.forEach(function(r){r.hidden=f!=='all'&&r.dataset.k!==f;r.classList.toggle('solo',f!=='all')})}})}catch(e){console.error(e)}})();</script></body>
 </html>
