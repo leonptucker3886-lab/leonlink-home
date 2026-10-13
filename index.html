@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>LeonLink — websites, stores, games, apps</title>
-<meta name="description" content="I build websites, stores, games and apps — 50% off right now. Plus Ledgerline for trades crews, free games, blog and tools.">
+<meta name="description" content="I build websites, stores, games and apps. Plus Ledgerline for trades crews, free games, blog and tools.">
 <link rel="canonical" href="https://www.leonlink.net/">
 <meta name="theme-color" content="#06060b">
 <link rel="icon" href="/favicon.png">
@@ -12,7 +12,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.leonlink.net/">
 <meta property="og:title" content="LeonLink — websites, stores, games, apps">
-<meta property="og:description" content="Websites, stores, games and apps — 50% off. Plus Ledgerline, free games, blog and tools.">
+<meta property="og:description" content="Websites, stores, games and apps. Plus Ledgerline, free games, blog and tools.">
 <meta property="og:image" content="https://www.leonlink.net/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" as="image" href="/img/cards/ledgerline.jpg">
@@ -492,40 +492,30 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
   <a class="logo" href="/" aria-label="LeonLink home"><canvas id="logoFx" width="72" height="72" style="width:36px;height:36px;display:block" role="img" aria-label="LeonLink logo"></canvas><b>LEON<span>LINK</span></b></a>
 <script>(function(){var cv=document.getElementById('logoFx');if(!cv||!cv.getContext)return;var ctx=cv.getContext('2d');var img=new Image();img.src='/img/logo-128.png';var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;var embers=[],i;for(i=0;i<9;i++)embers.push({x:8+Math.random()*56,y:Math.random()*72,s:1+Math.random()*1.8,v:6+Math.random()*10,ph:Math.random()*6.28});function draw(t){ctx.clearRect(0,0,72,72);ctx.save();ctx.translate(36,66);if(!reduce)ctx.rotate(Math.sin(t*1.4)*0.085);ctx.translate(-36,-66);ctx.shadowColor='rgba(34,240,255,.9)';ctx.shadowBlur=reduce?8:9+4*Math.sin(t*6.3)+2.5*Math.sin(t*11.7);if(img.complete&&img.naturalWidth)ctx.drawImage(img,5,5,62,62);ctx.restore();if(!reduce){for(i=0;i<embers.length;i++){var e=embers[i];e.y-=e.v/60;if(e.y<2){e.y=70;e.x=8+Math.random()*56}var x=e.x+Math.sin(t*3+e.ph)*4;ctx.fillStyle='rgba(140,235,255,'+(0.25+0.6*(e.y/72))+')';ctx.beginPath();ctx.arc(x,e.y,e.s,0,6.29);ctx.fill();}}}if(reduce){draw(0)}else{var t0=performance.now();(function loop(n){draw((n-t0)/1000);requestAnimationFrame(loop)})(t0)}})();</script>
   <nav class="gnav" aria-label="Main">
-    <a href="#top" class="on">Home</a>
-    <a href="/games.html">Games</a>
+    <a href="/" class="on">Home</a>
+    <a href="/games.html">Work</a>
     <a href="/software.html">Software</a>
     <a href="/blog.html">Blog</a>
-    <a href="/what-is-leonlink.html">About</a>
-    <a href="/hire-me.html">Hire me</a>
-  </nav>
+    <a href="/lineup/clocks-corner/">Clock's Corner</a>
+    <a href="/hire-me.html" class="fire">&#128293; Hire me</a>
+  </nav><style>.gnav a.fire{position:relative;color:#fff;font-weight:800;padding:6px 14px;border-radius:999px;background:linear-gradient(0deg,#ff3d00,#ff9100,#ffd600);background-size:100% 220%;animation:flm 1.2s ease-in-out infinite alternate,flk .18s steps(2) infinite;text-shadow:0 0 6px #ff6d00,0 -2px 10px #ffab00}.gnav a.fire:before{content:"";position:absolute;inset:-6px -2px 40% -2px;border-radius:50%;background:radial-gradient(ellipse at bottom,rgba(255,145,0,.7),transparent 70%);filter:blur(6px);z-index:-1;animation:flk .25s infinite alternate}@keyframes flm{to{background-position:0 100%;box-shadow:0 0 18px #ff6d00,0 -4px 22px #ffab00}}@keyframes flk{50%{opacity:.85}}@media (prefers-reduced-motion:reduce){.gnav a.fire,.gnav a.fire:before{animation:none}}</style>
   <a class="btn" href="https://app.leonlink.net">Get Ledgerline</a>
 </div></header>
 
-<div class="snav-wrap" id="top"><nav class="snav" aria-label="Store">
-  <div class="tabs">
-    <a href="/hire-me.html">Hire me</a>
-    <a href="/lineup/">Starting Lineup</a>
-    <a href="/games.html">Games</a>
-    <a href="/software.html">Software</a>
-    <a href="/blog.html">Blog</a>
-    <a href="/free-tools.html">Free Tools</a>
-  </div>
-</nav></div>
+<div id="top"></div>
 
 <div class="page">
-<aside class="side" aria-label="Browse">
-  <a class="giftcard" href="https://app.leonlink.net"><img src="/img/cards/ledgerline.jpg" alt="" loading="lazy"><span>Ledgerline, from $9.83/mo</span></a>
-  <a class="giftcard" href="https://ashfall-virid.vercel.app" target="_blank" rel="noopener"><img src="/img/cards/ashfall.jpg" alt="" loading="lazy"><span>Play ASHFALL free</span></a>
-  <h4>Browse</h4>
-  <a href="/lineup/">Starting Lineup</a>
-  <a href="/games.html">Games</a>
-  <a href="/software.html">Software</a>
-  <a href="/blog.html">Blog</a>
-  <a href="/free-tools.html">Free tools</a>
-</aside>
+
 
 <main>
+<section class="sec" id="picker" style="text-align:center;padding-top:28px">
+<h2 style="font-size:clamp(26px,5vw,40px);margin:0 0 6px">Where do you want to <em>go?</em></h2>
+<p class="sub" style="margin:0 auto 18px;max-width:560px">Tap what you're here for. Most of it is free.</p>
+<div id="pk" style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center"></div>
+<div id="pkr" style="margin:18px auto 0;max-width:620px;min-height:10px"></div>
+</section>
+<style>#pk button{background:rgba(34,240,255,.08);border:1px solid rgba(34,240,255,.35);color:#eef;padding:12px 18px;border-radius:999px;font:600 15px system-ui;cursor:pointer}#pk button:hover,#pk button.on{background:rgba(34,240,255,.22)}#pkr a{display:block;padding:14px 16px;margin:8px 0;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:#eef;text-decoration:none;text-align:left}#pkr a b{display:block}#pkr a span{opacity:.75;font-size:14px}</style>
+<script>(function(){var P={"Hire me":[["/hire-me.html","Work with me","Websites, stores, games and apps, built to order."]],"Free software":[["/software.html","Software","Apps plus the free tools."],["/software.html#free-tools","Free tools","Invoices, estimates, QR codes, checklists. No signup."],["https://app.leonlink.net","Ledgerline","Run a trades crew: scheduling, estimates, invoicing."]],"Read":[["/blog.html","The blog","Essays and interactive guides."],["/lineup/","Starting Lineup","Top-5 lists of gear worth owning."]],"Play":[["/games.html","Games","Free games and interactive stories."],["https://afterglow.leonlink.net","Afterglow Casino","19 free casino games, play money only."]],"Watches":[["/lineup/clocks-corner/","Clock's Corner","Every watch list in one place."]]};var k=document.getElementById('pk'),r=document.getElementById('pkr');Object.keys(P).forEach(function(n){var b=document.createElement('button');b.textContent=n;b.onclick=function(){[].forEach.call(k.children,function(x){x.classList.remove('on')});b.classList.add('on');r.innerHTML=P[n].map(function(a){return '<a href="'+a[0]+'"><b>'+a[1]+' →</b><span>'+a[2]+'</span></a>'}).join('')};k.appendChild(b)})})();</script>
 <h1 class="sr">LeonLink — websites, stores, games, apps</h1>
 
 
@@ -555,10 +545,7 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
   </div>
 </section>
 
-<section class="sec hire-banner"><div class="hb-in">
-  <h2>Need something <em>built?</em> 50% off until Oct 31.</h2>
-  <a class="btn" href="/hire-me.html">Hire me</a>
-</div></section>
+
 
 <section class="sec" id="start">
   <div class="sh"><h2>Everything <em>LeonLink</em></h2></div>
@@ -587,12 +574,12 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
     <div class="hblock" tabindex="0" role="button" aria-expanded="false">
       <div class="himg"><img src="/img/cards/t-qr.jpg" alt="QR Code Generator" loading="lazy"></div>
       <div class="hb"><span class="hk">No signup</span><b>Free Tools</b></div>
-      <div class="hx"><p>Small tools, free forever. QR codes, invoices, estimates.</p><a href="/free-tools.html">Use →</a></div>
+      <div class="hx"><p>Small tools, free forever. QR codes, invoices, estimates.</p><a href="/software.html#free-tools">Use →</a></div>
     </div>
     <div class="hblock" tabindex="0" role="button" aria-expanded="false">
       <div class="himg"><img src="/img/cards/hireme.jpg" alt="Hire Leon" loading="lazy"></div>
-      <div class="hb"><span class="hk">50% off until Oct 31</span><b>Hire me</b></div>
-      <div class="hx"><p>Websites, stores, games, apps — flat prices, agreed up front.</p><a href="/hire-me.html">Hire →</a></div>
+      <div class="hb"><span class="hk">Built to order</span><b>Hire me</b></div>
+      <div class="hx"><p>Websites, stores, games and apps, built to order.</p><a href="/hire-me.html">Hire →</a></div>
     </div>
   </div>
 </section>
@@ -619,7 +606,7 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
     <div><h5>Free tools</h5><a href="/qr-code-generator.html">QR code generator</a><a href="/invoice-generator.html">Invoice generator</a><a href="/estimate-generator.html">Estimate generator</a><a href="/before-after-viewer.html">Before/after viewer</a><a href="/chimney-inspection-checklist.html">Chimney checklist</a></div>
     <div><h5>Company</h5><a href="/what-is-leonlink.html">What is LeonLink?</a><a href="/blog.html">Blog</a><a href="mailto:info@leonlink.net">info@leonlink.net</a></div>
   </div>
-  <div class="fbar"><span style="display:flex;align-items:center;gap:10px"><img src="/img/logo-128.png" alt="" width="30" height="30" loading="lazy">© <span id="yr">2026</span> LeonLink. Every creation carries the anchor.</span><span>Flat prices. Your data walks out the door with you.</span></div>
+  <div class="fbar"><span style="display:flex;align-items:center;gap:10px"><img src="/img/logo-128.png" alt="" width="30" height="30" loading="lazy">© <span id="yr">2026</span> LeonLink. Every creation carries the anchor.</span><span>Most of it is free. Your data walks out the door with you.</span></div>
 </div></footer>
 
 <nav class="bnav" aria-label="Quick navigation">
@@ -723,7 +710,7 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const ext=o=>o.u.startsWith('http')&&!/leonlink\.net/.test(o.u)?' target="_blank" rel="noopener"':'';
 const img=(o,v)=>`/img/cards/${o.id}${v||''}.jpg`;
 const plat=o=>`<span class="plat">${o.plat.map(p=>I[p]).join('')}</span>`;
-const priceEl=o=>`<span class="price${/free/i.test(o.p)?' free':''}">${esc(o.p)}</span>`;
+const priceEl=o=>/free/i.test(o.p)?`<span class="price free">Free</span>`:'';
 const tagsEl=(o,n,btn)=>`<span class="tags">${o.tags.slice(0,n||9).map(t=>btn?`<button class="tag" data-tag="${esc(t)}">${esc(t)}</button>`:`<span class="tag">${esc(t)}</span>`).join('')}</span>`;
 const fmtDate=d=>new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
 

@@ -7,6 +7,26 @@
   ],
   "redirects": [
     {
+      "source": "/free-tools.html",
+      "destination": "/software.html#free-tools",
+      "permanent": false
+    },
+    {
+      "source": "/free-tools",
+      "destination": "/software.html#free-tools",
+      "permanent": false
+    },
+    {
+      "source": "/clocks-corner",
+      "destination": "/lineup/clocks-corner/",
+      "permanent": false
+    },
+    {
+      "source": "/work",
+      "destination": "/games.html",
+      "permanent": false
+    },
+    {
       "source": "/journal/watches-under-3k.html",
       "destination": "/lineup/watches-under-3k.html",
       "permanent": true
