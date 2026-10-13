@@ -388,6 +388,16 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 .libsearch input{width:100%;height:44px;border:1px solid var(--line2);border-radius:999px;background:var(--panel);color:var(--hi);padding:0 20px;font-size:15px}
 .libsearch input:focus{outline:none;border-color:var(--gold)}
 .libsearch input::placeholder{color:var(--faint)}
+.stabs{display:flex;gap:8px;margin:14px 0 4px;overflow-x:auto}
+.stabs button{min-height:44px;padding:0 18px;border-radius:999px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);color:inherit;font-weight:700;font-size:15px;cursor:pointer}
+.stabs button.on{background:#22f0ff;color:#041016;border-color:#22f0ff}
+.srow{margin-top:22px}.srow[hidden]{display:none}
+.srh{display:flex;align-items:baseline;justify-content:space-between;gap:10px;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:8px}
+.srh h3{margin:0;font-size:20px;text-transform:uppercase;letter-spacing:.06em}.srh span{opacity:.6;font-size:13px}
+.srow .plist{display:grid;grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:minmax(260px,300px);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px;-webkit-overflow-scrolling:touch}
+.srow .pitem{scroll-snap-align:start}
+.srow.solo .plist{grid-auto-flow:row;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));overflow:visible}
+@media(max-width:700px){.srow .plist{grid-auto-columns:82%}}
 </style>
 <style>.gnav a.fire{position:relative;color:#fff;font-weight:800;padding:6px 14px;border-radius:999px;background:linear-gradient(0deg,#ff3d00,#ff9100,#ffd600);background-size:100% 220%;animation:flm 1.2s ease-in-out infinite alternate,flk .18s steps(2) infinite;text-shadow:0 0 6px #ff6d00,0 -2px 10px #ffab00}.gnav a.fire:before{content:"";position:absolute;inset:-6px -2px 40% -2px;border-radius:50%;background:radial-gradient(ellipse at bottom,rgba(255,145,0,.7),transparent 70%);filter:blur(6px);z-index:-1;animation:flk .25s infinite alternate}@keyframes flm{to{background-position:0 100%;box-shadow:0 0 18px #ff6d00,0 -4px 22px #ffab00}}@keyframes flk{50%{opacity:.85}}@media (prefers-reduced-motion:reduce){.gnav a.fire,.gnav a.fire:before{animation:none}}.gnav a.casino{color:#ff4fd8;font-weight:800;text-shadow:0 0 8px rgba(255,79,216,.8)}</style>
 <script>document.addEventListener('error',function(e){var t=e.target;if(t&&t.tagName==='IMG'&&!t.dataset.f){t.dataset.f=1;if(/-2\.jpg$/.test(t.src)){t.remove();return}t.src='/og.png'}},true);</script><style>
@@ -436,7 +446,7 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 </aside>
 <main>
 <h1 class="sr">Games | LeonLink</h1>
-<section class="sec"><div class="sh"><h2>Games</h2></div><p class="sub">Free games that run in your browser. Tap one to play.</p><div class="plist" id="plist"></div></section>
+<section class="sec"><div class="sh"><h2>Games</h2></div><p class="sub">Free games that run in your browser. Tap one to play.</p><div class="stabs" role="tablist"><button class="on" data-f="all">All</button><button data-f="casino">Casino</button><button data-f="story">Story &amp; RPG</button><button data-f="arcade">Arcade</button></div><div class="srow" data-k="casino"><div class="srh"><h3>Casino</h3><span>Play-money casino, for fun only</span></div><div class="plist" id="plist-casino"></div></div><div class="srow" data-k="story"><div class="srh"><h3>Story &amp; RPG</h3><span>Choices, adventures and survival</span></div><div class="plist" id="plist-story"></div></div><div class="srow" data-k="arcade"><div class="srh"><h3>Arcade</h3><span>Quick runs and high scores</span></div><div class="plist" id="plist-arcade"></div></div></section>
 <div hidden><input id="libq"><p id="lcount"></p><div id="rows"></div><aside id="preview"></aside><div id="software-grid"></div><div id="g-grid"></div></div>
 </main>
 </div>
@@ -595,6 +605,6 @@ render();
 <script>(function(){try{var p=location.pathname;fetch("/api/track?p="+encodeURIComponent(p)+"&r="+encodeURIComponent(document.referrer||""),{mode:"no-cors",keepalive:true}).catch(function(){})}catch(e){}})();</script>
 <script>(function(){try{var L=DATA.filter(function(o){return ['games'].indexOf(o.c)>-1});
 var E=function(x){return String(x).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
-document.getElementById('plist').innerHTML=L.map(function(o){var ex=/^http/.test(o.u)&&!/leonlink\.net/.test(o.u)?' target="_blank" rel="noopener"':'';
-return '<a class="pitem" href="'+o.u+'"'+ex+'><div class="pim"><img src="'+img(o)+'" alt="'+E(o.t)+'" loading="lazy"></div><div class="pbd"><h3>'+E(o.t)+'</h3><p>'+E(o.x)+'</p><span class="pgo">Play \u2192</span></div></a>'}).join('')}catch(e){console.error(e)}})();</script></body>
+var G={casino:['afterglow'],arcade:['chimneyrun','paperroute']};var K=function(o){return G.casino.indexOf(o.id)>-1?'casino':G.arcade.indexOf(o.id)>-1?'arcade':'story'};var card=function(o){var ex=/^http/.test(o.u)&&!/leonlink\.net/.test(o.u)?' target="_blank" rel="noopener"':'';
+return '<a class="pitem" href="'+o.u+'"'+ex+'><div class="pim"><img src="'+img(o)+'" alt="'+E(o.t)+'" loading="lazy"></div><div class="pbd"><h3>'+E(o.t)+'</h3><p>'+E(o.x)+'</p><span class="pgo">Play \u2192</span></div></a>'};['casino','story','arcade'].forEach(function(k){document.getElementById('plist-'+k).innerHTML=L.filter(function(o){return K(o)===k}).map(card).join('')});var rows=document.querySelectorAll('.srow');document.querySelectorAll('.stabs button').forEach(function(b){b.onclick=function(){document.querySelectorAll('.stabs button').forEach(function(x){x.classList.toggle('on',x===b)});var f=b.dataset.f;rows.forEach(function(r){r.hidden=f!=='all'&&r.dataset.k!==f;r.classList.toggle('solo',f!=='all')})}})}catch(e){console.error(e)}})();</script></body>
 </html>
