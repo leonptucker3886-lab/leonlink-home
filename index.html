@@ -228,6 +228,15 @@ main{min-width:0}
 
 
 
+/* today strip */
+.today{display:grid;grid-template-columns:auto minmax(0,1fr) minmax(0,1fr);gap:12px;align-items:stretch;margin:14px auto 0}
+.tdc{background:rgba(0,200,255,.06);border:1px solid rgba(0,200,255,.25);border-radius:14px;padding:12px 14px;min-width:0;color:inherit;text-decoration:none}
+.tdc .hk{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#00c8ff;margin-bottom:4px}
+.tdc b{display:block;font-size:15px;line-height:1.3;overflow:hidden;text-overflow:ellipsis}
+.tdd b{font-size:22px;white-space:nowrap}
+.tdq button{margin-top:8px;margin-right:6px;background:#00c8ff;color:#0a0f14;border:0;border-radius:999px;padding:6px 12px;font-weight:700;cursor:pointer}
+.tdq .ans{display:block;margin-top:6px;font-size:13px;opacity:.9}
+@media(max-width:760px){.today{grid-template-columns:minmax(0,1fr)}.tdd b{font-size:18px}}
 /* spotlight carousel */
 .feat{position:relative}
 .fslides{position:relative;height:370px;border-radius:20px;overflow:hidden;border:1px solid var(--line)}
@@ -509,6 +518,14 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 
 
 <main>
+<section class="sec today" id="today" aria-label="Today"><div class="tdc tdd"><span class="hk">Today</span><b id="tdDate"></b></div><a class="tdc" href="/news.html" id="tdNews"><span class="hk">Top story</span><b>National, international and tech news, updated daily &rarr;</b></a><div class="tdc tdq"><span class="hk">Daily challenge</span><b id="tdQ"></b><div id="tdA"></div><span class="ans" id="tdR"></span></div></section>
+<script>(function(){var d=new Date();document.getElementById('tdDate').textContent=d.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'});
+var Q=[["Which planet has the most moons?",["Saturn","Jupiter"],0],["How many bones are in the adult human body?",["206","212"],0],["What year did the first iPhone launch?",["2007","2009"],0],["Which ocean is the largest?",["Atlantic","Pacific"],1],["What is the hardest natural substance?",["Diamond","Quartz"],0],["How many US states border Kentucky?",["7","5"],0],["What does CPU stand for?",["Central Processing Unit","Core Power Unit"],0],["Which country has the most people?",["India","China"],0],["What gas do plants take in?",["Oxygen","Carbon dioxide"],1],["How many minutes are in a day?",["1,440","1,240"],0],["Which metal is liquid at room temperature?",["Mercury","Tin"],0],["What is the capital of Australia?",["Sydney","Canberra"],1],["Light from the Sun reaches Earth in about…",["8 minutes","8 seconds"],0],["Which is the longest river in Africa?",["Nile","Congo"],0]];
+var day=Math.floor((d-new Date(d.getFullYear(),0,0))/864e5),q=Q[day%Q.length],k='lc-'+d.toDateString();
+document.getElementById('tdQ').textContent=q[0];var A=document.getElementById('tdA'),R=document.getElementById('tdR');
+function done(i){A.innerHTML='';R.textContent=(i==q[2]?'✅ Correct! ':'❌ Not quite. ')+'Answer: '+q[1][q[2]]+'. New question tomorrow.'}
+var saved=localStorage.getItem(k);if(saved!==null)done(+saved);else q[1].forEach(function(o,i){var b=document.createElement('button');b.textContent=o;b.onclick=function(){localStorage.setItem(k,i);done(i)};A.appendChild(b)});
+fetch('/news.json',{cache:'no-store'}).then(function(r){return r.json()}).then(function(n){var s=n.sections||{},f=null;Object.keys(s).some(function(x){if(s[x]&&s[x][0]){f=s[x][0];return true}});if(f){var b=document.querySelector('#tdNews b');b.textContent=f.t+' →'}}).catch(function(){})})()</script>
 <section class="sec" id="spot"><h1 class="sr">LeonLink — apps, games, news and blog</h1><div class="spg">
 <a class="spc" href="https://app.leonlink.net" target="_blank" rel="noopener"><img src="/img/cards/ledgerline.jpg" alt="Ledgerline"><div class="spx"><span class="hk">Spotlight · Software</span><b>Ledgerline</b><p>Scheduling, estimates and invoicing for trades crews. Proofline and Reviewline included.</p><span class="go">Open Ledgerline →</span></div></a>
 <a class="spc" href="https://afterglow.leonlink.net" target="_blank" rel="noopener"><img src="/img/cards/afterglow.jpg" alt="Afterglow Casino"><div class="spx"><span class="hk">Spotlight · Games</span><b>Afterglow Casino</b><p>19 casino games: slots, blackjack, poker. Entertainment only, 18+.</p><span class="go">Play Afterglow →</span></div></a>
