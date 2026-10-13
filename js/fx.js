@@ -27,7 +27,7 @@ function tilt(){$$(CARDS).forEach(function(el){if(el.closest(".lnx,.lnd")||el.__
  if(FINE&&!RM){el.addEventListener("pointermove",function(e){var q=pos(e.clientX,e.clientY);el.style.transform="perspective(800px) rotateX("+((.5-q[1])*8)+"deg) rotateY("+((q[0]-.5)*10)+"deg) translateY(-3px)"});
   el.addEventListener("pointerleave",function(){el.style.transform=""})}
  else el.addEventListener("touchstart",function(e){var t=e.touches[0];pos(t.clientX,t.clientY);el.classList.add("lfx-tap");setTimeout(function(){el.classList.remove("lfx-tap")},450)},{passive:true})})}
-function hero(){if(!(P=="/"||P=="/index.html"))return;
+function hero(){
  var host=D.querySelector("#spot");
  if(host&&!RM){host.classList.add("lfx-host");var c=D.createElement("canvas");c.className="lfx-sf";host.insertBefore(c,host.firstChild);
   var x=c.getContext("2d"),S=[],W,H,dpr=Math.min(2,devicePixelRatio||1),mx=0,my=0,vis=true;
@@ -38,7 +38,7 @@ function hero(){if(!(P=="/"||P=="/index.html"))return;
   (function lp(t){requestAnimationFrame(lp);if(!vis||D.hidden)return;x.clearRect(0,0,W,H);t/=1000;
    for(var i=0;i<S.length;i++){var s=S[i];s.y-=.0004*s.z;if(s.y<0){s.y=1;s.x=Math.random()}
     x.fillStyle="rgba("+(s.p>3?"34,240,255,":"255,120,240,")+Math.max(.1,.35+.5*Math.sin(t*2+s.p)*s.z)+")";x.beginPath();x.arc((s.x+mx*.04*s.z)*W,(s.y+my*.04*s.z)*H,1.6*s.z,0,6.29);x.fill()}})(0)}
- var h=D.querySelector("#picker h2")||D.querySelector(".sec h2");
+ var h=(P=="/"||P=="/index.html")?(D.querySelector("#picker h2")||D.querySelector(".sec h2")):null;
  if(h&&!RM&&!h.children.length&&h.textContent.trim().length<60){var full=h.textContent.trim(),k=0;h.setAttribute("aria-label",full);h.textContent="";h.classList.add("lfx-cur");
   (function ty(){h.textContent=full.slice(0,++k);if(k<full.length)setTimeout(ty,45);else setTimeout(function(){h.classList.remove("lfx-cur")},1500)})()}}
 function ripple(){if(RM)return;D.addEventListener("pointerdown",function(e){var b=e.target.closest("button,.go,.hm,.btn,.lnq a,[role=button]");if(!b)return;
