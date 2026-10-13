@@ -90,6 +90,61 @@
       "source": "/journal/tactical-under-700.html",
       "destination": "/lineup/",
       "permanent": true
+    },
+    {
+      "source": "/series",
+      "destination": "/blog.html",
+      "permanent": true
+    },
+    {
+      "source": "/series/",
+      "destination": "/blog.html",
+      "permanent": true
+    },
+    {
+      "source": "/series/index.html",
+      "destination": "/blog.html",
+      "permanent": true
+    },
+    {
+      "source": "/journal/why-we-cheat.html",
+      "destination": "/blog.html",
+      "permanent": true
+    },
+    {
+      "source": "/journal/why-breakups-hurt.html",
+      "destination": "/blog.html",
+      "permanent": true
+    },
+    {
+      "source": "/journal/are-feelings-real.html",
+      "destination": "/blog.html",
+      "permanent": true
+    },
+    {
+      "source": "/journal/can-you-control-your-feelings.html",
+      "destination": "/blog.html",
+      "permanent": true
+    },
+    {
+      "source": "/journal/what-is-ai.html",
+      "destination": "/blog.html",
+      "permanent": true
+    },
+    {
+      "source": "/journal/ai-help-or-harm.html",
+      "destination": "/blog.html",
+      "permanent": true
+    },
+    {
+      "source": "/journal/ai-life-without-money.html",
+      "destination": "/blog.html",
+      "permanent": true
+    },
+    {
+      "source": "/journal/ai-plus-biology.html",
+      "destination": "/blog.html",
+      "permanent": true
     }
   ],
   "headers": [
