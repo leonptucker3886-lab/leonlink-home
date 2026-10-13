@@ -15,3 +15,4 @@ var b=h.querySelector(".mb");b.onclick=function(){var o=d.classList.toggle("op")
 function dr(t){c.clearRect(0,0,88,88);c.save();c.translate(44,80);if(!rd)c.rotate(Math.sin(t*1.4)*.09);c.translate(-44,-80);c.shadowColor="rgba(34,240,255,.95)";c.shadowBlur=rd?10:11+5*Math.sin(t*6.3)+3*Math.sin(t*11.7);if(im.complete&&im.naturalWidth)c.drawImage(im,6,6,76,76);c.restore();if(!rd)for(i=0;i<E.length;i++){var e=E[i];e.y-=e.v/60;if(e.y<2){e.y=86;e.x=12+Math.random()*64}c.fillStyle="rgba(140,235,255,"+(.25+.6*(e.y/88))+")";c.beginPath();c.arc(e.x+Math.sin(t*3+e.p)*4,e.y,e.s,0,6.29);c.fill();}}
 if(rd){im.onload=function(){dr(0)};dr(0)}else{var t0=performance.now();(function lp(n){dr((n-t0)/1000);requestAnimationFrame(lp)})(t0)}})();
 })();
+(function(){if(document.getElementById("lfx-js"))return;var s=document.createElement("script");s.id="lfx-js";s.src="/js/fx.js?v=1";s.defer=true;document.head.appendChild(s)})();
