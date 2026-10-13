@@ -1,0 +1,109 @@
+{
+ "updated": "2026-10-13",
+ "sections": {
+  "National": [
+   {
+    "t": "FBI agents search Rep. Ilhan Omar's Washington home in criminal probe",
+    "f": "Agents searched the Minnesota congresswoman's Washington home as part of a criminal investigation. Omar said she would not be silenced. No charges have been announced.",
+    "s": [
+     [
+      "AP via Grand Junction Sentinel",
+      "https://gjsentinel.com/news/us/ap-news-summary-at-12-47-a-m-edt/article_60952a41-ea89-5404-8b62-d9f307ff5214.html"
+     ]
+    ]
+   },
+   {
+    "t": "Major GOP group pulls funding from some battleground House seats",
+    "f": "A large Republican spending group withdrew money from several competitive seats ahead of the midterms. The president is holding a rally in Alaska today.",
+    "s": [
+     [
+      "CNN",
+      "https://cnn.com/2026/10/13/politics/live-news/trump-alaska-rally-midterms"
+     ]
+    ]
+   },
+   {
+    "t": "Houthis warn the U.S. against joining Saudi strikes",
+    "f": "The Iran-backed Houthi group threatened a 'swift and painful' response if the U.S. joins Saudi Arabia's strikes on it. The White House has not announced a decision.",
+    "s": [
+     [
+      "CBS News",
+      "https://cbsnews.com/live-updates/iran-war-us-trump-saudi-arabia-houthi"
+     ]
+    ]
+   }
+  ],
+  "International": [
+   {
+    "t": "IMF raises 2026 global growth forecast to 3.1%",
+    "f": "The IMF lifted its forecast from 3.0% to 3.1%, below 2025's 3.5%. It warned that low emergency oil stocks, stretched budgets and a possible AI share-price drop could test the economy's resilience.",
+    "s": [
+     [
+      "The Guardian",
+      "https://www.theguardian.com/business/2026/oct/13/imf-global-economy-world-economic-outlook-uk-gdp-forecast-2026"
+     ],
+     [
+      "CNBC",
+      "https://www.cnbc.com/2026/10/12/imf-world-bank-annual-meetings-october-bangkok-asia-.html"
+     ]
+    ]
+   },
+   {
+    "t": "EU adopts its largest Russia sanctions package since 2022",
+    "f": "Europe announced new sanctions on Russia after the U.S. eased sanctions on Russian energy imports, a split between the two on policy toward the war in Ukraine.",
+    "s": [
+     [
+      "Economic Times",
+      "https://economictimes.indiatimes.com/news/international/world-news/eu-breaks-with-trump-over-us-russia-diesel-deal-europe-hits-putin-with-largest-sanctions-since-2022/videoshow/134925139.cms"
+     ]
+    ]
+   },
+   {
+    "t": "Qatar condemns Iranian attack; Hormuz disruption hits exports",
+    "f": "Qatar's emir called an Iranian attack a violation of sovereignty and said shipping disruptions in the Strait of Hormuz are hurting national exports, including LNG.",
+    "s": [
+     [
+      "Sunday Guardian",
+      "https://sundayguardianlive.com/world/us-israel-iran-war-latest-live-news-qatars-emir-slams-irans-attack-as-a-flagrant-violation-of-sovereignty-says-strait-of-hormuz-shipping-disruptions-hit-national-exports-304695/"
+     ]
+    ]
+   }
+  ],
+  "Tech": [
+   {
+    "t": "Anthropic: small AI models may soon self-replicate on home devices",
+    "f": "Anthropic research says small AI models could become able to copy themselves onto home devices without a data center, possibly within months.",
+    "s": [
+     [
+      "CNBC",
+      "https://www.cnbc.com/2026/10/13/anthropic-ai-models-self-replication-smart-devices.html"
+     ],
+     [
+      "Al Jazeera",
+      "https://www.aljazeera.com/economy/2026/10/13/ai-could-self-replicate-on-home-devices-within-months-anthropic-says"
+     ]
+    ]
+   },
+   {
+    "t": "Microsoft president calls for tougher AI rules",
+    "f": "Brad Smith said AI is less regulated than milk and called for measures such as kill switches and legal duties to people harmed by rogue AI agents.",
+    "s": [
+     [
+      "The Guardian",
+      "https://www.theguardian.com/technology/2026/oct/12/ai-less-regulated-than-milk-microsoft-president-calls-for-tougher-rules"
+     ]
+    ]
+   },
+   {
+    "t": "Character.AI files for bankruptcy; Disney may buy it",
+    "f": "The chatbot startup filed for Chapter 11, and Disney is reported to be a possible buyer.",
+    "s": [
+     [
+      "Hollywood Reporter",
+      "https://www.hollywoodreporter.com/business/digital/disney-may-buy-character-ai-chatbot-chapter-11-bankruptcy-1236728629/"
+     ]
+    ]
+   }
+  ]
+ }
+}
