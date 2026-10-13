@@ -390,7 +390,16 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 .libsearch input::placeholder{color:var(--faint)}
 </style>
 <style>.gnav a.fire{position:relative;color:#fff;font-weight:800;padding:6px 14px;border-radius:999px;background:linear-gradient(0deg,#ff3d00,#ff9100,#ffd600);background-size:100% 220%;animation:flm 1.2s ease-in-out infinite alternate,flk .18s steps(2) infinite;text-shadow:0 0 6px #ff6d00,0 -2px 10px #ffab00}.gnav a.fire:before{content:"";position:absolute;inset:-6px -2px 40% -2px;border-radius:50%;background:radial-gradient(ellipse at bottom,rgba(255,145,0,.7),transparent 70%);filter:blur(6px);z-index:-1;animation:flk .25s infinite alternate}@keyframes flm{to{background-position:0 100%;box-shadow:0 0 18px #ff6d00,0 -4px 22px #ffab00}}@keyframes flk{50%{opacity:.85}}@media (prefers-reduced-motion:reduce){.gnav a.fire,.gnav a.fire:before{animation:none}}.gnav a.casino{color:#ff4fd8;font-weight:800;text-shadow:0 0 8px rgba(255,79,216,.8)}</style>
-</head>
+<script>document.addEventListener('error',function(e){var t=e.target;if(t&&t.tagName==='IMG'&&!t.dataset.f){t.dataset.f=1;if(/-2\.jpg$/.test(t.src)){t.remove();return}t.src='/og.png'}},true);</script><style>
+.snav-wrap,.side{display:none!important}.page{display:block!important;grid-template-columns:1fr!important}
+.plist{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:16px}
+.pitem{display:flex;flex-direction:column;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:inherit;text-decoration:none;transition:transform .2s,border-color .2s}
+.pitem:hover{transform:translateY(-3px);border-color:rgba(34,240,255,.5)}
+.pitem .pim{aspect-ratio:16/9;background:#000;overflow:hidden}.pitem .pim img{width:100%;height:100%;object-fit:cover}
+.pitem .pbd{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.pitem h3{margin:0;font-size:18px}.pitem p{margin:0;opacity:.8;font-size:14px;line-height:1.5;flex:1}
+.pitem .pgo{font-weight:700;color:#22f0ff}
+</style></head>
 <body>
 <header class="gh"><div class="in">
   <a class="logo" href="/" aria-label="LeonLink home"><canvas id="logoFx" width="72" height="72" style="width:36px;height:36px;display:block" role="img" aria-label="LeonLink logo"></canvas><b>LEON<span>LINK</span></b></a>
@@ -427,28 +436,8 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 </aside>
 <main>
 <h1 class="sr">Software | LeonLink</h1>
-<section class="sec">
-  <div class="sh"><h2>Software <em>built by Leon</em></h2></div>
-  <p class="sub">Every app below is built and maintained by Leon. Tap a card for the details.</p>
-</section>
-
-<section class="sec" id="free-tools"><div class="sh"><h2>Free <em>tools</em></h2></div>
-<p class="sub">Free forever. No signup, no watermarks.</p>
-<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:12px">
-<a href="/invoice-generator.html" style="display:block;padding:16px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:inherit;text-decoration:none"><b>Invoice generator</b><br><span style="opacity:.75;font-size:14px">Make a clean PDF invoice.</span></a><a href="/estimate-generator.html" style="display:block;padding:16px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:inherit;text-decoration:none"><b>Estimate generator</b><br><span style="opacity:.75;font-size:14px">Quote a job in a minute.</span></a><a href="/qr-code-generator.html" style="display:block;padding:16px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:inherit;text-decoration:none"><b>QR code generator</b><br><span style="opacity:.75;font-size:14px">QR codes that never expire.</span></a><a href="/chimney-inspection-checklist.html" style="display:block;padding:16px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:inherit;text-decoration:none"><b>Chimney inspection checklist</b><br><span style="opacity:.75;font-size:14px">Printable field checklist.</span></a><a href="/before-after-viewer.html" style="display:block;padding:16px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:inherit;text-decoration:none"><b>Before/after viewer</b><br><span style="opacity:.75;font-size:14px">Show off your work with a slider.</span></a><a href="/leonlens/" style="display:block;padding:16px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:inherit;text-decoration:none"><b>LeonLens</b><br><span style="opacity:.75;font-size:14px">Camera with lenses, in your browser.</span></a></div></section>
-<section class="sec" id="library">
-  <div class="sh"><h2>The <em>library</em></h2></div>
-  <div class="libsearch"><input id="libq" type="search" placeholder="Search the library" autocomplete="off" aria-label="Search the library"></div>
-  <p class="lcount" id="lcount" style="margin:0 0 12px"></p>
-  <div class="lib">
-    <div class="rows" id="rows" role="tabpanel"></div>
-    <aside class="preview" id="preview" aria-live="polite"></aside>
-  </div>
-</section>
-
-<section class="sec">
-  <div class="grid sm" id="software-grid"></div>
-</section>
+<section class="sec"><div class="sh"><h2>Software</h2></div><p class="sub">Every app and tool built by Leon. Tap one to open it.</p><div class="plist" id="plist"></div></section>
+<div hidden><input id="libq"><p id="lcount"></p><div id="rows"></div><aside id="preview"></aside><div id="software-grid"></div><div id="g-grid"></div></div>
 </main>
 </div>
 <footer><div class="in">
@@ -563,7 +552,8 @@ const byId=Object.fromEntries(DATA.map(o=>[o.id,o]));
 const rib=o=>o.s==='new'&&Date.now()-new Date(o.d+'T12:00:00').getTime()>30*864e5?null:RIB[o.s];
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const ext=o=>o.u.startsWith('http')&&!/leonlink\.net/.test(o.u)?' target="_blank" rel="noopener"':'';
-const img=(o,v)=>`/img/cards/${o.id}${v||''}.jpg`;
+const IMGA={tacticalwatches:'tactical-watches',divewatches:'dive-watches',dresswatches:'dress-watches',fieldwatches:'field-watches',budgetwatches:'budget-watches',partyspeakers:'party-speakers'};
+const img=(o,v)=>`/img/cards/${IMGA[o.id]||o.id}${v||''}.jpg`;
 const plat=o=>`<span class="plat">${o.plat.map(p=>I[p]).join('')}</span>`;
 const priceEl=o=>/free/i.test(o.p)?`<span class="price free">Free</span>`:'';
 const tagsEl=(o,n,btn)=>`<span class="tags">${o.tags.slice(0,n||9).map(t=>btn?`<button class="tag" data-tag="${esc(t)}">${esc(t)}</button>`:`<span class="tag">${esc(t)}</span>`).join('')}</span>`;
@@ -620,5 +610,8 @@ document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement.t
 render();
 </script>
 <script>(function(){try{var p=location.pathname;fetch("/api/track?p="+encodeURIComponent(p)+"&r="+encodeURIComponent(document.referrer||""),{mode:"no-cors",keepalive:true}).catch(function(){})}catch(e){}})();</script>
-</body>
+<script>(function(){try{var L=DATA.filter(function(o){return ['software','tools'].indexOf(o.c)>-1});
+var E=function(x){return String(x).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+document.getElementById('plist').innerHTML=L.map(function(o){var ex=/^http/.test(o.u)&&!/leonlink\.net/.test(o.u)?' target="_blank" rel="noopener"':'';
+return '<a class="pitem" href="'+o.u+'"'+ex+'><div class="pim"><img src="'+img(o)+'" alt="'+E(o.t)+'" loading="lazy"></div><div class="pbd"><h3>'+E(o.t)+'</h3><p>'+E(o.x)+'</p><span class="pgo">Open \u2192</span></div></a>'}).join('')}catch(e){console.error(e)}})();</script></body>
 </html>
