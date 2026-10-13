@@ -7,6 +7,16 @@
   ],
   "redirects": [
     {
+      "source": "/what-is-leonlink.html",
+      "destination": "/hire-me.html",
+      "permanent": true
+    },
+    {
+      "source": "/what-is-leonlink",
+      "destination": "/hire-me.html",
+      "permanent": true
+    },
+    {
       "source": "/free-tools.html",
       "destination": "/software.html#free-tools",
       "permanent": false
