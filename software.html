@@ -477,7 +477,7 @@ const DATA=[
 {id:'linkline',t:'Linkline',u:'https://linkline.leonlink.net',c:'software',s:'new',p:'Free',d:'2026-10-13',plat:['web','mob'],
  tags:['Line Suite','Link in Bio','15 Themes','QR + NFC'],x:'Premium link-in-bio pages for business, free. Pick from 15 designer themes or set your own colours, fonts and buttons, then add video, music, galleries, maps and scheduled links with a live phone preview. Share it by QR code or NFC card, back it up in one click, and remove the Built with Linkline badge with a one-time Premium key, no monthly plan.'},
 {id:'rhymeline',t:'Rhymeline',u:'https://rhymeline.vercel.app',c:'software',s:'live',p:'Free',d:'2026-10-13',plat:['web','mob'],
- tags:['Line Suite','Writing'],x:'Rhymeline \u2014 part of the Line Suite. Tap Open to try it.'},
+ tags:['Line Suite','Writing','Lyrics','Rap','Rhymes'],x:'Write a line, hit Help, finish the rhyme. Get ranked perfect and near rhymes for your last word, three ways to finish your line, or a full 16-bar verse in AABB, ABAB, ABBA or AAAA, written by AI. A live syllable counter keeps your bars tight, tap any line to re-roll it, and copy the whole verse in one tap. Free, no sign-up, and your work stays on your device.'},
 {id:'sootfather',t:'Sootfather',u:'/sootfather.html',c:'games',s:'new',p:'Free',d:'2026-10-08',plat:['web','mob'],spot:1,one:1,
  tags:['RPG','Mafia','Story'],x:'A GTA-vibed mafia RPG: you\'re a chimney sweep for the family. Take jobs from the Don, manage your heat, talk or fight your way to Made Man.'},
 {id:'chimneyrun',t:'Chimney Run',u:'/chimney-run.html',c:'games',s:'new',p:'Free',d:'2026-10-08',plat:['web','mob'],spot:1,one:1,
@@ -551,7 +551,7 @@ const DATA=[
 ];
 const FEATURED=['ledgerline','dashline','linkline'];
 const RIB={live:['Live',''],ea:['Beta','ea'],new:['New','new'],read:['Read','read']};
-const AVAILS={ledgerline:'Flat price, whole crew',dashline:'Free plan, Pro from $9/mo',linkline:'Part of the Line suite',rhymeline:'Part of the Line suite'};
+const AVAILS={ledgerline:'Flat price, whole crew',dashline:'Free plan, Pro from $9/mo',linkline:'Part of the Line suite',rhymeline:'Free, no sign-up'};
 const CAT={software:'Software',games:'Game',worlds:'Blog',tools:'Free Tool'};
 const byId=Object.fromEntries(DATA.map(o=>[o.id,o]));
 const rib=o=>o.s==='new'&&Date.now()-new Date(o.d+'T12:00:00').getTime()>30*864e5?null:RIB[o.s];
