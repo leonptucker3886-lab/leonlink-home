@@ -3,6 +3,14 @@
     {
       "source": "/hub",
       "destination": "/hub.html"
+    },
+    {
+      "source": "/watchline",
+      "destination": "/lineup/clocks-corner/index.html"
+    },
+    {
+      "source": "/watchline/",
+      "destination": "/lineup/clocks-corner/index.html"
     }
   ],
   "redirects": [
@@ -28,7 +36,7 @@
     },
     {
       "source": "/clocks-corner",
-      "destination": "/lineup/clocks-corner/",
+      "destination": "/watchline/",
       "permanent": false
     },
     {
