@@ -4,15 +4,17 @@ if(window.__lfx)return;window.__lfx=1;
 var RM=matchMedia("(prefers-reduced-motion: reduce)").matches,FINE=matchMedia("(hover:hover) and (pointer:fine)").matches,P=location.pathname,D=document;
 var css=".lfx-r{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}.lfx-r.lfx-in{opacity:1;transform:none}"+
 "#lfx-pb{position:fixed;top:0;left:0;height:3px;width:0;z-index:10001;background:linear-gradient(90deg,#22f0ff,#ff3df0);box-shadow:0 0 10px #22f0ff}"+
-".lfx-t{will-change:transform;transition:transform .25s ease,box-shadow .25s ease}.lfx-t:hover{box-shadow:0 10px 34px rgba(34,240,255,.28)}"+
+".lfx-t{transition:transform .25s ease,box-shadow .25s ease}.lfx-t:hover{box-shadow:0 10px 34px rgba(34,240,255,.28)}"+
 ".lfx-g{position:absolute;inset:0;pointer-events:none;border-radius:inherit;opacity:0;transition:opacity .25s;background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(34,240,255,.28),transparent 55%);z-index:3}.lfx-t:hover .lfx-g,.lfx-tap .lfx-g{opacity:1}"+
 ".lfx-rp{position:absolute;border-radius:50%;transform:scale(0);background:rgba(255,255,255,.45);animation:lfxrp .6s ease-out forwards;pointer-events:none}@keyframes lfxrp{to{transform:scale(4);opacity:0}}"+
 ".lfx-sf{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.7}.lfx-host{position:relative}.lfx-host>*:not(.lfx-sf){position:relative;z-index:1}"+
 ".lfx-cur::after{content:'|';margin-left:2px;color:#22f0ff;animation:lfxbl 1s steps(1) infinite}@keyframes lfxbl{50%{opacity:0}}#lfx-cf{position:fixed;inset:0;pointer-events:none;z-index:10002}";
 var s=D.createElement("style");s.textContent=css;D.head.appendChild(s);
+var ART=/\/blog\/|\/lineup\/.+|\/news/.test(P)||(!!D.querySelector("article")&&!/blog\.html$|^\/$|index\.html$/.test(P));
+function big(el){return el.closest("article")||el.offsetHeight>520}
 var CARDS=".sc,.spc,.card,.gc,.post,.tile,.nc,.hbar,.tdc,.grid>a";
 function $$(q){return Array.prototype.slice.call(D.querySelectorAll(q))}
-function reveal(){if(RM||!("IntersectionObserver" in window))return;
+function reveal(){if(RM||ART||!("IntersectionObserver" in window))return;
  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("lfx-in");io.unobserve(e.target)}})},{rootMargin:"0px 0px -8% 0px"});
  $$(CARDS+",.sec>h2").forEach(function(el,i){if(el.closest(".lnx,.lnd"))return;if(el.getBoundingClientRect().top<innerHeight)return;
   el.classList.add("lfx-r");el.style.transitionDelay=((i%4)*70)+"ms";io.observe(el)})}
@@ -20,7 +22,7 @@ function progress(){if(!(/\/blog\/|\/lineup\/.+/.test(P)||(D.querySelector("arti
  var b=D.createElement("div");b.id="lfx-pb";D.body.appendChild(b);
  function u(){var h=D.documentElement,m=h.scrollHeight-h.clientHeight;b.style.width=(m>0?Math.min(100,h.scrollTop/m*100):0)+"%"}
  addEventListener("scroll",u,{passive:true});u()}
-function tilt(){$$(CARDS).forEach(function(el){if(el.closest(".lnx,.lnd")||el.__t)return;el.__t=1;
+function tilt(){if(ART)return;$$(CARDS).forEach(function(el){if(el.closest(".lnx,.lnd")||el.__t||big(el))return;el.__t=1;
  if(getComputedStyle(el).position=="static")el.style.position="relative";el.classList.add("lfx-t");
  var g=D.createElement("span");g.className="lfx-g";el.appendChild(g);
  function pos(cx,cy){var r=el.getBoundingClientRect(),x=(cx-r.left)/r.width,y=(cy-r.top)/r.height;el.style.setProperty("--gx",x*100+"%");el.style.setProperty("--gy",y*100+"%");return[x,y]}
