@@ -406,7 +406,20 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 .btn{min-height:48px;touch-action:manipulation}
 @media(max-width:700px){.pgo,.xopen{width:100%}.pbd h3{font-size:19px}.pbd p{font-size:15.5px;line-height:1.5}}
 </style>
-<style id="lnx-hide">header:has(.gnav),.gnav,.snav-wrap,.snav,aside.side,.bnav,.nav-links,nav.topnav,.site-nav{display:none!important}body{padding-bottom:0!important}</style><script src="/js/nav.js" defer></script><style id="pgo-fix">.pitem .pgo,.pgo{color:#041016!important;background:#22f0ff!important}</style></head>
+<style id="lnx-hide">header:has(.gnav),.gnav,.snav-wrap,.snav,aside.side,.bnav,.nav-links,nav.topnav,.site-nav{display:none!important}body{padding-bottom:0!important}</style><script src="/js/nav.js" defer></script><style id="pgo-fix">.pitem .pgo,.pgo{color:#041016!important;background:#22f0ff!important}</style><style id="steam">
+.stabs{display:flex;gap:8px;margin:14px 0 4px;overflow-x:auto}
+.stabs button{min-height:44px;padding:0 18px;border-radius:999px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);color:inherit;font-weight:700;font-size:15px;cursor:pointer}
+.stabs button.on{background:#22f0ff;color:#041016;border-color:#22f0ff}
+.srow{margin-top:22px}.srow[hidden]{display:none}
+.srh{display:flex;align-items:baseline;justify-content:space-between;gap:10px;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:8px}
+.srh h3{margin:0;font-size:20px;text-transform:uppercase;letter-spacing:.06em}.srh span{opacity:.6;font-size:13px}
+.srow .plist{display:grid;grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:minmax(260px,300px);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px;-webkit-overflow-scrolling:touch}
+.srow .pitem{scroll-snap-align:start}
+.srow.solo .plist{grid-auto-flow:row;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));overflow:visible}
+.pbadge{align-self:flex-start;font-size:12px;font-weight:800;padding:3px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.05em}
+.pbadge.paid{background:#ffb02e;color:#1a1000}.pbadge.free{background:#2ee59d;color:#00140b}
+@media(max-width:700px){.srow .plist{grid-auto-columns:82%}}
+</style></head>
 <body>
 <header class="gh"><div class="in">
   <a class="logo" href="/" aria-label="LeonLink home"><canvas id="logoFx" width="72" height="72" style="width:36px;height:36px;display:block" role="img" aria-label="LeonLink logo"></canvas><b>LEON<span>LINK</span></b></a>
@@ -443,7 +456,7 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 </aside>
 <main>
 <h1 class="sr">Software | LeonLink</h1>
-<section class="sec"><div class="sh"><h2>Software</h2></div><p class="sub">Free and business-level software. Tap one to open it.</p><div class="plist" id="plist"></div></section>
+<section class="sec"><div class="sh"><h2>Software</h2></div><p class="sub">Business-level software. Tap one to open it.</p><div class="stabs" role="tablist"><button class="on" data-f="all">All</button><button data-f="paid">Paid</button><button data-f="free">Free</button></div><div class="srow" data-k="paid"><div class="srh"><h3>Paid apps</h3><span>Pro tools for crews and businesses</span></div><div class="plist" id="plist-paid"></div></div><div class="srow" data-k="free"><div class="srh"><h3>Free apps</h3><span>Free to use, no catch</span></div><div class="plist" id="plist"></div></div></section>
 <div hidden><input id="libq"><p id="lcount"></p><div id="rows"></div><aside id="preview"></aside><div id="software-grid"></div><div id="g-grid"></div></div>
 </main>
 </div>
@@ -617,6 +630,9 @@ render();
 <script>(function(){try{var p=location.pathname;fetch("/api/track?p="+encodeURIComponent(p)+"&r="+encodeURIComponent(document.referrer||""),{mode:"no-cors",keepalive:true}).catch(function(){})}catch(e){}})();</script>
 <script>(function(){try{var L=DATA.filter(function(o){return ['software','tools'].indexOf(o.c)>-1});
 var E=function(x){return String(x).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
-document.getElementById('plist').innerHTML=L.map(function(o){var ex=/^http/.test(o.u)&&!/leonlink\.net/.test(o.u)?' target="_blank" rel="noopener"':'';
-return '<a class="pitem" href="'+o.u+'"'+ex+'><div class="pim"><img src="'+img(o)+'" alt="'+E(o.t)+'" loading="lazy"></div><div class="pbd"><h3>'+E(o.t)+'</h3><p>'+E(o.x)+'</p><span class="pgo">Open \u2192</span></div></a>'}).join('')}catch(e){console.error(e)}})();</script></body>
+var PAID=function(o){return o.p&&o.p!=='Free'};var card=function(o){var ex=/^http/.test(o.u)&&!/leonlink\.net/.test(o.u)?' target="_blank" rel="noopener"':'';
+return '<a class="pitem" href="'+o.u+'"'+ex+'><div class="pim"><img src="'+img(o)+'" alt="'+E(o.t)+'" loading="lazy"></div><div class="pbd"><span class="pbadge '+(PAID(o)?'paid">Paid':'free">Free')+'</span><h3>'+E(o.t)+'</h3><p>'+E(o.x)+'</p><span class="pgo">Open \u2192</span></div></a>'};
+document.getElementById('plist-paid').innerHTML=L.filter(PAID).map(card).join('');
+document.getElementById('plist').innerHTML=L.filter(function(o){return !PAID(o)}).map(card).join('');
+var rows=document.querySelectorAll('.srow');document.querySelectorAll('.stabs button').forEach(function(b){b.onclick=function(){document.querySelectorAll('.stabs button').forEach(function(x){x.classList.toggle('on',x===b)});var f=b.dataset.f;rows.forEach(function(r){r.hidden=f!=='all'&&r.dataset.k!==f;r.classList.toggle('solo',f!=='all')})}});}catch(e){console.error(e)}})();</script></body>
 </html>
