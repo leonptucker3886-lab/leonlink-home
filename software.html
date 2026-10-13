@@ -399,7 +399,14 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 .pitem .pbd{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
 .pitem h3{margin:0;font-size:18px}.pitem p{margin:0;opacity:.8;font-size:14px;line-height:1.5;flex:1}
 .pitem .pgo{font-weight:700;color:#22f0ff}
-</style></head>
+</style><style>/* mobile-friendly links */
+.pitem{display:flex;flex-direction:column;-webkit-tap-highlight-color:rgba(34,240,255,.25);touch-action:manipulation}
+.pitem:active{transform:scale(.98)}
+.pgo{display:flex;align-items:center;justify-content:center;min-height:48px;margin-top:12px;border-radius:999px;background:var(--cyan,#22f0ff);color:#041016;font-weight:700;font-size:16px}
+.btn{min-height:48px;touch-action:manipulation}
+@media(max-width:700px){.pgo,.xopen{width:100%}.pbd h3{font-size:19px}.pbd p{font-size:15.5px;line-height:1.5}}
+</style>
+</head>
 <body>
 <header class="gh"><div class="in">
   <a class="logo" href="/" aria-label="LeonLink home"><canvas id="logoFx" width="72" height="72" style="width:36px;height:36px;display:block" role="img" aria-label="LeonLink logo"></canvas><b>LEON<span>LINK</span></b></a>
@@ -464,15 +471,13 @@ web:'<svg viewBox="0 0 24 24" aria-label="Web"><path d="M12 2a10 10 0 1 0 0 20 1
 mob:'<svg viewBox="0 0 24 24" aria-label="Mobile"><path d="M7 1h10a2 2 0 0 1 2 2v18a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2zm0 3v14h10V4H7zm5 15.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></svg>'};
 const DATA=[
 {id:'ledgerline',t:'Ledgerline',u:'https://app.leonlink.net',c:'software',s:'live',p:'$9.83/mo',d:'2026-10-04',plat:['web','mob'],
- tags:['Field Service','Invoicing','Scheduling','Payments'],x:'Run a small trades business from a phone. Quote before you leave the driveway, let customers approve and pay in their own portal, take the card on the spot, and let reminders chase what is owed.'},
-{id:'proofline',t:'Proofline',u:'https://proofline.leonlink.net',c:'software',s:'live',p:'Included with Command',d:'2026-10-08',plat:['web','mob'],
- tags:['Ledgerline','Before & After','Photo Reports'],x:'A Ledgerline feature: before-and-after photo reports that prove the work. Snap it, stamp it, send the customer a report they can\'t argue with.'},
-{id:'reviewline',t:'Reviewline',u:'https://review.leonlink.net',c:'software',s:'live',p:'Included with Command',d:'2026-10-08',plat:['web','mob'],
- tags:['Ledgerline','Google Reviews','Automation'],x:'A Ledgerline feature: Google review requests on autopilot. Every finished job gets the same polite ask \u2014 no review gating, no filtering, everyone treated the same.'},
-{id:'dashboard',t:'Dashboard',u:'https://dashboard.leonlink.net',c:'software',s:'new',p:'Free',d:'2026-10-13',plat:['web','mob'],
- tags:['Dashboard','In Development'],x:'A LeonLink dashboard \u2014 currently being built. Check back for updates.'},
+ tags:['Field Service','Invoicing','Scheduling','Payments','Proofline','Reviewline'],x:'Run a small trades business from a phone. Includes Proofline before-and-after photo reports and Reviewline automatic Google review requests. Quote before you leave the driveway, let customers approve and pay in their own portal, take the card on the spot, and let reminders chase what is owed.'},
+{id:'dashline',t:'Dashline',u:'https://dashboard.leonlink.net',c:'software',s:'new',p:'Free',d:'2026-10-13',plat:['web','mob'],
+ tags:['Line Suite','Dashboard','In Development'],x:'Dashline \u2014 a LeonLink dashboard app, currently being built. Check back for updates.'},
 {id:'linkline',t:'Linkline',u:'https://linkline.leonlink.net',c:'software',s:'new',p:'Free',d:'2026-10-13',plat:['web','mob'],
- tags:['Line Suite','In Development'],x:'Linkline \u2014 currently being built. Check back for updates.'},
+ tags:['Line Suite','In Development'],x:'Linkline \u2014 a new Line Suite app, currently being built. Check back for updates.'},
+{id:'rhymeline',t:'Rhymeline',u:'https://rhymeline.vercel.app',c:'software',s:'live',p:'Free',d:'2026-10-13',plat:['web','mob'],
+ tags:['Line Suite','Writing'],x:'Rhymeline \u2014 part of the Line Suite. Tap Open to try it.'},
 {id:'sootfather',t:'Sootfather',u:'/sootfather.html',c:'games',s:'new',p:'Free',d:'2026-10-08',plat:['web','mob'],spot:1,one:1,
  tags:['RPG','Mafia','Story'],x:'A GTA-vibed mafia RPG: you\'re a chimney sweep for the family. Take jobs from the Don, manage your heat, talk or fight your way to Made Man.'},
 {id:'chimneyrun',t:'Chimney Run',u:'/chimney-run.html',c:'games',s:'new',p:'Free',d:'2026-10-08',plat:['web','mob'],spot:1,one:1,
@@ -544,9 +549,9 @@ const DATA=[
 {id:'t-beforeafter',t:'Before & After Viewer',u:'/before-after-viewer.html',c:'tools',s:'live',p:'Free',d:'2026-10-01',plat:['web','mob'],one:1,tags:['Free Tool','Photos'],x:'Drop in two photos and drag the slider to compare.'},
 {id:'t-chimney',t:'Chimney Inspection Checklist',u:'/chimney-inspection-checklist.html',c:'tools',s:'live',p:'Free',d:'2026-10-01',plat:['web'],one:1,tags:['Free Tool','Printable','Trades'],x:'A printable Level 1 and Level 2 chimney inspection checklist.'}
 ];
-const FEATURED=['ledgerline','proofline','reviewline'];
+const FEATURED=['ledgerline','dashline','linkline'];
 const RIB={live:['Live',''],ea:['Beta','ea'],new:['New','new'],read:['Read','read']};
-const AVAILS={ledgerline:'Flat price, whole crew',proofline:'Part of the Line suite',reviewline:'Part of the Line suite'};
+const AVAILS={ledgerline:'Flat price, whole crew',dashline:'Part of the Line suite',linkline:'Part of the Line suite',rhymeline:'Part of the Line suite'};
 const CAT={software:'Software',games:'Game',worlds:'Blog',tools:'Free Tool'};
 const byId=Object.fromEntries(DATA.map(o=>[o.id,o]));
 const rib=o=>o.s==='new'&&Date.now()-new Date(o.d+'T12:00:00').getTime()>30*864e5?null:RIB[o.s];
