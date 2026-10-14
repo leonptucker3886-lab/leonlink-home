@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Glow Packs Whitepaper v1.1 — LeonLink</title>
+<title>Glow Packs Whitepaper v1.2 — LeonLink</title>
 <meta name="description" content="The official Glow Packs whitepaper: collectible card-art NFTs from the LeonLink universe. Product, technology, economics, roadmap, the gated $GLOW token design, compliance, and risk factors.">
 <style>
   :root{--bg:#0e0f14;--panel:#16181f;--panel-2:#1d2029;--line:#2a2e3a;--text:#e8eaf0;--muted:#9aa3b5;--cyan:#00e5ff;--magenta:#ff2fb9;--gold:#ffc857;--green:#3ddc97;--red:#ff5d6c;--radius:14px}
@@ -77,7 +77,7 @@
   <h1>Glow Packs — <span>Collectible Card-Art NFTs</span> from the LeonLink Universe</h1>
   <p class="sub">A collectibles program built on art that already exists: blind packs of original LeonLink game art, minted on Solana, displayed on leonlink.net — and the foundation of a phased ecosystem: achievement badges, cosmetic drops, season passes, staking-for-perks, and a pre-designed, hard-gated fungible token, $GLOW.</p>
   <div class="meta">
-    <span>Version <b>1.1</b></span><span>Date <b>October 14, 2026</b></span><span>Publisher <b>LeonLink (leonlink.net)</b></span><span>Chain <b>Solana</b></span><span>Standard <b>Metaplex Core</b></span><span>Status <b>Pre-launch</b></span>
+    <span>Version <b>1.2</b></span><span>Date <b>October 14, 2026</b></span><span>Publisher <b>LeonLink (leonlink.net)</b></span><span>Chain <b>Solana</b></span><span>Standard <b>Metaplex Core</b></span><span>Status <b>Pre-launch</b></span>
   </div>
 </header>
 
@@ -136,7 +136,7 @@
     <table>
       <thead><tr><th>Property</th><th>What it is</th><th>Role in this program</th></tr></thead>
       <tbody>
-        <tr><td class="tok">Afterglow</td><td>Neon social casino, 19+ games; Glow coins are play money (no cash value) sold in Stripe packs</td><td>Casino table skins as pack utility; cosmetic cNFT drops (Phase 2)</td></tr>
+        <tr><td class="tok">Afterglow</td><td>Neon social casino, 19+ games; Glow coins are play money (no cash value) sold in Stripe packs</td><td>No pack utility — casino separation is absolute (5.3). Cosmetic cNFT drops in Phase 2 are a separate, in-casino system, never sold as packs</td></tr>
         <tr><td class="tok">Arcadeline</td><td>Original arcade line, 14 games with global leaderboards (8 originals + 6 Wave 1 ports)</td><td>Primary art source; profile frames as pack utility</td></tr>
         <tr><td class="tok">LeonLink.net</td><td>Main site: 40+ games, 3 open worlds, Blog, Top 5 / Watchline lists, Ledgerline suite, hire-me services</td><td>Mint page + collector gallery host; whitepaper and odds published here</td></tr>
         <tr><td class="tok">Facebook Page</td><td>Distribution channel; every site post gets a Page twin</td><td>Drop announcements, pack openings, rarity reveals — content, not price talk</td></tr>
@@ -151,7 +151,7 @@
   <div class="card accent">
     <span class="badge pick">The Product</span>
     <p>Blind packs of LeonLink's original game art, minted as NFTs on Solana. Each pack contains <strong>3 cards</strong> drawn from a fixed, published print run across four rarity tiers. Two products: the <strong>Standard pack at $4.99</strong> and the <strong>Vault pack at $19.99</strong> with boosted Epic/Legendary weight. Odds are published on the mint page before any sale — the transparency standard of regulated trading-card products.</p>
-    <p style="margin:0;">Cards are collectibles first. Their utility is cosmetic and social: display in the on-site collector gallery, profile frames in Arcadeline, table skins in Afterglow. Holder perks are always cosmetic or access-based — <strong>never financial</strong>: no revenue share, no yield, no buyback, no cash redemption. That boundary is permanent and is restated in Sections 9 and 11.</p>
+    <p style="margin:0;">Cards are collectibles first. Their utility is cosmetic and social: display in the on-site collector gallery and profile frames in Arcadeline. Deliberately, no pack utility touches the casino in any way (see 5.3). Holder perks are always cosmetic or access-based — <strong>never financial</strong>: no revenue share, no yield, no buyback, no cash redemption. That boundary is permanent and is restated in Sections 9 and 11.</p>
   </div>
   <h3>Why this, first — the selection in brief</h3>
   <p>Ten ecosystem instruments were analyzed and costed in October 2026 (fungible token, packs, season pass, staking, creator coin, cosmetic lootboxes, soulbound badges, vote credits, tournament tokens, store-credit tokens). Packs won on four grounds: they monetize an asset that already exists; they launch for $30–$150 against day-one revenue; their legal posture (collectibles with utility, no profit expectation) is the cleanest of any revenue play; and they feed the content engine — openings and reveals are posts, and posts are the studio's growth strategy. The full comparison is summarized in Section 8's phasing: every other viable instrument appears later in the roadmap, in dependency order.</p>
@@ -170,6 +170,7 @@
       </tbody>
     </table>
   </div>
+  <p><strong>Odds integrity:</strong> a single shared pool with two pack types would drift as the pool drains — published odds would stop matching reality, which is both a trust failure and a legal one. Series 1 therefore uses <strong>fixed-odds pools per pack type</strong> (separate Standard and Vault pools, each with its own fixed composition), and the mint page publishes <strong>live remaining-supply counts per tier</strong> so any buyer can verify the true odds at the moment of purchase.</p>
   <p>Series 1 composition: <strong>120 Common · 40 Rare · 12 Epic · 4 Legendary</strong>. Rarity is enforced by the print run itself, not by post-hoc labeling. When a series window closes, unsold inventory is retired (burned) and the series never reprints; later series use new art from new games.</p>
   <h3>5.2 The art pool (Series 1)</h3>
   <div class="table-scroll">
@@ -188,7 +189,7 @@
   <ul class="plain">
     <li><strong>Collector gallery</strong> — a public page on leonlink.net displaying any wallet's cards by series and rarity.</li>
     <li><strong>Profile frames</strong> — Arcadeline profiles display frames unlocked by held cards.</li>
-    <li><strong>Table skins</strong> — Afterglow tables reskin for holders of designated cards.</li>
+    <li><strong>Casino separation</strong> — no card, perk, or pack mechanic touches Afterglow: no table skins, no in-casino display, no gameplay effect of any kind. The collectible program and the play-money casino are firewalled so no regulator has to take our word for the separation — it is structural.</li>
     <li><strong>Completion recognition</strong> — full-set holders are named on the gallery's Series wall (recognition only; no prize with cash value).</li>
   </ul>
 </section>
@@ -204,6 +205,7 @@
         <tr><td class="tok">Sale contract</td><td>Core Candy Machine</td><td>Battle-tested vending contract; guards for price, limits, dates, supply</td></tr>
         <tr><td class="tok">Storage</td><td>Arweave via Irys</td><td>Permanent art + metadata, independent of leonlink.net hosting</td></tr>
         <tr><td class="tok">Mint page</td><td>Static page, /packs.html</td><td>No accounts, no custody; buyers hold cards in their own wallets</td></tr>
+        <tr><td class="tok">Checkout</td><td>Card checkout + embedded wallet</td><td>Phantom-plus-SOL is too big an ask for a card-paying audience: Series 1 ships with card payment and an embedded wallet (Crossmint-class) from day one. Prices are fixed in USD and converted at checkout — the price a buyer sees is the price they pay.</td></tr>
         <tr><td class="tok">Tooling</td><td>Sugar CLI</td><td>Standard Candy Machine deployment and guard configuration</td></tr>
       </tbody>
     </table>
@@ -237,7 +239,7 @@
   <h2>8. Ecosystem Roadmap</h2>
   <ol class="phases">
     <li><strong>Phase 0 — Foundation (complete).</strong> The off-chain Glow vault unifies the play-money balance across the casino and arcade. Ten-idea analysis completed, packs research, art inventory, this whitepaper.</li>
-    <li><strong>Phase 1 — Glow Packs Series 1 (Q4 2026).</strong> Four-week launch: curation and rights (week 1), Candy Machine on devnet with full test mints (week 2), the /packs.html mint page with published odds and gallery (week 3), the Halloween drop with blog + Facebook announcement (week 4). Quarterly drops thereafter — Wave 1 arcade art supplies Series 2.</li>
+    <li><strong>Phase 1 — Glow Packs Series 1 (Q4 2026).</strong> <strong>Week 0 — the demand test, before any build spend:</strong> a waitlist plus a free "claim a card" signup goes live on leonlink.net, promoted by pack-opening reveal shorts cut ahead of the drop and the site's email list. <strong>Pass/fail: fewer than 40 signups means Series 1 does not proceed</strong> — the audience has spoken before a dollar is spent, and effort returns to traffic. <strong>Series 1 success is defined in advance as 40 packs sold.</strong> Then the four-week launch: curation and rights (week 1), Candy Machine on devnet with full test mints (week 2), the /packs.html mint page with published odds and gallery (week 3), the Halloween drop with blog + Facebook announcement, reveal shorts, and the waitlist email (week 4). Quarterly drops thereafter — Wave 1 arcade art supplies Series 2.</li>
     <li><strong>Phase 2 — Badges &amp; cosmetic drops (Q1 2027).</strong> Soulbound achievement badges (non-transferable, free) for game milestones, and compressed-NFT cosmetic drops inside Afterglow as daily-login rewards — retention layers at near-zero marginal cost (cNFT mints are fractions of a cent).</li>
     <li><strong>Phase 3 — Season pass &amp; staking-for-perks (2027).</strong> A quarterly Season Pass NFT (early access, members wall). Staking locks packs/badges for 30/90/180 days to unlock VIP tiers — exclusive tables, badges, beta access. The return on staking is access and status, never money: no APY, no yield language, anywhere, ever. Built on audited template contracts (deployment under $1 on Base-class chains) — no custom staking code, no five-figure audit line.</li>
     <li><strong>Phase 4 — The $GLOW decision (gated).</strong> A fungible token is the highest-ceiling, highest-risk instrument in this program. It launches only when all three gates are met — Section 9 fixes its design in advance so it is never improvised under hype.</li>
@@ -296,7 +298,8 @@
     <ul class="rules">
       <li><strong>Collectibles, not investments.</strong> All copy — site, social, packaging — describes cards as collectibles with cosmetic utility. Price predictions, profit language, and "investment" framing are prohibited in every channel, including informal posts.</li>
       <li><strong>No cash-out, ever.</strong> Nothing in this program converts to cash, pays winnings, or redeems for money. The casino remains play-money; packs are a separate retail product, not a wagering instrument, and pack contents have no effect on any game of chance.</li>
-      <li><strong>Transparency before sale:</strong> odds published, print runs honored, unsold series retired and burned.</li>
+      <li><strong>Transparency before sale:</strong> odds published and kept true by fixed per-type pools plus live remaining-supply counts (5.1); print runs honored; unsold series retired and burned.</li>
+      <li><strong>Legal review timing:</strong> the packs program as specified (collectibles, firewalled from the casino) launches without a pre-launch memo. Any future change that brings packs anywhere near the casino — a perk, a display, a crossover — requires the paid legal memo <em>before</em> it ships, not after any revenue milestone.</li>
       <li><strong>Provenance:</strong> only art owned outright is minted (Section 5.2).</li>
       <li><strong>18+ positioning,</strong> consistent with the casino's responsible-play language; packs are not marketed to children.</li>
       <li><strong>Securities posture:</strong> the program is structured to sit outside the Howey investment-contract frame as currently guided (including the SEC's September 2026 digital-asset guidance): no expectation of profit is created or marketed, no managerial-efforts value promise exists, and utility is delivered and consumable at purchase. The Phase 4 legal-memo gate exists because a fungible token changes this analysis and deserves paid review first.</li>
@@ -324,6 +327,10 @@
         <span class="mit"><b>Posture:</b> compliance framework written to the strictest current reading; paid legal review gated before any fungible token.</span></li>
       <li><strong>Platform risk.</strong> Dependence on Solana network health and Metaplex tooling.
         <span class="mit"><b>Posture:</b> assets and metadata are portable and permanent on Arweave; the collection does not depend on any single marketplace.</span></li>
+      <li><strong>Wallet-friction risk.</strong> A Phantom-plus-SOL-only launch would lose most of this audience at the connect step.
+        <span class="mit"><b>Posture:</b> card checkout and embedded wallet ship in Series 1 (Section 6), USD-fixed pricing converted at checkout.</span></li>
+      <li><strong>Odds-drift risk.</strong> With a hard-capped pool, naive odds change as cards sell.
+        <span class="mit"><b>Posture:</b> fixed-odds pools per pack type plus live remaining-supply publication (5.1).</span></li>
       <li><strong>No-value risk.</strong> A Glow Pack card may ultimately be worth nothing to anyone but its owner. That is the nature of a collectible, and it is the honest expectation to hold.</li>
     </ul>
   </div>
@@ -374,7 +381,7 @@
 </section>
 
 <footer>
-  <p><strong>Glow Packs Whitepaper v1.1</strong> · Published by LeonLink · leonlink.net/whitepaper.html · October 14, 2026. This paper may be updated; material changes will be versioned and noted on the public roadmap.</p>
+  <p><strong>Glow Packs Whitepaper v1.2</strong> · Published by LeonLink · leonlink.net/whitepaper.html · October 14, 2026. Changelog: v1.2 (Oct 14, 2026) — Week 0 demand gate with pass/fail numbers (40 signups / 40 packs), card checkout + embedded wallet in Series 1, fixed-odds pools with live supply counts, casino utility removed entirely, USD-fixed pricing, legal-memo trigger moved ahead of any casino adjacency. This paper may be updated; material changes will be versioned and noted on the public roadmap.</p>
 </footer>
 
 </div>
