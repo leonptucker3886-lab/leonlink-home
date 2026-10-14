@@ -70,6 +70,7 @@ function go(){
       p.style.animation='hwFall '+(11+Math.random()*10)+'s linear '+(Math.random()*14)+'s infinite';
       document.body.appendChild(p);
     }
+    setTimeout(function(){ document.querySelectorAll('.hw-pump').forEach(function(p){ p.style.transition='opacity 1.2s'; p.style.opacity='0'; setTimeout(function(){ p.remove(); },1300); }); }, 30000);
   }
 }
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',go); else go();
