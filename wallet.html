@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Glow Wallet</title>
+<meta name="robots" content="noindex,nofollow"></head>
+<body>
+<script>
+/* Glow Wallet — the one vault for leonlink.net.
+   Holds the single Glow balance for Afterglow + Arcadeline.
+   Other leonlink.net apps talk to this page via postMessage from a hidden iframe.
+   Protocol:  in  {glow:1, type:'get'}                -> out {glow:1, type:'balance', value}
+              in  {glow:1, type:'add', delta}         -> out balance
+              in  {glow:1, type:'set', value}         -> out balance
+              in  {glow:1, type:'seed', value}        -> sets only if vault never initialized
+*/
+(function(){
+  var KEY='glow_balance_v1', INIT='glow_init_v1';
+  var ALLOWED={
+    'https://www.leonlink.net':1,'https://leonlink.net':1,
+    'https://afterglow.leonlink.net':1,'https://arcadeline.leonlink.net':1,
+    'https://leonlink-home.vercel.app':1
+  };
+  function read(){
+    var v=parseInt(localStorage.getItem(KEY)||'0',10);
+    return isNaN(v)||v<0?0:v;
+  }
+  function write(v){
+    v=Math.max(0,Math.floor(v)||0);
+    localStorage.setItem(KEY,String(v));
+    localStorage.setItem(INIT,'1');
+    return v;
+  }
+  function reply(src,origin){
+    src.postMessage({glow:1,type:'balance',value:read()},origin);
+  }
+  window.addEventListener('message',function(e){
+    if(!ALLOWED[e.origin])return;
+    var m=e.data; if(!m||m.glow!==1)return;
+    if(m.type==='get'){reply(e.source,e.origin);}
+    else if(m.type==='add'){write(read()+(parseInt(m.delta,10)||0));reply(e.source,e.origin);}
+    else if(m.type==='set'){write(parseInt(m.value,10)||0);reply(e.source,e.origin);}
+    else if(m.type==='seed'){
+      if(!localStorage.getItem(INIT)){write(parseInt(m.value,10)||0);}
+      reply(e.source,e.origin);
+    }
+  });
+  /* Let a same-origin parent know the vault is ready */
+  if(window.parent!==window){
+    try{window.parent.postMessage({glow:1,type:'ready',value:read()},'*');}catch(_){}
+  }
+})();
+</script>
+</body></html>
