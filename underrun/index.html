@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Underrun — Open Worlds | LeonLink</title>
+<!--
+UNDERRUN — a 13k-jam WebGL metroidvania
+(c) 2018 Dominic Szablewski (phoboslab) — MIT License, see LICENSE.
+Hosted on leonlink.net with attribution under the MIT terms.
+Touch controls added by LeonLink for mobile play (drives the game's own key/mouse input; game code untouched).
+-->
+<style>
+html,body{margin:0;background:#000;height:100%;overflow:hidden;font-family:system-ui}
+#c{width:100vw;max-height:100vh;image-rendering:pixelated;display:block}
+#a{font-weight:bold;color:#c80;position:absolute;top:2vh;left:2vw;font-size:1.4em;overflow:hidden;white-space:nowrap;width:96%;text-shadow:0 0 7px #f70;transition:opacity 1s;pointer-events:none}
+.stick{position:fixed;bottom:18px;width:128px;height:128px;border-radius:50%;border:2px solid rgba(255,120,0,.5);background:rgba(255,120,0,.06);touch-action:none;display:none;z-index:5}
+.stick.on{display:block}
+.nub{position:absolute;left:39px;top:39px;width:50px;height:50px;border-radius:50%;background:rgba(255,120,0,.35)}
+#credit{position:fixed;bottom:6px;right:8px;color:#865;font:11px system-ui;opacity:.7}
+@media(pointer:coarse){.stick{display:block}}
+</style>
+</head>
+<body>
+<canvas id="c" width=320 height=180></canvas>
+<code id="a"></code>
+<div class="stick" id="stL" style="left:18px"><div class="nub"></div></div>
+<div class="stick" id="stR" style="right:18px"><div class="nub"></div></div>
+<div id="credit">Underrun © Dominic Szablewski (MIT)</div>
+<script src="source/game.js"></script>
+<script src="source/random.js"></script>
+<script src="source/renderer.js"></script>
+<script src="source/entity.js"></script>
+<script src="source/entity-player.js"></script>
+<script src="source/entity-cpu.js"></script>
+<script src="source/entity-plasma.js"></script>
+<script src="source/entity-spider.js"></script>
+<script src="source/entity-sentry.js"></script>
+<script src="source/entity-particle.js"></script>
+<script src="source/entity-health.js"></script>
+<script src="source/entity-explosion.js"></script>
+<script src="source/sonantx-reduced.js"></script>
+<script src="source/music-dark-meat-beat.js"></script>
+<script src="source/sound-effects.js"></script>
+<script src="source/audio.js"></script>
+<script src="source/terminal.js"></script>
+<script src="source/main.js"></script>
+<script>
+/* Touch twin-sticks: drive the game's own input model (keys[] + mouse_x/mouse_y). */
+(function(){
+  if(!window.matchMedia('(pointer:coarse)').matches) return;
+  var K_LEFT=37,K_UP=38,K_RIGHT=39,K_DOWN=40,K_SHOOT=512;
+  function bind(id,isMove){
+    var el=document.getElementById(id),nub=el.firstElementChild,ptr=null,sx=0,sy=0;
+    function setKey(k,v){ if(typeof keys!=='undefined') keys[k]=v; }
+    el.addEventListener('pointerdown',function(e){ptr=e.pointerId;sx=e.clientX;sy=e.clientY;el.setPointerCapture(ptr);e.preventDefault();});
+    el.addEventListener('pointermove',function(e){
+      if(e.pointerId!==ptr)return;
+      var dx=e.clientX-sx,dy=e.clientY-sy,m=Math.max(14,Math.abs(dx),Math.abs(dy));
+      nub.style.transform='translate('+Math.max(-39,Math.min(39,dx))+'px,'+Math.max(-39,Math.min(39,dy))+'px)';
+      if(isMove){setKey(K_LEFT,dx<-14?1:0);setKey(K_RIGHT,dx>14?1:0);setKey(K_UP,dy<-14?1:0);setKey(K_DOWN,dy>14?1:0);}
+      else{
+        if(typeof c!=='undefined'){
+          var r=c.getBoundingClientRect();
+          mouse_x=Math.max(0,Math.min(c.width,(r.left+r.width/2+(dx/m)*c.width*0.6)/r.width*c.width));
+          mouse_y=Math.max(0,Math.min(c.height,(r.top+r.height/2+(dy/m)*c.height*0.6)/r.height*c.height));
+          setKey(K_SHOOT,(Math.abs(dx)>14||Math.abs(dy)>14)?1:0);
+        }
+      }
+    });
+    function up(e){if(e.pointerId!==ptr)return;ptr=null;nub.style.transform='';
+      if(isMove){setKey(K_LEFT,0);setKey(K_RIGHT,0);setKey(K_UP,0);setKey(K_DOWN,0);}
+      else setKey(K_SHOOT,0);}
+    el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up);
+  }
+  bind('stL',true);bind('stR',false);
+})();
+</script>
+</body>
+</html>
