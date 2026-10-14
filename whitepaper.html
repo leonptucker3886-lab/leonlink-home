@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glow Packs Whitepaper v1.1 — LeonLink</title>
+<meta name="description" content="The official Glow Packs whitepaper: collectible card-art NFTs from the LeonLink universe. Product, technology, economics, roadmap, the gated $GLOW token design, compliance, and risk factors.">
+<style>
+  :root{--bg:#0e0f14;--panel:#16181f;--panel-2:#1d2029;--line:#2a2e3a;--text:#e8eaf0;--muted:#9aa3b5;--cyan:#00e5ff;--magenta:#ff2fb9;--gold:#ffc857;--green:#3ddc97;--red:#ff5d6c;--radius:14px}
+  *{box-sizing:border-box} html{scroll-behavior:smooth}
+  body{margin:0;color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;background:radial-gradient(900px 500px at 12% -10%, rgba(0,229,255,.10), transparent 60%),radial-gradient(800px 500px at 92% 0%, rgba(255,47,185,.10), transparent 60%),var(--bg)}
+  .wrap{max-width:980px;margin:0 auto;padding:48px 22px 90px}
+  header.hero{border:1px solid var(--line);border-radius:20px;padding:38px 32px;margin-bottom:30px;position:relative;overflow:hidden;background:linear-gradient(160deg, rgba(0,229,255,.07), rgba(255,47,185,.05) 60%, transparent)}
+  header.hero::after{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:linear-gradient(180deg,var(--cyan),var(--magenta))}
+  .kicker{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--cyan);font-weight:700;margin:0 0 12px}
+  h1{font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.2;margin:0 0 12px;letter-spacing:-.02em}
+  h1 span{background:linear-gradient(90deg,var(--cyan),var(--magenta));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:var(--muted);margin:0;max-width:74ch;font-size:.98rem}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+  .meta span{font-size:.75rem;letter-spacing:.08em;border:1px solid var(--line);border-radius:999px;padding:5px 12px;color:var(--muted);background:rgba(255,255,255,.02)}
+  .meta b{color:var(--text)}
+  section{margin-bottom:44px}
+  h2{font-size:1.35rem;margin:0 0 10px;letter-spacing:-.01em;display:flex;align-items:center;gap:12px}
+  h2::before{content:"";width:10px;height:10px;border-radius:3px;background:linear-gradient(135deg,var(--cyan),var(--magenta));flex:0 0 auto}
+  h3{font-size:1.05rem;margin:24px 0 8px;color:var(--text)}
+  .lede{color:var(--muted);font-size:.94rem;margin:0 0 18px;max-width:76ch}
+  p{margin:0 0 14px;color:#d5dae6}
+  .toc{columns:2;column-gap:34px;font-size:.92rem}
+  .toc a{color:#d5dae6;text-decoration:none;display:block;padding:5px 0;border-bottom:1px solid rgba(42,46,58,.55)}
+  .toc a:hover{color:var(--cyan)}
+  .table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);-webkit-overflow-scrolling:touch;margin-bottom:18px}
+  table{width:100%;border-collapse:collapse;min-width:620px;font-size:.88rem}
+  thead th{text-align:left;padding:13px 16px;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);background:rgba(0,229,255,.05);border-bottom:1px solid var(--line);white-space:nowrap}
+  tbody td{padding:12px 16px;border-bottom:1px solid rgba(42,46,58,.6);vertical-align:top;color:#d5dae6}
+  tbody tr:last-child td{border-bottom:none}
+  td.tok{font-weight:700;color:var(--gold);white-space:nowrap}
+  td.cost{white-space:nowrap;color:var(--green);font-variant-numeric:tabular-nums}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;margin-bottom:18px}
+  .card.accent{border-color:rgba(0,229,255,.35);background:linear-gradient(150deg, rgba(0,229,255,.06), transparent 55%), var(--panel)}
+  .badge{display:inline-block;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800;padding:5px 11px;border-radius:999px;margin-bottom:14px}
+  .badge.pick{color:#04131a;background:linear-gradient(90deg,var(--cyan),var(--green))}
+  .badge.risk{color:#2a070c;background:linear-gradient(90deg,#ff8a95,var(--red))}
+  .badge.gate{color:#1a1200;background:linear-gradient(90deg,var(--gold),#ff9d2f)}
+  ul.risks,ul.rules,ul.plain{list-style:none;padding:0;margin:0}
+  ul.risks li,ul.rules li{padding:12px 0 12px 18px;border-bottom:1px solid rgba(42,46,58,.7);position:relative;color:#d5dae6;font-size:.93rem}
+  ul.plain li{padding:7px 0 7px 18px;position:relative;color:#d5dae6;font-size:.93rem}
+  ul.risks li:last-child,ul.rules li:last-child{border-bottom:none}
+  ul.risks li::before{content:"";position:absolute;left:0;top:21px;width:7px;height:7px;border-radius:2px;background:var(--red)}
+  ul.rules li::before{content:"";position:absolute;left:0;top:19px;width:7px;height:7px;border-radius:2px;background:var(--green)}
+  ul.plain li::before{content:"";position:absolute;left:0;top:15px;width:7px;height:7px;border-radius:2px;background:var(--cyan)}
+  .mit{display:block;margin-top:5px;color:var(--muted);font-size:.86rem}
+  .mit b{color:var(--green);font-weight:700}
+  strong{color:var(--text)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:16px;margin-bottom:24px}
+  .stat{background:var(--panel-2);border:1px solid var(--line);border-radius:11px;padding:14px 16px}
+  .stat .label{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 6px;font-weight:700}
+  .stat .value{margin:0;font-size:.95rem;font-weight:600;color:var(--text)}
+  .stat .value.glow{color:var(--cyan)} .stat .value.money{color:var(--green)}
+  ol.phases{list-style:none;counter-reset:phase;padding:0;margin:0 0 24px}
+  ol.phases li{counter-increment:phase;position:relative;padding:12px 0 12px 52px;border-bottom:1px solid rgba(42,46,58,.7);font-size:.92rem;color:#d5dae6}
+  ol.phases li:last-child{border-bottom:none}
+  ol.phases li::before{content:counter(phase);position:absolute;left:0;top:11px;width:32px;height:32px;display:grid;place-items:center;border-radius:9px;background:linear-gradient(135deg, rgba(0,229,255,.18), rgba(255,47,185,.18));border:1px solid rgba(0,229,255,.35);color:var(--cyan);font-weight:800;font-size:.82rem}
+  .why{border-left:3px solid var(--magenta);padding:4px 0 4px 18px;margin:0 0 14px;color:#d5dae6;font-size:.95rem}
+  .why strong{color:var(--cyan)}
+  .refs{font-size:.85rem;color:var(--muted)} .refs li{padding:4px 0}
+  .refs a{color:var(--cyan)}
+  footer{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:.8rem}
+  @media print{body{background:#fff;color:#111}.wrap{max-width:none;padding:0}header.hero,.card,.table-scroll,.stat{background:#fff!important;border-color:#ccc!important}h1 span{color:#111!important;-webkit-text-fill-color:#111}p,li,td{color:#222!important}.kicker,thead th{color:#333!important;background:#f2f2f2!important}td.tok{color:#7a5b00!important}td.cost{color:#0a6b45!important}section{page-break-inside:avoid}}
+  @media (max-width:600px){.wrap{padding:28px 14px 60px}header.hero{padding:24px 18px}.card{padding:20px 16px}.toc{columns:1}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <p class="kicker">LeonLink · Official Whitepaper</p>
+  <h1>Glow Packs — <span>Collectible Card-Art NFTs</span> from the LeonLink Universe</h1>
+  <p class="sub">A collectibles program built on art that already exists: blind packs of original LeonLink game art, minted on Solana, displayed on leonlink.net — and the foundation of a phased ecosystem: achievement badges, cosmetic drops, season passes, staking-for-perks, and a pre-designed, hard-gated fungible token, $GLOW.</p>
+  <div class="meta">
+    <span>Version <b>1.1</b></span><span>Date <b>October 14, 2026</b></span><span>Publisher <b>LeonLink (leonlink.net)</b></span><span>Chain <b>Solana</b></span><span>Standard <b>Metaplex Core</b></span><span>Status <b>Pre-launch</b></span>
+  </div>
+</header>
+
+<section>
+  <h2>Contents</h2>
+  <div class="toc">
+    <a href="#abstract">Abstract</a>
+    <a href="#intro">1. Introduction</a>
+    <a href="#problem">2. The Problem</a>
+    <a href="#ecosystem">3. The LeonLink Ecosystem</a>
+    <a href="#solution">4. The Solution: Glow Packs</a>
+    <a href="#spec">5. Product Specification</a>
+    <a href="#tech">6. Technology &amp; Architecture</a>
+    <a href="#economics">7. Economics &amp; Supply Model</a>
+    <a href="#roadmap">8. Ecosystem Roadmap</a>
+    <a href="#glow">9. $GLOW — Pre-Committed Token Design (Gated)</a>
+    <a href="#governance">10. Governance &amp; Operations</a>
+    <a href="#compliance">11. Compliance Framework</a>
+    <a href="#risks">12. Risk Factors</a>
+    <a href="#aftercare">13. Aftercare &amp; Support</a>
+    <a href="#glossary">14. Glossary</a>
+    <a href="#disclaimer">15. Disclaimer</a>
+    <a href="#references">References</a>
+  </div>
+</section>
+
+<section id="abstract">
+  <h2>Abstract</h2>
+  <p>LeonLink is a one-person game and content studio operating four connected properties: the Afterglow social casino, the Arcadeline arcade, a library of browser games and open worlds, and a research-driven blog with product lists — plus the Ledgerline software suite. Every title ships with original card art. That art, today, is displayed once and forgotten. Glow Packs converts the art library into collectible digital trading cards sold in blind packs on Solana via Metaplex Core Candy Machine, at a total launch cost under $150, with published odds, fixed print runs, and a collector gallery on leonlink.net.</p>
+  <p>This paper specifies the product, technology, and economics; lays out the five-phase ecosystem roadmap (packs → badges and cosmetic drops → season pass and staking-for-perks → a gated fungible token); pre-commits the complete $GLOW token design behind three hard launch gates; and states the compliance framework and risk factors in full. Glow Packs are collectibles with cosmetic in-site utility. They are not investments, carry no promise of profit or cash value, and are never connected to wagering or winnings.</p>
+</section>
+
+<section id="intro">
+  <h2>1. Introduction</h2>
+  <p>Independent game studios face a structural problem: their most durable asset — original art — earns nothing after launch day. The art is commissioned or created, shown on a product page, and never monetized again, while the studio's revenue depends entirely on the next title or the next sale.</p>
+  <p>Blockchain collectibles changed the economics of digital art for large publishers, but the standard playbook — a fungible token launch with liquidity seeding, audits, and market making — is priced for companies with treasuries and teams, and carries securities risk that a solo founder cannot responsibly absorb. LeonLink's approach inverts the sequence: launch the collectible first, on infrastructure that costs dollars, prove that an audience will pay for the art, and let every later instrument (badges, passes, staking, and eventually a token) be earned by demonstrated demand rather than projected hype.</p>
+  <p>This document is published before any sale, in the open, so that every prospective buyer can read exactly what Glow Packs are, what they are not, what they cost to run, and what could go wrong.</p>
+</section>
+
+<section id="problem">
+  <h2>2. The Problem</h2>
+  <div class="card">
+    <ul class="plain">
+      <li><strong>Art is a sunk cost.</strong> LeonLink has produced 16+ original card designs across its arcade, casino, and story titles. They generate no revenue after the day they ship.</li>
+      <li><strong>Indie monetization is thin.</strong> The studio's rails are coin packs ($0.99–$19.99), flat-price services, and nothing else. There is no collectible, membership, or ownership layer for its most loyal users.</li>
+      <li><strong>Token-first launches fail small studios.</strong> A fungible token launched to a small audience produces an illiquid market, permanent compliance upkeep, and — when staking pays revenue share — a genuine securities problem. The instrument arrives before the audience that would give it purpose.</li>
+      <li><strong>Collectors have no home.</strong> Players who love these games have nothing to own, display, or complete. Loyalty has no artifact.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="ecosystem">
+  <h2>3. The LeonLink Ecosystem</h2>
+  <p class="lede">Four connected properties under one brand — the demand base and the art supply for everything in this paper.</p>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Property</th><th>What it is</th><th>Role in this program</th></tr></thead>
+      <tbody>
+        <tr><td class="tok">Afterglow</td><td>Neon social casino, 19+ games; Glow coins are play money (no cash value) sold in Stripe packs</td><td>Casino table skins as pack utility; cosmetic cNFT drops (Phase 2)</td></tr>
+        <tr><td class="tok">Arcadeline</td><td>Original arcade line, 14 games with global leaderboards (8 originals + 6 Wave 1 ports)</td><td>Primary art source; profile frames as pack utility</td></tr>
+        <tr><td class="tok">LeonLink.net</td><td>Main site: 40+ games, 3 open worlds, Blog, Top 5 / Watchline lists, Ledgerline suite, hire-me services</td><td>Mint page + collector gallery host; whitepaper and odds published here</td></tr>
+        <tr><td class="tok">Facebook Page</td><td>Distribution channel; every site post gets a Page twin</td><td>Drop announcements, pack openings, rarity reveals — content, not price talk</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Growth is driven by the Traffic Generators program (search content, indexing, short video, social distribution) and a published public roadmap. The studio's Top 5 lists operate under a hard integrity rule — $0 from reviews, no affiliates, no sponsored picks — which extends to this program: no paid promotion of packs, ever.</p>
+</section>
+
+<section id="solution">
+  <h2>4. The Solution: Glow Packs</h2>
+  <div class="card accent">
+    <span class="badge pick">The Product</span>
+    <p>Blind packs of LeonLink's original game art, minted as NFTs on Solana. Each pack contains <strong>3 cards</strong> drawn from a fixed, published print run across four rarity tiers. Two products: the <strong>Standard pack at $4.99</strong> and the <strong>Vault pack at $19.99</strong> with boosted Epic/Legendary weight. Odds are published on the mint page before any sale — the transparency standard of regulated trading-card products.</p>
+    <p style="margin:0;">Cards are collectibles first. Their utility is cosmetic and social: display in the on-site collector gallery, profile frames in Arcadeline, table skins in Afterglow. Holder perks are always cosmetic or access-based — <strong>never financial</strong>: no revenue share, no yield, no buyback, no cash redemption. That boundary is permanent and is restated in Sections 9 and 11.</p>
+  </div>
+  <h3>Why this, first — the selection in brief</h3>
+  <p>Ten ecosystem instruments were analyzed and costed in October 2026 (fungible token, packs, season pass, staking, creator coin, cosmetic lootboxes, soulbound badges, vote credits, tournament tokens, store-credit tokens). Packs won on four grounds: they monetize an asset that already exists; they launch for $30–$150 against day-one revenue; their legal posture (collectibles with utility, no profit expectation) is the cleanest of any revenue play; and they feed the content engine — openings and reveals are posts, and posts are the studio's growth strategy. The full comparison is summarized in Section 8's phasing: every other viable instrument appears later in the roadmap, in dependency order.</p>
+</section>
+
+<section id="spec">
+  <h2>5. Product Specification</h2>
+  <h3>5.1 Series and print runs</h3>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Series</th><th>Theme</th><th>Print run</th><th>Window</th></tr></thead>
+      <tbody>
+        <tr><td class="tok">Series 1</td><td>Halloween 2026 — the launch drop</td><td class="cost">176 cards</td><td>Oct–Nov 2026</td></tr>
+        <tr><td class="tok">Series 2</td><td>Arcade Wave 1 (six new titles)</td><td class="cost">TBA with art</td><td>Q1 2027</td></tr>
+        <tr><td class="tok">Series 3+</td><td>New-game art, quarterly</td><td class="cost">Per drop</td><td>Quarterly</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Series 1 composition: <strong>120 Common · 40 Rare · 12 Epic · 4 Legendary</strong>. Rarity is enforced by the print run itself, not by post-hoc labeling. When a series window closes, unsold inventory is retired (burned) and the series never reprints; later series use new art from new games.</p>
+  <h3>5.2 The art pool (Series 1)</h3>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Source</th><th>Designs</th><th>Count</th></tr></thead>
+      <tbody>
+        <tr><td class="tok">Arcadeline</td><td>Serpentine, Brickfall, Drift, Skyline Siege, Stackline, Knockout Queens, Glowmaze, Soot Squad</td><td class="cost">8</td></tr>
+        <tr><td class="tok">Open Worlds</td><td>Overdrive City, Voxelcraft, Red Sands</td><td class="cost">3</td></tr>
+        <tr><td class="tok">Story Games</td><td>Sootfather, Chimney Run, Started From a Baby, Paper Route</td><td class="cost">4</td></tr>
+        <tr><td class="tok">Key Art</td><td>Roadmap cover art; Afterglow cabinet art clears title by title</td><td class="cost">1+</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><strong>Provenance rule:</strong> only art LeonLink owns outright is ever minted. Product photography from Top 5 lists, licensed stock, and third-party art are permanently excluded.</p>
+  <h3>5.3 Utility specification</h3>
+  <ul class="plain">
+    <li><strong>Collector gallery</strong> — a public page on leonlink.net displaying any wallet's cards by series and rarity.</li>
+    <li><strong>Profile frames</strong> — Arcadeline profiles display frames unlocked by held cards.</li>
+    <li><strong>Table skins</strong> — Afterglow tables reskin for holders of designated cards.</li>
+    <li><strong>Completion recognition</strong> — full-set holders are named on the gallery's Series wall (recognition only; no prize with cash value).</li>
+  </ul>
+</section>
+
+<section id="tech">
+  <h2>6. Technology &amp; Architecture</h2>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Layer</th><th>Choice</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td class="tok">Chain</td><td>Solana</td><td>Sub-cent fees, fast finality, mature collectibles tooling</td></tr>
+        <tr><td class="tok">NFT standard</td><td>Metaplex Core</td><td>Current lightweight standard; ~$0.25–$0.35 all-in mint cost</td></tr>
+        <tr><td class="tok">Sale contract</td><td>Core Candy Machine</td><td>Battle-tested vending contract; guards for price, limits, dates, supply</td></tr>
+        <tr><td class="tok">Storage</td><td>Arweave via Irys</td><td>Permanent art + metadata, independent of leonlink.net hosting</td></tr>
+        <tr><td class="tok">Mint page</td><td>Static page, /packs.html</td><td>No accounts, no custody; buyers hold cards in their own wallets</td></tr>
+        <tr><td class="tok">Tooling</td><td>Sugar CLI</td><td>Standard Candy Machine deployment and guard configuration</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h3>6.1 Candy Machine guards (Series 1 configuration)</h3>
+  <ul class="plain">
+    <li><strong>Fixed price</strong> in SOL, set at launch and published in advance.</li>
+    <li><strong>Per-wallet mint limit</strong> to keep distribution broad and deter botting sweeps.</li>
+    <li><strong>Scheduled start</strong> — no pre-sales, no allowlist sales, no insider allocation. The public mint is the only mint.</li>
+    <li><strong>Hard supply cap</strong> equal to the print run (176). The contract cannot mint beyond it.</li>
+  </ul>
+  <h3>6.2 Custody and security posture</h3>
+  <p>LeonLink never custodies buyer assets. The program's own wallets are hardware-backed; mint authority for a series is revoked when its window closes and unsold inventory is burned. No upgradeable custom contracts are introduced by this program — the sale runs entirely on Metaplex's audited, widely deployed contracts.</p>
+</section>
+
+<section id="economics">
+  <h2>7. Economics &amp; Supply Model</h2>
+  <div class="grid">
+    <div class="stat"><p class="label">Setup Cost</p><p class="value money">$30–$150 total</p></div>
+    <div class="stat"><p class="label">Cost per Card</p><p class="value money">~$0.30 mint (Metaplex Core)</p></div>
+    <div class="stat"><p class="label">Pack Prices</p><p class="value">$4.99 Standard · $19.99 Vault</p></div>
+    <div class="stat"><p class="label">Royalties</p><p class="value">5% configured — unreliable; excluded from projections</p></div>
+  </div>
+  <div class="card">
+    <p><strong>Revenue model:</strong> primary pack sales only. Series 1 gross at full sell-through is roughly $300–$900 — stated plainly because this program is a proof of demand, not a windfall, and this paper does not deal in projections beyond arithmetic.</p>
+    <p style="margin:0;"><strong>What the money does:</strong> pack revenue funds the next series' art and the studio's development time. There is no treasury token, no investor allocation, and no return promise of any kind. An optional short-form legal memo ($5,000–$15,000 at current boutique rates) is budgeted only after cumulative pack sales pass $1,000 — the program buys its legal review out of revenue, not out of hope.</p>
+  </div>
+</section>
+
+<section id="roadmap">
+  <h2>8. Ecosystem Roadmap</h2>
+  <ol class="phases">
+    <li><strong>Phase 0 — Foundation (complete).</strong> The off-chain Glow vault unifies the play-money balance across the casino and arcade. Ten-idea analysis completed, packs research, art inventory, this whitepaper.</li>
+    <li><strong>Phase 1 — Glow Packs Series 1 (Q4 2026).</strong> Four-week launch: curation and rights (week 1), Candy Machine on devnet with full test mints (week 2), the /packs.html mint page with published odds and gallery (week 3), the Halloween drop with blog + Facebook announcement (week 4). Quarterly drops thereafter — Wave 1 arcade art supplies Series 2.</li>
+    <li><strong>Phase 2 — Badges &amp; cosmetic drops (Q1 2027).</strong> Soulbound achievement badges (non-transferable, free) for game milestones, and compressed-NFT cosmetic drops inside Afterglow as daily-login rewards — retention layers at near-zero marginal cost (cNFT mints are fractions of a cent).</li>
+    <li><strong>Phase 3 — Season pass &amp; staking-for-perks (2027).</strong> A quarterly Season Pass NFT (early access, members wall). Staking locks packs/badges for 30/90/180 days to unlock VIP tiers — exclusive tables, badges, beta access. The return on staking is access and status, never money: no APY, no yield language, anywhere, ever. Built on audited template contracts (deployment under $1 on Base-class chains) — no custom staking code, no five-figure audit line.</li>
+    <li><strong>Phase 4 — The $GLOW decision (gated).</strong> A fungible token is the highest-ceiling, highest-risk instrument in this program. It launches only when all three gates are met — Section 9 fixes its design in advance so it is never improvised under hype.</li>
+  </ol>
+</section>
+
+<section id="glow">
+  <h2>9. $GLOW — Pre-Committed Token Design (Gated)</h2>
+  <div class="card accent">
+    <span class="badge gate">Phase 4 · Design Fixed · Launch Gated</span>
+    <h3 style="margin-top:0;">The three gates (all required)</h3>
+    <ul class="plain">
+      <li><strong>Audience:</strong> 500+ sustained daily visitors across LeonLink properties.</li>
+      <li><strong>Collector base:</strong> 1,000+ distinct Glow Packs holders.</li>
+      <li><strong>Legal:</strong> a paid, written legal memo from a crypto boutique in hand before any contract is deployed.</li>
+    </ul>
+    <p>Rationale: a token's only durable value source is demand from real users of a real product. Launching before the gates produces an illiquid ghost market with permanent compliance upkeep — the failure mode this entire program is sequenced to avoid.</p>
+    <h3>Tokenomics</h3>
+    <div class="grid">
+      <div class="stat"><p class="label">Token</p><p class="value glow">$GLOW</p></div>
+      <div class="stat"><p class="label">Total Supply</p><p class="value">500,000,000 — fixed, no mint function</p></div>
+      <div class="stat"><p class="label">Chain</p><p class="value">Solana or Base — decided at gate time</p></div>
+      <div class="stat"><p class="label">Team Vesting</p><p class="value">4 years, 1-year cliff, on-chain verifiable</p></div>
+    </div>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Allocation</th><th>Share</th><th>Terms</th></tr></thead>
+        <tbody>
+          <tr><td class="tok">Community pool</td><td class="cost">35%</td><td>Released only as perks: pack allocations, cosmetic drops, tournament prizes. Never cash yield.</td></tr>
+          <tr><td class="tok">Treasury</td><td class="cost">20%</td><td>Multisig, published wallet address, quarterly public accounting.</td></tr>
+          <tr><td class="tok">Team</td><td class="cost">15%</td><td>4-year vesting, 1-year cliff, on-chain.</td></tr>
+          <tr><td class="tok">Liquidity</td><td class="cost">15%</td><td>Seeded only at launch, sized to the audience that exists then.</td></tr>
+          <tr><td class="tok">Ecosystem</td><td class="cost">10%</td><td>Partnerships and grants, treasury-approved.</td></tr>
+          <tr><td class="tok">Advisors</td><td class="cost">5%</td><td>Same vesting terms as team.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Hard rules — non-negotiable</h3>
+    <ul class="rules">
+      <li><strong>No yield.</strong> Staking $GLOW unlocks access tiers, exclusive tables, beta slots, and pack allocations — status and access, never a share of revenue.</li>
+      <li><strong>No buybacks, no burns-for-price, no distributions.</strong> Any market value must come from utility demand alone.</li>
+      <li><strong>No profit language</strong> in any channel, ever — the Section 11 language rule applies to the token with double force.</li>
+      <li><strong>Play money stays play money:</strong> $GLOW never buys casino advantage, never redeems for cash, and Glow coins never convert into $GLOW.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="governance">
+  <h2>10. Governance &amp; Operations</h2>
+  <p>LeonLink is operated by one person. This paper does not pretend otherwise, and the program is designed for that reality: quarterly drops, no daily obligations, no promises that require a team to keep. Treasury and program wallets (if Phase 4 activates) are published addresses with quarterly public accounting posted to the blog. Decisions about series themes and future drops are announced on the public roadmap page before execution. If operations ever pause, existing cards remain valid on-chain, art and metadata persist on Arweave, and the gallery remains readable — the assets do not depend on the operator's continued activity to exist.</p>
+</section>
+
+<section id="compliance">
+  <h2>11. Compliance Framework</h2>
+  <div class="card">
+    <ul class="rules">
+      <li><strong>Collectibles, not investments.</strong> All copy — site, social, packaging — describes cards as collectibles with cosmetic utility. Price predictions, profit language, and "investment" framing are prohibited in every channel, including informal posts.</li>
+      <li><strong>No cash-out, ever.</strong> Nothing in this program converts to cash, pays winnings, or redeems for money. The casino remains play-money; packs are a separate retail product, not a wagering instrument, and pack contents have no effect on any game of chance.</li>
+      <li><strong>Transparency before sale:</strong> odds published, print runs honored, unsold series retired and burned.</li>
+      <li><strong>Provenance:</strong> only art owned outright is minted (Section 5.2).</li>
+      <li><strong>18+ positioning,</strong> consistent with the casino's responsible-play language; packs are not marketed to children.</li>
+      <li><strong>Securities posture:</strong> the program is structured to sit outside the Howey investment-contract frame as currently guided (including the SEC's September 2026 digital-asset guidance): no expectation of profit is created or marketed, no managerial-efforts value promise exists, and utility is delivered and consumable at purchase. The Phase 4 legal-memo gate exists because a fungible token changes this analysis and deserves paid review first.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="risks">
+  <h2>12. Risk Factors</h2>
+  <p class="lede">Read this section before buying anything. These risks are real, current, and stated without softening.</p>
+  <div class="card">
+    <span class="badge risk">Risk Register</span>
+    <ul class="risks">
+      <li><strong>Market risk.</strong> NFT demand is soft and cyclical in 2026. Cards may have little or no resale market and may never resell at or above pack price.
+        <span class="mit"><b>Posture:</b> buy to collect and use, never to profit. Program exposure is capped under $150 per series.</span></li>
+      <li><strong>Audience risk.</strong> LeonLink's traffic is small (tens of visitors daily at writing). Drops may sell slowly or partially.
+        <span class="mit"><b>Posture:</b> print runs sized to the audience that exists; unsold inventory retired, not discounted into doubt.</span></li>
+      <li><strong>Key-person risk.</strong> One operator designs, builds, and supports the program. Illness, burnout, or a change of priorities could pause future drops.
+        <span class="mit"><b>Posture:</b> existing cards and the gallery persist independently (Arweave + on-chain); no drop is sold against future promises beyond the drop itself.</span></li>
+      <li><strong>Technology risk.</strong> Smart contracts, wallets, and chains can fail or be exploited.
+        <span class="mit"><b>Posture:</b> no custom contracts in Phases 0–2 — only Metaplex's deployed, audited infrastructure; buyers keep self-custody.</span></li>
+      <li><strong>Royalty risk.</strong> Secondary-market royalties are inconsistently enforced across marketplaces.
+        <span class="mit"><b>Posture:</b> royalties excluded from all program economics.</span></li>
+      <li><strong>Regulatory risk.</strong> Digital-asset rules evolve and vary by jurisdiction; a future rule could restrict pack sales or secondary trading.
+        <span class="mit"><b>Posture:</b> compliance framework written to the strictest current reading; paid legal review gated before any fungible token.</span></li>
+      <li><strong>Platform risk.</strong> Dependence on Solana network health and Metaplex tooling.
+        <span class="mit"><b>Posture:</b> assets and metadata are portable and permanent on Arweave; the collection does not depend on any single marketplace.</span></li>
+      <li><strong>No-value risk.</strong> A Glow Pack card may ultimately be worth nothing to anyone but its owner. That is the nature of a collectible, and it is the honest expectation to hold.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="aftercare">
+  <h2>13. Aftercare &amp; Support</h2>
+  <p>Ongoing load is deliberately LOW–MEDIUM: one drop per quarter (curation, an afternoon of machine configuration, odds publication, announcement), gallery maintenance, and mint troubleshooting via the site contact. There is no market making, no price management, no floor support, and no community-management obligation beyond the existing Facebook Page rhythm. Holders should expect a maintained gallery and an honest quarterly cadence — nothing more is promised, and nothing more should be inferred.</p>
+</section>
+
+<section id="glossary">
+  <h2>14. Glossary</h2>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Term</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td class="tok">Candy Machine</td><td>Metaplex vending contract that mints NFTs at a fixed price under configured guards.</td></tr>
+        <tr><td class="tok">Metaplex Core</td><td>Solana's current lightweight NFT standard; ~$0.30 all-in mint cost.</td></tr>
+        <tr><td class="tok">cNFT</td><td>Compressed NFT — state-compressed minting at fractions of a cent, used for mass cosmetic drops.</td></tr>
+        <tr><td class="tok">Soulbound</td><td>Non-transferable token; used for achievement badges so they can never be bought or sold.</td></tr>
+        <tr><td class="tok">Print Run</td><td>The fixed supply of a series, enforced on-chain by the Candy Machine supply cap.</td></tr>
+        <tr><td class="tok">Glow Coins</td><td>Afterglow/Arcadeline play money. No cash value. Unrelated to Glow Packs and to $GLOW.</td></tr>
+        <tr><td class="tok">$GLOW</td><td>The pre-designed, unlaunched fungible token of Section 9. It does not exist yet and may never launch if the gates are not met.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="disclaimer">
+  <h2>15. Disclaimer</h2>
+  <div class="card">
+    <p style="margin:0;">This document describes a digital collectibles program and is published for information before any sale. Glow Packs are collectibles with cosmetic in-site utility. They are not securities, investments, or currency; they carry no cash value, no promise of profit, and no redemption rights. Glow coins inside Afterglow and Arcadeline are play money. $GLOW, described in Section 9, does not exist at the time of writing; its design is pre-committed and its launch is conditional on gates that may never be met. Nothing in this paper is financial, legal, or tax advice. Figures are estimates at October 2026 rates and may change. Forward-looking statements (roadmap phases, dates, and features) are intentions, not guarantees.</p>
+  </div>
+</section>
+
+<section id="references">
+  <h2>References</h2>
+  <ol class="refs">
+    <li>Metaplex Core &amp; Candy Machine documentation and mint-cost data — metaplex.com; protocol cost notes via <a href="https://github.com/azumizeus/promptdeck">azumizeus/promptdeck protocol skills</a>.</li>
+    <li>U.S. SEC, digital asset guidance on the Howey framework (September 25, 2026) and protocol-staking statements (2025–2026).</li>
+    <li>TurnKey Jet SEC no-action letter (2019) — fixed-price, consumable token blueprint, via <a href="https://tokenist.com/sec-issues-first-no-action-letter-featuring-a-tokenized-digital-asset-which-is-not-a-security/">tokenist.com</a>.</li>
+    <li>Smart-contract audit cost ranges 2026 — <a href="https://redvolt.ai/blog/smart-contract-audit-cost-2026-complete-pricing-guide">redvolt.ai</a>; <a href="https://sigintzero.com/blog/smart-contract-audit-cost-guide">sigintzero.com</a>.</li>
+    <li>Crypto legal opinion cost ranges — <a href="https://metapress.com/how-to-choose-a-law-firm-for-a-cryptocurrency-legal-opinion/">metapress.com</a>.</li>
+    <li>Base network gas costs — <a href="https://cryptopresalenews.com/ido-gas-fees-comparison">cryptopresalenews.com</a>; thirdweb audited contract templates and audit reports — <a href="https://github.com/thirdweb-dev/contracts">github.com/thirdweb-dev</a>.</li>
+    <li>Clanker launch mechanics (Base) — <a href="https://www.clanker.world">clanker.world</a>.</li>
+    <li>LeonLink Ecosystem Token Analysis (internal research report, October 14, 2026) — full ten-idea costing and scoring, available on request.</li>
+  </ol>
+</section>
+
+<footer>
+  <p><strong>Glow Packs Whitepaper v1.1</strong> · Published by LeonLink · leonlink.net/whitepaper.html · October 14, 2026. This paper may be updated; material changes will be versioned and noted on the public roadmap.</p>
+</footer>
+
+</div>
+</body>
+</html>
