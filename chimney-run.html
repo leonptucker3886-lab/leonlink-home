@@ -44,6 +44,10 @@ h1 .c{color:#22f0ff;text-shadow:0 0 24px #22f0ff,0 0 60px #22f0ff66}
 #tJump{width:88px;height:88px;font-size:20px;font-weight:800;border-color:#ff9f1c;color:#ffcf7d}
 .tgrp{display:flex;gap:12px}
 .credit{position:absolute;bottom:8px;right:12px;font-size:11px;color:#55556f;z-index:4;letter-spacing:.1em}
+/* mobile: controls never cover the game */
+#touch{position:fixed;padding:0 calc(14px + env(safe-area-inset-right)) calc(14px + env(safe-area-inset-bottom)) calc(14px + env(safe-area-inset-left))}
+@media(orientation:portrait){#wrap{align-items:flex-start;padding-top:calc(env(safe-area-inset-top) + 14vh)}#stage{width:100vw}#touch{padding-bottom:calc(28px + env(safe-area-inset-bottom))}}
+@media(orientation:landscape) and (max-height:540px){.tbtn{width:56px;height:56px;font-size:22px;background:rgba(20,20,36,.35)}#tJump{width:68px;height:68px;font-size:15px}.tgrp{gap:8px}#touch{opacity:.8}#hud{padding:6px 10px}#hud .pill{padding:4px 10px;font-size:12px}#hud button{width:32px;height:32px;font-size:14px}}
 </style>
 </head>
 <body>
