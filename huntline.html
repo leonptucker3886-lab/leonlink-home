@@ -128,6 +128,8 @@ body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef;user-s
 </div>
 
 <script src="/js/nav.js" defer></script>
+<script src="/js/leonlink-profile.js"></script>
+<script>LLProfile.init("huntline");</script>
 <script>
 (function(){
 "use strict";
@@ -932,6 +934,7 @@ function endRound(g){
 function endSeason(g){
   g.over=true;playing=false;
   var t=HUNT.loadT();t.plays++;t.best=Math.max(t.best,g.score);HUNT.saveT(t);
+  try{LLProfile.score(g.score);var tot=0;for(var _k in t.tr)tot+=t.tr[_k]||0;if(tot>=1)LLProfile.unlock('first_hunt');if(tot>=25)LLProfile.unlock('hunt_25');}catch(e){}
   document.getElementById('sumscore').textContent=g.score;
   document.getElementById('sumbest').textContent='Personal best: '+t.best+' · Seasons: '+t.plays+(g.score>=PAR_SEASON?' · PAR CLEARED':' · Par '+PAR_SEASON);
   renderTrophies(document.getElementById('trophies2'),t);
