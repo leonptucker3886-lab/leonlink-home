@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Are Computers Alive? | Blog</title>
+<meta name="description" content="Neurons vs circuits, electricity vs blood. The honest scientific answer — no, by every definition — and why the parallels are still astonishing. With peer-reviewed sources.">
+<link rel="canonical" href="https://www.leonlink.net/journal/are-computers-alive.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Are Computers Alive?">
+<meta property="og:description" content="Neurons vs circuits, electricity vs blood. The honest scientific answer — no, by every definition — and why the parallels are still astonishing.">
+<meta property="og:url" content="https://www.leonlink.net/journal/are-computers-alive.html">
+<meta property="og:image" content="https://www.leonlink.net/img/cards/arecomputersalive.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#04060a">
+<link rel="icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#04060a;--pan:#0b1018d9;--ink:#e6edf5;--mut:#8e9bb0;--g:#39ff88;--c:#22f0ff;--p:#ff3dc8;--y:#ffe14d;--line:#1b2636;--line2:#26364c}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:60px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 Georgia,"Iowan Old Style",serif;padding-bottom:env(safe-area-inset-bottom)}
+a{color:var(--c)}
+header{position:sticky;top:0;z-index:5;background:#04060ae0;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px;padding:10px 16px;font:600 .86rem "DM Sans",system-ui,sans-serif;overflow-x:auto;scrollbar-width:none;white-space:nowrap}
+header::-webkit-scrollbar{display:none}
+header .home{color:var(--g);text-decoration:none;text-shadow:0 0 10px #39ff8899}header a{color:var(--mut);text-decoration:none}header a:hover{color:var(--ink)}
+main{max-width:700px;margin:0 auto;padding:0 18px 70px}
+section{padding:54px 0 6px}
+.kick{font:700 .74rem "DM Sans",system-ui;letter-spacing:.14em;text-transform:uppercase;color:var(--p);text-shadow:0 0 12px #ff3dc888}
+h1{font-family:"Fraunces",Georgia,serif;font-size:clamp(2.4rem,9vw,3.6rem);line-height:1.02;margin:.25em 0 .3em;letter-spacing:-.01em}
+h1 span{color:var(--g);text-shadow:0 0 22px #39ff8877}
+h2{font-family:"Fraunces",Georgia,serif;font-size:1.6rem;line-height:1.2;margin:0 0 .4em;color:var(--g);text-shadow:0 0 16px #39ff8855}
+h3{font-size:1.15rem;margin:1.4em 0 .3em}
+p.n,.n{color:var(--mut);font-style:italic}
+.ui,button{font-family:"DM Sans",system-ui,sans-serif}
+.card{background:var(--pan);border:1px solid var(--line2);border-radius:14px;padding:16px;margin:16px 0;box-shadow:0 0 0 1px #39ff880d,0 10px 30px #0008}
+.tabs{display:flex;gap:8px;margin:10px 0;overflow-x:auto;scrollbar-width:none;padding:2px 2px 6px;scroll-snap-type:x proximity}
+.tabs::-webkit-scrollbar{display:none}
+button{background:#0b1018;border:1px solid var(--line2);color:var(--ink);border-radius:999px;padding:10px 16px;min-height:44px;font-size:.9rem;cursor:pointer;white-space:nowrap;scroll-snap-align:start;transition:all .2s;-webkit-tap-highlight-color:transparent}
+button:hover{border-color:var(--g)}
+button[aria-pressed=true]{background:var(--g);color:#02170b;border-color:var(--g);font-weight:700;box-shadow:0 0 18px #39ff8888}
+.kv{display:flex;justify-content:space-between;gap:12px;font:.92rem/1.45 "DM Sans",system-ui;padding:7px 0;border-bottom:1px solid var(--line)}
+.kv span:first-child{color:var(--mut);flex-shrink:0}.kv span:last-child{text-align:right}
+.ref{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:999px;border:1px solid var(--c);color:var(--c);font:700 .72rem "DM Sans",system-ui;vertical-align:super;cursor:pointer;background:transparent}
+.ref[aria-pressed=true]{background:var(--c);color:#04121a}
+small,.src{color:var(--mut);font:.82rem/1.5 "DM Sans",system-ui}
+blockquote{margin:12px 0;padding:10px 14px;border-left:3px solid var(--c);background:#22f0ff0d;border-radius:0 10px 10px 0;font-style:italic}
+blockquote cite{display:block;font:normal .8rem "DM Sans",system-ui;color:var(--mut);margin-top:4px}
+/* quiz */
+.qbtns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.qbtns button{border-radius:12px;font-weight:700;min-height:52px}
+.qbtns button.ok{background:var(--g);color:#02170b;border-color:var(--g);box-shadow:0 0 18px #39ff8888}
+.qbtns button.no{background:#ff3dc822;border-color:var(--p);color:var(--p)}
+.score{font:700 .9rem "DM Sans",system-ui;color:var(--c)}
+.srcs{font:.8rem/1.6 "DM Sans",system-ui;color:var(--mut);padding-left:18px}.srcs li{margin:4px 0;word-break:break-word}
+.back{display:inline-flex;align-items:center;gap:8px;font:700 .9rem "DM Sans",system-ui;color:#02170b;background:var(--g);padding:12px 20px;border-radius:999px;text-decoration:none;box-shadow:0 0 20px #39ff8877;min-height:44px}
+:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media(min-width:720px){body{font-size:18px}section{padding-top:64px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.sharebtn{background:#0b1018;border:1px solid var(--line2);color:var(--ink);border-radius:999px;padding:8px 16px;min-height:36px;font:600 .82rem "DM Sans",system-ui,sans-serif;cursor:pointer;white-space:nowrap;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.sharebtn:hover{border-color:var(--g)}
+header .sharebtn{margin-left:auto}
+.backrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+/* scorecard */
+.sctable{width:100%;border-collapse:collapse;font:.85rem/1.4 "DM Sans",system-ui;margin:10px 0}
+.sctable th{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);padding:6px 4px;text-align:left}
+.sctable td{padding:7px 4px;border-top:1px solid var(--line);text-align:center}
+.sctable td:first-child,.sctable th:first-child{text-align:left}
+.mk{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;font-weight:800;font-size:.8rem}
+.mk.y{background:#39ff8833;color:var(--g);border:1px solid var(--g)}
+.mk.m{background:#ffe14d33;color:var(--y);border:1px solid var(--y)}
+.mk.n{background:#ff3dc833;color:var(--p);border:1px solid var(--p)}
+.tally{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;font-family:"DM Sans",system-ui}
+.tally div{border:1px solid var(--line2);border-radius:10px;padding:8px 10px;flex:1;min-width:110px;text-align:center}
+.tally b{display:block;font-size:1.15rem;color:var(--g)}
+.tally small{font-size:.7rem}
+</style></head><body>
+<header><a class="home" href="/blog.html">← Blog</a><a href="#checklist">The checklist</a><a href="#neurons">Neurons vs circuits</a><a href="#blood">Electricity and blood</a><a href="#cases">The hard cases</a><a href="#take">My take</a><button class="sharebtn" type="button">Share</button></header>
+<main>
+<section id="top">
+<span class="kick">Blog · The Science of Being</span>
+<h1>Are computers <span>alive?</span></h1>
+<p>Before you answer — take the question seriously for a minute. Your brain is an electrical machine. Your computer is an electrical machine. A computer can copy itself, mutate, evolve, learn, and draw power. A flame can grow, eat, and reproduce. So where is the line?</p>
+<p>Here is the honest scientific answer, up front: <b>no — a computer is not alive, by every definition scientists actually use</b><button class="ref" data-r="0" type="button" aria-pressed="false">1</button><button class="ref" data-r="1" type="button" aria-pressed="false">2</button>. But the parallels are real enough that an entire research field exists to argue about exactly where they break. Tap the numbered markers for sources.</p>
+<div class="card" id="refout" aria-live="polite"><p class="n" style="margin:0">Tap a numbered marker in the text to see the full reference here.</p></div>
+</section>
+<section id="checklist"><h2>1. The checklist</h2>
+<p>In 2002, the biochemist Daniel Koshland published an attempt at a universal definition of life — built so it could cover artificial and even extraterrestrial life, not just Earth biology. His seven pillars, abbreviated PICERAS<button class="ref" data-r="0" type="button" aria-pressed="false">1</button>:</p>
+<div class="tabs" id="pictabs"><button type="button" data-i="0" aria-pressed="true">Program</button><button type="button" data-i="1">Improvisation</button><button type="button" data-i="2">Compartmentalization</button><button type="button" data-i="3">Energy</button><button type="button" data-i="4">Regeneration</button><button type="button" data-i="5">Adaptability</button><button type="button" data-i="6">Seclusion</button></div>
+<div class="card" id="picout" aria-live="polite"></div>
+<div class="card"><h3 style="margin-top:0">The running score</h3>
+<div class="tally" id="tally"></div>
+<p class="n" id="verdictline" style="margin:10px 0 0">Tap a pillar above to see each contender's verdict.</p></div>
+<p>NASA's working definition draws the same boundary in different words: life is "a self-sustained chemical system capable of undergoing Darwinian evolution"<button class="ref" data-r="8" type="button" aria-pressed="false">9</button>. Note the two quiet killers inside that sentence: <i>chemical</i> and <i>self-sustained</i>. And the classic trap case — fire grows, consumes, and "reproduces." It scores roughly <b>one</b> of seven above. Nobody alive argues that fire is alive, which tells you a checklist isn't the whole story — but it tells you where the gaps are.</p>
+</section>
+<section id="neurons"><h2>2. Neurons vs circuits</h2>
+<p>Your laptop has more than twice as many switches as you have neurons. Tap each stat.</p>
+<div class="card">
+<div class="kv"><span>Human neurons</span><span><b>≈ 86 billion</b><button class="ref" data-r="1" type="button" aria-pressed="false">2</button></span></div>
+<div class="kv"><span>Transistors, NVIDIA Blackwell B200 (2024)</span><span><b>208 billion</b><button class="ref" data-r="7" type="button" aria-pressed="false">8</button></span></div>
+<div class="kv"><span>Synapses (brain connections)</span><span><b>≈ 100 trillion</b><button class="ref" data-r="6" type="button" aria-pressed="false">7</button></span></div>
+<div class="kv"><span>Brain power draw</span><span><b>≈ 20 watts</b> — a dim bulb<button class="ref" data-r="6" type="button" aria-pressed="false">7</button></span></div>
+<div class="kv"><span>A rack of AI GPUs</span><span><b>kilowatts</b> — thousands of dim bulbs</span></div>
+<div class="kv"><span>Switch speed</span><span><b>transistors:</b> billions of flips/sec · <b>neurons:</b> hundreds of spikes/sec<button class="ref" data-r="1" type="button" aria-pressed="false">2</button></span></div>
+</div>
+<p>The raw counts make the computer look like it wins. The architecture says otherwise, in four ways:</p>
+<p><b>Neurons are slow but massively parallel — and they rewire themselves.</b> A transistor flips a billion times a second and never changes what it's connected to. A neuron fires a few hundred times a second, and its connections physically strengthen, weaken, grow, and prune every day of your life. Learning is literally the hardware reshaping itself.</p>
+<p><b>The signal is electrochemical, not just electric.</b> A nerve impulse is a wave of charged ions — sodium and potassium — pouring across a membrane, with neurotransmitter molecules physically crossing synapses. Electrons never carry the message alone; chemistry carries it halfway<button class="ref" data-r="1" type="button" aria-pressed="false">2</button>.</p>
+<p><b>There is no hardware-software split.</b> Your computer stores its programs in memory and executes them on a processor — two different places. In a brain, memory <i>is</i> the wiring. Change the strength of a synapse and you've changed both the data and the program at once. No neuroscientist has ever found the brain's hard drive.</p>
+<p><b>A transistor is a switch. A neuron computes.</b> One neuron can integrate thousands of inputs and perform operations a whole circuit of transistors would need to simulate. The comparison "neurons = transistors" flatters the transistor and insults the neuron.</p>
+</section>
+<section id="blood"><h2>3. Electricity and blood</h2>
+<p>Leon put it best: <i>compare electricity and blood.</i> Both are the body's wiring — but only one of them is alive.</p>
+<div class="card">
+<div class="kv"><span>Blood carries</span><span><b>fuel, materials, waste, messages, soldiers</b></span></div>
+<div class="kv"><span>&nbsp;</span><span class="n">glucose · oxygen · amino acids · hormones · white blood cells · platelets</span></div>
+<div class="kv"><span>Electricity carries</span><span><b>energy and information — nothing else</b></span></div>
+<div class="kv"><span>&nbsp;</span><span class="n">no fuel · no building materials · no repair crews</span></div>
+</div>
+<p>A wire that carries power to your GPU carries <i>only</i> power. A vessel carrying blood carries the fuel, the building materials, the maintenance crew, the waste disposal, and the immune system — all in the same tube, going in every direction at once. Your heart pumps about 7,500 liters of that a day through 100,000 kilometers of vessels your body <i>grew itself</i>.</p>
+<p>That last part is the kill shot for the comparison: <b>a body builds its own wires and seals its own cuts.</b> Blood clots. Vessels regrow. Nerves re-sprout. A computer's wiring never heals — a nicked trace is broken forever until a human technician replaces it. Electricity is the delivery truck; blood is the delivery truck, the cargo, the factory, and the road crew.</p>
+<blockquote>"An organism's astonishing gift of concentrating a 'stream of order' on itself and thus escaping the decay into atomic chaos."<cite>— Erwin Schrödinger, <i>What Is Life?</i> (1944)</cite></blockquote>
+<p>That stream of order isn't just electricity. It's electricity plus <i>matter that rebuilds itself</i>.</p>
+</section>
+<section id="cases"><h2>4. The hard cases</h2>
+<p>The checklist cleared computers off the table. But three contenders deserve a real hearing — and one scientist built from a computer file.</p>
+<p><b>Computer viruses.</b> They replicate. They mutate. In the wild, variants compete and the fitter spread — genuinely Darwinian. But they consume no energy, run no metabolism, and cannot exist without a host computer. Most biologists file them with biological viruses: half-alive at best.</p>
+<p><b>Things that "learn."</b> An AI model that adjusts its weights is adapting — but within a single lifetime, not across generations. It never rewrites its own program, never builds offspring, never dies to make room for variants. That's adaptability, not evolution.</p>
+<p><b>Tierra.</b> In 1991, ecologist Tom Ray built a virtual world where small computer programs bred and competed for memory<button class="ref" data-r="3" type="button" aria-pressed="false">4</button>. Real Darwinian evolution happened in the machine: his original program was 80 lines long; within a day, 22-line descendants dominated — parasites that hijacked other programs' copying code had evolved from nothing. Richard Lenski, the microbiologist who ran the longest-running evolution experiment in biology, tried the successor system Avida and said it "had the <i>smell</i> of life"<button class="ref" data-r="4" type="button" aria-pressed="false">5</button>.</p>
+<p><b>The computer that became a cell.</b> In 2010, the Venter Institute synthesized an entire bacterial genome — designed on a computer, built in a lab — and used it to boot up a living, dividing cell<button class="ref" data-r="5" type="button" aria-pressed="false">6</button>. The first organism in Earth's history with an entirely synthetic genome. That one <i>is</i> alive — and the fact that we can see the boundary clearly there shows the boundary is real, not semantic.</p>
+<p>And then there's the philosopher Carol Cleland's warning: maybe we're asking the wrong question. She argues we can't <i>define</i> life before we have a theory of it — the way nobody could define "water" before chemistry could say "H₂O"<button class="ref" data-r="2" type="button" aria-pressed="false">3</button>. We are, right now, in the water-before-chemistry era of understanding life.</p>
+<div class="card"><h3 style="margin-top:0">Hard cases — true or false?</h3>
+<div id="cq"></div>
+<div class="qbtns" id="cqbtns" style="grid-template-columns:1fr"></div>
+<p class="score" id="cqout"></p></div>
+<p class="src">This post summarizes peer-reviewed findings for a general audience. It is not a claim about machine consciousness or rights.</p>
+<div class="backrow" style="margin-top:26px"><a class="back" href="/journal/what-lives-on-us.html">Read next: What Lives On Us →</a><a class="back" href="/blog.html">← Back to Blog</a></div>
+</section>
+<section id="take"><h2>5. My take</h2>
+<p>A computer is not alive. It has no body it maintains, no offspring it births, no chemistry that flows against entropy on its own account. By the checklist, it fails the pillars that matter most — the self-maintenance ones.</p>
+<p>But here is why the question deserves to be asked: <b>the computer is the best mirror we have ever built for life — and mirrors don't breathe.</b> Every pillar it passes makes us more precise about what the failing pillars actually mean. We learned what regeneration <i>is</i> by meeting a machine that lacks it. We understand evolution better because Tierra evolved in a box we could watch. The machine doesn't get to be alive. It does get to show us what alive is.</p>
+<div class="backrow" style="margin-top:26px"><a class="back" href="/blog.html">← Back to Blog</a></div>
+</section>
+<section id="sources"><h3>Sources</h3>
+<ul class="srcs">
+<li id="sr0">[1] Koshland, D. E., Jr. (2002). The seven pillars of life. <i>Science</i>, 295(5563), 2215–2216.</li>
+<li id="sr1">[2] Azevedo, F. A. C., et al. (2009). Equal numbers of neuronal and nonneuronal cells make the human brain an isometrically scaled-up primate brain. <i>J. Comp. Neurol.</i>, 513, 532–541. (≈86 billion neurons)</li>
+<li id="sr2">[3] Cleland, C. E., &amp; Chyba, C. F. (2002). Defining "life". <i>Origins Life Evol. Biosph.</i>, 32(4), 387–393. (The water-before-chemistry argument.)</li>
+<li id="sr3">[4] Ray, T. S. (1991). An approach to the synthesis of life. In Langton, C. G., et al. (Eds.), <i>Artificial Life II</i>. Addison-Wesley. (Tierra.)</li>
+<li id="sr4">[5] Ofria, C., &amp; Wilke, C. O. (2004). Avida: A software platform for research in computational evolutionary biology. <i>Artificial Life</i>, 10, 145–156.</li>
+<li id="sr5">[6] Gibson, D. G., et al. (2010). Creation of a bacterial cell controlled by a chemically synthesized genome. <i>Science</i>, 329(5987), 52–56. (JCVI-syn1.0.)</li>
+<li id="sr6">[7] UCLA Brain Research Institute: ~86 billion neurons, ~100 trillion synapses; brain ≈20 W (2% of mass, ~20% of body energy). (Reputable explainer; not peer-reviewed.)</li>
+<li id="sr7">[8] NVIDIA Blackwell B200 GPU — 208 billion transistors across two chiplets, unveiled at GTC 2024. (Industry source.)</li>
+<li id="sr8">[9] NASA astrobiology working definition: "a self-sustained chemical system capable of undergoing Darwinian evolution" — see Chyba &amp; McDonald (1995), <i>Annu. Rev. Earth Planet. Sci.</i> (Peer-reviewed formulation.)</li>
+</ul></section>
+</main>
+<script>
+(function(){
+var REFS=[
+"[1] Koshland, D. E., Jr. (2002). The seven pillars of life. Science, 295(5563), 2215-2216. PICERAS: Program, Improvisation, Compartmentalization, Energy, Regeneration, Adaptability, Seclusion — proposed as a universal definition covering artificial and extraterrestrial life.",
+"[2] Azevedo, F. A. C., et al. (2009). Equal numbers of neuronal and nonneuronal cells make the human brain an isometrically scaled-up primate brain. J. Comp. Neurol., 513, 532-541. Found on average 86.1 billion neurons and 84.6 billion non-neuronal cells.",
+"[3] Cleland, C. E., & Chyba, C. F. (2002). Defining 'life'. Origins Life Evol. Biosph., 32(4), 387-393. Argues that defining life requires a theory first — like defining water before molecular theory could say H2O.",
+"[4] Ray, T. S. (1991). An approach to the synthesis of life. In Langton et al. (Eds.), Artificial Life II. Addison-Wesley. Tierra: self-replicating programs evolving in a virtual world; 80-line ancestor gave rise to 22-line parasite descendants.",
+"[5] Ofria, C., & Wilke, C. O. (2004). Avida: A software platform for research in computational evolutionary biology. Artificial Life, 10, 145-156. Digital organisms evolving in Avida; Richard Lenski said it had 'the smell of life'.",
+"[6] Gibson, D. G., et al. (2010). Creation of a bacterial cell controlled by a chemically synthesized genome. Science, 329(5987), 52-56. JCVI-syn1.0: first organism in Earth's history with an entirely synthetic genome, designed on a computer.",
+"[7] UCLA Brain Research Institute: the human brain holds about 86 billion neurons forming roughly 100 trillion synapses; it is ~2% of body mass yet uses ~20% of the body's energy, running on about 20 watts. (Reputable explainer; not peer-reviewed.)",
+"[8] NVIDIA Blackwell B200 GPU: 208 billion transistors across two chiplets, unveiled at GTC 2024 on TSMC's 4nm-class process. (Industry source.)",
+"[9] NASA astrobiology working definition of life: 'a self-sustained chemical system capable of undergoing Darwinian evolution' — the formulation used across NASA's origins-of-life program, as in Chyba & McDonald (1995), Annu. Rev. Earth Planet. Sci. Note: by design, a chemical definition excludes digital life."
+];
+function showRef(i){
+document.querySelectorAll(".ref").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.r==i)});
+document.getElementById("refout").innerHTML="<p style=\"margin:0\">"+REFS[i]+"</p>";
+var el=document.getElementById("sr"+i);if(el)el.style.color="#e6edf5";
+}
+document.querySelectorAll(".ref").forEach(function(b){b.onclick=function(){showRef(+b.dataset.r)}});
+
+/* PICERAS scorecard: score per entity per pillar. y=yes, m=partial, n=no */
+var ENT=["Human","Bacterium","Computer","Computer virus","Fire"];
+var PILLARS=[
+{n:"Program",d:"An organized plan that describes the ingredients and how they interact over time — in biology, written in DNA.",
+ s:["y","y","m","m","n"],
+ w:["Your genome is the program.","Its genome runs the cell.","Code is a plan — but the computer never writes or maintains it; humans do.","Viral code self-replicates, but its 'kinetics' run on someone else's machine.","No plan. Only fuel, heat, and oxygen."]},
+{n:"Improvisation",d:"The ability to change the program in response to the environment — evolution's job.",
+ s:["y","y","m","m","n"],
+ w:["DNA mutates; selection shapes generations.","Bacteria evolve in days — the textbook case.","An AI can 'learn' inside one lifetime, but it never rewrites its own program across generations.","Variants mutate and compete in the wild — Darwinian, but selection pressure comes from humans writing antivirus.","Fire cannot change its own recipe."]},
+{n:"Compartmentalization",d:"Separate spaces that protect chemical processes from the outside world — membranes, cells, rooms with doors.",
+ s:["y","y","y","m","n"],
+ w:["Cells, organs, skin.","The membrane — one compartment, everything inside.","Chips genuinely do isolate regions and pathways from each other.","Only inside a host's compartments — alone it has none.","A flame is an open process with no walls."]},
+{n:"Energy",d:"Controlled intake and use of energy to fight entropy — not just burning fuel, but harvesting it.",
+ s:["y","y","y","n","m"],
+ w:["Metabolism: controlled burn, 37°C.","ATP, chemotaxis, full metabolism.","Draws and regulates electricity — a real controlled energy flow.","Consumes no energy of its own; it borrows a computer's.","Burns fuel, yes — but there's no control, no harvest, no storage."]},
+{n:"Regeneration",d:"Repairing and replacing worn parts from within — healing, regrowth, cell turnover.",
+ s:["y","y","n","n","n"],
+ w:["You replace your own skin, blood, and bone.","Constant self-repair and division.","A nicked circuit stays nicked until a human swaps the board. No self-healing.","It spreads, but nothing repairs.","Burned fuel never unburns."]},
+{n:"Adaptability",d:"Fast behavioral responses — reflexes, pupils shrinking, fans ramping up.",
+ s:["y","y","m","n","n"],
+ w:["Reflexes, hormones, behavior.","Chemotaxis: bacteria swim toward food, away from poison.","Fans ramp, chips throttle — a thermostat, not a reflex arc.","No behavior of its own; only the behavior of its code.","A fire flares in wind, but that is physics, not a response."]},
+{n:"Seclusion",d:"Thousands of specific reactions in tiny volumes at once, without cross-talk.",
+ s:["y","y","m","n","n"],
+ w:["Cells run thousands of reactions side by side, each in its channel.","One cell, hundreds of simultaneous pathways.","Transistors do isolate pathways — but no chemical specificity; it's all electrons.","No internal chemistry at all.","One reaction, everywhere, all at once."]}
+];
+function mk(v){return v==="y"?'<span class="mk y">✓</span>':v==="m"?'<span class="mk m">~</span>':'<span class="mk n">✗</span>'}
+function tally(){
+var T=ENT.map(function(e,ei){
+ var f=0,p=0;
+ PILLARS.forEach(function(pl){var v=pl.s[ei];if(v==="y")f++;else if(v==="m")p++});
+ return {e:e,f:f,p:p};
+});
+document.getElementById("tally").innerHTML=T.map(function(t){
+ return '<div><b>'+t.f+' / 7</b><small>'+t.e+(t.p?' · '+t.p+' partial':'')+'</small></div>';
+}).join("");
+document.getElementById("verdictline").textContent="Human 7/7, bacterium 7/7. Computer: 2 full + 4 partial. Computer virus: 0 full. Fire: 1 partial. The computer fails every pillar about self-maintenance — that is the line.";
+}
+function showPillar(i){
+document.querySelectorAll("#pictabs button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.i==i)});
+var p=PILLARS[i];
+var rows=ENT.map(function(e,ei){
+ return '<tr><td style="text-align:left">'+e+'</td>'+'<td>'+mk(p.s[ei])+'</td><td style="text-align:left">'+p.w[ei]+'</td></tr>';
+}).join("");
+document.getElementById("picout").innerHTML='<h3 style="margin-top:0">'+p.n+'</h3><p class="n">'+p.d+'</p><table class="sctable"><tr><th>Contender</th><th>Verdict</th><th>Why</th></tr>'+rows+'</table>';
+}
+document.querySelectorAll("#pictabs button").forEach(function(b){b.onclick=function(){showPillar(+b.dataset.i)}});
+showPillar(0);tally();
+
+/* hard-cases quiz */
+var CQ=[
+["Fire grows, eats, and reproduces — so it's alive.",false,"False. Fire scores about one of seven on the checklist. Growth plus consumption isn't life — it's just chemistry going downhill."],
+["Computer viruses evolve.",true,"True — sort of. Variants mutate and the fitter spread, which is Darwinian. But they burn no energy and run no metabolism, and they can't exist without a host machine. Half-alive at best."],
+["In Tierra, programs evolved on their own.",true,"True. Tom Ray's 80-line program gave rise to 22-line descendants that hijacked other programs' copying code — parasites evolved from nothing in the machine."],
+["Scientists built a living cell from a computer file.",true,"True. JCVI-syn1.0 (2010): a genome designed on a computer and synthesized in a lab, used to boot up a living, dividing cell — the first organism in Earth's history with an entirely synthetic genome."],
+["Your brain runs on about 20 watts.",true,"True — about the same as a dim lightbulb, roughly 2% of your body mass burning ~20% of its energy."]
+];
+var cqi=0;
+function cqrender(){
+document.getElementById("cq").innerHTML="<p><b>Q"+(cqi+1)+".</b> "+CQ[cqi][0]+"</p>";
+document.getElementById("cqbtns").innerHTML='<button type="button" data-v="1">True</button><button type="button" data-v="0">False</button>';
+var btns=document.querySelectorAll("#cqbtns button");
+btns.forEach(function(b){b.onclick=function(){
+var ok=(b.dataset.v==="1")===CQ[cqi][1];
+btns.forEach(function(x){x.classList.add((x.dataset.v==="1")===CQ[cqi][1]?"ok":"no")});
+document.getElementById("cqout").textContent=CQ[cqi][2];
+var btn=document.createElement("button");btn.type="button";btn.textContent=cqi<CQ.length-1?"Next →":"Done";btn.style.marginTop="8px";
+btn.onclick=function(){cqi++;if(cqi<CQ.length){document.getElementById("cqout").textContent="";cqrender()}else{document.getElementById("cq").innerHTML="";document.getElementById("cqbtns").innerHTML="";document.getElementById("cqout").textContent="The pattern: everything that scores 'alive' maintains itself. The rest just consumes."}};
+document.getElementById("cqbtns").appendChild(btn);
+}});
+}
+cqrender();
+
+/* share */
+document.querySelector(".sharebtn").onclick=function(){
+var d={title:document.title,text:"Are computers alive? Neurons vs circuits, electricity vs blood.",url:location.href};
+if(navigator.share)navigator.share(d).catch(function(){});else if(navigator.clipboard)navigator.clipboard.writeText(location.href);
+};
+})();
+
+/* traffic beacon */
+(function(){try{var p=location.pathname;fetch("/api/track?p="+encodeURIComponent(p)+"&r="+encodeURIComponent(document.referrer||""),{mode:"no-cors",keepalive:true}).catch(function(){})}catch(e){}})();
+</script>
+</body>
+</html>
