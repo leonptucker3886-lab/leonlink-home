@@ -23,7 +23,7 @@
 {"@type":"Person","@id":"https://www.leonlink.net/#leon","name":"Leon from LeonLink","url":"https://www.leonlink.net/","jobTitle":"Full-stack Web & Game Developer","email":"mailto:info@leonlink.net","knowsAbout":["Web development","HTML5 game development","E-commerce","Progressive web apps","SaaS","SEO","Supabase","Stripe","JavaScript"]},
 {"@type":"ProfessionalService","@id":"https://www.leonlink.net/#service","name":"LeonLink — Leon from LeonLink, independent developer","url":"https://www.leonlink.net/","email":"info@leonlink.net","founder":{"@id":"https://www.leonlink.net/#leon"},"areaServed":"Worldwide","image":"https://www.leonlink.net/og.png","hasOfferCatalog":{"@type":"OfferCatalog","name":"Development services","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Custom website design and development"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"E-commerce store development"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"HTML5 browser game development"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Web app and PWA development"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"White-label SaaS development"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Technical SEO and site speed"}}]}},
 {"@type":"ItemList","name":"Live proof of work","itemListElement":[{"@type":"ListItem","position":1,"name":"LeonLink Blog","url":"https://www.leonlink.net/blog.html"},{"@type":"ListItem","position":2,"name":"Top 5 buying guides","url":"https://www.leonlink.net/lineup/"},{"@type":"ListItem","position":3,"name":"Arcadeline arcade","url":"https://arcadeline.leonlink.net"},{"@type":"ListItem","position":4,"name":"Afterglow casino (free-to-play)","url":"https://afterglow.leonlink.net"}]},
-{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do I own the code?","acceptedAnswer":{"@type":"Answer","text":"Yes. Code, design, accounts and keys are yours outright."}},{"@type":"Question","name":"How long does it take?","acceptedAnswer":{"@type":"Answer","text":"Most projects ship in days to a couple of weeks, and you watch it being built."}},{"@type":"Question","name":"Do you work with existing sites?","acceptedAnswer":{"@type":"Answer","text":"Yes. I can fix, speed up or rebuild what you already have."}}]}
+{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do I own the code?","acceptedAnswer":{"@type":"Answer","text":"Yes. Code, design, accounts and keys are yours outright."}},{"@type":"Question","name":"How long does it take?","acceptedAnswer":{"@type":"Answer","text":"Most projects ship in days to a couple of weeks, and you watch it being built."}},{"@type":"Question","name":"Do you work with existing sites?","acceptedAnswer":{"@type":"Answer","text":"Yes. I can fix, speed up or rebuild what you already have."}},{"@type":"Question","name":"What if I don't like it?","acceptedAnswer":{"@type":"Answer","text":"You approve the plan before I start and see it as it's built. No surprises."}},{"@type":"Question","name":"Is there anything you won't build?","acceptedAnswer":{"@type":"Answer","text":"Real-money gambling, logins into other people's accounts, and app-store submissions."}}]}
 ]}
 </script>
 <style>
@@ -50,7 +50,7 @@ a.card:hover{border-color:rgba(34,240,255,.6);transform:translateY(-3px)}.card h
 .token{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center}
 .coin{width:100px;height:100px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:13px;text-align:center;background:linear-gradient(135deg,var(--c),var(--o));color:#04121a;box-shadow:0 0 34px rgba(34,240,255,.5);animation:sp 6s linear infinite}
 @keyframes sp{50%{transform:rotateY(180deg)}}@media(prefers-reduced-motion:reduce){.coin{animation:none}}
-.hl{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:8px 18px}.hl li:before{content:"✔ ";color:var(--g);font-weight:900}
+.hl{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:8px 18px}.hl li:before{content:"◆ ";color:var(--g);font-weight:900}
 .steps{counter-reset:s;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.steps div{counter-increment:s}.steps div:before{content:counter(s);display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--o);color:#1a0800;font-weight:900;margin-bottom:6px}
 details{border-bottom:1px solid var(--line);padding:12px 0}summary{cursor:pointer;font-weight:700}
 .cue{position:fixed;right:16px;bottom:16px;z-index:40;display:flex;gap:8px}.cue a{background:rgba(5,8,16,.92);border:1px solid rgba(34,240,255,.5);color:var(--c);padding:10px 14px;border-radius:999px;text-decoration:none;font-weight:800;font-size:14px;backdrop-filter:blur(6px)}.cue a.h{background:var(--o);color:#1a0800;border-color:var(--o)}
@@ -59,10 +59,10 @@ details{border-bottom:1px solid var(--line);padding:12px 0}summary{cursor:pointe
 .jump{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.jump a{font-size:14px;text-decoration:none;border:1px solid var(--line);padding:6px 12px;border-radius:999px;color:#cdd6ee}
 @media(max-width:760px){.grid,.g2,.steps,.hl{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.token{grid-template-columns:1fr}.coin{margin:0 auto}.cue{bottom:84px;right:10px}}
 .plain{font-size:.9rem;opacity:.75;margin-top:.45rem;font-style:italic}
-</style>
+.ico{width:1.35em;height:1.35em;fill:none;stroke:url(#llg);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.25em;filter:drop-shadow(0 0 4px rgba(0,229,255,.35))}.qc .ico{width:22px;height:22px}.ic .ico{width:30px;height:30px}</style>
 <script src="/js/nav.js" defer></script>
 </head>
-<body>
+<body><svg width="0" height="0" style="position:absolute"><defs><linearGradient id="llg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22e5ff"/><stop offset="1" stop-color="#ff3fb4"/></linearGradient></defs></svg>
 <main>
 <header class="hero w">
 <span class="kick">Available for new projects</span>
@@ -72,7 +72,7 @@ details{border-bottom:1px solid var(--line);padding:12px 0}summary{cursor:pointe
 <p class="tagline" style="font-size:1.15rem;font-weight:600;margin:.4rem 0 .9rem;opacity:.92">I engineer it, launch it and put it live on your screen. Start to finish.</p>
 <p class="lead">Full-stack dev, game builder, pixel pusher. I ship hand-coded sites, online stores, HTML5 games, web apps and white-label SaaS. Logins, payments, leaderboards, PWAs and SEO all wired in, no bloated templates. You get fast, clean code that's 100% yours.</p>
 <div class="ctas">
-<a class="btn p" href="mailto:info@leonlink.net?subject=Project%20inquiry%20from%20leonlink.net" data-cta="hero">🔥 Start your project</a>
+<a class="btn p" href="mailto:info@leonlink.net?subject=Project%20inquiry%20from%20leonlink.net" data-cta="hero"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" style="stroke:currentColor;filter:none"><path d="M12 22a7 7 0 007-7c0-4-3-6-4-10-2 2-3 4-3 6-1-1-2-2-2-4-2 2-5 5-5 8a7 7 0 007 7z"/></svg> Start your project</a>
 <a class="btn s" href="#proof">See the live proof ↓</a>
 </div>
 <p class="note">One email gets a reply with a plan and timeline. No calls about calls.</p>
@@ -86,7 +86,7 @@ details{border-bottom:1px solid var(--line);padding:12px 0}summary{cursor:pointe
 </header>
 
 <style>.qgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin:18px 0 6px}.qc{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 8px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);color:inherit;text-decoration:none;font-weight:700;font-size:.92rem;text-align:center}.qc span{font-size:1.6rem}.qc:hover{border-color:#22d3ee;background:rgba(34,211,238,.08)}</style>
-<section id="quick" class="w" aria-label="Quick links"><div class="qgrid"><a class="qc" href="/games.html"><span>🎮</span>Games</a><a class="qc" href="https://arcadeline.leonlink.net"><span>🕹️</span>Arcadeline</a><a class="qc" href="https://afterglow.leonlink.net"><span>🎰</span>Casino</a><a class="qc" href="/software.html"><span>💻</span>Software</a><a class="qc" href="https://app.leonlink.net"><span>📒</span>Ledgerline</a><a class="qc" href="https://dashboard.leonlink.net"><span>📊</span>Dashline</a><a class="qc" href="/blog.html"><span>📝</span>Blog</a><a class="qc" href="/lineup/"><span>🏆</span>Top 5</a><a class="qc" href="/watchline/"><span>⌚</span>Watchline</a><a class="qc" href="/explore.html"><span>🧭</span>Explore all</a></div></section>
+<section id="quick" class="w" aria-label="Quick links"><div class="qgrid"><a class="qc" href="/games.html"><span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 11v3M5.5 12.5h3"/><circle cx="16" cy="11.5" r=".8"/><circle cx="18" cy="13.5" r=".8"/></svg></span>Games</a><a class="qc" href="https://arcadeline.leonlink.net"><span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v9"/><circle cx="12" cy="4" r="2"/><path d="M4 17l8 4 8-4-8-4z"/></svg></span>Arcadeline</a><a class="qc" href="https://afterglow.leonlink.net"><span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="15" height="16" rx="2"/><path d="M7 9v6M10.5 9v6M14 9v6M18 8h2v6"/></svg></span>Casino</a><a class="qc" href="/software.html"><span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="11" rx="1"/><path d="M2 19h20M10 9l-2 2 2 2M14 9l2 2-2 2"/></svg></span>Software</a><a class="qc" href="https://app.leonlink.net"><span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h12a2 2 0 012 2v16H7a2 2 0 01-2-2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span>Ledgerline</a><a class="qc" href="https://dashboard.leonlink.net"><span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M6 17V10M11 17V5M16 17v-8M21 17v-4"/></svg></span>Dashline</a><a class="qc" href="https://linkline.leonlink.net"><span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1"/></svg></span>Linkline</a><a class="qc" href="/blog.html"><span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L20 8l-4-4L4 16z"/><path d="M14 6l4 4"/></svg></span>Blog</a><a class="qc" href="/lineup/"><span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v5a5 5 0 01-10 0z"/><path d="M7 6H4a3 3 0 003 4M17 6h3a3 3 0 01-3 4M12 14v4M8 21h8"/></svg></span>Top 5</a><a class="qc" href="/watchline/"><span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6"/><path d="M9 6l1-4h4l1 4M9 18l1 4h4l1-4M12 9v3l2 1"/></svg></span>Watchline</a><a class="qc" href="/explore.html"><span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></span>Explore all</a></div></section>
 <section id="skills" class="w">
 <h2>What I can build for you</h2>
 <p class="sub">Pick what you need and see the live work that proves it.</p>
@@ -95,12 +95,12 @@ details{border-bottom:1px solid var(--line);padding:12px 0}summary{cursor:pointe
 </div>
 <div id="match" aria-live="polite"></div>
 <div class="grid" style="margin-top:18px">
-<div class="card"><div class="ic">🌐</div><h3>Custom websites</h3><p>Fast, mobile-first sites with clean code, structured data and a sitemap, built to rank on Google.</p><p class="plain">In plain terms: a site that loads fast, looks right on phones and gets found on Google.</p></div>
-<div class="card"><div class="ic">🛒</div><h3>E-commerce stores</h3><p>Products, checkout and Stripe payments, without handing a platform a cut of every sale.</p><p class="plain">In plain terms: an online shop where customers pay you directly.</p></div>
-<div class="card"><div class="ic">🎮</div><h3>HTML5 game development</h3><p>Arcade, physics, slots and 3D worlds that run in any browser, with leaderboards and rewards.</p><p class="plain">In plain terms: games people play right in their browser, no download.</p></div>
-<div class="card"><div class="ic">📱</div><h3>Web apps &amp; PWAs</h3><p>Installable apps with logins, databases and offline support. No app store gatekeepers.</p><p class="plain">In plain terms: an app people add to their phone straight from your website.</p></div>
-<div class="card"><div class="ic">🏷️</div><h3>White-label SaaS</h3><p>Dashboards, billing and accounts under your brand. Nothing says my name.</p><p class="plain">In plain terms: software you sell to your customers as your own.</p></div>
-<div class="card"><div class="ic">📈</div><h3>SEO &amp; traffic</h3><p>Technical SEO, schema markup, sitemaps, indexing fixes and content built to bring daily visitors.</p><p class="plain">In plain terms: more people finding you on Google every day.</p></div>
+<div class="card"><div class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div><h3>Custom websites</h3><p>Fast, mobile-first sites with clean code, structured data and a sitemap, built to rank on Google.</p><p class="plain">In plain terms: a site that loads fast, looks right on phones and gets found on Google.</p></div>
+<div class="card"><div class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.5 11h11L21 7H7"/><circle cx="9" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/></svg></div><h3>E-commerce stores</h3><p>Products, checkout and Stripe payments, without handing a platform a cut of every sale.</p><p class="plain">In plain terms: an online shop where customers pay you directly.</p></div>
+<div class="card"><div class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 11v3M5.5 12.5h3"/><circle cx="16" cy="11.5" r=".8"/><circle cx="18" cy="13.5" r=".8"/></svg></div><h3>HTML5 game development</h3><p>Arcade, physics, slots and 3D worlds that run in any browser, with leaderboards and rewards.</p><p class="plain">In plain terms: games people play right in their browser, no download.</p></div>
+<div class="card"><div class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div><h3>Web apps &amp; PWAs</h3><p>Installable apps with logins, databases and offline support. No app store gatekeepers.</p><p class="plain">In plain terms: an app people add to their phone straight from your website.</p></div>
+<div class="card"><div class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h8l10 10-8 8L3 11z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg></div><h3>White-label SaaS</h3><p>Dashboards, billing and accounts under your brand. Nothing says my name.</p><p class="plain">In plain terms: software you sell to your customers as your own.</p></div>
+<div class="card"><div class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></div><h3>SEO &amp; traffic</h3><p>Technical SEO, schema markup, sitemaps, indexing fixes and content built to bring daily visitors.</p><p class="plain">In plain terms: more people finding you on Google every day.</p></div>
 </div>
 </section>
 
@@ -108,20 +108,41 @@ details{border-bottom:1px solid var(--line);padding:12px 0}summary{cursor:pointe
 <h2>Live proof: tap through, this is the résumé</h2>
 <p class="sub">Every project below is live on leonlink.net and was designed, coded and shipped by me.</p>
 <div class="grid g2">
-<a class="card" id="blog" href="/blog.html"><div class="ic">📝</div><h3>The LeonLink Blog</h3><p>Opinion columns, watch reviews and stories. Content publishing with share previews, article schema and fast loading, built to earn search traffic every day.</p><p class="plain">In plain terms: articles people find on Google and share.</p><span class="go">Read the blog →</span></a>
-<a class="card" id="top5" href="/lineup/"><div class="ic">🏆</div><h3>Top 5 buying guides</h3><p>Ranked guides for knives, flashlights, earbuds, multitools and more. Affiliate-ready "Check price" buttons with no prices hard-coded, so the pages never go stale.</p><p class="plain">In plain terms: "best of" lists that can earn a commission on every sale.</p><span class="go">See the Top 5 lists →</span></a>
-<a class="card" href="https://arcadeline.leonlink.net"><div class="ic">🕹️</div><h3>Arcadeline arcade</h3><p>A full arcade of browser games with challenge-a-friend links, leaderboards and rewards. Built from scratch, no game engine licence.</p><p class="plain">In plain terms: a free game site where players compete with friends.</p><span class="go">Play Arcadeline →</span></a>
-<a class="card" href="https://afterglow.leonlink.net"><div class="ic">🎰</div><h3>Afterglow casino</h3><p>A free-to-play social casino with slots, fishing and table games, sound and effects. 18+, for entertainment only, no real-money gambling.</p><p class="plain">In plain terms: casino-style games for fun, never real money.</p><span class="go">Play Afterglow →</span></a>
+<a class="card" id="blog" href="/blog.html"><div class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L20 8l-4-4L4 16z"/><path d="M14 6l4 4"/></svg></div><h3>The LeonLink Blog</h3><p>Opinion columns, watch reviews and stories. Content publishing with share previews, article schema and fast loading, built to earn search traffic every day.</p><p class="plain">In plain terms: articles people find on Google and share.</p><span class="go">Read the blog →</span></a>
+<a class="card" id="top5" href="/lineup/"><div class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v5a5 5 0 01-10 0z"/><path d="M7 6H4a3 3 0 003 4M17 6h3a3 3 0 01-3 4M12 14v4M8 21h8"/></svg></div><h3>Top 5 buying guides</h3><p>Ranked guides for knives, flashlights, earbuds, multitools and more. Affiliate-ready "Check price" buttons with no prices hard-coded, so the pages never go stale.</p><p class="plain">In plain terms: "best of" lists that can earn a commission on every sale.</p><span class="go">See the Top 5 lists →</span></a>
+<a class="card" href="https://arcadeline.leonlink.net"><div class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v9"/><circle cx="12" cy="4" r="2"/><path d="M4 17l8 4 8-4-8-4z"/></svg></div><h3>Arcadeline arcade</h3><p>A full arcade of browser games with challenge-a-friend links, leaderboards and rewards. Built from scratch, no game engine licence.</p><p class="plain">In plain terms: a free game site where players compete with friends.</p><span class="go">Play Arcadeline →</span></a>
+<a class="card" href="https://afterglow.leonlink.net"><div class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="15" height="16" rx="2"/><path d="M7 9v6M10.5 9v6M14 9v6M18 8h2v6"/></svg></div><h3>Afterglow casino</h3><p>A free-to-play social casino with slots, fishing and table games, sound and effects. 18+, for entertainment only, no real-money gambling.</p><p class="plain">In plain terms: casino-style games for fun, never real money.</p><span class="go">Play Afterglow →</span></a>
 </div>
+<h3 style="margin-top:22px">More live builds</h3>
+<div class="qgrid">
+<a class="qc" href="/catillery.html"><span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2 6 6-2-3 5 5 3-6 1 1 6-5-4-5 4 1-6-6-1 5-3-3-5 6 2z"/></svg></span>Catillery: physics artillery, idea to live in days</a>
+<a class="qc" href="/worlds/overdrive-city/"><span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21V9l5-3v15M8 21V4h8v17M16 21V10h5v11M11 8h2M11 12h2M11 16h2"/></svg></span>Overdrive City: drivable 3D city in the browser</a>
+<a class="qc" href="/worlds/voxelcraft/"><span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14"/><path d="M3 12h18M9 5v7M15 12v7"/></svg></span>Voxelcraft: endless block world</a>
+<a class="qc" href="/worlds/red-sands/"><span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V4a2 2 0 014 0v17M8 21h8M12 13H9a2 2 0 01-2-2V8M16 11h2a2 2 0 002-2V7"/></svg></span>Red Sands: western open world</a>
+<a class="qc" href="https://dashboard.leonlink.net"><span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M6 17V10M11 17V5M16 17v-8M21 17v-4"/></svg></span>Dashline: freelancer dashboard with Stripe pay links</a>
+<a class="qc" href="https://linkline.leonlink.net"><span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1"/></svg></span>Linkline: premium link-in-bio pages</a>
+</div>
+<p class="plain">In plain terms: big 3D worlds, games and business tools, all running right in the browser.</p>
+</section>
+
+<section id="whitelabel" class="w">
+<h2>White-label SaaS and branded games</h2>
+<p class="sub">Your product, your brand, your customers, your revenue. Dashboards, billing and logins engineered end to end, then handed over with the keys.</p>
+<ul class="hl">
+<li>No LeonLink branding, no "powered by"</li><li>Runs on your domain, under your name</li>
+<li>You own all the code, forever</li><li>Your customers never see me</li>
+</ul>
+<p class="plain">In plain terms: software you sell as your own. Want a game with your name on it? Reskins, custom mechanics or a full branded mini-arcade: <a href="/game-packages.html">see the game packages →</a></p>
+<p><a class="go" href="mailto:info@leonlink.net?subject=White-label%20SaaS%20project">Tell me about your SaaS →</a></p>
 </section>
 
 <section id="token" class="w">
 <h2>Two platforms. One token.</h2>
 <p class="sub">Arcadeline and Afterglow are separate apps on separate domains. Both use the same LeonLink account and token wallet, the kind of systems integration most agencies quote for months.</p>
 <div class="token">
-<div class="card"><h3>🕹️ Arcadeline</h3><p>Earn tokens playing arcade games and daily challenges.</p></div>
+<div class="card"><h3><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v9"/><circle cx="12" cy="4" r="2"/><path d="M4 17l8 4 8-4-8-4z"/></svg> Arcadeline</h3><p>Earn tokens playing arcade games and daily challenges.</p></div>
 <div class="coin" title="One LeonLink token">1 TOKEN<br>1 LOGIN</div>
-<div class="card"><h3>🎰 Afterglow</h3><p>Spend that balance on slots and table games.</p></div>
+<div class="card"><h3><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="15" height="16" rx="2"/><path d="M7 9v6M10.5 9v6M14 9v6M18 8h2v6"/></svg> Afterglow</h3><p>Spend that balance on slots and table games.</p></div>
 </div>
 <p class="note" style="margin-top:12px">Under the hood: a shared Supabase account and ledger, server-side balance checks, and cross-domain sign-in. Tokens are for entertainment only and are never cashed out.</p><p class="plain">In plain terms: one sign-in and one coin balance that work on two different sites.</p>
 </section>
@@ -145,6 +166,7 @@ details{border-bottom:1px solid var(--line);padding:12px 0}summary{cursor:pointe
 <div class="card"><h3>Watch it rise</h3><p>A live preview link while I build.</p></div>
 <div class="card"><h3>It's yours</h3><p>Code, accounts and keys handed over.</p></div>
 </div>
+<p class="note" style="margin-top:12px">Terms: a deposit starts the build, the rest is due on delivery. Walk away anytime and everything comes with you.</p>
 </section>
 
 <section id="faq" class="w">
@@ -153,16 +175,18 @@ details{border-bottom:1px solid var(--line);padding:12px 0}summary{cursor:pointe
 <details><summary>Do I own the code?</summary><p>Yes. Code, design, accounts and keys are yours outright.</p></details>
 <details><summary>How long does it take?</summary><p>Most projects ship in days to a couple of weeks, and you watch it being built.</p></details>
 <details><summary>Do you work with existing sites?</summary><p>Yes. I can fix, speed up or rebuild what you already have.</p></details>
+<details><summary>What if I don't like it?</summary><p>You approve the plan before I start and see it as it's built. No surprises.</p></details>
+<details><summary>Is there anything you won't build?</summary><p>Real-money gambling, logins into other people's accounts, and app-store submissions.</p></details>
 </section>
 
 <section class="w" style="text-align:center">
 <h2>Let's build yours next.</h2>
 <p class="sub">Send one email. Get a plan back.</p>
-<div class="ctas" style="justify-content:center"><a class="btn p" href="mailto:info@leonlink.net?subject=Project%20inquiry%20from%20leonlink.net" data-cta="footer">🔥 Start your project</a><a class="btn s" href="/explore.html">Explore the site</a></div>
+<div class="ctas" style="justify-content:center"><a class="btn p" href="mailto:info@leonlink.net?subject=Project%20inquiry%20from%20leonlink.net" data-cta="footer"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" style="stroke:currentColor;filter:none"><path d="M12 22a7 7 0 007-7c0-4-3-6-4-10-2 2-3 4-3 6-1-1-2-2-2-4-2 2-5 5-5 8a7 7 0 007 7z"/></svg> Start your project</a><a class="btn s" href="/explore.html">Explore the site</a></div>
 
 </section>
 </main>
-<div class="cue"><a href="/explore.html">🧭 Explore</a><a class="h" href="mailto:info@leonlink.net?subject=Project%20inquiry%20from%20leonlink.net">Hire me</a></div>
+<div class="cue"><a href="/explore.html"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg> Explore</a><a class="h" href="mailto:info@leonlink.net?subject=Project%20inquiry%20from%20leonlink.net">Hire me</a></div>
 <script>(function(){var M={web:['Custom websites','This whole site: 60+ hand-coded pages, mobile bottom nav, schema markup and a clean sitemap.','/explore.html','Explore leonlink.net'],store:['Online stores','Afterglow runs a real Stripe store, and Dashline sends Stripe pay links.','https://afterglow.leonlink.net','See Afterglow'],game:['Browser games','A full arcade on Arcadeline, plus physics, 3D and open-world games on the Games page.','/games.html','Browse the games'],app:['Web apps and PWAs','LeonLens is an installable camera app; Dashline is a full freelancer dashboard.','/software.html','See the software'],saas:['White-label SaaS','Dashline, Linkline and Ledgerline: accounts, billing and dashboards, ready to rebrand.','/software.html','See the SaaS apps'],seo:['SEO and traffic','Structured data, sitemaps, indexing fixes and daily content like the blog and Top 5 guides.','/blog.html','Read the blog']};var box=document.getElementById('match'),bs=document.querySelectorAll('.picker button');function show(k){var m=M[k];box.innerHTML='<b>'+m[0]+'</b><br>'+m[1]+' <a href="'+m[2]+'">'+m[3]+' →</a>';bs.forEach(function(b){b.setAttribute('aria-pressed',b.dataset.k===k)})}bs.forEach(function(b){b.addEventListener('click',function(){show(b.dataset.k)})});show('web');document.querySelectorAll('[data-cta]').forEach(function(a){a.addEventListener('click',function(){try{fetch('/api/track?p='+encodeURIComponent('/cta/'+a.dataset.cta),{mode:'no-cors',keepalive:true})}catch(e){}})})})();</script>
 <script>(function(){try{var p=location.pathname;fetch("/api/track?p="+encodeURIComponent(p)+"&r="+encodeURIComponent(document.referrer||""),{mode:"no-cors",keepalive:true}).catch(function(){})}catch(e){}})();</script>
 <footer class="ll-footer" style="border-top:1px solid rgba(128,128,128,.25);padding:22px 16px;text-align:center;font:14px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#0b0b0f;color:#cfcfd6;position:relative;z-index:5;clear:both">
