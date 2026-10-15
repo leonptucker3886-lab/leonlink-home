@@ -37,6 +37,8 @@ h1 .p{color:#ff3dc8;text-shadow:0 0 24px #ff3dc8,0 0 60px #ff3dc866}
 #dayflash{position:absolute;top:34%;left:0;right:0;text-align:center;font-size:clamp(30px,6vw,64px);font-weight:800;color:#fff;text-shadow:0 0 30px #b8ff3b;opacity:0;pointer-events:none;z-index:4;letter-spacing:.06em;transition:opacity .6s}
 .credit{position:absolute;bottom:8px;right:12px;font-size:11px;color:#55556f;z-index:4;letter-spacing:.1em}
 </style>
+<script src="/js/leonlink-profile.js"></script>
+<script>try{LLProfile.init("paper-route");}catch(e){}</script>
 </head>
 <body>
 <div id="wrap"><div id="stage">
@@ -166,6 +168,7 @@ function startGame(){reset();state='play';show(null);$('hud').hidden=false;flash
 function pauseGame(){if(state!=='play')return;state='pause';show('ovPause')}
 function resumeGame(){if(state!=='pause')return;state='play';show(null)}
 function endGame(){
+  try{LLProfile.score(world.score);}catch(_e){}
   state='over';$('hud').hidden=true;show('ovOver');sCrash();
   const nb=world.score>best;if(nb){best=world.score;try{localStorage.setItem('ll-paperroute-best',best)}catch(e){}}
   $('overStats').innerHTML=`Score <b style="color:#fff">${world.score}</b> · ${world.delivered} delivered · Day ${world.day}${nb?' · <span style="color:#f2c14e">NEW BEST!</span>':''}`;
@@ -245,7 +248,7 @@ function spawnObstacle(){
 function update(dt){
   const sp=speed();
   world.dayT+=dt;world.dist+=sp*dt;
-  if(world.dayT>=40){world.day++;world.dayT=0;flash('DAY '+world.day);tone(440,880,.25,'square',.06)}
+  if(world.dayT>=40){world.day++;try{LLProfile.unlock('first_route');}catch(_e){}world.dayT=0;flash('DAY '+world.day);tone(440,880,.25,'square',.06)}
   if(dayFlashT>0){dayFlashT-=dt;if(dayFlashT<=0)$('dayflash').style.opacity=0}
   // player
   const ty=LANES[P.lane];P.y+=(ty-P.y)*Math.min(1,dt*12);P.pedal+=dt*10;

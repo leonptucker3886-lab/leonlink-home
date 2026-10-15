@@ -56,6 +56,8 @@ body{font-family:Georgia,"Times New Roman",serif;color:#f0e9d8;user-select:none;
 #ovWasted h1{font-family:"Fraunces",Georgia,serif;font-size:64px;color:#8a8a8a;text-shadow:0 0 40px #000;letter-spacing:.14em;font-family:"DM Sans",system-ui,sans-serif;font-weight:800}
 .credit{position:absolute;bottom:6px;right:10px;font-size:10px;color:#55556a;z-index:4;letter-spacing:.12em;font-family:"DM Sans",system-ui,sans-serif}
 </style>
+<script src="/js/leonlink-profile.js"></script>
+<script>try{LLProfile.init("sootfather");}catch(e){}</script>
 </head>
 <body>
 <div id="wrap"><div id="stage">
@@ -592,7 +594,7 @@ function startMission(ch,mi){
   }
   say('','<b>'+m.name+'.</b>');
   $('text').onclick=tapTo(()=>{runScript(beats.concat([
-    {t:'fn',fn:()=>{P.done.push(missionId(ch,mi));save()}},
+    {t:'fn',fn:()=>{P.done.push(missionId(ch,mi));save();try{LLProfile.unlock('first_job');LLProfile.score(pScore());}catch(_e){}}},
     {t:'say',who:'',text:'<b style="color:#c9a227;letter-spacing:.1em">MISSION PASSED</b><br>The family eats tonight.'},
     {t:'gain',g:m.reward},
     {t:'fn',fn:()=>{if(m.boss&&ch===CHAPTERS.length-1)ending();else hub()}},
@@ -632,6 +634,7 @@ function buy(it){
   float2('Bought '+it.n);hud();save();shop();
 }
 function ending(){
+  try{LLProfile.unlock('boss');LLProfile.score(pScore());}catch(_e){}
   screen='end';showPanel(false);
   $('ovEnd').hidden=false;
   $('endTitle').innerHTML='MADE <span class="r">MAN</span>';

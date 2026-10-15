@@ -195,6 +195,8 @@ h1{font-size:34px;font-weight:900;letter-spacing:.01em}
 #stage svg.arena{filter:saturate(1.15) contrast(1.05)}
 @media (prefers-reduced-motion:reduce){.embers circle,.afog,.flag{animation:none}}
 </style>
+<script src="/js/leonlink-profile.js"></script>
+<script>try{LLProfile.init("battleline");}catch(e){}</script>
 </head>
 <body>
 <div id="gtop">
@@ -787,6 +789,7 @@ function enemyAct(){
 }
 
 function winFight(){
+  try{LLProfile.unlock('first_win');}catch(_e){}
   SFX.play('win'); buzz([20,30,20]); var stc=$('stage'); stc.classList.remove('cheer'); void stc.offsetWidth; stc.classList.add('cheer'); $('fxE').classList.add('ko');
   var m=G.me, e=G.enemy;
   $('fxE').classList.add('ko');
@@ -842,6 +845,7 @@ function loseRun(){
 }
 
 function endRun(finished){
+  try{LLProfile.score(G.score);}catch(_e){}
   var best = null;
   try{ best = JSON.parse(localStorage.getItem('battleline:best')||'null'); }catch(e){}
   var score = G.score;

@@ -107,6 +107,8 @@ h1.cat{font-size:clamp(34px,7vw,64px);font-weight:800;letter-spacing:.06em;color
 }
 #firebtn{display:flex;align-items:center;justify-content:center;user-select:none;-webkit-user-select:none}
 </style>
+<script src="/js/leonlink-profile.js"></script>
+<script>try{LLProfile.init("catillery");}catch(e){}</script>
 </head>
 <body>
 <div id="topbar">
@@ -951,6 +953,7 @@ function start(m){
   updHUD();
 }
 function onEvent(ev,d){
+  if(ev==='over'&&g&&g.mode==='cpu'&&d&&d.winner===0){try{var _w=(+localStorage.getItem('ll-cat-wins')||0)+1;localStorage.setItem('ll-cat-wins',_w);LLProfile.unlock('first_win');if(_w>=10)LLProfile.unlock('win_10');LLProfile.score(_w);}catch(_e){}}
   if(ev==='boom'){Snd.boom();shake=14;addFlash(d.x,d.y,d.r*1.4,160);addSmoke(d.x,d.y,6);}
   else if(ev==='fire'){Snd.fire();addFlash(d.x,d.y,d.w==='shotgun'?30:44,110);}
   else if(ev==='splash'){Snd.splash();}

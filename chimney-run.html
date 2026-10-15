@@ -49,6 +49,8 @@ h1 .c{color:#22f0ff;text-shadow:0 0 24px #22f0ff,0 0 60px #22f0ff66}
 @media(orientation:portrait){#wrap{align-items:flex-start;padding-top:calc(env(safe-area-inset-top) + 14vh)}#stage{width:100vw}#touch{padding-bottom:calc(28px + env(safe-area-inset-bottom))}}
 @media(orientation:landscape) and (max-height:540px){.tbtn{width:56px;height:56px;font-size:22px;background:rgba(20,20,36,.35)}#tJump{width:68px;height:68px;font-size:15px}.tgrp{gap:8px}#touch{opacity:.8}#hud{padding:6px 10px}#hud .pill{padding:4px 10px;font-size:12px}#hud button{width:32px;height:32px;font-size:14px}}
 </style>
+<script src="/js/leonlink-profile.js"></script>
+<script>try{LLProfile.init("chimney-run");}catch(e){}</script>
 </head>
 <body>
 <div id="wrap"><div id="stage">
@@ -222,6 +224,7 @@ function startGame(){reset(1,false);state='play';show(null);$('hud').hidden=fals
 function pauseGame(){if(state!=='play')return;state='pause';show('ovPause')}
 function resumeGame(){if(state!=='pause')return;state='play';show(null)}
 function gameOver(){
+  try{LLProfile.score(world.score);}catch(_e){}
   state='over';$('hud').hidden=true;show('ovOver');sDie();
   const nb=world.score>best;if(nb){best=world.score;try{localStorage.setItem('ll-chimney-best',best)}catch(e){}}
   $('overStats').innerHTML=`Score <b style="color:#fff">${world.score}</b> · 🪙 ${world.coins} · Level ${world.lvl}${nb?' · <span style="color:#f2c14e">NEW BEST!</span>':''}`;
@@ -364,6 +367,7 @@ function update(dt){
     const bonus=Math.max(0,Math.floor(500-world.time*4));
     const nl=world.lvl+1,nscore=world.score+1000+bonus,ncoins=world.coins;
     flash('LEVEL '+nl+'!');
+    if(nl>5){try{LLProfile.unlock('level_5');}catch(_e){}}
     const lives=P.lives,hat=P.hat;
     reset(nl,true);world.score=nscore;world.coins=ncoins;P.lives=lives;P.hat=hat;
     $('hLvl').textContent=nl;

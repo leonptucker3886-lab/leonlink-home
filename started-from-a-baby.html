@@ -158,6 +158,8 @@ button.mini{background:#1c2440;border:1px solid #2a3556;color:#cfe;border-radius
 .crestchip{display:inline-flex;vertical-align:-3px;margin-right:6px}
 
 </style>
+<script src="/js/leonlink-profile.js"></script>
+<script>try{LLProfile.init("started-from-a-baby");}catch(e){}</script>
 </head>
 <body>
 <div id="title" class="title-screen">
@@ -653,6 +655,7 @@ let SNAP=null;
 function ageUp(){
   const p=S.p;
   if(!p.alive)return;
+  if(p.age>=17){try{LLProfile.unlock('grow_up');}catch(_e){}}
   try{SNAP=JSON.stringify(S);}catch(e){SNAP=null;}
   p.age++;
   // kids age
@@ -737,6 +740,7 @@ function checkDeath(){
 }
 function die(){
   const p=S.p;if(catSave(p))return;p.alive=false;
+  try{if(p.age>=60)LLProfile.unlock('legacy');LLProfile.score(dynastyScore());}catch(_e){}
   checkAch();
   const r=ribbonFor(p), ob=obituary(p,r);
   const [cid,cname]=weeklyChal();
@@ -1294,6 +1298,7 @@ function beginLife(){
  if(nm&&nm.value.trim())CRE.name=nm.value.trim().slice(0,14);
  document.getElementById('create').style.display='none';
  newGame(CRE);
+ try{LLProfile.unlock('first_life');}catch(_e){}
 }
 
 /* ---- canvas crest for the shareable life card ---- */
