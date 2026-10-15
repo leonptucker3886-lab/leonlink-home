@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>Started From a Baby — Life Sim</title>
+<meta name="description" content="A complete life simulator. Born a baby, die a legend — then play as your heir. Drugs, badges, thrones, sawdust: every life is different.">
+<meta name="theme-color" content="#0b0f1a">
+<link rel="icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0f1a;--pan:#121828;--ink:#eef2ff;--mut:#8b95b3;--g:#39ff88;--c:#22f0ff;--p:#ff3dc8;--y:#ffe14d;--r:#ff5d5d;--line:#1e2a44}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:"DM Sans",system-ui,-apple-system,sans-serif;max-width:520px;margin:0 auto;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom)}
+.hud{position:sticky;top:0;z-index:10;background:#0b0f1af2;backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:10px 14px}
+.hud .row1{display:flex;align-items:center;gap:10px}
+.avatar{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#fff;flex-shrink:0;background:linear-gradient(135deg,#22f0ff,#39ff88)}
+.who{flex:1;min-width:0}
+.who b{font-size:17px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.who span{font-size:12px;color:var(--mut)}
+.money{font-weight:800;color:var(--g);font-size:15px;text-align:right}
+.money small{display:block;color:var(--mut);font-weight:600;font-size:11px}
+.tabs{display:flex;gap:6px;margin-top:10px}
+.tabs button{flex:1;border:1px solid var(--line);background:var(--pan);color:var(--mut);border-radius:12px;padding:10px 4px;font-size:13px;font-weight:700;cursor:pointer}
+.tabs button.on{background:var(--c);color:#03222a;border-color:var(--c)}
+main{flex:1;padding:14px;overflow-y:auto}
+.screen{display:none}.screen.on{display:block}
+.bars{display:grid;gap:8px;margin-bottom:14px}
+.bar{display:flex;align-items:center;gap:10px}
+.bar .ic{font-size:18px;width:26px;text-align:center}
+.bar .nm{font-size:12px;font-weight:700;color:var(--mut);width:56px;letter-spacing:.02em}
+.bar .tr{flex:1;height:12px;background:#1a2338;border-radius:7px;overflow:hidden}
+.bar .fl{height:100%;border-radius:7px;transition:width .4s}
+.bar .vl{font-size:12px;font-weight:800;width:34px;text-align:right}
+.log{display:flex;flex-direction:column;gap:8px}
+.ev{background:var(--pan);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:14px;line-height:1.5}
+.ev .yr{font-size:11px;color:var(--mut);font-weight:700;letter-spacing:.06em}
+.ev.good{border-color:#1f5c38}.ev.bad{border-color:#5c2222}.ev.wild{border-color:#5c4a1f}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.act{border:1px solid var(--line);background:var(--pan);border-radius:16px;padding:16px 10px;color:var(--ink);cursor:pointer;text-align:center}
+.act{border-top:3px solid var(--ac,#22f0ff)}
+.act b{font-size:14px;display:block}
+.act small{color:var(--mut);font-size:11px}
+.act:disabled{opacity:.35}
+.act.wide{grid-column:1/-1}
+.jobcard{background:var(--pan);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.jobcard h3{margin:0 0 4px;font-size:18px}
+.jobcard p{margin:4px 0;color:var(--mut);font-size:13px}
+.jobcard .pay{color:var(--g);font-weight:800}
+.jlist{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.jlist button{border:1px solid var(--line);background:#0e1424;color:var(--ink);border-radius:12px;padding:12px;text-align:left;cursor:pointer}
+.jlist button b{display:block;font-size:15px}
+.jlist button small{color:var(--mut)}
+.jlist button:disabled{opacity:.4}
+.agebar{position:sticky;bottom:0;background:#0b0f1af2;backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:12px 14px calc(12px + env(safe-area-inset-bottom))}
+#ageBtn{width:100%;border:none;border-radius:18px;padding:18px;font-size:22px;font-weight:900;letter-spacing:.04em;background:linear-gradient(135deg,var(--g),var(--c));color:#04140a;cursor:pointer;box-shadow:0 6px 24px #39ff8844}
+#ageBtn:active{transform:scale(.98)}
+.modal{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;background:#04060acc;padding:18px}
+.modal.on{display:flex}
+.mbox{background:var(--pan);border:1px solid var(--line2,#2a3a5c);border-radius:22px;padding:24px 20px;max-width:440px;width:100%;max-height:86vh;overflow-y:auto;text-align:center}
+.mbox h2{font-family:"Fraunces",Georgia,serif;margin:0 0 8px;font-size:24px}
+.mbox p{color:var(--mut);font-size:14px;line-height:1.6}
+.mbox .big{font-size:52px}
+.choices{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.choices button{border:1px solid var(--line);background:#0e1424;color:var(--ink);border-radius:14px;padding:14px;font-size:15px;font-weight:700;cursor:pointer}
+.choices button:hover{border-color:var(--c)}
+.result{margin-top:14px;font-size:15px;line-height:1.6}
+.dead{color:var(--r)}
+.kv{display:flex;justify-content:space-between;font-size:14px;padding:6px 0;border-bottom:1px solid var(--line)}
+.kv span:first-child{color:var(--mut)}
+.fam{display:flex;flex-direction:column;gap:8px}
+.member{background:var(--pan);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:14px;display:flex;justify-content:space-between;align-items:center}
+.title-screen{text-align:center;padding:40px 20px}
+.title-screen h1{font-family:"Fraunces",Georgia,serif;font-size:clamp(2.2rem,10vw,3.4rem);margin:.3em 0;line-height:1.05}
+.title-screen h1 em{font-style:normal;color:var(--g);text-shadow:0 0 24px #39ff8877}
+.title-screen .kick{font-size:.75rem;letter-spacing:.24em;color:var(--y);font-weight:800}
+#startBtn{margin-top:26px;border:none;border-radius:18px;padding:18px 44px;font-size:20px;font-weight:900;background:linear-gradient(135deg,var(--g),var(--c));color:#04140a;cursor:pointer}
+.feat{color:var(--mut);font-size:13px;line-height:1.9;margin-top:22px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:110px;background:#1a2338;border:1px solid var(--c);color:var(--ink);padding:10px 18px;border-radius:999px;font-size:13px;font-weight:700;z-index:60;display:none}
+
+.modal.on .mbox{animation:pop .28s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:scale(.85) translateY(20px);opacity:0}to{transform:none;opacity:1}}
+.modal{background:#04060ad9;backdrop-filter:blur(4px)}
+.mbox .big{font-size:30px;display:block;margin-bottom:4px;opacity:.9}
+#ageBtn{transition:transform .1s}
+#ageBtn.pulse{animation:apulse .5s ease}
+@keyframes apulse{0%{transform:scale(1)}40%{transform:scale(1.04)}100%{transform:scale(1)}}
+.mutebtn{background:none;border:1px solid var(--line);border-radius:10px;color:var(--mut);font-size:16px;padding:6px 10px;cursor:pointer}
+.confetti{position:fixed;top:-12px;width:10px;height:14px;z-index:100;pointer-events:none;border-radius:2px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+.ev{animation:slidein .3s ease}
+@keyframes slidein{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.deadtomb{font-size:64px;filter:grayscale(1)}
+.chal{background:linear-gradient(135deg,#1a1030,#0e1a2e);border:1px solid var(--c);border-radius:16px;padding:14px 16px;margin:18px 0 0;max-width:420px}
+.chal small{color:var(--mut);font-size:11px;letter-spacing:.14em;font-weight:800}
+.chal b{display:block;font-size:17px;margin-top:4px}
+.chal .done{color:var(--good);font-weight:800}
+.achbtn{margin-top:12px;background:none;border:1px solid #2a3550;color:var(--mut);border-radius:14px;padding:10px 22px;font-size:14px;font-weight:700;cursor:pointer}
+.achgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;text-align:left}
+.ach{border:1px solid #232c44;border-radius:12px;padding:10px;font-size:12px}
+.ach.got{border-color:var(--good);background:#0c1a12}
+.ach b{display:block;font-size:13px}
+.ach span{color:var(--mut)}
+.ribbon{display:inline-block;background:linear-gradient(135deg,#ffd700,#ff9f1c);color:#221a05;font-weight:900;letter-spacing:.12em;font-size:13px;border-radius:999px;padding:8px 20px;margin:8px 0}
+.obit{font-style:italic;color:var(--mut);font-size:14px;line-height:1.55;margin:10px 0;text-align:left}
+.wform input,.wform textarea,.wform select{width:100%;margin:6px 0;padding:12px;border-radius:12px;border:1px solid #2a3550;background:#0b1120;color:var(--ink);font-size:15px;font-family:inherit}
+.wform label{font-size:12px;color:var(--mut);font-weight:700;display:block;margin-top:8px;text-align:left}
+.sharebtn{margin-top:10px;width:100%;padding:14px;border-radius:14px;border:1px solid var(--c);background:#0e1424;color:var(--ink);font-weight:800;font-size:16px;cursor:pointer}
+.rewindbtn{background:#141b30;border:1px solid #2a3550;color:var(--ink);border-radius:16px;padding:0 18px;font-size:15px;font-weight:800;cursor:pointer}
+.rewindbtn:disabled{opacity:.3}
+.agebar{display:flex;gap:10px;padding:14px 16px calc(16px + env(safe-area-inset-bottom))}
+#ageBtn{flex:1}
+
+/* ===== baby-upgrade: creation panel, crests, stage band, animated bars ===== */
+#create{display:none;max-width:640px;margin:0 auto;padding:26px 18px 90px;text-align:center}
+.ckick{font-size:.72rem;letter-spacing:.26em;color:var(--y);font-weight:800}
+.ctitle{font-family:"Fraunces",Georgia,serif;font-size:clamp(1.8rem,8vw,2.6rem);margin:.4em 0 .8em}
+.csec{margin:0 0 26px;text-align:left}
+.clab{font-size:.78rem;letter-spacing:.18em;font-weight:800;color:var(--mut);margin-bottom:10px}
+.nmrow{display:flex;gap:10px}
+.nmrow input{flex:1;background:#141b30;border:1px solid #2a3556;border-radius:14px;color:#fff;font-size:22px;font-weight:800;padding:14px 16px;font-family:inherit}
+button.mini{background:#1c2440;border:1px solid #2a3556;color:#cfe;border-radius:12px;padding:10px 16px;font-weight:800;cursor:pointer;font-size:14px}
+.formgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.fm{background:#141b30;border:2px solid #2a3556;border-radius:14px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;color:#eef;font-size:12px;font-weight:800}
+.fm.sel{border-color:var(--g);box-shadow:0 0 16px #39ff8855}
+.crgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.cr{background:#141b30;border:2px solid #2a3556;border-radius:14px;padding:12px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.cr.sel{border-color:#ffd94d;box-shadow:0 0 16px #ffd94d66}
+.fnote{color:var(--mut);font-size:13.5px;margin-top:10px;line-height:1.5}
+.parcards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:520px){.parcards{grid-template-columns:1fr}}
+.par{background:#141b30;border:2px solid #2a3556;border-radius:16px;padding:14px;cursor:pointer;color:#eef;font-family:inherit}
+.par.sel{border-color:var(--c);box-shadow:0 0 18px #22f0ff55}
+.prow{display:flex;gap:12px;align-items:center}
+.prow b{font-size:17px}
+.pstr{color:var(--mut);font-size:13px;margin-top:3px}
+.ptag{margin-top:10px;font-size:12.5px;color:var(--y);font-weight:700}
+#beginBtn{border:none;border-radius:18px;padding:18px 54px;font-size:20px;font-weight:900;background:linear-gradient(135deg,var(--g),var(--c));color:#04140a;cursor:pointer;margin-top:8px}
+/* stage scene band */
+.stageband{display:flex;align-items:center;gap:16px;padding:16px 18px;border-radius:18px;margin:10px 12px 4px;color:#fff;transition:background .8s}
+.stageband .sbwho b{font-size:22px;display:block}
+.stageband .sbwho span{font-size:13.5px;opacity:.85}
+.st-baby{background:linear-gradient(135deg,#3a2b5e,#5e3a5e)}
+.st-child{background:linear-gradient(135deg,#1d5c3a,#2b7a4e)}
+.st-teen{background:linear-gradient(135deg,#5e2b7a,#8a2b8a)}
+.st-adult{background:linear-gradient(135deg,#1d3a6e,#2b5a8a)}
+.st-middle{background:linear-gradient(135deg,#6e4a1d,#8a6a2b)}
+.st-elder{background:linear-gradient(135deg,#141b3a,#2b2b5e)}
+/* animated attribute bars */
+.fl{transition:width .6s ease}
+.crestchip{display:inline-flex;vertical-align:-3px;margin-right:6px}
+
+</style>
+</head>
+<body>
+<div id="title" class="title-screen">
+  <div class="kick">LEONLINK PRESENTS</div>
+  <h1>Started<br>From a <em>Baby</em></h1>
+  <p style="color:var(--mut)">One life. Every choice matters.<br>Die, and your heir carries the name.</p>
+  <button id="startBtn">Be Born</button><div id="contWrap"></div>
+  <div class="chal" id="chalBanner"></div>
+  <div><button class="achbtn" id="achBtn">Achievements</button></div>
+  <div class="feat">baby → school → career → love → heirs → legacy<br>
+  cop · dealer · woodworker · doctor · <b>emperor</b> · and 20 more fates<br>
+  snake bites · lottery wins · prison · miracles · tragedy</div>
+</div>
+
+<div id="create"></div>
+<div id="game" style="display:none;flex:1;flex-direction:column">
+  <div class="hud">
+    <div class="row1">
+      <div class="avatar" id="hAv">👶</div>
+      <div class="who"><b id="hName">—</b><span id="hSub">Age 0</span></div>
+      <div class="money"><span id="hMoney">$0</span><small id="hGen">Gen 1</small></div><button class="mutebtn" id="muteBtn" title="Sound">♪</button>
+    </div>
+    <div class="tabs">
+      <button data-tab="life" class="on">Life</button>
+      <button data-tab="do">Do</button>
+      <button data-tab="work">Work</button>
+      <button data-tab="love">Love</button>
+    </div>
+  </div>
+  <div id="stageband" class="stageband st-baby"></div>
+  <main>
+    <div class="screen on" id="s-life">
+      <div class="bars" id="bars"></div>
+      <div class="log" id="log"></div>
+    </div>
+    <div class="screen" id="s-do"><div class="grid" id="acts"></div></div>
+    <div class="screen" id="s-work"><div id="workbox"></div></div>
+    <div class="screen" id="s-love"><div id="lovebox"></div></div>
+  </main>
+  <div class="agebar"><button class="rewindbtn" id="rewindBtn" title="Rewind one year">↺</button><button id="ageBtn">AGE +1 →</button></div>
+</div>
+
+<div class="modal" id="modal"><div class="mbox" id="mbox"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+/* ================= UTIL ================= */
+const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const clamp=(v,a=0,b=100)=>Math.max(a,Math.min(b,v));
+const fmt$=n=>{const neg=n<0;n=Math.abs(Math.round(n));let s=n>=1e9?(n/1e9).toFixed(2)+'B':n>=1e6?(n/1e6).toFixed(2)+'M':n>=1e3?(n/1e3).toFixed(1)+'K':''+n;return (neg?'-$':'$')+s;};
+const MALE=['James','Marcus','Leo','Dre','Tommy','Kai','Malik','Rico','Sam','Theo','Jay','Chris','Dev','Tony','Ray'];
+const FEMALE=['Maya','Zoe','Nia','Ava','Lena','Ruby','Ivy','Noor','Tiana','Gia','Wren','Alba','Suki','Demi','Rosa'];
+const SURN=['Carter','Reyes','Okafor','Lindqvist','Marsh','Delacroix','Ashford','Vane','Kowalski','Rivers','Stone','Blackwood','Ferro','Quill','Holloway'];
+const AV={baby:'👶',child:'🧒',teen:'🧑',adult:'🧔',senior:'🧓'};
+function toast(t){const e=document.getElementById('toast');e.textContent=t;e.style.display='block';clearTimeout(e._t);e._t=setTimeout(()=>e.style.display='none',2200);}
+
+/* ================= STATE ================= */
+let S=null;
+function newPerson(gen, surname, inherit, opts){
+  opts=opts||{};
+  const form=opts.form||pick(FORMS_ALL);
+  const male=form==='male'?true:form==='female'?false:Math.random()<0.5;
+  const base={health:R(70,95),happy:R(60,90),smarts:R(20,80),looks:R(20,80),fit:R(30,80),karma:R(40,60),spirit:R(20,60)};
+  const st=opts.parent?blendStats(base,opts.parent,0.65):base;
+  const skin=opts.parent?opts.parent.skin:pick(SKINS);
+  const hair=opts.parent?opts.parent.hair:pick(HAIRS);
+  const eyes=opts.parent?opts.parent.eyes:pick(EYES);
+  const p={
+    name:(opts.firstName||pick(male?MALE:FEMALE))+' '+surname, male, form,
+    pron:PN({form}),
+    skin, hair, eyes,
+    talent:opts.parent?talentOf(opts.parent):null,
+    parentFrom:opts.parent?opts.parent.role:null,
+    usedNineLives:false,
+    age:0, gen,
+    health:st.health, happy:st.happy, smarts:st.smarts, looks:st.looks, fit:st.fit,
+    karma:st.karma, spirit:st.spirit, fame:0, street:0,
+    money:inherit||0, edu:'none', eduYears:0,
+    job:null, jobYears:0, heat:0, prison:0,
+    partner:null, kids:[], pets:[],
+    addicted:false, inCollege:false,
+    alive:true, cause:'',
+    office:null, given:0, foundation:false, excon:false, legacy:0,
+    rewinds:1, highlights:[]
+  };
+  return p;
+}
+function newGame(cre){
+  const surname=pick(SURN);
+  const po=cre?{firstName:cre.name,form:cre.form,parent:cre.parentObj}:null;
+  S={surname, gen:1, p:newPerson(1,surname,0,po), log:[], peak:0, legends:[], fired:{}, era:pick(ERAS)[0], crest:cre?cre.crest:'shield'};
+  const p=S.p;
+  const bornAs={male:'a boy',female:'a girl',cat:'a cat',robot:'a robot',umbrella:'an umbrella'}[p.form];
+  if(p.talent)log(`🧬 <b>Inherited:</b> ${p.talent.name} — ${p.talent.from}'s genes run strong. ${p.talent.desc}.`,'good');
+  applyGift(dailyGift());
+  log(`👶 <b>${p.name}</b> is born ${bornAs}. The ${surname} dynasty begins under the ${CRESTS[S.crest].n}.`,'wild');
+  show('game'); render();
+}
+function log(html, cls){
+  S.log.unshift({age:S.p.age, html, cls:cls||''});
+  if(S.log.length>60)S.log.pop();
+}
+
+/* ================= UI ================= */
+const BARS=[['health','Health','#ff5d5d'],['happy','Happy','#ffe14d'],['smarts','Smarts','#22f0ff'],['looks','Looks','#ff3dc8'],['fit','Fit','#39ff88'],['karma','Karma','#b48cff'],['spirit','Spirit','#ffd9a0']];
+function stage(){const a=S.p.age;return a<3?'baby':a<13?'child':a<20?'teen':a<60?'adult':'senior';}
+function render(){
+  const p=S.p;
+  const _av=document.getElementById('hAv');_av.innerHTML=portraitSVG(p,56);
+  _av.style.background=p.prison>0?'linear-gradient(135deg,#555,#222)':({baby:'linear-gradient(135deg,#22f0ff,#39ff88)',child:'linear-gradient(135deg,#39ff88,#ffe14d)',teen:'linear-gradient(135deg,#ff3dc8,#b48cff)',adult:'linear-gradient(135deg,#22f0ff,#7a5cff)',senior:'linear-gradient(135deg,#b48cff,#ff9f1c)'})[stage()];
+  _av.title=p.prison>0?'In prison':stage();
+  document.getElementById('hName').textContent=p.name+(p.prison>0?' (in prison)':'');
+  document.getElementById('hSub').textContent=`Age ${p.age} · ${FORM_LABEL[p.form||'male']} · ${p.job?p.job.title:'Unemployed'} · ${S.era||'Peace'}`+(p.partner?` · 💘 ${p.partner.name.split(' ')[0]}`:'')+(p.talent?` · Inherited: ${p.talent.name}`:'');
+  document.getElementById('hMoney').textContent=fmt$(p.money);
+  document.getElementById('hGen').innerHTML=`Gen ${S.gen} · <span class="crestchip">${crestSVG(S.crest||'shield',13)}</span>House ${S.surname}`;
+  document.getElementById('bars').innerHTML=BARS.map(([k,nm,c])=>
+    `<div class="bar"><span class="nm">${nm}</span><div class="tr"><div class="fl" style="width:${clamp(Math.round(p[k]))}%;background:${c}"></div></div><span class="vl">${Math.round(clamp(p[k]))}</span></div>`).join('')
+    +`<div class="bar"><span class="nm">Fame</span><div class="tr"><div class="fl" style="width:${clamp(Math.round(p.fame))}%;background:#fff"></div></div><span class="vl">${Math.round(clamp(p.fame))}</span></div>`
+    +(p.street>0?`<div class="bar"><span class="nm">Street</span><div class="tr"><div class="fl" style="width:${clamp(Math.round(p.street))}%;background:#ff9f1c"></div></div><span class="vl">${Math.round(clamp(p.street))}</span></div>`:'');
+  document.getElementById('log').innerHTML=S.log.map(e=>`<div class="ev ${e.cls}"><div class="yr">AGE ${e.age}</div>${e.html}</div>`).join('');
+  const _sb=document.getElementById('stageband');
+  if(_sb){const _st=pstage(p);_sb.className='stageband st-'+_st;
+    _sb.innerHTML=portraitSVG(p,104)+`<div class="sbwho"><b>${p.name}</b><span>${FORM_LABEL[p.form||'male']} · Age ${p.age} · ${ {baby:'Nursery days',child:'School days',teen:'Teen years',adult:'Prime',middle:'Middle age',elder:'Golden years'}[_st]} · House ${S.surname}</span></div><div style="margin-left:auto">${crestSVG(S.crest||'shield',44)}</div>`;}
+  renderActs(); renderWork(); renderLove(); checkAch();
+  const rb=document.getElementById('rewindBtn');if(rb)rb.disabled=!(SNAP&&S.p.rewinds>0&&S.p.alive);
+}
+function show(id){
+  document.getElementById('title').style.display='none';
+  const g=document.getElementById('game'); g.style.display='flex';
+}
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  document.getElementById('s-'+b.dataset.tab).classList.add('on');
+});
+</script>
+<script>
+"use strict";
+/* ================= ACTIONS ================= */
+function addAct(list,e,t,sub,fn,ok){list.push({e,t,sub,fn,ok:ok===undefined?true:ok});}
+function renderActs(){
+  const p=S.p, L=[];
+  const locked=p.age<6, teen=p.age>=6;
+  addAct(L,'📚','Study','+smarts',()=>{p.smarts=clamp(p.smarts+R(2,6));p.happy=clamp(p.happy-R(1,4));p.karma=clamp(p.karma+1);return 'Hit the books.';},teen);
+  addAct(L,'🏋️','Work out','+fitness',()=>{p.fit=clamp(p.fit+R(3,7));p.health=clamp(p.health+R(1,4));p.looks=clamp(p.looks+R(0,3));p.happy=clamp(p.happy+R(0,3));return 'Gym session crushed.';},p.age>=8);
+  addAct(L,'🧘','Meditate','+spirit',()=>{p.spirit=clamp(p.spirit+R(3,8));p.happy=clamp(p.happy+R(2,5));p.karma=clamp(p.karma+1);return 'Mind like still water.';},p.age>=8);
+  addAct(L,'🙏','Pray','luck',()=>{p.spirit=clamp(p.spirit+R(2,6));if(Math.random()<0.12+p.spirit/1000){const g=R(50,500);p.money+=g;log(`🙏 Answered prayer: found <b>${fmt$(g)}</b>!`,'good');return 'You feel watched over.';}p.happy=clamp(p.happy+R(1,4));return 'A quiet moment.';},p.age>=6);
+  addAct(L,'🎉','Party','+happy',()=>{p.happy=clamp(p.happy+R(5,12));p.health=clamp(p.health-R(2,6));if(Math.random()<0.15){p.addicted=true;log('🍺 The partying turned into a <b>habit</b>.','bad');}return 'Good times.';},p.age>=14);
+  addAct(L,'🏥','Doctor','$500',()=>{if(p.money<500)return 'No money for the doctor.';p.money-=500;p.health=clamp(p.health+R(8,18));return 'Checkup: all good.';},p.age>=6);
+  addAct(L,'💪','Therapy','+$300',()=>{if(p.money<300)return 'Therapy costs money.';p.money-=300;p.happy=clamp(p.happy+R(8,15));return 'Talked it out.';},p.age>=12);
+  addAct(L,'Lottery','Play','$10 · odds 1:200',()=>{
+    if(p.money<10)return 'Not even $10 to spare.';
+    p.money-=10;
+    const r=Math.random();
+    if(r<0.005){p.money+=1000000;log('🎰 <b>JACKPOT! $1,000,000!</b>','wild');hi('Won the $1,000,000 lottery');unlock('jackpot');return 'JACKPOT!!! $1,000,000!';}
+    if(r<0.02){const w=R(100,2000);p.money+=w;return `Won ${fmt$(w)}!`;}
+    p.happy=clamp(p.happy-2);return 'Lost. Again.';
+  },p.age>=18);
+  addAct(L,'🏕️','Hike','risk',()=>{
+    p.fit=clamp(p.fit+R(1,4));p.happy=clamp(p.happy+R(2,6));
+    if(Math.random()<0.06){p.health=clamp(p.health-R(15,30));log('🐍 <b>Snake bite on the trail!</b> Rushed to hospital.','bad');return 'SNAKE BITE! You survive, barely.';}
+    return 'Fresh air. No snakes today.';
+  },p.age>=10);
+  addAct(L,'📖','Read','+smarts',()=>{p.smarts=clamp(p.smarts+R(1,5));p.happy=clamp(p.happy+R(1,3));return 'A chapter a day.';},teen);
+  addAct(L,'🎨','Create','fame?',()=>{
+    p.happy=clamp(p.happy+R(2,6));
+    if(Math.random()<0.05+p.smarts/2000){p.fame=clamp(p.fame+R(5,20));log('🎨 Your creation <b>went viral</b>!','good');return 'VIRAL! Fame rising.';}
+    return 'Made something beautiful.';
+  },p.age>=8);
+  if(p.age>=3&&p.age<13){
+    addAct(L,'Play','Outside','+happy',()=>{p.happy=clamp(p.happy+R(4,10));if(Math.random()<0.05){p.health=clamp(p.health-10);log('<b>Scraped knee.</b> A badge of honor.','bad');return 'Scraped knee. Worth it.';}return 'Tag. Hide and seek. Pure joy.';},true);
+    addAct(L,'Read','Comics','+smarts',()=>{p.smarts=clamp(p.smarts+R(2,5));p.happy=clamp(p.happy+R(1,4));return 'Pow! Zap! Knowledge!';},p.age>=6);
+  }
+  if(p.money>=100000)addAct(L,'Give','Donate $25k','+karma',()=>{p.money-=25000;p.given+=25000;p.legacy+=25;p.karma=clamp(p.karma+8);p.happy=clamp(p.happy+5);log('<b>Donated $25,000</b> to people who needed it more.','good');return 'Money well spent.';},p.age>=18);
+  if(p.money>=500000&&!p.foundation)addAct(L,'Build','Foundation','$500k',()=>{p.money-=500000;p.given+=500000;p.foundation=true;p.legacy+=200;p.fame=clamp(p.fame+25);p.karma=clamp(p.karma+20);log('<b>Founded the '+p.name.split(' ')[1]+' Foundation.</b> Your name on a building.','good');hi('Started a charitable foundation');return 'Your name on a building. Immortality, sort of.';},p.age>=25);
+  if(p.addicted)addAct(L,'💊','Rehab','$2,000',()=>{
+    if(p.money<2000)return 'Rehab costs $2,000.';
+    p.money-=2000;
+    if(Math.random()<0.7){p.addicted=false;p.health=clamp(p.health+10);log('💊 <b>Clean!</b> A new chapter.','good');return 'Clean. One day at a time.';}
+    p.happy=clamp(p.happy-10);return 'Relapsed. Try again.';
+  },true);
+  const _pal=['#22f0ff','#39ff88','#ff3dc8','#ffe14d','#b48cff','#ff9f1c','#7a5cff'];
+  document.getElementById('acts').innerHTML=L.map((a,i)=>`<button class="act" data-i="${i}" ${a.ok?'':'disabled'} style="--ac:${_pal[i%_pal.length]}"><b>${a.t}</b><small>${a.sub}</small></button>`).join('')
+  +`<button class="act" id="wsBtn" style="--ac:#8b98b8"><b>Write</b><small>create an event</small></button>`;
+  document.querySelectorAll('#acts .act').forEach(b=>b.onclick=()=>{
+    const a=L[+b.dataset.i]; const r=a.fn(); if(r)toast(r); render();
+  });
+  const wb=document.getElementById('wsBtn');if(wb)wb.onclick=openWorkshop;
+}
+
+/* ================= WORK ================= */
+const JOBS=[
+ {t:'Woodworker',pay:34000,need:{edu:'hs'},d:'Honest work. Sawdust smells like pride.'},
+ {t:'Barista',pay:26000,need:{},d:'Espresso yourself.'},
+ {t:'Warehouse Clerk',pay:30000,need:{},d:'Boxes. So many boxes.'},
+ {t:'Police Officer',pay:58000,need:{edu:'hs',fit:55},d:'Serve and protect. Danger included.'},
+ {t:'Detective',pay:82000,need:{job:'Police Officer',years:4,smarts:60},d:'Follow the evidence.'},
+ {t:'Police Chief',pay:120000,need:{job:'Detective',years:5},d:'The badge gets heavy.'},
+ {t:'Nurse',pay:72000,need:{edu:'college'},d:'Long shifts, big heart.'},
+ {t:'Teacher',pay:52000,need:{edu:'college'},d:'Mold young minds.'},
+ {t:'Engineer',pay:115000,need:{edu:'college',smarts:60},d:'Build the future.'},
+ {t:'Lawyer',pay:160000,need:{edu:'grad'},d:'Objection! Sustained.'},
+ {t:'Doctor',pay:290000,need:{edu:'grad',smarts:70},d:'Do no harm. Bill plenty.'},
+ {t:'CEO',pay:450000,need:{edu:'college',smarts:75,fame:20},d:'Corner office energy.'},
+ {t:'Drug Dealer',pay:0,need:{street:10},crime:true,d:'Fast money. Faster consequences.'},
+ {t:'Emperor',pay:1000000,need:{},special:true,d:'All hail.'},
+];
+const CRIME_RANKS=[['Corner Dealer',40000],['Distributor',120000],['Kingpin',400000]];
+function canDo(j){
+  const p=S.p,n=j.need||{};
+  if(j.special)return false;
+  if(n.edu){const order={none:0,hs:1,college:2,grad:3};if(order[p.edu]<order[n.edu])return false;}
+  if(n.fit&&p.fit<n.fit)return false;
+  if(n.smarts&&p.smarts<n.smarts)return false;
+  if(n.street&&p.street<n.street)return false;
+  if(n.job&&(!p.job||p.job.title!==n.job))return false;
+  if(n.years&&p.jobYears<n.years)return false;
+  return true;
+}
+function renderWork(){
+  const p=S.p,box=document.getElementById('workbox');
+  let html='';
+  if(p.prison>0){box.innerHTML=`<div class="jobcard"><h3>⛓️ In prison</h3><p>${p.prison} years left. Keep your head down.</p></div>`;return;}
+  if(p.age<16){box.innerHTML=`<div class="jobcard"><h3>🧒 Too young</h3><p>Enjoy childhood. It ends.</p></div>`;return;}
+  // education
+  const order={none:0,hs:1,college:2,grad:3};
+  let edu=`<div class="jobcard"><h3>🎓 Education: ${p.edu==='none'?'None':p.edu.toUpperCase()}</h3>`;
+  if(p.age>=18&&p.edu==='none')edu+=`<button class="act wide" id="gedBtn" style="width:100%;margin-top:8px"><b>📜 Get GED / finish high school</b></button>`;
+  if(p.age>=18&&p.age<=30&&p.edu==='hs')edu+=`<button class="act wide" id="colBtn" style="width:100%;margin-top:8px"><b>🎓 College ($40k, 4 yrs)</b></button>`;
+  if(p.edu==='college'&&p.age<=35)edu+=`<button class="act wide" id="gradBtn" style="width:100%;margin-top:8px"><b>🎓 Grad school ($60k, 3 yrs)</b></button>`;
+  edu+=`</div>`;
+  html+=edu;
+  // politics ladder
+  if(p.age>=30&&p.prison===0&&!(p.job&&p.job.crime)){
+    const off=p.office;
+    let pol=`<div class="jobcard"><h3>Run for office${off?': '+off:''}</h3>`;
+    const winC=Math.min(0.9,0.25+p.smarts/200+p.fame/200);
+    const camp=(title,cost,need,ok)=>`<button class="act wide" data-pol="${title}" ${ok?'':'disabled'} style="width:100%;margin-top:8px"><b>${title} — ${fmt$(cost)}</b><small>${need} · win ~${Math.round(winC*100)}%</small></button>`;
+    if(!off)pol+=camp('Mayor',50000,'Smarts 55+',p.smarts>=55&&p.money>=50000);
+    else if(off==='Mayor')pol+=camp('Governor',250000,'Fame 40+',p.fame>=40&&p.money>=250000);
+    else if(off==='Governor'&&p.age>=40)pol+=camp('President',1000000,'Fame 65+',p.fame>=65&&p.money>=1000000);
+    else if(off==='President')pol+=`<p style="color:var(--good)">The highest office. Now: legacy.</p>`;
+    pol+=`</div>`;html+=pol;
+  }
+  if(p.job){
+    const j=p.job;
+    html+=`<div class="jobcard"><h3>💼 ${j.title}</h3><p class="pay">${fmt$(j.pay)}/yr · ${p.jobYears} yrs</p><p>${j.d||''}</p>${j.crime?`<p style="color:var(--bad)">Heat ${Math.round(p.heat)}% · bust risk ~${Math.round(p.heat/(S.era==='Crime Wave'?3:4))}%/yr</p>`:''}
+    <div style="display:flex;gap:8px;margin-top:10px"><button class="act" id="hardBtn" style="flex:1"><b>🔥 Work hard</b></button><button class="act" id="quitBtn" style="flex:1"><b>🚪 Quit</b></button></div></div>`;
+  }else{
+    html+=`<div class="jobcard"><h3>🔍 Find work</h3><div class="jlist">`+
+      JOBS.filter(j=>!j.special).map(j=>{const ok=canDo(j)&&p.age>=16;
+        return `<button data-j="${j.t}" ${ok?'':'disabled'}><b>${j.t}</b><small>${j.crime?'💀 crime':fmt$(j.pay)+'/yr'} — ${j.d}</small></button>`;}).join('')+`</div></div>`;
+  }
+  box.innerHTML=html;
+  const gb=document.getElementById('gedBtn');if(gb)gb.onclick=()=>{p.edu='hs';log('📜 <b>High school diploma earned.</b>','good');toast('Diploma!');render();};
+  const cb=document.getElementById('colBtn');if(cb)cb.onclick=()=>{
+    if(p.money<40000){toast('Need $40k for college.');return;}
+    p.money-=40000;p.edu='college';p.smarts=clamp(p.smarts+15);log('🎓 <b>College degree!</b> -$40k.','good');render();};
+  const grb=document.getElementById('gradBtn');if(grb)grb.onclick=()=>{
+    if(p.money<60000){toast('Need $60k.');return;}
+    p.money-=60000;p.edu='grad';p.smarts=clamp(p.smarts+12);log('🎓 <b>Graduate degree!</b> -$60k.','good');render();};
+  box.querySelectorAll('[data-pol]').forEach(b=>b.onclick=()=>{
+    const t=b.dataset.pol;
+    const spec={Mayor:[50000,'Mayor',120000],Governor:[250000,'Governor',220000],President:[1000000,'President',500000]}[t];
+    if(p.money<spec[0]){toast('Need '+fmt$(spec[0]));return;}
+    p.money-=spec[0];
+    const winC=Math.min(0.9,0.25+p.smarts/200+p.fame/200);
+    if(Math.random()<winC){p.office=t;p.job={title:t,pay:spec[2],d:'Elected by the people.'};p.jobYears=0;p.fame=clamp(p.fame+20);p.happy=clamp(p.happy+15);
+      log(`<b>ELECTED ${t.toUpperCase()}!</b> The people have spoken.`,'wild');hi('Elected '+t);if(t==='President')unlock('prez');celebrate(true);}
+    else{p.happy=clamp(p.happy-12);log(`Lost the race for <b>${t}</b>. ${fmt$(spec[0])} down the drain.`,'bad');}
+    render();});
+  const hb=document.getElementById('hardBtn');if(hb)hb.onclick=()=>{
+    p.jobYears++; // counts double below? no—year tick adds 1; this adds effort
+    if(Math.random()<0.25+p.smarts/400){promote();}else{p.happy=clamp(p.happy-4);toast('Nobody noticed.');}render();};
+  const qb=document.getElementById('quitBtn');if(qb)qb.onclick=()=>{log(`🚪 Quit as ${p.job.title}.`);p.job=null;p.jobYears=0;render();};
+  box.querySelectorAll('[data-j]').forEach(b=>b.onclick=()=>{
+    const j=JOBS.find(x=>x.t===b.dataset.j);
+    if(j.crime){p.job={title:'Corner Dealer',pay:40000,crime:true,rank:0,d:'Fast money. Faster consequences.'};}
+    else p.job={title:j.t,pay:j.pay,d:j.d};
+    p.jobYears=0;log(`💼 Became <b>${p.job.title}</b> (${fmt$(p.job.pay)}/yr).`,'good');render();
+  });
+}
+function promote(){
+  const p=S.p,order=['Police Officer','Detective','Police Chief'];
+  const i=order.indexOf(p.job.title);
+  if(i>=0&&i<order.length-1){
+    const nj=JOBS.find(j=>j.t===order[i+1]);
+    if(canDo(nj)){p.job={title:nj.t,pay:nj.pay,d:nj.d};p.jobYears=0;log(`🎖️ <b>PROMOTED to ${nj.t}!</b> ${fmt$(nj.pay)}/yr.`,'good');toast('Promoted!');return;}
+  }
+  const raise=Math.round(p.job.pay*R(3,10)/100);
+  p.job.pay+=raise;p.happy=clamp(p.happy+4);log(`📈 Raise! +${fmt$(raise)}/yr.`,'good');toast('Raise!');
+}
+
+/* ================= LOVE & FAMILY ================= */
+function renderLove(){
+  const p=S.p,box=document.getElementById('lovebox');
+  let html='';
+  if(p.partner){
+    html+=`<div class="jobcard"><h3>💘 ${p.partner.name}</h3><p>Partner · together ${p.partner.years}y</p>
+    <div style="display:flex;gap:8px;margin-top:10px">
+    <button class="act" id="kidBtn" style="flex:1"><b>👶 Have child</b></button>
+    ${p.partner.married?'':`<button class="act" id="propBtn" style="flex:1"><b>💍 Propose</b></button>`}
+    <button class="act" id="dumpBtn" style="flex:1"><b>💔 Break up</b></button></div></div>`;
+  }else if(p.age>=16){
+    html+=`<div class="jobcard"><h3>💘 Single</h3><p>Love is out there. Probably.</p><button class="act wide" id="dateBtn" style="width:100%;margin-top:8px"><b>💌 Find love</b></button></div>`;
+  }else html+=`<div class="jobcard"><h3>💘 Too young</h3><p>Focus on cooties first.</p></div>`;
+  if(p.kids.length){
+    html+=`<h3 style="margin:14px 0 8px">👶 Children (${p.kids.length})</h3><div class="fam">`+
+      p.kids.map(k=>`<div class="member"><span>${kidIcon(k)} ${k.name}, ${k.age}</span><span>${k.alive?'💚':'🪦'}</span></div>`).join('')+`</div>`;
+  }
+  box.innerHTML=html;
+  const db=document.getElementById('dateBtn');
+  if(db)db.onclick=()=>{
+    if(Math.random()<0.3+p.looks/200+p.fame/400){
+      const male=!p.male;
+      p.partner={name:pick(male?MALE:FEMALE)+' '+pick(SURN),years:0};
+      p.happy=clamp(p.happy+15);log(`💘 <b>${p.partner.name}</b> said yes to a date. Then another. Then forever (maybe).`,'good');
+    }else{p.happy=clamp(p.happy-8);log('💔 Rejected. Their loss.','bad');}
+    render();};
+  const kb=document.getElementById('kidBtn');
+  if(kb)kb.onclick=()=>{
+    if(p.kids.length>=6){toast('The house is full!');return;}
+    const male=Math.random()<0.5;
+    const kid={name:pick(male?MALE:FEMALE)+' '+S.surname,male,age:0,alive:true,form:pick(FORMS_ALL)};
+    p.kids.push(kid);p.happy=clamp(p.happy+12);p.money-=5000;
+    log(`👶 <b>${kid.name}</b> is born! Heir #${p.kids.length}.`,'wild');render();};
+  const pb=document.getElementById('propBtn');
+  if(pb)pb.onclick=()=>{
+    if(p.money<5000){toast('Need $5k for a ring.');return;}
+    p.money-=5000;
+    if(Math.random()<0.6+p.happy/250){p.partner.married=true;p.happy=clamp(p.happy+20);log(`💍 <b>Married ${p.partner.name}!</b>`,'good');hi('Got married');unlock('wed');celebrate(false);}
+    else{p.happy=clamp(p.happy-15);log('💔 The proposal was declined. Awkward.','bad');}
+    render();};
+  const ub=document.getElementById('dumpBtn');
+  if(ub)ub.onclick=()=>{log(`💔 Split with ${p.partner.name}.`,'bad');p.partner=null;p.happy=clamp(p.happy-12);render();};
+}
+
+/* ================= EVENTS ================= */
+function modal(html){const m=document.getElementById('modal');document.getElementById('mbox').innerHTML=html;m.classList.add('on');}
+function closeModal(){document.getElementById('modal').classList.remove('on');}
+function fireEvent(ev){
+  const p=S.p;
+  const ch=ev.c.map((c,i)=>`<button data-c="${i}">${c.t}</button>`).join('');
+  modal(`<div class="big">${ev.e||'📣'}</div><h2>${ev.title||'Life happens'}</h2><p>${ev.t(p)}</p><div class="choices">${ch}</div><div class="result" id="evres"></div>`);
+  document.querySelectorAll('#mbox [data-c]').forEach(b=>b.onclick=()=>{
+    const r=ev.c[+b.dataset.c].f(p);
+    document.getElementById('evres').innerHTML=r;
+    document.querySelectorAll('#mbox [data-c]').forEach(x=>x.disabled=true);
+    const btn=document.createElement('button');btn.textContent='Continue →';btn.style.cssText='margin-top:14px;width:100%;padding:14px;border-radius:14px;border:1px solid var(--c);background:#0e1424;color:var(--ink);font-weight:800;font-size:16px;cursor:pointer';
+    btn.onclick=()=>{closeModal();render();drainEvents();};
+    document.getElementById('evres').appendChild(btn);
+  });
+}
+function drainEvents(){if(pendingEvents.length&&S.p.alive){const ev=pendingEvents.shift();S.fired[ev._i]=S.p.age;fireEvent(ev);}}
+const EV=[];
+function E(o){o._i=EV.length;EV.push(o);}
+function dmg(p,n){p.health=clamp(p.health-n);}
+/* ---- BABY/CHILD ---- */
+E({e:'🪙',min:0,max:4,w:8,t:()=>'You swallowed a coin. It is not passing quietly.',c:[
+ {t:'Wait it out',f:p=>{dmg(p,8);log('🪙 Swallowed a coin. It passed.','bad');return 'It passed. Eventually.';}},
+ {t:'Doctor ($200)',f:p=>{if(p.money>=200){p.money-=200;dmg(p,2);return 'Doctor: totally fine.';}dmg(p,8);log('🪙 Swallowed a coin. No doctor money.','bad');return 'No money. It passed anyway.';}}]});
+E({e:'🐕',min:1,max:8,w:7,t:()=>'A stray puppy follows you home. Those eyes.',c:[
+ {t:'Keep it',f:p=>{p.pets.push('dog');p.happy=clamp(p.happy+15);log('🐕 Adopted a stray puppy!','good');return 'Best decision ever.';}},
+ {t:'Shoo it',f:p=>{p.happy=clamp(p.happy-6);p.karma=clamp(p.karma-4);return 'You monster. (It found a better home.)';}}]});
+E({e:'🤒',min:0,max:10,w:8,t:()=>'A raging fever. 104°F.',c:[
+ {t:'Hospital ($800)',f:p=>{if(p.money>=800){p.money-=800;p.health=clamp(p.health+5);return 'Treated. Fine now.';}dmg(p,15);log('🤒 Fever with no hospital money.','bad');return 'Rough week, but you pull through.';}},
+ {t:'Tough it out',f:p=>{dmg(p,14);log('🤒 Beat a bad fever naturally.','bad');return 'Miserable, but alive.';}}]});
+E({e:'👣',min:1,max:3,w:6,t:()=>'First steps! The whole family is watching.',c:[
+ {t:'Walk to mama',f:p=>{p.happy=clamp(p.happy+12);p.fit=clamp(p.fit+5);log('👣 First steps!','good');return 'You did it!';}},
+ {t:'Face-plant',f:p=>{p.happy=clamp(p.happy+6);dmg(p,3);log('👣 First steps ended in a face-plant. Funny though.','good');return 'Everyone laughed. Including you.';}}]});
+E({e:'🥊',min:6,max:12,w:9,t:()=>`${pick(['A bigger kid','The class bully','A rival'])} shoves you at recess.`,c:[
+ {t:'Fight back',f:p=>{if(p.fit>55){p.street=clamp(p.street+8);p.happy=clamp(p.happy+8);log('🥊 Won the playground fight. Legend status.','good');return 'You won!';}dmg(p,10);p.happy=clamp(p.happy-8);log('🥊 Lost a playground fight.','bad');return 'You lost. Badly.';}},
+ {t:'Tell a teacher',f:p=>{p.karma=clamp(p.karma+3);log('🥊 Told a teacher. Bully suspended.','good');return 'Justice served.';}},
+ {t:'Run',f:p=>{p.fit=clamp(p.fit+2);p.happy=clamp(p.happy-4);return 'Lived to run another day.';}}]});
+E({e:'🍋',min:6,max:12,w:6,t:()=>'Hot day. A lemonade stand could print money.',c:[
+ {t:'Open stand',f:p=>{const m=R(20,120);p.money+=m;p.smarts=clamp(p.smarts+3);log(`🍋 Lemonade empire: +${fmt$(m)}.`,'good');return `Made ${fmt$(m)}!`;}},
+ {t:'Nah',f:p=>{return 'Missed opportunity.';}}]});
+E({e:'🐍',min:5,max:60,w:5,t:()=>'A rattlesnake on the path. It strikes!',c:[
+ {t:'Hospital NOW ($1,500)',f:p=>{if(p.money>=1500){p.money-=1500;dmg(p,12);log('🐍 <b>Snake bite!</b> Antivenom saved you. -$1,500.','bad');return 'Antivenom works. Barely.';}dmg(p,30);log('🐍 <b>Snake bite, no hospital money!</b>','bad');return 'You survive on spite.';}},
+ {t:'Suck out venom (movies)',f:p=>{dmg(p,25);log('🐍 Snake bite. Movies lied.','bad');return 'That is not how venom works.';}}]});
+E({e:'🧠',min:6,max:12,w:6,t:()=>'The gifted program wants you. Bigger homework, bigger brain.',c:[
+ {t:'Join',f:p=>{p.smarts=clamp(p.smarts+12);p.happy=clamp(p.happy-4);log('🧠 Joined the gifted program.','good');return 'Nerd power +12.';}},
+ {t:'Pass',f:p=>{p.happy=clamp(p.happy+4);return 'Recess > homework.';}}]});
+/* ---- TEEN ---- */
+E({e:'🎓',min:13,max:17,w:8,t:()=>'Final exams. You studied... some.',c:[
+ {t:'Study hard',f:p=>{p.smarts=clamp(p.smarts+6);return 'Aced them.';}},
+ {t:'Cheat',f:p=>{if(Math.random()<0.6){p.smarts=clamp(p.smarts+4);p.karma=clamp(p.karma-8);return 'Got away with it.';}p.smarts=clamp(p.smarts-4);p.happy=clamp(p.happy-10);log('🎓 Caught cheating. Suspended.','bad');return 'CAUGHT. Suspended.';}}]});
+E({e:'🌿',min:13,max:25,w:7,t:()=>'A friend offers you weed behind the bleachers.',c:[
+ {t:'Just once',f:p=>{p.happy=clamp(p.happy+6);if(Math.random()<0.3){p.addicted=true;log('🌿 It wasn\'t just once. <b>Addicted.</b>','bad');return 'It wasn\'t just once.';}return 'Once. Never again. Probably.';}},
+ {t:'Deal it instead',f:p=>{p.street=clamp(p.street+15);p.money+=R(200,800);p.karma=clamp(p.karma-10);log('🌿 Started dealing. Fast money.','wild');return 'Money flows. So does risk.';}},
+ {t:'Refuse',f:p=>{p.karma=clamp(p.karma+4);p.spirit=clamp(p.spirit+3);return 'Clear head. Clear conscience.';}}]});
+E({e:'💘',min:13,max:19,w:7,t:()=>'Your crush smiled at you. Your heart is doing cardio.',c:[
+ {t:'Confess',f:p=>{if(p.looks>50||Math.random()<0.4){p.happy=clamp(p.happy+18);log('💘 First love!','good');return 'They said yes!!';}p.happy=clamp(p.happy-12);log('💘 Rejected by your crush.','bad');return 'They said "as a friend".';}},
+ {t:'Admire silently',f:p=>{return 'Safe. Lonely. Safe.';}}]});
+E({e:'🏋️',min:13,max:19,w:6,t:()=>'The school gym is empty. Transformation montage time?',c:[
+ {t:'Grind',f:p=>{p.fit=clamp(p.fit+12);p.looks=clamp(p.looks+8);log('🏋️ Glow-up arc complete.','good');return 'Beast mode.';}},
+ {t:'Nah',f:p=>{p.happy=clamp(p.happy+3);return 'Couch it is.';}}]});
+E({e:'🚗',min:16,max:25,w:6,t:()=>'You borrow the car. Rain. A sharp turn...',c:[
+ {t:'Brake!',f:p=>{if(p.form==='umbrella'){p.happy=clamp(p.happy+12);log('☂️ <b>Born for this.</b> The rain respects you.','good');hi('Out-drove the storm (umbrella)');return 'You open wide. The storm applauds.';}dmg(p,8);log('🚗 Fender bender in the rain.','bad');return 'Shook, but fine.';}},
+ {t:'Floor it',f:p=>{dmg(p,22);p.money-=2000;log('🚗 <b>Wrapped the car around a pole.</b>','bad');return 'Hospital. And a bill.';}}]});
+/* ---- ADULT ---- */
+E({e:'🎰',min:18,max:99,w:4,t:()=>'A $10 lottery ticket glints at the checkout.',c:[
+ {t:'Buy it',f:p=>{p.money-=10;if(Math.random()<0.002){p.money+=1000000;log('🎰 <b>LOTTERY WIN: $1,000,000!</b>','wild');return 'MILLIONAIRE!';}return 'Worthless paper.';}},
+ {t:'Walk away',f:p=>{p.karma=clamp(p.karma+1);return 'Smart.';}}]});
+E({e:'🔫',min:16,max:60,w:6,t:()=>'A guy in an alley shows a knife. "Wallet. Now."',c:[
+ {t:'Hand it over',f:p=>{const l=Math.min(p.money,R(50,500));p.money-=l;p.happy=clamp(p.happy-8);log(`🔫 Mugged! Lost ${fmt$(l)}.`,'bad');return 'Alive. Poorer.';}},
+ {t:'Fight',f:p=>{if(p.fit>65){p.street=clamp(p.street+10);log('🔫 Fought off a mugger! Street legend.','good');return 'He ran!';}dmg(p,20);p.money=Math.max(0,p.money-300);log('🔫 Mugger beat you up AND took cash.','bad');return 'Bad idea.';}}]});
+E({e:'💡',min:20,max:55,w:5,t:()=>'3 AM idea: an app that rates sandwiches. It could be huge.',c:[
+ {t:'Invest $10k',f:p=>{if(p.money<10000)return 'Need $10k.';p.money-=10000;if(Math.random()<0.15){const w=R(100000,900000);p.money+=w;p.fame=clamp(p.fame+15);log(`💡 Sandwich app sold for <b>${fmt$(w)}</b>!`,'wild');return 'EXIT! You genius!';}p.karma=clamp(p.karma+2);log('💡 Sandwich app flopped.','bad');return 'Nobody rated sandwiches.';}},
+ {t:'Sleep on it',f:p=>{return 'Probably wise.';}}]});
+E({e:'👴',once:true,min:25,max:99,w:5,t:()=>`Distant Uncle ${pick(SURN)} died. The will is being read...`,c:[
+ {t:'Attend reading',f:p=>{const w=R(5000,80000);p.money+=w;log(`👴 Inherited <b>${fmt$(w)}</b> from Uncle.`,'good');return `You got ${fmt$(w)}!`;}},
+ {t:'Skip it',f:p=>{return 'Family drama avoided.';}}]});
+E({e:'🛐',min:16,max:99,w:5,t:()=>'A serene monk invites you to a mountain retreat. Free. Silent.',c:[
+ {t:'Go (1 year of peace)',f:p=>{p.spirit=clamp(p.spirit+25);p.happy=clamp(p.happy+15);p.karma=clamp(p.karma+8);log('🛐 A year of silence. Transformed.','good');return 'Enlightenment speedrun.';}},
+ {t:'Too busy',f:p=>{return 'The mountain waits.';}}]});
+E({e:'🔥',min:18,max:99,w:4,t:()=>'You smell smoke. The kitchen is on FIRE.',c:[
+ {t:'Grab extinguisher',f:p=>{if(p.smarts>50){p.money-=2000;log('🔥 Kitchen fire contained. -$2k damage.','bad');return 'Contained!';}dmg(p,15);p.money-=8000;log('🔥 <b>House fire!</b> Half the house gone.','bad');return 'Everything smells like smoke now.';}},
+ {t:'Call 911, run',f:p=>{p.money-=5000;log('🔥 Firefighters saved the house. -$5k.','bad');return 'Professionals handle it.';}}]});
+E({e:'📼',once:true,min:16,max:50,w:4,t:()=>'Your dumb video just hit 10M views overnight.',c:[
+ {t:'Ride the fame',f:p=>{p.fame=clamp(p.fame+30);p.money+=R(5000,30000);log('📼 <b>VIRAL!</b> Brand deals incoming.','wild');return 'Influencer arc begins.';}},
+ {t:'Stay private',f:p=>{p.spirit=clamp(p.spirit+5);return 'Fame is a trap.';}}]});
+E({e:'🏛️',once:true,min:25,max:80,w:3,cond:p=>!p.job||p.job.title!=='Emperor',t:()=>'The government collapses! Chaos in the streets. A crowd looks to YOU.',c:[
+ {t:'👑 SEIZE THE PALACE',f:p=>{
+    if(p.smarts>65&&p.street>40){p.job={title:'Emperor',pay:1000000,special:true,d:'All hail.'};p.fame=100;p.money+=500000;log('👑 <b>CROWNED EMPEROR!</b> The palace is yours!','wild');unlock('emperor');hi('Seized power and became Emperor');return 'ALL HAIL!';}
+    p.prison=10;p.happy=0;log('👑 Coup failed. <b>10 years in prison.</b>','bad');return 'The guards were ready.';}},
+ {t:'Hide',f:p=>{p.happy=clamp(p.happy-5);return 'Wise. Probably.';}}]});
+E({e:'👮',min:18,max:35,w:5,t:()=>'A police recruiter: "You look like you could wear the badge."',c:[
+ {t:'Join academy',f:p=>{if(p.fit>=55){p.job={title:'Police Officer',pay:58000,d:'Serve and protect.'};p.jobYears=0;log('👮 <b>Joined the police force!</b>','good');return 'Badge earned.';}return 'Not fit enough. Train first.';}},
+ {t:'Decline',f:p=>{return 'The streets keep you.';}}]});
+E({e:'🪓',min:16,max:70,w:5,t:()=>'Old Man Hemlock the woodworker offers an apprenticeship. Sawdust and wisdom.',c:[
+ {t:'Apprentice',f:p=>{p.job={title:'Woodworker',pay:34000,d:'Honest work.'};p.jobYears=0;p.spirit=clamp(p.spirit+8);log('🪓 <b>Woodworking apprentice!</b>','good');return 'Smells like pine and pride.';}},
+ {t:'Pass',f:p=>{return 'The workshop door closes.';}}]});
+E({e:'💊',min:16,max:60,w:6,t:()=>'A connect whispers: real weight, real money. One run.',c:[
+ {t:'Run it',f:p=>{const m=R(5000,30000);p.money+=m;p.street=clamp(p.street+20);p.heat=clamp((p.heat||0)+25);p.karma=clamp(p.karma-12);
+    if(Math.random()<0.25){const y=R(3,10);p.prison=y;p.money=Math.max(0,p.money-20000);log(`💊 <b>BUSTED! ${y} years.</b>`,'bad');return 'BUSTED!';}
+    log(`💊 One run: +${fmt$(m)}. Heat rising.`,'wild');return 'Clean getaway. This time.';}},
+ {t:'Walk away',f:p=>{p.karma=clamp(p.karma+5);return 'Not your life.';}}]});
+E({e:'🤧',min:30,max:99,w:6,t:()=>'A cough that won\'t quit. The doctor looks serious.',c:[
+ {t:'Treatment ($15k)',f:p=>{if(p.money>=15000){p.money-=15000;dmg(p,10);log('🤧 Treated. You\'ll make it.','good');return 'Caught early.';}dmg(p,35);log('🤧 <b>Couldn\'t afford treatment.</b>','bad');return 'It gets worse.';}},
+ {t:'Ignore it',f:p=>{dmg(p,30);log('🤧 Ignored it. Mistake.','bad');return 'Denial is not medicine.';}}]});
+E({e:'💒',min:20,max:60,w:4,cond:p=>!!p.partner,t:p=>`${p.partner.name} is staring at a ring in a shop window...`,c:[
+ {t:'Propose!',f:p=>{if(Math.random()<0.7){p.happy=clamp(p.happy+20);log('💒 <b>Married!</b>','good');return 'They said YES!';}p.happy=clamp(p.happy-15);log('💒 Proposal rejected.','bad');return 'Awkward.';}},
+ {t:'Not yet',f:p=>{return 'Someday.';}}]});
+
+E({e:'🗣️',min:1,max:3,w:6,t:()=>'Your first word is coming...',c:[
+ {t:'"Mama"',f:p=>{p.happy=clamp(p.happy+10);log('🗣️ First word: "Mama"!','good');return 'Mama cries.';}},
+ {t:'"No!"',f:p=>{p.happy=clamp(p.happy+8);log('🗣️ First word: "No!" Iconic.','good');return 'A contrarian already.';}}]});
+E({e:'🔬',min:7,max:12,w:6,t:()=>'Science fair. Volcano or robot?',c:[
+ {t:'Volcano',f:p=>{p.smarts=clamp(p.smarts+4);log('🔬 Volcano erupted on cue. 2nd place.','good');return 'Classic.';}},
+ {t:'Robot',f:p=>{if(p.smarts>55){p.smarts=clamp(p.smarts+8);p.fame=clamp(p.fame+3);log('🔬 Robot won the fair!','good');return '1st place!';}p.smarts=clamp(p.smarts+3);return 'It moved. Mostly.';}}]});
+E({e:'🎤',min:14,max:22,w:5,t:()=>'Karaoke night. The mic is yours.',c:[
+ {t:'Belt it out',f:p=>{if(p.looks>55||p.spirit>60){p.fame=clamp(p.fame+8);p.happy=clamp(p.happy+10);log('🎤 Karaoke legend born.','good');return 'Standing ovation!';}p.happy=clamp(p.happy-6);log('🎤 Karaoke disaster.','bad');return 'Never again.';}},
+ {t:'Pass the mic',f:p=>{return 'Wisdom.';}}]});
+E({e:'🎟️',min:16,max:24,w:5,t:()=>'Prom. Nobody asked you yet.',c:[
+ {t:'Ask your crush',f:p=>{if(Math.random()<0.5+p.looks/200){p.happy=clamp(p.happy+16);log('🎟️ Prom night magic.','good');return 'Yes!';}p.happy=clamp(p.happy-10);log('🎟️ Prom rejection.','bad');return 'Stag it is.';}},
+ {t:'Go with friends',f:p=>{p.happy=clamp(p.happy+8);return 'Better anyway.';}}]});
+E({e:'🚔',min:18,max:99,w:5,t:()=>'Blue lights. You were doing 90 in a 55.',c:[
+ {t:'Accept ticket ($250)',f:p=>{p.money=Math.max(0,p.money-250);p.karma=clamp(p.karma+2);log('🚔 Speeding ticket. -$250.','bad');return 'Expensive lesson.';}},
+ {t:'Charm the officer',f:p=>{if(p.looks>65||p.street>50){log('🚔 Talked your way out of a ticket!','good');return 'Warning only. Smooth.';}p.money=Math.max(0,p.money-400);log('🚔 Charm failed. Bigger fine.','bad');return 'That backfired.';}}]});
+E({e:'📈',min:22,max:70,w:5,t:()=>`A coworker whispers a "guaranteed" stock tip.`,c:[
+ {t:'YOLO $5k',f:p=>{if(p.money<5000)return 'Need $5k.';p.money-=5000;if(Math.random()<0.3){const w=R(8000,40000);p.money+=w;log(`📈 Stock tip mooned: +${fmt$(w)}!`,'wild');return 'To the moon!';}log('📈 Stock tip was a pump and dump.','bad');return 'Rugged.';}},
+ {t:'Hard pass',f:p=>{p.karma=clamp(p.karma+1);return 'Boring. Rich-adjacent.';}}]});
+E({e:'🏃',min:20,max:60,w:5,t:()=>'The city marathon. 26.2 miles of regret.',c:[
+ {t:'Run it',f:p=>{if(p.fit>65){p.fit=clamp(p.fit+8);p.fame=clamp(p.fame+5);p.happy=clamp(p.happy+12);log('🏃 <b>Finished the marathon!</b>','good');return 'Finisher medal!';}dmg(p,12);log('🏃 Marathon DNF at mile 18.','bad');return 'Your knees filed a complaint.';}},
+ {t:'Cheer instead',f:p=>{p.happy=clamp(p.happy+3);return 'Cowbell duty.';}}]});
+E({e:'👶',min:22,max:45,w:4,cond:p=>!p.kids.length,t:()=>'The orphanage fundraiser tugs at you. Adoption is an option.',c:[
+ {t:'Adopt',f:p=>{const male=Math.random()<0.5;const kid={name:pick(male?MALE:FEMALE)+' '+S.surname,male,age:R(1,5),alive:true,form:pick(FORMS_ALL)};p.kids.push(kid);p.happy=clamp(p.happy+18);p.karma=clamp(p.karma+15);log(`👶 Adopted <b>${kid.name}</b>! An heir!`,'wild');return 'Family grows.';}},
+ {t:'Donate $1k instead',f:p=>{if(p.money<1000)return 'Need $1k.';p.money-=1000;p.karma=clamp(p.karma+8);return 'Generous.';}}]});
+E({e:'🎳',min:55,max:99,w:5,t:()=>'The senior center bowling league needs a ringer.',c:[
+ {t:'Join league',f:p=>{p.happy=clamp(p.happy+12);p.fit=clamp(p.fit+3);log('🎳 Bowling league champion (65+ division).','good');return 'Turkey! (three strikes)';}},
+ {t:'Pass',f:p=>{return 'Your knees thank you.';}}]});
+E({e:'🌪️',min:10,max:99,w:4,t:()=>'Tornado sirens! Take cover NOW.',c:[
+ {t:'Basement!',f:p=>{if(Math.random()<0.8){log('🌪️ Rode out the tornado safely.','good');return 'That was close.';}dmg(p,20);p.money=Math.max(0,p.money-10000);log('🌪️ <b>Tornado hit the house!</b>','bad');return 'Roof: gone.';}},
+ {t:'Chase it (content)',f:p=>{if(p.form==='umbrella'){p.fame=clamp(p.fame+15);p.happy=clamp(p.happy+10);log('🌪️ <b>Storm rider.</b> An umbrella in a tornado. Obviously.','wild');hi('Rode out a tornado (umbrella)');return 'You dance in the funnel. Legendary footage.';}if(Math.random()<0.3){p.fame=clamp(p.fame+12);log('🌪️ Tornado footage went viral!','wild');return 'Viral storm chaser!';}dmg(p,30);log('🌪️ <b>Chasing was a mistake.</b>','bad');return 'Debris. Everywhere.';}}]});
+
+/* ---- SENIOR ---- */
+E({e:'📖',min:60,max:99,w:5,t:()=>'A publisher wants your memoir. "Just tell the truth."',c:[
+ {t:'Write it',f:p=>{p.fame=clamp(p.fame+20);p.money+=R(10000,60000);log('📖 <b>Memoir published!</b>','good');return 'Bestseller (locally).';}},
+ {t:'Decline',f:p=>{p.spirit=clamp(p.spirit+5);return 'Some stories stay yours.';}}]});
+E({e:'👴',min:65,max:99,w:6,t:()=>'Your grandchild asks: "Were you cool?"',c:[
+ {t:'Tell war stories',f:p=>{p.happy=clamp(p.happy+15);p.fame=clamp(p.fame+5);log('👴 Grandkids think you\'re a legend.','good');return 'Legend status: confirmed.';}},
+ {t:'Show scars',f:p=>{p.happy=clamp(p.happy+8);return 'Every scar has a story.';}}]});
+E({e:'🕊️',min:50,max:99,w:4,t:()=>'A quiet urge: make peace with everyone.',c:[
+ {t:'Forgive all',f:p=>{p.karma=100;p.spirit=clamp(p.spirit+20);p.happy=clamp(p.happy+10);log('🕊️ <b>At peace with the world.</b>','good');return 'Weight lifted.';}},
+ {t:'Hold grudges',f:p=>{p.karma=clamp(p.karma-5);return 'They know what they did.';}}]});
+
+/* ================= YEAR TICK ================= */
+let SNAP=null;
+function ageUp(){
+  const p=S.p;
+  if(!p.alive)return;
+  try{SNAP=JSON.stringify(S);}catch(e){SNAP=null;}
+  p.age++;
+  // kids age
+  p.kids.forEach(k=>{if(k.alive)k.age++;});
+  if(p.partner)p.partner.years++;
+  // prison
+  if(p.prison>0){
+    p.prison--;p.happy=clamp(p.happy-8);dmg(p,3);
+    log(`⛓️ Prison year. ${p.prison} left.`,'bad');
+    if(p.prison===0){log('⛓️ <b>Free!</b>','good');p.job=null;p.excon=true;}
+    if(checkDeath())return;
+    render();return;
+  }
+  // income
+  if(p.job){
+    p.jobYears++;
+    let pay=Math.round(p.job.pay*payMult());
+    if(p.job.crime){
+      const rank=Math.min(2,Math.floor(p.street/40));
+      pay=Math.round(CRIME_RANKS[rank][1]*crimeMult());
+      p.job.title=CRIME_RANKS[rank][0];p.job.pay=pay;
+      p.heat=clamp(p.heat+R(5,20));
+      if(Math.random()<p.heat/(S.era==='Crime Wave'?300:400)){
+        const y=R(4,12);p.prison=y;p.heat=0;p.money=Math.max(0,p.money*0.4);
+        log(`🚔 <b>BUSTED as ${p.job.title}! ${y} years in prison.</b> 60% of cash seized.`,'bad');
+        p.job=null;p.jobYears=0;
+      }else if(Math.random()<0.08){p.alive=false;p.cause='Rival crew hit';return die();}
+    }
+    p.money+=pay;
+    S.peak=Math.max(S.peak,p.money);
+    p.happy=clamp(p.happy-2);
+  }else if(p.age>=16){
+    p.money-=R(8000,15000); // living costs
+  }
+  // emperor assassination risk
+  if(p.job&&p.job.title==='Emperor'&&Math.random()<0.05){p.alive=false;p.cause='Assassinated';return die();}
+  // addiction drain
+  if(p.addicted){dmg(p,6);p.happy=clamp(p.happy-8);p.money=Math.max(0,p.money-3000);if(Math.random()<0.05){p.alive=false;p.cause='Overdose';return die();}}
+  // age drift
+  if(S.era==='Pandemic')dmg(p,2);
+  const _rb=p.form==='robot';
+  if(p.age>40)dmg(p,S.era==='Peace'?R(0,_rb?1:2):R(1,_rb?2:3));
+  if(p.age>60)dmg(p,_rb?R(1,2):R(2,5));
+  if(p.age>80)dmg(p,_rb?R(2,4):R(4,8));
+  if(p.talent&&p.alive)p[p.talent.stat]=clamp(p[p.talent.stat]+1);
+  p.happy=clamp(p.happy+R(-3,3));
+  // milestones
+  if(p.age===6)log('🎒 Started school.','good');
+  if(p.age===13)log('🧑 Teenager now. Good luck.','wild');
+  if(p.age===18){p.edu=p.edu==='none'?'hs':p.edu;log('🎓 <b>Turned 18.</b> The world is yours. High school done.','good');}
+  if(p.age===65&&p.job)log('👴 Retirement age. The rocking chair beckons.');
+  // random events: 1-2
+  const nEvs=1+(Math.random()<0.35?1:0);
+  for(let i=0;i<nEvs;i++){
+    const pool=EV.filter(e=>p.age>=e.min&&p.age<=e.max&&(!e.cond||e.cond(p))&&(!S.fired[e._i]||(e.once?p.age-S.fired[e._i]>999:p.age-S.fired[e._i]>12)));
+    if(!pool.length)continue;
+    const tw=pool.reduce((s,e)=>s+e.w,0);let r=Math.random()*tw,ev=pool[0];
+    for(const e of pool){r-=e.w;if(r<=0){ev=e;break;}}
+    // don't stack modals: queue
+    S.fired[ev._i]=p.age;pendingEvents.push(ev);
+  }
+  if(checkDeath())return;
+  render();
+  if(pendingEvents.length){const ev0=pendingEvents.shift();S.fired[ev0._i]=p.age;fireEvent(ev0);}
+}
+let pendingEvents=[];
+function checkDeath(){
+  const p=S.p;
+  if(!p.alive){die();return true;}
+  let risk=0.002;
+  if(p.age>50)risk+=(p.age-50)*0.004;
+  if(p.age>70)risk+=(p.age-70)*0.01;
+  if(p.age>90)risk+=0.15;
+  if(p.health<25)risk+=0.08;
+  if(p.health<10)risk+=0.2;
+  if(Math.random()<risk){
+    if(catSave(p))return false;
+    p.cause=pick(['Old age','Heart failure','A freak accident','Pneumonia','A peaceful sleep']);
+    die();return true;
+  }
+  return false;
+}
+function die(){
+  const p=S.p;if(catSave(p))return;p.alive=false;
+  checkAch();
+  const r=ribbonFor(p), ob=obituary(p,r);
+  const [cid,cname]=weeklyChal();
+  let chalHtml='';
+  if(META.chal.week!==weekId()||!META.chal.done){
+    if(chalDone(cid,p)){META.chal={week:weekId(),done:1};saveMeta();chalHtml=`<p style="color:var(--good)"><b>Weekly challenge complete:</b> ${cname}!</p>`;celebrate(true);}
+  }
+  const heirs=p.kids.filter(k=>k.alive);
+  const worth=fmt$(p.money);
+  let html=`<div class="big deadtomb">✝</div><h2 class="dead">${p.name} died</h2>
+  <div class="ribbon">${r}</div>
+  <p class="obit">${ob}</p>
+  ${chalHtml}
+  <div style="text-align:left;margin:14px 0">
+  <div class="kv"><span>Net worth</span><b>${worth}</b></div>
+  <div class="kv"><span>Career</span><b>${p.job?p.job.title:'—'}</b></div>
+  <div class="kv"><span>Children</span><b>${p.kids.length}</b></div>
+  <div class="kv"><span>Fame</span><b>${Math.round(p.fame)}</b></div>
+  <div class="kv"><span>Karma</span><b>${Math.round(p.karma)}</b></div></div>
+  <button class="sharebtn" id="shareBtn">Share this life</button>`;
+  if(p.fame>60||p.money>1000000||(p.job&&p.job.title==='Emperor')){S.legends.push(p.name);html+=`<p>🌟 <b>LEGEND.</b> Songs will be sung.</p>`;}
+  if(heirs.length){
+    html+=`<p>The ${S.surname} line continues. Choose your heir:</p><div class="choices">`+
+      heirs.map((k,i)=>`<button data-h="${i}">${k.male?'👦':'👧'} ${k.name}, ${k.age}</button>`).join('')+`</div>`;
+  }else{
+    html+=`<p class="dead"><b>No heirs. The ${S.surname} dynasty ends here.</b></p>
+    <div class="choices"><button id="endBtn">See dynasty legacy →</button></div>`;
+  }
+  modal(html);
+  document.getElementById('shareBtn').onclick=shareLife;
+  document.querySelectorAll('#mbox [data-h]').forEach(b=>b.onclick=()=>{
+    const heir=heirs[+b.dataset.h];
+    S.gen++;
+    const inherit=Math.round(p.money*0.6);
+    S.p=newPerson(S.gen,S.surname,inherit);
+    S.fired={};S.era=pick(ERAS)[0];S.p.rewinds=1;
+    S.p.age=Math.max(18,heir.age);S.p.name=heir.name;S.p.male=heir.male;
+    closeModal();
+    log(`👶 <b>${heir.name}</b> takes up the mantle. Generation ${S.gen}. Inherits ${fmt$(inherit)}. Era: <b>${S.era}</b>.`,'wild');
+    render();
+  });
+  const eb=document.getElementById('endBtn');
+  if(eb)eb.onclick=()=>{
+    const gens=S.gen;
+    modal(`<h2 style="font-size:30px;margin-bottom:6px">Dynasty Complete</h2>
+    <p>The ${S.surname} line lasted <b>${gens} generation${gens>1?'s':''}</b>.</p>
+    <div style="text-align:left;margin:14px 0">
+    <div class="kv"><span>Peak wealth</span><b>${fmt$(S.peak)}</b></div>
+    <div class="kv"><span>Legends</span><b>${S.legends.length?S.legends.join(', '):'none'}</b></div>
+    <div class="kv"><span>Dynasty score</span><b>${dynastyScore()}</b></div>
+    <div class="kv"><span>House</span><b>${S.surname} · ${FORM_LABEL[S.p.form||'male']}</b></div></div>
+    <button class="sharebtn" id="shareBtn2">Share this dynasty</button>
+    <div class="choices"><button id="againBtn">🔄 Start a new bloodline</button></div>`);
+    const _sc=dynastyScore();if(_sc>(META.best||0)){META.best=_sc;saveMeta();}
+    document.getElementById('shareBtn2').onclick=shareLife;
+    document.getElementById('againBtn').onclick=()=>{closeModal();newGame();};
+  };
+  render();
+}
+
+
+/* ================= RESEARCH SYSTEMS ================= */
+const META_KEY='sfab-meta-v1';
+let META={ach:{},best:0,gift:'',custom:[],chal:{}};
+try{const _m=JSON.parse(localStorage.getItem(META_KEY));if(_m)META=Object.assign(META,_m);}catch(e){}
+function saveMeta(){try{localStorage.setItem(META_KEY,JSON.stringify(META));}catch(e){}}
+const ACH=[
+ ['jackpot','Jackpot','Win the lottery'],['emperor','All Hail','Become Emperor'],
+ ['tycoon','Tycoon','$1M net worth'],['century','Centenarian','Reach 100'],
+ ['scholar','Scholar','Graduate school'],['kingpin','Kingpin','Top the crime ladder'],
+ ['jailbird','Jailbird','Do prison time'],['star','Superstar','100 fame'],
+ ['saint','Saint','Reach 100 karma'],['sinner','Villain','Hit 0 karma'],
+ ['parent5','Full House','Have 5 kids'],['wed','Married','Tie the knot'],
+ ['chief','Top Cop','Become Police Chief'],['ceo','Corner Office','Become CEO'],
+ ['prez','President','Win the presidency'],['monk','Enlightened','100 spirit'],
+ ['old90','Nonagenarian','Reach 90'],['gen5','Bloodline','Reach generation 5'],
+ ['giver','Philanthropist','Donate $500k total'],['founder','Founder','Start a foundation']];
+function unlock(id){if(!S||!S.p||META.ach[id])return;const a=ACH.find(x=>x[0]===id);if(!a)return;META.ach[id]=1;saveMeta();toast('Achievement unlocked: '+a[1]);sfx('win');confetti(30);}
+function checkAch(){if(!S||!S.p||!S.p.alive)return;const p=S.p;
+ if(p.money>=1e6)unlock('tycoon');if(p.fame>=100)unlock('star');
+ if(p.karma>=100)unlock('saint');if(p.karma<=0)unlock('sinner');
+ if(p.spirit>=100)unlock('monk');if(p.kids.length>=5)unlock('parent5');
+ if(p.age>=90)unlock('old90');if(p.age>=100)unlock('century');
+ if(p.edu==='grad')unlock('scholar');if(p.prison>0||p.excon)unlock('jailbird');
+ if(p.job&&p.job.title==='Police Chief')unlock('chief');
+ if(p.job&&p.job.title==='CEO')unlock('ceo');if(p.office==='President')unlock('prez');
+ if(p.street>=80)unlock('kingpin');if(p.given>=500000)unlock('giver');
+ if(p.foundation)unlock('founder');if(p.partner&&p.partner.married)unlock('wed');
+ if(S.gen>=5)unlock('gen5');}
+function ribbonFor(p){
+ if(p.job&&p.job.title==='Emperor')return 'ROYAL';
+ if(p.office==='President')return 'COMMANDER';
+ if(p.money>=5000000)return 'TYCOON';
+ if(p.fame>=90)return 'STAR';
+ if(p.excon||p.prison>0)return 'OUTLAW';
+ if(p.karma>=90)return 'SAINT';
+ if(p.karma<=10)return 'VILLAIN';
+ if(p.kids.length>=5)return 'FAMILY';
+ if(p.age>=100)return 'CENTURY';
+ if(p.edu==='grad')return 'SCHOLAR';
+ return 'ORDINARY';}
+function obituary(p,r){
+ const job=p.office||(p.job?p.job.title:null);
+ let o=p.name+', dead at '+p.age+' of '+(p.cause||'unknown causes')+'. ';
+ if(r==='ROYAL')o+='Seized a nation and ruled it. History will argue about the rest. ';
+ else if(r==='TYCOON')o+='Turned pocket change into an empire worth '+fmt$(p.money)+'. ';
+ else if(r==='STAR')o+='Lived loud, died famous. The cameras never really left. ';
+ else if(r==='OUTLAW')o+='Lived by the streets, paid the price on the streets. ';
+ else if(r==='SAINT')o+='Gave more than they took. Rare, and everyone knew it. ';
+ else if(r==='VILLAIN')o+='Feared by many, mourned by few. ';
+ else if(r==='FAMILY')o+='Leaves behind '+p.kids.length+' children and a very full photo album. ';
+ else if(r==='CENTURY')o+='A hundred years of mornings. Imagine the stories. ';
+ else o+=(job?('Spent the working years as a '+job.toLowerCase()+'. '):'')+'A life lived. ';
+ if(p.given>0)o+='Gave away '+fmt$(p.given)+' to make the world slightly less terrible.';
+ o+=({male:'He did what he could. ',female:'She did what she could. ',cat:'It used one (1) of its nine lives. ',robot:'Its warranty has expired. ',umbrella:'It will be missed, especially in the rain. '}[p.form]||'');
+ return o;}
+const CHALS=[['emperor','Become Emperor'],['tycoon','Reach $1M net worth'],['parent5','Have 5 children'],['star','Reach 100 fame'],['prez','Become President'],['century','Live to 100'],['kingpin','Become Kingpin'],['scholar','Earn a graduate degree']];
+function weekId(){const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()+3-((d.getDay()+6)%7));const w1=new Date(d.getFullYear(),0,4);return d.getFullYear()+'-W'+(1+Math.round(((d-w1)/864e5-3+((w1.getDay()+6)%7))/7));}
+function hashStr(s){let x=0;for(let i=0;i<s.length;i++)x=(x*31+s.charCodeAt(i))>>>0;return x;}
+function weeklyChal(){return CHALS[hashStr(weekId())%CHALS.length];}
+function chalDone(id,p){
+ if(id==='emperor')return p.job&&p.job.title==='Emperor';
+ if(id==='tycoon')return p.money>=1e6;
+ if(id==='parent5')return p.kids.length>=5;
+ if(id==='star')return p.fame>=100;
+ if(id==='prez')return p.office==='President';
+ if(id==='century')return p.age>=100;
+ if(id==='kingpin')return p.street>=80;
+ if(id==='scholar')return p.edu==='grad';
+ return false;}
+function dailyGift(){const t=new Date().toDateString();if(META.gift===t)return null;META.gift=t;saveMeta();
+ return pick([['cash',500,'$500'],['health',8,'+8 Health'],['happy',10,'+10 Happy'],['smarts',5,'+5 Smarts']]);}
+function applyGift(g){if(!g||!S||!S.p)return;const p=S.p;
+ if(g[0]==='cash')p.money+=g[1];else p[g[0]]=clamp(p[g[0]]+g[1]);
+ toast('Daily gift: '+g[2]);log('<b>Daily gift:</b> '+g[2]+'.','good');}
+const ERAS=[['Boom','Salaries up'],['Recession','Pay down, crime pays'],['Peace','Steady'],['Crime Wave','Streets pay, heat rises'],['Pandemic','Health is everything']];
+function payMult(){return S.era==='Boom'?1.25:S.era==='Recession'?0.75:1;}
+function crimeMult(){return S.era==='Crime Wave'?1.5:S.era==='Recession'?1.3:1;}
+function hi(t){if(!S||!S.p)return;S.p.highlights=S.p.highlights||[];if(S.p.highlights.length<6)S.p.highlights.push(t);}
+function shareLife(){
+ const p=S.p,r=ribbonFor(p);
+ const c=document.createElement('canvas');c.width=900;c.height=1200;const x=c.getContext('2d');
+ const g=x.createLinearGradient(0,0,0,1200);g.addColorStop(0,'#0b1020');g.addColorStop(1,'#141b30');
+ x.fillStyle=g;x.fillRect(0,0,900,1200);
+ x.textAlign='center';x.fillStyle='#5b6b8c';x.font='800 26px "DM Sans",system-ui';
+ x.fillText('L E O N L I N K   P R E S E N T S',450,90);
+ x.fillStyle='#fff';x.font='900 64px "DM Sans",system-ui';x.fillText('STARTED FROM',450,180);x.fillText('A BABY',450,250);
+ x.fillStyle='#ffd700';x.font='900 40px "DM Sans",system-ui';x.fillText(r,450,330);
+ drawCrest(x,252,360,30,S.crest||'shield');
+ x.fillStyle='#ffd94d';x.font='700 30px "DM Sans",system-ui';x.fillText('House of '+S.surname+'  ·  '+FORM_LABEL[p.form||'male'],470,372);
+ x.fillStyle='#fff';x.font='700 44px "DM Sans",system-ui';x.fillText(p.name,450,420);
+ x.fillStyle='#8b98b8';x.font='400 32px "DM Sans",system-ui';x.fillText('Age '+p.age+'  ·  Gen '+S.gen+'  ·  '+(p.office||(p.job?p.job.title:'Unemployed')),450,470);
+ const bars=[['Health',p.health,'#ff5d5d'],['Happy',p.happy,'#ffe14d'],['Smarts',p.smarts,'#22f0ff'],['Wealth',Math.min(100,p.money/100000),'#39ff88'],['Fame',p.fame,'#ffffff']];
+ bars.forEach((b,i)=>{const y=560+i*80;x.fillStyle='#8b98b8';x.font='700 26px "DM Sans",system-ui';x.textAlign='left';x.fillText(b[0],90,y+28);
+  x.fillStyle='#1c2440';x.fillRect(280,y,530,26);x.fillStyle=b[2];x.fillRect(280,y,530*Math.max(0,Math.min(100,b[1]))/100,26);});
+ x.textAlign='center';x.fillStyle='#5b6b8c';x.font='800 24px "DM Sans",system-ui';x.fillText('WILDEST MOMENT',450,1010);
+ const mom=String((p.highlights&&p.highlights[0])||'A quiet life. Suspiciously quiet.').replace(/<[^>]+>/g,'');
+ x.fillStyle='#fff';x.font='italic 30px "DM Sans",system-ui';
+ const words=mom.split(' ');let line='',yy=1055;
+ for(const w of words){if((line+' '+w).length>42){x.fillText(line,450,yy);yy+=42;line=w;}else line=line?line+' '+w:w;}
+ x.fillText(line,450,yy);
+ x.fillStyle='#5b6b8c';x.font='400 24px "DM Sans",system-ui';x.fillText('leonlink.net',450,1150);
+ c.toBlob(b=>{const f=new File([b],'my-life.png',{type:'image/png'});
+  if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],title:'My life in Started From a Baby'}).catch(()=>{});}
+  else{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='started-from-a-baby.png';a.click();toast('Life card saved');}});}
+function openWorkshop(){
+ modal('<h2>Write an event</h2><p style="color:var(--mut);font-size:14px">It joins your world immediately.</p>'+
+ '<div class="wform"><label>Title</label><input id="wT" maxlength="60" placeholder="The pigeon incident">'+
+ '<label>Story</label><textarea id="wS" rows="2" maxlength="220" placeholder="A pigeon lands on your head and refuses to leave."></textarea>'+
+ '<label>Choice A</label><input id="wA" maxlength="40" placeholder="Adopt it"><label>What happens (A)</label><input id="wRA" maxlength="140" placeholder="You name him Gerald. Best friends forever.">'+
+ '<label>Choice B</label><input id="wB" maxlength="40" placeholder="Shoo it"><label>What happens (B)</label><input id="wRB" maxlength="140" placeholder="It leaves. You feel oddly empty.">'+
+ '<label>Minimum age</label><input id="wAge" type="number" value="6" min="0" max="100" style="width:90px"></div>'+
+ '<div class="choices"><button id="wSave">Add to my world</button><button id="wCancel">Cancel</button></div>');
+ document.getElementById('wCancel').onclick=closeModal;
+ document.getElementById('wSave').onclick=()=>{
+  const v=id=>document.getElementById(id).value.trim();
+  if(!v('wT')||!v('wS')||!v('wA')||!v('wB')){toast('Fill every field');return;}
+  const ev={t:v('wT'),story:v('wS'),a:v('wA'),ra:v('wRA')||'Nothing happened.',b:v('wB'),rb:v('wRB')||'Nothing happened.',min:Math.max(0,Math.min(100,+v('wAge')||0))};
+  META.custom.push(ev);saveMeta();injectCustom(ev);closeModal();toast('Event added to your world');sfx('good');};}
+function injectCustom(ev){
+ E({e:'✏️',min:ev.min,max:99,w:3,t:()=>ev.story,title:ev.t,custom:true,c:[
+  {t:ev.a,f:p=>{p.happy=clamp(p.happy+R(-2,6));return ev.ra;}},
+  {t:ev.b,f:p=>{p.happy=clamp(p.happy+R(-2,6));return ev.rb;}}]});}
+function dynastyScore(){return S.gen*100+Math.floor(S.peak/20000)+S.legends.length*500+Object.keys(META.ach).length*25;}
+
+/* ================= RESEARCH BATCH: 30 new events ================= */
+// kid chaos
+E({e:'🛝',min:4,max:11,w:5,t:()=>'The playground slide is lava-hot from the sun. The other kids are watching.',c:[
+ {t:'Go anyway',f:p=>{if(Math.random()<0.3){p.health=clamp(p.health-12);log('🛝 <b>Slide burn.</b> A legend is forged in pain.','bad');return 'You screamed the whole way down. Respect +10.';}p.happy=clamp(p.happy+10);return 'Perfect landing. The crowd goes mild.';}},
+ {t:'Wait for shade',f:p=>{p.smarts=clamp(p.smarts+3);return 'Patience. A rare childhood virtue.';}}]});
+E({e:'🦷',min:5,max:12,w:5,t:()=>'Your tooth is hanging by a thread. The Tooth Fairy economy awaits.',c:[
+ {t:'Yank it',f:p=>{const m=R(1,20);p.money+=m;p.happy=clamp(p.happy+8);return `Out it comes! The fairy leaves $${m}. Inflation is real.`;}},
+ {t:'Wiggle it for weeks',f:p=>{p.happy=clamp(p.happy-4);return 'It falls out during lunch. Anticlimax.';}}]});
+E({e:'👾',min:6,max:14,w:5,t:()=>'A kid at school claims he can beat anyone at the arcade fighter. Winner gets lunch money.',c:[
+ {t:'Accept the duel',f:p=>{if(Math.random()<0.4+p.smarts/250){const w=R(5,25);p.money+=w;p.happy=clamp(p.happy+12);log('👾 <b>Arcade champion!</b> Lunch money secured.','good');return `Flawless victory. +$${w}.`;}p.money=Math.max(0,p.money-5);p.happy=clamp(p.happy-6);return 'You got perfected. Twice. In front of everyone.';}},
+ {t:'Decline gracefully',f:p=>{p.karma=clamp(p.karma+3);return 'You keep your $5 and your dignity. Mostly.';}}]});
+// teen absurdity
+E({e:'🤖',min:13,max:19,w:4,t:()=>'Your phone suggests you might enjoy "extreme ironing." The algorithm knows you too well.',c:[
+ {t:'Try extreme ironing',f:p=>{p.fame=clamp(p.fame+8);p.happy=clamp(p.happy+10);log('🤖 <b>Extreme ironing influencer arc begins.</b>','wild');return 'You iron a shirt on a cliffside. 40k views.';}},
+ {t:'Touch grass instead',f:p=>{p.health=clamp(p.health+5);p.happy=clamp(p.happy+4);return 'The algorithm is disappointed in you.';}}]});
+E({e:'🍕',min:14,max:30,w:4,t:()=>'A pizza place offers you $200 to eat a 5-pound "Mount Vesuvius" calzone on camera.',c:[
+ {t:'Accept the challenge',f:p=>{if(Math.random()<0.5){p.money+=200;p.fame=clamp(p.fame+6);log('🍕 <b>Conquered the Mount Vesuvius.</b>','wild');return '$200 and mild stomach damage. Worth it.';}p.health=clamp(p.health-15);p.happy=clamp(p.happy-5);return 'You tapped out at pound three. The internet saw.';}},
+ {t:'Hard pass',f:p=>{p.health=clamp(p.health+3);return 'Your arteries thank you.';}}]});
+E({e:'👽',min:8,max:99,w:2,t:()=>'You wake up at 3am. There is a humming light outside your window. Classic.',c:[
+ {t:'Investigate',f:p=>{const r=Math.random();if(r<0.3){p.smarts=clamp(p.smarts+10);p.fame=clamp(p.fame+15);log('👽 <b>Abducted. Returned with forbidden knowledge (and a probe story).</b>','wild');hi('Abducted by aliens at 3am');return 'They were surprisingly polite. You now understand taxes.';}if(r<0.6){p.happy=clamp(p.happy-8);return 'It was a drone. A kid\'s drone. You screamed at a child\'s toy.';}p.spirit=clamp(p.spirit+10);return 'You wave at the light. It blinks back. Beautiful.';}},
+ {t:'Go back to sleep',f:p=>{p.health=clamp(p.health+4);return 'Whatever it was, it can wait until morning.';}}]});
+E({e:'🎤',min:16,max:40,w:4,t:()=>'A street interviewer shoves a mic in your face: "What\'s your biggest red flag?"',c:[
+ {t:'Answer honestly',f:p=>{p.fame=clamp(p.fame+10);p.happy=clamp(p.happy+6);log('🎤 <b>"I rehearse arguments in the shower." — 2M views.</b>','wild');return '"I rehearse arguments in the shower." 2M views overnight.';}},
+ {t:'Run away',f:p=>{p.fit=clamp(p.fit+3);return 'Cardio and dignity, preserved.';}}]});
+// adult chaos
+E({e:'🦜',min:18,max:99,w:4,t:()=>'A parrot at the pet store looks you dead in the eye and says your full name. It is not for sale. It chooses you.',c:[
+ {t:'Take the parrot',f:p=>{if(p.money<300)return 'The parrot costs $300. It judges your finances.';p.money-=300;p.pets.push('parrot');p.happy=clamp(p.happy+15);log('🦜 <b>Adopted a parrot that knows your name.</b> Concerning.','wild');return 'It already knows your secrets. Too late now.';}},
+ {t:'Back away slowly',f:p=>{p.spirit=clamp(p.spirit-3);return 'You will think about that parrot forever.';}}]});
+E({e:'📦',min:20,max:60,w:4,t:()=>'A package arrives. You ordered nothing. The return address is your own handwriting.',c:[
+ {t:'Open it',f:p=>{const r=Math.random();if(r<0.4){const m=R(100,2000);p.money+=m;log('📦 <b>Mystery box contained cash.</b> Do not ask questions.','wild');return `Inside: $${m} and a note saying "you\'ll understand soon."`;}if(r<0.7){p.happy=clamp(p.happy+8);return 'Inside: a single perfect burrito. Still warm. Impossible. Delicious.';}p.happy=clamp(p.happy-6);return 'Inside: 400 packing peanuts and regret.';}},
+ {t:'Return to sender (you)',f:p=>{p.karma=clamp(p.karma+4);return 'You mail it back to yourself. The loop continues.';}}]});
+E({e:'💼',min:22,max:60,w:4,t:()=>'A recruiter offers you a job with an incredible salary. The company name is "Synergy Dynamics Solutions." Nobody knows what they do.',c:[
+ {t:'Take the mystery job',f:p=>{const r=Math.random();if(r<0.5){const s=R(90000,180000);p.job={title:'Synergy Consultant',pay:s,d:'Nobody knows what you do. Including you.'};p.jobYears=0;log(`💼 <b>Hired at Synergy Dynamics Solutions: ${fmt$(s)}/yr.</b>`,'good');return `Salary: ${fmt$(s)}. Duties: unknown. Vibes: immaculate.`;}p.happy=clamp(p.happy-10);return 'It was a pyramid scheme. The pyramid had great branding though.';}},
+ {t:'Ask what they actually do',f:p=>{p.smarts=clamp(p.smarts+4);return '"We leverage synergistic paradigms." You walk away.';}}]});
+E({e:'🧛',min:18,max:99,w:3,t:()=>'Your new neighbor only comes out at night, never ages, and keeps inviting you to "dinner."',c:[
+ {t:'Accept dinner',f:p=>{const r=Math.random();if(r<0.5){p.health=clamp(p.health-20);p.spirit=clamp(p.spirit+10);log('🧛 <b>Survived dinner with the neighbor.</b> Barely.','bad');return 'You wake up dizzy with two tiny marks and a great story.';}p.fame=clamp(p.fame+8);return 'Turns out they\'re just a night-shift nurse who loves garlic bread. Anticlimax.';}},
+ {t:'Install garlic wreath',f:p=>{p.money=Math.max(0,p.money-40);p.happy=clamp(p.happy+4);return '$40 of garlic. Your house smells incredible. Neighbor unfazed.';}}]});
+E({e:'🎰',min:25,max:70,w:3,t:()=>'A casino host comps you a suite because you "have the look." You have never gambled.',c:[
+ {t:'Play it cool, bet $100',f:p=>{if(p.money<100)return 'You don\'t even have $100. The look fades.';p.money-=100;if(Math.random()<0.3){const w=R(500,5000);p.money+=w;log(`🎰 <b>Beginner's luck: won ${fmt$(w)}.</b>`,'good');return `Won ${fmt$(w)}! The host nods respectfully.`;}p.happy=clamp(p.happy-5);return 'Lost it in four minutes. The look is gone.';}},
+ {t:'Take the suite, skip the tables',f:p=>{p.happy=clamp(p.happy+12);return 'Free suite, room service, zero losses. The real jackpot.';}}]});
+E({e:'🐝',min:10,max:99,w:4,t:()=>'You have been chosen. By bees. A whole swarm, following you like a furry tornado.',c:[
+ {t:'Become the bee person',f:p=>{p.fame=clamp(p.fame+12);p.happy=clamp(p.happy+8);log('🐝 <b>Became locally famous as "the bee person."</b>','wild');hi('Became the local bee person');return 'Local news covers it. Kids want your autograph. The bees stay.';}},
+ {t:'Run flailing',f:p=>{p.health=clamp(p.health-10);p.fit=clamp(p.fit+4);return 'Stung 6 times. The bees found it hilarious.';}}]});
+E({e:'🏚️',min:25,max:70,w:4,t:()=>'A "haunted" Victorian is selling for almost nothing. The listing says "motivated seller (deceased)."',c:[
+ {t:'Buy the haunted house',f:p=>{if(p.money<30000)return 'You can\'t afford the ghosts.';p.money-=30000;const r=Math.random();if(r<0.5){p.money+=120000;p.fame=clamp(p.fame+10);log('🏚️ <b>Flipped the haunted house for a fortune.</b> The ghosts got a cut.','good');return 'Renovated, flipped, +$120k. The ghosts asked for a percentage. Fair.';}p.happy=clamp(p.happy-8);return 'The pipes scream at 2am. Worth it? Unclear.';}},
+ {t:'Ghosts don\'t pay rent',f:p=>{p.karma=clamp(p.karma+2);return 'Someone braver buys it. You watch from across the street.';}}]});
+E({e:'📈',min:20,max:60,w:4,t:()=>'Your cousin\'s friend\'s barber says a coin called "MoonDogeElon" is going to 100x. He seems trustworthy. He is not.',c:[
+ {t:'YOLO $1,000',f:p=>{if(p.money<1000)return 'You don\'t have $1,000 to vaporize.';p.money-=1000;const r=Math.random();if(r<0.12){const w=R(20000,90000);p.money+=w;log(`📈 <b>MoonDogeElon MOONED. +${fmt$(w)}.</b>`,'wild');hi('Got rich off a meme coin');return `It 50x'd. You are a genius (this time). +${fmt$(w)}.`;}p.happy=clamp(p.happy-8);return 'Rug pulled. The barber has stopped answering texts.';}},
+ {t:'Lecture him about index funds',f:p=>{p.smarts=clamp(p.smarts+3);return 'He buys anyway. You were right. It changes nothing.';}}]});
+E({e:'🦞',min:18,max:80,w:3,t:()=>'At a seafood restaurant, a lobster in the tank makes direct eye contact and raises one claw. A challenge? A plea?',c:[
+ {t:'Order the lobster',f:p=>{p.happy=clamp(p.happy-6);p.karma=clamp(p.karma-8);return 'You eat it. It haunts your dreams. Worth it? No.';}},
+ {t:'Buy its freedom ($80)',f:p=>{if(p.money<80)return 'Freedom costs $80. You don\'t have it.';p.money-=80;p.karma=clamp(p.karma+12);p.happy=clamp(p.happy+10);log('🦞 <b>Freed a lobster. It waved goodbye.</b>','good');return 'Released at the pier. It waved. You cried a little.';}}]});
+E({e:'🎪',min:18,max:50,w:3,t:()=>'A traveling circus needs an emergency lion tamer. The last one "retired." Pay is cash, daily.',c:[
+ {t:'Tame lions',f:p=>{const r=Math.random();if(r<0.4){const w=R(300,900);p.money+=w;p.fame=clamp(p.fame+10);p.fit=clamp(p.fit+6);log('🎪 <b>Joined the circus as lion tamer.</b>','wild');hi('Ran away with the circus');return `You stare down a lion named Kevin. +$${w}. Legend.`;}p.health=clamp(p.health-25);return 'Kevin was not in the mood. Hospital. Great story.';}},
+ {t:'Decline (wisely)',f:p=>{p.smarts=clamp(p.smarts+2);return 'The circus leaves town. Kevin waves with his tail.';}}]});
+// midlife & senior
+E({e:'🚗',min:40,max:99,w:4,t:()=>'A teenager in a sports car challenges your sedan at a red light. Your knees say no. Your pride says yes.',c:[
+ {t:'Race them',f:p=>{const r=Math.random();if(r<0.4){p.fame=clamp(p.fame+8);p.happy=clamp(p.happy+15);log('🚗 <b>Smoked a teenager at a red light.</b> Midlife: thriving.','wild');return 'You win by half a car. The teen is humbled. You feel 25 again.';}p.money=Math.max(0,p.money-400);p.happy=clamp(p.happy-8);return 'Speeding ticket: $400. Your knees were right.';}},
+ {t:'Smile and wave',f:p=>{p.karma=clamp(p.karma+4);p.happy=clamp(p.happy+3);return 'Maturity looks good on you.';}}]});
+E({e:'🧶',min:55,max:99,w:4,t:()=>'The senior center knitting circle is actually a front for an underground poker ring. They want fresh blood.',c:[
+ {t:'Join the ring',f:p=>{const r=Math.random();if(r<0.5){const w=R(200,3000);p.money+=w;p.happy=clamp(p.happy+12);log('🧶 <b>Cleaned out the knitting-circle poker ring.</b>','wild');return `Mildred goes all-in on a bluff. You call. +$${w}.`;}p.money=Math.max(0,p.money-200);return 'Ethel took your $200 and your pride.';}},
+ {t:'Just knit',f:p=>{p.happy=clamp(p.happy+6);p.spirit=clamp(p.spirit+4);return 'You make a scarf. It is lopsided. It is perfect.';}}]});
+E({e:'📻',min:60,max:99,w:4,t:()=>'A local radio station wants you to host "Stories from the best generation." They will pay in exposure and pie.',c:[
+ {t:'Become a radio legend',f:p=>{p.fame=clamp(p.fame+20);p.happy=clamp(p.happy+14);log('📻 <b>Hosting a radio show at the senior center of life.</b>','good');return 'Your catchphrase trends locally. The pie is excellent.';}},
+ {t:'Retire quietly',f:p=>{p.happy=clamp(p.happy+4);return 'The porch. The sunset. Enough.';}}]});
+E({e:'🪂',min:50,max:99,w:3,t:()=>'Your bucket list has one unchecked box: skydive. The instructor looks 19. The parachute looks older.',c:[
+ {t:'Jump',f:p=>{const r=Math.random();if(r<0.85){p.happy=clamp(p.happy+25);p.spirit=clamp(p.spirit+10);log('🪂 <b>Skydived. Screamed the whole way. 10/10.</b>','wild');hi('Went skydiving');return 'Best 60 seconds of the decade. You scream-sing the whole way down.';}p.alive=false;p.cause='Skydiving at an advanced age';return 'The chute had other plans.';}},
+ {t:'Watch from the ground',f:p=>{p.happy=clamp(p.happy+5);return 'You cheer for strangers. Surprisingly fulfilling.';}}]});
+// work & money absurdity
+E({e:'🖨️',min:18,max:65,w:4,t:()=>'The office printer has jammed again. Someone has written "it knows what it did" on it in sharpie.',c:[
+ {t:'Fix it yourself',f:p=>{if(Math.random()<0.6){p.happy=clamp(p.happy+6);p.karma=clamp(p.karma+3);return 'Paper clip, prayer, persistence. It prints. You are a hero.';}p.happy=clamp(p.happy-6);return 'It ate your tie. HR got involved.';}},
+ {t:'Sacrifice it to IT',f:p=>{p.happy=clamp(p.happy+2);return 'IT exorcises it with a firmware update.';}}]});
+E({e:'💸',min:25,max:70,w:3,t:()=>'A Nigerian prince emails you personally. But this one includes a photo ID, a video call offer, and suspiciously good grammar.',c:[
+ {t:'Video call the prince',f:p=>{const r=Math.random();if(r<0.2){const w=R(5000,40000);p.money+=w;log('💸 <b>The prince was real. THE PRINCE WAS REAL.</b>','wild');hi('The prince was real');return `He wires you $${w} "for your belief." Unbelievable.`;}p.money=Math.max(0,p.money-500);p.smarts=clamp(p.smarts+5);return 'Scam, but an elaborate one. Tuition: $500.';}},
+ {t:'Delete',f:p=>{p.smarts=clamp(p.smarts+2);return 'Somewhere, a real prince weeps.';}}]});
+E({e:'🧠',min:30,max:80,w:3,t:()=>'A tech startup wants to upload your brain "for science and also profit." Compensation: $250,000.',c:[
+ {t:'Sell your mind',f:p=>{p.money+=250000;p.happy=clamp(p.happy-10);p.spirit=clamp(p.spirit-15);log('🧠 <b>Sold a copy of your brain for $250k.</b>','wild');hi('Sold a copy of their brain');return '$250k. Somewhere, a server dreams your dreams. Unsettling.';}},
+ {t:'My thoughts are priceless',f:p=>{p.spirit=clamp(p.spirit+8);return 'The startup pivots to dog brain uploads instead.';}}]});
+// love & family absurdity
+E({e:'💍',min:20,max:60,w:4,t:()=>'Your partner proposes... at your own surprise birthday party... in front of your ex. Bold strategy.',c:[
+ {t:'Say yes',f:p=>{p.partner.married=true;p.happy=clamp(p.happy+20);p.money-=8000;log('💍 <b>Married! In front of the ex. Power move.</b>','good');hi('Got married');return 'You say yes. The ex claps through tears. Iconic.';}},
+ {t:'Say "let\'s talk later"',f:p=>{p.happy=clamp(p.happy-12);return 'The silence was louder than the DJ.';}}],cond:p=>p.partner&&!p.partner.married});
+E({e:'🍼',min:22,max:50,w:4,t:()=>'Your toddler has learned exactly one word and it is "no." They use it with the confidence of a CEO.',c:[
+ {t:'Respect the boundary',f:p=>{p.happy=clamp(p.happy+6);p.karma=clamp(p.karma+3);return '"No." Fair enough. You back away from the cookie jar.';}},
+ {t:'Negotiate',f:p=>{p.smarts=clamp(p.smarts+2);p.happy=clamp(p.happy-3);return 'Negotiations fail. The toddler has leverage (cuteness).';}}],cond:p=>p.kids.some(k=>k.alive&&k.age<5)});
+E({e:'👰',min:25,max:70,w:3,t:()=>'You are invited to your 8th wedding this year. The gift table has a spreadsheet. There are tiers.',c:[
+ {t:'Give generously ($500)',f:p=>{if(p.money<500)return 'Tier: "Acquaintance." You bring a card.';p.money-=500;p.karma=clamp(p.karma+6);p.happy=clamp(p.happy+5);return 'Tier: "Inner Circle." The couple cries. Worth it.';}},
+ {t:'Bring a card',f:p=>{p.money=Math.max(0,p.money-10);return 'Tier: "Acquaintance." The spreadsheet judges you.';}}]});
+// fame & weird
+E({e:'📱',min:14,max:45,w:4,t:()=>'Your embarrassing childhood photo just leaked. It is everywhere. You look like a haunted potato.',c:[
+ {t:'Lean into it',f:p=>{p.fame=clamp(p.fame+18);p.happy=clamp(p.happy+8);log('📱 <b>Haunted potato meme goes mega-viral.</b>','wild');hi('Became a meme');return 'Merch deals incoming. The potato is now a brand.';}},
+ {t:'Lawyer up',f:p=>{if(p.money<2000)return 'Lawyers cost money. The potato remains.';p.money-=2000;p.happy=clamp(p.happy-5);return 'The photos stay up. Streisand effect. Classic.';}}]});
+E({e:'🏆',min:18,max:99,w:3,t:()=>'You have been nominated for "Citizen of the Year" by someone who may have confused you with someone else.',c:[
+ {t:'Accept the honor',f:p=>{p.fame=clamp(p.fame+15);p.happy=clamp(p.happy+12);log('🏆 <b>Citizen of the Year (probably by mistake).</b>','good');return 'Your speech thanks "whoever nominated me, mistakenly or not." Standing ovation.';}},
+ {t:'Correct the mistake',f:p=>{p.karma=clamp(p.karma+10);return 'Honesty. The real winner sends you a fruit basket.';}}]});
+/* seasonal */
+E({e:'🎃',min:5,max:99,w:4,t:()=>"It's Halloween. Someone's handing out full-size candy bars three streets over. This is the big leagues.",cond:()=>new Date().getMonth()===9,c:[
+ {t:'Suit up and go',f:p=>{p.happy=clamp(p.happy+12);if(Math.random()<0.2){p.health=clamp(p.health-8);return 'Full-size bars acquired. Stomach: destroyed. Worth it.';}return 'Record haul. You are the neighborhood legend tonight.';}},
+ {t:'Hand out candy instead',f:p=>{if(p.money<30)return 'No candy budget. The kids can tell.';p.money-=30;p.karma=clamp(p.karma+6);p.happy=clamp(p.happy+6);return 'You become "the good house." Kids remember.';}}]});
+E({e:'🎄',min:5,max:99,w:4,t:()=>'Holiday season. Your family group chat is planning a reunion. 47 people. One bathroom.',cond:()=>new Date().getMonth()===11,c:[
+ {t:'Host it',f:p=>{if(p.money<1000)return 'Hosting costs money you don\'t have. Blame the economy.';p.money-=1000;p.happy=clamp(p.happy+10);p.karma=clamp(p.karma+5);return 'Chaos. Laughter. Someone deep-fries a turkey. Perfect.';}},
+ {t:'"Maybe next year"',f:p=>{p.happy=clamp(p.happy-4);return 'The group chat goes quiet. Guilt: acquired.';}}]});
+E({e:'🎆',min:10,max:99,w:4,t:()=>'New Year\'s Eve. Everyone is making resolutions. Yours needs to be legendary.',cond:()=>new Date().getMonth()===0,c:[
+ {t:'"Learn to juggle chainsaws"',f:p=>{p.happy=clamp(p.happy+8);p.fame=clamp(p.fame+5);return 'Bold. Concerning. Unforgettable.';}},
+ {t:'"Drink more water"',f:p=>{p.health=clamp(p.health+6);return 'Achievable. Boring. Effective.';}}]});
+
+/* ================= INIT ================= */
+document.getElementById('startBtn').onclick=()=>showCreate();
+document.getElementById('ageBtn').onclick=()=>{if(!pendingEvents.length&&!document.getElementById('modal').classList.contains('on'))ageUp();};
+
+</script>
+<script>
+"use strict";
+/* ================= POLISH: sound, confetti, save ================= */
+let AC=null, MUTED=false;
+function ac(){if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){}}if(AC&&AC.state==='suspended')AC.resume();return AC;}
+function tone(f,d,type,vol,when){if(MUTED)return;const c=ac();if(!c)return;const t=c.currentTime+(when||0);
+  const o=c.createOscillator(),g=c.createGain();o.type=type||'sine';o.frequency.value=f;
+  g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(vol||0.12,t+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+d);
+  o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+d+0.05);}
+function sfx(n){
+  if(n==='click')tone(600,0.06,'square',0.05);
+  else if(n==='age'){tone(440,0.08,'triangle',0.08);tone(660,0.1,'triangle',0.06,0.07);}
+  else if(n==='good'){tone(523,0.12,'sine',0.1);tone(659,0.12,'sine',0.1,0.1);tone(784,0.2,'sine',0.1,0.2);}
+  else if(n==='bad'){tone(180,0.25,'sawtooth',0.08);tone(120,0.3,'sawtooth',0.08,0.12);}
+  else if(n==='win'){[523,659,784,1047,1319].forEach((f,i)=>tone(f,0.25,'triangle',0.12,i*0.11));}
+  else if(n==='death'){tone(220,0.8,'sine',0.12);tone(110,1.2,'sine',0.1,0.3);}
+  else if(n==='birth'){tone(660,0.15,'sine',0.1);tone(880,0.25,'sine',0.1,0.12);}
+}
+function confetti(n){
+  const colors=['#39ff88','#22f0ff','#ff3dc8','#ffe14d','#fff'];
+  for(let i=0;i<(n||50);i++){
+    const d=document.createElement('div');d.className='confetti';
+    d.style.left=Math.random()*100+'vw';
+    d.style.background=colors[i%colors.length];
+    d.style.animationDuration=(1.8+Math.random()*1.6)+'s';
+    document.body.appendChild(d);
+    setTimeout(()=>d.remove(),3600);
+  }
+}
+function celebrate(big){sfx('win');confetti(big?90:45);}
+/* hook sounds into existing flows */
+const _fireEvent=fireEvent;
+fireEvent=function(ev){const good=/good|wild/.test('');_fireEvent(ev);};
+document.getElementById('muteBtn').onclick=function(){MUTED=!MUTED;this.textContent=MUTED?'✕':'♪';this.style.opacity=MUTED?.4:1;if(!MUTED)sfx('click');};
+/* save / load */
+const SAVE_KEY='sfab-save-v1';
+function save(){try{if(S&&S.p.alive){const c=JSON.parse(JSON.stringify(S));localStorage.setItem(SAVE_KEY,JSON.stringify(c));}}catch(e){}}
+function load(){try{const raw=localStorage.getItem(SAVE_KEY);if(!raw)return null;const c=JSON.parse(raw);if(!c||!c.p||!c.p.alive)return null;c.log=c.log||[];c.fired=c.fired||{};
+c.era=c.era||'Peace';const q=c.p;q.rewinds=q.rewinds==null?1:q.rewinds;q.highlights=q.highlights||[];q.given=q.given||0;q.legacy=q.legacy||0;q.excon=!!q.excon;q.foundation=!!q.foundation;
+return c;}catch(e){return null;}}
+function clearSave(){try{localStorage.removeItem(SAVE_KEY);}catch(e){}}
+/* age button pulse + save hook */
+const _ageUp=ageUp;
+ageUp=function(){sfx('age');_ageUp();save();
+  const b=document.getElementById('ageBtn');b.classList.remove('pulse');void b.offsetWidth;b.classList.add('pulse');};
+/* celebrate big moments */
+const _log=log;
+log=function(html,cls){_log(html,cls);
+  if(/JACKPOT|LOTTERY WIN|CROWNED EMPEROR|VIRAL/.test(html))celebrate(true);
+  else if(cls==='good'&&/PROMOTED|Married|degree|Clean/.test(html))celebrate(false);};
+/* death sting */
+const _die=die;
+die=function(){sfx('death');_die();clearSave();};
+/* rewind button */
+document.getElementById('rewindBtn').onclick=()=>{
+  if(!S||!S.p.rewinds||!SNAP){toast('Nothing to rewind');return;}
+  try{S=JSON.parse(SNAP);}catch(e){return;}
+  S.p.rewinds--;pendingEvents=[];closeModal();save();render();toast('Rewound one year');sfx('good');};
+/* challenge banner + achievements on title */
+(function(){
+  const [cid,cname]=weeklyChal();
+  const done=META.chal.week===weekId()&&META.chal.done;
+  document.getElementById('chalBanner').innerHTML=`<small>WEEKLY CHALLENGE</small><b>${cname}</b>`+(done?`<span class="done">Complete ✓</span>`:`<span style="color:var(--mut);font-size:13px">Finish it in any life this week</span>`);
+  document.getElementById('achBtn').onclick=()=>{
+    const got=Object.keys(META.ach).length;
+    modal(`<h2>Achievements (${got}/${ACH.length})</h2><div class="achgrid">`+
+      ACH.map(a=>`<div class="ach ${META.ach[a[0]]?'got':''}"><b>${META.ach[a[0]]?'✓ ':''}${a[1]}</b><span>${a[2]}</span></div>`).join('')+
+      `</div><div class="choices"><button onclick="closeModal()">Close</button></div>`);};
+  // inject player-written events
+  (META.custom||[]).forEach(injectCustom);
+  /* continue button on title */
+  const s=load();
+  if(s){const w=document.getElementById('contWrap');
+    w.innerHTML=`<button id="contBtn" style="margin-top:12px;border:1px solid var(--c);background:#0e1424;color:var(--ink);border-radius:18px;padding:16px 40px;font-size:17px;font-weight:800;cursor:pointer">Continue: ${s.p.name}, age ${s.p.age} (Gen ${s.gen})</button>`;
+    document.getElementById('contBtn').onclick=()=>{S=s;pendingEvents=[];applyGift(dailyGift());log('💾 Dynasty restored.','good');show('game');render();sfx('birth');};}
+  const sb=document.getElementById('startBtn');
+  const _s=sb.onclick; sb.onclick=()=>{clearSave();_s();sfx('birth');};
+})();
+document.addEventListener('pointerdown',()=>ac(),{once:true});
+
+</script>
+<script>
+/* ===== CHARACTER CREATION + PORTRAIT + CREST ADDON (baby-upgrade) ===== */
+const FORMS_ALL=['male','female','cat','robot','umbrella'];
+const FORM_LABEL={male:'Male',female:'Female',cat:'Cat',robot:'Robot',umbrella:'Umbrella'};
+const SKINS=['#f6d7b8','#e8b48c','#c98d5e','#8a5a3b','#5e3a24'];
+const HAIRS=['#1a1a1a','#4a2f18','#8a5a2a','#d9a441','#b03a2a','#777770'];
+const EYES=['#4a2f18','#2f5a8a','#3f7a3f','#6a6a6a','#1a1a1a'];
+const PN=p=>p.form==='male'?{s:'he',o:'him',x:'his'}:p.form==='female'?{s:'she',o:'her',x:'her'}:{s:'it',o:'it',x:'its'};
+
+/* ---- house crests: inline SVG, no emoji ---- */
+const CRESTS={
+ shield:{n:'Shield',s:'<path d="M24 5 L39 11 V25 C39 36 31 42 24 44 C17 42 9 36 9 25 V11 Z" fill="none" stroke="#ffd94d" stroke-width="3.4"/>'},
+ tower:{n:'Tower',s:'<rect x="15" y="9" width="18" height="8" fill="none" stroke="#ffd94d" stroke-width="3"/><rect x="19" y="17" width="10" height="21" fill="none" stroke="#ffd94d" stroke-width="3"/><rect x="22" y="30" width="4" height="8" fill="#ffd94d"/>'},
+ star:{n:'Star',s:'<polygon points="24,6 29.4,18 42,18 32,26 35.4,39 24,31 12.6,39 16,26 6,18 18.6,18" fill="#ffd94d"/>'},
+ wave:{n:'Wave',s:'<path d="M6 26 q6 -8 12 0 t12 0 t12 0" fill="none" stroke="#ffd94d" stroke-width="3.4" stroke-linecap="round"/><path d="M6 36 q6 -8 12 0 t12 0 t12 0" fill="none" stroke="#ffd94d" stroke-width="3.4" stroke-linecap="round" opacity=".55"/>'},
+ flame:{n:'Flame',s:'<path d="M24 5 C28 14 35 18 35 29 A11 11 0 0 1 13 29 C13 18 20 14 24 5 Z" fill="none" stroke="#ffd94d" stroke-width="3.4"/><path d="M24 22 C26 26 29 27 29 32 A5 5 0 0 1 19 32 C19 27 22 26 24 22 Z" fill="#ffd94d"/>'},
+ key:{n:'Key',s:'<circle cx="16" cy="16" r="8" fill="none" stroke="#ffd94d" stroke-width="3.4"/><path d="M21 21 L39 39 M33 33 l5 -5 M37 37 l3 -3" stroke="#ffd94d" stroke-width="3.4" stroke-linecap="round"/>'},
+ horns:{n:'Stag',s:'<path d="M20 42 V24 M20 24 L13 15 M20 24 L16 10 M20 30 L26 24 M28 42 V24 M28 24 L35 15 M28 24 L32 10 M28 30 L22 24" fill="none" stroke="#ffd94d" stroke-width="3" stroke-linecap="round"/>'},
+ anchor:{n:'Anchor',s:'<circle cx="24" cy="9" r="4.5" fill="none" stroke="#ffd94d" stroke-width="3"/><path d="M24 14 V42 M15 21 H33 M10 32 Q10 42 24 42 Q38 42 38 32" fill="none" stroke="#ffd94d" stroke-width="3.2" stroke-linecap="round"/>'}
+};
+const CREST_IDS=Object.keys(CRESTS);
+function crestSVG(id,size){size=size||40;const c=CRESTS[id]||CRESTS.shield;
+ return `<svg viewBox="0 0 48 48" width="${size}" height="${size}" data-crest="${id}" style="display:block">${c.s}</svg>`;}
+
+/* ---- life stages (finer than the game's 5-stage map) ---- */
+function pstage(p){const a=p.age;return a<3?'baby':a<13?'child':a<20?'teen':a<40?'adult':a<60?'middle':'elder';}
+
+/* ---- portraits: flat SVG, form x stage ---- */
+function humanSVG(p,st){
+ const skin=p.skin||'#e8b48c', eye=p.eyes||'#4a2f18', fem=p.form==='female';
+ let hair=p.hair||'#4a2f18';
+ if(st==='elder')hair='#e8e8e8'; else if(st==='middle')hair=p.hair||'#4a2f18';
+ let back='',top='';
+ if(fem&&(st==='adult'||st==='middle')) back=`<rect x="20" y="22" width="60" height="52" rx="22" fill="${hair}"/>`;
+ if(st==='baby') top=`<path d="M45 25 q5 -9 10 0" stroke="${hair}" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+ else if(st==='child') top=`<ellipse cx="50" cy="30" rx="29" ry="15" fill="${hair}"/>`;
+ else if(st==='teen') top=`<ellipse cx="50" cy="29" rx="29" ry="17" fill="${hair}"/><path d="M24 34 q10 8 20 4" stroke="${hair}" stroke-width="7" fill="none" stroke-linecap="round"/>`;
+ else if(st==='adult') top=fem?`<ellipse cx="50" cy="28" rx="29" ry="15" fill="${hair}"/>`:`<ellipse cx="50" cy="29" rx="28" ry="13" fill="${hair}"/>`;
+ else if(st==='middle') top=`<ellipse cx="50" cy="29" rx="28" ry="14" fill="${hair}"/><path d="M36 22 q6 10 2 20 M60 22 q-4 12 0 22" stroke="#cfd4dc" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+ else top=fem?`<circle cx="50" cy="16" r="10" fill="${hair}"/><ellipse cx="50" cy="30" rx="27" ry="10" fill="${hair}"/>`:`<ellipse cx="27" cy="46" rx="7" ry="10" fill="${hair}"/><ellipse cx="73" cy="46" rx="7" ry="10" fill="${hair}"/>`;
+ let beard='';
+ if(!fem&&st==='adult') beard=`<path d="M36 70 q14 10 28 0" stroke="${hair}" stroke-width="3" fill="none" opacity=".35" stroke-linecap="round"/>`;
+ if(!fem&&st==='middle') beard=`<path d="M34 66 q16 16 32 0 l0 5 q-16 12 -32 0 Z" fill="${hair}" opacity=".85"/>`;
+ if(!fem&&st==='elder') beard=`<ellipse cx="50" cy="82" rx="17" ry="11" fill="#e8e8e8"/>`;
+ return `${back}<circle cx="50" cy="52" r="28" fill="${skin}"/><circle cx="22" cy="52" r="5" fill="${skin}"/><circle cx="78" cy="52" r="5" fill="${skin}"/>${top}${beard}`
+ +`<ellipse cx="40" cy="50" rx="6" ry="7" fill="#fff"/><ellipse cx="60" cy="50" rx="6" ry="7" fill="#fff"/>`
+ +`<ellipse cx="40" cy="51" rx="3" ry="4" fill="${eye}"/><ellipse cx="60" cy="51" rx="3" ry="4" fill="${eye}"/>`
+ +`<circle cx="41" cy="49.5" r="1.2" fill="#fff"/><circle cx="61" cy="49.5" r="1.2" fill="#fff"/>`
+ +(fem?`<circle cx="22" cy="60" r="2.4" fill="#ffd94d"/><circle cx="78" cy="60" r="2.4" fill="#ffd94d"/>`:'')
+ +`<path d="M48 57 l-2.5 5 h5 Z" fill="${skin}" stroke="#00000022" stroke-width="1"/>`
+ +`<path d="M42 70 Q50 76 58 70" stroke="#7a4a3a" stroke-width="2.6" fill="none" stroke-linecap="round"/>`;
+}
+function catSVG(p,st){
+ const fur=p.hair||'#8a5a2a', eye=p.eyes||'#3f7a3f';
+ const elder=st==='elder';
+ return `<path d="M28 32 L20 6 L46 20 Z" fill="${fur}"/><path d="M72 32 L80 6 L54 20 Z" fill="${fur}"/>`
+ +`<path d="M29 26 L25 13 L40 21 Z" fill="#f2a0a0"/><path d="M71 26 L75 13 L60 21 Z" fill="#f2a0a0"/>`
+ +`<circle cx="50" cy="56" r="30" fill="${fur}"/>`
+ +(elder?`<ellipse cx="50" cy="70" rx="16" ry="10" fill="#e8e8e8" opacity=".55"/>`:'')
+ +`<ellipse cx="38" cy="52" rx="7.5" ry="9" fill="#fff"/><ellipse cx="62" cy="52" rx="7.5" ry="9" fill="#fff"/>`
+ +`<ellipse cx="38" cy="53" rx="3.4" ry="5" fill="${eye}"/><ellipse cx="62" cy="53" rx="3.4" ry="5" fill="${eye}"/>`
+ +`<rect x="37" y="49" width="2" height="8" fill="#111"/><rect x="61" y="49" width="2" height="8" fill="#111"/>`
+ +`<circle cx="39.5" cy="50" r="1.3" fill="#fff"/><circle cx="63.5" cy="50" r="1.3" fill="#fff"/>`
+ +`<path d="M46 63 L54 63 L50 67 Z" fill="#d97a7a"/>`
+ +`<path d="M50 67 q-4 4 -9 2 M50 67 q4 4 9 2" stroke="#7a4a3a" stroke-width="1.8" fill="none" stroke-linecap="round"/>`
+ +[0,1,2].map(i=>`<line x1="30" y1="${60+i*6}" x2="12" y2="${58+i*7}" stroke="#ffffff88" stroke-width="1.6" stroke-linecap="round"/><line x1="70" y1="${60+i*6}" x2="88" y2="${58+i*7}" stroke="#ffffff88" stroke-width="1.6" stroke-linecap="round"/>`).join('');
+}
+function robotSVG(p,st){
+ const tip={baby:'#39ff88',child:'#22f0ff',teen:'#ff3dc8',adult:'#ffe14d',middle:'#ff9f1c',elder:'#ff5d5d'}[st];
+ let eyes='';
+ if(st==='baby') eyes=`<path d="M38 52 q3.5 -4.5 7 0 M55 52 q3.5 -4.5 7 0" stroke="#39ff88" stroke-width="2.6" fill="none" stroke-linecap="round"/>`;
+ else if(st==='child') eyes=`<circle cx="41" cy="52" r="3" fill="#39ff88"/><circle cx="59" cy="52" r="3" fill="#39ff88"/>`;
+ else if(st==='teen') eyes=`<path d="M36 49 L46 54 M64 49 L54 54" stroke="#39ff88" stroke-width="2.8" stroke-linecap="round"/>`;
+ else if(st==='adult') eyes=`<path d="M37 52 h8 M55 52 h8" stroke="#39ff88" stroke-width="2.8" stroke-linecap="round"/>`;
+ else if(st==='middle') eyes=`<path d="M37 53 h8 M55 49 h8" stroke="#39ff88" stroke-width="2.8" stroke-linecap="round"/>`;
+ else eyes=`<circle cx="41" cy="52" r="3" fill="#39ff88" opacity=".45"/><circle cx="59" cy="52" r="3" fill="#39ff88" opacity=".45"/><path d="M48 44 l3 4 l-3 4 l3 4" stroke="#39ff88" stroke-width="1.6" fill="none" opacity=".6"/>`;
+ return `<line x1="50" y1="14" x2="50" y2="27" stroke="#8a93a5" stroke-width="4" stroke-linecap="round"/><circle cx="50" cy="11" r="4.5" fill="${tip}"/>`
+ +`<rect x="22" y="27" width="56" height="52" rx="16" fill="#aeb9c9"/><rect x="22" y="27" width="56" height="52" rx="16" fill="none" stroke="#7c8798" stroke-width="2"/>`
+ +`<rect x="22" y="27" width="14" height="52" rx="7" fill="#ffffff" opacity=".18"/>`
+ +`<circle cx="18" cy="53" r="5" fill="#8a93a5"/><circle cx="82" cy="53" r="5" fill="#8a93a5"/>`
+ +`<rect x="32" y="41" width="36" height="25" rx="9" fill="#0b1020"/>${eyes}`
+ +`<path d="M40 86 h20 M44 90 h12" stroke="#7c8798" stroke-width="2.4" stroke-linecap="round"/>`;
+}
+function umbSVG(p,st){
+ const cc={baby:'#ffd94d',child:'#39ff88',teen:'#ff3dc8',adult:'#2f6df6',middle:'#7a8aa0',elder:'#a8adb5'}[st];
+ const dark='rgba(0,0,0,.28)';
+ const patch=st==='elder'?`<rect x="58" y="38" width="12" height="9" rx="2" fill="${dark}"/><rect x="30" y="46" width="9" height="7" rx="2" fill="${dark}"/>`:'';
+ return `<rect x="47" y="12" width="6" height="12" rx="3" fill="#666"/>`
+ +`<path d="M14 60 A36 36 0 0 1 86 60 Z" fill="${cc}"/>`
+ +`<path d="M50 25 L28 52 M50 25 L50 60 M50 25 L72 52 M50 25 L20 60 M50 25 L80 60" stroke="${dark}" stroke-width="2"/>`
+ +`<path d="M50 60 V84 q0 11 -11 11 q-9 0 -9 -9" stroke="#8a6f4d" stroke-width="6.5" fill="none" stroke-linecap="round"/>${patch}`
+ +`<circle cx="40" cy="46" r="5.5" fill="#fff"/><circle cx="60" cy="46" r="5.5" fill="#fff"/>`
+ +`<circle cx="40" cy="47" r="2.6" fill="#1a1a1a"/><circle cx="60" cy="47" r="2.6" fill="#1a1a1a"/>`
+ +`<path d="M44 56 Q50 60 56 56" stroke="#1a1a1a" stroke-width="2.2" fill="none" stroke-linecap="round"/>`;
+}
+function portraitSVG(p,size){
+ size=size||64; const st=pstage(p), form=p.form||'male';
+ const inner=form==='cat'?catSVG(p,st):form==='robot'?robotSVG(p,st):form==='umbrella'?umbSVG(p,st):humanSVG(p,st);
+ return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" data-form="${form}" data-stage="${st}" style="display:block;border-radius:50%;flex:none">${inner}</svg>`;
+}
+
+/* ---- parents + inheritance (documented weighting: 65/35 blend toward chosen parent) ---- */
+function genParent(role){
+ const stats={health:R(70,95),happy:R(60,90),smarts:R(20,80),looks:R(20,80),fit:R(30,80),karma:R(40,60),spirit:R(20,60)};
+ (role==='mother'?['smarts','looks']:['fit','health']).forEach(k=>{stats[k]=R(72,100);});
+ return {role,stats,skin:pick(SKINS),hair:pick(HAIRS),eyes:pick(EYES)};
+}
+const INH_KEYS=['health','happy','smarts','looks','fit','karma','spirit'];
+function blendStats(base,parent,w){
+ w=(w===undefined?0.65:w);
+ const out={};
+ INH_KEYS.forEach(k=>{out[k]=clamp(Math.round((1-w)*base[k]+w*parent.stats[k]));});
+ return out;
+}
+const TALENT_OF={smarts:['Quick Mind','+1 Smarts every birthday'],looks:['Striking Looks','+1 Looks every birthday — people notice'],fit:['Athletic Frame','+1 Fit every birthday'],health:['Sturdy Build','+1 Health every birthday']};
+function talentOf(parent){
+ let best='smarts';['looks','fit','health'].forEach(k=>{if(parent.stats[k]>parent.stats[best])best=k;});
+ const t=TALENT_OF[best];
+ return {stat:best,name:t[0],desc:t[1],from:parent.role==='mother'?'Mother':'Father'};
+}
+
+/* ---- form mechanics ---- */
+function catSave(p){ /* nine lives: one death-save per life */
+ if(p.form!=='cat'||p.usedNineLives)return false;
+ p.usedNineLives=true;p.alive=true;if(p.health<30)p.health=30;p.cause='';
+ log('🐱 <b>Nine lives.</b> That was one of them. Eight remain.','wild');
+ hi('Cheated death — nine lives');toast('Nine lives: death dodged');sfx('win');
+ return true;
+}
+
+/* ---- creation flow state ---- */
+let CRE=null;
+function freshParents(){return {mother:genParent('mother'),father:genParent('father')};}
+function showCreate(){
+ document.getElementById('title').style.display='none';
+ CRE={name:pick(MALE.concat(FEMALE)),form:'male',crest:'shield',parentRole:'mother',parents:freshParents(),parentObj:null};
+ CRE.parentObj=CRE.parents.mother;
+ renderCreate();
+ document.getElementById('create').style.display='block';
+ window.scrollTo(0,0);
+}
+function parentCardHTML(role){
+ const q=CRE.parents[role], sel=CRE.parentRole===role;
+ const strong=role==='mother'?['smarts','looks']:['fit','health'];
+ const face=portraitSVG({form:role==='mother'?'female':'male',age:30,skin:q.skin,hair:q.hair,eyes:q.eyes},54);
+ return `<button class="par${sel?' sel':''}" onclick="pickParent('${role}')" style="text-align:left">`
+ +`<div class="prow">${face}<div><b>${role==='mother'?'Mother':'Father'}</b><div class="pstr">${strong.map(k=>k[0].toUpperCase()+k.slice(1)+' '+q.stats[k]).join(' · ')}</div></div></div>`
+ +`<div class="ptag">Strong genes: ${strong.join(' + ')}</div></button>`;
+}
+function renderCreate(){
+ const el=document.getElementById('create');
+ const formBtn=f=>{const demo={form:f,age:0,skin:'#e8b48c',hair:'#4a2f18',eyes:'#4a2f18'};
+  return `<button class="fm${CRE.form===f?' sel':''}" onclick="pickForm('${f}')">${portraitSVG(demo,46)}<span>${FORM_LABEL[f]}</span></button>`;};
+ el.innerHTML=`
+ <div class="ckick">NEW LIFE · CHARACTER CREATION</div>
+ <h2 class="ctitle">Who is this baby?</h2>
+ <div class="csec"><div class="clab">1 · Name</div>
+  <div class="nmrow"><input id="cName" maxlength="14" value="${CRE.name.replace(/"/g,'&quot;')}"><button class="mini" onclick="rerollName()">Random</button></div></div>
+ <div class="csec"><div class="clab">2 · Form</div><div class="formgrid">${FORMS_ALL.map(formBtn).join('')}</div>
+  <div class="fnote">${{male:'A classic human boy.',female:'A classic human girl.',cat:'A cat. Nine lives. One death-save per life.',robot:'A robot. Ages slower. Rusts sometimes.',umbrella:'An umbrella. Rain is your element.'}[CRE.form]}</div></div>
+ <div class="csec"><div class="clab">3 · House symbol</div><div class="crgrid">${CREST_IDS.map(id=>`<button class="cr${CRE.crest===id?' sel':''}" title="${CRESTS[id].n}" onclick="pickCrest('${id}')">${crestSVG(id,40)}</button>`).join('')}</div>
+  <div class="fnote">House <b>${CRE.name.split(' ')[0]||'???'}</b> · Crest of the <b>${CRESTS[CRE.crest].n}</b> — it flies on your life card forever.</div></div>
+ <div class="csec"><div class="clab">4 · Whose genes run stronger?</div>
+  <div class="parcards">${parentCardHTML('mother')}${parentCardHTML('father')}</div>
+  <div class="fnote">Starting stats blend <b>65 / 35</b> toward the chosen parent. You also inherit their eyes, hair, and one talent.</div>
+  <div style="text-align:center;margin-top:6px"><button class="mini" onclick="rerollParents()">Reroll parents</button></div></div>
+ <button id="beginBtn" onclick="beginLife()">Begin life →</button>`;
+ const nm=document.getElementById('cName');
+ if(nm)nm.oninput=e=>{CRE.name=e.target.value.slice(0,14)||CRE.name;};
+}
+function pickForm(f){CRE.form=f;renderCreate();}
+function pickCrest(c){CRE.crest=c;renderCreate();}
+function pickParent(r){CRE.parentRole=r;CRE.parentObj=CRE.parents[r];renderCreate();}
+function rerollName(){CRE.name=pick(MALE.concat(FEMALE));renderCreate();}
+function rerollParents(){CRE.parents=freshParents();CRE.parentObj=CRE.parents[CRE.parentRole];renderCreate();}
+function beginLife(){
+ const nm=document.getElementById('cName');
+ if(nm&&nm.value.trim())CRE.name=nm.value.trim().slice(0,14);
+ document.getElementById('create').style.display='none';
+ newGame(CRE);
+}
+
+/* ---- canvas crest for the shareable life card ---- */
+function drawCrest(x,cx,cy,s,id){
+ x.save();x.translate(cx,cy);x.scale(s/48,s/48);x.translate(-24,-24);
+ x.strokeStyle='#ffd94d';x.fillStyle='#ffd94d';x.lineWidth=3.4;x.lineCap='round';
+ const P=()=>x.beginPath();
+ if(id==='shield'){P();x.moveTo(24,5);x.lineTo(39,11);x.lineTo(39,25);x.bezierCurveTo(39,36,31,42,24,44);x.bezierCurveTo(17,42,9,36,9,25);x.lineTo(9,11);x.closePath();x.stroke();}
+ else if(id==='tower'){x.strokeRect(15,9,18,8);x.strokeRect(19,17,10,21);x.fillRect(22,30,4,8);}
+ else if(id==='star'){P();const pt=[[24,6],[29.4,18],[42,18],[32,26],[35.4,39],[24,31],[12.6,39],[16,26],[6,18],[18.6,18]];pt.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.closePath();x.fill();}
+ else if(id==='wave'){[26,36].forEach(y=>{P();x.moveTo(6,y);x.quadraticCurveTo(12,y-8,18,y);x.quadraticCurveTo(24,y+8,30,y);x.quadraticCurveTo(36,y-8,42,y);x.stroke();});}
+ else if(id==='flame'){P();x.moveTo(24,5);x.bezierCurveTo(28,14,35,18,35,29);x.arc(24,29,11,0,Math.PI);x.bezierCurveTo(13,18,20,14,24,5);x.stroke();x.beginPath();x.arc(24,32,5,0,7);x.fill();}
+ else if(id==='key'){P();x.arc(16,16,8,0,7);x.stroke();P();x.moveTo(21,21);x.lineTo(39,39);x.moveTo(33,33);x.lineTo(38,28);x.stroke();}
+ else if(id==='horns'){[[20,-1],[28,1]].forEach(([bx])=>{P();x.moveTo(bx,42);x.lineTo(bx,24);x.moveTo(bx,24);x.lineTo(bx-7,15);x.moveTo(bx,24);x.lineTo(bx-4,10);x.moveTo(bx,30);x.lineTo(bx+6,24);x.stroke();});}
+ else{P();x.arc(24,9,4.5,0,7);x.stroke();P();x.moveTo(24,14);x.lineTo(24,42);x.moveTo(15,21);x.lineTo(33,21);x.stroke();P();x.moveTo(10,32);x.quadraticCurveTo(10,42,24,42);x.quadraticCurveTo(38,42,38,32);x.stroke();}
+ x.restore();
+}
+
+/* ---- weather: a rust event for robots (everyone can creak, robots feel it) ---- */
+E({e:'⚙',min:10,max:99,w:2,t:()=>'A strange metallic creak follows your every step today.',c:[
+ {t:'Oil the joints ($150)',f:p=>{if(p.money<150)return 'No oil money. The creak continues.';p.money-=150;if(p.form==='robot'){p.health=clamp(p.health+6);return 'Fresh oil. You purr like a server rack.';}p.happy=clamp(p.happy+3);return 'WD-40 fixes everything. Probably.';}},
+ {t:'Ignore it',f:p=>{if(p.form==='robot'){dmg(p,10);log('⚙️ <b>Rust sets in.</b>','bad');return 'Rust never sleeps.';}p.happy=clamp(p.happy-2);return 'The creak was probably nothing.';}}]});
+
+/* ---- test seam (harness only) ---- */
+window.__T={getS:()=>S,getEV:()=>EV,blendStats,genParent,pstage,portraitSVG,crestSVG,catSave,CREST_IDS,PN,FORM_LABEL,
+ getCRE:()=>CRE,setCRE:c=>{CRE=c;},beginLife,talentOf};
+function kidIcon(k){return k.form==='cat'?'🐱':k.form==='robot'?'🤖':k.form==='umbrella'?'☂️':(k.male?'👦':'👧');}
+
+</script>
+</body></html>
