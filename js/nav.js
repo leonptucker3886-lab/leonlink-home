@@ -77,3 +77,10 @@ function go(){
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',go); else go();
 }catch(e){}
 })();
+
+/* Floating Share button: page headers sit under the site nav, so surface Share here */
+(function(){try{var sb=document.querySelector('.sharebtn');if(!sb||document.querySelector('.lsf'))return;
+var st=document.createElement('style');st.textContent='.lsf{position:fixed;right:16px;bottom:20px;z-index:9996;display:flex;align-items:center;gap:8px;padding:12px 20px;min-height:46px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:rgba(11,16,24,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;font:700 15px system-ui,-apple-system,Segoe UI,Roboto,sans-serif;box-shadow:0 10px 28px rgba(0,0,0,.55);cursor:pointer;-webkit-tap-highlight-color:transparent}.lsf:hover{border-color:#22f0ff}@media(max-width:700px){.lsf{bottom:calc(78px + env(safe-area-inset-bottom))}}';document.head.appendChild(st);
+var f=document.createElement('button');f.type='button';f.className='lsf';f.setAttribute('aria-label','Share this page');f.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg><span>Share</span>';
+f.onclick=function(){sb.click();if(!navigator.share){var s=f.querySelector('span');s.textContent='Link copied';setTimeout(function(){s.textContent='Share'},2000)}};
+document.body.appendChild(f)}catch(e){}})();
