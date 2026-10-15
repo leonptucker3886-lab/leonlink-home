@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /account
+Disallow: /__llid
 
 Sitemap: https://www.leonlink.net/sitemap.xml
