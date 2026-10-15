@@ -94,17 +94,25 @@ details{border-bottom:1px solid var(--line);padding:12px 0}summary{cursor:pointe
 <section class="brand w" aria-label="LeonLink"><p class="hw">Happy Halloween</p></section>
 <header class="hero w">
 <span class="kick">Available for new projects</span>
-<h1>Leon from LeonLink. <em>Full-stack engineering, from architecture to deployment.</em></h1>
-<p class="tagline" style="font-size:1.15rem;font-weight:600;margin:.4rem 0 .9rem;opacity:.92">I engineer it, launch it and put it live on your screen. Start to finish.</p>
-<p class="lead">Full-stack dev, game builder, pixel pusher. I ship hand-coded sites, online stores, HTML5 games, web apps and white-label SaaS. Logins, payments, leaderboards, PWAs and SEO all wired in, no bloated templates. You get fast, clean code that's 100% yours.</p>
-<p class="note">Have a project in mind? Use the <a href="#contact">contact form</a> below.</p>
-<div class="stats">
-<div class="stat"><b data-n="60">60</b><span>live pages on this site</span></div>
-<div class="stat"><b>2</b><span>gaming platforms, 1 shared token</span></div>
-<div class="stat"><b data-n="40">40</b><span>+ browser games and apps shipped</span></div>
-<div class="stat"><b>100%</b><span>code and keys owned by you</span></div>
+<style>.asks{font-size:clamp(1.4rem,4vw,2.3rem);font-weight:800;line-height:1.35;margin:18px 0 6px}.asks span{display:inline-block;margin-right:.35em}.cando{font-size:clamp(1.6rem,5vw,2.8rem);font-weight:900;margin:6px 0 22px;color:var(--g)}.prices{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;max-width:760px;margin:22px 0 4px}.prices div{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:12px;padding:12px 14px}.prices b{display:block;font-size:15px}.prices span{color:var(--g);font-weight:800;font-size:18px}</style>
+<p class="asks"><span>Custom game?</span> <span>Website?</span> <span>Your own software?</span> <span>Tools?</span> <span>Casinos?</span> <span>Arcades?</span> <span>Blogs?</span></p>
+<p class="cando">I can do that.</p>
+<div id="contact"><form class="cf" id="cf"><label>Name<input name="n" required autocomplete="name"></label><label>Email<input type="email" name="e" required autocomplete="email"></label><label>Message<textarea name="m" rows="5" required></textarea></label><button class="btn p" type="submit">Send</button><p class="note">Or email <a href="mailto:info@leonlink.net">info@leonlink.net</a></p></form>
+<style>.cf{display:grid;gap:12px;max-width:560px}.cf label{display:grid;gap:6px;font-weight:700;font-size:14px}.cf input,.cf textarea{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:12px;color:var(--t);padding:12px 14px;font:16px system-ui}.cf input:focus,.cf textarea:focus{outline:none;border-color:var(--c)}.cf button{justify-self:start;border:0;cursor:pointer;font-size:16px}</style>
+<script>document.getElementById('cf').addEventListener('submit',function(ev){ev.preventDefault();var f=ev.target;location.href='mailto:info@leonlink.net?subject='+encodeURIComponent('Message from '+f.n.value+' via leonlink.net')+'&body='+encodeURIComponent(f.m.value+'
+
+'+f.n.value+' <'+f.e.value+'>');try{fetch('/api/track?p=%2Fcta%2Fcontact',{mode:'no-cors',keepalive:true})}catch(e){}});</script>
 </div>
-<nav class="jump" aria-label="On this page"><a href="#skills">Skills</a><a href="#proof">Proof</a><a href="#token">Shared token</a><a href="#blog">Blog</a><a href="#top5">Top 5</a><a href="#process">Process</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></nav>
+<div class="prices" aria-label="Example prices">
+<div><b>Website</b><span>from $500</span></div>
+<div><b>Blog</b><span>from $400</span></div>
+<div><b>Tools</b><span>from $300</span></div>
+<div><b>Custom game</b><span>from $1,000</span></div>
+<div><b>Your own software</b><span>from $1,500</span></div>
+<div><b>Arcade</b><span>from $2,500</span></div>
+<div><b>Casino</b><span>from $3,500</span></div>
+</div>
+<p class="note">Example prices. Final quote depends on scope.</p>
 </header>
 
 <section id="skills" class="w">
@@ -199,15 +207,7 @@ details{border-bottom:1px solid var(--line);padding:12px 0}summary{cursor:pointe
 <details><summary>Is there anything you won't build?</summary><p>Real-money gambling, logins into other people's accounts, and app-store submissions.</p></details>
 </section>
 
-<section id="contact" class="w">
-<h2>Contact</h2>
-<p class="sub">Tell me what you need. I reply by email.</p>
-<form class="cf" id="cf"><label>Name<input name="n" required autocomplete="name"></label><label>Email<input type="email" name="e" required autocomplete="email"></label><label>Message<textarea name="m" rows="5" required></textarea></label><button class="btn p" type="submit">Send</button><p class="note">Or email <a href="mailto:info@leonlink.net">info@leonlink.net</a></p></form>
-<style>.cf{display:grid;gap:12px;max-width:560px}.cf label{display:grid;gap:6px;font-weight:700;font-size:14px}.cf input,.cf textarea{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:12px;color:var(--t);padding:12px 14px;font:16px system-ui}.cf input:focus,.cf textarea:focus{outline:none;border-color:var(--c)}.cf button{justify-self:start;border:0;cursor:pointer;font-size:16px}</style>
-<script>document.getElementById('cf').addEventListener('submit',function(ev){ev.preventDefault();var f=ev.target;location.href='mailto:info@leonlink.net?subject='+encodeURIComponent('Message from '+f.n.value+' via leonlink.net')+'&body='+encodeURIComponent(f.m.value+'
 
-'+f.n.value+' <'+f.e.value+'>');try{fetch('/api/track?p=%2Fcta%2Fcontact',{mode:'no-cors',keepalive:true})}catch(e){}});</script>
-</section>
 </main>
 <script>(function(){var M={web:['Custom websites','This whole site: 60+ hand-coded pages, mobile bottom nav, schema markup and a clean sitemap.','/software.html','See the software'],store:['Online stores','Afterglow runs a real Stripe store, and Dashline sends Stripe pay links.','https://afterglow.leonlink.net','See Afterglow'],game:['Browser games','A full arcade on Arcadeline, plus physics, 3D and open-world games on the Games page.','/games.html','Browse the games'],app:['Web apps and PWAs','LeonLens is an installable camera app; Dashline is a full freelancer dashboard.','/software.html','See the software'],saas:['White-label SaaS','Dashline, Linkline and Ledgerline: accounts, billing and dashboards, ready to rebrand.','/software.html','See the SaaS apps'],seo:['SEO and traffic','Structured data, sitemaps, indexing fixes and daily content like the blog and Top 5 guides.','/blog.html','Read the blog']};var box=document.getElementById('match'),bs=document.querySelectorAll('.picker button');function show(k){var m=M[k];box.innerHTML='<b>'+m[0]+'</b><br>'+m[1]+' <a href="'+m[2]+'">'+m[3]+' →</a>';bs.forEach(function(b){b.setAttribute('aria-pressed',b.dataset.k===k)})}bs.forEach(function(b){b.addEventListener('click',function(){show(b.dataset.k)})});show('web');document.querySelectorAll('[data-cta]').forEach(function(a){a.addEventListener('click',function(){try{fetch('/api/track?p='+encodeURIComponent('/cta/'+a.dataset.cta),{mode:'no-cors',keepalive:true})}catch(e){}})})})();</script>
 <script>(function(){try{var p=location.pathname;fetch("/api/track?p="+encodeURIComponent(p)+"&r="+encodeURIComponent(document.referrer||""),{mode:"no-cors",keepalive:true}).catch(function(){})}catch(e){}})();</script>
