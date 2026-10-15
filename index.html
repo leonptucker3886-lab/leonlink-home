@@ -54,6 +54,8 @@ a.card:hover{border-color:rgba(34,240,255,.6);transform:translateY(-3px)}.card h
 .steps{counter-reset:s;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.steps div{counter-increment:s}.steps div:before{content:counter(s);display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--o);color:#1a0800;font-weight:900;margin-bottom:6px}
 details{border-bottom:1px solid var(--line);padding:12px 0}summary{cursor:pointer;font-weight:700}
 .cue{position:fixed;right:16px;bottom:16px;z-index:40;display:flex;gap:8px}.cue a{background:rgba(5,8,16,.92);border:1px solid rgba(34,240,255,.5);color:var(--c);padding:10px 14px;border-radius:999px;text-decoration:none;font-weight:800;font-size:14px;backdrop-filter:blur(6px)}.cue a.h{background:var(--o);color:#1a0800;border-color:var(--o)}
+.enter{position:relative;display:inline-flex;align-items:center;margin:16px 0 4px;padding:16px 64px 16px 26px;background:#ffd60a;color:#111;font-weight:900;font-size:clamp(20px,4.5vw,30px);letter-spacing:.04em;text-transform:uppercase;text-decoration:none;clip-path:polygon(0 0,calc(100% - 44px) 0,100% 50%,calc(100% - 44px) 100%,0 100%);box-shadow:0 0 30px rgba(255,214,10,.45);transition:transform .2s,filter .2s}.enter:hover{transform:translateX(6px);filter:brightness(1.08)}
+.toplinks{display:flex;gap:18px;flex-wrap:wrap;margin:18px 0 6px}.toplinks a{font-size:14px;font-weight:800;letter-spacing:.16em;color:#9fd8ff;text-decoration:none;border-bottom:2px solid transparent}.toplinks a:hover{border-color:#ff4fd8;color:#fff}
 .jump{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.jump a{font-size:14px;text-decoration:none;border:1px solid var(--line);padding:6px 12px;border-radius:999px;color:#cdd6ee}
 @media(max-width:760px){.grid,.g2,.steps,.hl{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.token{grid-template-columns:1fr}.coin{margin:0 auto}.cue{bottom:84px;right:10px}}
 </style>
@@ -63,8 +65,10 @@ details{border-bottom:1px solid var(--line);padding:12px 0}summary{cursor:pointe
 <main>
 <header class="hero w">
 <span class="kick">Available for new projects</span>
+<div><a class="enter" href="/explore.html" aria-label="Enter LeonLink, go to the full site">Enter LeonLink</a></div>
+<nav class="toplinks" aria-label="Explore"><a href="/lineup/">TOP5</a><a href="/blog.html">BLOG</a><a href="/software.html">SOFTWARE</a><a href="/games.html">GAMES</a></nav>
 <h1>Hire Leon from LeonLink. <em>I build the whole thing.</em></h1>
-<p class="lead">Freelance full-stack web developer and browser game developer. I build custom websites, online stores, HTML5 games, web apps and white-label SaaS: design, code, logins, payments, leaderboards and SEO. One builder from idea to launch, and you own all of it.</p>
+<p class="lead">Full-stack dev, game builder, pixel pusher. I ship hand-coded sites, online stores, HTML5 games, web apps and white-label SaaS, from first commit to live deploy. Logins, payments, leaderboards, PWAs and SEO all wired in, no bloated templates. You get fast, clean code that's 100% yours.</p>
 <div class="ctas">
 <a class="btn p" href="mailto:info@leonlink.net?subject=Project%20inquiry%20from%20leonlink.net" data-cta="hero">🔥 Start your project</a>
 <a class="btn s" href="#proof">See the live proof ↓</a>
