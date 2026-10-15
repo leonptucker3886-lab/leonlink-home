@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Battleline — a LeonLink game</title>
+<meta name="description" content="Battleline: turn-based arena duels. Pick your class, read your enemy, climb the 10-rung ladder. Free.">
+<link rel="canonical" href="https://www.leonlink.net/battleline.html">
+<meta property="og:title" content="Battleline — a LeonLink game">
+<meta property="og:description" content="Ten fighters. One line. Climb it.">
+<meta property="og:image" content="https://www.leonlink.net/img/cards/battleline.jpg">
+<meta name="theme-color" content="#0b0b16">
+<link rel="icon" href="/favicon.png">
+<script src="/js/nav.js" defer></script>
+<style>
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{background:#0b0b16}
+body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef;user-select:none;-webkit-user-select:none;min-height:100dvh;display:flex;flex-direction:column;font-size:17px}
+#gtop{display:flex;align-items:center;gap:12px;padding:10px 14px;background:#10101d;border-bottom:1px solid #26263e;flex:0 0 auto}
+#gtop a.back{color:#9b9dba;text-decoration:none;font-weight:700;font-size:15px;min-height:44px;display:flex;align-items:center}
+#gtop .wm{font-weight:900;letter-spacing:.18em;font-size:16px;color:#f2c14e}
+#rungpill{margin-left:auto;background:#1a1a2e;border:1px solid #33335a;border-radius:999px;padding:7px 14px;font-size:13px;font-weight:800;color:#9be7ff;white-space:nowrap}
+main{flex:1 0 auto;display:flex;flex-direction:column;width:100%;max-width:520px;margin:0 auto;padding-bottom:96px}
+.view{display:none;flex-direction:column;padding:14px;gap:12px;width:100%}
+.view.on{display:flex}
+h1{font-size:34px;font-weight:900;letter-spacing:.01em}
+.sub{color:#9b9dba;font-size:16px;line-height:1.45}
+.namerow{display:flex;gap:10px}
+#fname{flex:1;background:#141422;border:2px solid #33335a;color:#fff;border-radius:12px;padding:0 14px;font-size:19px;font-weight:700;min-height:58px;min-width:0}
+#fname:focus{outline:none;border-color:#f2c14e}
+#fdice{background:#1a1a2e;border:2px solid #33335a;color:#fff;border-radius:12px;min-width:58px;min-height:58px;font-size:22px;font-weight:900;cursor:pointer}
+#fdice:active{transform:scale(.94)}
+.classcard{display:block;width:100%;text-align:left;background:#141422;border:2px solid #33335a;color:#fff;border-radius:14px;padding:14px;cursor:pointer;min-height:76px}
+.classcard .cn{font-size:21px;font-weight:900}
+.classcard .cs{font-size:14px;color:#9b9dba;margin-top:2px}
+.classcard .cb{font-size:15px;margin-top:6px;line-height:1.4}
+.classcard .ca{font-size:13px;color:#f2c14e;margin-top:6px;font-weight:700}
+.classcard.sel{border-color:#f2c14e;background:#1c1a26}
+.bigbtn{display:block;width:100%;background:#f2c14e;color:#171207;border:none;border-radius:14px;font-size:21px;font-weight:900;padding:18px;cursor:pointer;min-height:64px}
+.bigbtn:active{transform:scale(.98)}
+.bigbtn:disabled{opacity:.45}
+.ghostbtn{display:block;width:100%;background:transparent;color:#9b9dba;border:2px solid #33335a;border-radius:14px;font-size:17px;font-weight:700;padding:14px;cursor:pointer;min-height:58px}
+/* ---- duel ---- */
+#v-duel{height:calc(100dvh - 135px);max-height:720px;min-height:480px;padding-bottom:8px}
+.plate{background:#10101d;border:1px solid #26263e;border-radius:12px;padding:8px 12px}
+.plate .pr{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.pname{font-size:17px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.phpt{font-size:13px;color:#9b9dba;font-weight:700;white-space:nowrap}
+.hpbar{height:12px;border-radius:99px;background:#23233a;overflow:hidden;margin-top:6px}
+.hpbar i{display:block;height:100%;border-radius:99px;transition:width .35s ease}
+#ehpf{background:linear-gradient(90deg,#b91c1c,#ff5c5c)}
+#mhpf{background:linear-gradient(90deg,#0f766e,#5eead4)}
+.stbar{height:8px;border-radius:99px;background:#23233a;overflow:hidden;margin-top:5px}
+.stbar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#7c5cff,#b79bff);transition:width .35s ease}
+#intent{min-height:22px;font-size:14px;font-weight:700;color:#ffb84d;margin-top:4px}
+#midrow{display:flex;align-items:center;justify-content:space-between}
+#rungtag{font-size:13px;font-weight:900;letter-spacing:.14em;color:#9be7ff}
+#scoretag{font-size:13px;font-weight:800;color:#9b9dba}
+#stage{position:relative;flex:1 1 auto;min-height:140px;border-radius:14px;overflow:hidden;background:radial-gradient(120% 90% at 50% 110%,#23233f 0%,#14141f 55%,#0d0d17 100%);border:1px solid #26263e}
+#stage .floor{position:absolute;left:6%;right:6%;bottom:12%;height:3px;background:#33335a;border-radius:99px;opacity:.7}
+.fx{position:absolute;bottom:14%;width:32%;max-width:150px}
+#fxM{left:7%}
+#fxE{right:7%}
+.fx .flip{transform:scaleX(-1)}
+.fx svg{width:100%;height:auto;display:block;overflow:visible}
+.ovl{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+.fx.flash .ovl{animation:fl .3s ease}
+@keyframes fl{0%{opacity:0}30%{opacity:.55}100%{opacity:0}}
+.fx.atkM{animation:lungeR .38s ease}
+.fx.atkE{animation:lungeL .38s ease}
+@keyframes lungeR{0%{transform:translateX(0)}40%{transform:translateX(52px)}100%{transform:translateX(0)}}
+@keyframes lungeL{0%{transform:translateX(0)}40%{transform:translateX(-52px)}100%{transform:translateX(0)}}
+.fx.hurt{animation:shk2 .32s ease}
+@keyframes shk2{0%,100%{transform:translateX(0)}25%{transform:translateX(-9px)}50%{transform:translateX(8px)}75%{transform:translateX(-5px)}}
+.fx.ko{animation:kod .6s ease forwards}
+@keyframes kod{to{transform:rotate(72deg) translateY(26px);opacity:.25}}
+#stage.shake{animation:shk .36s ease}
+@keyframes shk{0%,100%{transform:translate(0,0)}20%{transform:translate(-7px,3px)}40%{transform:translate(6px,-4px)}60%{transform:translate(-5px,-2px)}80%{transform:translate(4px,2px)}}
+.hitnum{position:absolute;font-size:26px;font-weight:900;color:#fff;text-shadow:0 2px 8px #000;pointer-events:none;animation:pop .75s ease forwards;white-space:nowrap}
+.hitnum.crit{color:#ffd75c;font-size:32px}
+.hitnum.miss{color:#9b9dba;font-size:20px}
+.hitnum.heal{color:#5eead4}
+@keyframes pop{0%{transform:translateY(6px) scale(.7);opacity:0}18%{opacity:1;transform:translateY(0) scale(1.12)}100%{transform:translateY(-44px) scale(1);opacity:0}}
+#banner{position:absolute;top:16%;left:0;right:0;text-align:center;font-size:34px;font-weight:900;letter-spacing:.04em;opacity:0;pointer-events:none;text-shadow:0 3px 14px #000}
+#banner.show{animation:ban 1.5s ease forwards}
+@keyframes ban{0%{opacity:0;transform:scale(.85)}18%{opacity:1;transform:scale(1)}78%{opacity:1}100%{opacity:0;transform:scale(1.04)}}
+#dock{display:grid;grid-template-columns:1fr 1fr;gap:10px;flex:0 0 auto}
+.act{background:#1a1a2e;border:2px solid #33335a;color:#fff;border-radius:14px;padding:10px 8px;cursor:pointer;min-height:66px;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.act b{font-size:18px}
+.act span{font-size:12.5px;color:#9b9dba;font-weight:600}
+.act:active:not(:disabled){transform:scale(.97)}
+.act:disabled{opacity:.38;cursor:default}
+.act.cd span{color:#f2c14e}
+#taunt{font-size:14.5px;font-style:italic;color:#9b9dba;text-align:center;min-height:20px}
+/* ---- gear / end ---- */
+.gearcard{display:block;width:100%;text-align:left;background:#141422;border:2px solid #33335a;color:#fff;border-radius:14px;padding:16px;cursor:pointer;min-height:88px}
+.gearcard .gs{font-size:12px;font-weight:800;letter-spacing:.12em;color:#9be7ff}
+.gearcard .gn{font-size:20px;font-weight:900;margin-top:2px}
+.gearcard .gd{font-size:15px;color:#9b9dba;margin-top:4px;line-height:1.4}
+.gearcard:active{transform:scale(.98);border-color:#f2c14e}
+.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:#141422;border:1px solid #26263e;border-radius:12px;padding:12px;text-align:center}
+.stat b{font-size:26px;display:block}
+.stat span{font-size:13px;color:#9b9dba}
+.best{font-size:14px;color:#9b9dba;text-align:center}
+@media(min-width:560px){
+  #dock{grid-template-columns:repeat(4,1fr)}
+  h1{font-size:40px}
+}
+</style>
+</head>
+<body>
+<div id="gtop">
+  <a class="back" href="/games.html">&larr; Games</a>
+  <span class="wm">BATTLELINE</span>
+  <span id="rungpill" style="display:none"></span>
+</div>
+<main>
+<!-- CREATE -->
+<section class="view on" id="v-create">
+  <h1>Build your fighter.</h1>
+  <p class="sub">Ten rungs. One line. Climb it.</p>
+  <div class="namerow">
+    <input id="fname" maxlength="16" placeholder="Fighter name" autocomplete="off">
+    <button id="fdice" aria-label="Random name">&#9861;</button>
+  </div>
+  <button class="classcard" data-cls="blade">
+    <div class="cn">Blade</div><div class="cs">112 HP &middot; balanced &middot; 25% crit</div>
+    <div class="cb">The all-rounder. Reliable strikes that sometimes land twice as hard.</div>
+    <div class="ca">ABILITY: Flurry — 3 quick strikes (3-turn cooldown)</div>
+  </button>
+  <button class="classcard" data-cls="brawler">
+    <div class="cn">Brawler</div><div class="cs">118 HP &middot; heavy hits &middot; hits like a truck</div>
+    <div class="cb">Slow, mean, and hard to put down. Heavies hurt everybody.</div>
+    <div class="ca">ABILITY: Crush — huge hit, ignores Block (4-turn cooldown)</div>
+  </button>
+  <button class="classcard" data-cls="ranger">
+    <div class="cn">Ranger</div><div class="cs">100 HP &middot; fast &middot; 30% double-strike</div>
+    <div class="cb">Fragile and furious. Wins before the other guy loads up.</div>
+    <div class="ca">ABILITY: Pinpoint — one guaranteed crit (3-turn cooldown)</div>
+  </button>
+  <button class="bigbtn" id="startbtn" disabled>Pick a class</button>
+</section>
+<!-- DUEL -->
+<section class="view" id="v-duel">
+  <div class="plate">
+    <div class="pr"><span class="pname" id="ename">—</span><span class="phpt" id="ehpt"></span></div>
+    <div class="hpbar"><i id="ehpf"></i></div>
+    <div id="intent"></div>
+  </div>
+  <div id="midrow"><span id="rungtag"></span><span id="scoretag"></span></div>
+  <div id="stage">
+    <div class="floor"></div>
+    <div class="fx" id="fxM"></div>
+    <div class="fx" id="fxE"></div>
+    <div id="hits"></div>
+    <div id="banner"></div>
+  </div>
+  <div id="taunt"></div>
+  <div class="plate">
+    <div class="pr"><span class="pname" id="mname">—</span><span class="phpt" id="mhpt"></span></div>
+    <div class="hpbar"><i id="mhpf"></i></div>
+    <div class="stbar"><i id="mstf"></i></div>
+  </div>
+  <div id="dock">
+    <button class="act" data-a="strike"><b>Strike</b><span>Reliable. No cost.</span></button>
+    <button class="act" data-a="heavy"><b>Heavy</b><span>Big damage. Can miss. <span class="cost"></span></span></button>
+    <button class="act" data-a="block"><b>Block</b><span>Halve next hit. +25 stamina.</span></button>
+    <button class="act" data-a="ability"><b class="abn">Ability</b><span class="abd"></span></button>
+  </div>
+</section>
+<!-- GEAR -->
+<section class="view" id="v-gear">
+  <h1>Rung <span id="gcleared"></span> clear.</h1>
+  <p class="sub" id="gheal"></p>
+  <p class="sub" style="font-weight:800;color:#fff">Take one:</p>
+  <div id="gears" style="display:flex;flex-direction:column;gap:10px"></div>
+</section>
+<!-- END -->
+<section class="view" id="v-end">
+  <h1 id="endtitle">K.O.</h1>
+  <p class="sub" id="endsub"></p>
+  <div class="statgrid">
+    <div class="stat"><b id="st-rung">0</b><span>rungs cleared</span></div>
+    <div class="stat"><b id="st-score">0</b><span>score</span></div>
+    <div class="stat"><b id="st-nohit">0</b><span>no-hit rounds</span></div>
+    <div class="stat"><b id="st-comeback">0</b><span>comebacks</span></div>
+  </div>
+  <p class="best" id="st-best"></p>
+  <button class="bigbtn" id="againbtn">Fight again</button>
+  <a class="ghostbtn" href="/games.html" style="text-align:center;text-decoration:none">Back to games</a>
+</section>
+</main>
+<script>
+"use strict";
+/* ================= ENGINE (no DOM) ================= */
+var BL = (function(){
+  var seed = 1;
+  function setSeed(n){ seed = (n>>>0) || 1; }
+  function rnd(){ // mulberry32
+    seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+    var t = Math.imul(seed ^ (seed>>>15), 1|seed);
+    t = (t + Math.imul(t ^ (t>>>7), 61|t)) ^ t;
+    return ((t ^ (t>>>14))>>>0) / 4294967296;
+  }
+  function rr(a,b){ return a + rnd()*(b-a); }
+  function ri(a,b){ return Math.floor(rr(a, b+1)); }
+  function pick(arr){ return arr[Math.floor(rnd()*arr.length)]; }
+
+  var CLASSES = {
+    blade:   {label:'Blade',   hp:112, st:100, smin:13, smax:17, hmin:26, hmax:34, hcost:25, hacc:0.75, crit:0.25, dbl:0,
+              ab:{name:'Flurry', kind:'flurry', cd:3, cost:20}, col:['#3a4356','#7aa2ff'], wpn:'sword'},
+    brawler: {label:'Brawler', hp:118, st:100, smin:14, smax:18, hmin:32, hmax:42, hcost:25, hacc:0.70, crit:0.10, dbl:0,
+              ab:{name:'Crush', kind:'crush', cd:4, cost:30}, col:['#4a3636','#ff7a5c'], wpn:'hammer'},
+    ranger:  {label:'Ranger',  hp:100,  st:110, smin:11, smax:15, hmin:24, hmax:30, hcost:25, hacc:0.80, crit:0.15, dbl:0.30,
+              ab:{name:'Pinpoint', kind:'pinpoint', cd:3, cost:20}, col:['#2c4438','#5cffb1'], wpn:'bow'}
+  };
+
+  var NAMES = ['Ash','Rook','Vex','Juno','Kade','Mira','Sol','Drex','Ivy','Corv','Lux','Bram','Zed','Onyx','Raze','Talon','Wren','Zara','Flint','Sable'];
+  function randomName(){ return pick(NAMES); }
+
+  function mkFighter(name, cls, isPlayer){
+    var c = CLASSES[cls];
+    return { name:name, cls:cls, isPlayer:!!isPlayer,
+      maxhp:c.hp, hp:c.hp, maxst:c.st, st:c.st,
+      smin:c.smin, smax:c.smax, hmin:c.hmin, hmax:c.hmax,
+      hcost:c.hcost, hacc:c.hacc, crit:c.crit, dbl:c.dbl,
+      ab:{name:c.ab.name, kind:c.ab.kind, cd:c.ab.cd, cost:c.ab.cost, t:0},
+      col:c.col.slice(), wpn:c.wpn,
+      block:false, blockPow:0.5, sPow:0, hPow:0, proc:0, abPow:0,
+      stRegen:12, hCostMod:0, healKill:0, lifeSteal:0, gear:[] };
+  }
+
+  var RUNGS = [
+    {name:'Rusty Rook',  cls:'brawler', wpn:'club',   col:['#3a3f4a','#ff9a3c'], taunt:"I've seen tougher in the food line.", hpMod:0.90, dmgMod:0.85},
+    {name:'Sister Vex',  cls:'blade',   wpn:'spear',  col:['#232a3d','#7aa2ff'], taunt:"Say your prayers.", hpMod:0.95, dmgMod:0.95},
+    {name:'Boarhide',    cls:'brawler', wpn:'hammer', col:['#3d2a23','#ff5c5c'], taunt:"I eat Blades for breakfast.", hpMod:1.15, dmgMod:1.00},
+    {name:'Twitch',      cls:'ranger',  wpn:'bow',    col:['#233d2a','#b1ff5c'], taunt:"Can't hit what you can't see.", hpMod:0.95, dmgMod:1.00},
+    {name:'Marrow',      cls:'blade',   wpn:'sword',  col:['#2d2d33','#e8edf5'], taunt:"One cut. That's all I need.", hpMod:1.05, dmgMod:1.10},
+    {name:'Gristle',     cls:'brawler', wpn:'axe',    col:['#38233d','#c77aff'], taunt:"Last chance to run.", hpMod:1.25, dmgMod:1.10},
+    {name:'Nyx',         cls:'ranger',  wpn:'knives', col:['#101418','#5cfff4'], taunt:"You won't feel the second one.", hpMod:1.00, dmgMod:1.20},
+    {name:'Warlord Kess',cls:'blade',   wpn:'sword',  col:['#3d1a1a','#ffd75c'], taunt:"Kneel.", hpMod:1.20, dmgMod:1.25},
+    {name:'The Mirror',  cls:'mirror',  wpn:'sword',  col:['#2a2f3a','#cfd6ea'], taunt:"I am you, sharper.", hpMod:1.10, dmgMod:1.20},
+    {name:'DREADNOUGHT', cls:'brawler', wpn:'hammer', col:['#16090d','#ff3b3b'], taunt:"THE LINE ENDS WITH ME.", hpMod:1.40, dmgMod:1.30}
+  ];
+  var ENDLESS_NAMES = ['Hollow Jack','Widow Six','Cinder','Maul','Static','Reaver','Pale','Grimble','Volt','Ashen','Null','Ferrox'];
+  var ENDLESS_WPNS = ['sword','hammer','axe','spear','knives','bow','club'];
+  var ENDLESS_COLS = [['#241a2e','#b78cff'],['#1a2e24','#7dffb0'],['#2e241a','#ffcf7d'],['#2e1a1a','#ff8d7d']];
+
+  function mkEnemy(rung, playerCls){
+    var cfg, cls;
+    if(rung <= 10){
+      cfg = RUNGS[rung-1];
+      cls = (cfg.cls === 'mirror') ? playerCls : cfg.cls;
+    } else {
+      var over = rung - 10;
+      cfg = { name: pick(ENDLESS_NAMES) + ' +' + over, cls: pick(['blade','brawler','ranger']),
+              wpn: pick(ENDLESS_WPNS), col: pick(ENDLESS_COLS), taunt: "The line goes on. So do I.",
+              hpMod: 1.5 * Math.pow(1.13, over), dmgMod: 1.35 * Math.pow(1.08, over) };
+      cls = cfg.cls;
+    }
+    var e = mkFighter(cfg.name, cls, false);
+    e.col = cfg.col.slice(); e.wpn = cfg.wpn; e.taunt = cfg.taunt;
+    e.maxhp = e.hp = Math.round((40 + 16*Math.min(rung,10)) * cfg.hpMod);
+    var dm = (1 + 0.035*(Math.min(rung,10)-1)) * cfg.dmgMod;
+    e.abDmgMod = 0.6;
+    e.smin = Math.round(e.smin*dm); e.smax = Math.round(e.smax*dm);
+    e.hmin = Math.round(e.hmin*dm); e.hmax = Math.round(e.hmax*dm);
+    return e;
+  }
+
+  function dmgRoll(f, kind){
+    var lo = kind==='strike' ? f.smin + f.sPow : f.hmin + f.hPow;
+    var hi = kind==='strike' ? f.smax + f.sPow : f.hmax + f.hPow;
+    var base = rr(lo, hi);
+    var crit = rnd() < (f.crit + f.proc);
+    if(crit) base *= 2;
+    return {dmg: Math.max(1, Math.round(base)), crit: crit};
+  }
+
+  function deal(att, def, r, kind, events){
+    var dmg = r.dmg, wasBlocked = false;
+    if(def.block && kind !== 'crush'){
+      dmg = Math.max(1, Math.round(dmg * def.blockPow));
+      wasBlocked = true;
+    }
+    if(def.block) def.block = false;
+    var before = def.hp;
+    def.hp = Math.max(0, def.hp - dmg);
+    if(att.lifeSteal && kind !== 'ability-fail'){
+      att.hp = Math.min(att.maxhp, att.hp + att.lifeSteal);
+      events.push({type:'lifesteal', amt:att.lifeSteal, who:att.name});
+    }
+    events.push({type:'dmg', dmg:dmg, dealt:(before - def.hp), crit:r.crit, kind:kind, wasBlocked:wasBlocked, to:def.name});
+    return dmg;
+  }
+
+  // act: 'strike'|'heavy'|'block'|'ability'. Returns events[].
+  function takeAction(att, def, act){
+    var events = [];
+    if(act === 'strike'){
+      var r = dmgRoll(att, 'strike');
+      deal(att, def, r, 'strike', events);
+      if(att.dbl > 0 && rnd() < att.dbl + att.proc && def.hp > 0){
+        var r2 = dmgRoll(att, 'strike');
+        r2.dmg = Math.max(1, Math.round(r2.dmg * 0.6));
+        deal(att, def, r2, 'strike2', events);
+      }
+    } else if(act === 'heavy'){
+      var cost = att.hcost + att.hCostMod;
+      if(att.st < cost){ events.push({type:'fail', why:'stamina', act:act}); return events; }
+      att.st -= cost;
+      if(rnd() > att.hacc){ events.push({type:'miss', kind:'heavy', who:att.name}); }
+      else { var rh = dmgRoll(att, 'heavy'); deal(att, def, rh, 'heavy', events); }
+    } else if(act === 'block'){
+      att.block = true;
+      att.st = Math.min(att.maxst, att.st + 25);
+      events.push({type:'block', who:att.name});
+    } else if(act === 'ability'){
+      var a = att.ab;
+      if(a.t > 0 || att.st < a.cost){ events.push({type:'fail', why:(a.t>0?'cooldown':'stamina'), act:act}); return events; }
+      att.st -= a.cost; a.t = a.cd;
+      var adm = (att.abDmgMod || 1);
+      if(a.kind === 'flurry'){
+        for(var i=0; i<3 && def.hp>0; i++){
+          var rf = dmgRoll(att, 'strike');
+          rf.dmg = Math.max(1, Math.round(rf.dmg * 0.45 * (1+att.abPow) * adm)); rf.crit = false;
+          deal(att, def, rf, 'ability', events);
+        }
+        events.push({type:'ability', name:a.name, who:att.name});
+      } else if(a.kind === 'crush'){
+        var rc = {dmg: Math.max(1, Math.round((rr(30,38) + att.hPow*1.5) * (1+att.abPow) * adm)), crit:false};
+        deal(att, def, rc, 'crush', events);
+        events.push({type:'ability', name:a.name, who:att.name});
+      } else if(a.kind === 'pinpoint'){
+        var rp = dmgRoll(att, 'strike');
+        rp.dmg = Math.max(1, Math.round(rp.dmg * 2 * (1+att.abPow) * adm)); rp.crit = true;
+        deal(att, def, rp, 'ability', events);
+        events.push({type:'ability', name:a.name, who:att.name});
+      }
+    }
+    return events;
+  }
+
+  function endTurn(f){
+    f.st = Math.min(f.maxst, f.st + f.stRegen);
+    if(f.ab.t > 0) f.ab.t--;
+  }
+
+  var ACTIONS = ['strike','heavy','block','ability'];
+  function aiChoose(e, noAbility){
+    var opts = [['strike', 45]];
+    if(e.st >= e.hcost + e.hCostMod) opts.push(['heavy', 22]);
+    opts.push(['block', e.st < 30 ? 26 : 12]);
+    if(!noAbility && e.ab.t <= 0 && e.st >= e.ab.cost) opts.push(['ability', 12]);
+    var total = 0, i;
+    for(i=0;i<opts.length;i++) total += opts[i][1];
+    var x = rnd()*total;
+    for(i=0;i<opts.length;i++){ x -= opts[i][1]; if(x <= 0) return opts[i][0]; }
+    return 'strike';
+  }
+
+  function intentText(act){
+    if(act === 'heavy') return 'Winding up a heavy…';
+    if(act === 'ability') return 'Gathering power…';
+    if(act === 'block') return 'Raises guard';
+    return 'Circles…';
+  }
+
+  var GEAR = [
+    {id:'whetstone', slot:'Weapon', name:'Whetstone Blade', desc:'Strike +3 damage', apply:function(f){ f.sPow += 3; }},
+    {id:'warmaul',   slot:'Weapon', name:'War Maul', desc:'Heavy +6 damage', apply:function(f){ f.hPow += 6; }},
+    {id:'swift',     slot:'Weapon', name:'Swift String', desc:'+12% crit / double-strike', apply:function(f){ f.proc += 0.12; }},
+    {id:'duelist',   slot:'Weapon', name:"Duelist's Edge", desc:'Ability +25% damage', apply:function(f){ f.abPow += 0.25; }},
+    {id:'vamp',      slot:'Weapon', name:'Vampiric Edge', desc:'Strikes heal you 2', apply:function(f){ f.lifeSteal += 2; }},
+    {id:'plates',    slot:'Armor', name:'Iron Plates', desc:'+25 max HP, heal 25', apply:function(f){ f.maxhp += 25; f.hp = Math.min(f.maxhp, f.hp+25); }},
+    {id:'guard',     slot:'Armor', name:'Reinforced Guard', desc:'Block cuts damage to 25%', apply:function(f){ f.blockPow = 0.25; }},
+    {id:'wind',      slot:'Armor', name:'Second Wind', desc:'+25 stamina, +4 regen', apply:function(f){ f.maxst += 25; f.stRegen += 4; }},
+    {id:'titan',     slot:'Armor', name:'Titan Belt', desc:'+40 max HP', apply:function(f){ f.maxhp += 40; f.hp += 40; }},
+    {id:'vial',      slot:'Trinket', name:'Blood Vial', desc:'Heal 8 after each win', apply:function(f){ f.healKill += 8; }},
+    {id:'coin',      slot:'Trinket', name:'Lucky Coin', desc:'+10% crit chance', apply:function(f){ f.crit += 0.10; }},
+    {id:'adrenal',   slot:'Trinket', name:'Adrenal Gland', desc:'Heavy costs 8 less', apply:function(f){ f.hCostMod -= 8; }}
+  ];
+  function drawGear(n){
+    var pool = GEAR.slice(), out = [];
+    while(out.length < n && pool.length){
+      out.push(pool.splice(Math.floor(rnd()*pool.length), 1)[0]);
+    }
+    return out;
+  }
+  function applyGear(f, g){ g.apply(f); f.gear.push(g.id); }
+  function betweenRungs(f){
+    f.hp = Math.min(f.maxhp, f.hp + Math.round(f.maxhp * 0.60));
+    if(f.healKill) f.hp = Math.min(f.maxhp, f.hp + f.healKill);
+    f.sPow += 2; f.hPow += 4;   // battle-hardened: damage grows with the climb
+  }
+
+  // Headless full-run sim. policy(f, e) -> action string. Returns result object.
+  // When debug=true, throws on invariant violations (stamina<0, hp mismatch).
+  function simRun(cls, policy, seedN, debug){
+    setSeed(seedN);
+    var me = mkFighter('Sim', cls, true);
+    var res = {cls:cls, rungs:0, score:0, nohit:0, comeback:0, endless:false, lost:false, turns:0};
+    var rung = 1;
+    while(true){
+      var e = mkEnemy(rung, cls);
+      e.intent = aiChoose(e, true);
+      var tookDmg = false, turns = 0;
+      while(me.hp > 0 && e.hp > 0){
+        turns++;
+        if(turns > 200){ res.lost = true; break; } // safety: stalemate = loss
+        var act = policy(me, e);
+        var mhp0 = me.hp, ehp0 = e.hp, mst0 = me.st;
+        var evs = takeAction(me, e, act);
+        if(debug){
+          if(me.st < 0) throw new Error('stamina negative after player '+act);
+          var edealt = 0;
+          for(var i=0;i<evs.length;i++) if(evs[i].type==='dmg') edealt += evs[i].dealt;
+          if(ehp0 - e.hp !== edealt) throw new Error('enemy HP mismatch');
+        }
+        if(e.hp > 0){
+          var ehp1 = e.hp, mhp1 = me.hp;
+          var eevs = takeAction(e, me, e.intent);
+          if(debug){
+            if(e.st < 0) throw new Error('enemy stamina negative');
+            var mdealt = 0;
+            for(var j=0;j<eevs.length;j++) if(eevs[j].type==='dmg') mdealt += eevs[j].dealt;
+            if(mhp1 - me.hp !== mdealt) throw new Error('player HP mismatch');
+          }
+          if(me.hp < mhp1) tookDmg = true;
+          endTurn(e);
+          e.intent = aiChoose(e);
+          if(debug && ACTIONS.indexOf(e.intent) < 0) throw new Error('bad intent');
+          if(debug && !intentText(e.intent)) throw new Error('empty telegraph');
+        }
+        endTurn(me);
+      }
+      res.turns += turns;
+      if(me.hp <= 0){ res.lost = true; break; }
+      // won the rung
+      res.rungs++;
+      res.score += 100;
+      if(!tookDmg){ res.score += 50; res.nohit++; }
+      if(me.hp <= me.maxhp * 0.25){ res.score += 75; res.comeback++; }
+      if(rung >= 10) res.endless = true;
+      if(res.rungs >= 14) break; // cap endless in sims
+      // between rungs
+      betweenRungs(me);
+      var gs = drawGear(3);
+      applyGear(me, gs[0]);
+      rung++;
+    }
+    return res;
+  }
+
+  return { setSeed:setSeed, rnd:rnd, ri:ri, pick:pick, randomName:randomName, betweenRungs:betweenRungs, aiChoose:aiChoose,
+    CLASSES:CLASSES, mkFighter:mkFighter, mkEnemy:mkEnemy, RUNGS:RUNGS,
+    takeAction:takeAction, endTurn:endTurn, aiChoose:aiChoose, intentText:intentText,
+    GEAR:GEAR, drawGear:drawGear, applyGear:applyGear, simRun:simRun, ACTIONS:ACTIONS };
+})();
+if(typeof window !== 'undefined'){ window.BL = BL; }
+if(typeof module !== 'undefined'){ module.exports = BL; }
+/* ================= UI ================= */
+(function(){
+"use strict";
+if(typeof document === 'undefined') return;
+BL.setSeed((Math.random()*4294967296)>>>0);
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+var WEAPONS = {
+  sword:'<g><rect x="72" y="18" width="7" height="54" rx="3" fill="AC"/><rect x="63" y="70" width="25" height="7" rx="3" fill="PR"/><rect x="71" y="77" width="9" height="16" rx="4" fill="PR"/></g>',
+  hammer:'<g><rect x="70" y="30" width="9" height="52" rx="4" fill="PR"/><rect x="52" y="14" width="44" height="24" rx="6" fill="AC"/></g>',
+  spear:'<g><rect x="73" y="8" width="6" height="76" rx="3" fill="PR"/><path d="M76 8 L66 24 L86 24 Z" fill="AC"/></g>',
+  bow:'<g><path d="M78 18 Q56 52 78 86" stroke="AC" stroke-width="6" fill="none" stroke-linecap="round"/><line x1="78" y1="18" x2="78" y2="86" stroke="PR" stroke-width="2"/><line x1="66" y1="52" x2="80" y2="52" stroke="PR" stroke-width="3"/></g>',
+  knives:'<g><rect x="70" y="46" width="5" height="26" rx="2" fill="AC" transform="rotate(24 72 52)"/><rect x="82" y="52" width="5" height="24" rx="2" fill="AC" transform="rotate(-18 84 58)"/></g>',
+  axe:'<g><rect x="71" y="26" width="8" height="58" rx="4" fill="PR"/><path d="M79 26 Q104 30 100 52 Q88 46 79 48 Z" fill="AC"/></g>',
+  club:'<g><rect x="68" y="30" width="16" height="52" rx="8" fill="AC" transform="rotate(28 76 56)"/></g>'
+};
+function fighterSVG(col, wpn, flip){
+  var P = col[0], A = col[1];
+  var w = (WEAPONS[wpn] || WEAPONS.sword).split('AC').join(A).split('PR').join(P);
+  var inner = '<g>' +
+    '<ellipse cx="50" cy="134" rx="26" ry="6" fill="#000" opacity=".4"/>' +
+    '<circle cx="50" cy="28" r="13" fill="'+P+'"/>' +
+    '<circle cx="45" cy="26" r="2.6" fill="'+A+'"/><circle cx="55" cy="26" r="2.6" fill="'+A+'"/>' +
+    '<rect x="36" y="44" width="28" height="52" rx="10" fill="'+P+'"/>' +
+    '<rect x="36" y="70" width="28" height="7" fill="'+A+'" opacity=".85"/>' +
+    '<rect x="30" y="96" width="11" height="34" rx="5" fill="'+P+'" opacity=".9"/>' +
+    '<rect x="59" y="96" width="11" height="34" rx="5" fill="'+P+'" opacity=".9"/>' +
+    '<path d="M37 54 L19 68" stroke="'+P+'" stroke-width="10" stroke-linecap="round"/>' +
+    w + '</g>';
+  return '<svg viewBox="0 0 100 142"><g class="'+(flip?'flip':'')+'">'+inner+'</g><rect class="ovl" x="0" y="0" width="100" height="142"/></svg>';
+}
+
+var G = null; // run state
+function show(id){
+  ['v-create','v-duel','v-gear','v-end'].forEach(function(v){ $(v).classList.toggle('on', v===id); });
+  window.scrollTo(0,0);
+}
+function banner(t){ var b=$('banner'); b.textContent=t; b.classList.remove('show'); void b.offsetWidth; b.classList.add('show'); }
+function hitnum(x, txt, cls){
+  var s=document.createElement('span'); s.className='hitnum '+(cls||''); s.textContent=txt;
+  s.style.left=x+'%'; s.style.top=(38+Math.random()*14)+'%';
+  $('hits').appendChild(s); setTimeout(function(){ s.remove(); }, 780);
+}
+function fxHit(el, heavy){
+  el.classList.remove('hurt','flash'); void el.offsetWidth;
+  el.classList.add('hurt','flash');
+  if(heavy){ var st=$('stage'); st.classList.remove('shake'); void st.offsetWidth; st.classList.add('shake'); }
+}
+function fxAtk(el, me){ el.classList.remove('atkM','atkE'); void el.offsetWidth; el.classList.add(me?'atkM':'atkE'); }
+
+function updBars(){
+  var e=G.enemy, m=G.me;
+  $('ehpf').style.width=(100*e.hp/e.maxhp)+'%';
+  $('mhpf').style.width=(100*m.hp/m.maxhp)+'%';
+  $('mstf').style.width=(100*m.st/m.maxst)+'%';
+  $('ehpt').textContent=e.hp+'/'+e.maxhp;
+  $('mhpt').textContent=m.hp+'/'+m.maxhp+' · '+Math.floor(m.st)+' st';
+  $('rungpill').textContent = 'RUNG ' + G.rung;
+  $('rungtag').textContent = 'RUNG ' + G.rung + (G.rung>10 ? ' · ENDLESS' : ' / 10');
+  $('scoretag').textContent = 'SCORE ' + G.score;
+  var btns = document.querySelectorAll('#dock .act');
+  var cost = m.hcost + m.hCostMod;
+  btns[1].disabled = m.st < cost;
+  btns[1].querySelector('.cost').textContent = cost + ' st';
+  var ab = btns[3];
+  ab.querySelector('.abn').textContent = m.ab.name;
+  if(m.ab.t > 0 || m.st < m.ab.cost){ ab.disabled = true; ab.classList.add('cd'); }
+  else { ab.disabled = false; ab.classList.remove('cd'); }
+  ab.querySelector('.abd').textContent = m.ab.t>0 ? ('Ready in '+m.ab.t) : (m.ab.name==='Flurry'?'3 quick strikes · '+m.ab.cost+' st':m.ab.name==='Crush'?'Ignores block · '+m.ab.cost+' st':'Guaranteed crit · '+m.ab.cost+' st');
+  $('intent').textContent = e.hp>0 ? BL.intentText(e.intent) : '';
+}
+
+function startDuel(){
+  var e = G.enemy;
+  $('ename').textContent = e.name;
+  $('mname').textContent = G.me.name;
+  $('fxM').innerHTML = fighterSVG(G.me.col, G.me.wpn, false);
+  $('fxE').innerHTML = fighterSVG(e.col, e.wpn, true);
+  $('fxE').classList.remove('ko'); $('fxM').classList.remove('ko');
+  $('taunt').textContent = '\u201C' + e.taunt + '\u201D';
+  $('hits').innerHTML = '';
+  G.lock = false;
+  updBars();
+}
+
+function eventsToFx(events, attEl, defEl, defIsEnemy){
+  var ax = defIsEnemy ? 24 : 62;   // attacker side
+  var dx = defIsEnemy ? 62 : 24;   // defender side
+  events.forEach(function(ev, k){
+    setTimeout(function(){
+      if(ev.type==='dmg'){
+        fxHit(defEl, ev.kind==='heavy' || ev.kind==='crush');
+        hitnum(dx, ev.dmg, ev.crit?'crit':'');
+        if(ev.wasBlocked) hitnum(dx, 'blocked', 'miss');
+      } else if(ev.type==='miss'){ hitnum(dx, 'miss', 'miss'); }
+      else if(ev.type==='block'){ hitnum(ax, 'guard', 'heal'); }
+      else if(ev.type==='fail'){ hitnum(ax, 'nope', 'miss'); }
+      else if(ev.type==='lifesteal'){ hitnum(ax, '+'+ev.amt, 'heal'); }
+      else if(ev.type==='ability'){ banner(ev.name.toUpperCase()+'!'); }
+      updBars();
+    }, k*260);
+  });
+  return events.length*260;
+}
+
+function playerAct(act){
+  if(!G || G.lock || G.over) return;
+  var m=G.me, e=G.enemy;
+  var ok = act==='strike' || act==='block' ||
+    (act==='heavy' && m.st >= m.hcost+m.hCostMod) ||
+    (act==='ability' && m.ab.t<=0 && m.st>=m.ab.cost);
+  if(!ok) return;
+  G.lock = true;
+  fxAtk($('fxM'), true);
+  var evs = BL.takeAction(m, e, act);
+  var wait = eventsToFx(evs, $('fxM'), $('fxE'), true);
+  setTimeout(function(){
+    if(e.hp<=0){ winFight(); return; }
+    setTimeout(enemyAct, 320);
+  }, wait + 200);
+}
+
+function enemyAct(){
+  var m=G.me, e=G.enemy;
+  fxAtk($('fxE'), false);
+  var evs = BL.takeAction(e, m, e.intent);
+  evs.forEach(function(ev){ if(ev.type==='dmg' && ev.to===m.name) G.tookDmg = true; });
+  var wait = eventsToFx(evs, $('fxE'), $('fxM'), false);
+  setTimeout(function(){
+    if(m.hp<=0){ loseRun(); return; }
+    BL.endTurn(e); BL.endTurn(m);
+    e.intent = BL.aiChoose(e);
+    updBars();
+    G.lock = false;
+  }, wait + 200);
+}
+
+function winFight(){
+  var m=G.me, e=G.enemy;
+  $('fxE').classList.add('ko');
+  var nohit = (G.tookDmg===false);
+  G.score += 100;
+  if(nohit){ G.score += 50; G.st.nohit++; }
+  if(m.hp <= m.maxhp*0.25){ G.score += 75; G.st.comeback++; }
+  G.st.rungs++;
+  banner(G.rung>=10 && G.rung%10!==0 ? 'RUNG '+G.rung+' CLEAR' : (G.rung===10 ? 'LINE CONQUERED' : 'RUNG '+G.rung+' CLEAR'));
+  if(m.healKill){ m.hp = Math.min(m.maxhp, m.hp+m.healKill); }
+  setTimeout(function(){
+    if(G.rung >= 10 && !G.endlessAsked && G.rung === 10){
+      G.endlessAsked = true;
+      banner('ENDLESS MODE');
+    }
+    showGear();
+  }, 1500);
+}
+
+function showGear(){
+  var m=G.me;
+  var hp0 = m.hp;
+  BL.betweenRungs(m);
+  $('gcleared').textContent = G.rung;
+  $('gheal').textContent = 'Healed '+(m.hp-hp0)+' HP, hits harder now. Choose one upgrade:';
+  var gs = BL.drawGear(3);
+  var box = $('gears'); box.innerHTML = '';
+  gs.forEach(function(g){
+    var b=document.createElement('button'); b.className='gearcard';
+    b.innerHTML = '<div class="gs">'+esc(g.slot.toUpperCase())+'</div><div class="gn">'+esc(g.name)+'</div><div class="gd">'+esc(g.desc)+'</div>';
+    b.addEventListener('click', function(){
+      BL.applyGear(m, g);
+      banner(esc(g.name).toUpperCase());
+      G.rung++;
+      G.enemy = BL.mkEnemy(G.rung, m.cls);
+      G.enemy.intent = BL.aiChoose(G.enemy, true);
+      G.tookDmg = false;
+      show('v-duel');
+      startDuel();
+    });
+    box.appendChild(b);
+  });
+  show('v-gear');
+}
+
+
+function loseRun(){
+  G.over = true;
+  $('fxM').classList.add('ko');
+  banner('K.O.');
+  setTimeout(function(){ endRun(false); }, 1400);
+}
+
+function endRun(finished){
+  var best = null;
+  try{ best = JSON.parse(localStorage.getItem('battleline:best')||'null'); }catch(e){}
+  var score = G.score;
+  if(!best || score > best.score){
+    best = {rung:G.st.rungs, score:score, name:G.me.name, cls:G.me.cls, d:new Date().toISOString().slice(0,10)};
+    try{ localStorage.setItem('battleline:best', JSON.stringify(best)); }catch(e){}
+  }
+  $('endtitle').textContent = finished ? 'Line conquered.' : 'K.O.';
+  $('endsub').textContent = finished
+    ? 'You cleared all 10 rungs. The line remembers.'
+    : G.me.name + ' fell on rung ' + G.rung + ' to ' + G.enemy.name + '.';
+  $('st-rung').textContent = G.st.rungs;
+  $('st-score').textContent = score;
+  $('st-nohit').textContent = G.st.nohit;
+  $('st-comeback').textContent = G.st.comeback;
+  $('st-best').textContent = 'Best: ' + best.name + ' (' + best.cls + ') — rung ' + best.rung + ', ' + best.score + ' pts';
+  $('rungpill').style.display = 'none';
+  show('v-end');
+}
+
+/* ---- wiring ---- */
+var selCls = null;
+document.querySelectorAll('.classcard').forEach(function(c){
+  c.addEventListener('click', function(){
+    document.querySelectorAll('.classcard').forEach(function(x){ x.classList.remove('sel'); });
+    c.classList.add('sel');
+    selCls = c.getAttribute('data-cls');
+    var b=$('startbtn'); b.disabled=false; b.textContent='Enter the line';
+  });
+});
+$('fdice').addEventListener('click', function(){ $('fname').value = BL.randomName(); });
+document.querySelectorAll('#dock .act').forEach(function(b){
+  b.addEventListener('click', function(){ playerAct(b.getAttribute('data-a')); });
+});
+$('startbtn').addEventListener('click', function(){
+  if(!selCls) return;
+  var name = ($('fname').value||'').trim() || BL.randomName();
+  var me = BL.mkFighter(name, selCls, true);
+  G = { me:me, enemy:BL.mkEnemy(1, selCls), rung:1, score:0,
+        st:{rungs:0, nohit:0, comeback:0}, tookDmg:false, lock:false, over:false, endlessAsked:false };
+  G.enemy.intent = BL.aiChoose(G.enemy, true);
+  $('rungpill').style.display = '';
+  show('v-duel');
+  banner('RUNG 1');
+  startDuel();
+});
+$('againbtn').addEventListener('click', function(){
+  $('fname').value=''; selCls=null;
+  document.querySelectorAll('.classcard').forEach(function(x){ x.classList.remove('sel'); });
+  var b=$('startbtn'); b.disabled=true; b.textContent='Pick a class';
+  show('v-create');
+});
+if(typeof window !== 'undefined'){
+  window.BLUI = {
+    playerAct: playerAct,
+    getState: function(){ return G; },
+    show: show, startDuel: startDuel
+  };
+}
+})();
+</script>
+<script>(function(){try{var p=location.pathname;fetch("/api/track?p="+encodeURIComponent(p)+"&r="+encodeURIComponent(document.referrer||""),{mode:"no-cors",keepalive:true}).catch(function(){})}catch(e){}})();</script>
+</body>
+</html>
