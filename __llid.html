@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>LeonLink ID hub</title>
+<meta name="robots" content="noindex,nofollow">
+<script>
+/* __llid — LeonLink ID session hub (apex, https://www.leonlink.net).
+ *
+ * This page owns the ONE canonical Supabase session for the ecosystem, in
+ * www.leonlink.net localStorage (written by /account). App surfaces embed it
+ * in a hidden iframe and ask for the session via postMessage.
+ *
+ * Protocol:
+ *   app -> hub : { type: 'llid-hello' }    -> hub replies { type:'llid-session', key, value }
+ *   app -> hub : { type: 'llid-signout' }  -> hub signs out canonical session, replies { type:'llid-signed-out' }
+ *
+ * Security: the hub answers ONLY origins matching *.leonlink.net over https.
+ * Anything else gets total silence. No UI, no navigation, no tracking.
+ */
+(function (global) {
+  'use strict';
+  var ORIGIN_RE = /^https:\/\/([a-z0-9-]+\.)*leonlink\.net$/;
+  var PROJECT_URL = 'https://cjtutkvhyzjsgclqvylg.supabase.co';
+  var PUBLISHABLE_KEY = 'sb_publishable_E48ovT9wWxduLxnzPXL_5g_SnNl2rqz';
+  var SUPA_ESM = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+  var LS_KEY = 'sb-cjtutkvhyzjsgclqvylg-auth-token';
+
+  function okOrigin(o) { return typeof o === 'string' && ORIGIN_RE.test(o); }
+
+  var sbPromise = null;
+  function client() {
+    if (!sbPromise) {
+      sbPromise = (function () {
+        try {
+          var seam = global.__LLID_SUPABASE__; // test seam only; never set in production
+          if (seam && seam.createClient) return Promise.resolve(seam.createClient(PROJECT_URL, PUBLISHABLE_KEY));
+        } catch (e) {}
+        return import(SUPA_ESM).then(function (mod) { return mod.createClient(PROJECT_URL, PUBLISHABLE_KEY); });
+      })();
+    }
+    return sbPromise;
+  }
+
+  function readSession() {
+    try { return global.localStorage.getItem(LS_KEY); } catch (e) { return null; }
+  }
+
+  global.addEventListener('message', function (ev) {
+    if (!okOrigin(ev.origin)) return; // hostile origins: total silence
+    var d = ev.data || {};
+    try {
+      if (d.type === 'llid-hello') {
+        ev.source.postMessage({ type: 'llid-session', key: LS_KEY, value: readSession() }, ev.origin);
+      } else if (d.type === 'llid-signout') {
+        client()
+          .then(function (sb) { return sb.auth.signOut(); })
+          .catch(function () {})
+          .then(function () {
+            try { global.localStorage.removeItem(LS_KEY); } catch (e) {}
+            try { ev.source.postMessage({ type: 'llid-signed-out' }, ev.origin); } catch (e) {}
+          });
+      }
+    } catch (e) { /* never leak, never throw across the boundary */ }
+  });
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+</head>
+<body><!-- LeonLink ID session hub. No UI. --></body>
+</html>
