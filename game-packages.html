@@ -450,7 +450,6 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
     <a href="/software.html">Software</a>
     <a href="/blog.html">Blog</a>
     <a href="/watchline/">Watchline</a>
-    <a href="https://afterglow.leonlink.net" class="casino">&#127920; Casino</a>
     
   </nav><style>.gnav a.fire{position:relative;color:#fff;font-weight:800;padding:6px 14px;border-radius:999px;background:linear-gradient(0deg,#ff3d00,#ff9100,#ffd600);background-size:100% 220%;animation:flm 1.2s ease-in-out infinite alternate,flk .18s steps(2) infinite;text-shadow:0 0 6px #ff6d00,0 -2px 10px #ffab00}.gnav a.fire:before{content:"";position:absolute;inset:-6px -2px 40% -2px;border-radius:50%;background:radial-gradient(ellipse at bottom,rgba(255,145,0,.7),transparent 70%);filter:blur(6px);z-index:-1;animation:flk .25s infinite alternate}@keyframes flm{to{background-position:0 100%;box-shadow:0 0 18px #ff6d00,0 -4px 22px #ffab00}}@keyframes flk{50%{opacity:.85}}@media (prefers-reduced-motion:reduce){.gnav a.fire,.gnav a.fire:before{animation:none}}</style>
   <a class="btn" href="https://app.leonlink.net">Get Ledgerline</a>
@@ -519,7 +518,7 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 </ul>
 </div>
 </div>
-<p class="rules" style="margin-top:22px"><b>How it works:</b> 50% deposit starts the build, the rest on delivery. You own everything — code, art, the lot. Not included: accounts or logins, real-money play, app-store submission, or changes past the revision rounds (quoted flat if you want them). Examples are live right now: <a href="https://arcadeline.leonlink.net">Arcadeline</a> (15 games), <a href="https://afterglow.leonlink.net">Afterglow</a> (22-game casino), and the games library on this site.</p>
+<p class="rules" style="margin-top:22px"><b>How it works:</b> 50% deposit starts the build, the rest on delivery. You own everything — code, art, the lot. Not included: accounts or logins, real-money play, app-store submission, or changes past the revision rounds (quoted flat if you want them). Examples are live right now: (15 games), (22-game casino), and the games library on this site.</p>
 <p class="rules"><b>Start:</b> email <a href="mailto:info@leonlink.net">info@leonlink.net</a> with the package name and the game you want. First reply within a day.</p>
 </section>
 </main>
@@ -552,10 +551,6 @@ const DATA=[
  tags:['Ledgerline','Before & After','Photo Reports'],x:'A Ledgerline feature: before-and-after photo reports that prove the work. Snap it, stamp it, send the customer a report they can\'t argue with.'},
 {id:'reviewline',t:'Reviewline',u:'https://review.leonlink.net',c:'software',s:'live',p:'Included with Command',d:'2026-10-08',plat:['web','mob'],
  tags:['Ledgerline','Google Reviews','Automation'],x:'A Ledgerline feature: Google review requests on autopilot. Every finished job gets the same polite ask \u2014 no review gating, no filtering, everyone treated the same.'},
-{id:'afterglow',t:'AFTERGLOW: Neon Social Casino',u:'https://afterglow.leonlink.net',c:'games',s:'new',p:'Free',d:'2026-10-06',plat:['web','mob'],spot:1,
- tags:['Social Casino','Slots','Poker','Play Money'],x:'A neon casino that never closes. 19 games including 9 slots (Zeus, buffalo, fireball hold-and-spin, fishing, diamonds, joker, pigs), Heads or Tails, video poker, keno, baccarat, blackjack and roulette, plus a daily wheel, levels and provably fair seeds. Play money only, 18+.'},
-{id:'arcadeline',t:'Arcadeline',u:'https://arcadeline.leonlink.net',c:'games',s:'new',p:'Free',d:'2026-10-13',plat:['web','mob'],spot:1,
- tags:['Arcade','Leaderboards','High Score'],x:'The arcade: 8 original games with leaderboards — Serpentine, Brickfall, Drift, Skyline Siege, Stackline, Knockout Queens, Glowmaze and Soot Squad.'},
 {id:'sootfather',t:'Sootfather',u:'/sootfather.html',c:'games',s:'new',p:'Free',d:'2026-10-08',plat:['web','mob'],spot:1,one:1,
  tags:['RPG','Mafia','Story'],x:'A GTA-vibed mafia RPG: you\'re a chimney sweep for the family. Take jobs from the Don, manage your heat, talk or fight your way to Made Man.'},
 {id:'chimneyrun',t:'Chimney Run',u:'/chimney-run.html',c:'games',s:'new',p:'Free',d:'2026-10-08',plat:['web','mob'],spot:1,one:1,
@@ -687,7 +682,7 @@ render();
 var E=function(x){return String(x).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
 var G={casino:['afterglow','arcadeline'],arcade:['chimneyrun','paperroute','knockoutqueens'],worlds:['overdrivecity','voxelcraft','redsands']};var K=function(o){return G.casino.indexOf(o.id)>-1?'casino':G.arcade.indexOf(o.id)>-1?'arcade':G.worlds.indexOf(o.id)>-1?'worlds':'story'};var card=function(o){var ex=/^http/.test(o.u)&&!/leonlink\.net/.test(o.u)?' target="_blank" rel="noopener"':'';
 return '<a class="pitem" href="'+o.u+'"'+ex+'><div class="pim"><img src="'+img(o)+'" alt="'+E(o.t)+'" loading="lazy"></div><div class="pbd"><h3>'+E(o.t)+'</h3><p>'+E(o.x)+'</p><span class="pgo">Play \u2192</span></div></a>'};document.getElementById('plist-all').innerHTML=['casino','story','arcade','worlds'].map(function(k){return L.filter(function(o){return K(o)===k}).map(card).join('')}).join('');var rows=document.querySelectorAll('.srow');document.querySelectorAll('.stabs button').forEach(function(b){b.onclick=function(){document.querySelectorAll('.stabs button').forEach(function(x){x.classList.toggle('on',x===b)});var f=b.dataset.f;rows.forEach(function(r){r.hidden=f!=='all'&&r.dataset.k!==f;r.classList.toggle('solo',f!=='all')})}})}catch(e){console.error(e)}})();</script><footer class="ll-footer" style="border-top:1px solid rgba(128,128,128,.25);padding:22px 16px;text-align:center;font:14px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#0b0b0f;color:#cfcfd6;position:relative;z-index:5;clear:both">
-  <nav style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-bottom:8px"><a href="/" style="color:inherit;text-decoration:none">Home</a><a href="/blog.html" style="color:inherit;text-decoration:none">Blog</a><a href="/software.html" style="color:inherit;text-decoration:none">Software</a><a href="/watchline/" style="color:inherit;text-decoration:none">Watches</a><a href="https://afterglow.leonlink.net" style="color:inherit;text-decoration:none">Casino</a><a href="/games.html" style="color:inherit;text-decoration:none">Games</a><a href="https://arcadeline.leonlink.net" style="color:inherit;text-decoration:none">Arcadeline</a></nav>
+  <nav style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-bottom:8px"><a href="/" style="color:inherit;text-decoration:none">Home</a><a href="/blog.html" style="color:inherit;text-decoration:none">Blog</a><a href="/software.html" style="color:inherit;text-decoration:none">Software</a><a href="/watchline/" style="color:inherit;text-decoration:none">Watches</a><a href="/games.html" style="color:inherit;text-decoration:none">Games</a></nav>
   <div>&copy; 2026 LeonLink</div>
 </footer>
 </body>
