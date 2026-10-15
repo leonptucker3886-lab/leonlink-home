@@ -1,6 +1,80 @@
 {
   "rewrites": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "games.leonlink.net"
+        }
+      ],
+      "destination": "/games.html"
+    },
+    {
+      "source": "/arcadeline/",
+      "destination": "https://arcadeline.leonlink.net/"
+    },
+    {
+      "source": "/arcadeline/:path*",
+      "destination": "https://arcadeline.leonlink.net/:path*"
+    },
+    {
+      "source": "/casino/",
+      "destination": "https://afterglow.leonlink.net/"
+    },
+    {
+      "source": "/casino/:path*",
+      "destination": "https://afterglow.leonlink.net/:path*"
+    },
+    {
+      "source": "/ashfall/",
+      "destination": "https://ashfall.leonlink.net/"
+    },
+    {
+      "source": "/ashfall/:path*",
+      "destination": "https://ashfall.leonlink.net/:path*"
+    },
+    {
+      "source": "/sporebound/",
+      "destination": "https://sporebound.leonlink.net/"
+    },
+    {
+      "source": "/sporebound/:path*",
+      "destination": "https://sporebound.leonlink.net/:path*"
+    },
+    {
+      "source": "/stopz/",
+      "destination": "https://stop-z-fighting.vercel.app/"
+    },
+    {
+      "source": "/stopz/:path*",
+      "destination": "https://stop-z-fighting.vercel.app/:path*"
+    },
+    {
+      "source": "/stage/",
+      "destination": "https://stage-pi-umber.vercel.app/"
+    },
+    {
+      "source": "/stage/:path*",
+      "destination": "https://stage-pi-umber.vercel.app/:path*"
+    },
+    {
+      "source": "/numbers/",
+      "destination": "https://n-umber-one.vercel.app/"
+    },
+    {
+      "source": "/numbers/:path*",
+      "destination": "https://n-umber-one.vercel.app/:path*"
+    },
+    {
+      "source": "/cosmos/",
+      "destination": "https://leonlink-site.vercel.app/"
+    },
+    {
+      "source": "/cosmos/:path*",
+      "destination": "https://leonlink-site.vercel.app/:path*"
+    },
+    {
       "source": "/hub",
       "destination": "/hub.html"
     },
@@ -22,6 +96,46 @@
     }
   ],
   "redirects": [
+    {
+      "source": "/arcadeline",
+      "destination": "/arcadeline/",
+      "permanent": false
+    },
+    {
+      "source": "/casino",
+      "destination": "/casino/",
+      "permanent": false
+    },
+    {
+      "source": "/ashfall",
+      "destination": "/ashfall/",
+      "permanent": false
+    },
+    {
+      "source": "/sporebound",
+      "destination": "/sporebound/",
+      "permanent": false
+    },
+    {
+      "source": "/stopz",
+      "destination": "/stopz/",
+      "permanent": false
+    },
+    {
+      "source": "/stage",
+      "destination": "/stage/",
+      "permanent": false
+    },
+    {
+      "source": "/numbers",
+      "destination": "/numbers/",
+      "permanent": false
+    },
+    {
+      "source": "/cosmos",
+      "destination": "/cosmos/",
+      "permanent": false
+    },
     {
       "source": "/what-is-leonlink.html",
       "destination": "/",
