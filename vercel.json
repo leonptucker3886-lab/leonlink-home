@@ -1,16 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "/",
-      "has": [
-        {
-          "type": "host",
-          "value": "games.leonlink.net"
-        }
-      ],
-      "destination": "/games.html"
-    },
-    {
       "source": "/arcadeline/",
       "destination": "https://arcadeline.leonlink.net/"
     },
@@ -96,6 +86,17 @@
     }
   ],
   "redirects": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "games.leonlink.net"
+        }
+      ],
+      "destination": "/games.html",
+      "permanent": false
+    },
     {
       "source": "/arcadeline",
       "destination": "/arcadeline/",
