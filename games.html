@@ -78,12 +78,39 @@ nav a{margin:0;padding:8px 12px;border-radius:999px;border:1px solid #ffffff1f;f
 @media(min-width:720px){header{padding:18px 5vw}.logo{font-size:1.6rem}.doors{gap:0;padding:0}.doors .door{min-height:70vh;border-radius:0;padding:6vh 4vw}.bgrid{gap:16px}}
 @media(hover:hover){.gc .play{display:grid}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.door{overflow:hidden}.door>*:not(.fan){position:relative;z-index:2}
+.fan{position:absolute;left:50%;top:50%;width:0;height:0;z-index:0;pointer-events:none}
+.fan i{position:absolute;width:clamp(70px,11vw,150px);aspect-ratio:5/7;left:calc(clamp(70px,11vw,150px)/-2);top:calc(clamp(70px,11vw,150px)*-.7);border-radius:12px;background-size:cover;background-position:center;border:2px solid rgba(255,255,255,.25);box-shadow:0 10px 30px rgba(0,0,0,.6);opacity:.4;transform-origin:50% 120%;transition:transform .35s,opacity .35s}
+.fan i:nth-child(1){transform:rotate(-24deg) translateY(-8%)}.fan i:nth-child(2){transform:rotate(-8deg) translateY(-14%)}.fan i:nth-child(3){transform:rotate(8deg) translateY(-14%)}.fan i:nth-child(4){transform:rotate(24deg) translateY(-8%)}
+.door:hover .fan i{opacity:.6}.door:hover .fan i:nth-child(1){transform:rotate(-32deg) translateY(-10%)}.door:hover .fan i:nth-child(4){transform:rotate(32deg) translateY(-10%)}
+.casino .fan i{display:flex;align-items:center;justify-content:center;font:900 clamp(.7rem,1.4vw,1.1rem)/1.1 system-ui;color:#fff;text-align:center;text-shadow:0 0 10px var(--glow);border-color:var(--glow)}
+.door:before{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse at center,rgba(7,6,15,.55),rgba(7,6,15,.2) 70%);pointer-events:none}
+.doors{grid-template-columns:repeat(3,1fr)!important}.bangers-door{box-shadow:0 0 0 1px var(--gold) inset}.bangers-door:hover{box-shadow:0 0 40px rgba(255,200,80,.5),0 0 0 1px var(--gold) inset}.bangers-door h2{color:var(--gold);text-shadow:0 0 14px var(--gold)}.bangers-door .btn{background:var(--gold)}@media(max-width:640px){.doors{grid-template-columns:1fr 1fr!important}.bangers-door{grid-column:1/-1}}
+.buyglow{display:inline-block;margin-top:12px;padding:9px 20px;border-radius:999px;font-weight:700;font-size:.85rem;color:var(--gold);border:1.5px solid var(--gold);background:rgba(0,0,0,.35);cursor:pointer;position:relative;z-index:3}.buyglow:hover{background:var(--gold);color:#07060f}.door .btn+.buyglow{margin-left:8px}@media(max-width:640px){.door .btn+.buyglow{margin-left:0;display:block}}
+.door{background-size:cover!important;background-position:center!important}
+.door:before{background:linear-gradient(180deg,rgba(7,6,15,.35),rgba(7,6,15,.85))!important}
+.door:hover{filter:brightness(1.1)}
+.casino{background-image:radial-gradient(circle at 30% 30%,#ff3df2aa,transparent 50%),radial-gradient(circle at 70% 70%,#22e6ff88,transparent 50%),linear-gradient(160deg,#2a0b45,#07060f)!important}
+.arcade{background-image:url(https://www.leonlink.net/img/cards/dominion.jpg)!important}
+.bangers-door{background-image:url(https://www.leonlink.net/img/cards/sootfather.jpg)!important}
+
+/* folder look */
+.doors{padding:28px 8px 0!important;gap:14px!important;align-items:end}
+@media(min-width:720px){.doors{padding:40px 4vw 0!important;gap:22px!important}.doors .door{min-height:56vh!important}}
+.doors .door{overflow:visible!important;border-radius:0 16px 16px 16px!important;margin-top:26px}
+.ftab{position:absolute!important;z-index:3!important;left:-1px;top:-26px;height:27px;padding:0 16px;display:flex;align-items:center;border-radius:12px 12px 0 0;font:800 .72rem/1 system-ui;letter-spacing:.14em;text-transform:uppercase;color:#07060f}
+.ftab:after{content:"";position:absolute;right:-14px;bottom:0;width:15px;height:100%;background:inherit;clip-path:polygon(0 0,0 100%,100% 100%)}
+.casino .ftab{background:var(--glow)}.arcade .ftab{background:var(--cyan)}.bangers-door .ftab{background:var(--gold)}
+.door:before{border-radius:inherit}
+.casino{background-image:url(https://afterglow.leonlink.net/og.png),linear-gradient(160deg,#2a0b45,#07060f)!important}
+.arcade{background-image:url(https://arcadeline.leonlink.net/og.png),url(https://www.leonlink.net/img/cards/dominion.jpg)!important}
+.door .count{display:inline-block;margin-bottom:12px;font-size:.8rem;opacity:.85}
 </style>
 </head>
 <body>
 <header>
   <div class="logo">Glowline</div>
-  <nav><a href="https://afterglow.leonlink.net">Casino</a><a href="https://arcadeline.leonlink.net">Arcade</a><a href="#bangers">Original Bangers</a><a href="https://leonlink.net">LeonLink</a></nav>
+  <nav><a href="https://afterglow.leonlink.net">Casino</a><a href="https://arcadeline.leonlink.net">Arcade</a><a href="https://glowline.leonlink.net/bangers.html">Original Bangers</a><a href="https://leonlink.net">LeonLink</a></nav>
 </header>
 <section class="hero">
   <p class="welcome" style="font-size:1.25rem;font-weight:700;letter-spacing:.08em;color:var(--cyan);text-shadow:0 0 12px var(--cyan);margin-bottom:12px">Welcome to the Glowline Station</p>
@@ -93,19 +120,20 @@ nav a{margin:0;padding:8px 12px;border-radius:999px;border:1px solid #ffffff1f;f
 </section>
 <section class="doors">
   <a class="door casino" href="https://afterglow.leonlink.net">
-    <div class="tag">Casino floor</div>
+    <span class="ftab">Casino</span><div class="tag">Folder</div>
     <h2>Casino</h2>
     <ul><li>Slots: Neon, Sun n Fun, Zeus and more</li><li>Table games and mines</li><li>Glow store and wallet</li></ul>
-    <span class="btn">Enter the casino</span>
+    <span class="btn">Open folder</span>
   </a>
   <a class="door arcade" href="https://arcadeline.leonlink.net">
-    <div class="tag">Arcade</div>
+    <span class="ftab">Arcade</span><div class="tag">Folder</div>
     <h2>Arcade</h2>
     <ul><li>Skill and arcade games</li><li>Your player dashboard</li><li>Leaderboards and progress</li></ul>
-    <span class="btn">Enter the arcade</span>
+    <span class="btn">Open folder</span>
   </a>
+<a class="door bangers-door" href="https://glowline.leonlink.net/bangers.html"><span class="ftab">Original Bangers</span><div class="tag">Folder</div><h2>Original Bangers</h2><ul><li>16 original games</li><li>Adventure, racing, survival</li><li>New drops coming soon</li></ul><span class="btn">Open folder</span></a>
 </section>
-<section class="bangers" id="bangers"><h2>Original Bangers</h2><p class="sub">The rest of the LeonLink lineup</p><div class="bgrid"><a class="gc" href="https://www.leonlink.net/sootfather.html"><div class="art" style="background:linear-gradient(135deg,#3a1a10,#08080f)"><img loading="lazy" decoding="async" src="https://www.leonlink.net/img/cards/sootfather.jpg" alt="Sootfather" loading="lazy"></div><div class="meta"><h3>Sootfather</h3><small>Adventure</small></div><div class="play"><span>Play</span></div></a><a class="gc" href="https://www.leonlink.net/chimney-run.html"><div class="art" style="background:linear-gradient(135deg,#2a1530,#08080f)"><img loading="lazy" decoding="async" src="https://www.leonlink.net/img/cards/chimneyrun.jpg" alt="Chimney Run" loading="lazy"></div><div class="meta"><h3>Chimney Run</h3><small>Runner</small></div><div class="play"><span>Play</span></div></a><a class="gc" href="https://www.leonlink.net/started-from-a-baby.html"><div class="art" style="background:linear-gradient(135deg,#3a1035,#08080f)"><img loading="lazy" decoding="async" src="https://www.leonlink.net/img/cards/lifesim.jpg" alt="Started From a Baby" loading="lazy"></div><div class="meta"><h3>Started From a Baby</h3><small>Life sim</small></div><div class="play"><span>Play</span></div></a><a class="gc" href="https://www.leonlink.net/battleline.html"><div class="art" style="background:linear-gradient(135deg,#301018,#08080f)"><img loading="lazy" decoding="async" src="https://www.leonlink.net/img/cards/battleline.jpg" alt="Battleline" loading="lazy"></div><div class="meta"><h3>Battleline</h3><small>Strategy</small></div><div class="play"><span>Play</span></div></a><a class="gc" href="https://www.leonlink.net/huntline.html"><div class="art" style="background:linear-gradient(135deg,#1a2a14,#08080f)"><img loading="lazy" decoding="async" src="https://www.leonlink.net/img/cards/huntline.jpg" alt="Huntline" loading="lazy"></div><div class="meta"><h3>Huntline</h3><small>Hunting</small></div><div class="play"><span>Play</span></div></a><a class="gc" href="https://www.leonlink.net/paper-route.html"><div class="art" style="background:linear-gradient(135deg,#14243a,#08080f)"><img loading="lazy" decoding="async" src="https://www.leonlink.net/img/cards/paperroute.jpg" alt="Paper Route" loading="lazy"></div><div class="meta"><h3>Paper Route</h3><small>Arcade</small></div><div class="play"><span>Play</span></div></a><a class="gc" href="https://www.leonlink.net/catillery.html"><div class="art" style="background:linear-gradient(135deg,#3a2a10,#08080f)"><img loading="lazy" decoding="async" src="https://www.leonlink.net/img/cards/catillery.jpg" alt="Catillery" loading="lazy"></div><div class="meta"><h3>Catillery</h3><small>Artillery</small></div><div class="play"><span>Play</span></div></a><a class="gc" href="https://www.leonlink.net/underrun/"><div class="art" style="background:linear-gradient(135deg,#10203a,#08080f)"><img loading="lazy" decoding="async" src="https://www.leonlink.net/img/cards/underrun.jpg" alt="Underrun" loading="lazy"></div><div class="meta"><h3>Underrun</h3><small>Action</small></div><div class="play"><span>Play</span></div></a><a class="gc" href="https://www.leonlink.net/worlds/overdrive-city/"><div class="art" style="background:linear-gradient(135deg,#2a0b45,#08080f)"><img loading="lazy" decoding="async" src="https://www.leonlink.net/img/cards/overdrivecity.jpg" alt="Overdrive City" loading="lazy"></div><div class="meta"><h3>Overdrive City</h3><small>Racing</small></div><div class="play"><span>Play</span></div></a><a class="gc" href="https://www.leonlink.net/worlds/voxelcraft/"><div class="art" style="background:linear-gradient(135deg,#10302a,#08080f)"><img loading="lazy" decoding="async" src="https://www.leonlink.net/img/cards/voxelcraft.jpg" alt="Voxelcraft" loading="lazy"></div><div class="meta"><h3>Voxelcraft</h3><small>Sandbox</small></div><div class="play"><span>Play</span></div></a><a class="gc" href="https://www.leonlink.net/worlds/red-sands/"><div class="art" style="background:linear-gradient(135deg,#401808,#08080f)"><img loading="lazy" decoding="async" src="https://www.leonlink.net/img/cards/redsands.jpg" alt="Red Sands" loading="lazy"></div><div class="meta"><h3>Red Sands</h3><small>Open world</small></div><div class="play"><span>Play</span></div></a><a class="gc" href="https://www.leonlink.net/ashfall/"><div class="art" style="background:linear-gradient(135deg,#3a0e0e,#08080f)"><img loading="lazy" decoding="async" src="https://www.leonlink.net/img/cards/ashfall.jpg" alt="ASHFALL" loading="lazy"></div><div class="meta"><h3>ASHFALL</h3><small>Survival</small></div><div class="play"><span>Play</span></div></a><a class="gc" href="https://arcadeline.leonlink.net/#dominion"><div class="art" style="background:linear-gradient(135deg,#2a1a45,#08080f)"><img loading="lazy" decoding="async" src="https://www.leonlink.net/img/cards/dominion.jpg" alt="Pocket Dominion" loading="lazy"></div><div class="meta"><h3>Pocket Dominion</h3><small>Arcadeline</small></div><div class="play"><span>Play</span></div></a><a class="gc" href="https://arcadeline.leonlink.net/#boxing"><div class="art" style="background:linear-gradient(135deg,#45102a,#08080f)"><img loading="lazy" decoding="async" src="https://www.leonlink.net/img/cards/knockoutqueens.jpg" alt="Knockout Queens" loading="lazy"></div><div class="meta"><h3>Knockout Queens</h3><small>Arcadeline</small></div><div class="play"><span>Play</span></div></a><div class="gc soon" aria-disabled="true"><div class="art" style="background:linear-gradient(135deg,#1a3a20,#08080f)"><img loading="lazy" decoding="async" src="https://www.leonlink.net/img/cards/sporebound.jpg" alt="Sporebound" loading="lazy"><span class="badge">SOON</span></div><div class="meta"><h3>Sporebound</h3><small>Under Construction</small></div></div><div class="gc soon" aria-disabled="true"><div class="art" style="background:linear-gradient(135deg,#20203a,#08080f)"><img loading="lazy" decoding="async" src="https://www.leonlink.net/media/joustline-trailer.jpg" alt="Joustline" loading="lazy"><span class="badge">SOON</span></div><div class="meta"><h3>Joustline</h3><small>Under Construction</small></div></div></div></section>
+
 <p class="coins">Your Glow balance follows you everywhere you sign in.</p>
 <footer>&copy; Glowline &middot; a LeonLink games property</footer>
 </body>
