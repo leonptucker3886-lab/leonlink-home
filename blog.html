@@ -432,15 +432,6 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
     <h1>Big questions. <em>Interactive</em> answers.</h1>
   </div>
 </section>
-<section class="sec">
-  <div class="jlist">
-<a class="jpost" href="/journal/life-of-an-ai-captain/">
-    <div class="jb"><span class="k">New blog series</span><h3>The Life of an AI Captain &mdash; Pip Paperwork</h3>
-    <p>Letters home from the front lines of an AI army.</p>
-    <span class="go">Read the letters &rarr;</span></div>
-  </a>
-  </div>
-</section>
 
 
 <section class="sec" id="library">
@@ -594,7 +585,7 @@ function render(){
   if(term)list=list.filter(o=>(o.t+' '+o.x+' '+o.tags.join(' ')).toLowerCase().includes(term));
   if(lc)lc.textContent=list.length+' post'+(list.length===1?'':'s');
   if(!list.length){rows.innerHTML='<div class="empty">Nothing matches that. Try another word.</div>';return}
-  var CARD=o=>`<a class="pitem" href="${o.u}"${ext(o)}><div class="pim"><img src="${img(o)}" alt="${esc(o.t)}" loading="lazy"></div><div class="pbd"><h3>${esc(o.t)}</h3><p>${esc(o.x)}</p><span class="pgo">Read \u2192</span></div></a>`;rows.innerHTML=(function(){var RANK=['partnercheating','executions','wrongpeople','ghosts','aliens','dream','traumabond','on-us','simulation','afterlife','war','clowns','hiddensites','thewall','arecomputersalive','selfmade','aitax','abrahamic','reviewgating','longway','commonwealth','seodead','audit','poetrycorner','flatprices','perseat','tradestax','roadmap'];var seen={},l=[];RANK.forEach(function(id){var o=list.find(function(x){return x.id===id});if(o&&!seen[id]){seen[id]=1;l.push(o)}});list.forEach(function(o){if(!seen[o.id]){seen[o.id]=1;l.push(o)}});return '<div class="plist">'+l.map(CARD).join('')+'</div>'})();
+  var CARD=o=>`<a class="pitem" href="${o.u}"${ext(o)}><div class="pim"><img src="${img(o)}" alt="${esc(o.t)}" loading="lazy"></div><div class="pbd"><h3>${esc(o.t)}</h3><p>${esc(o.x)}</p><span class="pgo">Read \u2192</span></div></a>`;rows.innerHTML=(function(){var RANK=['partnercheating','executions','wrongpeople','ghosts','aliens','dream','traumabond','on-us','simulation','afterlife','war','clowns','hiddensites','thewall','arecomputersalive','selfmade','aitax','abrahamic','reviewgating','longway','commonwealth','seodead','audit','poetrycorner','flatprices','perseat','tradestax','roadmap'];var seen={},l=[];RANK.forEach(function(id){var o=list.find(function(x){return x.id===id});if(o&&!seen[id]){seen[id]=1;l.push(o)}});list.forEach(function(o){if(!seen[o.id]){seen[o.id]=1;l.push(o)}});return '<div class="plist">'+'<a class="pitem" href="/journal/life-of-an-ai-captain/"><div class="pim"><img src="/og.png" alt="The Life of an AI Captain" loading="lazy"></div><div class="pbd"><h3>The Life of an AI Captain \u2014 Pip Paperwork</h3><p>Letters home from the front lines of an AI army.</p><span class="pgo">Read the letters \u2192</span></div></a>'+l.map(CARD).join('')+'</div>'})();
 }
 if(q){let qt;q.addEventListener('input',()=>{clearTimeout(qt);qt=setTimeout(render,120)});
 q.addEventListener('keydown',e=>{if(e.key==='Escape'){q.value='';render()}});}
