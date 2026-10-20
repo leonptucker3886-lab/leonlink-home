@@ -1,0 +1,41 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mission Wheel | LeonLink</title>
+<style>
+body{margin:0;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle,#1a0f2e,#04060a);color:#f1d27a;font-family:system-ui,sans-serif;text-align:center}
+h1{margin:12px 0 4px;letter-spacing:2px}.sub{color:#8e9bb0;margin:0 0 14px}
+#wrap{position:relative;width:min(88vw,420px);aspect-ratio:1}
+canvas{width:100%;height:100%;border-radius:50%;box-shadow:0 0 40px #D4AF3788,0 0 0 8px #D4AF37}
+#ptr{position:absolute;top:-14px;left:50%;transform:translateX(-50%);width:0;height:0;border:16px solid transparent;border-top:30px solid #fff;filter:drop-shadow(0 2px 3px #000)}
+button{margin:22px;padding:16px 46px;font-size:1.3rem;font-weight:800;border:0;border-radius:40px;background:linear-gradient(#f1d27a,#D4AF37);color:#1a0f2e;cursor:pointer}
+button:disabled{opacity:.5}#res{min-height:4.5em;font-size:1.15rem;color:#e6edf5;padding:0 16px}
+#res b{color:#f1d27a;font-size:1.5rem;display:block}#log{color:#8e9bb0;font-size:.85rem}
+</style></head><body>
+<h1>MISSION WHEEL</h1><p class="sub">A Colonel Pip Production · spin for your next assignment</p>
+<div id="wrap"><div id="ptr"></div><canvas id="c" width="840" height="840"></canvas></div>
+<button id="spin">SPIN</button><div id="res"></div><div id="log"></div>
+<script>
+const cats=[
+{n:"Games",c:"#e63946",i:["Build a new arcade game","Build a new kids game","Add a level to an existing game"]},
+{n:"Blogs",c:"#f4a261",i:["Write a battalion blog post","Write a kids story post","Write a post about one of our games"]},
+{n:"Top 5",c:"#e9c46a",i:["Top 5 games on LeonLink","Top 5 Kids Corner picks","Top 5 battalion moments"]},
+{n:"Watches",c:"#2a9d8f",i:["Write a watch review","Top 5 watches under $200","Watch care guide"]},
+{n:"Software",c:"#457b9d",i:["Build a small tool for the site","Fix a bug on the board","Improve a game's loading speed"]},
+{n:"SEO",c:"#6a4c93",i:["Fix titles & descriptions on 5 pages","Add a page to the sitemap","Write meta tags for a game"]},
+{n:"Surprise",c:"#ff70a6",i:["Leon's choice!","Pip's choice!","Free pick: build anything fun"]}];
+const cv=document.getElementById('c'),x=cv.getContext('2d'),R=420,seg=2*Math.PI/cats.length;let rot=0,busy=false;
+function draw(){x.clearRect(0,0,840,840);x.save();x.translate(R,R);x.rotate(rot);
+cats.forEach((k,j)=>{x.beginPath();x.moveTo(0,0);x.arc(0,0,R,j*seg,(j+1)*seg);x.fillStyle=k.c;x.fill();x.strokeStyle="#04060a";x.lineWidth=6;x.stroke();
+x.save();x.rotate(j*seg+seg/2);x.fillStyle="#fff";x.font="bold 46px system-ui";x.textAlign="right";x.textBaseline="middle";x.shadowColor="#000";x.shadowBlur=6;x.fillText(k.n.toUpperCase(),R-30,0);x.restore()});
+x.beginPath();x.arc(0,0,60,0,7);x.fillStyle="#D4AF37";x.fill();x.fillStyle="#1a0f2e";x.font="bold 56px system-ui";x.textAlign="center";x.textBaseline="middle";x.fillText("P",0,4);x.restore()}
+draw();
+document.getElementById('spin').onclick=()=>{if(busy)return;busy=true;spin.disabled=true;res.innerHTML="";
+const pick=Math.floor(Math.random()*cats.length);
+// pointer at top = angle -PI/2; want segment center there
+const target=-Math.PI/2-(pick*seg+seg/2)+(Math.random()-.5)*seg*.7;
+const start=rot,end=target-2*Math.PI*(6+Math.floor(Math.random()*3))-((target-start)%(2*Math.PI)+2*Math.PI)%(2*Math.PI)+((target-start)%(2*Math.PI)+2*Math.PI)%(2*Math.PI);
+const fin=start+((end-start)%(2*Math.PI)+2*Math.PI)%(2*Math.PI)+2*Math.PI*7,T=5000,t0=performance.now();
+(function f(t){let p=Math.min((t-t0)/T,1),e=1-Math.pow(1-p,4);rot=start+(fin-start)*e;draw();
+if(p<1)requestAnimationFrame(f);else{const k=cats[pick],idea=k.i[Math.floor(Math.random()*k.i.length)];
+res.innerHTML=`<b>${k.n}</b>${idea}`;const L=JSON.parse(localStorage.wheelLog||"[]");L.unshift(k.n+": "+idea);localStorage.wheelLog=JSON.stringify(L.slice(0,5));
+log.innerHTML="Last spins: "+L.slice(0,5).join(" · ");busy=false;spin.disabled=false}})(t0)};
+</script></body></html>
