@@ -1,0 +1,8 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Intro Test | LeonLink</title><meta name="robots" content="noindex">
+<style>body{background:#111;color:#eee;font-family:system-ui;text-align:center;padding:30px}a{display:block;margin:14px auto;max-width:320px;padding:16px;border-radius:12px;background:#2a78d6;color:#fff;text-decoration:none;font-weight:700}</style></head><body>
+<h1>Game Intro Test</h1><p>Tap a style. Each runs ~5 seconds. Tap to skip.</p>
+<a href="?introStyle=arcade&introGame=Arcadeline">Arcade (blocky)</a>
+<a href="?introStyle=casino&introGame=Afterglow">Casino (cards)</a>
+<a href="?introStyle=normal&introGame=Neon%20Crypt">Normal (everything else)</a>
+<script>if(new URLSearchParams(location.search).get('introStyle')){var s=document.createElement('script');s.src='leonlink-intro.js';document.body.appendChild(s);}</script>
+</body></html>
