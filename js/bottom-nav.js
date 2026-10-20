@@ -18,3 +18,5 @@ mo.onclick=function(){var d=document.querySelector(".lnd");
 }
 if(document.body)init();else document.addEventListener("DOMContentLoaded",init);
 })();
+
+;(function(){if(location.pathname.indexOf("/journal/")===0&&!document.getElementById("ll-pt")){var s=document.createElement("script");s.id="ll-pt";s.src="/js/post-tools.js?v=1";s.defer=true;document.head.appendChild(s)}})();
