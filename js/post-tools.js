@@ -16,7 +16,7 @@ var w=document.createElement("section");w.className="llpt";w.setAttribute("aria-
 w.innerHTML='<a class="nx" href="'+nx[0]+'"><small>'+label+' &rarr;</small><b>'+nx[1].replace(/</g,"&lt;")+'</b></a>'+
 '<div class="sh"><button type="button" class="s1">Share</button><a target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?url='+e(url)+'&text='+e(ttl)+'">X</a><a target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u='+e(url)+'">Facebook</a><button type="button" class="s2">Copy link</button></div>'+
 '<h3 id="comments">Comments</h3><div class="gc"></div>';
-var anchor=document.querySelector("main article")||document.querySelector("article");
+var anchor=document.getElementById("real-talk")||document.querySelector("main .ooc")||document.querySelector("main article")||document.querySelector("article");
 if(anchor&&anchor.parentNode)anchor.parentNode.insertBefore(w,anchor.nextSibling);else(document.querySelector("main")||document.body).appendChild(w);
 function copy(b){(navigator.clipboard?navigator.clipboard.writeText(url):Promise.reject()).then(function(){b.textContent="Link copied"},function(){prompt("Copy this link",url)})}
 w.querySelector(".s2").onclick=function(){copy(this)};
