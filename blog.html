@@ -438,9 +438,6 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 
 
 <section class="sec" id="library">
-  <div class="sh"><h2>The <em>library</em></h2></div>
-  <div class="libsearch"><input id="libq" type="search" placeholder="Search the library" autocomplete="off" aria-label="Search the library"></div>
-  <p class="lcount" id="lcount" style="margin:0 0 12px"></p>
   <div class="libwrap" id="rows"></div>
 </section>
 
@@ -671,16 +668,16 @@ const fmtDate=d=>new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'shor
 const rows=document.getElementById('rows'),q=document.getElementById('libq'),lc=document.getElementById('lcount');
 const LIB=DATA.filter(o=>o.c==='blog');
 function render(){
-  const term=q.value.trim().toLowerCase();
+  const term='';
   let list=LIB;
   if(term)list=list.filter(o=>(o.t+' '+o.x+' '+o.tags.join(' ')).toLowerCase().includes(term));
-  lc.textContent=list.length+' post'+(list.length===1?'':'s');
+  if(lc)lc.textContent=list.length+' post'+(list.length===1?'':'s');
   if(!list.length){rows.innerHTML='<div class="empty">Nothing matches that. Try another word.</div>';return}
   var CARD=o=>`<a class="pitem" href="${o.u}"${ext(o)}><div class="pim"><img src="${img(o)}" alt="${esc(o.t)}" loading="lazy"></div><div class="pbd"><h3>${esc(o.t)}</h3><p>${esc(o.x)}</p><span class="pgo">Read \u2192</span></div></a>`;rows.innerHTML=(function(){var SEC=[['Big Questions',['ghosts','aliens','simulation','afterlife','dream','arecomputersalive','on-us','executions']],['The Wall — Relationships',['partnercheating','traumabond','wrongpeople','thewall']],['Weird & Wild',['clowns','hiddensites','war']],['Poetry & Stories',['poetrycorner','longway']],['Guides & Business',['audit','flatprices']],['News',['roadmap']]];var used={},out='';SEC.forEach(function(s){var items=list.filter(function(o){return s[1].indexOf(o.id)>-1});items.forEach(function(o){used[o.id]=1});if(items.length)out+='<div class="cat-h">'+s[0]+'</div><div class="plist">'+items.map(CARD).join('')+'</div>'});var rest=list.filter(function(o){return !used[o.id]});if(rest.length)out+='<div class="cat-h">More from the Blog</div><div class="plist">'+rest.map(CARD).join('')+'</div>';return out})();
 }
-let qt;q.addEventListener('input',()=>{clearTimeout(qt);qt=setTimeout(render,120)});
-q.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();document.getElementById('library').scrollIntoView()}if(e.key==='Escape'){q.value='';render()}});
-document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='TEXTAREA'){e.preventDefault();q.focus()}});
+if(q){let qt;q.addEventListener('input',()=>{clearTimeout(qt);qt=setTimeout(render,120)});
+q.addEventListener('keydown',e=>{if(e.key==='Escape'){q.value='';render()}});}
+document.addEventListener('keydown',e=>{if(q&&e.key==='/'&&document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='TEXTAREA'){e.preventDefault();q.focus()}});
 render();
 </script>
 <script>(function(){try{var p=location.pathname;fetch("/api/track?p="+encodeURIComponent(p)+"&r="+encodeURIComponent(document.referrer||""),{mode:"no-cors",keepalive:true}).catch(function(){})}catch(e){}})();</script>
