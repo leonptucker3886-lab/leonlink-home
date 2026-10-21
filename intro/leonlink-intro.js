@@ -23,6 +23,9 @@
   '@keyframes llF{to{opacity:1}}@keyframes llS{to{opacity:1}}@keyframes llR{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}'+
   '@keyframes llG{0%{opacity:0;transform:scale(1.6)}100%{opacity:1;transform:scale(1)}}'+
   '@keyframes llP{0%,100%{opacity:1}50%{opacity:.2}}'+
+  '#llI .rf{position:absolute;left:calc(50% - 32px);top:calc(50% - 60px);width:64px;height:92px;border-radius:8px;background:#fff;color:#111;border:2px solid #d4af37;box-shadow:0 0 18px #ffd54a88,0 6px 14px #000a;z-index:3;opacity:0;transform-origin:50% 160%;display:flex;flex-direction:column;align-items:center;justify-content:center;font:bold 24px Georgia;animation:llRf .7s cubic-bezier(.3,1.5,.6,1) forwards,llRg 1.2s ease-in-out infinite alternate}#llI .rf i{font-style:normal;font-size:26px}'+
+  '@keyframes llRf{from{opacity:0;transform:translateY(60vh) rotate(0) scale(.5)}to{opacity:1;transform:rotate(var(--a)) translateY(-70px)}}'+
+  '@keyframes llRg{to{box-shadow:0 0 34px #ffd54a,0 6px 14px #000a}}'+
   '#llI .card{position:absolute;width:52px;height:74px;border-radius:6px;background:#fff;color:#111;font:bold 22px Georgia;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px #0008;animation:llC 4.5s linear forwards}'+
   '@keyframes llC{from{transform:translateY(-120px) rotate(0)}to{transform:translateY(115vh) rotate(540deg)}}'+
   '#llI .px{position:absolute;inset:0;background:repeating-linear-gradient(0deg,#0000 0 3px,#0006 3px 4px);pointer-events:none}'+
@@ -55,9 +58,9 @@
   '#llI .bo{position:absolute;height:4px;width:60px;border-radius:4px;background:linear-gradient(90deg,#4fc3ff00,#fff,#ffe27a);box-shadow:0 0 12px #4fc3ff;z-index:4;opacity:0}'+
   '#llI .bm{position:absolute;left:50%;top:50%;width:20px;height:20px;margin:-10px;border-radius:50%;z-index:4;opacity:0;background:radial-gradient(#fff,#ffe27a 40%,#4fc3ff00 70%);animation:llBm .7s 1.6s forwards}'+
   '@keyframes llBm{0%{opacity:1}100%{opacity:0;transform:scale(24)}}'+
-  '#llI .pip{position:absolute;right:4%;top:8%;width:min(20vw,100px);z-index:6;opacity:0;filter:drop-shadow(0 6px 14px #000a);animation:llPi .7s 3.6s cubic-bezier(.3,1.6,.6,1) forwards}'+
+  '#llI .pip{position:relative;display:inline-block;vertical-align:middle;margin-left:10px;width:min(13vw,62px);z-index:6;opacity:0;filter:drop-shadow(0 6px 14px #000a);animation:llPi .7s 1.5s cubic-bezier(.3,1.6,.6,1) forwards}'+
   '@keyframes llPi{from{opacity:0;transform:scale(0) rotate(-30deg)}to{opacity:1;transform:rotate(8deg)}}'+
-  '#llI .pip .wk{animation:llWk .6s 4.3s}#llI .pip .wl{animation:llWl .6s 4.3s}'+
+  '#llI .pip .wk{animation:llWk .6s 2.3s,llWk .6s 4.6s}#llI .pip .wl{animation:llWl .6s 2.3s,llWl .6s 4.6s}'+
   '@keyframes llWk{20%,80%{opacity:0}}@keyframes llWl{20%,80%{opacity:1}}';
   var logo;
   if(style==='arcade'){ // blocky pixel L
@@ -70,7 +73,8 @@
     logo='<svg viewBox="0 0 200 200" width="100%" height="100%"><defs><linearGradient id="llg" x1="0" x2="1"><stop offset="0" stop-color="'+C.ac+'"/><stop offset="1" stop-color="#a66bff"/></linearGradient></defs><circle cx="100" cy="100" r="88" fill="none" stroke="url(#llg)" stroke-width="10"/><path d="M70 50v100h60" fill="none" stroke="#fff" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   }
   var extra='';
-  if(style==='casino'||combo){var su=['\u2660','\u2665','\u2666','\u2663','A'];for(var i=0;i<12;i++){var c=su[i%5],red=(c==='\u2665'||c==='\u2666');extra+='<div class="card" style="left:'+(Math.random()*92)+'%;animation-delay:'+(Math.random()*1.8).toFixed(2)+'s;color:'+(red?'#c62828':'#111')+'">'+c+'</div>';}}
+  if(combo){var rf=['10','J','Q','K','A'];for(var i=0;i<5;i++){extra+='<div class="rf" style="--a:'+((i-2)*22)+'deg;animation-delay:'+(1.7+i*.18).toFixed(2)+'s,3.2s"><b>'+rf[i]+'</b><i>\\u2660</i></div>';}}
+if(style==='casino'){var su=['\u2660','\u2665','\u2666','\u2663','A'];for(var i=0;i<12;i++){var c=su[i%5],red=(c==='\u2665'||c==='\u2666');extra+='<div class="card" style="left:'+(Math.random()*92)+'%;animation-delay:'+(Math.random()*1.8).toFixed(2)+'s;color:'+(red?'#c62828':'#111')+'">'+c+'</div>';}}
   if(style==='arcade')extra='<div class="px"></div>';
 
   function R(a,b){return (a+Math.random()*(b-a)).toFixed(1);}
@@ -84,7 +88,7 @@
   function fire(d){if(style!=='normal'||combo||!d.animate||!d.querySelector('.gun'))return;var g=d.querySelector('.gun').getBoundingClientRect();var sx=g.left+g.width*.9,sy=g.top+g.height*.42,tx=innerWidth/2,ty=innerHeight/2;var ang=Math.atan2(ty-sy,tx-sx)*180/Math.PI;for(var i=0;i<6;i++){var b=document.createElement('div');b.className='bo';d.appendChild(b);b.animate([{opacity:1,transform:'translate('+sx+'px,'+sy+'px) rotate('+ang+'deg)'},{opacity:1,transform:'translate('+(tx-30)+'px,'+ty+'px) rotate('+ang+'deg)'},{opacity:0,transform:'translate('+(tx-30)+'px,'+ty+'px) rotate('+ang+'deg) scaleX(.2)'}],{duration:420,delay:1000+i*200,fill:'forwards',easing:'ease-in'});}}
 
   var PIP='<svg viewBox="0 0 120 130"><rect x="20" y="34" width="80" height="90" rx="10" fill="#fffef6" stroke="#18181b" stroke-width="4"/><path d="M80 34v20h20" fill="#e8e4d4" stroke="#18181b" stroke-width="3"/><path d="M14 40Q60 4 106 40L108 46H12Z" fill="#3d5229" stroke="#18181b" stroke-width="3"/><rect x="10" y="42" width="100" height="9" rx="4" fill="#2a3a18"/><g fill="#ffd54a" stroke="#8a6d00" stroke-width="1">'+[30,48,66,84].map(function(x){return '<path transform="translate('+x+',24) scale(.55)" d="M10 0l3 7 7 .5-5.5 4.5 2 7-6.5-4-6.5 4 2-7L0 7.5 7 7z"/>';}).join('')+'</g><circle cx="44" cy="76" r="8" fill="#18181b"/><circle cx="46" cy="73" r="2.5" fill="#fff"/><g class="wk"><circle cx="78" cy="76" r="8" fill="#18181b"/><circle cx="80" cy="73" r="2.5" fill="#fff"/></g><path class="wl" d="M70 77Q78 70 86 77" stroke="#18181b" stroke-width="4" fill="none" stroke-linecap="round" opacity="0"/><circle cx="34" cy="92" r="6" fill="#ff9aa2" opacity=".7"/><circle cx="88" cy="92" r="6" fill="#ff9aa2" opacity=".7"/><path d="M46 96Q60 110 76 96" stroke="#18181b" stroke-width="4" fill="none" stroke-linecap="round"/></svg>';
-  extra+='<div class="pip">'+PIP+'</div>';
+  var PIPH='<span class="pip">'+PIP+'</span>';
   function run(){
     var st=document.createElement('style');st.textContent=css;document.head.appendChild(st);
     var d=document.createElement('div');d.id='llI';d.setAttribute('role','presentation');
