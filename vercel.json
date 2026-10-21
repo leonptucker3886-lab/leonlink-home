@@ -98,6 +98,11 @@
       "permanent": false
     },
     {
+      "source": "/kids/pet",
+      "destination": "/kids/pet/",
+      "permanent": false
+    },
+    {
       "source": "/arcadeline",
       "destination": "/arcadeline/",
       "permanent": false
