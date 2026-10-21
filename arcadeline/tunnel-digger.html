@@ -1,0 +1,127 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Tunnel Digger - Arcadeline</title>
+<style>
+html,body{margin:0;height:100%;background:#05060f;overflow:hidden;font-family:"Courier New",monospace;color:#fff}
+#s{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s}
+.p{letter-spacing:.5em;font-size:2.2vmin;color:#9fdcff;opacity:0;animation:f 1s .3s forwards}
+h1{font-size:12vmin;margin:.3em 0;color:#fff;text-shadow:0 0 10px #7fd8ff,0 0 30px #ff3bd4;opacity:0;transform:scale(.3);animation:r 1.2s 1.5s cubic-bezier(.2,1.6,.4,1) forwards}
+.t{font-size:3vmin;color:#ff8bf0;opacity:0;animation:f 1s 3s forwards}
+.b{width:50vmin;height:2.4vmin;border:2px solid #7fd8ff;border-radius:2vmin;margin-top:5vmin;overflow:hidden;box-shadow:0 0 12px #7fd8ff}
+.b i{display:block;height:100%;width:0;background:linear-gradient(90deg,#7fd8ff,#ff3bd4);animation:g 5.6s .6s linear forwards}
+.ball{position:absolute;bottom:8vmin;left:-10vmin;width:4vmin;height:4vmin;border-radius:50%;background:#eaf8ff;box-shadow:0 0 15px #fff;animation:roll 6.2s .3s ease-in forwards}
+@keyframes f{to{opacity:1}}@keyframes r{to{opacity:1;transform:scale(1)}}@keyframes g{to{width:100%}}
+@keyframes roll{to{left:110vw;width:14vmin;height:14vmin;transform:rotate(1080deg)}}
+#game{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;font-size:5vmin;opacity:0;transition:opacity .8s}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block}
+#hud{position:fixed;top:env(safe-area-inset-top,0);left:0;right:0;display:flex;justify-content:space-between;padding:10px 14px;font-size:clamp(14px,4vmin,24px);text-shadow:0 0 8px #7fd8ff;pointer-events:none;z-index:2}
+#ov{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(5,6,15,.8);z-index:3;text-align:center;padding:20px;box-sizing:border-box}
+#ov h2{font-size:clamp(28px,9vmin,64px);margin:0 0 10px;text-shadow:0 0 10px #7fd8ff,0 0 24px #ff3bd4}
+#ov p{font-size:clamp(14px,3.6vmin,22px);color:#9fdcff;margin:6px}
+#ov button{margin-top:18px;font:inherit;font-size:clamp(18px,5vmin,30px);padding:12px 30px;border-radius:30px;border:2px solid #7fd8ff;background:transparent;color:#fff;box-shadow:0 0 14px #ff3bd4}
+#s{z-index:10;background:#05060f}
+body{touch-action:none;user-select:none;-webkit-user-select:none}
+</style></head><body>
+#pad{position:fixed;bottom:calc(14px + env(safe-area-inset-bottom,0px));left:14px;width:150px;height:150px;z-index:2;display:none}
+#pad b{position:absolute;width:50px;height:50px;border:2px solid #7fd8ff;border-radius:12px;background:rgba(127,216,255,.12);display:flex;align-items:center;justify-content:center;color:#7fd8ff;font-size:22px}
+#fire{position:fixed;bottom:calc(30px + env(safe-area-inset-bottom,0px));right:20px;width:96px;height:96px;border-radius:50%;border:2px solid #ff3bd4;color:#fff;background:rgba(255,59,212,.15);z-index:2;display:none;align-items:center;justify-content:center;font-size:18px;box-shadow:0 0 14px #ff3bd4}
+</style></head><body>
+<div id="hud"><span id="sc">Score 0</span><span id="lv">Lv 1</span><span id="lf">Lives 3</span><span id="hi">Best 0</span></div>
+<canvas id="c"></canvas>
+<div id="pad"><b data-d="0,-1" style="left:50px;top:0">&#9650;</b><b data-d="-1,0" style="left:0;top:50px">&#9664;</b><b data-d="1,0" style="left:100px;top:50px">&#9654;</b><b data-d="0,1" style="left:50px;top:100px">&#9660;</b></div>
+<div id="fire">PUMP</div>
+<div id="ov" style="display:none"><h2 id="ot">TUNNEL DIGGER</h2><p id="op">Dig through neon earth. Pump monsters until they pop,<br>or drop rocks on them. Clear them all to dig deeper!</p><p>Arrows/WASD dig &middot; Space pump &middot; P pause &middot; Touch: D-pad + PUMP</p><button id="go">PLAY</button></div>
+<div id="s"><div class="p">LEONLINK PRESENTS</div><h1>ARCADELINE</h1><div class="t">Start small. Roll big.</div><div class="b"><i></i></div><div class="ball"></div></div>
+<script>
+const $=i=>document.getElementById(i),cv=$('c'),g=cv.getContext('2d'),touch=matchMedia('(pointer:coarse)').matches;
+const W=13,H=16,T=32,VW=W*T,VH=H*T;let S,ox,oy,st='load',score=0,lv=1,lives=3,best=+localStorage.getItem('td_best')||0;
+let dirt,pl,mons,rocks,pump,keys={},tdir=null,tfire=false,tick=0,AC;
+function sfx(f,d){try{AC=AC||new AudioContext();const o=AC.createOscillator(),v=AC.createGain();o.frequency.value=f;o.type='square';v.gain.value=.05;v.gain.exponentialRampToValueAtTime(.001,AC.currentTime+d);o.connect(v).connect(AC.destination);o.start();o.stop(AC.currentTime+d)}catch(e){}}
+function size(){const r=devicePixelRatio||1;cv.width=innerWidth*r;cv.height=innerHeight*r;const b=touch?190*r:10*r,top=48*r;S=Math.min(cv.width/VW,(cv.height-top-b)/VH);ox=(cv.width-S*VW)/2;oy=top+((cv.height-top-b)-S*VH)/2}
+addEventListener('resize',size);size();
+function hud(){$('sc').textContent='Score '+score;$('lv').textContent='Lv '+lv;$('lf').textContent='Lives '+lives;$('hi').textContent='Best '+best}
+// entities move tile to tile: tx,ty = current tile, p = progress 0..1 toward (tx+dx,ty+dy)
+function ent(x,y){return{x,y,dx:0,dy:0,p:0,moving:false}}
+function pos(e){return[(e.x+e.dx*e.p)*T,(e.y+e.dy*e.p)*T]}
+function open(x,y){return x>=0&&x<W&&y>=1&&y<H&&!dirt[y][x]&&!rockAt(x,y)}
+function rockAt(x,y){return rocks.some(r=>r.x==x&&Math.round(r.y)==y)}
+function level(){dirt=[];for(let y=0;y<H;y++){dirt.push([]);for(let x=0;x<W;x++)dirt[y].push(y>=2?1:0)}
+ for(let y=2;y<=7;y++)dirt[y][6]=0;pl=ent(6,7);pl.face=[1,0];pump=null;mons=[];rocks=[];
+ const n=Math.min(3+lv,9);let k=0;
+ while(mons.length<n&&k++<800){const x=1+(Math.random()*(W-2)|0),y=4+(Math.random()*(H-5)|0);if(Math.abs(x-6)<3&&y<10)continue;if(mons.some(m=>Math.abs(m.x-x)+Math.abs(m.y-y)<4))continue;
+  const hz=Math.random()<.5;for(let j=-1;j<=1;j++)dirt[hz?y:y+j][hz?x+j:x]=0;
+  const m=ent(x,y);m.inf=0;m.ghost=0;m.fire=Math.random()<.35;m.cool=120;m.flame=0;mons.push(m)}
+ for(let i=0;i<3+(lv>3);i++)for(let j=0;j<60;j++){const x=Math.random()*W|0,y=3+(Math.random()*(H-7)|0);if(dirt[y][x]&&dirt[y+1][x]&&!rockAt(x,y)&&!(x==6)){rocks.push({x,y,st:0,t:0,kills:0});break}}}
+function newGame(){score=0;lv=1;lives=3;level();hud();st='play'}
+function dirIn(){if(keys.ArrowLeft||keys.a)return[-1,0];if(keys.ArrowRight||keys.d)return[1,0];if(keys.ArrowUp||keys.w)return[0,-1];if(keys.ArrowDown||keys.s)return[0,1];return tdir}
+const fireIn=()=>keys[' ']||tfire;
+function stepPlayer(){
+ if(pl.moving){pl.p+=.09;if(pl.p>=1){pl.x+=pl.dx;pl.y+=pl.dy;pl.p=0;pl.moving=false;if(dirt[pl.y][pl.x]){dirt[pl.y][pl.x]=0;score+=10;hud()}}return}
+ if(fireIn()||pump)return;const d=dirIn();if(!d)return;pl.face=d;
+ const nx=pl.x+d[0],ny=pl.y+d[1];if(nx<0||nx>=W||ny<1||ny>=H||rockAt(nx,ny))return;
+ pl.dx=d[0];pl.dy=d[1];pl.moving=true;if(dirt[ny][nx])dirt[ny][nx]=.5}
+function doPump(){
+ if(!fireIn()){if(pump){pump.len-=.4;pump.hit=null;if(pump.len<=0)pump=null}return}
+ if(pl.moving)return;
+ if(!pump){pump={len:0,hit:null,dx:pl.face[0],dy:pl.face[1]};sfx(220,.05)}
+ if(pump.hit){const m=pump.hit;if(!mons.includes(m)){pump=null;return}if(tick%16==0){m.inf++;sfx(300+m.inf*140,.07);if(m.inf>=4){score+=m.y<6?200:m.y<10?300:m.y<13?400:500;mons.splice(mons.indexOf(m),1);pop(m);pump=null;hud()}}return}
+ pump.len=Math.min(pump.len+.25,3.5);
+ const L=Math.ceil(pump.len);for(let i=1;i<=L;i++){const cx=pl.x+pump.dx*i,cy=pl.y+pump.dy*i;if(cx<0||cx>=W||cy<1||cy>=H||dirt[cy][cx]==1||rockAt(cx,cy)){pump.len=Math.min(pump.len,i-.5);break}}
+ const tipx=pl.x+pump.dx*pump.len,tipy=pl.y+pump.dy*pump.len;
+ for(const m of mons){const[mx,my]=pos(m);if(!m.ghost&&Math.abs(mx/T-tipx)<.7&&Math.abs(my/T-tipy)<.7){pump.hit=m;if(!m.inf)m.inf=1;break}}
+ if(pump.len>=3.5&&!pump.hit)pump.len=3.49}
+let parts=[];function pop(m){const[x,y]=pos(m);for(let i=0;i<18;i++)parts.push({x:x+T/2,y:y+T/2,vx:Math.cos(i)*3*Math.random()+Math.sin(i),vy:Math.sin(i*1.7)*3,l:30,c:m.fire?'#7dff6a':'#ff4f6d'});sfx(880,.2)}
+function stepMons(){const sp=.035+lv*.006;for(const m of mons){
+ if(m.inf>0){if(!(pump&&pump.hit==m)&&tick%45==0)m.inf--;continue}
+ if(m.flame>0){m.flame--;continue}
+ if(m.ghost){const[mx,my]=pos(m);m.gx=(m.gx??mx/T);m.gy=(m.gy??my/T);const tx=pl.x-m.gx,ty=pl.y-m.gy,d=Math.hypot(tx,ty)||1;m.gx+=tx/d*sp*.8;m.gy+=ty/d*sp*.8;m.gt=(m.gt||0)+1;
+  const rx=Math.round(m.gx),ry=Math.round(m.gy);if(m.gt>90&&Math.abs(m.gx-rx)<.1&&Math.abs(m.gy-ry)<.1&&open(rx,ry)){m.x=rx;m.y=ry;m.p=0;m.moving=false;m.ghost=0;m.gx=m.gy=null;m.gt=0}continue}
+ if(m.moving){m.p+=sp;if(m.p>=1){m.x+=m.dx;m.y+=m.dy;m.p=0;m.moving=false}continue}
+ if(m.fire&&--m.cool<=0&&m.y==pl.y&&Math.abs(pl.x-m.x)<=3){m.flame=60;m.fdx=Math.sign(pl.x-m.x)||1;m.cool=200;sfx(120,.4);continue}
+ if(Math.random()<.003+lv*.0008){m.ghost=1;continue}
+ const o=[[1,0],[-1,0],[0,1],[0,-1]].filter(([a,b])=>open(m.x+a,m.y+b));if(!o.length)continue;
+ const f=o.filter(([a,b])=>!(a==-m.dx&&b==-m.dy)),pool=f.length?f:o;
+ pool.sort((p,q)=>Math.hypot(m.x+p[0]-pl.x,m.y+p[1]-pl.y)-Math.hypot(m.x+q[0]-pl.x,m.y+q[1]-pl.y));
+ const c=Math.random()<.55?pool[0]:pool[Math.random()*pool.length|0];m.dx=c[0];m.dy=c[1];m.moving=true}}
+function stepRocks(){for(const r of rocks){
+ if(r.st==0){const below=Math.round(r.y)+1;if(below<H&&!dirt[below][r.x]&&!(pl.x==r.x&&pl.y==below&&!pl.moving)){r.st=1;r.t=40}}
+ else if(r.st==1){if(--r.t<=0)r.st=2}
+ else if(r.st==2){r.y+=.15;const cy=Math.floor(r.y)+1;
+  for(const m of [...mons]){const[mx,my]=pos(m);if(Math.abs(mx/T-r.x)<.7&&my/T>r.y&&my/T-r.y<1.1){mons.splice(mons.indexOf(m),1);r.kills++;pop(m)}}
+  const[px,py]=pos(pl);if(Math.abs(px/T-r.x)<.7&&py/T>r.y&&py/T-r.y<1)die();
+  if(cy>=H||dirt[cy][r.x]==1){r.y=Math.floor(r.y);r.st=3;r.t=30;if(r.kills){score+=[0,1000,2500,4000,6000,8000,10000][Math.min(r.kills,6)];hud()}sfx(90,.3)}}
+ else if(r.st==3&&--r.t<=0)r.dead=1}rocks=rocks.filter(r=>!r.dead)}
+function hit(){const[px,py]=pos(pl);for(const m of mons){if(m.inf>0)continue;const[mx,my]=m.ghost?[m.gx*T,m.gy*T]:pos(m);if(Math.hypot(px-mx,py-my)<T*.7)return die();
+ if(m.flame>0&&m.flame<45){const fy=my/T,fx0=mx/T;if(Math.abs(py/T-fy)<.6){const d=(px/T-fx0)*m.fdx;if(d>0&&d<3.2)return die()}}}}
+function die(){if(pl.dead)return;pl.dead=60;sfx(80,.6)}
+function update(){tick++;
+ if(pl.dead){if(--pl.dead==0){lives--;hud();if(lives<=0){over();return}const keep=dirt;const r=rocks;mons.forEach(m=>{m.inf=0;m.flame=0});pl=ent(6,7);pl.face=[1,0];pump=null;for(let y=2;y<=7;y++)dirt[y][6]=0;
+  mons.forEach(m=>{if(Math.abs(m.x-6)+Math.abs(m.y-7)<4){m.ghost=1;m.gx=m.x;m.gy=H-2}})}return}
+ stepPlayer();doPump();stepMons();stepRocks();hit();
+ parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.l--});parts=parts.filter(p=>p.l>0);
+ if(!mons.length){score+=500;lv++;hud();level();sfx(660,.3);setTimeout(()=>sfx(990,.3),150)}}
+function over(){st='over';if(score>best){best=score;localStorage.setItem('td_best',best)}hud();$('ot').textContent='GAME OVER';$('op').innerHTML='Score '+score+' &middot; Best '+best;$('go').textContent='PLAY AGAIN';$('ov').style.display='flex'}
+const LAY=['#3a1d5c','#5c1d4a','#1d3a5c','#1d5c4a'];
+function draw(){const r=devicePixelRatio||1;g.setTransform(1,0,0,1,0,0);g.fillStyle='#05060f';g.fillRect(0,0,cv.width,cv.height);if(!dirt)return;g.setTransform(S,0,0,S,ox,oy);
+ g.fillStyle='#0a0c22';g.fillRect(0,0,VW,VH);
+ for(let y=0;y<H;y++)for(let x=0;x<W;x++)if(dirt[y][x]){g.fillStyle=LAY[Math.min(3,Math.floor((y-2)/3.5))];g.fillRect(x*T,y*T,T,T);g.fillStyle='rgba(255,255,255,.07)';if((x*7+y*3)%5==0)g.fillRect(x*T+8,y*T+10,4,4);if((x*3+y*5)%7==0)g.fillRect(x*T+20,y*T+22,3,3)}
+ g.strokeStyle='#ff3bd4';g.lineWidth=2;g.shadowColor='#ff3bd4';g.shadowBlur=10;g.beginPath();g.moveTo(0,2*T);g.lineTo(VW,2*T);g.stroke();
+ g.shadowColor='#7fd8ff';g.strokeStyle='rgba(127,216,255,.35)';g.lineWidth=1;g.strokeRect(.5,.5,VW-1,VH-1);
+ for(const k of rocks){let sx=k.st==1?Math.sin(tick)*2:0;g.fillStyle='#ffb347';g.shadowColor='#ffb347';g.shadowBlur=12;g.beginPath();g.ellipse(k.x*T+T/2+sx,k.y*T+T/2,T*.45,T*.4,0,0,7);g.fill()}
+ for(const m of mons){let[mx,my]=m.ghost?[m.gx*T,m.gy*T]:pos(m);const c=m.fire?'#7dff6a':'#ff4f6d',s=T*.4*(1+m.inf*.25);g.globalAlpha=m.ghost?.45:1;g.fillStyle=c;g.shadowColor=c;g.shadowBlur=14;g.beginPath();g.arc(mx+T/2,my+T/2,s,0,7);g.fill();
+  g.fillStyle='#fff';g.shadowBlur=0;g.beginPath();g.arc(mx+T/2-5,my+T/2-3,4,0,7);g.arc(mx+T/2+5,my+T/2-3,4,0,7);g.fill();g.fillStyle='#000';g.fillRect(mx+T/2-6,my+T/2-4,2,2);g.fillRect(mx+T/2+4,my+T/2-4,2,2);g.globalAlpha=1;
+  if(m.flame>0){const ph=m.flame>=45?.3:1;g.fillStyle='rgba(255,140,40,'+(.4+.4*ph)+')';g.shadowColor='#ff8c28';g.shadowBlur=16;const fx=m.fdx>0?mx+T:mx-3*T*ph;g.fillRect(fx,my+8,3*T*ph,T-16)}}
+ if(pump){g.strokeStyle='#7fd8ff';g.shadowColor='#7fd8ff';g.shadowBlur=10;g.lineWidth=3;const[px,py]=pos(pl);g.beginPath();g.moveTo(px+T/2,py+T/2);g.lineTo(px+T/2+pump.dx*pump.len*T,py+T/2+pump.dy*pump.len*T);g.stroke()}
+ const[px,py]=pos(pl);if(!pl.dead||tick%8<4){g.fillStyle='#eaf8ff';g.shadowColor='#7fd8ff';g.shadowBlur=16;g.beginPath();g.arc(px+T/2,py+T/2,T*.38,0,7);g.fill();g.fillStyle='#7fd8ff';g.shadowBlur=0;g.fillRect(px+T/2-10,py+6,20,5);g.fillStyle='#ff3bd4';g.beginPath();g.arc(px+T/2+pl.face[0]*7,py+T/2+pl.face[1]*7,3.5,0,7);g.fill()}
+ g.shadowBlur=0;for(const p of parts){g.globalAlpha=p.l/30;g.fillStyle=p.c;g.fillRect(p.x,p.y,4,4)}g.globalAlpha=1;
+ if(st=='pause'){g.fillStyle='#fff';g.font='bold 40px Courier New';g.textAlign='center';g.fillText('PAUSED',VW/2,VH/2)}}
+let last=0,acc=0;function loop(ts){const dt=Math.min(100,ts-last);last=ts;if(st=='play'){acc+=dt;while(acc>=16.67){update();acc-=16.67;if(st!='play')break}}else acc=0;draw();requestAnimationFrame(loop)}requestAnimationFrame(loop);
+addEventListener('keydown',e=>{const k=e.key.length==1?e.key.toLowerCase():e.key;keys[k]=1;if(k.startsWith('Arrow')||k==' ')e.preventDefault();
+ if(k=='p'){if(st=='play')st='pause';else if(st=='pause')st='play'}if((k==' '||k=='Enter')&&$('ov').style.display=='flex')$('go').click()});
+addEventListener('keyup',e=>{keys[e.key.length==1?e.key.toLowerCase():e.key]=0});
+document.querySelectorAll('#pad b').forEach(b=>{const d=b.dataset.d.split(',').map(Number);b.addEventListener('pointerdown',e=>{e.preventDefault();tdir=d});b.addEventListener('pointerenter',e=>{if(e.buttons)tdir=d})});
+addEventListener('pointerup',e=>{if(e.target.closest&&e.target.closest('#pad'))tdir=null});
+$('pad').addEventListener('pointerleave',()=>tdir=null);$('pad').addEventListener('pointercancel',()=>tdir=null);
+const fb=$('fire');fb.addEventListener('pointerdown',e=>{e.preventDefault();tfire=true});['pointerup','pointerleave','pointercancel'].forEach(v=>fb.addEventListener(v,()=>tfire=false));
+$('go').onclick=()=>{$('ov').style.display='none';if(st=='pause')st='play';else newGame()};
+if(touch){$('pad').style.display='block';fb.style.display='flex'}
+hud();setTimeout(()=>{$('s').style.opacity=0;setTimeout(()=>{$('s').remove();st='menu';$('ov').style.display='flex'},800)},7000);
+</script></body></html>
