@@ -1,0 +1,91 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Neon Mini Golf - Arcadeline</title>
+<style>
+html,body{margin:0;height:100%;background:#05060f;overflow:hidden;font-family:"Courier New",monospace;color:#fff}
+#s{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s}
+.p{letter-spacing:.5em;font-size:2.2vmin;color:#9fdcff;opacity:0;animation:f 1s .3s forwards}
+h1{font-size:12vmin;margin:.3em 0;color:#fff;text-shadow:0 0 10px #7fd8ff,0 0 30px #ff3bd4;opacity:0;transform:scale(.3);animation:r 1.2s 1.5s cubic-bezier(.2,1.6,.4,1) forwards}
+.t{font-size:3vmin;color:#ff8bf0;opacity:0;animation:f 1s 3s forwards}
+.b{width:50vmin;height:2.4vmin;border:2px solid #7fd8ff;border-radius:2vmin;margin-top:5vmin;overflow:hidden;box-shadow:0 0 12px #7fd8ff}
+.b i{display:block;height:100%;width:0;background:linear-gradient(90deg,#7fd8ff,#ff3bd4);animation:g 5.6s .6s linear forwards}
+.ball{position:absolute;bottom:8vmin;left:-10vmin;width:4vmin;height:4vmin;border-radius:50%;background:#eaf8ff;box-shadow:0 0 15px #fff;animation:roll 6.2s .3s ease-in forwards}
+@keyframes f{to{opacity:1}}@keyframes r{to{opacity:1;transform:scale(1)}}@keyframes g{to{width:100%}}
+@keyframes roll{to{left:110vw;width:14vmin;height:14vmin;transform:rotate(1080deg)}}
+#game{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;font-size:5vmin;opacity:0;transition:opacity .8s}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block}
+#hud{position:fixed;top:env(safe-area-inset-top,0);left:0;right:0;display:flex;justify-content:space-between;padding:10px 14px;font-size:clamp(14px,4vmin,24px);text-shadow:0 0 8px #7fd8ff;pointer-events:none;z-index:2}
+#ov{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(5,6,15,.8);z-index:3;text-align:center;padding:20px;box-sizing:border-box}
+#ov h2{font-size:clamp(28px,9vmin,64px);margin:0 0 10px;text-shadow:0 0 10px #7fd8ff,0 0 24px #ff3bd4}
+#ov p{font-size:clamp(14px,3.6vmin,22px);color:#9fdcff;margin:6px}
+#ov button{margin-top:18px;font:inherit;font-size:clamp(18px,5vmin,30px);padding:12px 30px;border-radius:30px;border:2px solid #7fd8ff;background:transparent;color:#fff;box-shadow:0 0 14px #ff3bd4}
+#s{z-index:10;background:#05060f}
+body{touch-action:none;user-select:none;-webkit-user-select:none}
+</style></head><body>
+<div id="hud"><span id="sc">Hole 1/9</span><span id="lv">Par 2</span><span id="lf">Strokes 0</span><span id="hi">Best -</span></div>
+<canvas id="c"></canvas>
+<div id="ov" style="display:none"><h2 id="ot">NEON MINI GOLF</h2><p id="op">9 neon holes with bumpers and moving walls.<br>Fewest strokes wins!</p><p>Drag back from anywhere and release to putt &middot; Arrows/WASD aim &amp; power, Space to putt &middot; P to pause</p><button id="go">PLAY</button></div>
+<div id="s"><div class="p">LEONLINK PRESENTS</div><h1>ARCADELINE</h1><div class="t">Start small. Roll big.</div><div class="b"><i></i></div><div class="ball"></div></div>
+<script>
+const $=i=>document.getElementById(i),cv=$('c'),g=cv.getContext('2d');
+const VW=400,VH=640,R=8,CUP=13;let S,ox,oy,st='load',hole=0,strokes=0,total=0,ball,vel,aim=null,best=+localStorage.getItem('nmg_best')||0,t=0,kA=-Math.PI/2,kP=0.5,keys={},sunk=0;
+const H=[
+{s:[200,560],c:[200,110],p:2,w:[],b:[],m:[]},
+{s:[90,560],c:[310,110],p:3,w:[[60,300,220,18]],b:[],m:[]},
+{s:[200,570],c:[200,90],p:3,w:[],b:[[200,330,28],[120,230,18],[280,230,18]],m:[]},
+{s:[200,570],c:[200,90],p:3,w:[],b:[],m:[[140,320,120,16,'x',110,1.6]]},
+{s:[80,570],c:[320,90],p:4,w:[[0,420,280,18],[120,240,280,18]],b:[[330,500,20],[70,330,20]],m:[]},
+{s:[200,570],c:[200,90],p:3,w:[[40,200,120,16],[240,200,120,16]],b:[[200,420,26]],m:[[150,300,100,16,'x',120,2.2]]},
+{s:[70,570],c:[330,80],p:4,w:[[170,140,18,380]],b:[[90,300,22],[310,420,22]],m:[[190,250,140,16,'y',90,1.5]]},
+{s:[200,580],c:[200,70],p:4,w:[[0,460,150,16],[250,460,150,16],[0,180,150,16],[250,180,150,16]],b:[[110,320,22],[290,320,22],[200,250,18]],m:[[160,380,80,14,'x',130,2.6]]},
+{s:[60,580],c:[340,70],p:5,w:[[0,470,300,16],[100,330,300,16],[0,190,300,16]],b:[[350,400,18],[50,260,18],[200,120,16]],m:[[120,400,60,14,'x',100,2],[220,260,60,14,'x',100,2.4]]}];
+function size(){const r=devicePixelRatio||1;cv.width=innerWidth*r;cv.height=innerHeight*r;S=Math.min(cv.width/VW,(cv.height-50*r)/VH);ox=(cv.width-S*VW)/2;oy=(cv.height-S*VH)/2+25*r}
+addEventListener('resize',size);size();
+function rects(){const h=H[hole],a=h.w.slice();h.m.forEach(m=>{const o=Math.sin(t*m[6]*0.02)*m[5];a.push(m[4]=='x'?[m[0]+o,m[1],m[2],m[3]]:[m[0],m[1]+o,m[2],m[3]])});return a}
+function load(){const h=H[hole];ball={x:h.s[0],y:h.s[1]};vel={x:0,y:0};strokes=0;sunk=0;hud()}
+function newGame(){hole=0;total=0;load();st='play'}
+function hud(){$('sc').textContent='Hole '+(hole+1)+'/9';$('lv').textContent='Par '+H[hole].p;$('lf').textContent='Strokes '+strokes;$('hi').textContent='Best '+(best||'-')}
+function moving(){return Math.hypot(vel.x,vel.y)>0.05}
+function shoot(a,p){if(st!='play'||moving()||sunk)return;const v=2+p*14;vel.x=Math.cos(a)*v;vel.y=Math.sin(a)*v;strokes++;hud()}
+function bounce(nx,ny,k){const d=vel.x*nx+vel.y*ny;if(d<0){vel.x-=k*d*nx;vel.y-=k*d*ny}}
+function step(){const h=H[hole];t++;if(sunk){if(++sunk>50)finishHole();return}
+for(let i=0;i<4;i++){ball.x+=vel.x/4;ball.y+=vel.y/4;
+if(ball.x<R+10){ball.x=R+10;vel.x=Math.abs(vel.x)}if(ball.x>VW-R-10){ball.x=VW-R-10;vel.x=-Math.abs(vel.x)}
+if(ball.y<R+10){ball.y=R+10;vel.y=Math.abs(vel.y)}if(ball.y>VH-R-10){ball.y=VH-R-10;vel.y=-Math.abs(vel.y)}
+for(const r of rects()){const cx=Math.max(r[0],Math.min(ball.x,r[0]+r[2])),cy=Math.max(r[1],Math.min(ball.y,r[1]+r[3])),dx=ball.x-cx,dy=ball.y-cy,d=Math.hypot(dx,dy);
+if(d<R){let nx=0,ny=ball.y<r[1]+r[3]/2?-1:1;if(d>.001){nx=dx/d;ny=dy/d}ball.x=cx+nx*R;ball.y=cy+ny*R;bounce(nx,ny,1.8)}}
+for(const b of h.b){const dx=ball.x-b[0],dy=ball.y-b[1],d=Math.hypot(dx,dy);if(d<R+b[2]){const nx=dx/d,ny=dy/d;ball.x=b[0]+nx*(R+b[2]);ball.y=b[1]+ny*(R+b[2]);bounce(nx,ny,2);vel.x*=1.15;vel.y*=1.15;b.f=10}}}
+vel.x*=.982;vel.y*=.982;if(!moving())vel.x=vel.y=0;
+const dc=Math.hypot(ball.x-h.c[0],ball.y-h.c[1]),sp=Math.hypot(vel.x,vel.y);
+if(dc<CUP&&sp<7){sunk=1;vel.x=vel.y=0;ball.x=h.c[0];ball.y=h.c[1]}else if(dc<CUP*2&&sp<3){vel.x+=(h.c[0]-ball.x)*.004;vel.y+=(h.c[1]-ball.y)*.004}
+if(strokes>=10&&!moving()&&!sunk)sunk=1}
+function finishHole(){total+=strokes;st='card';const d=strokes-H[hole].p,N={'-3':'ALBATROSS!','-2':'EAGLE!','-1':'BIRDIE!','0':'PAR','1':'BOGEY','2':'DOUBLE BOGEY'};
+const nm=strokes==1?'HOLE IN ONE!':(N[d]||('+'+d));
+if(hole==8){const par=H.reduce((a,h)=>a+h.p,0);if(!best||total<best){best=total;localStorage.setItem('nmg_best',best)}show('ROUND OVER',nm+'<br>Total '+total+' strokes (par '+par+')<br>Best round: '+best,'PLAY AGAIN')}
+else show(nm,'Hole '+(hole+1)+': '+strokes+' strokes (par '+H[hole].p+')<br>Total so far: '+total,'NEXT HOLE')}
+function show(a,b,c){$('ot').textContent=a;$('op').innerHTML=b;$('go').textContent=c;$('ov').style.display='flex'}
+$('go').onclick=()=>{$('ov').style.display='none';if(st=='menu'||(st=='card'&&hole==8))newGame();else if(st=='card'){hole++;load();st='play'}else if(st=='pause')st='play'};
+function toV(e){const r=devicePixelRatio||1;return{x:(e.clientX*r-ox)/S,y:(e.clientY*r-oy)/S}}
+cv.addEventListener('pointerdown',e=>{if(st!='play'||moving()||sunk)return;aim={s:toV(e),c:toV(e)}});
+addEventListener('pointermove',e=>{if(aim)aim.c=toV(e)});
+addEventListener('pointerup',()=>{if(!aim)return;const dx=aim.s.x-aim.c.x,dy=aim.s.y-aim.c.y,d=Math.hypot(dx,dy);if(d>8)shoot(Math.atan2(dy,dx),Math.min(d/180,1));aim=null});
+addEventListener('keydown',e=>{keys[e.key]=1;if(e.key=='p'||e.key=='P'){if(st=='play'){st='pause';show('PAUSED','Take a breath.','RESUME')}else if(st=='pause')$('go').onclick()}
+if(e.key==' '||e.key=='Enter'){e.preventDefault();if(st=='play')shoot(kA,kP);else if($('ov').style.display=='flex')$('go').onclick()}
+if(e.key.startsWith('Arrow'))e.preventDefault()});
+addEventListener('keyup',e=>keys[e.key]=0);
+function keyAim(){const k=keys;if(k.ArrowLeft||k.a||k.A)kA-=.04;if(k.ArrowRight||k.d||k.D)kA+=.04;if(k.ArrowUp||k.w||k.W)kP=Math.min(1,kP+.01);if(k.ArrowDown||k.s||k.S)kP=Math.max(.05,kP-.01)}
+function gl(c,b){g.shadowColor=c;g.shadowBlur=b*S}
+function draw(){const h=H[hole];g.setTransform(1,0,0,1,0,0);g.shadowBlur=0;g.fillStyle='#05060f';g.fillRect(0,0,cv.width,cv.height);g.setTransform(S,0,0,S,ox,oy);
+g.fillStyle='#071a14';g.fillRect(0,0,VW,VH);g.strokeStyle='rgba(0,255,170,.08)';g.lineWidth=1;g.beginPath();for(let i=0;i<=VW;i+=20){g.moveTo(i,0);g.lineTo(i,VH)}for(let i=0;i<=VH;i+=20){g.moveTo(0,i);g.lineTo(VW,i)}g.stroke();
+gl('#7fd8ff',12);g.strokeStyle='#7fd8ff';g.lineWidth=4;g.strokeRect(6,6,VW-12,VH-12);
+const rs=rects();g.fillStyle='#ff3bd4';gl('#ff3bd4',12);rs.slice(0,h.w.length).forEach(r=>g.fillRect(r[0],r[1],r[2],r[3]));
+g.fillStyle='#ffd23b';gl('#ffd23b',14);rs.slice(h.w.length).forEach(r=>g.fillRect(r[0],r[1],r[2],r[3]));
+h.b.forEach(b=>{gl('#7fff6a',b.f?30:14);g.strokeStyle='#7fff6a';g.lineWidth=b.f?6:4;g.beginPath();g.arc(b[0],b[1],b[2],0,7);g.stroke();if(b.f)b.f--});
+gl('#fff',16);g.fillStyle='#000';g.strokeStyle='#fff';g.lineWidth=3;g.beginPath();g.arc(h.c[0],h.c[1],CUP,0,7);g.fill();g.stroke();
+g.strokeStyle='#ff3bd4';g.lineWidth=2;g.beginPath();g.moveTo(h.c[0],h.c[1]);g.lineTo(h.c[0],h.c[1]-40);g.stroke();g.fillStyle='#ff3bd4';g.beginPath();g.moveTo(h.c[0],h.c[1]-40);g.lineTo(h.c[0]+20,h.c[1]-33);g.lineTo(h.c[0],h.c[1]-26);g.fill();
+if(st=='play'&&!moving()&&!sunk){let a=kA,p=kP;if(aim){const dx=aim.s.x-aim.c.x,dy=aim.s.y-aim.c.y;a=Math.atan2(dy,dx);p=Math.min(Math.hypot(dx,dy)/180,1)}
+if(aim||Object.values(keys).some(v=>v)||!('ontouchstart' in window)){gl('#7fd8ff',8);g.strokeStyle='hsl('+(120-p*120)+',100%,60%)';g.setLineDash([6,6]);g.lineWidth=3;g.beginPath();g.moveTo(ball.x,ball.y);g.lineTo(ball.x+Math.cos(a)*(30+p*110),ball.y+Math.sin(a)*(30+p*110));g.stroke();g.setLineDash([])}}
+if(!sunk||sunk<25){gl('#fff',18);g.fillStyle='#eaf8ff';g.beginPath();g.arc(ball.x,ball.y,sunk?R*(1-sunk/25):R,0,7);g.fill()}
+g.shadowBlur=0}
+function loop(){if(st=='play'){keyAim();step()}else if(st=='pause'||st=='card');draw();requestAnimationFrame(loop)}
+load();loop();
+setTimeout(()=>{$('s').style.opacity=0;setTimeout(()=>{$('s').remove();st='menu';$('ov').style.display='flex'},800)},7000);
+</script></body></html>
