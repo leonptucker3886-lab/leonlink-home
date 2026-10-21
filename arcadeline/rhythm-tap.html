@@ -1,0 +1,70 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Rhythm Tap - Arcadeline</title>
+<style>
+html,body{margin:0;height:100%;background:#05060f;overflow:hidden;font-family:"Courier New",monospace;color:#fff}
+#s{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s}
+.p{letter-spacing:.5em;font-size:2.2vmin;color:#9fdcff;opacity:0;animation:f 1s .3s forwards}
+h1{font-size:12vmin;margin:.3em 0;color:#fff;text-shadow:0 0 10px #7fd8ff,0 0 30px #ff3bd4;opacity:0;transform:scale(.3);animation:r 1.2s 1.5s cubic-bezier(.2,1.6,.4,1) forwards}
+.t{font-size:3vmin;color:#ff8bf0;opacity:0;animation:f 1s 3s forwards}
+.b{width:50vmin;height:2.4vmin;border:2px solid #7fd8ff;border-radius:2vmin;margin-top:5vmin;overflow:hidden;box-shadow:0 0 12px #7fd8ff}
+.b i{display:block;height:100%;width:0;background:linear-gradient(90deg,#7fd8ff,#ff3bd4);animation:g 5.6s .6s linear forwards}
+.ball{position:absolute;bottom:8vmin;left:-10vmin;width:4vmin;height:4vmin;border-radius:50%;background:#eaf8ff;box-shadow:0 0 15px #fff;animation:roll 6.2s .3s ease-in forwards}
+@keyframes f{to{opacity:1}}@keyframes r{to{opacity:1;transform:scale(1)}}@keyframes g{to{width:100%}}
+@keyframes roll{to{left:110vw;width:14vmin;height:14vmin;transform:rotate(1080deg)}}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block}
+#hud{position:fixed;top:env(safe-area-inset-top,0);left:0;right:0;display:flex;justify-content:space-between;padding:10px 14px;font-size:clamp(14px,4vmin,24px);text-shadow:0 0 8px #7fd8ff;pointer-events:none;z-index:2}
+#ov{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(5,6,15,.8);z-index:3;text-align:center;padding:20px;box-sizing:border-box}
+#ov h2{font-size:clamp(28px,9vmin,64px);margin:0 0 10px;text-shadow:0 0 10px #7fd8ff,0 0 24px #ff3bd4}
+#ov p{font-size:clamp(14px,3.6vmin,22px);color:#9fdcff;margin:6px}
+#ov button{margin-top:18px;font:inherit;font-size:clamp(18px,5vmin,30px);padding:12px 30px;border-radius:30px;border:2px solid #7fd8ff;background:transparent;color:#fff;box-shadow:0 0 14px #ff3bd4}
+#s{z-index:10;background:#05060f}
+</style></head><body>
+<div id="hud"><span id="sc">Score 0</span><span id="cb">Combo 0 x1</span><span id="lf">Health 100</span><span id="hi">Best 0</span></div>
+<canvas id="c"></canvas>
+<div id="ov" style="display:none"><h2 id="ot">RHYTHM TAP</h2><p id="op">Tap the neon notes as they cross the line.<br>Build combos for up to x4 points. Miss too many and the song ends!</p><p>Keys D F J K or arrows &middot; P pause &middot; Touch: tap the lanes</p><button id="go">PLAY</button></div>
+<div id="s"><div class="p">LEONLINK PRESENTS</div><h1>ARCADELINE</h1><div class="t">Start small. Roll big.</div><div class="b"><i></i></div><div class="ball"></div></div>
+<script>
+const $=i=>document.getElementById(i),cv=$('c'),g=cv.getContext('2d');
+const COL=['#ff3bd4','#7fd8ff','#ffe14d','#5dff8f'],KEYS={d:0,f:1,j:2,k:3,arrowleft:0,arrowdown:1,arrowup:2,arrowright:3};
+let st='load',score=0,combo=0,hp=100,best=+localStorage.getItem('rt_best')||0,notes=[],fx=[],press=[0,0,0,0],AC,t0=0,bpm=100,nb=0,bn=0,last=0,msg='',msgT=0;
+const TR=1.6,SC=[220,261.6,293.7,329.6,392,440];
+function size(){const r=devicePixelRatio||1;cv.width=innerWidth*r;cv.height=innerHeight*r}addEventListener('resize',size);size();
+function now(){return AC?AC.currentTime-t0:0}
+function tone(f,d,ty,vol,w){const o=AC.createOscillator(),v=AC.createGain(),s=w||AC.currentTime;o.type=ty;o.frequency.value=f;v.gain.setValueAtTime(vol,s);v.gain.exponentialRampToValueAtTime(.001,s+d);o.connect(v).connect(AC.destination);o.start(s);o.stop(s+d+.02)}
+function hat(d,vol,w){const b=AC.createBuffer(1,AC.sampleRate*d|0,AC.sampleRate),a=b.getChannelData(0);for(let i=0;i<a.length;i++)a[i]=(Math.random()*2-1)*(1-i/a.length);const s=AC.createBufferSource(),v=AC.createGain(),h=AC.createBiquadFilter();h.type='highpass';h.frequency.value=5000;s.buffer=b;v.gain.value=vol;s.connect(h).connect(v).connect(AC.destination);s.start(w)}
+function lvl(){return 1+Math.floor(bn/32)}
+function schedule(){while(nb<now()+TR+.2){const spb=60/bpm,w=t0+nb,s=bn%4;
+ if(s==0||s==2)tone(60,.3,'sine',.5,w);if(s%2)hat(.08,.25,w);hat(.03,.08,w+spb/2);if(bn%8==0)tone(SC[bn/8%6|0],spb*2,'triangle',.05,w);
+ const L=lvl(),pat=[1,.5,.7,.5,.9,.5,.7,.6][bn%8];
+ if(bn>=4){if(Math.random()<Math.min(.95,(.45+L*.08)*pat+.15))add(nb);if(L>=2&&Math.random()<.1+L*.05)add(nb+spb/2);if(L>=3&&Math.random()<.12)add(nb,1)}
+ nb+=spb;bn++;bpm=Math.min(170,92+lvl()*8)}}
+function add(t,d){const l=Math.random()*4|0;notes.push({t,l,hit:0});if(d)notes.push({t,l:(l+2)%4,hit:0})}
+function mult(){return combo>=30?4:combo>=20?3:combo>=10?2:1}
+function hud(){$('sc').textContent='Score '+score;$('cb').textContent='Combo '+combo+' x'+mult();$('lf').textContent='Health '+Math.max(0,hp|0);$('hi').textContent='Best '+best}
+function hit(l){if(st!='play')return;press[l]=.15;const n=now();let bo=null,bd=1;for(const o of notes)if(!o.hit&&o.l==l){const d=Math.abs(o.t-n);if(d<bd){bd=d;bo=o}}
+ if(bo&&bd<.16){bo.hit=1;combo++;const p=bd<.06;score+=(p?300:100)*mult();hp=Math.min(100,hp+2);msg=p?'PERFECT':'GOOD';msgT=.5;fx.push({l,a:1});tone(SC[(l+combo)%6]*2,.15,'triangle',.12)}
+ else{combo=0;hp-=4;msg='MISS';msgT=.4;tone(110,.1,'sawtooth',.06)}hud()}
+function geo(){const W=cv.width,H=cv.height,lw=Math.min(W/4,H*.16);return{W,H,lw,x0:(W-lw*4)/2,hy:H*.82}}
+addEventListener('keydown',e=>{const k=e.key.toLowerCase();if(k in KEYS){e.preventDefault();if(!e.repeat)hit(KEYS[k])}else if(k=='p')pause();else if((k==' '||k=='enter')&&(st=='over'||st=='title')){e.preventDefault();start()}});
+cv.addEventListener('pointerdown',e=>{e.preventDefault();const r=devicePixelRatio||1,G=geo(),l=Math.floor((e.clientX*r-G.x0)/G.lw);if(l>=0&&l<4)hit(l)});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&st=='play')pause()});
+function pause(){if(st=='play'){st='pause';AC.suspend();$('ot').textContent='PAUSED';$('op').innerHTML='Press P or tap Resume';$('go').textContent='RESUME';$('ov').style.display='flex'}else if(st=='pause')resume()}
+function resume(){st='play';$('ov').style.display='none';AC.resume()}
+function start(){if(st=='pause')return resume();AC=AC||new AudioContext();AC.resume();score=0;combo=0;hp=100;notes=[];fx=[];bpm=100;bn=0;nb=0;t0=AC.currentTime+.3;st='play';$('ov').style.display='none';hud()}
+$('go').onclick=start;
+function over(){st='over';if(score>best){best=score;localStorage.setItem('rt_best',best)}$('ot').textContent='SONG OVER';$('op').innerHTML='Score '+score+'<br>Best '+best;$('go').textContent='PLAY AGAIN';$('ov').style.display='flex';hud()}
+function frame(ts){const dt=Math.min(.05,(ts-last)/1000||0);last=ts;const{W,H,lw,x0,hy}=geo(),r=devicePixelRatio||1;
+ g.fillStyle='#05060f';g.fillRect(0,0,W,H);
+ if(st=='play'){schedule();const n=now();for(const o of notes)if(!o.hit&&n-o.t>.16){o.hit=2;combo=0;hp-=8;msg='MISS';msgT=.4;hud()}notes=notes.filter(o=>!(o.hit&&n-o.t>.3));if(hp<=0)over()}
+ const n=now(),pulse=st=='play'?Math.pow(1-((n*bpm/60)%1+1)%1,3):0;
+ for(let i=0;i<4;i++){const x=x0+i*lw;g.fillStyle=i%2?'#0a0d22':'#0d1030';g.fillRect(x,0,lw,H);if(press[i]>0){g.globalAlpha=press[i]*3;g.fillStyle=COL[i]+'33';g.fillRect(x,0,lw,H);g.globalAlpha=1;press[i]-=dt}
+  g.strokeStyle=COL[i];g.lineWidth=3*r;g.shadowColor=COL[i];g.shadowBlur=12*r;g.beginPath();g.arc(x+lw/2,hy,lw*.36*(1+pulse*.08),0,7);g.stroke();
+  g.shadowBlur=0;g.fillStyle=COL[i]+'99';g.font=(14*r)+'px Courier New';g.textAlign='center';g.fillText('DFJK'[i],x+lw/2,hy+lw*.6)}
+ g.strokeStyle='rgba(255,255,255,'+(.3+pulse*.5)+')';g.lineWidth=2*r;g.beginPath();g.moveTo(x0,hy);g.lineTo(x0+lw*4,hy);g.stroke();
+ for(const o of notes){if(o.hit)continue;const y=hy-(o.t-n)/TR*hy;if(y<-lw)continue;const x=x0+o.l*lw+lw/2;g.fillStyle=COL[o.l];g.shadowColor=COL[o.l];g.shadowBlur=18*r;g.beginPath();g.arc(x,y,lw*.3,0,7);g.fill();g.fillStyle='#fff';g.beginPath();g.arc(x,y,lw*.12,0,7);g.fill()}
+ g.shadowBlur=0;fx=fx.filter(f=>(f.a-=dt*2.5)>0);for(const f of fx){g.strokeStyle=COL[f.l];g.globalAlpha=f.a;g.lineWidth=4*r;g.beginPath();g.arc(x0+f.l*lw+lw/2,hy,lw*(.36+(1-f.a)*.4),0,7);g.stroke();g.globalAlpha=1}
+ if(msgT>0){msgT-=dt;g.fillStyle=msg=='MISS'?'#ff5566':msg=='PERFECT'?'#ffe14d':'#7fd8ff';g.globalAlpha=Math.min(1,msgT*3);g.font='bold '+(Math.min(W,H)*.07)+'px Courier New';g.textAlign='center';g.fillText(msg,W/2,H*.4);g.globalAlpha=1}
+ g.fillStyle='#222a';g.fillRect(x0,H*.07,lw*4,6*r);g.fillStyle=hp>40?'#5dff8f':'#ff5566';g.fillRect(x0,H*.07,lw*4*Math.max(0,hp)/100,6*r);
+ requestAnimationFrame(frame)}
+requestAnimationFrame(frame);hud();
+setTimeout(()=>{$('s').style.opacity=0;setTimeout(()=>{$('s').remove();st='title';$('ov').style.display='flex'},800)},7000);
+</script></body></html>
