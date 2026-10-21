@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><meta name="theme-color" content="#06060b"><meta name="apple-mobile-web-app-capable" content="yes">
-<title>LeonLink Kids – Pet</title><link rel="stylesheet" href="style.css"></head><body>
+<title>LeonLink Kids – Pet</title><link rel="stylesheet" href="style.css"><style>#splash{position:fixed;inset:0;z-index:9999;background:radial-gradient(#141428,#06060b);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-family:system-ui,sans-serif;text-align:center;transition:opacity .6s}
+#splash.out{opacity:0;pointer-events:none}
+.splogo{width:120px;height:120px;font-size:96px;animation:spspin 2s ease-out both}
+@keyframes spspin{from{transform:rotateY(0) scale(.3);opacity:0}to{transform:rotateY(720deg) scale(1);opacity:1}}
+.spl1,.spl2,.spl3{opacity:0;animation:spin2 .8s ease-out forwards}
+.spl1{font-size:28px;font-weight:800;margin-top:18px;letter-spacing:2px;animation-delay:1.8s}.spl1 b{color:#22f0ff}
+.spl2{font-size:20px;letter-spacing:4px;margin-top:10px;color:#ff3fb4;animation-delay:3s}
+.spl3{font-size:64px;font-weight:900;margin-top:22px;letter-spacing:6px;background:linear-gradient(90deg,#22e5ff,#ff3fb4);-webkit-background-clip:text;background-clip:text;color:transparent;animation-delay:4.2s}
+@keyframes spin2{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.spbar{width:60%;max-width:320px;height:10px;border-radius:5px;background:#ffffff22;margin-top:34px;overflow:hidden}
+.spbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#22e5ff,#ff3fb4);animation:spfill 7s linear forwards}
+@keyframes spfill{to{width:100%}}</style></head><body>
+<div id="splash"><img src="/logo.png" alt="" class="splogo" onerror="this.outerHTML='<span class=splogo>⚓</span>'"><div class="spl1">LEON<b>LINK</b> presents</div><div class="spl2">A BERT KIDS GAME</div><div class="spl3">PET</div><div class="spbar"><i></i></div></div>
+<script>setTimeout(function(){var s=document.getElementById('splash');s.classList.add('out');setTimeout(function(){s.remove()},600)},7000)</script>
 <header><span class="logo">⚓</span><span class="wm">LEON<b>LINK</b> <span class="kids">KIDS</span> · Pet</span><span class="tok">🪙 <span id="tok">0</span></span></header>
 <nav id="nav"></nav><main id="app"></main><div class="toast" id="toast"></div>
 <script src="data.js"></script><script src="app.js"></script><script src="v3.js"></script>
