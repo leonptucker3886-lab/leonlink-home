@@ -1,0 +1,87 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Neon Centipede - Arcadeline</title>
+<style>
+html,body{margin:0;height:100%;background:#05060f;overflow:hidden;font-family:"Courier New",monospace;color:#fff}
+#s{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s}
+.p{letter-spacing:.5em;font-size:2.2vmin;color:#9fdcff;opacity:0;animation:f 1s .3s forwards}
+h1{font-size:12vmin;margin:.3em 0;color:#fff;text-shadow:0 0 10px #7fd8ff,0 0 30px #ff3bd4;opacity:0;transform:scale(.3);animation:r 1.2s 1.5s cubic-bezier(.2,1.6,.4,1) forwards}
+.t{font-size:3vmin;color:#ff8bf0;opacity:0;animation:f 1s 3s forwards}
+.b{width:50vmin;height:2.4vmin;border:2px solid #7fd8ff;border-radius:2vmin;margin-top:5vmin;overflow:hidden;box-shadow:0 0 12px #7fd8ff}
+.b i{display:block;height:100%;width:0;background:linear-gradient(90deg,#7fd8ff,#ff3bd4);animation:g 5.6s .6s linear forwards}
+.ball{position:absolute;bottom:8vmin;left:-10vmin;width:4vmin;height:4vmin;border-radius:50%;background:#eaf8ff;box-shadow:0 0 15px #fff;animation:roll 6.2s .3s ease-in forwards}
+@keyframes f{to{opacity:1}}@keyframes r{to{opacity:1;transform:scale(1)}}@keyframes g{to{width:100%}}
+@keyframes roll{to{left:110vw;width:14vmin;height:14vmin;transform:rotate(1080deg)}}
+#game{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;font-size:5vmin;opacity:0;transition:opacity .8s}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block}
+#hud{position:fixed;top:env(safe-area-inset-top,0);left:0;right:0;display:flex;justify-content:space-between;padding:10px 14px;font-size:clamp(14px,4vmin,24px);text-shadow:0 0 8px #7fd8ff;pointer-events:none;z-index:2}
+#ov{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(5,6,15,.8);z-index:3;text-align:center;padding:20px;box-sizing:border-box}
+#ov h2{font-size:clamp(28px,9vmin,64px);margin:0 0 10px;text-shadow:0 0 10px #7fd8ff,0 0 24px #ff3bd4}
+#ov p{font-size:clamp(14px,3.6vmin,22px);color:#9fdcff;margin:6px}
+#ov button{margin-top:18px;font:inherit;font-size:clamp(18px,5vmin,30px);padding:12px 30px;border-radius:30px;border:2px solid #7fd8ff;background:transparent;color:#fff;box-shadow:0 0 14px #ff3bd4}
+#s{z-index:10;background:#05060f}
+body{touch-action:none;user-select:none;-webkit-user-select:none}
+</style></head><body>
+<div id="hud"><span id="sc">Score 0</span><span id="lv">Lv 1</span><span id="lf">Lives 3</span><span id="hi">Best 0</span></div>
+</style></head><body>
+<div id="hud"><span id="sc">Score 0</span><span id="lv">Wave 1</span><span id="lf">Lives 3</span><span id="hi">Best 0</span></div>
+<canvas id="c"></canvas>
+<div id="ov" style="display:none"><h2 id="ot">NEON CENTIPEDE</h2><p id="op">Blast the centipede as it winds through the mushrooms.<br>Every hit splits it in two!</p><p>Drag to move (auto-fire) &middot; Arrows/WASD + Space &middot; P to pause</p><button id="go">PLAY</button></div>
+<div id="s"><div class="p">LEONLINK PRESENTS</div><h1>ARCADELINE</h1><div class="t">Start small. Roll big.</div><div class="b"><i></i></div><div class="ball"></div></div>
+<script>
+const $=i=>document.getElementById(i),cv=$('c'),g=cv.getContext('2d');
+const W=25,H=32,ZONE=H-7;let T,ox,oy,mush={},segs=[],shots=[],spider,flea,pl={x:12,y:30},score=0,lives=3,wave=1,st='load',best=+localStorage.getItem('nc_best')||0,keys={},cool=0,touch=null,last=0,tick=0,segTimer=0;
+$('hi').textContent='Best '+best;
+function size(){const r=devicePixelRatio||1;cv.width=innerWidth*r;cv.height=innerHeight*r;T=Math.min(cv.width/W,(cv.height-40*r)/H);ox=(cv.width-T*W)/2;oy=(cv.height-T*H)/2+20*r}
+addEventListener('resize',size);size();
+function mkMush(n){for(let i=0;i<n;i++){const x=Math.random()*W|0,y=1+Math.random()*(H-4)|0;mush[y*W+x]=4}}
+function mkCent(){segs=[];const len=Math.min(8+wave,14);for(let i=0;i<len;i++)segs.push({x:Math.min(W-1,6+i),y:0,dx:-1,dy:1,head:i==0})}
+function resetWave(){mkCent();shots=[];spider=null;flea=null;pl={x:W/2,y:H-1.5};segTimer=0}
+function newGame(){mush={};score=0;lives=3;wave=1;mkMush(45);resetWave();upd()}
+function upd(){if(score>best){best=score;localStorage.setItem('nc_best',best)}$('sc').textContent='Score '+score;$('lv').textContent='Wave '+wave;$('lf').textContent='Lives '+lives;$('hi').textContent='Best '+best}
+function isM(x,y){return mush[y*W+x]>0}
+function moveSegs(){for(const s of segs){const nx=s.x+s.dx;
+ if(nx<0||nx>=W||isM(nx,s.y)){let ny=s.y+s.dy;if(ny>=H){s.dy=-1;ny=H-2}else if(s.dy<0&&ny<ZONE){s.dy=1;ny=s.y+1}s.y=ny;s.dx=-s.dx}else s.x=nx}}
+function hitSeg(i){const s=segs[i];mush[s.y*W+s.x]=4;score+=s.head?100:10;segs.splice(i,1);if(segs[i])segs[i].head=true;upd()}
+function ov(t,p,b){$('ot').innerHTML=t;$('op').innerHTML=p;$('go').textContent=b;$('ov').style.display='flex'}
+function die(){lives--;upd();if(lives<=0){st='over';ov('GAME OVER','Score '+score+' &middot; Best '+best,'AGAIN')}else resetWave()}
+function update(dt){tick+=dt;const sp=Math.max(.035,.09-wave*.006);segTimer+=dt;while(segTimer>sp){segTimer-=sp;moveSegs()}
+ let vx=0,vy=0;if(keys.arrowleft||keys.a)vx--;if(keys.arrowright||keys.d)vx++;if(keys.arrowup||keys.w)vy--;if(keys.arrowdown||keys.s)vy++;
+ pl.x+=vx*14*dt;pl.y+=vy*14*dt;if(touch){pl.x+=(touch.x-pl.x)*Math.min(1,dt*18);pl.y+=(touch.y-pl.y)*Math.min(1,dt*18)}
+ pl.x=Math.max(.5,Math.min(W-.5,pl.x));pl.y=Math.max(ZONE+.5,Math.min(H-.5,pl.y));
+ cool-=dt;if((keys[' ']||touch)&&cool<=0&&shots.length<2){shots.push({x:pl.x,y:pl.y-.6});cool=.11}
+ for(let i=shots.length-1;i>=0;i--){const b=shots[i];b.y-=40*dt;const cx=b.x|0,cy=b.y|0;let hit=b.y<0;
+  if(!hit&&isM(cx,cy)){if(!--mush[cy*W+cx]){delete mush[cy*W+cx];score++;upd()}hit=true}
+  if(!hit)for(let j=0;j<segs.length;j++)if(segs[j].x==cx&&segs[j].y==cy){hitSeg(j);hit=true;break}
+  if(!hit&&spider&&Math.abs(spider.x-b.x)<1&&Math.abs(spider.y-b.y)<.8){score+=Math.abs(spider.y-pl.y)<3?900:300;spider=null;upd();hit=true}
+  if(!hit&&flea&&Math.abs(flea.x+.5-b.x)<.8&&Math.abs(flea.y-b.y)<1){score+=200;flea=null;upd();hit=true}
+  if(hit)shots.splice(i,1)}
+ if(!spider&&Math.random()<dt*.25){const l=Math.random()<.5;spider={x:l?0:W,y:ZONE+2,vx:l?5:-5,vy:6}}
+ if(spider){spider.x+=spider.vx*dt;spider.y+=spider.vy*dt;if(spider.y<ZONE||spider.y>H-.5)spider.vy=-spider.vy;spider.y=Math.max(ZONE,Math.min(H-.5,spider.y));
+  const k=(spider.y|0)*W+(spider.x|0);if(mush[k]&&Math.random()<.05)delete mush[k];if(spider.x<-1||spider.x>W+1)spider=null}
+ let lowM=0;for(const k in mush)if(k/W>=ZONE)lowM++;if(!flea&&wave>1&&lowM<5&&Math.random()<dt*.4)flea={x:Math.random()*W|0,y:0};
+ if(flea){const y0=flea.y|0;flea.y+=16*dt;if((flea.y|0)!=y0&&Math.random()<.3&&flea.y<H-1)mush[(flea.y|0)*W+flea.x]=4;if(flea.y>H)flea=null}
+ const d=(x,y)=>Math.hypot(x-pl.x,y-pl.y);
+ if((spider&&d(spider.x,spider.y)<.9)||(flea&&d(flea.x+.5,flea.y)<.9)||segs.some(s=>d(s.x+.5,s.y+.5)<.9)){die();return}
+ if(!segs.length){wave++;score+=500;upd();mkMush(6);mkCent()}}
+function draw(){g.fillStyle='#05060f';g.fillRect(0,0,cv.width,cv.height);g.strokeStyle='#1a2350';g.lineWidth=1;g.strokeRect(ox,oy,W*T,H*T);
+ g.fillStyle='rgba(127,216,255,.05)';g.fillRect(ox,oy+ZONE*T,W*T,(H-ZONE)*T);g.shadowBlur=10;
+ for(const k in mush){const x=k%W,y=k/W|0,h=mush[k];g.shadowColor=g.fillStyle=['','#3a7a5a','#38c78a','#3df5a8','#00ffa2'][h];
+  const cx=ox+(x+.5)*T,cy=oy+(y+.5)*T;g.beginPath();g.arc(cx,cy,T*.42*(h/8+.5),Math.PI,0);g.fill();g.fillRect(cx-T*.13,cy,T*.26,T*.35)}
+ for(const s of segs){const cx=ox+(s.x+.5)*T,cy=oy+(s.y+.5)*T;g.shadowColor=g.fillStyle=s.head?'#ff3bd4':'#ff8bf0';g.beginPath();g.arc(cx,cy,T*.45,0,7);g.fill();
+  if(s.head){g.fillStyle='#fff';g.beginPath();g.arc(cx+s.dx*T*.18,cy-T*.12,T*.1,0,7);g.fill()}}
+ if(spider){g.shadowColor=g.strokeStyle=g.fillStyle='#ff9a1f';const cx=ox+spider.x*T,cy=oy+spider.y*T;g.beginPath();g.ellipse(cx,cy,T*.5,T*.35,0,0,7);g.fill();g.lineWidth=2;g.beginPath();for(let i=-1;i<=1;i+=2)for(let j=0;j<3;j++){g.moveTo(cx,cy);g.lineTo(cx+i*T*.9,cy+(j-1)*T*.4+Math.sin(tick*20)*T*.15)}g.stroke()}
+ if(flea){g.shadowColor=g.fillStyle='#ffee33';g.beginPath();g.arc(ox+(flea.x+.5)*T,oy+flea.y*T,T*.35,0,7);g.fill()}
+ g.shadowColor=g.fillStyle='#00f0ff';for(const b of shots)g.fillRect(ox+b.x*T-T*.07,oy+b.y*T-T*.35,T*.14,T*.7);
+ if(st!='over'){const cx=ox+pl.x*T,cy=oy+pl.y*T;g.beginPath();g.moveTo(cx,cy-T*.6);g.lineTo(cx+T*.45,cy+T*.45);g.lineTo(cx-T*.45,cy+T*.45);g.closePath();g.fill()}
+ g.shadowBlur=0;if(st=='pause'){g.fillStyle='#fff';g.font=(T*2|0)+'px Courier New';g.textAlign='center';g.fillText('PAUSED',cv.width/2,cv.height/2)}}
+function loop(t){const dt=Math.min(.05,(t-last)/1000||0);last=t;if(st=='play')update(dt);draw();requestAnimationFrame(loop)}
+requestAnimationFrame(loop);
+addEventListener('keydown',e=>{const k=e.key.toLowerCase();keys[k]=1;if(k=='p'&&(st=='play'||st=='pause'))st=st=='play'?'pause':'play';if((k=='enter'||k==' ')&&$('ov').style.display=='flex')$('go').click();if(k.startsWith('arrow')||k==' ')e.preventDefault()});
+addEventListener('keyup',e=>{keys[e.key.toLowerCase()]=0});
+function tp(e){const r=devicePixelRatio||1,p=e.touches?e.touches[0]:e;return{x:(p.clientX*r-ox)/T,y:(p.clientY*r-oy)/T-1.5}}
+cv.addEventListener('touchstart',e=>{e.preventDefault();touch=tp(e)},{passive:false});
+cv.addEventListener('touchmove',e=>{e.preventDefault();touch=tp(e)},{passive:false});
+cv.addEventListener('touchend',e=>{if(!e.touches.length)touch=null});
+cv.addEventListener('mousedown',e=>{touch=tp(e)});addEventListener('mousemove',e=>{if(touch)touch=tp(e)});addEventListener('mouseup',()=>touch=null);
+$('go').onclick=()=>{$('ov').style.display='none';newGame();st='play'};
+newGame();setTimeout(()=>{$('s').style.opacity=0;setTimeout(()=>{$('s').remove();st='menu';$('ov').style.display='flex'},800)},7000);
+</script></body></html>
