@@ -34,7 +34,10 @@ function spinNow(){if(!S.spin)return go('home');S.spin=0;save();const i=Math.flo
 let MG=null;
 function gamesView(){const g=(id,e,w)=>`<button class="item tap" aria-label="${w}" data-say="${w}" onclick="playGame('${id}')"><div class="e">${e}</div><div class="go">▶️</div></button>`;
  return `<div class="card"><button class="big-ico" data-say="Pick a game and win coins!">🎮 = 🪙</button><div class="grid two">${g('stars','⭐','Tap the stars')}${g('treats','🍖','Catch the treats')}${g('bubbles','🫧','Pop the bubbles')}${g('seek','🙈','Hide and seek')}</div></div>`}
-function endMG(got,id){(MG||[]).forEach(clearInterval);MG=null;if(got>0){LeonLinkPet.addTokens(got);confetti(25);sticker(id)}S.view='games';save();setTimeout(render,got>0?1200:0)}
+// Economy (see ECONOMY.md): game coins capped per pet per day
+function capCoins(n,k='g',max=60){const d=new Date().toDateString();if(S.capDay!==d){S.capDay=d;S.capG=0;S.capX=0}const key=k==='g'?'capG':'capX',room=Math.max(0,max-(S[key]||0)),g=Math.min(n,room);S[key]=(S[key]||0)+g;save();if(g<n)setTimeout(()=>pop('🌙💤','Come back tomorrow for more coins!'),900);return g}
+window.propTap=function(){S.taps=(S.taps||0)+1;if(S.taps%10===0){S.st.j=Math.min(100,(S.st.j||0)+5)}save()};
+function endMG(got,id){got=got>0?capCoins(got):0;(MG||[]).forEach(clearInterval);MG=null;if(got>0){LeonLinkPet.addTokens(got);confetti(25);sticker(id)}S.view='games';save();setTimeout(render,got>0?1200:0)}
 function playGame(id){if(id==='stars'){sticker('stars');S.view='play';save();return render()}
  S.view='mg';save();$('app').innerHTML=`<div class="card"><div class="row playbar"><button class="startbtn" data-say="Back" aria-label="Back" onclick="endMG(0)">⬅️</button><b id="gs" class="score">🪙 0</b></div><div class="timer"><i id="gt" style="width:100%"></i></div><div id="game" class="mg"></div></div>`;
  const box=$('game');let got=0,left=25;const sc=v=>{got+=v;$('gs').textContent='🪙 '+got;blip(1200)};
