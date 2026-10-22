@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Earbud Sound Lab: why fit changes bass | LeonLink</title>
+<meta name="description" content="Try it yourself: how sound works, why a good earbud seal makes bass, and how to test your own fit in 60 seconds.">
+<link rel="canonical" href="https://www.leonlink.net/lineup/earbuds-sound-lab.html">
+<meta property="og:type" content="article"><meta property="og:title" content="Earbud Sound Lab: why fit changes bass">
+<meta property="og:description" content="Hear the difference a seal makes. Interactive, works on your phone.">
+<meta property="og:url" content="https://www.leonlink.net/lineup/earbuds-sound-lab.html">
+<meta name="theme-color" content="#04060a"><link rel="icon" href="/favicon.png">
+<style>
+:root{--bg:#04060a;--pan:#0b1018d9;--ink:#e6edf5;--mut:#8e9bb0;--g:#39ff88;--c:#22f0ff;--p:#ff3dc8;--y:#ffe14d;--line:#1b2636;--line2:#26364c}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 Georgia,serif;padding-bottom:env(safe-area-inset-bottom)}
+a{color:var(--c)}
+header{position:sticky;top:0;z-index:5;background:#04060ae0;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;gap:16px;padding:10px 16px;font:600 .86rem system-ui,sans-serif;white-space:nowrap;overflow-x:auto}
+header a{color:var(--mut);text-decoration:none}header .home{color:var(--g)}
+main{max-width:700px;margin:0 auto;padding:0 18px 70px}section{padding:44px 0 6px}
+.kick,.when{font:700 .76rem system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--p)}.when{color:var(--c)}
+h1{font-size:clamp(2.2rem,9vw,3.4rem);line-height:1.04;margin:.25em 0 .3em}h1 span{color:var(--g);text-shadow:0 0 22px #39ff8877}
+h2{font-size:1.5rem;line-height:1.2;margin:0 0 .4em;color:var(--g)}
+.n{color:var(--mut);font-style:italic}
+.card{background:var(--pan);border:1px solid var(--line2);border-radius:14px;padding:16px;margin:16px 0}
+button{font:600 .95rem system-ui,sans-serif;background:#0b1018;border:1px solid var(--line2);color:var(--ink);border-radius:999px;padding:10px 18px;min-height:44px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+button.on{background:var(--g);color:#02170b;border-color:var(--g)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+input[type=range]{width:100%;accent-color:var(--g);height:44px}
+label{font:600 .9rem system-ui,sans-serif;color:var(--mut);display:flex;justify-content:space-between}
+canvas{width:100%;height:160px;display:block;border-radius:10px;background:#060a10;border:1px solid var(--line)}
+.big{font:700 1.2rem system-ui,sans-serif;color:var(--g)}
+.warn{font:500 .85rem system-ui,sans-serif;color:var(--y)}
+ol li{margin:.3em 0}
+</style></head><body>
+<header><a class="home" href="/lineup/earbuds.html">&larr; Top 5 earbuds</a><a href="#sound">Sound</a><a href="#seal">Seal</a><a href="#test">Fit test</a></header>
+<main>
+<section><div class="kick">Sound Lab</div>
+<h1>Why fit makes <span>bass</span></h1>
+<p>Same earbuds, two people: one hears thumping bass, the other hears thin and tinny. Usually it isn't the earbuds. It's the seal. Try it below on your phone, with your earbuds in.</p>
+<p class="warn">Start with your volume low. Every tone here is gentle, but your device volume is in charge.</p></section>
+
+<section id="sound"><div class="when">Step 1</div><h2>Sound is air being pushed</h2>
+<p>A speaker pushes air back and forth. How many times a second is the <b>frequency</b>: low numbers are bass you feel, high numbers are hiss and sparkle. Slide it and watch the wave.</p>
+<div class="card">
+<label><span>Frequency</span><span id="fv">200 Hz</span></label>
+<input type="range" id="freq" min="0" max="1000" value="400" aria-label="Frequency">
+<canvas id="wave" width="660" height="160"></canvas>
+<div class="row" style="margin-top:10px"><button id="toneBtn" type="button">&#9654; Play tone</button><span class="n" id="fdesc"></span></div>
+</div>
+<p>Bass waves are <b>long</b>: a 50 Hz wave is almost 7 metres from peak to peak. A tiny earbud driver can't fill a room with that. It makes bass by pressurising the small sealed space in your ear canal.</p></section>
+
+<section id="seal"><div class="when">Step 2</div><h2>A leak lets the bass escape</h2>
+<p>When the tip seals, the air in your ear canal has nowhere to go, so a tiny push becomes real pressure on your eardrum. Open a gap and the low notes leak out first, while high notes barely notice. Hear it:</p>
+<div class="card">
+<label><span>Seal</span><span id="sv">Perfect seal</span></label>
+<input type="range" id="seal" min="0" max="100" value="100" aria-label="Seal quality">
+<canvas id="curve" width="660" height="160"></canvas>
+<div class="row" style="margin-top:10px"><button id="beatBtn" type="button">&#9654; Play beat</button><span class="n">Slide toward "Loose" while it plays</span></div>
+<p class="n" style="margin:.6em 0 0">A filter simulates the leak. The green line shows how loud each frequency reaches your eardrum.</p>
+</div>
+<p>That's also why <b>noise cancelling</b> needs a seal. If outside noise sneaks around the tip, the earbud can't cancel what it can't control.</p></section>
+
+<section id="test"><div class="when">Step 3</div><h2>Test your own fit</h2>
+<p>Earbuds in. Tap each tone. If the low ones are faint or missing but 1000 Hz is clear, you've got a leak.</p>
+<div class="card">
+<div class="row" id="fit"></div>
+<p class="big" id="fitout" style="margin:.6em 0 0">Tap the lowest one first.</p>
+</div>
+<h2 style="font-size:1.2rem">If the bass was weak</h2>
+<ol>
+<li><b>Go up a tip size.</b> Most people keep the medium that came installed. Many need large, sometimes in just one ear.</li>
+<li><b>Twist, don't push.</b> Insert, then rotate the bud slightly so the tip angles down the canal.</li>
+<li><b>Pull your ear up and back</b> while inserting. It straightens the canal.</li>
+<li><b>Run the app's fit test.</b> Apple, Sony, Bose and Samsung all have one.</li>
+<li><b>Try foam tips.</b> They expand to fill odd-shaped ears.</li>
+</ol>
+<p>Shopping for a pair? <a href="/lineup/earbuds.html">See our Top 5 earbuds &rarr;</a></p>
+</section>
+</main>
+<script>
+(function(){
+var ctx=null,master=null;
+function ac(){if(!ctx){var A=window.AudioContext||window.webkitAudioContext;ctx=new A();master=ctx.createGain();master.gain.value=.18;master.connect(ctx.destination);}if(ctx.state==='suspended')ctx.resume();return ctx;}
+function fS(v){return Math.round(30*Math.pow(8000/30,v/1000));}
+function desc(f){return f<60?'Sub-bass: felt more than heard':f<250?'Bass: kick drums, bass guitar':f<2000?'Mids: voices live here':f<5000?'Presence: clarity':'Treble: cymbals, hiss';}
+var fr=document.getElementById('freq'),wc=document.getElementById('wave'),w=wc.getContext('2d'),osc=null,og=null;
+function drawWave(f){var W=wc.width,H=wc.height;w.clearRect(0,0,W,H);w.strokeStyle='#26364c';w.lineWidth=1;w.beginPath();w.moveTo(0,H/2);w.lineTo(W,H/2);w.stroke();
+var cyc=Math.max(1,Math.min(40,f/40));w.strokeStyle='#39ff88';w.lineWidth=3;w.beginPath();for(var x=0;x<=W;x+=2){var y=H/2-Math.sin(x/W*cyc*2*Math.PI)*H*.38;x?w.lineTo(x,y):w.moveTo(x,y);}w.stroke();}
+function upd(){var f=fS(+fr.value);document.getElementById('fv').textContent=f+' Hz';document.getElementById('fdesc').textContent=desc(f);drawWave(f);if(osc)osc.frequency.setTargetAtTime(f,ctx.currentTime,.03);}
+fr.addEventListener('input',upd);upd();
+function stopTone(b){og.gain.setTargetAtTime(0,ctx.currentTime,.03);var o=osc;setTimeout(function(){o.stop()},200);osc=null;b.textContent='\u25B6 Play tone';b.classList.remove('on');}
+document.getElementById('toneBtn').onclick=function(){var b=this;if(osc)return stopTone(b);
+ac();osc=ctx.createOscillator();og=ctx.createGain();og.gain.value=0;osc.frequency.value=fS(+fr.value);osc.connect(og);og.connect(master);osc.start();og.gain.setTargetAtTime(.8,ctx.currentTime,.05);b.textContent='\u25A0 Stop';b.classList.add('on');};
+var sl=document.getElementById('seal'),cc=document.getElementById('curve'),c=cc.getContext('2d'),hp=null,timer=null;
+function cutoff(){var l=1-(+sl.value/100);return 20+l*l*900;}
+function sealName(v){return v>90?'Perfect seal':v>65?'Slight gap':v>35?'Leaky':'Loose (barely in)';}
+function drawCurve(){var W=cc.width,H=cc.height,fc=cutoff();c.clearRect(0,0,W,H);c.font='13px system-ui';
+function X(f){return Math.log(f/20)/Math.log(1000)*W;}
+[[50,'50'],[200,'200'],[1000,'1k'],[5000,'5k']].forEach(function(t){c.strokeStyle='#1b2636';c.lineWidth=1;c.beginPath();c.moveTo(X(t[0]),0);c.lineTo(X(t[0]),H);c.stroke();c.fillStyle='#8e9bb0';c.fillText(t[1]+' Hz',X(t[0])+4,H-6);});
+c.fillStyle='#ff3dc8';c.fillText('BASS',8,16);c.fillText('TREBLE',W-58,16);
+c.strokeStyle='#39ff88';c.lineWidth=3;c.beginPath();for(var x=0;x<=W;x+=3){var f=20*Math.pow(1000,x/W),r=f/fc,g=(r*r)/Math.sqrt(1+r*r*r*r),y=26+(1-g)*(H-56);x?c.lineTo(x,y):c.moveTo(x,y);}c.stroke();}
+function updSeal(){document.getElementById('sv').textContent=sealName(+sl.value);drawCurve();if(hp)hp.frequency.setTargetAtTime(cutoff(),ctx.currentTime,.05);}
+sl.addEventListener('input',updSeal);updSeal();
+function hit(t){var o=ctx.createOscillator(),g=ctx.createGain();o.frequency.setValueAtTime(110,t);o.frequency.exponentialRampToValueAtTime(45,t+.25);g.gain.setValueAtTime(1,t);g.gain.exponentialRampToValueAtTime(.001,t+.35);o.connect(g);g.connect(hp);o.start(t);o.stop(t+.4);
+var b=ctx.createOscillator(),bg=ctx.createGain();b.type='sawtooth';b.frequency.value=55;bg.gain.setValueAtTime(.25,t+.25);bg.gain.exponentialRampToValueAtTime(.001,t+.5);b.connect(bg);bg.connect(hp);b.start(t+.25);b.stop(t+.55);
+var n=ctx.createOscillator(),ng=ctx.createGain();n.type='square';n.frequency.value=3200;ng.gain.setValueAtTime(.06,t+.25);ng.gain.exponentialRampToValueAtTime(.001,t+.3);n.connect(ng);ng.connect(hp);n.start(t+.25);n.stop(t+.32);}
+document.getElementById('beatBtn').onclick=function(){var b=this;if(timer){clearInterval(timer);timer=null;b.textContent='\u25B6 Play beat';b.classList.remove('on');return;}
+ac();if(!hp){hp=ctx.createBiquadFilter();hp.type='highpass';hp.Q.value=.7;hp.connect(master);}hp.frequency.value=cutoff();
+var next=ctx.currentTime+.05;function sched(){while(next<ctx.currentTime+.6){hit(next);next+=.5;}}sched();timer=setInterval(sched,150);b.textContent='\u25A0 Stop';b.classList.add('on');};
+var tips={40:'Missing? Normal for many buds. Try 60.',60:'Faint or missing here usually means a leak.',100:'You should feel a soft hum.',250:'Clear on almost any fit.',1000:'Reference tone: always clear.'},fit=document.getElementById('fit');
+[40,60,100,250,1000].forEach(function(f){var b=document.createElement('button');b.type='button';b.textContent=f+' Hz';b.onclick=function(){ac();var o=ctx.createOscillator(),g=ctx.createGain(),t=ctx.currentTime;o.frequency.value=f;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(f<200?1:.5,t+.08);g.gain.setValueAtTime(f<200?1:.5,t+1.2);g.gain.linearRampToValueAtTime(0,t+1.4);o.connect(g);g.connect(master);o.start(t);o.stop(t+1.5);document.getElementById('fitout').textContent=f+' Hz: '+tips[f];};fit.appendChild(b);});
+})();
+</script>
+</body></html>
