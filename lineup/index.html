@@ -23,34 +23,25 @@
 body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 a{color:var(--c)}
 main{max-width:1080px;margin:0 auto;padding:0 18px 70px}
-.phero{padding:34px 0 4px}
+.phero{padding:26px 0 6px}
 .phero .ph-k{display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--c);margin-bottom:8px}
 .phero .ph-h{font-size:clamp(40px,9vw,60px);font-weight:900;line-height:1.02;letter-spacing:-.02em;margin:0;color:var(--ink)}
 .phero .ph-h em{font-style:normal;background:linear-gradient(90deg,var(--c),#ff4fd8);-webkit-background-clip:text;background-clip:text;color:transparent}
 .phero .ph-s{margin:10px 0 0;color:var(--mut);font-size:16.5px}
-.tabs{position:sticky;top:0;z-index:40;display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 0;padding:12px 0;background:rgba(5,8,16,.96);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.tab{flex:0 0 auto;font:600 14px/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:11px 18px;border:1px solid var(--line2);border-radius:999px;color:var(--mut);background:var(--pan);cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent}
-.tab[aria-selected="true"]{color:#04160a;background:var(--g);border-color:var(--g);font-weight:800}
-.cat{padding:30px 0 4px}
-.sh{display:flex;align-items:baseline;gap:12px;margin-bottom:14px}
-.sh h2{font-size:1.6rem;font-weight:800;margin:0;letter-spacing:-.01em}
-.count{color:var(--mut);font-size:.85rem}
-.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
-.lpost{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--pan);text-decoration:none;color:var(--ink);transition:border-color .2s,transform .2s}
-.lpost:hover{border-color:var(--c);transform:translateY(-2px)}
-.limg{aspect-ratio:16/9;overflow:hidden;background:#050810;flex:none}
-.limg img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
-.lpost:hover .limg img{transform:scale(1.04)}
-.limg.art{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:18px 20px;background:radial-gradient(120% 160% at 85% -20%,rgba(34,240,255,.22),transparent 55%),radial-gradient(90% 120% at -10% 110%,rgba(255,106,42,.16),transparent 55%),#050810;border-bottom:1px solid rgba(34,240,255,.25)}
-.limg.art .t5{font-size:.72rem;font-weight:800;letter-spacing:.26em;text-transform:uppercase;color:var(--c);margin-bottom:2px}
-.limg.art .w{font-size:clamp(2.6rem,9vw,3.4rem);font-weight:900;line-height:1;letter-spacing:-.02em;color:var(--ink)}
-.limg.art .w.sm{font-size:clamp(2rem,7.5vw,2.7rem)}
-.lb{padding:16px 18px 18px;display:flex;flex-direction:column;flex:1}
-.lb .k{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--c)}
-.lb h3{margin:.25em 0 .3em;font-size:1.3rem;line-height:1.25;font-weight:800}
-.lb p{color:var(--mut);font-size:.95rem;line-height:1.45;margin:0;flex:1}
-.lmeta{font-size:12.5px;color:var(--mut);margin-top:12px}
-.go{margin-top:8px;font-size:14px;font-weight:800;color:var(--c)}
+.cat-h{font-size:23px;font-weight:800;margin:30px 0 12px;color:var(--ink)}
+.cat-h .count{color:var(--mut);font-size:13px;font-weight:600;margin-left:8px}
+section.cat:first-of-type .cat-h{margin-top:12px}
+.plist{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+.pitem{display:flex;flex-direction:column;border-radius:16px;overflow:hidden;background:var(--pan);border:1px solid var(--line);color:var(--ink);text-decoration:none;transition:transform .2s,border-color .2s}
+.pitem:hover{transform:translateY(-3px);border-color:rgba(34,240,255,.5)}
+.pitem .pim{aspect-ratio:16/9;background:#050810;overflow:hidden;flex:none}
+.pitem .pim img{width:100%;height:100%;object-fit:cover;display:block}
+.pitem .pim.tile{display:flex;align-items:center;justify-content:center;background:radial-gradient(120% 160% at 85% -20%,rgba(34,240,255,.20),transparent 55%),radial-gradient(90% 120% at -10% 110%,rgba(255,106,42,.15),transparent 55%),#050810;border-bottom:1px solid rgba(34,240,255,.25)}
+.pitem .pim.tile span{font-size:clamp(1.5rem,6vw,1.9rem);font-weight:900;line-height:1;letter-spacing:-.01em;color:var(--ink)}
+.pitem .pbd{padding:10px 12px 12px;display:flex;flex-direction:column;gap:4px;flex:1}
+.pitem h3{font-size:16px;line-height:1.3;margin:0}
+.pitem p{margin:0;color:var(--mut);font-size:13px;line-height:1.35;flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pitem .pgo{align-self:flex-start;font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px;margin-top:6px;color:#041016;background:var(--c)}
 .backrow{margin-top:40px}
 .back{color:var(--mut);text-decoration:none;font-size:.95rem}.back:hover{color:var(--ink)}
 .sfoot{border-top:1px solid var(--line);margin-top:44px;padding:26px 18px}
@@ -59,9 +50,12 @@ main{max-width:1080px;margin:0 auto;padding:0 18px 70px}
 .sfoot nav{display:flex;gap:14px;flex-wrap:wrap}
 .sfoot nav a{color:var(--mut);text-decoration:none;font-size:13.5px}
 .sfoot .fcopy{margin-left:auto;color:var(--mut);font-size:12.5px}
-@media(max-width:700px){
- .lgrid{grid-template-columns:1fr;gap:14px}
- .lb h3{font-size:1.35rem}
+@media(max-width:560px){
+ .plist{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .pitem .pbd{padding:8px 10px 10px}
+ .pitem h3{font-size:14px}
+ .pitem p{font-size:12px}
+ .pitem .pgo{font-size:12px}
  .sfoot .fcopy{margin-left:0}
  main{padding:0 14px 60px}
 }
@@ -84,230 +78,155 @@ main{max-width:1080px;margin:0 auto;padding:0 18px 70px}
 </div></div>
 
 <main>
-<section class="sec phero" id="spot"><div class="ph-t"><span class="ph-k">LeonLink presents</span><div class="ph-h">Top <em>5</em></div><p class="ph-s">The starting five of everything worth owning.</p></div></section>
-<div class="tabs" role="tablist" aria-label="Categories">
-<button class="tab" role="tab" data-cat="all" aria-selected="true">All</button>
-<button class="tab" role="tab" data-cat="tiktok" aria-selected="false">Viral Finds</button>
-<button class="tab" role="tab" data-cat="kitchen-shop" aria-selected="false">Kitchen</button>
-<button class="tab" role="tab" data-cat="tech-shop" aria-selected="false">Tech</button>
-<button class="tab" role="tab" data-cat="home-shop" aria-selected="false">Home</button>
-<button class="tab" role="tab" data-cat="beauty-shop" aria-selected="false">Beauty</button>
-<button class="tab" role="tab" data-cat="kids-shop" aria-selected="false">Kids</button>
-<button class="tab" role="tab" data-cat="gaming-shop" aria-selected="false">Gaming</button>
-<button class="tab" role="tab" data-cat="halloween" aria-selected="false">Halloween</button>
-<button class="tab" role="tab" data-cat="audio" aria-selected="false">Audio</button>
-<button class="tab" role="tab" data-cat="carry" aria-selected="false">Carry</button>
-<button class="tab" role="tab" data-cat="tools" aria-selected="false">Tools</button>
-<button class="tab" role="tab" data-cat="blades" aria-selected="false">Blades</button>
-<button class="tab" role="tab" data-cat="optics" aria-selected="false">Optics</button>
-<button class="tab" role="tab" data-cat="shooting" aria-selected="false">Shooting</button>
-<button class="tab" role="tab" data-cat="jewelry" aria-selected="false">Jewelry</button>
-</div>
+<section class="phero" id="spot"><span class="ph-k">LeonLink presents</span><div class="ph-h">Top <em>5</em></div><p class="ph-s">The starting five of everything worth owning.</p></section>
 <section class="cat" id="kitchen-shop">
-<div class="sh"><h2>Kitchen</h2><span class="count">1 list</span></div>
-<div class="lgrid">
-<a class="lpost" href="/lineup/kitchen-picks.html">
-  <div class="limg art" aria-hidden="true"><span class="t5">Top 5</span><span class="w">Kitchen</span></div>
-  <div class="lb"><span class="k">Starting Lineup &middot; Shop</span><h3>Top 5 Kitchen Gadgets Worth the Counter Space</h3>
-  <p>Instant Pot Duo 7-in-1 (6 Qt), COSORI Pro Air Fryer (5.8 Qt), Ninja Professional Blender and more.</p>
-  <div class="lmeta"><time datetime="2026-10">Updated Oct 2026</time></div>
-  <span class="go">See the five →</span></div>
+<h2 class="cat-h">Kitchen<span class="count">1 list</span></h2>
+<div class="plist">
+<a class="pitem" href="/lineup/kitchen-picks.html">
+  <div class="pim tile" aria-hidden="true"><span>Kitchen</span></div>
+  <div class="pbd"><h3>Top 5 Kitchen Gadgets Worth the Counter Space</h3><p>Instant Pot Duo 7-in-1 (6 Qt), COSORI Pro Air Fryer (5.8 Qt), Ninja Professional Blender and more.</p><span class="pgo">See the five →</span></div>
 </a>
 </div>
 </section>
 <section class="cat" id="tech-shop">
-<div class="sh"><h2>Tech</h2><span class="count">1 list</span></div>
-<div class="lgrid">
-<a class="lpost" href="/lineup/tech-picks.html">
-  <div class="limg art" aria-hidden="true"><span class="t5">Top 5</span><span class="w">Tech</span></div>
-  <div class="lb"><span class="k">Starting Lineup &middot; Shop</span><h3>Top 5 Tech Gadgets That Earn Their Spot</h3>
-  <p>Apple AirTag 4 Pack, Anker Portable Charger Power Bank, Amazon Echo Dot and more.</p>
-  <div class="lmeta"><time datetime="2026-10">Updated Oct 2026</time></div>
-  <span class="go">See the five →</span></div>
+<h2 class="cat-h">Tech<span class="count">1 list</span></h2>
+<div class="plist">
+<a class="pitem" href="/lineup/tech-picks.html">
+  <div class="pim tile" aria-hidden="true"><span>Tech</span></div>
+  <div class="pbd"><h3>Top 5 Tech Gadgets That Earn Their Spot</h3><p>Apple AirTag 4 Pack, Anker Portable Charger Power Bank, Amazon Echo Dot and more.</p><span class="pgo">See the five →</span></div>
 </a>
 </div>
 </section>
 <section class="cat" id="home-shop">
-<div class="sh"><h2>Home</h2><span class="count">1 list</span></div>
-<div class="lgrid">
-<a class="lpost" href="/lineup/home-picks.html">
-  <div class="limg art" aria-hidden="true"><span class="t5">Top 5</span><span class="w">Home</span></div>
-  <div class="lb"><span class="k">Starting Lineup &middot; Shop</span><h3>Top 5 Home and Cleaning Buys That Do the Work</h3>
-  <p>Shark Navigator Lift-Away Upright Vacuum, iRobot Roomba Robot Vacuum, Scrub Daddy Sponge and more.</p>
-  <div class="lmeta"><time datetime="2026-10">Updated Oct 2026</time></div>
-  <span class="go">See the five →</span></div>
+<h2 class="cat-h">Home<span class="count">1 list</span></h2>
+<div class="plist">
+<a class="pitem" href="/lineup/home-picks.html">
+  <div class="pim tile" aria-hidden="true"><span>Home</span></div>
+  <div class="pbd"><h3>Top 5 Home and Cleaning Buys That Do the Work</h3><p>Shark Navigator Lift-Away Upright Vacuum, iRobot Roomba Robot Vacuum, Scrub Daddy Sponge and more.</p><span class="pgo">See the five →</span></div>
 </a>
 </div>
 </section>
 <section class="cat" id="beauty-shop">
-<div class="sh"><h2>Beauty</h2><span class="count">1 list</span></div>
-<div class="lgrid">
-<a class="lpost" href="/lineup/beauty-picks.html">
-  <div class="limg art" aria-hidden="true"><span class="t5">Top 5</span><span class="w">Beauty</span></div>
-  <div class="lb"><span class="k">Starting Lineup &middot; Shop</span><h3>Top 5 Beauty Buys Everyone Keeps Re-Ordering</h3>
-  <p>CeraVe Moisturizing Cream, Laneige Lip Sleeping Mask, COSRX Snail Mucin Essence and more.</p>
-  <div class="lmeta"><time datetime="2026-10">Updated Oct 2026</time></div>
-  <span class="go">See the five →</span></div>
+<h2 class="cat-h">Beauty<span class="count">1 list</span></h2>
+<div class="plist">
+<a class="pitem" href="/lineup/beauty-picks.html">
+  <div class="pim tile" aria-hidden="true"><span>Beauty</span></div>
+  <div class="pbd"><h3>Top 5 Beauty Buys Everyone Keeps Re-Ordering</h3><p>CeraVe Moisturizing Cream, Laneige Lip Sleeping Mask, COSRX Snail Mucin Essence and more.</p><span class="pgo">See the five →</span></div>
 </a>
 </div>
 </section>
 <section class="cat" id="kids-shop">
-<div class="sh"><h2>Kids</h2><span class="count">1 list</span></div>
-<div class="lgrid">
-<a class="lpost" href="/lineup/kids-picks.html">
-  <div class="limg art" aria-hidden="true"><span class="t5">Top 5</span><span class="w">Kids</span></div>
-  <div class="lb"><span class="k">Starting Lineup &middot; Shop</span><h3>Top 5 Kids Toys That Actually Get Played With</h3>
-  <p>LEGO Classic Large Creative Brick Box, Magna-Tiles Clear Colors Set, Melissa and Doug Wooden Building Blocks and more.</p>
-  <div class="lmeta"><time datetime="2026-10">Updated Oct 2026</time></div>
-  <span class="go">See the five →</span></div>
+<h2 class="cat-h">Kids<span class="count">1 list</span></h2>
+<div class="plist">
+<a class="pitem" href="/lineup/kids-picks.html">
+  <div class="pim tile" aria-hidden="true"><span>Kids</span></div>
+  <div class="pbd"><h3>Top 5 Kids Toys That Actually Get Played With</h3><p>LEGO Classic Large Creative Brick Box, Magna-Tiles Clear Colors Set, Melissa and Doug Wooden Building Blocks and more.</p><span class="pgo">See the five →</span></div>
 </a>
 </div>
 </section>
 <section class="cat" id="gaming-shop">
-<div class="sh"><h2>Gaming</h2><span class="count">1 list</span></div>
-<div class="lgrid">
-<a class="lpost" href="/lineup/gaming-picks.html">
-  <div class="limg art" aria-hidden="true"><span class="t5">Top 5</span><span class="w">Gaming</span></div>
-  <div class="lb"><span class="k">Starting Lineup &middot; Shop</span><h3>Top 5 Gaming Gear Picks for Every Setup</h3>
-  <p>Nintendo Switch OLED, Xbox Wireless Controller, HyperX Cloud II Gaming Headset and more.</p>
-  <div class="lmeta"><time datetime="2026-10">Updated Oct 2026</time></div>
-  <span class="go">See the five →</span></div>
+<h2 class="cat-h">Gaming<span class="count">1 list</span></h2>
+<div class="plist">
+<a class="pitem" href="/lineup/gaming-picks.html">
+  <div class="pim tile" aria-hidden="true"><span>Gaming</span></div>
+  <div class="pbd"><h3>Top 5 Gaming Gear Picks for Every Setup</h3><p>Nintendo Switch OLED, Xbox Wireless Controller, HyperX Cloud II Gaming Headset and more.</p><span class="pgo">See the five →</span></div>
 </a>
 </div>
 </section>
 <section class="cat" id="halloween">
-<div class="sh"><h2>Halloween</h2><span class="count">2 lists</span></div>
-<div class="lgrid">
-<a class="lpost" href="/lineup/halloween-costumes.html">
-  <div class="limg"><img src="/img/cards/top5costumes.jpg" alt="Top 5 Halloween Costumes" loading="lazy"></div>
-  <div class="lb"><span class="k">Starting Lineup · Halloween</span><h3>Top 5 Halloween Costumes</h3>
-  <p>Ghostface, Wednesday, Beetlejuice, Michael Myers, the witch — instantly recognizable.</p>
-  <div class="lmeta"><time datetime="2026-10">Updated Oct 2026</time></div>
-  <span class="go">See the five →</span></div>
+<h2 class="cat-h">Halloween<span class="count">2 lists</span></h2>
+<div class="plist">
+<a class="pitem" href="/lineup/halloween-costumes.html">
+  <div class="pim"><img src="/img/cards/top5costumes.jpg" alt="Top 5 Halloween Costumes" loading="lazy"></div>
+  <div class="pbd"><h3>Top 5 Halloween Costumes</h3><p>Ghostface, Wednesday, Beetlejuice, Michael Myers, the witch — instantly recognizable.</p><span class="pgo">See the five →</span></div>
 </a>
-<a class="lpost" href="/lineup/halloween-candy.html">
-  <div class="limg"><img src="/img/cards/top5candy.jpg" alt="Top 5 Halloween Candies" loading="lazy"></div>
-  <div class="lb"><span class="k">Starting Lineup · Halloween</span><h3>Top 5 Halloween Candies</h3>
-  <p>Reese’s, Kit Kat, Snickers, M&amp;M’s, Twix — ranked by trade value.</p>
-  <div class="lmeta"><time datetime="2026-10">Updated Oct 2026</time></div>
-  <span class="go">See the five →</span></div>
+<a class="pitem" href="/lineup/halloween-candy.html">
+  <div class="pim"><img src="/img/cards/top5candy.jpg" alt="Top 5 Halloween Candies" loading="lazy"></div>
+  <div class="pbd"><h3>Top 5 Halloween Candies</h3><p>Reese’s, Kit Kat, Snickers, M&amp;M’s, Twix — ranked by trade value.</p><span class="pgo">See the five →</span></div>
 </a>
 </div>
 </section>
 <section class="cat" id="audio">
-<div class="sh"><h2>Audio</h2><span class="count">2 lists</span></div>
-<div class="lgrid">
-<a class="lpost" href="/lineup/earbuds.html">
-  <div class="limg"><img src="/img/cards/top5buds.jpg" alt="Top 5 Wireless Earbuds" loading="lazy"></div>
-  <div class="lb"><span class="k">Starting Lineup · Audio</span><h3>Top 5 Wireless Earbuds</h3>
-  <p>Sony, Apple, Bose, Samsung — the five earbuds worth your ears.</p>
-  <div class="lmeta"><time datetime="2026-10">Updated Oct 2026</time></div>
-  <span class="go">See the five →</span></div>
+<h2 class="cat-h">Audio<span class="count">2 lists</span></h2>
+<div class="plist">
+<a class="pitem" href="/lineup/earbuds.html">
+  <div class="pim"><img src="/img/cards/top5buds.jpg" alt="Top 5 Wireless Earbuds" loading="lazy"></div>
+  <div class="pbd"><h3>Top 5 Wireless Earbuds</h3><p>Sony, Apple, Bose, Samsung — the five earbuds worth your ears.</p><span class="pgo">See the five →</span></div>
 </a>
-<a class="lpost" href="/lineup/party-speakers.html">
-  <div class="limg"><img src="/img/cards/party-speakers.jpg" alt="Top 5 Party Speakers" loading="lazy"></div>
-  <div class="lb"><span class="k">Starting Lineup · Audio</span><h3>Top 5 Party Speakers</h3>
-  <p>JBL, Sony, UE, Tribit, Turtlebox — loud enough to feel.</p>
-  <div class="lmeta"><time datetime="2026-10">Updated Oct 2026</time></div>
-  <span class="go">See the five →</span></div>
+<a class="pitem" href="/lineup/party-speakers.html">
+  <div class="pim"><img src="/img/cards/party-speakers.jpg" alt="Top 5 Party Speakers" loading="lazy"></div>
+  <div class="pbd"><h3>Top 5 Party Speakers</h3><p>JBL, Sony, UE, Tribit, Turtlebox — loud enough to feel.</p><span class="pgo">See the five →</span></div>
 </a>
 </div>
 </section>
 <section class="cat" id="carry">
-<div class="sh"><h2>Carry</h2><span class="count">1 list</span></div>
-<div class="lgrid">
-<a class="lpost" href="/lineup/backpacks.html">
-  <div class="limg"><img src="/img/cards/top5pack.jpg" alt="Top 5 EDC Backpacks" loading="lazy"></div>
-  <div class="lb"><span class="k">Starting Lineup · Carry</span><h3>Top 5 EDC Backpacks</h3>
-  <p>GoRuck, Aer, Peak Design, 5.11, Bellroy — the five bags worth carrying daily.</p>
-  <div class="lmeta"><time datetime="2026-10">Updated Oct 2026</time></div>
-  <span class="go">See the five →</span></div>
+<h2 class="cat-h">Carry<span class="count">1 list</span></h2>
+<div class="plist">
+<a class="pitem" href="/lineup/backpacks.html">
+  <div class="pim"><img src="/img/cards/top5pack.jpg" alt="Top 5 EDC Backpacks" loading="lazy"></div>
+  <div class="pbd"><h3>Top 5 EDC Backpacks</h3><p>GoRuck, Aer, Peak Design, 5.11, Bellroy — the five bags worth carrying daily.</p><span class="pgo">See the five →</span></div>
 </a>
 </div>
 </section>
 <section class="cat" id="tools">
-<div class="sh"><h2>Tools</h2><span class="count">3 lists</span></div>
-<div class="lgrid">
-<a class="lpost" href="/lineup/multitools.html">
-  <div class="limg"><img src="/img/cards/top5multi.jpg" alt="Top 5 Multitools" loading="lazy"></div>
-  <div class="lb"><span class="k">Starting Lineup · Tools</span><h3>Top 5 Multitools</h3>
-  <p>Leatherman, Victorinox, Gerber — the five multitools worth carrying.</p>
-  <div class="lmeta"><time datetime="2026-10">Updated Oct 2026</time></div>
-  <span class="go">See the five →</span></div>
+<h2 class="cat-h">Tools<span class="count">3 lists</span></h2>
+<div class="plist">
+<a class="pitem" href="/lineup/multitools.html">
+  <div class="pim"><img src="/img/cards/top5multi.jpg" alt="Top 5 Multitools" loading="lazy"></div>
+  <div class="pbd"><h3>Top 5 Multitools</h3><p>Leatherman, Victorinox, Gerber — the five multitools worth carrying.</p><span class="pgo">See the five →</span></div>
 </a>
-<a class="lpost" href="/lineup/drills.html">
-  <div class="limg"><img src="/img/cards/top5drills.jpg" alt="Top 5 Battery Drills" loading="lazy"></div>
-  <div class="lb"><span class="k">Starting Lineup · Tools</span><h3>Top 5 Battery Drills</h3>
-  <p>Milwaukee, DeWalt, Makita, Bosch, Ryobi — the cordless kits worth buying.</p>
-  <div class="lmeta"><time datetime="2026-10">Updated Oct 2026</time></div>
-  <span class="go">See the five →</span></div>
+<a class="pitem" href="/lineup/drills.html">
+  <div class="pim"><img src="/img/cards/top5drills.jpg" alt="Top 5 Battery Drills" loading="lazy"></div>
+  <div class="pbd"><h3>Top 5 Battery Drills</h3><p>Milwaukee, DeWalt, Makita, Bosch, Ryobi — the cordless kits worth buying.</p><span class="pgo">See the five →</span></div>
 </a>
-<a class="lpost" href="/lineup/flashlights.html">
-  <div class="limg"><img src="/img/cards/top5light.jpg" alt="Top 5 Flashlights" loading="lazy"></div>
-  <div class="lb"><span class="k">Starting Lineup · Tools</span><h3>Top 5 Flashlights</h3>
-  <p>Fenix, Streamlight, SureFire, Olight — real lumens, real prices.</p>
-  <div class="lmeta"><time datetime="2026-10">Updated Oct 2026</time></div>
-  <span class="go">See the five →</span></div>
+<a class="pitem" href="/lineup/flashlights.html">
+  <div class="pim"><img src="/img/cards/top5light.jpg" alt="Top 5 Flashlights" loading="lazy"></div>
+  <div class="pbd"><h3>Top 5 Flashlights</h3><p>Fenix, Streamlight, SureFire, Olight — real lumens, real prices.</p><span class="pgo">See the five →</span></div>
 </a>
 </div>
 </section>
 <section class="cat" id="blades">
-<div class="sh"><h2>Blades</h2><span class="count">1 list</span></div>
-<div class="lgrid">
-<a class="lpost" href="/lineup/benchmade-knives.html">
-  <div class="limg"><img src="/img/cards/top5bench.jpg" alt="Top 5 Benchmades" loading="lazy"></div>
-  <div class="lb"><span class="k">Starting Lineup · Blades</span><h3>Top 5 Benchmades</h3>
-  <p>Bugout ELMAX, Bailout S90V, Osborne — Benchmade's 2026 releases ranked.</p>
-  <div class="lmeta"><time datetime="2026-10">Updated Oct 2026</time></div>
-  <span class="go">See the five →</span></div>
+<h2 class="cat-h">Blades<span class="count">1 list</span></h2>
+<div class="plist">
+<a class="pitem" href="/lineup/benchmade-knives.html">
+  <div class="pim"><img src="/img/cards/top5bench.jpg" alt="Top 5 Benchmades" loading="lazy"></div>
+  <div class="pbd"><h3>Top 5 Benchmades</h3><p>Bugout ELMAX, Bailout S90V, Osborne — Benchmade's 2026 releases ranked.</p><span class="pgo">See the five →</span></div>
 </a>
 </div>
 </section>
 <section class="cat" id="optics">
-<div class="sh"><h2>Optics</h2><span class="count">1 list</span></div>
-<div class="lgrid">
-<a class="lpost" href="/lineup/sunglasses.html">
-  <div class="limg"><img src="/img/cards/top5shades.jpg" alt="Top 5 Sunglasses" loading="lazy"></div>
-  <div class="lb"><span class="k">Starting Lineup · Optics</span><h3>Top 5 Sunglasses</h3>
-  <p>Oakley, Ray-Ban, Maui Jim, Costa, goodr — the five shades worth wearing.</p>
-  <div class="lmeta"><time datetime="2026-10">Updated Oct 2026</time></div>
-  <span class="go">See the five →</span></div>
+<h2 class="cat-h">Optics<span class="count">1 list</span></h2>
+<div class="plist">
+<a class="pitem" href="/lineup/sunglasses.html">
+  <div class="pim"><img src="/img/cards/top5shades.jpg" alt="Top 5 Sunglasses" loading="lazy"></div>
+  <div class="pbd"><h3>Top 5 Sunglasses</h3><p>Oakley, Ray-Ban, Maui Jim, Costa, goodr — the five shades worth wearing.</p><span class="pgo">See the five →</span></div>
 </a>
 </div>
 </section>
 <section class="cat" id="shooting">
-<div class="sh"><h2>Shooting</h2><span class="count">1 list</span></div>
-<div class="lgrid">
-<a class="lpost" href="/lineup/pcp-air-rifles.html">
-  <div class="limg"><img src="/img/cards/top5pcp.jpg" alt="Top 5 PCP Air Rifles" loading="lazy"></div>
-  <div class="lb"><span class="k">Starting Lineup · Shooting</span><h3>Top 5 PCP Air Rifles</h3>
-  <p>Pre-charged pneumatic rifles ranked, from $350 to the Swedish endgame.</p>
-  <div class="lmeta"><time datetime="2026-10">Updated Oct 2026</time></div>
-  <span class="go">See the five →</span></div>
+<h2 class="cat-h">Shooting<span class="count">1 list</span></h2>
+<div class="plist">
+<a class="pitem" href="/lineup/pcp-air-rifles.html">
+  <div class="pim"><img src="/img/cards/top5pcp.jpg" alt="Top 5 PCP Air Rifles" loading="lazy"></div>
+  <div class="pbd"><h3>Top 5 PCP Air Rifles</h3><p>Pre-charged pneumatic rifles ranked, from $350 to the Swedish endgame.</p><span class="pgo">See the five →</span></div>
 </a>
 </div>
 </section>
 <section class="cat" id="jewelry">
-<div class="sh"><h2>Jewelry</h2><span class="count">1 list</span></div>
-<div class="lgrid">
-<a class="lpost" href="/lineup/wedding-gems.html">
-  <div class="limg"><img src="/img/cards/top5gems.jpg" alt="Top 5 Wedding Gems (Not Diamonds)" loading="lazy"></div>
-  <div class="lb"><span class="k">Starting Lineup · Jewelry</span><h3>Top 5 Wedding Gems (Not Diamonds)</h3>
-  <p>Moissanite, sapphire, ruby, emerald, morganite — five ring stones that aren’t diamonds.</p>
-  <div class="lmeta"><time datetime="2026-10">Updated Oct 2026</time></div>
-  <span class="go">See the five →</span></div>
+<h2 class="cat-h">Jewelry<span class="count">1 list</span></h2>
+<div class="plist">
+<a class="pitem" href="/lineup/wedding-gems.html">
+  <div class="pim"><img src="/img/cards/top5gems.jpg" alt="Top 5 Wedding Gems (Not Diamonds)" loading="lazy"></div>
+  <div class="pbd"><h3>Top 5 Wedding Gems (Not Diamonds)</h3><p>Moissanite, sapphire, ruby, emerald, morganite — five ring stones that aren’t diamonds.</p><span class="pgo">See the five →</span></div>
 </a>
 </div>
 </section>
 <section class="cat" id="tiktok">
-<div class="sh"><h2>Viral Finds</h2><span class="count">From our TikTok ads</span></div>
-<div class="lgrid">
-<a class="lpost" href="/lineup/tiktok-picks.html">
-  <div class="limg art" aria-hidden="true"><span class="t5">Top 5</span><span class="w sm">Viral Finds</span></div>
-  <div class="lb"><span class="k">Viral Finds · From our ads</span><h3>Viral Finds — TikTok Made Me Buy It</h3>
-  <p>Stanley, Little Green, Laneige, Owala, Ninja CREAMi — the viral buys that hold up.</p>
-  <div class="lmeta"><time datetime="2026-10">Updated Oct 2026</time></div>
-  <span class="go">See the five →</span></div>
+<h2 class="cat-h">Viral Finds<span class="count">From our TikTok ads</span></h2>
+<div class="plist">
+<a class="pitem" href="/lineup/tiktok-picks.html">
+  <div class="pim tile" aria-hidden="true"><span>Viral Finds</span></div>
+  <div class="pbd"><h3>Viral Finds — TikTok Made Me Buy It</h3><p>Stanley, Little Green, Laneige, Owala, Ninja CREAMi — the viral buys that hold up.</p><span class="pgo">See the five →</span></div>
 </a>
 </div>
 </section>
@@ -320,19 +239,6 @@ main{max-width:1080px;margin:0 auto;padding:0 18px 70px}
 </div></footer>
 
 <script>(function(){try{var p=location.pathname;fetch("/api/track?p="+encodeURIComponent(p)+"&r="+encodeURIComponent(document.referrer||""),{mode:"no-cors",keepalive:true}).catch(function(){})}catch(e){}})();</script>
-<script>
-const tabs=[...document.querySelectorAll('.tab')];
-const cats=[...document.querySelectorAll('section.cat')];
-function showCat(id){
-  if(!cats.some(c=>c.id===id))id='all';
-  tabs.forEach(t=>t.setAttribute('aria-selected',t.dataset.cat===id?'true':'false'));
-  cats.forEach(c=>{c.style.display=(id==='all'||c.id===id)?'':'none'});
-  history.replaceState(null,'',id==='all'?location.pathname:'#'+id);
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-tabs.forEach(t=>t.addEventListener('click',()=>showCat(t.dataset.cat)));
-showCat(location.hash.slice(1));
-</script>
 <nav class="bnav" aria-label="Quick navigation">
   <a href="/" class=""><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</a>
   <a href="/games.html" class=""><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 11v3M5.5 12.5h3M15.5 12h.01M18 13.5h.01"/></svg>Games</a>
