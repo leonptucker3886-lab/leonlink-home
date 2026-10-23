@@ -296,6 +296,11 @@
       "source": "/hire-me",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/news.html",
+      "destination": "/blog.html",
+      "permanent": true
     }
   ],
   "headers": [
