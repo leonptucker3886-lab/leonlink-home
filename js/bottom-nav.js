@@ -9,7 +9,7 @@ function init(){
 if(document.querySelector("nav.lbn"))return;
 var s=document.createElement("style");s.id="lbn-css";s.textContent=css;document.head.appendChild(s);
 var bn=document.createElement("nav");bn.className="lbn";bn.setAttribute("aria-label","Bottom navigation");
-bn.innerHTML=[["\uD83C\uDFC6","Top 5","/lineup/"],["\uD83C\uDFE0","Home","/"],["\uD83D\uDCBB","Software","/software.html"],["\uD83C\uDFAE","Games","/games.html"],["\uD83D\uDCDD","Blog","/blog.html"],["\u231A","Watchline","/watchline/"]].map(function(x){return '<a href="'+x[2]+'"'+(on(x[2])?' class="on" aria-current="page"':'')+'>'+x[0]+'<span>'+x[1]+'</span></a>';}).join("")+'<button type="button" aria-label="More" aria-expanded="false">\u2630<span>More</span></button>';
+bn.innerHTML=[["\uD83C\uDFC6","Top 5","/lineup/"],["\uD83C\uDFE0","Home","/"],["\uD83D\uDCBB","Software","/software.html"],["\uD83C\uDFAE","Games","/games.html"],["\uD83D\uDCDD","Blog","/blog.html"]].map(function(x){return '<a href="'+x[2]+'"'+(on(x[2])?' class="on" aria-current="page"':'')+'>'+x[0]+'<span>'+x[1]+'</span></a>';}).join("")+'<button type="button" aria-label="More" aria-expanded="false">\u2630<span>More</span></button>';
 document.body.appendChild(bn);
 var mo=bn.querySelector("button");
 mo.onclick=function(){var d=document.querySelector(".lnd");
