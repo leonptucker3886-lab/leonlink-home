@@ -75,6 +75,8 @@
     <form id="add-form">
       <label>Photo of card</label><br>
       <input id="f-photo" type="file" accept="image/*" capture="environment">
+      <label>Or pick one already taken</label>
+      <input id="f-gallery" type="file" accept="image/*">
       <img id="photo-preview" alt="">
       <label>Name</label>
       <input id="f-name" type="text" placeholder="Visa gift, Amazon, etc." maxlength="60">
@@ -294,14 +296,19 @@ document.getElementById("f-cancel").addEventListener("click", function () {
   document.getElementById("photo-preview").style.display = "none";
   pendingPhoto = null;
 });
-document.getElementById("f-photo").addEventListener("change", function (e) {
-  var file = e.target.files && e.target.files[0];
+function handlePhotoFile(file) {
   if (!file) { pendingPhoto = null; return; }
   downscale(file).then(function (dataUrl) {
     pendingPhoto = dataUrl;
     var p = document.getElementById("photo-preview");
     p.src = dataUrl; p.style.display = "block";
-  }).catch(function () { pendingPhoto = null; });
+  }).catch(function () { pendingPhoto = null; alert("That photo could not be read. Try the gallery option."); });
+}
+document.getElementById("f-photo").addEventListener("change", function (e) {
+  handlePhotoFile(e.target.files && e.target.files[0]);
+});
+document.getElementById("f-gallery").addEventListener("change", function (e) {
+  handlePhotoFile(e.target.files && e.target.files[0]);
 });
 document.getElementById("add-form").addEventListener("submit", function (e) {
   e.preventDefault();
