@@ -17,6 +17,12 @@
   button.secondary { background: #333; }
   button.danger { background: #7f1d1d; }
   button.small { font-size: 16px; padding: 8px 12px; }
+  select { width: 100%; background: #222; color: #fff; border: 1px solid #444; font-size: 20px; padding: 12px 14px; border-radius: 12px; margin: 6px 0 14px; }
+  #controls { display: flex; gap: 8px; margin: 16px 0 4px; flex-wrap: wrap; align-items: center; }
+  #sort-sel { width: auto; margin: 0; font-size: 18px; }
+  .chip { background: #333; font-size: 16px; padding: 8px 14px; border-radius: 999px; }
+  .chip.active { background: #2563eb; }
+  .card .ctype { font-size: 15px; color: #888; }
   input[type="text"], input[type="number"], input[type="password"] { width: 100%; background: #222; color: #fff; border: 1px solid #444; margin: 6px 0 14px; }
   label { font-size: 18px; color: #ccc; }
   #lock-screen { padding: 60px 16px 0; max-width: 420px; margin: 0 auto; text-align: center; }
@@ -85,6 +91,13 @@
       <img id="photo-preview" alt="">
       <label>Name</label>
       <input id="f-name" type="text" placeholder="Visa gift, Amazon, etc." maxlength="60">
+      <label>Type</label>
+      <select id="f-type">
+        <option value="Other">Other</option>
+        <option value="Visa">Visa</option>
+        <option value="Mastercard">Mastercard</option>
+        <option value="Amex">Amex</option>
+      </select>
       <label>Full card number (optional)</label>
       <input id="f-num" type="text" inputmode="numeric" placeholder="Numbers only" maxlength="19">
       <label>Balance ($)</label>
@@ -92,6 +105,22 @@
       <button id="f-save" type="submit">Save card</button>
       <button id="f-cancel" type="button" class="secondary">Cancel</button>
     </form>
+
+    <div id="controls">
+      <select id="sort-sel">
+        <option value="newest">Newest</option>
+        <option value="value-desc">Highest $</option>
+        <option value="value-asc">Lowest $</option>
+        <option value="name">Name A–Z</option>
+      </select>
+      <div id="type-chips">
+        <button type="button" class="chip active" data-type="all">All</button>
+        <button type="button" class="chip" data-type="Visa">Visa</button>
+        <button type="button" class="chip" data-type="Mastercard">Mastercard</button>
+        <button type="button" class="chip" data-type="Amex">Amex</button>
+        <button type="button" class="chip" data-type="Other">Other</button>
+      </div>
+    </div>
 
     <div id="list"></div>
     <div id="empty" style="display:none">No cards yet.<br>Tap + Add a card.</div>
@@ -114,7 +143,9 @@
 <button id="to-top" type="button" class="small secondary" style="display:none;position:fixed;bottom:20px;right:16px;z-index:40;">↑ Top</button>
 
 <script>
-var DB_NAME = "giftcards", STORE = "cards", db = null, pendingPhoto = null;
+var DB_NAME = "giftcards", STORE = "cards", db = null, pendingPhoto = null, typeTouched = false;
+var sortBy = localStorage.getItem("gc_sort") || "newest";
+var typeFilter = localStorage.getItem("gc_type") || "all";
 var revealed = {};
 var editingId = null;
 
@@ -137,6 +168,16 @@ function masked(num) {
   if (!num) return "";
   if (num.length <= 4) return num;
   return "\u2022\u2022\u2022\u2022 " + num.slice(-4);
+}
+function detectType(num) {
+  num = digits(num);
+  if (/^3[47]/.test(num)) return "Amex";
+  if (/^4/.test(num)) return "Visa";
+  if (/^5[1-5]/.test(num) || /^(222[1-9]|22[3-9]\d|2[3-6]\d\d|27[01]\d|2720)/.test(num)) return "Mastercard";
+  return "Other";
+}
+function cardType(c) {
+  return c.type || detectType(c.num);
 }
 
 /* ---------- PIN ---------- */
@@ -267,10 +308,16 @@ function downscale(file) {
 
 function render() {
   return getAll().then(function (cards) {
-    cards.sort(function (a, b) { return b.updatedAt - a.updatedAt; });
+    var shown = cards.filter(function (c) {
+      return typeFilter === "all" || cardType(c) === typeFilter;
+    });
+    if (sortBy === "value-desc") shown.sort(function (a, b) { return b.balance - a.balance; });
+    else if (sortBy === "value-asc") shown.sort(function (a, b) { return a.balance - b.balance; });
+    else if (sortBy === "name") shown.sort(function (a, b) { return a.name.localeCompare(b.name); });
+    else shown.sort(function (a, b) { return b.updatedAt - a.updatedAt; });
     var total = 0, html = "";
-    cards.forEach(function (c) {
-      total += c.balance;
+    cards.forEach(function (c) { total += c.balance; });
+    shown.forEach(function (c) {
       var photo = c.photo
         ? '<img class="thumb" src="' + c.photo + '" alt="" data-full="' + c.photo + '">'
         : '<div class="nophoto">&#127873;</div>';
@@ -283,7 +330,7 @@ function render() {
         numLine = '<div class="num" data-num="' + esc(c.num) + '" title="Tap to show / hide">' + esc(shown) + "</div>";
       }
       html += '<div class="card" data-id="' + c.id + '">' + photo +
-        '<div class="info">' + nameHtml + numLine +
+        '<div class="info">' + nameHtml + '<div class="ctype">' + esc(cardType(c)) + "</div>" + numLine +
         '<div class="bal">' + money(c.balance) + "</div>" +
         '<div class="row"><input type="number" inputmode="decimal" step="0.01" min="0" placeholder="Amount $" class="amt">' +
         '<button type="button" class="small spent">Spent</button>' +
@@ -295,7 +342,12 @@ function render() {
         "</div></div>";
     });
     document.getElementById("list").innerHTML = html;
-    document.getElementById("empty").style.display = cards.length ? "none" : "block";
+    var emptyEl = document.getElementById("empty");
+    if (shown.length) { emptyEl.style.display = "none"; }
+    else {
+      emptyEl.style.display = "block";
+      emptyEl.innerHTML = cards.length ? "No cards of that type." : "No cards yet.<br>Tap + Add a card.";
+    }
     document.getElementById("total").textContent = money(total);
   });
 }
@@ -309,6 +361,7 @@ document.getElementById("f-cancel").addEventListener("click", function () {
   document.getElementById("photo-preview").style.display = "none";
   pendingPhoto = null;
   setPhotoStatus("");
+  typeTouched = false;
 });
 function setPhotoStatus(msg) {
   var s = document.getElementById("photo-status");
@@ -343,22 +396,29 @@ document.getElementById("f-photo").addEventListener("change", function (e) {
 document.getElementById("f-gallery").addEventListener("change", function (e) {
   handlePhotoFile(e.target.files && e.target.files[0]);
 });
+document.getElementById("f-type").addEventListener("change", function () { typeTouched = true; });
+document.getElementById("f-num").addEventListener("input", function (e) {
+  if (typeTouched) return;
+  document.getElementById("f-type").value = detectType(e.target.value);
+});
 document.getElementById("add-form").addEventListener("submit", function (e) {
   e.preventDefault();
   var name = document.getElementById("f-name").value.trim();
   var num = digits(document.getElementById("f-num").value).slice(0, 19);
+  var type = document.getElementById("f-type").value;
   var bal = toCents(document.getElementById("f-bal").value);
   if (!name) { alert("Give the card a name first."); return; }
   if (bal === null) { alert("Enter a balance."); return; }
   var now = Date.now();
   if (!db) { alert("Storage is not ready. Reload the page and try again."); return; }
-  putCard({ name: name, num: num, balance: bal, photo: pendingPhoto, createdAt: now, updatedAt: now })
+  putCard({ name: name, num: num, type: type, balance: bal, photo: pendingPhoto, createdAt: now, updatedAt: now })
     .then(function () {
       document.getElementById("add-form").reset();
       document.getElementById("add-form").classList.remove("open");
       document.getElementById("photo-preview").style.display = "none";
       pendingPhoto = null;
       setPhotoStatus("");
+      typeTouched = false;
       return render();
     })
     .catch(function (err) {
@@ -412,6 +472,7 @@ document.getElementById("list").addEventListener("click", function (e) {
     delCard(id).then(render);
     return;
   }
+  if (!t.classList.contains("spent") && !t.classList.contains("set")) return;
   var cents = toCents(amtInput.value);
   if (cents === null) { alert("Enter an amount first."); return; }
   getAll().then(function (cards) {
@@ -500,6 +561,26 @@ document.getElementById("restore-file").addEventListener("change", function (e) 
 if ("serviceWorker" in navigator && location.protocol.indexOf("http") === 0) {
   navigator.serviceWorker.register("gift-cards-sw.js").catch(function () {});
 }
+
+document.getElementById("sort-sel").addEventListener("change", function (e) {
+  sortBy = e.target.value;
+  localStorage.setItem("gc_sort", sortBy);
+  render();
+});
+document.getElementById("type-chips").addEventListener("click", function (e) {
+  var btn = e.target.closest(".chip");
+  if (!btn) return;
+  typeFilter = btn.getAttribute("data-type");
+  localStorage.setItem("gc_type", typeFilter);
+  var chips = document.querySelectorAll("#type-chips .chip");
+  for (var i = 0; i < chips.length; i++) chips[i].classList.toggle("active", chips[i] === btn);
+  render();
+});
+document.getElementById("sort-sel").value = sortBy;
+(function () {
+  var chips = document.querySelectorAll("#type-chips .chip");
+  for (var i = 0; i < chips.length; i++) chips[i].classList.toggle("active", chips[i].getAttribute("data-type") === typeFilter);
+})();
 
 openDb().then(function () {
   if (pinSetup()) { showLock(true); }
