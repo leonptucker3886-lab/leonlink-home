@@ -17,8 +17,17 @@
   button.secondary { background: #333; }
   button.danger { background: #7f1d1d; }
   button.small { font-size: 16px; padding: 8px 12px; }
-  input[type="text"], input[type="number"] { width: 100%; background: #222; color: #fff; border: 1px solid #444; margin: 6px 0 14px; }
+  input[type="text"], input[type="number"], input[type="password"] { width: 100%; background: #222; color: #fff; border: 1px solid #444; margin: 6px 0 14px; }
   label { font-size: 18px; color: #ccc; }
+  #lock-screen { padding: 60px 16px 0; max-width: 420px; margin: 0 auto; text-align: center; }
+  #lock-screen h1 { margin-bottom: 20px; }
+  #lock-screen p { font-size: 18px; color: #aaa; }
+  #lock-screen input { text-align: center; letter-spacing: 6px; }
+  #lock-screen button { width: 100%; margin-top: 6px; }
+  #lock-screen .forgot { background: none; color: #888; font-size: 15px; margin-top: 24px; }
+  #app { display: none; }
+  #app.open { display: block; }
+  #top-actions { display: flex; gap: 8px; margin: 12px 0 4px; flex-wrap: wrap; }
   #add-form { display: none; background: #1c1c1c; border-radius: 16px; padding: 16px; margin: 16px 0; }
   #add-form.open { display: block; }
   #photo-preview { max-width: 100%; border-radius: 12px; margin: 6px 0 14px; display: none; }
@@ -27,7 +36,7 @@
   .card .nophoto { width: 96px; height: 60px; border-radius: 8px; background: #333; color: #888; display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; }
   .card .info { flex: 1; min-width: 0; }
   .card .name { font-size: 22px; font-weight: 700; word-break: break-word; }
-  .card .last4 { font-size: 16px; color: #aaa; }
+  .card .num { font-size: 16px; color: #aaa; cursor: pointer; word-break: break-all; }
   .card .bal { font-size: 30px; font-weight: 800; color: #4ade80; margin: 4px 0 10px; }
   .card .row { display: flex; gap: 8px; margin-top: 8px; }
   .card .row input { margin: 0; flex: 1; min-width: 0; font-size: 18px; }
@@ -35,46 +44,70 @@
   #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.92); align-items: center; justify-content: center; z-index: 50; padding: 16px; }
   #lightbox.open { display: flex; }
   #lightbox img { max-width: 100%; max-height: 90vh; border-radius: 12px; }
+  #data-actions { display: flex; gap: 8px; margin: 20px 0 0; flex-wrap: wrap; }
   footer { padding: 20px 16px 0; color: #888; font-size: 15px; line-height: 1.5; }
 </style>
 </head>
 <body>
-<header>
+
+<div id="lock-screen">
   <h1>Gift Cards</h1>
-  <div id="total-label">Total balance</div>
-  <div id="total">$0.00</div>
-</header>
+  <p id="lock-msg">Enter your PIN</p>
+  <input id="pin-input" type="password" inputmode="numeric" maxlength="8" placeholder="PIN">
+  <button id="pin-go" type="button">Unlock</button>
+  <button id="pin-forgot" type="button" class="forgot">Forgot PIN? Erase everything and start over</button>
+</div>
 
-<div class="wrap">
-  <button id="add-btn" type="button">+ Add a card</button>
+<div id="app">
+  <header>
+    <h1>Gift Cards</h1>
+    <div id="total-label">Total balance</div>
+    <div id="total">$0.00</div>
+    <div id="top-actions">
+      <button id="lock-btn" type="button" class="small secondary">Lock</button>
+      <button id="download-btn" type="button" class="small secondary">Download app</button>
+    </div>
+  </header>
 
-  <form id="add-form">
-    <label>Photo of card</label><br>
-    <input id="f-photo" type="file" accept="image/*" capture="environment">
-    <img id="photo-preview" alt="">
-    <label>Name</label>
-    <input id="f-name" type="text" placeholder="Visa gift, Amazon, etc." maxlength="60">
-    <label>Last 4 digits (optional)</label>
-    <input id="f-last4" type="text" inputmode="numeric" placeholder="1234" maxlength="4">
-    <label>Balance ($)</label>
-    <input id="f-bal" type="number" inputmode="decimal" step="0.01" min="0" placeholder="0.00">
-    <button id="f-save" type="submit">Save card</button>
-    <button id="f-cancel" type="button" class="secondary">Cancel</button>
-  </form>
+  <div class="wrap">
+    <button id="add-btn" type="button">+ Add a card</button>
 
-  <div id="list"></div>
-  <div id="empty" style="display:none">No cards yet.<br>Tap + Add a card.</div>
+    <form id="add-form">
+      <label>Photo of card</label><br>
+      <input id="f-photo" type="file" accept="image/*" capture="environment">
+      <img id="photo-preview" alt="">
+      <label>Name</label>
+      <input id="f-name" type="text" placeholder="Visa gift, Amazon, etc." maxlength="60">
+      <label>Full card number (optional)</label>
+      <input id="f-num" type="text" inputmode="numeric" placeholder="Numbers only" maxlength="19">
+      <label>Balance ($)</label>
+      <input id="f-bal" type="number" inputmode="decimal" step="0.01" min="0" placeholder="0.00">
+      <button id="f-save" type="submit">Save card</button>
+      <button id="f-cancel" type="button" class="secondary">Cancel</button>
+    </form>
+
+    <div id="list"></div>
+    <div id="empty" style="display:none">No cards yet.<br>Tap + Add a card.</div>
+
+    <div id="data-actions">
+      <button id="backup-btn" type="button" class="small secondary">Backup</button>
+      <button id="restore-btn" type="button" class="small secondary">Restore</button>
+      <input id="restore-file" type="file" accept="application/json" style="display:none">
+    </div>
+  </div>
+
+  <footer>
+    Photos and numbers stay on this device. Nothing uploads anywhere.<br>
+    The PIN keeps casual eyes out — it is not bank security.<br>
+    Backup files hold full numbers. Keep them private.
+  </footer>
 </div>
 
 <div id="lightbox"><img id="lightbox-img" alt=""></div>
 
-<footer>
-  Photos stay on this device — nothing is uploaded anywhere.<br>
-  Only enter the last 4 digits. Never store a full card number or PIN here.
-</footer>
-
 <script>
 var DB_NAME = "giftcards", STORE = "cards", db = null, pendingPhoto = null;
+var revealed = {};
 
 function money(cents) {
   return "$" + (cents / 100).toFixed(2);
@@ -88,7 +121,88 @@ function esc(s) {
     return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
   });
 }
+function digits(s) {
+  return String(s || "").replace(/\D/g, "");
+}
+function masked(num) {
+  if (!num) return "";
+  if (num.length <= 4) return num;
+  return "\u2022\u2022\u2022\u2022 " + num.slice(-4);
+}
 
+/* ---------- PIN ---------- */
+function hashPin(pin, salt) {
+  var data = new TextEncoder().encode(salt + ":" + pin);
+  if (window.crypto && crypto.subtle) {
+    return crypto.subtle.digest("SHA-256", data).then(function (buf) {
+      return Array.prototype.map.call(new Uint8Array(buf), function (b) {
+        return ("00" + b.toString(16)).slice(-2);
+      }).join("");
+    });
+  }
+  var h = 2166136261, s = salt + ":" + pin;
+  for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return Promise.resolve(String(h >>> 0));
+}
+function pinSetup() {
+  return !localStorage.getItem("gc_pin_hash");
+}
+function showApp() {
+  document.getElementById("lock-screen").style.display = "none";
+  document.getElementById("app").classList.add("open");
+}
+function showLock(setup) {
+  document.getElementById("lock-msg").textContent = setup
+    ? "Set a PIN (4-8 digits)"
+    : "Enter your PIN";
+  document.getElementById("pin-go").textContent = setup ? "Set PIN" : "Unlock";
+  document.getElementById("app").classList.remove("open");
+  document.getElementById("lock-screen").style.display = "block";
+}
+document.getElementById("pin-go").addEventListener("click", function () {
+  var pin = digits(document.getElementById("pin-input").value);
+  if (pin.length < 4) { alert("PIN needs at least 4 digits."); return; }
+  if (pinSetup()) {
+    var salt = Math.random().toString(36).slice(2) + Date.now().toString(36);
+    hashPin(pin, salt).then(function (hash) {
+      localStorage.setItem("gc_pin_salt", salt);
+      localStorage.setItem("gc_pin_hash", hash);
+      sessionStorage.setItem("gc_unlocked", "1");
+      document.getElementById("pin-input").value = "";
+      showApp();
+    });
+  } else {
+    hashPin(pin, localStorage.getItem("gc_pin_salt") || "").then(function (hash) {
+      if (hash === localStorage.getItem("gc_pin_hash")) {
+        sessionStorage.setItem("gc_unlocked", "1");
+        document.getElementById("pin-input").value = "";
+        showApp();
+      } else {
+        alert("Wrong PIN.");
+      }
+    });
+  }
+});
+document.getElementById("pin-input").addEventListener("keydown", function (e) {
+  if (e.key === "Enter") document.getElementById("pin-go").click();
+});
+document.getElementById("pin-forgot").addEventListener("click", function () {
+  if (!confirm("Erase every card on this device and start over?")) return;
+  var del = indexedDB.deleteDatabase(DB_NAME);
+  del.onsuccess = del.onerror = del.onblocked = function () {
+    localStorage.removeItem("gc_pin_hash");
+    localStorage.removeItem("gc_pin_salt");
+    sessionStorage.removeItem("gc_unlocked");
+    location.reload();
+  };
+});
+document.getElementById("lock-btn").addEventListener("click", function () {
+  sessionStorage.removeItem("gc_unlocked");
+  document.getElementById("pin-input").value = "";
+  showLock(false);
+});
+
+/* ---------- Storage ---------- */
 function openDb() {
   return new Promise(function (resolve, reject) {
     var req = indexedDB.open(DB_NAME, 1);
@@ -151,10 +265,14 @@ function render() {
       var photo = c.photo
         ? '<img class="thumb" src="' + c.photo + '" alt="" data-full="' + c.photo + '">'
         : '<div class="nophoto">&#127873;</div>';
+      var numLine = "";
+      if (c.num) {
+        var shown = revealed[c.id] ? c.num : masked(c.num);
+        numLine = '<div class="num" data-num="' + esc(c.num) + '" title="Tap to show / hide">' + esc(shown) + "</div>";
+      }
       html += '<div class="card" data-id="' + c.id + '">' + photo +
-        '<div class="info"><div class="name">' + esc(c.name) + '</div>' +
-        (c.last4 ? '<div class="last4">&bull;&bull;&bull;&bull; ' + esc(c.last4) + '</div>' : "") +
-        '<div class="bal">' + money(c.balance) + '</div>' +
+        '<div class="info"><div class="name">' + esc(c.name) + "</div>" + numLine +
+        '<div class="bal">' + money(c.balance) + "</div>" +
         '<div class="row"><input type="number" inputmode="decimal" step="0.01" min="0" placeholder="Amount $" class="amt">' +
         '<button type="button" class="small spent">Spent</button>' +
         '<button type="button" class="small secondary set">Set</button>' +
@@ -188,12 +306,12 @@ document.getElementById("f-photo").addEventListener("change", function (e) {
 document.getElementById("add-form").addEventListener("submit", function (e) {
   e.preventDefault();
   var name = document.getElementById("f-name").value.trim();
-  var last4 = document.getElementById("f-last4").value.replace(/\D/g, "").slice(0, 4);
+  var num = digits(document.getElementById("f-num").value).slice(0, 19);
   var bal = toCents(document.getElementById("f-bal").value);
   if (!name) { alert("Give the card a name first."); return; }
   if (bal === null) { alert("Enter a balance."); return; }
   var now = Date.now();
-  putCard({ name: name, last4: last4, balance: bal, photo: pendingPhoto, createdAt: now, updatedAt: now })
+  putCard({ name: name, num: num, balance: bal, photo: pendingPhoto, createdAt: now, updatedAt: now })
     .then(function () {
       document.getElementById("add-form").reset();
       document.getElementById("add-form").classList.remove("open");
@@ -206,14 +324,18 @@ document.getElementById("add-form").addEventListener("submit", function (e) {
 document.getElementById("list").addEventListener("click", function (e) {
   var t = e.target;
   if (t.classList.contains("thumb")) {
-    var lb = document.getElementById("lightbox");
     document.getElementById("lightbox-img").src = t.getAttribute("data-full");
-    lb.classList.add("open");
+    document.getElementById("lightbox").classList.add("open");
     return;
   }
   var cardEl = t.closest(".card");
   if (!cardEl) return;
   var id = Number(cardEl.getAttribute("data-id"));
+  if (t.classList.contains("num")) {
+    revealed[id] = !revealed[id];
+    render();
+    return;
+  }
   var amtInput = cardEl.querySelector(".amt");
   if (t.classList.contains("del")) {
     if (!confirm("Delete this card?")) return;
@@ -237,7 +359,69 @@ document.getElementById("lightbox").addEventListener("click", function () {
   document.getElementById("lightbox").classList.remove("open");
 });
 
-openDb().then(render).catch(function () {
+/* ---------- Download / offline / backup ---------- */
+function saveFile(name, text, type) {
+  var blob = new Blob([text], { type: type || "text/plain" });
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+}
+document.getElementById("download-btn").addEventListener("click", function () {
+  fetch(location.href).then(function (r) { return r.text(); }).then(function (src) {
+    saveFile("gift-cards.html", src, "text/html");
+  }).catch(function () {
+    saveFile("gift-cards.html", "<!DOCTYPE html>\n" + document.documentElement.outerHTML, "text/html");
+  });
+});
+document.getElementById("backup-btn").addEventListener("click", function () {
+  getAll().then(function (cards) {
+    saveFile("gift-cards-backup.json", JSON.stringify(cards), "application/json");
+  });
+});
+document.getElementById("restore-btn").addEventListener("click", function () {
+  document.getElementById("restore-file").click();
+});
+document.getElementById("restore-file").addEventListener("change", function (e) {
+  var file = e.target.files && e.target.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function () {
+    try {
+      var cards = JSON.parse(reader.result);
+      if (!Array.isArray(cards)) throw new Error("not a list");
+      var chain = Promise.resolve();
+      cards.forEach(function (c) {
+        chain = chain.then(function () {
+          delete c.id;
+          if (typeof c.balance !== "number") c.balance = 0;
+          if (!c.updatedAt) c.updatedAt = Date.now();
+          if (!c.createdAt) c.createdAt = c.updatedAt;
+          return putCard(c);
+        });
+      });
+      chain.then(render).then(function () { alert("Restored " + cards.length + " cards."); });
+    } catch (err) {
+      alert("That file did not look like a gift-card backup.");
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = "";
+});
+
+if ("serviceWorker" in navigator && location.protocol.indexOf("http") === 0) {
+  navigator.serviceWorker.register("gift-cards-sw.js").catch(function () {});
+}
+
+openDb().then(function () {
+  if (pinSetup()) { showLock(true); }
+  else if (sessionStorage.getItem("gc_unlocked") === "1") { showApp(); }
+  else { showLock(false); }
+  return render();
+}).catch(function () {
   document.getElementById("empty").textContent = "Storage is blocked in this browser. Try opening the page directly, not in an in-app preview.";
   document.getElementById("empty").style.display = "block";
 });
