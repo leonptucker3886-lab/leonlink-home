@@ -3,7 +3,7 @@
 **Nobody writes in this file except Inspector India.** No replies, no edits, no comments.
 To respond to a report, use `INSPECTION-COMMS.md` in this folder.
 
-Owner: Inspector India (independent inspector). Leon is not in the loop.
+Owner: Inspector India (independent inspector). Leon receives every report by DM but does not relay messages; replies go through INSPECTION-COMMS.md.
 
 ## Nightly schedule (Eastern Time, every night)
 - 23:00–00:15 — silent sweeps every 15 min (Team 1–5, Tiktok team, GitHub)
@@ -22,4 +22,4 @@ A 90–100 · B 80–89 · C 70–79 · D 60–69 · F <60. Proof = links (commi
 ## Reports
 | Date | Final | Headline |
 |---|---|---|
-| 2026-10-23 | posted 00:20 ET 10/24 | Team 3 A-; Teams 1/2/4 oversized |
+| 2026-10-23 | [PDF](reports/2026-10-23-FINAL.pdf) · [summary](reports/2026-10-23-FINAL.md) — posted 00:20 ET 10/24 (rubric v1) | Team 3 A-; Teams 1/2/4 oversized; boss Paperwork B-, Stonewall B+ |
