@@ -38,8 +38,9 @@
   .card .name { font-size: 22px; font-weight: 700; word-break: break-word; }
   .card .num { font-size: 16px; color: #aaa; cursor: pointer; word-break: break-all; }
   .card .bal { font-size: 30px; font-weight: 800; color: #4ade80; margin: 4px 0 10px; }
-  .card .row { display: flex; gap: 8px; margin-top: 8px; }
-  .card .row input { margin: 0; flex: 1; min-width: 0; font-size: 18px; }
+  .card .row { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+  .card .row input { margin: 0; flex: 1 1 100%; min-width: 0; font-size: 20px; }
+  .card .name-edit { font-size: 22px; font-weight: 700; }
   #empty { text-align: center; color: #888; font-size: 20px; margin: 40px 0; }
   #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.92); align-items: center; justify-content: center; z-index: 50; padding: 16px; }
   #lightbox.open { display: flex; }
@@ -114,6 +115,7 @@
 <script>
 var DB_NAME = "giftcards", STORE = "cards", db = null, pendingPhoto = null;
 var revealed = {};
+var editingId = null;
 
 function money(cents) {
   return "$" + (cents / 100).toFixed(2);
@@ -271,17 +273,23 @@ function render() {
       var photo = c.photo
         ? '<img class="thumb" src="' + c.photo + '" alt="" data-full="' + c.photo + '">'
         : '<div class="nophoto">&#127873;</div>';
+      var nameHtml = (editingId === c.id)
+        ? '<input type="text" class="name-edit" maxlength="60" value="' + esc(c.name) + '">'
+        : '<div class="name">' + esc(c.name) + "</div>";
       var numLine = "";
       if (c.num) {
         var shown = revealed[c.id] ? c.num : masked(c.num);
         numLine = '<div class="num" data-num="' + esc(c.num) + '" title="Tap to show / hide">' + esc(shown) + "</div>";
       }
       html += '<div class="card" data-id="' + c.id + '">' + photo +
-        '<div class="info"><div class="name">' + esc(c.name) + "</div>" + numLine +
+        '<div class="info">' + nameHtml + numLine +
         '<div class="bal">' + money(c.balance) + "</div>" +
         '<div class="row"><input type="number" inputmode="decimal" step="0.01" min="0" placeholder="Amount $" class="amt">' +
         '<button type="button" class="small spent">Spent</button>' +
         '<button type="button" class="small secondary set">Set</button>' +
+        (editingId === c.id
+          ? '<button type="button" class="small secondary save-name">Save</button>'
+          : '<button type="button" class="small secondary edit">Edit</button>') +
         '<button type="button" class="small danger del">Delete</button></div>' +
         "</div></div>";
     });
@@ -372,6 +380,31 @@ document.getElementById("list").addEventListener("click", function (e) {
     render();
     return;
   }
+  if (t.classList.contains("edit")) {
+    editingId = id;
+    render().then(function () {
+      var inp = document.querySelector('.card[data-id="' + id + '"] .name-edit');
+      if (inp) { inp.focus(); inp.select(); }
+    });
+    return;
+  }
+  if (t.classList.contains("save-name")) {
+    var nameInput = cardEl.querySelector(".name-edit");
+    var newName = nameInput ? nameInput.value.trim() : "";
+    if (!newName) { alert("Give the card a name first."); return; }
+    getAll().then(function (cards) {
+      var c = null;
+      for (var i = 0; i < cards.length; i++) { if (cards[i].id === id) { c = cards[i]; break; } }
+      if (!c) return;
+      c.name = newName;
+      c.updatedAt = Date.now();
+      editingId = null;
+      return putCard(c).then(render).catch(function (err) {
+        alert("Could not save name: " + (err && err.message ? err.message : err));
+      });
+    });
+    return;
+  }
   var amtInput = cardEl.querySelector(".amt");
   if (t.classList.contains("del")) {
     if (!confirm("Delete this card?")) return;
@@ -390,6 +423,14 @@ document.getElementById("list").addEventListener("click", function (e) {
     c.updatedAt = Date.now();
     return putCard(c).then(render);
   });
+});
+document.getElementById("list").addEventListener("keydown", function (e) {
+  if (e.key === "Enter" && e.target.classList.contains("name-edit")) {
+    e.preventDefault();
+    var cardEl = e.target.closest(".card");
+    var btn = cardEl && cardEl.querySelector(".save-name");
+    if (btn) btn.click();
+  }
 });
 document.getElementById("lightbox").addEventListener("click", function () {
   document.getElementById("lightbox").classList.remove("open");
