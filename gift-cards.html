@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gift Cards</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, sans-serif; background: #111; color: #fff; padding-bottom: 40px; }
+  header { padding: 20px 16px 8px; }
+  h1 { font-size: 40px; margin: 0 0 4px; }
+  #total { font-size: 32px; font-weight: 800; color: #4ade80; }
+  #total-label { font-size: 16px; color: #aaa; }
+  .wrap { padding: 0 16px; }
+  button, input { font-size: 20px; padding: 12px 14px; border-radius: 12px; border: none; }
+  button { background: #2563eb; color: #fff; font-weight: 700; cursor: pointer; }
+  button.secondary { background: #333; }
+  button.danger { background: #7f1d1d; }
+  button.small { font-size: 16px; padding: 8px 12px; }
+  input[type="text"], input[type="number"] { width: 100%; background: #222; color: #fff; border: 1px solid #444; margin: 6px 0 14px; }
+  label { font-size: 18px; color: #ccc; }
+  #add-form { display: none; background: #1c1c1c; border-radius: 16px; padding: 16px; margin: 16px 0; }
+  #add-form.open { display: block; }
+  #photo-preview { max-width: 100%; border-radius: 12px; margin: 6px 0 14px; display: none; }
+  .card { background: #1c1c1c; border-radius: 16px; padding: 14px; margin: 14px 0; display: flex; gap: 14px; }
+  .card img.thumb { width: 96px; height: 60px; object-fit: cover; border-radius: 8px; cursor: pointer; background: #333; flex-shrink: 0; }
+  .card .nophoto { width: 96px; height: 60px; border-radius: 8px; background: #333; color: #888; display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; }
+  .card .info { flex: 1; min-width: 0; }
+  .card .name { font-size: 22px; font-weight: 700; word-break: break-word; }
+  .card .last4 { font-size: 16px; color: #aaa; }
+  .card .bal { font-size: 30px; font-weight: 800; color: #4ade80; margin: 4px 0 10px; }
+  .card .row { display: flex; gap: 8px; margin-top: 8px; }
+  .card .row input { margin: 0; flex: 1; min-width: 0; font-size: 18px; }
+  #empty { text-align: center; color: #888; font-size: 20px; margin: 40px 0; }
+  #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.92); align-items: center; justify-content: center; z-index: 50; padding: 16px; }
+  #lightbox.open { display: flex; }
+  #lightbox img { max-width: 100%; max-height: 90vh; border-radius: 12px; }
+  footer { padding: 20px 16px 0; color: #888; font-size: 15px; line-height: 1.5; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Gift Cards</h1>
+  <div id="total-label">Total balance</div>
+  <div id="total">$0.00</div>
+</header>
+
+<div class="wrap">
+  <button id="add-btn" type="button">+ Add a card</button>
+
+  <form id="add-form">
+    <label>Photo of card</label><br>
+    <input id="f-photo" type="file" accept="image/*" capture="environment">
+    <img id="photo-preview" alt="">
+    <label>Name</label>
+    <input id="f-name" type="text" placeholder="Visa gift, Amazon, etc." maxlength="60">
+    <label>Last 4 digits (optional)</label>
+    <input id="f-last4" type="text" inputmode="numeric" placeholder="1234" maxlength="4">
+    <label>Balance ($)</label>
+    <input id="f-bal" type="number" inputmode="decimal" step="0.01" min="0" placeholder="0.00">
+    <button id="f-save" type="submit">Save card</button>
+    <button id="f-cancel" type="button" class="secondary">Cancel</button>
+  </form>
+
+  <div id="list"></div>
+  <div id="empty" style="display:none">No cards yet.<br>Tap + Add a card.</div>
+</div>
+
+<div id="lightbox"><img id="lightbox-img" alt=""></div>
+
+<footer>
+  Photos stay on this device — nothing is uploaded anywhere.<br>
+  Only enter the last 4 digits. Never store a full card number or PIN here.
+</footer>
+
+<script>
+var DB_NAME = "giftcards", STORE = "cards", db = null, pendingPhoto = null;
+
+function money(cents) {
+  return "$" + (cents / 100).toFixed(2);
+}
+function toCents(str) {
+  var v = Math.round(parseFloat(str) * 100);
+  return isNaN(v) ? null : Math.max(0, v);
+}
+function esc(s) {
+  return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+  });
+}
+
+function openDb() {
+  return new Promise(function (resolve, reject) {
+    var req = indexedDB.open(DB_NAME, 1);
+    req.onupgradeneeded = function () {
+      req.result.createObjectStore(STORE, { keyPath: "id", autoIncrement: true });
+    };
+    req.onsuccess = function () { db = req.result; resolve(); };
+    req.onerror = function () { reject(req.error); };
+  });
+}
+function tx(mode) {
+  return db.transaction(STORE, mode).objectStore(STORE);
+}
+function getAll() {
+  return new Promise(function (resolve, reject) {
+    var req = tx("readonly").getAll();
+    req.onsuccess = function () { resolve(req.result || []); };
+    req.onerror = function () { reject(req.error); };
+  });
+}
+function putCard(card) {
+  return new Promise(function (resolve, reject) {
+    var req = tx("readwrite").put(card);
+    req.onsuccess = function () { resolve(req.result); };
+    req.onerror = function () { reject(req.error); };
+  });
+}
+function delCard(id) {
+  return new Promise(function (resolve, reject) {
+    var req = tx("readwrite").delete(id);
+    req.onsuccess = function () { resolve(); };
+    req.onerror = function () { reject(req.error); };
+  });
+}
+
+function downscale(file) {
+  return new Promise(function (resolve, reject) {
+    var img = new Image();
+    var url = URL.createObjectURL(file);
+    img.onload = function () {
+      var max = 1000, w = img.width, h = img.height;
+      if (w > max) { h = Math.round(h * max / w); w = max; }
+      var cv = document.createElement("canvas");
+      cv.width = w; cv.height = h;
+      cv.getContext("2d").drawImage(img, 0, 0, w, h);
+      URL.revokeObjectURL(url);
+      resolve(cv.toDataURL("image/jpeg", 0.75));
+    };
+    img.onerror = function () { URL.revokeObjectURL(url); reject(new Error("bad image")); };
+    img.src = url;
+  });
+}
+
+function render() {
+  return getAll().then(function (cards) {
+    cards.sort(function (a, b) { return b.updatedAt - a.updatedAt; });
+    var total = 0, html = "";
+    cards.forEach(function (c) {
+      total += c.balance;
+      var photo = c.photo
+        ? '<img class="thumb" src="' + c.photo + '" alt="" data-full="' + c.photo + '">'
+        : '<div class="nophoto">&#127873;</div>';
+      html += '<div class="card" data-id="' + c.id + '">' + photo +
+        '<div class="info"><div class="name">' + esc(c.name) + '</div>' +
+        (c.last4 ? '<div class="last4">&bull;&bull;&bull;&bull; ' + esc(c.last4) + '</div>' : "") +
+        '<div class="bal">' + money(c.balance) + '</div>' +
+        '<div class="row"><input type="number" inputmode="decimal" step="0.01" min="0" placeholder="Amount $" class="amt">' +
+        '<button type="button" class="small spent">Spent</button>' +
+        '<button type="button" class="small secondary set">Set</button>' +
+        '<button type="button" class="small danger del">Delete</button></div>' +
+        "</div></div>";
+    });
+    document.getElementById("list").innerHTML = html;
+    document.getElementById("empty").style.display = cards.length ? "none" : "block";
+    document.getElementById("total").textContent = money(total);
+  });
+}
+
+document.getElementById("add-btn").addEventListener("click", function () {
+  document.getElementById("add-form").classList.toggle("open");
+});
+document.getElementById("f-cancel").addEventListener("click", function () {
+  document.getElementById("add-form").classList.remove("open");
+  document.getElementById("add-form").reset();
+  document.getElementById("photo-preview").style.display = "none";
+  pendingPhoto = null;
+});
+document.getElementById("f-photo").addEventListener("change", function (e) {
+  var file = e.target.files && e.target.files[0];
+  if (!file) { pendingPhoto = null; return; }
+  downscale(file).then(function (dataUrl) {
+    pendingPhoto = dataUrl;
+    var p = document.getElementById("photo-preview");
+    p.src = dataUrl; p.style.display = "block";
+  }).catch(function () { pendingPhoto = null; });
+});
+document.getElementById("add-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var name = document.getElementById("f-name").value.trim();
+  var last4 = document.getElementById("f-last4").value.replace(/\D/g, "").slice(0, 4);
+  var bal = toCents(document.getElementById("f-bal").value);
+  if (!name) { alert("Give the card a name first."); return; }
+  if (bal === null) { alert("Enter a balance."); return; }
+  var now = Date.now();
+  putCard({ name: name, last4: last4, balance: bal, photo: pendingPhoto, createdAt: now, updatedAt: now })
+    .then(function () {
+      document.getElementById("add-form").reset();
+      document.getElementById("add-form").classList.remove("open");
+      document.getElementById("photo-preview").style.display = "none";
+      pendingPhoto = null;
+      return render();
+    });
+});
+
+document.getElementById("list").addEventListener("click", function (e) {
+  var t = e.target;
+  if (t.classList.contains("thumb")) {
+    var lb = document.getElementById("lightbox");
+    document.getElementById("lightbox-img").src = t.getAttribute("data-full");
+    lb.classList.add("open");
+    return;
+  }
+  var cardEl = t.closest(".card");
+  if (!cardEl) return;
+  var id = Number(cardEl.getAttribute("data-id"));
+  var amtInput = cardEl.querySelector(".amt");
+  if (t.classList.contains("del")) {
+    if (!confirm("Delete this card?")) return;
+    delCard(id).then(render);
+    return;
+  }
+  var cents = toCents(amtInput.value);
+  if (cents === null) { alert("Enter an amount first."); return; }
+  getAll().then(function (cards) {
+    var c = null;
+    for (var i = 0; i < cards.length; i++) { if (cards[i].id === id) { c = cards[i]; break; } }
+    if (!c) return;
+    if (t.classList.contains("spent")) { c.balance = Math.max(0, c.balance - cents); }
+    else if (t.classList.contains("set")) { c.balance = cents; }
+    else return;
+    c.updatedAt = Date.now();
+    return putCard(c).then(render);
+  });
+});
+document.getElementById("lightbox").addEventListener("click", function () {
+  document.getElementById("lightbox").classList.remove("open");
+});
+
+openDb().then(render).catch(function () {
+  document.getElementById("empty").textContent = "Storage is blocked in this browser. Try opening the page directly, not in an in-app preview.";
+  document.getElementById("empty").style.display = "block";
+});
+</script>
+</body>
+</html>
