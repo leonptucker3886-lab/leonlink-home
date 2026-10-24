@@ -77,6 +77,7 @@
       <input id="f-photo" type="file" accept="image/*" capture="environment">
       <label>Or pick one already taken</label>
       <input id="f-gallery" type="file" accept="image/*">
+      <div id="photo-status" style="font-size:16px;color:#aaa;margin:2px 0 10px;"></div>
       <img id="photo-preview" alt="">
       <label>Name</label>
       <input id="f-name" type="text" placeholder="Visa gift, Amazon, etc." maxlength="60">
@@ -295,14 +296,34 @@ document.getElementById("f-cancel").addEventListener("click", function () {
   document.getElementById("add-form").reset();
   document.getElementById("photo-preview").style.display = "none";
   pendingPhoto = null;
+  setPhotoStatus("");
 });
+function setPhotoStatus(msg) {
+  var s = document.getElementById("photo-status");
+  if (s) s.textContent = msg;
+}
 function handlePhotoFile(file) {
   if (!file) { pendingPhoto = null; return; }
+  setPhotoStatus("Reading photo...");
   downscale(file).then(function (dataUrl) {
     pendingPhoto = dataUrl;
     var p = document.getElementById("photo-preview");
     p.src = dataUrl; p.style.display = "block";
-  }).catch(function () { pendingPhoto = null; alert("That photo could not be read. Try the gallery option."); });
+    setPhotoStatus("Photo attached.");
+  }).catch(function () {
+    var reader = new FileReader();
+    reader.onload = function () {
+      pendingPhoto = reader.result;
+      var p = document.getElementById("photo-preview");
+      p.src = reader.result; p.style.display = "block";
+      setPhotoStatus("Photo attached (full size).");
+    };
+    reader.onerror = function () {
+      pendingPhoto = null;
+      setPhotoStatus("That photo could not be read.");
+    };
+    reader.readAsDataURL(file);
+  });
 }
 document.getElementById("f-photo").addEventListener("change", function (e) {
   handlePhotoFile(e.target.files && e.target.files[0]);
@@ -324,6 +345,7 @@ document.getElementById("add-form").addEventListener("submit", function (e) {
       document.getElementById("add-form").classList.remove("open");
       document.getElementById("photo-preview").style.display = "none";
       pendingPhoto = null;
+      setPhotoStatus("");
       return render();
     });
 });
