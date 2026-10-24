@@ -25,6 +25,7 @@ var now=new Date(); if(now>new Date('2026-11-01T23:59:59')) return;
 var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 var css=''
 +'.lnx .lg{position:relative}'
++'.lnx{overflow:hidden}'
 +'.hw-drips{position:absolute;left:2px;top:40px;width:44px;height:30px;pointer-events:none;z-index:5}'
 +'.hw-drips i{position:absolute;top:0;width:5px;border-radius:0 0 6px 6px;background:linear-gradient(#f21636,#8f0c22);transform-origin:top}'
 +'.hw-drips i:after{content:"";position:absolute;left:0;bottom:-4px;width:5px;height:7px;border-radius:50%;background:#c01028}'
@@ -62,7 +63,7 @@ function go(){
     for(var i=0;i<N;i++){
       var p=document.createElement('div'); p.className='hw-witch';
       var sz=54+Math.random()*34;
-      p.style.top=(2+Math.random()*54)+'px'; p.style.width=sz+'px'; p.style.opacity=(0.8+Math.random()*0.2);
+      p.style.top=(2+Math.random()*Math.max(0,54-sz*0.6))+'px'; p.style.width=sz+'px'; p.style.opacity=(0.8+Math.random()*0.2);
       p.innerHTML=WITCH;
       var L=Math.random()<0.5;
       p.style.animation=(L?'hwFlyL ':'hwFlyR ')+(17+Math.random()*12)+'s linear '+(-Math.random()*20)+'s infinite';
