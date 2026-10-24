@@ -98,3 +98,14 @@ nav button{font-size:34px;min-height:64px;padding:4px}
 @keyframes gb{50%{transform:translateY(-8px)}}
 .gpoint{position:absolute;z-index:89;font-size:44px;pointer-events:none;animation:gb .8s infinite}
 .ghelp{margin-left:6px;font-size:22px;background:none;border:0}
+
+/* polish 24 Oct */
+button:active{transform:scale(.93)}button{transition:transform .08s}
+.stage{height:min(440px,58vh);min-height:300px}
+@media (max-height:560px){.stage{height:72vh}}
+.flash{position:fixed;inset:0;background:#fff;z-index:9998;pointer-events:none;animation:flashk .45s ease-out forwards}@keyframes flashk{from{opacity:.9}to{opacity:0}}
+.match{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:10px;align-content:center}
+.mcard{min-height:0;aspect-ratio:3/4;font-size:clamp(28px,9vw,46px);border:0;border-radius:14px;background:linear-gradient(#ff8fc8,#ff3fb4);color:#fff;box-shadow:0 4px 0 #b02a7c}
+.mcard.up{background:#fff;box-shadow:0 4px 0 #ccc;animation:mflip .25s}.mcard.ok{background:#d6ffe6;box-shadow:0 4px 0 #3ddc84}@keyframes mflip{from{transform:rotateY(90deg)}to{transform:none}}
+*{-webkit-touch-callout:none}input{-webkit-touch-callout:default}
+header{padding-top:max(8px,env(safe-area-inset-top))}

@@ -4,7 +4,7 @@ const decay=m=>{for(const k in S.st)S.st[k]=Math.max(10,S.st[k]-m*0.3);S.t=Date.
 decay((Date.now()-S.t)/60000);
 const today=new Date().toDateString();let gift=0;if(S.lastDay!==today){if(S.pet){S.days=(S.days||0)+1;S.spin=1}S.lastDay=S.pet?today:null;save()}
 function mute(){S.mute=!S.mute;save();render()}
-setInterval(()=>{decay(1);save();if(S.view==='home')render()},60000);
+setInterval(()=>{decay(1);save();if(S.view==='home')(window.refreshMeters?refreshMeters():render())},60000);
 const $=id=>document.getElementById(id);
 // Picture-first UI: buttons speak their name so kids who can't read hear what they do.
 function say(t){try{if(S.mute||!t||!window.speechSynthesis)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.rate=.95;u.pitch=1.25;speechSynthesis.speak(u)}catch(e){}}

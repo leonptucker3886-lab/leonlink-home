@@ -191,9 +191,9 @@ function spawn(kind,pos,txt){if(kind==='step'){const r=mesh(new THREE.RingGeomet
 function burst(txt,n=6,y=2.6){for(let i=0;i<n;i++)setTimeout(()=>petG&&spawn('fx',petG.position.clone().add(new THREE.Vector3(0,y,0)),txt),i*90)}
 let AC,ST={},grow=1,need=null,needT=0;
 function tone(f1,f2,dur,type='sine',vol=.15,delay=0){if(ST.mute)return;AC=AC||new (window.AudioContext||window.webkitAudioContext)();const t=AC.currentTime+delay,o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.setValueAtTime(f1,t);o.frequency.exponentialRampToValueAtTime(f2,t+dur);g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+dur);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+dur)}
-const SND={pat:()=>{tone(700,1300,.12);tone(900,1600,.12,'sine',.12,.13)},tickle:()=>[0,1,2,3].forEach(i=>tone(900+i*120,1400,.08,'triangle',.1,i*.09)),eat:()=>[0,1,2].forEach(i=>tone(220,120,.09,'square',.06,i*.2)),wash:()=>[0,1,2,3,4].forEach(i=>tone(500+Math.random()*600,1500,.06,'sine',.08,i*.12)),play:()=>[0,1,2].forEach(i=>tone(520+i*200,780+i*200,.12,'triangle',.12,i*.12)),nap:()=>[0,1.1].forEach(d=>tone(90,60,.8,'sawtooth',.05,d)),happy:()=>tone(600,1200,.25),dance:()=>[523,659,784,1047,784,1047].forEach((f,i)=>tone(f,f*1.01,.18,'triangle',.1,i*.22))};
+const SND={pat:()=>{tone(700,1300,.12);tone(900,1600,.12,'sine',.12,.13)},tickle:()=>[0,1,2,3].forEach(i=>tone(900+i*120,1400,.08,'triangle',.1,i*.09)),eat:()=>[0,1,2].forEach(i=>tone(220,120,.09,'square',.06,i*.2)),wash:()=>[0,1,2,3,4].forEach(i=>tone(500+Math.random()*600,1500,.06,'sine',.08,i*.12)),play:()=>[0,1,2].forEach(i=>tone(520+i*200,780+i*200,.12,'triangle',.12,i*.12)),nap:()=>[0,1.1].forEach(d=>tone(90,60,.8,'sawtooth',.05,d)),happy:()=>tone(600,1200,.25),flip:()=>{tone(300,1200,.35,'triangle',.12);tone(1200,1600,.1,'sine',.1,.4)},spin:()=>[0,1,2,3,4].forEach(i=>tone(600+i*150,700+i*150,.08,'triangle',.09,i*.08)),wave:()=>{tone(800,1000,.1);tone(1000,800,.1,'sine',.12,.15)},love:()=>[659,784,988].forEach((f,i)=>tone(f,f,.2,'sine',.1,i*.15)),dance:()=>[523,659,784,1047,784,1047].forEach((f,i)=>tone(f,f*1.01,.18,'triangle',.1,i*.22))};
 // actions called by the app (or by tapping the pet)
-const ACT={pat:{t:.8,fx:'💖'},tickle:{t:1,fx:'😆'},eat:{t:1.4,fx:'😋'},wash:{t:1.6,fx:'🫧'},play:{t:2.2,fx:'⭐'},nap:{t:2.6,fx:'💤'},happy:{t:1,fx:'✨'},dance:{t:3,fx:'🎵'}};
+const ACT={pat:{t:.8,fx:'💖'},tickle:{t:1,fx:'😆'},eat:{t:1.4,fx:'😋'},wash:{t:1.6,fx:'🫧'},play:{t:2.2,fx:'⭐'},nap:{t:2.6,fx:'💤'},happy:{t:1,fx:'✨'},dance:{t:3,fx:'🎵'},flip:{t:1.1,fx:'🌟'},spin:{t:1.2,fx:'💫'},wave:{t:1.6,fx:'👋'},love:{t:1.4,fx:'💕'}};
 function act(kind,emoji){const a=ACT[kind]||ACT.happy;(SND[kind]||SND.happy)();anim={kind,t:0,dur:a.t};
  if(kind==='pat'||kind==='tickle'){burst(a.fx,kind==='pat'?4:5);if(kind==='pat'&&window.pat)window.pat(true);if(kind==='tickle'&&window.tickle)window.tickle()}
  else{burst(emoji||a.fx,7);if(kind==='play'&&emoji){const b=sprite(emoji);b.scale.setScalar(.9);scene.add(b);fx.push({o:b,t:0,life:2.2,toss:1,from:petG.position.clone()})}
@@ -212,18 +212,22 @@ function loop(){requestAnimationFrame(loop);const dt=Math.min(clock.getDelta(),.
    if(anim.kind==='play'||anim.kind==='happy'){y+=Math.abs(Math.sin(k*Math.PI*3))*1.1;petG.rotation.y+=anim.kind==='play'?dt*5:0}
    if(anim.kind==='dance'){y+=Math.abs(Math.sin(anim.t*8))*.5;rz=Math.sin(anim.t*6)*.25;petG.rotation.y+=dt*3}
    if(anim.kind==='nap'){rx=-s*1.2;y-=s*.3}
+   if(anim.kind==='flip'){y+=s*1.8}
+   if(anim.kind==='spin'){petG.rotation.y+=dt*16*s;y+=s*.7}
+   if(anim.kind==='love'){y+=Math.abs(Math.sin(anim.t*6))*.25;if(Math.random()<.15)spawn('fx',p.clone().add(new THREE.Vector3((Math.random()-.5)*1.2,2.5*grow,(Math.random()-.5)*1.2)),'💕')}
    if(anim.kind==='tilt'){head.rotation.z=Math.sin(k*Math.PI)*.35}
    if(anim.kind==='yawn'){sy=1+.08*s;head.rotation.x=-.3*s}
    if(anim.kind==='chase'){petG.rotation.y+=dt*9*s;y+=Math.abs(Math.sin(anim.t*12))*.2}
    if(anim.kind==='wiggle'){sx=1+Math.sin(anim.t*20)*.05*s;rz=Math.sin(anim.t*14)*.1*s}
    if((anim.kind==='happy'||anim.kind==='play')&&y<.08){sy*=.88;sx*=1.08}
    if(k>=1){anim=null;head.rotation.x=0;head.rotation.z=0}}
-  else if(!walking&&!need&&(idleT-=dt)<0){idleT=6+Math.random()*5;const ks=['tilt','yawn','chase','wiggle'],kd=ks[Math.random()*4|0];anim={kind:kd,t:0,dur:{tilt:1.4,yawn:1.6,chase:1.8,wiggle:1}[kd]};if(kd==='yawn')spawn('fx',p.clone().add(new THREE.Vector3(0,3*grow,0)),'🥱');if(kd==='chase')tone(500,900,.25,'triangle',.08)}
-  petG.scale.set(sx*grow,sy*grow,sx*grow);blob.position.x=p.x;blob.position.z=p.z;blob.scale.setScalar(grow*(1-Math.min(p.y,1)*.35));p.y=y;petG.rotation.z=rz;petG.rotation.x=rx*.6;
+  else if(!walking&&!need&&(idleT-=dt)<0){idleT=6+Math.random()*5;const ks=['tilt','yawn','chase','wiggle','wave','tilt'],kd=ks[Math.random()*6|0];anim={kind:kd,t:0,dur:{tilt:1.4,yawn:1.6,chase:1.8,wiggle:1,wave:1.6}[kd]};if(kd==='yawn')spawn('fx',p.clone().add(new THREE.Vector3(0,3*grow,0)),'🥱');if(kd==='chase')tone(500,900,.25,'triangle',.08)}
+  petG.scale.set(sx*grow,sy*grow,sx*grow);blob.position.x=p.x;blob.position.z=p.z;blob.scale.setScalar(grow*(1-Math.min(p.y,1)*.35));p.y=y;petG.rotation.z=rz;petG.rotation.x=anim&&anim.kind==='flip'?-Math.min(anim.t/anim.dur,1)*Math.PI*2:rx*.6;
   petG.traverse(o=>{if(o.userData.arm!==undefined){const s=o.userData.arm;o.position.set(s*.8,1.1,.3);o.rotation.z=0;
-    if(!anim&&!walking&&need){if(need==='h'){o.position.set(s*.35,.95+Math.sin(t*6+s)*.12,.8)}else if(s>0){o.position.set(1,1.9,.3);o.rotation.z=Math.sin(t*8)*.6}}}});
+    if(!anim&&!walking&&need){if(need==='h'){o.position.set(s*.35,.95+Math.sin(t*6+s)*.12,.8)}else if(s>0){o.position.set(1,1.9,.3);o.rotation.z=Math.sin(t*8)*.6}}
+    if(anim&&anim.kind==='wave'&&s>0){o.position.set(1,1.95,.35);o.rotation.z=Math.sin(t*12)*.7}}});
   if(need&&!anim&&(needT-=dt)<0){needT=2.5;spawn('fx',p.clone().add(new THREE.Vector3(0,3.3*grow,0)),{h:'🍎',c:'🫧',en:'💤',j:'⚽'}[need])}
-  if(t>blinkAt){blinkT=.14;blinkAt=t+2+Math.random()*3.5}blinkT-=dt;const blink=blinkT>0||(anim&&anim.kind==='nap')?.1:1;eyes.forEach(e=>e.scale.y=blink);
+  if(t>blinkAt){blinkT=.14;blinkAt=t+2+Math.random()*3.5}blinkT-=dt;const blink=blinkT>0||(anim&&anim.kind==='nap')?.1:1;const sq=anim&&/pat|tickle|dance|love/.test(anim.kind)?.4:(need==='en'&&!anim?.55:1);eyes.forEach(e=>e.scale.y=Math.min(blink,sq));
   if(mouth){const{sm,om}=mouth.userData,open=anim&&anim.kind!=='nap'&&anim.kind!=='eat'||(anim&&anim.kind==='eat'&&Math.sin(anim.t*18)>0);om.visible=!!open;sm.visible=!open;sm.rotation.z=need&&!anim?0:Math.PI;sm.position.y=need&&!anim?-.1:0}
   if(!anim||anim.kind!=='eat'){const lp=head.parent.worldToLocal(look.clone());head.rotation.y=THREE.MathUtils.clamp(Math.atan2(lp.x,lp.z),-.6,.6)*.6;head.rotation.x=THREE.MathUtils.clamp(-(lp.y-2.1)*.08,-.3,.3)}
   petG.traverse(o=>{if(o.userData.wing)o.rotation.z=-o.userData.wing*(.6+Math.sin(t*(walking?14:3))*.3);if(o.userData.tail)o.rotation.z=Math.sin(t*(walking||(anim&&anim.kind!=='nap')?14:need?1.5:5))*(need&&!anim?.15:.5);if(o.userData.ear){const s=o.userData.ear,pt=anim&&(anim.kind==='pat'||anim.kind==='happy'||anim.kind==='play')?Math.sin(anim.t*16)*.35:0;o.rotation.z=s*(.12+Math.sin(t*3+s)*.06+(walking?Math.sin(t*10)*.15:0))+pt}})}
@@ -241,6 +245,8 @@ function mount(el,S){ST=S;grow=.7+Math.min(S.days||1,9)*.035;need=S.st.h<35?'h':
  if(ph!==S.home){if(homeG)scene.remove(homeG);homeG=buildHome(S.home);scene.add(homeG)}
  if(furnG)scene.remove(furnG);furnG=new THREE.Group();S.placed.forEach((id,i)=>furnG.add(buildFurn(id,i)));scene.add(furnG);
  if(wearG)head.remove(wearG);wearG=outline(buildWear(S.wear),.03);head.add(wearG)}
-function photo(name){R.render(scene,cam);const a=document.createElement('a');a.download=(name||'my-pet')+'.png';a.href=cv.toDataURL('image/png');a.click()}
-window.Pet3D={mount,act,photo,ready:true};
+function photo(name){R.render(scene,cam);const fn=(name||'my-pet')+'.png',dl=()=>{const a=document.createElement('a');a.download=fn;a.href=cv.toDataURL('image/png');a.click()};
+ const fl=document.createElement('div');fl.className='flash';document.body.appendChild(fl);setTimeout(()=>fl.remove(),450);tone(1500,900,.12,'square',.06);
+ if(navigator.canShare&&cv.toBlob){cv.toBlob(b=>{try{const f=new File([b],fn,{type:'image/png'});if(navigator.canShare({files:[f]}))navigator.share({files:[f]}).catch(()=>{});else dl()}catch(e){dl()}},'image/png')}else dl()}
+window.Pet3D={mount,act,photo,ready:true,get canvas(){return cv}};
 window.dispatchEvent(new Event('pet3d-ready'));
