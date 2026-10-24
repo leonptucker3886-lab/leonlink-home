@@ -1,4 +1,4 @@
-/* Kids Corner core: on-device save, sound toggle, intro, bottom nav. No network, no tracking. */
+/* Kids Corner core: on-device save, sound toggle, bottom nav. No network, no tracking. */
 (function(){const KEY='kc_save_v1';
 const KC=window.KC={load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return{}}},
 save(d){try{localStorage.setItem(KEY,JSON.stringify(d))}catch(e){}},
@@ -12,6 +12,4 @@ const n=document.createElement('nav');n.className='kc-nav';n.setAttribute('aria-
 n.innerHTML=NAV.map(([h,e,l])=>`<a href="${h}"${p===h?' aria-current="page"':''}><span aria-hidden="true">${e}</span>${l}</a>`).join('');document.body.appendChild(n);
 const s=document.getElementById('kc-sound');if(s){const r=()=>{s.textContent=KC.soundOn()?'🔊':'🔇';s.setAttribute('aria-label',KC.soundOn()?'Sound on':'Sound off')};r();s.onclick=()=>{KC.set('sound',!KC.soundOn());r();KC.beep()}}
 const c=document.getElementById('coins');if(c)c.textContent=KC.get('coins',0);
-if(document.body.dataset.intro==='1'&&!KC.get('introSeen',false)){const i=document.createElement('div');i.className='kc-intro';i.setAttribute('role','dialog');
-i.innerHTML='<div class="big bob" aria-hidden="true">🎖️</div><h2>Welcome to Kids Corner!</h2><p style="font-size:1.25rem;max-width:28ch">General Pip and the Paper Trooper Battalion built a whole town for you.</p><button>LET\'S GO!</button>';
-document.body.appendChild(i);i.querySelector('button').onclick=()=>{KC.set('introSeen',true);KC.beep(880);i.remove()}}});})();
+});})();
