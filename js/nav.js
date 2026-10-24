@@ -89,3 +89,13 @@ document.body.appendChild(f)}catch(e){}})();
 
 /* Crew art in the header: faded group portrait on every page */
 (function(){try{var s=document.createElement('style');s.textContent='.lnx,.gh{isolation:isolate;overflow:hidden}.lnx::before,.gh::before{content:"";position:absolute;inset:0;z-index:-1;background:url(/img/cards/group-portrait.jpg) center 38%/cover no-repeat;opacity:.3;pointer-events:none;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 30%,#000 70%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 30%,#000 70%,transparent 100%)}';document.head.appendChild(s);}catch(e){}})();
+
+/* Footer quote art: Listening first is the whole job, human or not. */
+(function(){try{
+var Q='<svg viewBox="0 0 720 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Listening first is the whole job, human or not. - Stonewall"><text x="360" y="72" text-anchor="middle" font-family="Georgia, Times New Roman, serif" font-style="italic" font-size="38" fill="#e8e8f0">Listening first is the whole job,</text><text x="360" y="122" text-anchor="middle" font-family="Georgia, Times New Roman, serif" font-style="italic" font-size="38" fill="#e8e8f0">human or not.</text><line x1="290" y1="158" x2="430" y2="158" stroke="#22f0ff" stroke-width="2"/><text x="360" y="188" text-anchor="middle" font-family="system-ui, sans-serif" font-size="17" letter-spacing="4" fill="#22f0ff">STONEWALL</text></svg>';
+var st=document.createElement('style');st.textContent='.ll-quote-art{margin:22px auto 0;max-width:640px}.ll-quote-art svg{width:100%;height:auto;display:block}';document.head.appendChild(st);
+var foot=document.querySelector('footer');
+var box=document.createElement('div');box.className='ll-quote-art';box.innerHTML=Q;
+if(foot){if(!foot.querySelector('.ll-quote-art'))foot.appendChild(box);}
+else{var f=document.createElement('footer');f.className='ll-footer';f.style.cssText='border-top:1px solid rgba(128,128,128,.25);padding:22px 16px;text-align:center;';f.appendChild(box);document.body.appendChild(f);}
+}catch(e){}})();
