@@ -1,13 +1,16 @@
 /* LeonLink shared game intro - A General Pip Production
    Usage: <script src="https://www.leonlink.net/intro/leonlink-intro.js" data-style="arcade|casino|normal" data-game="Game Name"></script>
    Style auto-detects by host (arcadeline=arcade, afterglow=casino) if data-style is omitted.
-   Game name falls back to document.title. ~5s, tap to skip. */
+   Game name falls back to document.title. ~5s, tap to skip. Name: data-game > og:title > <title> > <h1> > filename. Fires ll-intro-done when finished. */
 (function(){
   var s=document.currentScript||{};var ds=(s.dataset||{});
   var h=location.hostname;var q=new URLSearchParams(location.search);
   var style=q.get('introStyle')||ds.style||(/arcadeline/.test(h)?'arcade':/afterglow/.test(h)?'casino':'normal');
   var combo=(style==='combo'||style==='all');if(combo)style='normal';
-  var game=q.get('introGame')||ds.game||(document.title||'LeonLink').split(/[|\u2014\u2013-]/)[0].trim();
+  var game=q.get('introGame')||ds.game||'';
+  function gname(){if(game)return game;var c=[];try{var m=document.querySelector('meta[property="og:title"],meta[name="game-name"]');if(m)c.push(m.content);}catch(e){}c.push(document.title||'');try{var h=document.querySelector('h1');if(h)c.push(h.textContent);}catch(e){}
+   for(var i=0;i<c.length;i++){var n=(c[i]||'').split(/\s[|\u2014\u2013-]\s|\s*\|\s*/)[0].replace(/\s+/g,' ').trim();if(n&&!/^(leonlink|arcadeline|afterglow)$/i.test(n)&&n.length<40)return n;}
+   var p=location.pathname.replace(/\/(index)?(\.html)?$/,'').split('/').pop().replace(/\.html$/,'').replace(/[-_]+/g,' ');return p?p.replace(/\b\w/g,function(x){return x.toUpperCase();}):'LeonLink';}
   var C={
    arcade:{bg:'#05010f',fg:'#39ff14',ac:'#ff2bd6',font:'"Press Start 2P","Courier New",monospace'},
    casino:{bg:'radial-gradient(circle,#0b5d2a,#02210f)',fg:'#ffd54a',ac:'#e53935',font:'Georgia,"Times New Roman",serif'},
@@ -20,7 +23,7 @@
   '#llI .p1{animation:llF 1.6s .1s forwards}#llI .p2{animation:llF 1.6s 1s forwards;color:'+C.ac+'}'+
   '#llI .lg{width:min(38vw,170px);height:min(38vw,170px);margin:18px 0;opacity:0;animation:llS 2.4s 1.6s forwards;perspective:600px}'+
   '#llI .lg>div{width:100%;height:100%;animation:llR 1.2s 1.6s 2 linear}'+
-  '#llI .gn{opacity:0;font-weight:900;font-size:clamp(26px,9vw,64px);animation:llG .8s 3.3s forwards;text-shadow:0 0 18px '+C.ac+'}'+
+  '#llI .gn{opacity:0;font-weight:900;font-size:clamp(24px,8vw,60px);line-height:1.1;max-width:92vw;padding:.25em .6em;border-radius:14px;background:#000a;border:3px solid '+C.ac+';box-shadow:0 0 24px '+C.ac+'88;animation:llG .8s 2s forwards;text-shadow:0 0 18px '+C.ac+'}'+
   '#llI .sk{position:absolute;bottom:14px;font-size:11px;opacity:.5;letter-spacing:.1em}'+
   '@keyframes llF{to{opacity:1}}@keyframes llS{to{opacity:1}}@keyframes llR{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}'+
   '@keyframes llG{0%{opacity:0;transform:scale(1.6)}100%{opacity:1;transform:scale(1)}}'+
@@ -32,7 +35,7 @@
   '@keyframes llC{from{transform:translateY(-120px) rotate(0)}to{transform:translateY(115vh) rotate(540deg)}}'+
   '#llI .px{position:absolute;inset:0;background:repeating-linear-gradient(0deg,#0000 0 3px,#0006 3px 4px);pointer-events:none}'+
   '@media (prefers-reduced-motion:reduce){#llI *{animation-duration:.01s!important;animation-delay:0s!important;opacity:1!important}}'+
-  '#llI .t,#llI .lg,#llI .gn{position:relative;z-index:5}#llI .p2{text-shadow:0 0 10px currentColor}'+
+  '#llI .t,#llI .lg{position:relative;z-index:5}#llI .gn{position:relative;z-index:9}#llI .p2{text-shadow:0 0 10px currentColor}'+
   '#llI .spot{position:absolute;inset:-50%;background:conic-gradient(#fff0 0 40deg,#fff3 50deg,#fff0 60deg 180deg,#fff2 190deg,#fff0 200deg);animation:llSp 6s linear infinite;pointer-events:none}'+
   '@keyframes llSp{to{transform:rotate(360deg)}}'+
 '#llI .dogs{position:absolute;right:2%;bottom:44px;width:min(46vw,260px);z-index:4;opacity:0;filter:drop-shadow(0 6px 14px #000c);animation:llDg .9s .6s forwards}#llI .dogs .hd{animation:llDb 1s ease-in-out infinite alternate;transform-origin:center}@keyframes llDg{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}@keyframes llDb{to{transform:translateY(-2px) rotate(-3deg)}}'+
@@ -93,7 +96,8 @@ if(style==='casino'){var su=['\u2660','\u2665','\u2666','\u2663','A'];for(var i=
   var FA=pix(['..pppppp..','.pppppppp.','ppwwppwwpp','ppkwppkwpp','pppppppppp','pppppppppp','pp.pp.pp.p','p...p...pp'],{p:'#ff2bd6',w:'#fff',k:'#18181b'},10);
   var FB=pix(['...cccc...','..cccccc..','.ccwccwcc.','.cckcckcc.','cccccccccc','c.cccccc.c','c.c....c.c','...cc.cc..'],{c:'#4fc3ff',w:'#fff',k:'#18181b'},10);
   var FC=pix(['..yyyyyy..','.yyyyyyyy.','yywwyywwyy','yykwyykwyy','yyyyyyyyyy','yyykkkkyyy','.yyyyyyyy.','.yy....yy.'],{y:'#ffd54a',w:'#fff',k:'#18181b'},10);
-  var GUNNER='<svg viewBox="0 0 200 160"><g class="rc"><ellipse cx="60" cy="153" rx="46" ry="6" fill="#0006"/><rect x="40" y="96" width="16" height="52" rx="5" fill="#3d5229"/><rect x="62" y="96" width="16" height="52" rx="5" fill="#34481f"/><rect x="34" y="143" width="26" height="10" rx="4" fill="#111"/><rect x="58" y="143" width="26" height="10" rx="4" fill="#111"/><rect x="34" y="56" width="50" height="48" rx="10" fill="#4b6b2f"/><rect x="34" y="74" width="50" height="7" fill="#2f421c"/><circle cx="59" cy="40" r="17" fill="#f1c27d"/><path d="M39 40Q59 10 80 40Z" fill="#3d5229" stroke="#2a3a18" stroke-width="2"/><rect x="60" y="38" width="16" height="5" rx="2" fill="#111"/><path d="M54 50Q61 55 68 50" stroke="#7a3b10" stroke-width="2" fill="none"/><rect x="60" y="62" width="100" height="12" rx="3" fill="#2b2f36"/><rect x="150" y="60" width="18" height="16" rx="2" fill="#4fc3ff"/><rect x="80" y="72" width="12" height="20" rx="3" fill="#1a1d22"/><rect x="66" y="54" width="40" height="8" rx="3" fill="#444b55"/><circle cx="72" cy="80" r="8" fill="#f1c27d"/></g><g class="fl"><polygon points="168,68 196,56 186,68 198,80" fill="#ffe27a"/><circle cx="172" cy="68" r="8" fill="#fff"/></g></svg>';
+  var GUNNER=(function(){var b=pix(['....hhhh............','...hhhhhh...........','...ssssss...........','...sksskk...........','...ssssss...........','....ssss............','..uuuuuuu...........','.uuuuuuuussgggggggggm','.uuuuuuuuggggggg....','.uuuuuuu...gg.......','..bbbbbb............','..pppppp............','..pp..pp............','..pp..pp............','..pp..pp............','.ooo..ooo...........'],{h:'#3d5229',s:'#f1c27d',k:'#18181b',u:'#4b6b2f',b:'#2a3a18',p:'#34481f',o:'#111',g:'#2b2f36',m:'#555c66'},20);
+   return b.replace('<svg ','<svg ').replace('crispEdges">','crispEdges"><g class="rc">').replace('</svg>','</g><g class="fl"><rect x="20" y="6" width="2" height="3" fill="#ffe27a"/><rect x="21" y="7" width="2" height="1" fill="#fff"/></g></svg>').replace('viewBox="0 0 20 ','viewBox="0 0 23 ');})();
   if(style==='casino'||combo){extra+='<div class="spot"></div>'+'<div class="jk l">'+JOKER+'</div>'+(combo?'<div class="dogs">'+DOGS+'</div>':'<div class="jk r">'+JOKER+'</div>')+'<div class="jk c">'+JOKER+'</div>';for(var k=0;k<24;k++)extra+='<div class="sp" style="left:'+R(0,100)+'%;top:'+R(0,100)+'%;animation-delay:'+R(0,1.5)+'s"></div>';}
   if(style==='arcade'||combo){for(var k=0;k<(combo?0:40);k++)extra='<div class="sp" style="background:#fff;box-shadow:0 0 6px #ff2bd6;width:3px;height:3px;left:'+R(0,100)+'%;top:'+R(0,70)+'%;animation-delay:'+R(0,2)+'s"></div>'+extra;extra+='<div class="gr"></div><div class="qb">&#9733;</div><div class="coin"></div><div class="hero'+(combo?' st':'')+'">'+HERO+'</div>';}
   if(style==='normal'){for(var k=0;k<40;k++)extra+='<div class="sp" style="background:#fff;box-shadow:0 0 6px #4fc3ff;width:3px;height:3px;left:'+R(0,100)+'%;top:'+R(0,100)+'%;animation-delay:'+R(0,2)+'s"></div>';if(!combo){extra+='<div class="gun">'+GUNNER+'</div>';[[FA,62,0],[FB,74,.12],[FC,86,.24]].forEach(function(f){extra+='<div class="fg" style="left:'+f[1]+'%;animation-delay:'+f[2]+'s,'+f[2]+'s,'+(1.25+f[2])+'s">'+f[0]+'<span class="ex">!</span></div>';});}}
@@ -106,11 +110,12 @@ if(style==='casino'){var su=['\u2660','\u2665','\u2666','\u2663','A'];for(var i=
     var st=document.createElement('style');st.textContent=css;document.head.appendChild(st);
     var d=document.createElement('div');d.id='llI';d.setAttribute('role','presentation');
     d.innerHTML=extra+'<div class="t p1">LeonLink presents</div><div class="t p2">A General Pip Production</div><div class="lg"><div>'+logo+'</div></div><div class="gn"></div><div class="sk">TAP TO SKIP</div>';
-    d.querySelector('.gn').textContent=game;
+    d.querySelector('.gn').textContent=gname();
     if(style==='arcade')d.querySelector('.sk').style.animation='llP 1s infinite';
     document.body.appendChild(d);fire(d);deal(d);if(d.getAnimations)setTimeout(function(){d.getAnimations({subtree:true}).forEach(function(x){x.playbackRate=.75;});},0);
-    var done=false;function end(){if(done)return;done=true;d.style.opacity='0';setTimeout(function(){d.remove();st.remove();},520);}
-    d.addEventListener('click',end);setTimeout(end,7000);
+    var done=false;function end(){if(done)return;done=true;d.style.opacity='0';try{sessionStorage.setItem('ll-intro-'+location.pathname,'1');}catch(e){}removeEventListener('keydown',end,true);setTimeout(function(){d.remove();st.remove();try{window.dispatchEvent(new Event('ll-intro-done'));}catch(e){}},520);}
+    window.LL_skipIntro=end;d.addEventListener('click',end);addEventListener('keydown',end,true);setTimeout(end,6000);
   }
+  if(ds.once&&!q.get('introStyle')){try{if(sessionStorage.getItem('ll-intro-'+location.pathname)){setTimeout(function(){window.dispatchEvent(new Event('ll-intro-done'));},0);return;}}catch(e){}}
   if(document.body)run();else document.addEventListener('DOMContentLoaded',run);
 })();
