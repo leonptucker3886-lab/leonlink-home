@@ -24,6 +24,7 @@ body{touch-action:none;user-select:none;-webkit-user-select:none}
 #pad b{position:absolute;width:50px;height:50px;border:2px solid #7fd8ff;border-radius:12px;background:rgba(127,216,255,.12);display:flex;align-items:center;justify-content:center;color:#7fd8ff;font-size:22px}
 #fire{position:fixed;bottom:calc(30px + env(safe-area-inset-bottom,0px));right:20px;width:96px;height:96px;border-radius:50%;border:2px solid #ff3bd4;color:#fff;background:rgba(255,59,212,.15);z-index:2;display:none;align-items:center;justify-content:center;font-size:18px;box-shadow:0 0 14px #ff3bd4}
 </style></head><body>
+<script src="/ll-beats.js" defer></script><script src="/ll-intro.js" data-cat="arcade" defer></script>
 <div id="hud"><span id="sc">Score 0</span><span id="lv">Lv 1</span><span id="lf">Lives 3</span><span id="hi">Best 0</span></div>
 <canvas id="c"></canvas>
 <div id="pad"><b data-d="0,-1" style="left:50px;top:0">&#9650;</b><b data-d="-1,0" style="left:0;top:50px">&#9664;</b><b data-d="1,0" style="left:100px;top:50px">&#9654;</b><b data-d="0,1" style="left:50px;top:100px">&#9660;</b></div>
