@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Learn &amp; Explore | LeonLink Kids Corner</title><meta name="description" content="LeonLink Kids Corner zone. No ads, no logins, no chat."><link rel="stylesheet" href="/kids/kc.css">
+<style>
+#ld{position:fixed;inset:0;background:#e8f6ff;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99;transition:opacity .4s}
+#ld .bk{font-size:72px;animation:bob 1s ease-in-out infinite alternate}#ld p{font-size:22px;font-weight:700;margin:12px 0 0;text-align:center}
+@keyframes bob{to{transform:translateY(-12px)}}
+.wrap{max-width:640px;margin:0 auto;padding:12px;box-sizing:border-box}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.tabs button,.grid button,.ctl button{border:0;border-radius:18px;font-weight:700;cursor:pointer;font-family:inherit}
+.tabs button{padding:14px 6px;font-size:18px;background:#cfe9ff;box-shadow:0 4px 0 #8fbbe0}
+.tabs button.on{background:#7cc4ff}
+.card{background:#fff;border-radius:22px;padding:18px;text-align:center;box-shadow:0 4px 0 #ddd}
+.big{font-size:min(30vw,150px);line-height:1.1;margin:6px 0}
+.word{font-size:26px;font-weight:700;min-height:34px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(64px,1fr));gap:10px;margin-top:12px}
+.grid button{font-size:30px;padding:14px 0;background:#ffe08a;box-shadow:0 4px 0 #d9b44a;min-height:64px}
+.ctl{display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+.ctl button{font-size:20px;padding:14px 22px;background:#b6f0c0;box-shadow:0 4px 0 #6fc47f;min-height:56px}
+.ok{color:#2a9d4a}.back{display:block;text-align:center;margin:18px auto}
+</style></head>
+<body><div id="ld" aria-live="polite"><div class="bk" aria-hidden="true">🔬</div><p>LeonLink Presents<br>Learn &amp; Explore</p></div>
+<header class="kc-top"><h1>🔬 Learn &amp; Explore</h1><button id="kc-sound" class="kc-btn" type="button">🔊</button></header>
+<main class="wrap">
+<div class="tabs" role="tablist"><button data-m="abc" class="on" type="button">🔤 ABC</button><button data-m="num" type="button">🔢 123</button><button data-m="col" type="button">🎨 Colors</button></div>
+<div class="card"><div class="big" id="big" aria-live="polite"></div><div class="word" id="word"></div>
+<div class="ctl"><button id="prev" type="button">⬅️</button><button id="say" type="button">🗣️ Say</button><button id="next" type="button">➡️</button></div>
+<div class="grid" id="quiz" hidden></div><div class="word ok" id="fb"></div>
+<div class="ctl"><button id="qz" type="button">⭐ Quiz me</button></div></div>
+<a class="back" href="/kids/"><span aria-hidden="true">🏠</span> Back to Town</a></main>
+<script>
+var D={abc:"A🍎Apple B🐻Bear C🐱Cat D🐶Dog E🐘Elephant F🐟Fish G🍇Grapes H🏠House I🍦Ice cream J🧃Juice K🪁Kite L🦁Lion M🌙Moon N🪺Nest O🐙Octopus P🐧Penguin Q👑Queen R🌈Rainbow S⭐Star T🌳Tree U☂️Umbrella V🎻Violin W🐋Whale X🎹Xylophone Y🧶Yarn Z🦓Zebra".split(" ").map(function(s){var c=s[0],r=s.slice(1),m=r.match(/^(\p{Extended_Pictographic}\uFE0F?)(.*)$/u);return{b:c,e:m[1],w:c+" is for "+m[2],a:c};}),
+num:[1,2,3,4,5,6,7,8,9,10].map(function(n){var w=["one","two","three","four","five","six","seven","eight","nine","ten"][n-1];return{b:String(n),e:"🦆".repeat(n),w:n+" — "+w,a:String(n)};}),
+col:[["Red","#e63946"],["Orange","#f4a261"],["Yellow","#ffd23f"],["Green","#2a9d4a"],["Blue","#3a86ff"],["Purple","#8e44ad"],["Pink","#ff8fab"],["Brown","#8b5a2b"]].map(function(c){return{b:"●",col:c[1],w:c[0],a:c[0]};})};
+var m="abc",i=0,q=null;
+function $(x){return document.getElementById(x)}
+function say(t){try{if(window.speechSynthesis){speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.rate=.85;speechSynthesis.speak(u);}}catch(e){}}
+function show(){var it=D[m][i];q=null;$("quiz").hidden=true;$("fb").textContent="";var b=$("big");b.style.color=it.col||"";b.textContent=it.b;$("word").textContent=m=="num"?it.w+"  "+it.e:(m=="abc"?it.e+" "+it.w:it.w);}
+function quiz(){var L=D[m],ans=L[Math.floor(Math.random()*L.length)],o=[ans];while(o.length<3){var x=L[Math.floor(Math.random()*L.length)];if(o.indexOf(x)<0)o.push(x);}o.sort(function(){return Math.random()-.5});q=ans;
+$("big").style.color="";$("big").textContent="❓";var p=m=="abc"?"Find the letter "+ans.b:m=="num"?"Find the number "+ans.b:"Find the color "+ans.w;$("word").textContent=p;say(p);$("fb").textContent="";
+var g=$("quiz");g.innerHTML="";o.forEach(function(it){var bt=document.createElement("button");bt.type="button";if(m=="col"){bt.style.background=it.col;bt.setAttribute("aria-label",it.w);bt.textContent=" ";}else bt.textContent=it.b;bt.onclick=function(){if(it===q){$("fb").textContent="🎉 Great job!";say("Great job!");setTimeout(quiz,1200);}else{$("fb").textContent="Try again! 💪";say("Try again");}};g.appendChild(bt);});g.hidden=false;}
+document.querySelectorAll(".tabs button").forEach(function(b){b.onclick=function(){document.querySelectorAll(".tabs button").forEach(function(x){x.classList.remove("on")});b.classList.add("on");m=b.dataset.m;i=0;show();}});
+$("prev").onclick=function(){i=(i-1+D[m].length)%D[m].length;show()};$("next").onclick=function(){i=(i+1)%D[m].length;show()};
+$("say").onclick=function(){if(q)say($("word").textContent);else say(D[m][i].w)};$("qz").onclick=quiz;
+show();setTimeout(function(){var l=$("ld");l.style.opacity=0;setTimeout(function(){l.remove()},400)},1500);
+</script><script src="/kids/kc.js"></script></body></html>

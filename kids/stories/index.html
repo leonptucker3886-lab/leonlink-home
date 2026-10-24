@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Songs &amp; Stories | LeonLink Kids Corner</title><meta name="description" content="LeonLink Kids Corner zone. No ads, no logins, no chat."><link rel="stylesheet" href="/kids/kc.css">
+<style>
+#ld{position:fixed;inset:0;background:#fff7e6;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99;font-family:inherit;transition:opacity .4s}
+#ld .bk{font-size:72px;animation:bob 1s ease-in-out infinite alternate}#ld p{font-size:22px;font-weight:700;margin:12px 0 0}
+@keyframes bob{to{transform:translateY(-12px)}}
+.shelf{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;padding:12px;max-width:640px;margin:0 auto}
+.shelf button{border:0;border-radius:18px;padding:18px 10px;font-size:18px;font-weight:700;background:#ffe08a;box-shadow:0 4px 0 #d9b44a;cursor:pointer;min-height:120px}
+.shelf button .e{font-size:48px;display:block}
+.book{display:none;max-width:560px;margin:0 auto;padding:12px;text-align:center}
+.pg{background:#fff;border-radius:20px;padding:22px 16px;box-shadow:0 4px 12px rgba(0,0,0,.1);min-height:260px;display:flex;flex-direction:column;justify-content:center}
+.pg .e{font-size:84px}.pg p{font-size:22px;line-height:1.4;margin:14px 0 0}
+.ctl{display:flex;gap:10px;justify-content:center;margin:14px 0}
+.ctl button{border:0;border-radius:999px;padding:14px 18px;font-size:20px;font-weight:700;background:#8fd3ff;min-width:64px;cursor:pointer}
+.ctl button:disabled{opacity:.4}.cnt{font-size:16px;opacity:.7}
+</style></head>
+<body><div id="ld" aria-live="polite"><div class="bk" aria-hidden="true">📖</div><p>LeonLink Presents</p><p>Songs &amp; Stories</p></div>
+<header class="kc-top"><h1>📖 Songs &amp; Stories</h1><button id="kc-sound" class="kc-btn" type="button">🔊</button></header>
+<main class="town">
+<div id="shelf" class="shelf" aria-label="story shelf"></div>
+<section id="book" class="book" aria-live="polite">
+<div class="pg"><div id="pe" class="e" aria-hidden="true"></div><p id="pt"></p></div>
+<div class="cnt" id="pc"></div>
+<div class="ctl"><button id="prev" type="button" aria-label="Back page">⬅️</button><button id="read" type="button" aria-label="Read to me">🗣️ Read</button><button id="next" type="button" aria-label="Next page">➡️</button></div>
+<div class="ctl"><button id="close" type="button">📚 All Stories</button></div>
+</section>
+<a class="back" href="/kids/"><span aria-hidden="true">🏠</span> Back to Town</a></main>
+<script>
+var S=[
+{t:"Pip Finds a Friend",e:"🐶",p:[["🐶","Pip the puppy lived in Kids Corner Town."],["🌳","One sunny day, Pip went to the park."],["🐱","Under a tree sat a little cat named Mo."],["🎾","Pip shared his ball. Mo shared her yarn."],["💛","Now Pip and Mo play together every day. The End!"]]},
+{t:"The Sleepy Moon",e:"🌙",p:[["🌙","The Moon was very, very sleepy."],["⭐","\"Who will shine tonight?\" asked the Moon."],["✨","\"We will!\" twinkled all the little stars."],["🌌","The stars sparkled across the whole sky."],["😴","And the Moon had a cozy nap. Goodnight! The End!"]]},
+{t:"Garden Surprise",e:"🌻",p:[["🌱","Lily planted one tiny seed."],["💧","She gave it water every morning."],["☀️","The sun helped it grow tall."],["🌻","One day, a big yellow flower said hello!"],["🐝","A happy bee came to visit too. The End!"]]},
+{t:"Five Little Ducks",e:"🦆",p:[["🦆","Five little ducks went out to play."],["🌊","Over the pond and far away."],["🦢","Mother Duck said, \"Quack, quack, quack!\""],["🐥","And all five little ducks came swimming back!"],["🎵","Sing it again any time you like. The End!"]]}
+];
+var cur=null,i=0,sh=document.getElementById('shelf'),bk=document.getElementById('book');
+S.forEach(function(s,n){var b=document.createElement('button');b.type='button';b.innerHTML='<span class="e" aria-hidden="true">'+s.e+'</span>'+s.t;b.onclick=function(){open(n)};sh.appendChild(b)});
+function stop(){try{speechSynthesis.cancel()}catch(e){}}
+function show(){var p=cur.p[i];document.getElementById('pe').textContent=p[0];document.getElementById('pt').textContent=p[1];document.getElementById('pc').textContent='Page '+(i+1)+' of '+cur.p.length;document.getElementById('prev').disabled=i==0;document.getElementById('next').disabled=i==cur.p.length-1}
+function open(n){cur=S[n];i=0;sh.style.display='none';bk.style.display='block';show();window.scrollTo(0,0)}
+document.getElementById('prev').onclick=function(){stop();if(i>0){i--;show()}};
+document.getElementById('next').onclick=function(){stop();if(i<cur.p.length-1){i++;show()}};
+document.getElementById('close').onclick=function(){stop();bk.style.display='none';sh.style.display='grid'};
+document.getElementById('read').onclick=function(){stop();if(!('speechSynthesis' in window))return;var u=new SpeechSynthesisUtterance(cur.p[i][1]);u.rate=0.9;speechSynthesis.speak(u)};
+setTimeout(function(){var l=document.getElementById('ld');l.style.opacity=0;setTimeout(function(){l.remove()},400)},1500);
+</script><script src="/kids/kc.js"></script></body></html>
