@@ -110,7 +110,8 @@
   </footer>
 </div>
 
-<div id="lightbox"><img id="lightbox-img" alt=""></div>
+<div id="lightbox"><button id="lightbox-close" type="button" class="small secondary" style="position:absolute;top:16px;right:16px;z-index:2;">✕ Close</button><img id="lightbox-img" alt=""></div>
+<button id="to-top" type="button" class="small secondary" style="display:none;position:fixed;bottom:20px;right:16px;z-index:40;">↑ Top</button>
 
 <script>
 var DB_NAME = "giftcards", STORE = "cards", db = null, pendingPhoto = null;
@@ -434,6 +435,13 @@ document.getElementById("list").addEventListener("keydown", function (e) {
 });
 document.getElementById("lightbox").addEventListener("click", function () {
   document.getElementById("lightbox").classList.remove("open");
+});
+var toTopBtn = document.getElementById("to-top");
+window.addEventListener("scroll", function () {
+  toTopBtn.style.display = window.scrollY > 300 ? "block" : "none";
+});
+toTopBtn.addEventListener("click", function () {
+  window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
 /* ---------- Download / offline / backup ---------- */
