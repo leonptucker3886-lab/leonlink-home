@@ -342,6 +342,7 @@ document.getElementById("add-form").addEventListener("submit", function (e) {
   if (!name) { alert("Give the card a name first."); return; }
   if (bal === null) { alert("Enter a balance."); return; }
   var now = Date.now();
+  if (!db) { alert("Storage is not ready. Reload the page and try again."); return; }
   putCard({ name: name, num: num, balance: bal, photo: pendingPhoto, createdAt: now, updatedAt: now })
     .then(function () {
       document.getElementById("add-form").reset();
@@ -350,6 +351,9 @@ document.getElementById("add-form").addEventListener("submit", function (e) {
       pendingPhoto = null;
       setPhotoStatus("");
       return render();
+    })
+    .catch(function (err) {
+      alert("Could not save card: " + (err && err.message ? err.message : err));
     });
 });
 
