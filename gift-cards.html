@@ -74,9 +74,12 @@
 
     <form id="add-form">
       <label>Photo of card</label><br>
-      <input id="f-photo" type="file" accept="image/*" capture="environment">
-      <label>Or pick one already taken</label>
-      <input id="f-gallery" type="file" accept="image/*">
+      <input id="f-photo" type="file" accept="image/*" capture="environment" style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;">
+      <input id="f-gallery" type="file" accept="image/*" style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;">
+      <div style="display:flex;gap:8px;margin:6px 0 14px;">
+        <label for="f-photo" style="flex:1;background:#2563eb;color:#fff;font-weight:700;font-size:18px;padding:12px;border-radius:12px;text-align:center;cursor:pointer;">Take photo</label>
+        <label for="f-gallery" style="flex:1;background:#333;color:#fff;font-weight:700;font-size:18px;padding:12px;border-radius:12px;text-align:center;cursor:pointer;">Choose from gallery</label>
+      </div>
       <div id="photo-status" style="font-size:16px;color:#aaa;margin:2px 0 10px;"></div>
       <img id="photo-preview" alt="">
       <label>Name</label>
