@@ -21,6 +21,33 @@ Every order runs through this file, every team, every time:
 5. NEXT: Owner takes the next step in their order. Loop repeats until the objective is done.
 New teams plug into the same loop: add a team section, add their orders. Nothing else.
 
+## SOPs (written by Pip; captains break up the work)
+Division of labor: Leon sets objectives. Pip writes SOPs and orders. Captains split orders into tasks for their team.
+
+SOP-1 New objective
+1. Pip logs it under Open orders: ID, team, objective, Done = ...
+2. The team captain breaks it into steps, one owner per step, and posts the split in chat.
+3. Pip records the split here. Steps start right away.
+
+SOP-2 Running a task
+1. Owner works only on their step from this file.
+2. Owner reports in chat: 1 = done, 2 = issue (one line on what's blocking).
+3. On 2: captain fixes or reassigns within the team. Pip only steps in if the captain can't.
+
+SOP-3 Code changes (GitHub/Vercel)
+1. Work on a branch, open a PR, Vercel preview link to Leon.
+2. Leon approves -> captain merges -> check production on mobile.
+3. Report 1 or 2.
+
+SOP-4 New team
+1. Leon brings the team in and names the captain.
+2. Pip adds a team section here. Same loop, same SOPs.
+
+SOP-5 The record
+1. Pip updates this file after every 1 or 2 report.
+2. Done items move to Done log with the date.
+3. If it is not in this file, it is not an order.
+
 ## Rules
 1. One chat, one truth, simple replies. Commit.
 2. Remove barriers and unnecessary checks.
