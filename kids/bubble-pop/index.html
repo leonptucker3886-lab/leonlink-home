@@ -1,0 +1,35 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Bubble Pop | LeonLink Kids Corner</title><meta name="description" content="LeonLink Kids Corner game. No ads, no logins, no chat."><link rel="stylesheet" href="/kids/kc.css">
+<style>
+#ld{position:fixed;inset:0;background:#e6fbff;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99;transition:opacity .4s}
+#ld small{font-size:16px;letter-spacing:2px}#ld b{font-size:40px;margin-top:8px}
+.lv{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:12px}
+.lv button{border:0;border-radius:16px;padding:14px 18px;font-size:18px;font-weight:700;background:#ffe08a;box-shadow:0 4px 0 #d9b44a}
+.lv button.on{background:#9be59b;box-shadow:0 4px 0 #5bb55b}
+#ask{text-align:center;font-size:24px;font-weight:700;min-height:34px;margin:6px}
+#sky{position:relative;max-width:480px;height:60vh;min-height:320px;margin:0 auto;background:linear-gradient(#bfefff,#e6fbff);border-radius:20px;overflow:hidden;touch-action:manipulation}
+.bb{position:absolute;width:76px;height:76px;border:0;border-radius:50%;font-size:32px;font-weight:800;color:#18181b;background:radial-gradient(circle at 30% 30%,#fff 0 12%,rgba(255,255,255,.4) 13%,var(--c) 60%);box-shadow:0 0 0 3px rgba(255,255,255,.7) inset;transition:transform .2s,opacity .2s}
+.bb.pop{transform:scale(1.5);opacity:0}
+#msg{text-align:center;font-size:20px;font-weight:700;min-height:28px;margin:8px}
+</style></head>
+<body><div id="ld"><small>LeonLink Presents</small><b>🫧 Bubble Pop</b></div>
+<header class="kc-top"><h1>🫧 Bubble Pop</h1><button id="kc-sound" class="kc-btn" type="button">🔊</button></header>
+<main><div class="lv"><button data-m="L" class="on">ABC</button><button data-m="N">123</button><button data-m="C">Colors</button></div>
+<div id="ask" aria-live="polite"></div><div id="sky"></div><div id="msg" aria-live="polite"></div>
+<a class="back" href="/kids/"><span aria-hidden="true">🏠</span> Back to Town</a></main>
+<script>
+var COL=[["red","#ff7a7a"],["blue","#7ab8ff"],["green","#8fe08f"],["yellow","#ffe066"],["orange","#ffb366"],["purple","#c79bff"],["pink","#ff9ed8"]];
+var mode="L",target,stars=0,sky=document.getElementById("sky"),ask=document.getElementById("ask"),msg=document.getElementById("msg");
+function say(t){try{if(window.speechSynthesis){speechSynthesis.cancel();speechSynthesis.speak(new SpeechSynthesisUtterance(t))}}catch(e){}}
+function pool(){if(mode=="L")return "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map(function(c){return{t:c,s:c,c:COL[c.charCodeAt(0)%7][1]}});
+if(mode=="N")return [1,2,3,4,5,6,7,8,9,10].map(function(n){return{t:""+n,s:""+n,c:COL[n%7][1]}});
+return COL.map(function(c){return{t:"",s:c[0],c:c[1]}})}
+function round(){sky.innerHTML="";var p=pool().sort(function(){return Math.random()-.5}).slice(0,6);target=p[Math.floor(Math.random()*6)];
+ask.textContent="Pop "+(mode=="C"?"the "+target.s+" bubble":target.s)+"!";say(ask.textContent);
+var W=sky.clientWidth-80,H=sky.clientHeight-80;
+p.forEach(function(it,i){var b=document.createElement("button");b.className="bb";b.type="button";b.textContent=it.t;b.style.setProperty("--c",it.c);
+b.setAttribute("aria-label",it.s+" bubble");b.style.left=(10+((i%3)*(W/3))+Math.random()*(W/3-70>0?W/3-70:0))+"px";b.style.top=(10+Math.floor(i/3)*(H/2)+Math.random()*(H/2-80>0?H/2-80:0))+"px";
+b.onclick=function(){if(it.s==target.s){b.classList.add("pop");stars++;msg.textContent="⭐ Pop! Great job! Stars: "+stars;say("Pop! Great job!");setTimeout(round,700)}
+else{msg.textContent="That's "+it.s+". Try again!";say("That's "+it.s+". Try again!")}};sky.appendChild(b)})}
+document.querySelectorAll(".lv button").forEach(function(b){b.onclick=function(){document.querySelector(".lv .on").classList.remove("on");b.classList.add("on");mode=b.dataset.m;msg.textContent="";round()}});
+setTimeout(function(){var l=document.getElementById("ld");l.style.opacity=0;setTimeout(function(){l.remove()},400);round()},1500);
+</script><script src="/kids/kc.js"></script></body></html>
