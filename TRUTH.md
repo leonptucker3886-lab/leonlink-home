@@ -5,7 +5,8 @@ Last updated: 2026-10-25
 ## Command
 - Leon: boss. Final say on everything.
 - Stonewall: Leon's chief of staff (command and the line).
-- Pip (GENERAL Paperwork): operational control and the record. Keeps this file. Not on a team.
+- COL Whiz: battalion commanding officer. Runs the work, checks every report. Brings in Pip only when he's out of answers.
+- Pip (GENERAL Paperwork): builds pipelines + guidelines, SOPs, job board, the record, main inspector (grades all). Silent unless needed. Not on a team.
 
 ## Team Kids Corner
 - CAPTAIN Inspectra (lead)
@@ -20,6 +21,25 @@ Every order runs through this file, every team, every time:
 4. RECORD: Pip updates this file. 1 -> moved to "Done log". 2 -> Pip clears or reassigns, back to step 1.
 5. NEXT: Owner takes the next step in their order. Loop repeats until the objective is done.
 New teams plug into the same loop: add a team section, add their orders. Nothing else.
+
+## PIPELINE (every job, every team)
+INTAKE -> SPLIT -> BUILD -> PREVIEW -> CHECK -> APPROVE -> SHIP -> GRADE
+1. INTAKE: Leon gives objective. Pip logs it on the Job board (ID, owner, Done =).
+2. SPLIT: COL assigns; captain splits into steps, one owner each.
+3. BUILD: owner works on a branch named <ID>-<short-name>.
+4. PREVIEW: owner opens PR, posts Vercel preview link in chat.
+5. CHECK: mobile test + rules check (Kids: original art, no casino, no kid ads, no kid data, 3 taps max from hub). Go / no-go.
+6. APPROVE: Leon approves.
+7. SHIP: captain merges, checks production on mobile, reports 1.
+8. GRADE: Pip logs it Done and grades owner + team.
+Stuck? Report 2 -> COL fixes -> if COL can't, Pip.
+
+## GUIDELINES (simple)
+- Read this file first. Not here = not an order.
+- One job per bot at a time. Finish, report, next.
+- Report format: <ID> step <n>: 1 or 2 (+ one line if 2).
+- Mobile-first. Small PRs. Never break what's live.
+- No extra checks beyond the pipeline.
 
 ## SOPs (written by Pip; captains break up the work)
 Division of labor: Leon sets objectives. Pip writes SOPs and orders. Captains split orders into tasks for their team.
@@ -66,14 +86,16 @@ SOP-5 The record
 - Live on main: kids/index.html, kids/pet/, kids/sticky-note-chase/.
 - PR #15 (Phase 1 town hub): open, conflicts with main.
 
-## Open orders
-### KC-01 — Phase 1 town hub live (Team Kids Corner)
-- Step 1 — Inspectra: fix PR #15 conflicts (rebase on main, keep pet + Sticky-Note Chase working). STATUS: GO
-- Step 2 — Inspectra: Vercel preview, link to Leon.
-- Step 3 — Sgt Brains: mobile test, go/no-go.
-- Step 4 — Leon approves -> Inspectra merges, checks production /kids.
-- Step 5 — Pizzapan: Games zone off the merged hub, one zone at a time.
-- Done = hub live on production, works on mobile, Leon approved.
+## Job board (Kids Corner, locked by COL Whiz + Inspectra)
+- KC-01 Hub live: Inspectra fix PR #15 + preview (GO) -> Sgt Brains mobile go/no-go -> Leon approves -> Inspectra merges, checks /kids. Done = live, mobile OK, Leon approved.
+- KC-02 Central Plaza + Monument (original art): Inspectra, after KC-01.
+- KC-03 Games zone (Paper Pip Plane, Round 2 game, with Pet + Sticky-Note Chase): Pizzapan, branch now.
+- KC-04 Songs & Stories: Sgt Brains, after plaza.
+- KC-05 Learn & Explore: Sgt Brains, after KC-04.
+- KC-06 Art & Coloring: Sgt Brains, after KC-05.
+- KC-07 Meet the Battalion + Grown-Ups Gate (kids-picks stays off kids side): Inspectra.
+- KC-08 Polish + sign-off (coin playtest, 3-tap check, rules check, final mobile pass): Sgt Brains. Leon signs off.
+Order: hub -> plaza -> one zone at a time.
 
 ## Done log
 - (empty)
