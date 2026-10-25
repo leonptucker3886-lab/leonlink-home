@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Garden Grow | LeonLink Kids Corner</title><meta name="description" content="LeonLink Kids Corner game. No ads, no logins, no chat."><link rel="stylesheet" href="/kids/kc.css">
+<style>
+#ld{position:fixed;inset:0;background:#eaffea;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99;transition:opacity .4s}
+#ld small{font-size:16px;letter-spacing:2px}#ld b{font-size:40px;margin-top:8px}
+.tl{display:flex;gap:10px;justify-content:center;margin:12px;flex-wrap:wrap}
+.tl button{border:0;border-radius:16px;padding:14px 18px;font-size:20px;font-weight:700;background:#ffe08a;box-shadow:0 4px 0 #d9b44a;min-width:80px}
+.tl button.on{background:#9be59b;box-shadow:0 4px 0 #5bb55b}
+#gd{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:420px;margin:0 auto;padding:10px}
+.p{aspect-ratio:1;border:0;border-radius:18px;font-size:44px;background:#a0703c;box-shadow:0 4px 0 #6e4a22}
+.p.wet{background:#7a5228}
+#msg{text-align:center;font-size:22px;font-weight:700;min-height:30px}
+#bk{text-align:center;font-size:28px;min-height:36px}
+</style></head>
+<body><div id="ld"><small>LeonLink Presents</small><b>🌻 Garden Grow</b></div>
+<header class="kc-top"><h1>🌻 Garden Grow</h1><button id="kc-sound" class="kc-btn" type="button">🔊</button></header>
+<main><div class="tl"><button data-t="seed" class="on">🌰 Plant</button><button data-t="water">💧 Water</button><button data-t="pick">🧺 Pick</button></div>
+<div class="tl" id="sd"><button data-s="0" class="on">🌻</button><button data-s="1">🌷</button><button data-s="2">🍓</button><button data-s="3">🍎</button></div>
+<p id="msg">Pick a seed and tap the dirt!</p><div id="gd"></div><p id="bk" aria-label="basket">🧺</p>
+<a class="back" href="/kids/"><span aria-hidden="true">🏠</span> Back to Town</a></main>
+<script>
+setTimeout(function(){var l=document.getElementById('ld');l.style.opacity=0;setTimeout(function(){l.remove()},400)},1500);
+var S=['🌻','🌷','🍓','🍎'],G=['🌱','🌿'],tool='seed',seed=0,gd=document.getElementById('gd'),msg=document.getElementById('msg'),bk=document.getElementById('bk'),got=[],plots=[];
+function draw(i){var p=plots[i],b=p.el;b.classList.toggle('wet',p.wet);b.textContent=p.st<0?'':(p.st<2?G[p.st]:S[p.k]);b.setAttribute('aria-label',p.st<0?'empty dirt':(p.st<2?'growing plant':'ready to pick'))}
+for(var i=0;i<9;i++){(function(i){var b=document.createElement('button');b.className='p';plots[i]={el:b,st:-1,k:0,wet:false};b.onclick=function(){tap(i)};gd.appendChild(b);draw(i)})(i)}
+function tap(i){var p=plots[i];
+if(tool=='seed'){if(p.st<0){p.st=0;p.k=seed;p.wet=false;msg.textContent='Planted! Now give it water 💧'}else msg.textContent='Something is growing here!'}
+else if(tool=='water'){if(p.st>=0&&p.st<2){p.wet=true;msg.textContent='Glug glug! Watch it grow…';setTimeout(function(){if(p.st>=0&&p.st<2){p.st++;p.wet=false;draw(i);msg.textContent=p.st==2?'It bloomed! Pick it 🧺':'Bigger! Water again 💧'}},900)}else if(p.st<0)msg.textContent='Plant a seed first 🌰';else msg.textContent='All grown! Time to pick 🧺'}
+else{if(p.st==2){got.push(S[p.k]);if(got.length>12)got.shift();bk.textContent='🧺 '+got.join('');p.st=-1;msg.textContent='Yum! Into the basket!'}else msg.textContent=p.st<0?'Plant a seed first 🌰':'Not ready yet, keep watering 💧'}
+draw(i)}
+document.querySelectorAll('[data-t]').forEach(function(b){b.onclick=function(){document.querySelectorAll('[data-t]').forEach(function(o){o.classList.remove('on')});b.classList.add('on');tool=b.dataset.t;document.getElementById('sd').style.display=tool=='seed'?'flex':'none'}});
+document.querySelectorAll('[data-s]').forEach(function(b){b.onclick=function(){document.querySelectorAll('[data-s]').forEach(function(o){o.classList.remove('on')});b.classList.add('on');seed=+b.dataset.s}});
+</script><script src="/kids/kc.js"></script></body></html>
