@@ -1,0 +1,31 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Memory Match | LeonLink Kids Corner</title><meta name="description" content="LeonLink Kids Corner game. No ads, no logins, no chat."><link rel="stylesheet" href="/kids/kc.css">
+<style>
+#ld{position:fixed;inset:0;background:#e8f4ff;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99;transition:opacity .4s}
+#ld small{font-size:16px;letter-spacing:2px}#ld b{font-size:40px;margin-top:8px}
+.lv{display:flex;gap:10px;justify-content:center;margin:12px}
+.lv button{border:0;border-radius:16px;padding:14px 18px;font-size:18px;font-weight:700;background:#ffe08a;box-shadow:0 4px 0 #d9b44a}
+.lv button.on{background:#9be59b;box-shadow:0 4px 0 #5bb55b}
+#bd{display:grid;gap:10px;max-width:480px;margin:0 auto;padding:10px}
+.c{aspect-ratio:1;border:0;border-radius:16px;font-size:40px;background:#7ab8ff;box-shadow:0 4px 0 #3f86d6;color:transparent}
+.c.up,.c.ok{background:#fff;color:inherit}.c.ok{box-shadow:0 4px 0 #5bb55b}
+#msg{text-align:center;font-size:22px;font-weight:700;min-height:30px}
+</style></head>
+<body><div id="ld"><small>LeonLink Presents</small><b>🃏 Memory Match</b></div>
+<header class="kc-top"><h1>🃏 Memory Match</h1><button id="kc-sound" class="kc-btn" type="button">🔊</button></header>
+<main><div class="lv"><button data-n="3" class="on">Easy</button><button data-n="6">Medium</button><button data-n="8">Hard</button></div>
+<p id="msg">Find the pairs!</p><div id="bd"></div>
+<a class="back" href="/kids/"><span aria-hidden="true">🏠</span> Back to Town</a></main>
+<script>
+setTimeout(function(){var l=document.getElementById('ld');l.style.opacity=0;setTimeout(function(){l.remove()},400)},1500);
+var P=['🐶','🐱','🐰','🐻','🐸','🦆','🏠','🌳'],bd=document.getElementById('bd'),msg=document.getElementById('msg'),a=null,lock=false,left=0;
+function start(n){bd.innerHTML='';a=null;lock=false;left=n;msg.textContent='Find the pairs!';
+bd.style.gridTemplateColumns='repeat('+(n==3?3:4)+',1fr)';
+var d=P.slice(0,n).concat(P.slice(0,n));for(var i=d.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=d[i];d[i]=d[j];d[j]=t}
+d.forEach(function(e){var b=document.createElement('button');b.className='c';b.textContent=e;b.setAttribute('aria-label','card');b.onclick=function(){flip(b)};bd.appendChild(b)})}
+function flip(b){if(lock||b.classList.contains('up')||b.classList.contains('ok'))return;b.classList.add('up');
+if(!a){a=b;return}
+if(a.textContent==b.textContent){a.className=b.className='c ok';a=null;if(--left==0)msg.textContent='🎉 You did it! Great memory!'}
+else{lock=true;var x=a;a=null;setTimeout(function(){x.classList.remove('up');b.classList.remove('up');lock=false},800)}}
+document.querySelectorAll('.lv button').forEach(function(b){b.onclick=function(){document.querySelectorAll('.lv button').forEach(function(o){o.classList.remove('on')});b.classList.add('on');start(+b.dataset.n)}});
+start(3);
+</script><script src="/kids/kc.js"></script></body></html>
