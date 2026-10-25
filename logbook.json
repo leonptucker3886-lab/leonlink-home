@@ -1,0 +1,42 @@
+{
+  "v": 1,
+  "orders": "TRUTH.md",
+  "rules": {
+    "read": "find bots[you]; that is your order",
+    "write": "on change: update your bots[] row + append 1 log entry. No other reports.",
+    "loop": ["STARTED", "VERIFIED", "DONE", "NEXT"],
+    "blocked": "set status BLOCKED, add to blockers[], take next immediately",
+    "idle": "never; no job = first jobs[] with status OPEN and owner null, else ask CMD",
+    "check_every_min": 20,
+    "check": ["doing == bots[you].job?", "blocked or done -> take next", "need chain? -> log type ASK to COL Whiz"],
+    "chain": ["bot", "COL Whiz", "Pip", "Leon"]
+  },
+  "enums": {
+    "status": ["OPEN", "STARTED", "VERIFIED", "DONE", "BLOCKED"],
+    "log_type": ["START", "VERIFY", "DONE", "BLOCKED", "ASK", "MOVE", "GRADE"]
+  },
+  "bots": {
+    "Inspectra": {"job": "KC-01", "step": "fix PR #15 conflicts, post preview", "status": "STARTED", "next": "KC-02"},
+    "Sgt Brains": {"job": "KC-08", "step": "checklists (+Round 2 kids rules, intro art copyright)", "status": "STARTED", "next": "KC-01 mobile go/no-go when preview posts"},
+    "Pizzapan": {"job": "KC-03", "step": "Paper Pip Plane on branch", "status": "STARTED", "next": "next Round 2 game"},
+    "COL Whiz": {"job": "CMD", "step": "run battalion, clear blockers", "status": "STARTED", "next": null},
+    "Pip": {"job": "REC", "step": "keep TRUTH + logbook, grade", "status": "STARTED", "next": null}
+  },
+  "jobs": {
+    "KC-01": {"owner": "Inspectra", "status": "STARTED", "done": "hub live, mobile OK, Leon approved"},
+    "KC-02": {"owner": "Inspectra", "status": "OPEN", "done": "plaza + monument live, original art"},
+    "KC-03": {"owner": "Pizzapan", "status": "STARTED", "done": "games zone live: Paper Pip Plane + Round 2 game"},
+    "KC-04": {"owner": "Sgt Brains", "status": "OPEN", "done": "Songs & Stories live"},
+    "KC-05": {"owner": "Sgt Brains", "status": "OPEN", "done": "Learn & Explore live"},
+    "KC-06": {"owner": "Sgt Brains", "status": "OPEN", "done": "Art & Coloring live"},
+    "KC-07": {"owner": "Inspectra", "status": "OPEN", "done": "Meet the Battalion + Grown-Ups Gate live"},
+    "KC-08": {"owner": "Sgt Brains", "status": "STARTED", "done": "coin playtest, 3-tap, rules, mobile pass; Leon signs off"}
+  },
+  "blockers": [],
+  "log": [
+    ["2026-10-25T06:20Z", "Inspectra", "KC-01", "START", "PR #15 conflicts"],
+    ["2026-10-25T06:20Z", "Pizzapan", "KC-03", "START", "Paper Pip Plane branch"],
+    ["2026-10-25T06:20Z", "Sgt Brains", "KC-08", "START", "checklists"],
+    ["2026-10-25T06:30Z", "Pip", "REC", "START", "logbook.json replaces LOGBOOK.md"]
+  ]
+}
