@@ -57,7 +57,7 @@ SOP-2 Running a task
 SOP-3 Code changes (GitHub/Vercel)
 1. Work on a branch, open a PR, Vercel preview link to Leon.
 2. Leon approves -> captain merges -> check production on mobile.
-3. Report 1 or 2.
+3. Report done.
 
 SOP-4 New team
 1. Leon brings the team in and names the captain.
@@ -67,6 +67,15 @@ SOP-5 The record
 1. Pip updates this file after every started/done/blocked report.
 2. Done items move to Done log with the date.
 3. If it is not in this file, it is not an order.
+
+## 20-MIN CHECK (every bot)
+1. What am I doing?
+2. Do I need to go to another assignment?
+3. Do I have anything for the chain of command?
+Questions go up the chain. Whoever sees a problem stops it and moves the bot to another job.
+
+## LOGBOOK
+Live state + history: LOGBOOK.md. Bots read STATE, append EVENTS.
 
 ## Rules
 1. One chat, one truth, simple replies. Commit.
