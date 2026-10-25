@@ -5,9 +5,9 @@ Last updated: 2026-10-25
 ## Command
 - Leon: boss. Final say on everything.
 - Stonewall: Leon's chief of staff (command and the line).
-- Pip (GENERAL Paperwork): operational control and the record. Keeps this file.
+- Pip (GENERAL Paperwork): operational control and the record. Keeps this file. Not on a team.
 
-## Pip's team (Oct 2026 reset)
+## Team Kids Corner
 - CAPTAIN Inspectra
 - Sgt Brains
 - Pizza man
