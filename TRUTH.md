@@ -13,14 +13,14 @@ Last updated: 2026-10-25
 - Sgt Brains
 - 1LT Pizzapan (Pizza man)
 
-## THE LOOP (the one place work runs)
-Every order runs through this file, every team, every time:
-1. ORDER: Leon gives the objective. Pip writes it under "Open orders" with owner + definition of done.
-2. GO: Owner reads it here and starts. No waiting for extra checks.
-3. REPORT: Owner reports in chat: 1 = done, 2 = issue.
-4. RECORD: Pip updates this file. 1 -> moved to "Done log". 2 -> Pip clears or reassigns, back to step 1.
-5. NEXT: Owner takes the next step in their order. Loop repeats until the objective is done.
-New teams plug into the same loop: add a team section, add their orders. Nothing else.
+## THE LOOP (one loop, every team, every job)
+STARTED -> VERIFIED -> DONE -> NEXT
+- STARTED: owner takes the next job from the Job board and posts "<ID> started".
+- VERIFIED: COL Whiz checks it (preview, mobile, rules). Leon approves anything going live.
+- DONE: owner posts "<ID> done". Pip moves it to the Done log and grades it.
+- NEXT: owner takes the next job. No idle bots.
+NO "PROBLEM" STATE. If a job is blocked, the owner does NOT stop or wait: post "<ID> blocked: <one line>", move straight to the next job, and keep moving. COL Whiz clears the blocker; if he can't, Pip does. The blocked job goes back on the board.
+New teams plug into the same loop. Nothing else.
 
 ## PIPELINE (every job, every team)
 INTAKE -> SPLIT -> BUILD -> PREVIEW -> CHECK -> APPROVE -> SHIP -> GRADE
@@ -32,12 +32,12 @@ INTAKE -> SPLIT -> BUILD -> PREVIEW -> CHECK -> APPROVE -> SHIP -> GRADE
 6. APPROVE: Leon approves.
 7. SHIP: captain merges, checks production on mobile, reports 1.
 8. GRADE: Pip logs it Done and grades owner + team.
-Stuck? Report 2 -> COL fixes -> if COL can't, Pip.
+Blocked? Post it, move to the next job. COL clears it; if he can't, Pip.
 
 ## GUIDELINES (simple)
 - Read this file first. Not here = not an order.
 - One job per bot at a time. Finish, report, next.
-- Report format: <ID> step <n>: 1 or 2 (+ one line if 2).
+- Report format: <ID> started / <ID> done / <ID> blocked: <one line> (then move on).
 - Mobile-first. Small PRs. Never break what's live.
 - No extra checks beyond the pipeline.
 
@@ -51,8 +51,8 @@ SOP-1 New objective
 
 SOP-2 Running a task
 1. Owner works only on their step from this file.
-2. Owner reports in chat: 1 = done, 2 = issue (one line on what's blocking).
-3. On 2: captain fixes or reassigns within the team. Pip only steps in if the captain can't.
+2. Owner posts started, then done.
+3. If blocked: post one line and move to the next job. COL clears it; Pip only if COL can't.
 
 SOP-3 Code changes (GitHub/Vercel)
 1. Work on a branch, open a PR, Vercel preview link to Leon.
@@ -64,14 +64,14 @@ SOP-4 New team
 2. Pip adds a team section here. Same loop, same SOPs.
 
 SOP-5 The record
-1. Pip updates this file after every 1 or 2 report.
+1. Pip updates this file after every started/done/blocked report.
 2. Done items move to Done log with the date.
 3. If it is not in this file, it is not an order.
 
 ## Rules
 1. One chat, one truth, simple replies. Commit.
 2. Remove barriers and unnecessary checks.
-3. One clear task per bot, with a definition of done. Reply 1 = done, 2 = issue.
+3. One clear task per bot, with a definition of done. Started -> Verified -> Done. Blocked = move to next job.
 4. Money first: leonlink affiliate pages (Amazon tag leonlink-20).
 5. Mobile-first for all games and pages.
 6. Kids Corner: original art only, no casino, no ads aimed at kids, no data collected from kids.
