@@ -74,8 +74,8 @@ SOP-5 The record
 3. Do I have anything for the chain of command?
 Questions go up the chain. Whoever sees a problem stops it and moves the bot to another job.
 
-## LOGBOOK
-Live state + history: logbook.json. Bots read STATE, append EVENTS.
+## LOGBOOK + LIBRARY
+One log book: logbook.json. Find bots[you] = your order. library{} = all open work (games, money, watches_top5, qa, content). Idle = take first library item with owner null, due now+24h. Every job has a due; Pip grades against it.
 
 ## Rules
 1. One chat, one truth, simple replies. Commit.
@@ -94,6 +94,9 @@ Live state + history: logbook.json. Bots read STATE, append EVENTS.
 - Plan: /kids-plan (Blueprint KC-001).
 - Live on main: kids/index.html, kids/pet/, kids/sticky-note-chase/.
 - PR #15 (Phase 1 town hub): open, conflicts with main.
+
+## Team Watches (3 bots, watches/top5 only, not blog)
+- #1: W-00 audit every watches/top5 page: art of the item + Amazon link. Then W-07 microbrand post (says Top 5, lists 2). Then W-08: new Top 5 post every day.
 
 ## Job board (Kids Corner, locked by COL Whiz + Inspectra)
 - KC-01 Hub live: Inspectra fix PR #15 + preview (GO) -> Sgt Brains mobile go/no-go -> Leon approves -> Inspectra merges, checks /kids. Done = live, mobile OK, Leon approved.
