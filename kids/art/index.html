@@ -1,2 +1,60 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Art & Coloring | LeonLink Kids Corner</title><meta name="description" content="LeonLink Kids Corner zone. No ads, no logins, no chat."><link rel="stylesheet" href="/kids/kc.css"></head>
-<body><header class="kc-top"><h1>🎨 Art &amp; Coloring</h1><button id="kc-sound" class="kc-btn" type="button">🔊</button></header><main class="town"><nav class="map one" aria-label="art"><div class="b a"><div class="e bob" aria-hidden="true">🚧</div><h3>The Paper Troopers are building this!</h3><small>Come back soon.</small></div></nav><a class="back" href="/kids/"><span aria-hidden="true">🏠</span> Back to Town</a></main><script src="/kids/kc.js"></script></body></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Art &amp; Coloring | LeonLink Kids Corner</title><meta name="description" content="LeonLink Kids Corner zone. No ads, no logins, no chat."><link rel="stylesheet" href="/kids/kc.css">
+<style>
+#ld{position:fixed;inset:0;background:#fff0f6;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99;transition:opacity .4s}
+#ld .bk{font-size:72px;animation:bob 1s ease-in-out infinite alternate}#ld p{font-size:22px;font-weight:700;margin:12px 0 0;text-align:center}
+@keyframes bob{to{transform:translateY(-12px)}}
+.wrap{max-width:640px;margin:0 auto;padding:12px;box-sizing:border-box}
+button{font-family:inherit;cursor:pointer;border:0}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tabs button{padding:14px 6px;font-size:18px;font-weight:700;border-radius:18px;background:#ffd6e8;box-shadow:0 4px 0 #e0a3bf}
+.tabs button.on{background:#ff9cc8}
+.pal{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0}
+.pal button{width:44px;height:44px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 4px #0003;font-size:22px}
+.pal button.on{border-color:#333}
+.tools{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.tools button{min-width:52px;min-height:52px;font-size:24px;border-radius:16px;background:#ffe08a;box-shadow:0 4px 0 #d9b44a}
+.tools button.on{background:#9be59b}
+.board{background:#fff;border-radius:22px;box-shadow:0 4px 0 #ddd;overflow:hidden;margin-top:12px}
+canvas,svg{display:block;width:100%;height:auto;touch-action:none}svg .f{stroke:#333;stroke-width:3;cursor:pointer}
+.hide{display:none}
+</style></head>
+<body><div id="ld"><div class="bk" aria-hidden="true">🎨</div><p>LeonLink Presents<br>Art &amp; Coloring</p></div>
+<header class="kc-top"><h1>🎨 Art &amp; Coloring</h1><button id="kc-sound" class="kc-btn" type="button">🔊</button></header>
+<main class="wrap">
+<div class="tabs"><button id="tD" class="on" type="button">✏️ Draw</button><button id="tC" type="button">🖍️ Color</button></div>
+<div class="pal" id="pal"></div>
+<section id="draw"><div class="tools"><button data-s="6" type="button" aria-label="thin">•</button><button data-s="14" class="on" type="button" aria-label="medium">●</button><button data-s="28" type="button" aria-label="big">⬤</button><button id="stB" type="button" aria-label="stickers">⭐</button><button id="er" type="button" aria-label="eraser">🧽</button><button id="un" type="button" aria-label="undo">↩️</button><button id="cl" type="button" aria-label="new page">🗑️</button></div>
+<div class="pal hide" id="st"></div><div class="board"><canvas id="cv" width="600" height="600"></canvas></div></section>
+<section id="color" class="hide"><div class="tools" id="pages"><button data-p="0" class="on" type="button">🏠</button><button data-p="1" type="button">🌷</button><button data-p="2" type="button">🐟</button><button id="rs" type="button" aria-label="start over">🔄</button></div><div class="board" id="pg"></div></section>
+<a class="back" href="/kids/"><span aria-hidden="true">🏠</span> Back to Town</a>
+</main>
+<script src="/kids/kc.js"></script>
+<script>
+(function(){
+function $(i){return document.getElementById(i)}function all(s){return [].slice.call(document.querySelectorAll(s))}
+setTimeout(function(){var l=$('ld');l.style.opacity=0;setTimeout(function(){l.remove()},400)},1500);
+var C=['#ff4d4d','#ff9f1c','#ffd93d','#5ccf5c','#3fa7ff','#8a5cff','#ff7ac8','#8b5a2b','#222','#fff'],col=C[0],size=14,mode='pen',stamp='⭐';
+C.forEach(function(c,i){var b=document.createElement('button');b.type='button';b.style.background=c;b.setAttribute('aria-label','color');if(!i)b.className='on';b.onclick=function(){col=c;if(mode==='erase')setMode('pen');all('#pal button').forEach(function(y){y.className=''});b.className='on'};$('pal').appendChild(b)});
+['⭐','❤️','🌈','☀️','🌸','🐱','🐶','🦋','🍎','🚗'].forEach(function(s,i){var b=document.createElement('button');b.type='button';b.textContent=s;b.style.background='#fff';if(!i)b.className='on';b.onclick=function(){stamp=s;all('#st button').forEach(function(y){y.className=''});b.className='on'};$('st').appendChild(b)});
+var cv=$('cv'),x=cv.getContext('2d'),hist=[],down=false,last;
+function blank(){x.fillStyle='#fff';x.fillRect(0,0,600,600)}blank();
+function save(){hist.push(x.getImageData(0,0,600,600));if(hist.length>15)hist.shift()}
+function pt(e){var r=cv.getBoundingClientRect();return{x:(e.clientX-r.left)*600/r.width,y:(e.clientY-r.top)*600/r.height}}
+function line(a,b){x.strokeStyle=mode==='erase'?'#fff':col;x.lineWidth=mode==='erase'?36:size;x.lineCap=x.lineJoin='round';x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);x.stroke()}
+cv.addEventListener('pointerdown',function(e){e.preventDefault();save();var p=pt(e);if(mode==='stamp'){x.font='70px sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillText(stamp,p.x,p.y);return}down=true;last=p;line(p,p)});
+cv.addEventListener('pointermove',function(e){if(!down)return;e.preventDefault();var p=pt(e);line(last,p);last=p});
+['pointerup','pointerleave','pointercancel'].forEach(function(t){cv.addEventListener(t,function(){down=false})});
+function setMode(m,btn){mode=m;all('#draw .tools button').forEach(function(t){t.classList.remove('on')});(btn||document.querySelector('[data-s="'+size+'"]')).classList.add('on');$('st').classList.toggle('hide',m!=='stamp')}
+all('[data-s]').forEach(function(b){b.onclick=function(){size=+b.dataset.s;setMode('pen',b)}});
+$('er').onclick=function(){setMode('erase',this)};$('stB').onclick=function(){setMode('stamp',this)};
+$('un').onclick=function(){if(hist.length)x.putImageData(hist.pop(),0,0)};$('cl').onclick=function(){save();blank()};
+var P=['<rect class="f" x="0" y="530" width="600" height="70"/><rect class="f" x="120" y="250" width="360" height="280"/><polygon class="f" points="100,260 300,90 500,260"/><rect class="f" x="260" y="390" width="80" height="140"/><rect class="f" x="160" y="310" width="70" height="70"/><rect class="f" x="370" y="310" width="70" height="70"/><circle class="f" cx="520" cy="80" r="45"/>',
+'<rect class="f" x="0" y="560" width="600" height="40"/><rect class="f" x="290" y="250" width="20" height="310"/><ellipse class="f" cx="230" cy="430" rx="70" ry="28"/><ellipse class="f" cx="370" cy="400" rx="70" ry="28"/><path class="f" d="M210 140 Q300 60 390 140 L390 250 Q300 330 210 250 Z"/><path class="f" d="M250 150 L300 70 L350 150 Z"/><circle class="f" cx="100" cy="100" r="40"/>',
+'<path class="f" d="M0 520 Q150 470 300 520 T600 520 L600 600 L0 600 Z"/><polygon class="f" points="440,300 560,200 560,400"/><path class="f" d="M220 200 Q280 120 340 200 Z"/><ellipse class="f" cx="280" cy="300" rx="180" ry="110"/><circle class="f" cx="180" cy="280" r="20"/><circle class="f" cx="110" cy="130" r="22"/><circle class="f" cx="70" cy="70" r="14"/>'];
+var cur=0;function show(i){cur=i;$('pg').innerHTML='<svg viewBox="0 0 600 600" role="img" aria-label="coloring page">'+P[i].replace(/\/>/g,' fill="#fff"/>')+'</svg>';all('#pg .f').forEach(function(s){s.addEventListener('click',function(){s.setAttribute('fill',col)})})}
+all('[data-p]').forEach(function(b){b.onclick=function(){all('[data-p]').forEach(function(y){y.classList.remove('on')});b.classList.add('on');show(+b.dataset.p)}});
+$('rs').onclick=function(){show(cur)};show(0);
+function tab(d){$('tD').classList.toggle('on',d);$('tC').classList.toggle('on',!d);$('draw').classList.toggle('hide',!d);$('color').classList.toggle('hide',d)}
+$('tD').onclick=function(){tab(true)};$('tC').onclick=function(){tab(false)};
+})();
+</script></body></html>
