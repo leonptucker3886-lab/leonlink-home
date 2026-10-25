@@ -75,7 +75,7 @@ SOP-5 The record
 Questions go up the chain. Whoever sees a problem stops it and moves the bot to another job.
 
 ## LOGBOOK
-Live state + history: LOGBOOK.md. Bots read STATE, append EVENTS.
+Live state + history: logbook.json. Bots read STATE, append EVENTS.
 
 ## Rules
 1. One chat, one truth, simple replies. Commit.
