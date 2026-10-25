@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Puzzle Town | LeonLink Kids Corner</title><meta name="description" content="LeonLink Kids Corner game. No ads, no logins, no chat."><link rel="stylesheet" href="/kids/kc.css">
+<style>
+#ld{position:fixed;inset:0;background:#fff3e0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99;transition:opacity .4s}
+#ld small{font-size:16px;letter-spacing:2px}#ld b{font-size:40px;margin-top:8px}
+.lv{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:12px}
+.lv button{border:0;border-radius:16px;padding:14px 18px;font-size:18px;font-weight:700;background:#ffe08a;box-shadow:0 4px 0 #d9b44a}
+.lv button.on{background:#9be59b;box-shadow:0 4px 0 #5bb55b}
+#board{position:relative;width:min(90vw,360px);aspect-ratio:1;margin:8px auto;background:#eee;border-radius:12px;box-shadow:0 0 0 4px #d9b44a;display:grid}
+#board .slot{outline:2px dashed rgba(0,0,0,.18);outline-offset:-2px}
+#tray{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:480px;margin:12px auto;min-height:90px;padding:8px}
+.pc{width:var(--s);height:var(--s);border-radius:8px;box-shadow:0 3px 8px rgba(0,0,0,.3);touch-action:none;cursor:grab;background-repeat:no-repeat;position:relative;z-index:1}
+.pc.drag{position:fixed;z-index:50;transform:scale(1.08);cursor:grabbing}
+.pc.done{box-shadow:none;border-radius:0;cursor:default}
+#msg{text-align:center;font-size:22px;font-weight:700;min-height:30px;margin:8px}
+</style></head>
+<body><div id="ld"><small>LeonLink Presents</small><b>🧩 Puzzle Town</b></div>
+<header class="kc-top"><h1>🧩 Puzzle Town</h1><button id="kc-sound" class="kc-btn" type="button">🔊</button></header>
+<main><div class="lv"><button data-n="2" class="on">Easy (4)</button><button data-n="6">Medium (6)</button><button data-n="3">Hard (9)</button></div>
+<div id="board"></div><div id="msg" aria-live="polite">Drag each piece into the picture!</div><div id="tray"></div>
+<div class="lv"><button id="nx" type="button">🔄 New picture</button></div>
+<a class="back" href="/kids/"><span aria-hidden="true">🏠</span> Back to Town</a></main>
+<script>
+var board=document.getElementById("board"),tray=document.getElementById("tray"),msg=document.getElementById("msg"),lvl="2",scene=0,left=0;
+function say(t){try{if(window.speechSynthesis){speechSynthesis.cancel();speechSynthesis.speak(new SpeechSynthesisUtterance(t))}}catch(e){}}
+function house(g,x,y,w,c,r){g.fillStyle=c;g.fillRect(x,y,w,w*.8);g.fillStyle=r;g.beginPath();g.moveTo(x-10,y);g.lineTo(x+w/2,y-w*.55);g.lineTo(x+w+10,y);g.fill();g.fillStyle="#8b5a2b";g.fillRect(x+w*.4,y+w*.4,w*.2,w*.4);g.fillStyle="#bfe6ff";g.fillRect(x+w*.1,y+w*.15,w*.2,w*.18);g.fillRect(x+w*.7,y+w*.15,w*.2,w*.18)}
+function tree(g,x,y){g.fillStyle="#8b5a2b";g.fillRect(x-8,y,16,50);g.fillStyle="#3fae4f";g.beginPath();g.arc(x,y,34,0,7);g.fill()}
+function draw(){var c=document.createElement("canvas");c.width=c.height=600;var g=c.getContext("2d");
+var sky=[["#9fd8ff","#ffd84d"],["#ffc9a8","#ff8a4d"],["#c8b6ff","#fff6b0"]][scene%3];
+g.fillStyle=sky[0];g.fillRect(0,0,600,600);g.fillStyle=sky[1];g.beginPath();g.arc(500,100,55,0,7);g.fill();
+g.fillStyle="#fff";[[120,90],[300,130]].forEach(function(p){g.beginPath();g.arc(p[0],p[1],28,0,7);g.arc(p[0]+30,p[1]-10,32,0,7);g.arc(p[0]+60,p[1],28,0,7);g.fill()});
+g.fillStyle="#7fd36b";g.fillRect(0,380,600,220);g.fillStyle="#9a9a9a";g.fillRect(0,480,600,70);g.fillStyle="#fff";for(var i=0;i<600;i+=80)g.fillRect(i+10,510,45,8);
+var H=[["#ff8a8a","#c0392b"],["#8ab8ff","#2c5fa8"],["#ffe066","#d98a00"],["#c79bff","#6a3fb5"]];
+house(g,40,300,120,H[scene%4][0],H[scene%4][1]);house(g,230,280,140,H[(scene+1)%4][0],H[(scene+1)%4][1]);house(g,440,310,110,H[(scene+2)%4][0],H[(scene+2)%4][1]);
+tree(g,190,360);tree(g,410,350);g.font="60px sans-serif";g.fillText(["🐶","🐱","🦆"][scene%3],270,470);return c.toDataURL()}
+function start(){board.innerHTML="";tray.innerHTML="";var img=draw(),cols,rows;
+if(lvl=="2"){cols=rows=2}else if(lvl=="6"){cols=3;rows=2}else{cols=rows=3}
+board.style.gridTemplateColumns="repeat("+cols+",1fr)";board.style.aspectRatio=cols+"/"+rows;
+var bw=board.clientWidth,pw=bw/cols,ph=pw;board.style.height=(ph*rows)+"px";left=cols*rows;var ps=[];
+for(var r=0;r<rows;r++)for(var k=0;k<cols;k++){var s=document.createElement("div");s.className="slot";s.dataset.i=r*cols+k;board.appendChild(s);
+var p=document.createElement("div");p.className="pc";p.dataset.i=r*cols+k;p.setAttribute("aria-label","puzzle piece "+(r*cols+k+1));
+p.style.setProperty("--s",pw+"px");p.style.height=ph+"px";p.style.backgroundImage="url("+img+")";p.style.backgroundSize=(pw*cols)+"px "+(pw*cols)+"px";
+p.style.backgroundPosition=(-k*pw)+"px "+(-r*ph-(rows<cols?pw*(cols-rows)/2:0))+"px";ps.push(p)}
+ps.sort(function(){return Math.random()-.5}).forEach(function(p){tray.appendChild(p);drag(p)});msg.textContent="Drag each piece into the picture!"}
+function drag(p){var ox,oy,home;p.addEventListener("pointerdown",function(e){if(p.classList.contains("done"))return;e.preventDefault();var b=p.getBoundingClientRect();ox=e.clientX-b.left;oy=e.clientY-b.top;home=p.parentNode;
+p.setPointerCapture(e.pointerId);p.classList.add("drag");mv(e)});
+function mv(e){p.style.left=(e.clientX-ox)+"px";p.style.top=(e.clientY-oy)+"px"}
+p.addEventListener("pointermove",function(e){if(p.classList.contains("drag"))mv(e)});
+p.addEventListener("pointerup",function(e){if(!p.classList.contains("drag"))return;p.classList.remove("drag");p.style.left=p.style.top="";
+var s=board.querySelector('.slot[data-i="'+p.dataset.i+'"]'),b=s.getBoundingClientRect(),cx=e.clientX-ox+b.width/2,cy=e.clientY-oy+b.height/2;
+if(cx>b.left-20&&cx<b.right+20&&cy>b.top-20&&cy<b.bottom+20){s.appendChild(p);p.classList.add("done");left--;
+if(left==0){msg.textContent="⭐ You did it! Great puzzle!";say("You did it! Great puzzle!")}else{msg.textContent="Nice fit!";}}
+else{msg.textContent="Not there. Try another spot!"}})}
+document.querySelectorAll(".lv button[data-n]").forEach(function(b){b.onclick=function(){document.querySelector(".lv .on").classList.remove("on");b.classList.add("on");lvl=b.dataset.n;start()}});
+document.getElementById("nx").onclick=function(){scene++;start()};
+setTimeout(function(){var l=document.getElementById("ld");l.style.opacity=0;setTimeout(function(){l.remove()},400);start()},1500);
+</script><script src="/kids/kc.js"></script></body></html>
