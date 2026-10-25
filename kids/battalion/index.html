@@ -1,2 +1,35 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Meet the Battalion | LeonLink Kids Corner</title><meta name="description" content="LeonLink Kids Corner zone. No ads, no logins, no chat."><link rel="stylesheet" href="/kids/kc.css"></head>
-<body><header class="kc-top"><h1>🎖️ Meet the Battalion</h1><button id="kc-sound" class="kc-btn" type="button">🔊</button></header><main class="town"><nav class="map one" aria-label="battalion"><div class="b m"><div class="e bob" aria-hidden="true">🚧</div><h3>The Paper Troopers are building this!</h3><small>Come back soon.</small></div></nav><a class="back" href="/kids/"><span aria-hidden="true">🏠</span> Back to Town</a></main><script src="/kids/kc.js"></script></body></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Meet the Battalion | LeonLink Kids Corner</title><meta name="description" content="LeonLink Kids Corner zone. No ads, no logins, no chat."><link rel="stylesheet" href="/kids/kc.css">
+<style>
+#ld{position:fixed;inset:0;background:#eaf6ea;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99;transition:opacity .4s}
+#ld small{font-size:16px;letter-spacing:2px}#ld b{font-size:36px;margin-top:8px;text-align:center}
+.crew{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;padding:12px;max-width:640px;margin:0 auto}
+.crew button{border:0;border-radius:18px;padding:16px 8px;font-size:18px;font-weight:700;background:#bfe6c0;box-shadow:0 4px 0 #6fb571;min-height:130px;cursor:pointer}
+.crew .e{font-size:52px;display:block}
+#card{display:none;max-width:480px;margin:10px auto;padding:20px;border-radius:20px;background:#fff;box-shadow:0 4px 0 #ccc;text-align:center}
+#card .e{font-size:90px}#card p{font-size:20px;line-height:1.4}
+.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.row button{border:0;border-radius:16px;padding:14px 18px;font-size:18px;font-weight:700;background:#ffe08a;box-shadow:0 4px 0 #d9b44a;min-width:120px;min-height:52px}
+</style></head>
+<body><div id="ld"><small>LEONLINK PRESENTS</small><b>🎖️ Meet the Battalion</b></div>
+<header class="kc-top"><h1>🎖️ Meet the Battalion</h1><button id="kc-sound" class="kc-btn" type="button">🔊</button></header>
+<main class="town"><p style="text-align:center;font-size:18px">The Paper Troopers are helpers! Tap a friend to meet them.</p>
+<div class="crew" id="crew"></div>
+<div id="card"><div class="e" id="ce"></div><h2 id="cn"></h2><p id="ct"></p>
+<div class="row"><button id="say" type="button">🗣️ Hear me</button><button id="wave" type="button">👋 Wave</button><button id="bk" type="button">⬅️ All friends</button></div></div>
+<a class="back" href="/kids/"><span aria-hidden="true">🏠</span> Back to Town</a></main>
+<script>
+var F=[["🧑‍✈️","Captain Fold","I lead the team! My job is making sure every friend gets home safe."],
+["👷","Builder Bea","I build bridges and tree houses out of paper and tape."],
+["🧑‍⚕️","Doctor Dot","I put bandages on scraped knees and give the best hugs."],
+["🧑‍🍳","Cook Crinkle","I make pancakes for the whole team every morning."],
+["🧑‍🚒","Rescue Rex","I help cats down from trees and kids across the street."],
+["🧑‍🌾","Gardener Gus","I plant flowers so the Town looks bright and happy."]];
+var crew=document.getElementById('crew'),card=document.getElementById('card'),cur=0;
+F.forEach(function(f,i){var b=document.createElement('button');b.type='button';b.innerHTML='<span class="e" aria-hidden="true">'+f[0]+'</span>'+f[1];b.onclick=function(){show(i)};crew.appendChild(b)});
+function say(t){try{speechSynthesis.cancel();speechSynthesis.speak(new SpeechSynthesisUtterance(t))}catch(e){}}
+function show(i){cur=i;var f=F[i];ce.textContent=f[0];cn.textContent=f[1];ct.textContent=f[2];crew.style.display='none';card.style.display='block';say('Hi! I am '+f[1]+'. '+f[2])}
+document.getElementById('say').onclick=function(){say('Hi! I am '+F[cur][1]+'. '+F[cur][2])};
+document.getElementById('wave').onclick=function(){ce.animate([{transform:'rotate(0)'},{transform:'rotate(-15deg)'},{transform:'rotate(15deg)'},{transform:'rotate(0)'}],{duration:600,iterations:2});say('Hello friend!')};
+document.getElementById('bk').onclick=function(){card.style.display='none';crew.style.display='grid'};
+setTimeout(function(){var l=document.getElementById('ld');l.style.opacity=0;setTimeout(function(){l.remove()},400)},1500);
+</script><script src="/kids/kc.js"></script></body></html>
