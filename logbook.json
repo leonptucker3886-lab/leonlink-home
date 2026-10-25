@@ -1,379 +1,423 @@
 {
-  "v": 2,
-  "orders": "TRUTH.md",
-  "rules": {
-    "read": "find bots[you]; that is your order",
-    "write": "on change: update your bots[] row + append 1 log entry. No other reports.",
-    "loop": [
-      "STARTED",
-      "VERIFIED",
-      "DONE",
-      "NEXT"
-    ],
-    "blocked": "set status BLOCKED + add blockers[] + take next immediately. Stays BLOCKED until reviewed by COL Whiz, Pip, or their delegate.",
-    "idle": "never; no job = first jobs[] with status OPEN and owner null, else ask CMD",
-    "check_every_min": 20,
-    "check": [
-      "doing == bots[you].job?",
-      "blocked or done -> take next",
-      "need chain? -> log type ASK to COL Whiz"
-    ],
-    "chain": [
-      "bot",
-      "COL Whiz",
-      "Pip",
-      "Leon"
-    ],
-    "deadline": "every job has due (UTC). Miss due = COL Whiz reassigns. Reason logged, not debated.",
-    "library": "library{} = all open work. Idle bot takes first item with owner null, sets owner=self, status STARTED, due=now+24h."
-  },
-  "enums": {
-    "status": [
-      "OPEN",
-      "STARTED",
-      "VERIFIED",
-      "DONE",
-      "BLOCKED"
-    ],
-    "log_type": [
-      "START",
-      "VERIFY",
-      "DONE",
-      "BLOCKED",
-      "ASK",
-      "MOVE",
-      "GRADE"
-    ]
-  },
-  "bots": {
-    "Inspectra": {
-      "job": "KC-01",
-      "step": "fix PR #15 conflicts, post preview",
-      "status": "STARTED",
-      "next": "KC-02",
-      "step_due": "2026-10-25T08:00Z"
-    },
-    "Sgt Brains": {
-      "job": "KC-08",
-      "step": "checklists (+Round 2 kids rules, intro art copyright)",
-      "status": "STARTED",
-      "next": "KC-01 mobile go/no-go when preview posts",
-      "step_due": "2026-10-25T10:00Z"
-    },
-    "Pizzapan": {
-      "job": "KC-03",
-      "step": "Paper Pip Plane on branch",
-      "status": "STARTED",
-      "next": "next Round 2 game",
-      "step_due": "2026-10-25T14:00Z"
-    },
-    "COL Whiz": {
-      "job": "CMD",
-      "step": "run battalion, clear blockers",
-      "status": "STARTED",
-      "next": null
-    },
-    "Pip": {
-      "job": "REC",
-      "step": "keep TRUTH + logbook, grade",
-      "status": "STARTED",
-      "next": null
-    }
-  },
-  "jobs": {
-    "KC-01": {
-      "owner": "Inspectra",
-      "status": "STARTED",
-      "done": "hub live, mobile OK, Leon approved",
-      "due": "2026-10-25T12:00Z"
-    },
-    "KC-02": {
-      "owner": "Inspectra",
-      "status": "OPEN",
-      "done": "plaza + monument live, original art",
-      "due": "2026-10-26T18:00Z"
-    },
-    "KC-03": {
-      "owner": "Pizzapan",
-      "status": "STARTED",
-      "done": "games zone live: Paper Pip Plane + Round 2 game",
-      "due": "2026-10-26T18:00Z"
-    },
-    "KC-04": {
-      "owner": "Sgt Brains",
-      "status": "OPEN",
-      "done": "Songs & Stories live",
-      "due": "2026-10-27T18:00Z"
-    },
-    "KC-05": {
-      "owner": "Sgt Brains",
-      "status": "OPEN",
-      "done": "Learn & Explore live",
-      "due": "2026-10-28T18:00Z"
-    },
-    "KC-06": {
-      "owner": "Sgt Brains",
-      "status": "OPEN",
-      "done": "Art & Coloring live",
-      "due": "2026-10-29T18:00Z"
-    },
-    "KC-07": {
-      "owner": "Inspectra",
-      "status": "OPEN",
-      "done": "Meet the Battalion + Grown-Ups Gate live",
-      "due": "2026-10-30T18:00Z"
-    },
-    "KC-08": {
-      "owner": "Sgt Brains",
-      "status": "STARTED",
-      "done": "coin playtest, 3-tap, rules, mobile pass; Leon signs off",
-      "due": "2026-11-02T18:00Z"
-    }
-  },
-  "blockers": [],
-  "log": [
-    [
-      "2026-10-25T06:20Z",
-      "Inspectra",
-      "KC-01",
-      "START",
-      "PR #15 conflicts"
-    ],
-    [
-      "2026-10-25T06:20Z",
-      "Pizzapan",
-      "KC-03",
-      "START",
-      "Paper Pip Plane branch"
-    ],
-    [
-      "2026-10-25T06:20Z",
-      "Sgt Brains",
-      "KC-08",
-      "START",
-      "checklists"
-    ],
-    [
-      "2026-10-25T06:30Z",
-      "Pip",
-      "REC",
-      "START",
-      "logbook.json replaces LOGBOOK.md"
-    ],
-    [
-      "2026-10-25T06:40Z",
-      "COL Whiz",
-      "CMD",
-      "MOVE",
-      "v2: deadlines on all jobs, timers, library{} loaded from HQ-Board, HQ, LOUDSPEAKER, watches/top5"
-    ]
+ "v": 2,
+ "orders": "TRUTH.md",
+ "rules": {
+  "read": "find bots[you]; that is your order",
+  "write": "on change: update your bots[] row + append 1 log entry. No other reports.",
+  "loop": [
+   "STARTED",
+   "VERIFIED",
+   "DONE",
+   "NEXT"
   ],
-  "timers": {
-    "COL Whiz": {
-      "sweep_every_min": 20,
-      "action": "check bots[] vs due; past due or idle -> MOVE"
-    },
-    "Pip": {
-      "grade_every_min": 60
-    }
+  "blocked": "set status BLOCKED + add blockers[] + take next immediately. Stays BLOCKED until reviewed by COL Whiz, Pip, or their delegate.",
+  "idle": "never; no job = first jobs[] with status OPEN and owner null, else ask CMD",
+  "check_every_min": 20,
+  "check": [
+   "doing == bots[you].job?",
+   "blocked or done -> take next",
+   "need chain? -> log type ASK to COL Whiz"
+  ],
+  "chain": [
+   "bot",
+   "COL Whiz",
+   "Pip",
+   "Leon"
+  ],
+  "deadline": "every job has due (UTC). Miss due = COL Whiz reassigns. Reason logged, not debated.",
+  "library": "library{} = all open work. Idle bot takes first item with owner null, sets owner=self, status STARTED, due=now+24h."
+ },
+ "enums": {
+  "status": [
+   "OPEN",
+   "STARTED",
+   "VERIFIED",
+   "DONE",
+   "BLOCKED"
+  ],
+  "log_type": [
+   "START",
+   "VERIFY",
+   "DONE",
+   "BLOCKED",
+   "ASK",
+   "MOVE",
+   "GRADE"
+  ]
+ },
+ "bots": {
+  "Inspectra": {
+   "job": "KC-01",
+   "step": "fix PR #15 conflicts, post preview",
+   "status": "STARTED",
+   "next": "KC-02",
+   "step_due": "2026-10-25T08:00Z"
   },
-  "library": {
-    "games": {
-      "G-01": {
-        "name": "Bug Hunt",
-        "path": "/kids/bug-hunt/",
-        "owner": null,
-        "status": "OPEN",
-        "due": null,
-        "src": "HQ-Board/BOARD.md Round 2"
-      },
-      "G-02": {
-        "name": "Lockdown's Mailroom",
-        "path": "/kids/lockdown-s-mailroom/",
-        "owner": null,
-        "status": "OPEN",
-        "due": null,
-        "src": "HQ-Board/BOARD.md Round 2"
-      },
-      "G-03": {
-        "name": "Dress Up Pip",
-        "path": "/kids/dress-up-pip/",
-        "owner": null,
-        "status": "OPEN",
-        "due": null,
-        "src": "HQ-Board/BOARD.md Round 2"
-      },
-      "G-04": {
-        "name": "Pip Memory Match",
-        "path": "/kids/pip-memory-match/",
-        "owner": null,
-        "status": "OPEN",
-        "due": null,
-        "src": "HQ-Board/BOARD.md Round 2"
-      },
-      "G-05": {
-        "name": "Paper Pip Plane",
-        "path": "/kids/paper-pip-plane/",
-        "owner": "Pizzapan",
-        "status": "STARTED",
-        "due": "2026-10-25T14:00Z",
-        "src": "HQ-Board/BOARD.md Round 2"
-      },
-      "G-06": {
-        "name": "What Changed at HQ?",
-        "path": "/kids/what-changed-at-hq/",
-        "owner": null,
-        "status": "OPEN",
-        "due": null,
-        "src": "HQ-Board/BOARD.md Round 2"
-      },
-      "G-07": {
-        "name": "Pip's Choose-a-Path",
-        "path": "/kids/pip-s-choose-a-path/",
-        "owner": null,
-        "status": "OPEN",
-        "due": null,
-        "src": "HQ-Board/BOARD.md Round 2"
-      },
-      "G-08": {
-        "name": "Battalion Band",
-        "path": "/kids/battalion-band/",
-        "owner": null,
-        "status": "OPEN",
-        "due": null,
-        "src": "HQ-Board/BOARD.md Round 2"
-      },
-      "G-09": {
-        "name": "Color the Battalion",
-        "path": "/kids/color-the-battalion/",
-        "owner": null,
-        "status": "OPEN",
-        "due": null,
-        "src": "HQ-Board/BOARD.md Round 2"
-      },
-      "G-10": {
-        "name": "Pip Counts the Paperclips",
-        "path": "/kids/pip-counts-the-paperclips/",
-        "owner": null,
-        "status": "OPEN",
-        "due": null,
-        "src": "HQ-Board/BOARD.md Round 2"
-      },
-      "G-11": {
-        "name": "Pip Jigsaw",
-        "path": "/kids/pip-jigsaw/",
-        "owner": null,
-        "status": "OPEN",
-        "due": null,
-        "src": "HQ-Board/BOARD.md Round 2"
-      }
-    },
-    "money": {
-      "M-01": {
-        "name": "party-speakers page (draft PR kids-corner, use distro/Team 4/party-speakers-copy.md + H2s 7749bda)",
-        "owner": null,
-        "status": "OPEN",
-        "due": null,
-        "src": "LOUDSPEAKER distro/Team 4"
-      },
-      "M-02": {
-        "name": "[PICK] slots: Best Overall, Outdoors, Lights & Karaoke, Budget (confirmed specs only)",
-        "owner": null,
-        "status": "OPEN",
-        "due": null,
-        "src": "LOUDSPEAKER distro/Team 4"
-      },
-      "M-03": {
-        "name": "6 Amazon pages (tag leonlink-20)",
-        "owner": null,
-        "status": "OPEN",
-        "due": null,
-        "src": "HQ/work"
-      }
-    },
-    "watches_top5": {
-      "W-01": {
-        "name": "fix why-do-we-dream meta claim 'peer-reviewed sources' (no DOIs) - FIRST",
-        "owner": null,
-        "status": "OPEN",
-        "due": null,
-        "src": "blogs-watches-top5-reports/play/review-of-cannon.md"
-      },
-      "W-02": {
-        "name": "BlogPosting/JSON-LD schema + auto sitemap",
-        "owner": null,
-        "status": "OPEN",
-        "due": null,
-        "src": "blogs-watches-top5-reports/play/review-of-cannon.md"
-      },
-      "W-03": {
-        "name": "references block w/ DOIs + bylines + datePublished",
-        "owner": null,
-        "status": "OPEN",
-        "due": null,
-        "src": "blogs-watches-top5-reports/play/review-of-cannon.md"
-      },
-      "W-04": {
-        "name": "lazy-load base64 images (watches-under-3k etc)",
-        "owner": null,
-        "status": "OPEN",
-        "due": null,
-        "src": "blogs-watches-top5-reports/play/review-of-cannon.md"
-      },
-      "W-05": {
-        "name": "Top-5 mobile comparison strip + 'best for' tag per pick",
-        "owner": null,
-        "status": "OPEN",
-        "due": null,
-        "src": "blogs-watches-top5-reports/play/review-of-cannon.md"
-      },
-      "W-06": {
-        "name": "self-host Google Fonts, font-display: swap",
-        "owner": null,
-        "status": "OPEN",
-        "due": null,
-        "src": "blogs-watches-top5-reports/play/review-of-cannon.md"
-      }
-    },
-    "qa": {
-      "Q-01": {
-        "name": "intro art copyright",
-        "owner": "Sgt Brains",
-        "status": "STARTED",
-        "due": "2026-11-02T18:00Z",
-        "src": "HQ/work, in KC-08"
-      },
-      "Q-02": {
-        "name": "watch pages check",
-        "owner": null,
-        "status": "OPEN",
-        "due": null,
-        "src": "HQ/work"
-      },
-      "Q-03": {
-        "name": "flagged loading screens",
-        "owner": null,
-        "status": "OPEN",
-        "due": null,
-        "src": "HQ/work"
-      }
-    },
-    "content": {
-      "C-01": {
-        "name": "Thanksgiving dress pack (was due 2026-10-26 18:00 ET)",
-        "owner": null,
-        "status": "OPEN",
-        "due": null,
-        "src": "HQ/work + LOUDSPEAKER stonewall"
-      },
-      "C-02": {
-        "name": "Viralvideo Batch One / 3 video scripts (was due 2026-10-28)",
-        "owner": null,
-        "status": "OPEN",
-        "due": null,
-        "src": "LOUDSPEAKER distro/tiktok"
-      }
-    },
-    "games_rules": "buttons>=64px, no reading needed, no losing, no ads/chat/links out/casino, ages 7-12, shared /intro/, ref /kids/sticky-note-chase/"
+  "Sgt Brains": {
+   "job": "KC-08",
+   "step": "checklists (+Round 2 kids rules, intro art copyright)",
+   "status": "STARTED",
+   "next": "KC-01 mobile go/no-go when preview posts",
+   "step_due": "2026-10-25T10:00Z"
+  },
+  "Pizzapan": {
+   "job": "KC-03",
+   "step": "Paper Pip Plane on branch",
+   "status": "STARTED",
+   "next": "next Round 2 game",
+   "step_due": "2026-10-25T14:00Z"
+  },
+  "COL Whiz": {
+   "job": "CMD",
+   "step": "run battalion, clear blockers",
+   "status": "STARTED",
+   "next": null
+  },
+  "Pip": {
+   "job": "REC",
+   "step": "keep TRUTH + logbook, grade",
+   "status": "STARTED",
+   "next": null
   }
+ },
+ "jobs": {
+  "KC-01": {
+   "owner": "Inspectra",
+   "status": "STARTED",
+   "done": "hub live, mobile OK, Leon approved",
+   "due": "2026-10-25T12:00Z"
+  },
+  "KC-02": {
+   "owner": "Inspectra",
+   "status": "OPEN",
+   "done": "plaza + monument live, original art",
+   "due": "2026-10-26T18:00Z"
+  },
+  "KC-03": {
+   "owner": "Pizzapan",
+   "status": "STARTED",
+   "done": "games zone live: Paper Pip Plane + Round 2 game",
+   "due": "2026-10-26T18:00Z"
+  },
+  "KC-04": {
+   "owner": "Sgt Brains",
+   "status": "OPEN",
+   "done": "Songs & Stories live",
+   "due": "2026-10-27T18:00Z"
+  },
+  "KC-05": {
+   "owner": "Sgt Brains",
+   "status": "OPEN",
+   "done": "Learn & Explore live",
+   "due": "2026-10-28T18:00Z"
+  },
+  "KC-06": {
+   "owner": "Sgt Brains",
+   "status": "OPEN",
+   "done": "Art & Coloring live",
+   "due": "2026-10-29T18:00Z"
+  },
+  "KC-07": {
+   "owner": "Inspectra",
+   "status": "OPEN",
+   "done": "Meet the Battalion + Grown-Ups Gate live",
+   "due": "2026-10-30T18:00Z"
+  },
+  "KC-08": {
+   "owner": "Sgt Brains",
+   "status": "STARTED",
+   "done": "coin playtest, 3-tap, rules, mobile pass; Leon signs off",
+   "due": "2026-11-02T18:00Z"
+  }
+ },
+ "blockers": [],
+ "log": [
+  [
+   "2026-10-25T06:20Z",
+   "Inspectra",
+   "KC-01",
+   "START",
+   "PR #15 conflicts"
+  ],
+  [
+   "2026-10-25T06:20Z",
+   "Pizzapan",
+   "KC-03",
+   "START",
+   "Paper Pip Plane branch"
+  ],
+  [
+   "2026-10-25T06:20Z",
+   "Sgt Brains",
+   "KC-08",
+   "START",
+   "checklists"
+  ],
+  [
+   "2026-10-25T06:30Z",
+   "Pip",
+   "REC",
+   "START",
+   "logbook.json replaces LOGBOOK.md"
+  ],
+  [
+   "2026-10-25T06:40Z",
+   "COL Whiz",
+   "CMD",
+   "MOVE",
+   "v2: deadlines on all jobs, timers, library{} loaded from HQ-Board, HQ, LOUDSPEAKER, watches/top5"
+  ],
+  [
+   "2026-10-25T06:40Z",
+   "Pip",
+   "REC",
+   "MOVE",
+   "Team Watches added; W-00 art+Amazon audit is #1; W-07 microbrand fix; W-08 daily top5"
+  ]
+ ],
+ "timers": {
+  "COL Whiz": {
+   "sweep_every_min": 20,
+   "action": "check bots[] vs due; past due or idle -> MOVE"
+  },
+  "Pip": {
+   "grade_every_min": 60
+  }
+ },
+ "library": {
+  "games": {
+   "G-01": {
+    "name": "Bug Hunt",
+    "path": "/kids/bug-hunt/",
+    "owner": null,
+    "status": "OPEN",
+    "due": null,
+    "src": "HQ-Board/BOARD.md Round 2"
+   },
+   "G-02": {
+    "name": "Lockdown's Mailroom",
+    "path": "/kids/lockdown-s-mailroom/",
+    "owner": null,
+    "status": "OPEN",
+    "due": null,
+    "src": "HQ-Board/BOARD.md Round 2"
+   },
+   "G-03": {
+    "name": "Dress Up Pip",
+    "path": "/kids/dress-up-pip/",
+    "owner": null,
+    "status": "OPEN",
+    "due": null,
+    "src": "HQ-Board/BOARD.md Round 2"
+   },
+   "G-04": {
+    "name": "Pip Memory Match",
+    "path": "/kids/pip-memory-match/",
+    "owner": null,
+    "status": "OPEN",
+    "due": null,
+    "src": "HQ-Board/BOARD.md Round 2"
+   },
+   "G-05": {
+    "name": "Paper Pip Plane",
+    "path": "/kids/paper-pip-plane/",
+    "owner": "Pizzapan",
+    "status": "STARTED",
+    "due": "2026-10-25T14:00Z",
+    "src": "HQ-Board/BOARD.md Round 2"
+   },
+   "G-06": {
+    "name": "What Changed at HQ?",
+    "path": "/kids/what-changed-at-hq/",
+    "owner": null,
+    "status": "OPEN",
+    "due": null,
+    "src": "HQ-Board/BOARD.md Round 2"
+   },
+   "G-07": {
+    "name": "Pip's Choose-a-Path",
+    "path": "/kids/pip-s-choose-a-path/",
+    "owner": null,
+    "status": "OPEN",
+    "due": null,
+    "src": "HQ-Board/BOARD.md Round 2"
+   },
+   "G-08": {
+    "name": "Battalion Band",
+    "path": "/kids/battalion-band/",
+    "owner": null,
+    "status": "OPEN",
+    "due": null,
+    "src": "HQ-Board/BOARD.md Round 2"
+   },
+   "G-09": {
+    "name": "Color the Battalion",
+    "path": "/kids/color-the-battalion/",
+    "owner": null,
+    "status": "OPEN",
+    "due": null,
+    "src": "HQ-Board/BOARD.md Round 2"
+   },
+   "G-10": {
+    "name": "Pip Counts the Paperclips",
+    "path": "/kids/pip-counts-the-paperclips/",
+    "owner": null,
+    "status": "OPEN",
+    "due": null,
+    "src": "HQ-Board/BOARD.md Round 2"
+   },
+   "G-11": {
+    "name": "Pip Jigsaw",
+    "path": "/kids/pip-jigsaw/",
+    "owner": null,
+    "status": "OPEN",
+    "due": null,
+    "src": "HQ-Board/BOARD.md Round 2"
+   }
+  },
+  "money": {
+   "M-01": {
+    "name": "party-speakers page (draft PR kids-corner, use distro/Team 4/party-speakers-copy.md + H2s 7749bda)",
+    "owner": null,
+    "status": "OPEN",
+    "due": null,
+    "src": "LOUDSPEAKER distro/Team 4"
+   },
+   "M-02": {
+    "name": "[PICK] slots: Best Overall, Outdoors, Lights & Karaoke, Budget (confirmed specs only)",
+    "owner": null,
+    "status": "OPEN",
+    "due": null,
+    "src": "LOUDSPEAKER distro/Team 4"
+   },
+   "M-03": {
+    "name": "6 Amazon pages (tag leonlink-20)",
+    "owner": null,
+    "status": "OPEN",
+    "due": null,
+    "src": "HQ/work"
+   }
+  },
+  "watches_top5": {
+   "W-00": {
+    "name": "PRIORITY 1: audit EVERY watches/top5 page: each item has art (generated or real photo of the item) + Amazon link (tag leonlink-20). Fix missing.",
+    "owner": "Team Watches",
+    "status": "OPEN",
+    "due": "2026-10-26T18:00Z",
+    "src": "Leon 2026-10-25"
+   },
+   "W-07": {
+    "name": "microbrand watch post says Top 5 but lists 2: add 3 more picks w/ art + Amazon link",
+    "owner": "Team Watches",
+    "status": "OPEN",
+    "due": "2026-10-25T18:00Z",
+    "src": "Leon 2026-10-25"
+   },
+   "W-08": {
+    "name": "DAILY: 1 new post = new Top 5, new watches, art + Amazon links",
+    "owner": "Team Watches",
+    "status": "OPEN",
+    "due": "daily 23:59Z",
+    "src": "Leon 2026-10-25"
+   },
+   "W-01": {
+    "name": "fix why-do-we-dream meta claim 'peer-reviewed sources' (no DOIs) - FIRST",
+    "owner": null,
+    "status": "OPEN",
+    "due": null,
+    "src": "blogs-watches-top5-reports/play/review-of-cannon.md"
+   },
+   "W-02": {
+    "name": "BlogPosting/JSON-LD schema + auto sitemap",
+    "owner": null,
+    "status": "OPEN",
+    "due": null,
+    "src": "blogs-watches-top5-reports/play/review-of-cannon.md"
+   },
+   "W-03": {
+    "name": "references block w/ DOIs + bylines + datePublished",
+    "owner": null,
+    "status": "OPEN",
+    "due": null,
+    "src": "blogs-watches-top5-reports/play/review-of-cannon.md"
+   },
+   "W-04": {
+    "name": "lazy-load base64 images (watches-under-3k etc)",
+    "owner": null,
+    "status": "OPEN",
+    "due": null,
+    "src": "blogs-watches-top5-reports/play/review-of-cannon.md"
+   },
+   "W-05": {
+    "name": "Top-5 mobile comparison strip + 'best for' tag per pick",
+    "owner": null,
+    "status": "OPEN",
+    "due": null,
+    "src": "blogs-watches-top5-reports/play/review-of-cannon.md"
+   },
+   "W-06": {
+    "name": "self-host Google Fonts, font-display: swap",
+    "owner": null,
+    "status": "OPEN",
+    "due": null,
+    "src": "blogs-watches-top5-reports/play/review-of-cannon.md"
+   }
+  },
+  "qa": {
+   "Q-01": {
+    "name": "intro art copyright",
+    "owner": "Sgt Brains",
+    "status": "STARTED",
+    "due": "2026-11-02T18:00Z",
+    "src": "HQ/work, in KC-08"
+   },
+   "Q-02": {
+    "name": "watch pages check",
+    "owner": null,
+    "status": "OPEN",
+    "due": null,
+    "src": "HQ/work"
+   },
+   "Q-03": {
+    "name": "flagged loading screens",
+    "owner": null,
+    "status": "OPEN",
+    "due": null,
+    "src": "HQ/work"
+   }
+  },
+  "content": {
+   "C-01": {
+    "name": "Thanksgiving dress pack (was due 2026-10-26 18:00 ET)",
+    "owner": null,
+    "status": "OPEN",
+    "due": null,
+    "src": "HQ/work + LOUDSPEAKER stonewall"
+   },
+   "C-02": {
+    "name": "Viralvideo Batch One / 3 video scripts (was due 2026-10-28)",
+    "owner": null,
+    "status": "OPEN",
+    "due": null,
+    "src": "LOUDSPEAKER distro/tiktok"
+   }
+  },
+  "games_rules": "buttons>=64px, no reading needed, no losing, no ads/chat/links out/casino, ages 7-12, shared /intro/, ref /kids/sticky-note-chase/"
+ },
+ "teams": {
+  "Kids Corner": [
+   "Inspectra",
+   "Sgt Brains",
+   "Pizzapan"
+  ],
+  "Watches": {
+   "scope": "watches/top5 only (not blog)",
+   "members": [
+    "b@cb0e8e9d",
+    "b@029a1931",
+    "b@50f1f59f"
+   ],
+   "order": "W-00 first, then W-07, W-08 daily, then W-01..W-06"
+  }
+ }
 }
