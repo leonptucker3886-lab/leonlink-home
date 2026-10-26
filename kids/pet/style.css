@@ -241,3 +241,6 @@ body.kidmode header{padding-left:70px}
 .inv .slot.shop{border-style:dashed;border-color:#ffd166}
 .inv .slot .n{position:absolute;right:4px;bottom:2px;font-size:16px;font-weight:900;background:#ff3fb4;color:#fff;border-radius:10px;padding:0 6px}
 .inv .slot:active{transform:scale(.92)}
+
+.pg-home{display:flex;align-items:center;gap:10px;margin-top:14px;padding:14px 26px;border-radius:999px;background:#fff;color:#2a2a4a;text-decoration:none;font:800 22px system-ui,sans-serif;box-shadow:0 6px 0 #c9c3e6,0 10px 24px rgba(0,0,0,.25)}
+.pg-home span{font-size:38px}.pg-home:active{transform:translateY(4px);box-shadow:0 2px 0 #c9c3e6}

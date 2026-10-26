@@ -90,12 +90,13 @@ function enter(){KM=true;document.body.classList.add('kidmode');goFull();history
  const o=$q('.playgate');if(o)o.remove();
  if(S.pet&&S.tut<TUT.length)setTimeout(tutShow,800);else if(S.pet){bertSay('Hi again! Your pet missed you!','👋');setTimeout(bertHide,4000)}}
 function gate(again){if($q('.playgate'))return;const g=document.createElement('div');g.className='playgate';
- g.innerHTML=`<div class="pg-bert">${BERT_SVG}</div><button class="pg-play" aria-label="Play">▶</button>`;
+ g.innerHTML=`<div class="pg-bert">${BERT_SVG}</div><button class="pg-play" aria-label="Play">▶</button><a class="pg-home" href="/kids/" aria-label="Back to Kids Corner"><span>🏠</span><b>Kids Corner</b></a>`;
+ g.querySelector('.pg-home').onclick=e=>{KM=false;say('Back to Kids Corner!');e.preventDefault();setTimeout(()=>location.href='/kids/',600)};
  g.querySelector('.pg-play').onclick=()=>{say(again?'Back to your pet!':'Let\'s play!');enter()};document.body.appendChild(g);
  const b=g.querySelector('.pg-bert');b.classList.add('talking');setTimeout(()=>b.classList.remove('talking'),2500)}
 function leave(){KM=false;document.body.classList.remove('kidmode');bertHide();closeSheet();
  try{if(navigator.keyboard&&navigator.keyboard.unlock)navigator.keyboard.unlock();if(isFull())(document.exitFullscreen||document.webkitExitFullscreen).call(document)}catch(e){}
- say('Bye bye! See you soon!');gate(false)}
+ say('Bye bye! Tap the house to go to Kids Corner.');gate(false)}
 // exit button: hold it for 2 seconds so little hands don't leave by accident
 const ex=document.createElement('button');ex.className='exitpet';ex.setAttribute('aria-label','Exit Pet. Hold to leave.');ex.innerHTML='<span>🚪</span><i></i>';
 let hold=0;const stop=()=>{clearTimeout(hold);ex.classList.remove('holding')};
