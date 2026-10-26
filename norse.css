@@ -1,0 +1,21 @@
+/* LeonLink Norse theme (Phase 2) - colours and fonts only; no layout changes */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&display=swap');
+html:root{
+  --bg:#0d0e11 !important; --pan:#17181c !important; --line:#3a3226 !important;
+  --c:#9fd3ee !important;  /* frost */
+  --p:#d4a72c !important;  /* gold */
+  --g:#e2b84a !important;  /* gold-light */
+  --y:#e8c15a !important;
+  --o:#e0622b !important;  /* ember */
+  --t:#efe8da !important; --ink:#efe8da !important; --mut:#a89f8e !important;
+}
+html:root body{
+  background-color:#0d0e11;
+  background-image:radial-gradient(ellipse at top,rgba(212,167,44,.07),transparent 60%),
+    repeating-linear-gradient(135deg,rgba(255,255,255,.012) 0 2px,transparent 2px 6px);
+  border-top:4px solid #d4a72c;
+}
+html:root h1,html:root h2,html:root h3{font-family:'Cinzel',Georgia,serif;letter-spacing:.02em}
+html:root a{text-decoration-color:rgba(159,211,238,.5)}
+html:root ::selection{background:#d4a72c;color:#0d0e11}
+html:root a[href*="amazon."],html:root a[href*="amzn.to"]{ }
