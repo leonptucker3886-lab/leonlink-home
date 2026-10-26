@@ -4,3 +4,4 @@ Disallow: /account
 Disallow: /__llid
 
 Sitemap: https://www.leonlink.net/sitemap.xml
+Sitemap: https://www.leonlink.net/feed.xml

@@ -1,0 +1,29 @@
+# LeonLink
+> LeonLink (leonlink.net): researched, interactive long-form journal posts, buying guides (Lineup), free business tools and games.
+
+## Journal posts
+- [Why Do We Procrastinate?](https://www.leonlink.net/journal/why-we-procrastinate.html): It's not laziness. Procrastination is short-term mood repair. The procrastination equation, what it costs you, and the if-then trick with 94 studies behind it.
+- [Does Music Make You Smarter?](https://www.leonlink.net/journal/does-music-make-you-smarter.html): The Mozart effect, 30 years later. What the 1993 study really found and what the best studies say about music lessons.
+- [You’re paying for AI you didn’t ask for](https://www.leonlink.net/journal/ai-you-didnt-ask-for.html): Renewal prices keep rising with 'AI' as the reason. Some of it is real cost. A lot of it is bundling. Sort the real features from the decoration.
+- [The trades software tax](https://www.leonlink.net/journal/trades-software-tax.html): Field service software that bills per technician charges you more every time you hire. Run your own numbers.
+- [The Self-Made Myth](https://www.leonlink.net/journal/self-made-myth.html): Hard work is real. So is everything underneath it. Peel back the invisible stack every success story stands on.
+- [SEO died and nobody held a funeral](https://www.leonlink.net/journal/seo-is-dead.html): People ask an AI and get one answer instead of ten blue links. Will the machine cite you? Run the checklist.
+- [Review gating is fraud with a smile](https://www.leonlink.net/journal/review-gating.html): Sending only happy customers to Google and hiding the unhappy ones is called review gating. The FTC and Google both say no. See what it does to a rating.
+- [Per-seat pricing is dying](https://www.leonlink.net/journal/per-seat-pricing.html): Software has billed per person since the SaaS boom. AI agents do work without logging in. The billing unit and the value unit just split.
+- [Commonwealth vs State: is there any difference?](https://www.leonlink.net/journal/commonwealth.html): Virginia, Kentucky, Pennsylvania and Massachusetts call themselves commonwealths. Does that change their courts, crimes or punishments? Tap through the myth check.
+- [Abrahamic religions: three faiths, one family](https://www.leonlink.net/journal/abrahamic.html): Judaism, Christianity and Islam share more than most people think. Compare them side by side, with no winner declared.
+- [Why We Fall for the Wrong People](https://www.leonlink.net/journal/why-we-fall-for-the-wrong-people.html): The science of bad chemistry — attachment templates, the anxious-avoidant trap, the slot machine, and rewiring taste. The Wall doctrine #2.
+- [What Lives On Us](https://www.leonlink.net/journal/what-lives-on-us.html): You are an ecosystem. 38 trillion bacteria, eyelash mites that roam your face at night, and a second genome 150 times your own — meet everything living on you.
+- [Valhalla, Hades, Heaven and Hell](https://www.leonlink.net/journal/afterlife.html): Ten afterlives, described the way their believers describe them — and the stats: the world's religions by size and years of influence.
+- [Love, or a Trauma Bond?](https://www.leonlink.net/journal/love-or-trauma-bond.html): Trauma bonds are real in the research and inflated online. The clinical core, the cycle, and how it differs from an ordinary hard relationship.
+- [Partner Cheating?](https://www.leonlink.net/journal/why-we-cheat.html): Why people cheat — the research, the red flags, and who to avoid. Patterns, not paranoia; every claim sourced.
+- [How Do You Kill Humanely?](https://www.leonlink.net/journal/humane-executions.html): Christa Pike survived her own execution. Every method — lethal injection, nitrogen gas, firing squad, the guillotine — ranked by what the evidence says.
+- [Are Computers Alive?](https://www.leonlink.net/journal/are-computers-alive.html): Neurons vs circuits, electricity vs blood. The honest scientific answer — no, by every definition — and why the parallels are still astonishing.
+
+## Key pages
+- [Blog index](https://www.leonlink.net/blog.html)
+- [Free tools](https://www.leonlink.net/free-tools.html)
+- [Lineup buying guides](https://www.leonlink.net/lineup/)
+- [How LeonLink blogs are written](https://leonlink-blog-playbook.vercel.app)
+
+Feed: https://www.leonlink.net/feed.xml
