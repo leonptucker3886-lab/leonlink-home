@@ -13,88 +13,116 @@
 <link rel="icon" href="/favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Fraunces:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#07040f;--pan:#120b22e0;--ink:#efe9ff;--mut:#a69cc4;--c:#22f0ff;--p:#b06bff;--o:#ff8a1f;--y:#ffd25a;--line:#2a1f45}
-*{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#2a1050,transparent 60%),radial-gradient(900px 500px at 100% 40%,#3a1a05,transparent 55%),var(--bg);color:var(--ink);font:16px/1.6 "DM Sans",system-ui,sans-serif}
-main{max-width:1100px;margin:0 auto;padding:18px 14px 60px}
-h1,h2,h3{font-family:Fraunces,Georgia,serif;line-height:1.2}
-h1{font-size:clamp(2rem,6vw,3.4rem);margin:.2em 0 .1em;background:linear-gradient(90deg,var(--y),var(--o),var(--p));-webkit-background-clip:text;background-clip:text;color:transparent}
-h2{font-size:1.6rem;margin:1.6em 0 .5em}h2 small{display:block;font:500 .9rem "DM Sans";color:var(--mut)}
-a{color:var(--c)}.mut{color:var(--mut)}
-.pan{background:var(--pan);border:1px solid var(--line);border-radius:18px;padding:18px}
-.jump{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.jump a{padding:8px 14px;border-radius:999px;background:#ffffff10;border:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:600;font-size:14px}
-.hero{display:grid;gap:18px}@media(min-width:880px){.hero{grid-template-columns:1.05fr 1fr;align-items:start}}
-.stage{position:relative;aspect-ratio:1/1;max-height:520px;border-radius:22px;overflow:hidden;background:linear-gradient(#0d0620,#1b0c33 60%,#2b1206);border:1px solid var(--line)}
+:root{--bg:#05070d;--pan:#0a0f1ae6;--ink:#e6e8ef;--mut:#8e98ad;--gold:#c8a96a;--gold2:#e2cd9c;--line:#1a2233;--line2:#263149}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:60px;-webkit-text-size-adjust:100%}
+body{margin:0;background:radial-gradient(1100px 520px at 50% -8%,#121a33 0%,transparent 62%),var(--bg);color:var(--ink);font:16px/1.65 "DM Sans",system-ui,sans-serif;padding-bottom:env(safe-area-inset-bottom)}
+a{color:var(--gold2);text-decoration-color:#c8a96a66;text-underline-offset:3px}a:hover{color:#fff}
+.mut,.hint{color:var(--mut)}.hint{font-size:13px}
+header.top{position:sticky;top:0;z-index:5;background:#05070de6;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:18px;padding:10px 16px;font:600 .86rem "DM Sans",system-ui,sans-serif;overflow-x:auto;scrollbar-width:none;white-space:nowrap}
+header.top::-webkit-scrollbar{display:none}
+header.top a{color:var(--mut);text-decoration:none}header.top a:hover{color:var(--ink)}header.top .home{color:var(--gold)}
+main{max-width:1080px;margin:0 auto;padding:0 18px 70px}
+section{padding:56px 0 4px}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;line-height:1.15}
+.kick{font:700 .72rem "DM Sans",system-ui;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:0}
+.intro{padding:46px 0 6px;text-align:center;max-width:760px;margin:0 auto}
+h1{font-size:clamp(2.4rem,7vw,3.8rem);margin:.25em 0 .2em}h1 em{font-style:italic;color:var(--gold)}
+.lede{color:#c3c8d4;font-size:1.06rem;margin:0 auto;max-width:640px}
+.orn{display:block;margin:22px auto 0;width:240px;height:18px;color:var(--gold);opacity:.75}
+h2{font-size:clamp(1.5rem,3.6vw,1.9rem);margin:.3em 0 0}
+h2 small{display:block;font:400 .95rem/1.5 "DM Sans",system-ui;color:var(--mut);margin-top:6px}
+.shead{border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:18px}
+h3{font-size:1.12rem;color:var(--gold2);margin:1.2em 0 .5em}
+.pan{background:var(--pan);border:1px solid var(--line2);border-radius:14px;padding:20px;box-shadow:0 12px 30px #0007}
+.hero{display:grid;gap:20px;padding-top:34px}@media(min-width:880px){.hero{grid-template-columns:1fr 1fr;align-items:stretch}}
+.stage{position:relative;aspect-ratio:1/1;max-height:540px;border-radius:14px;overflow:hidden;background:linear-gradient(180deg,#0b1124,#0a0f1d 58%,#07090f);border:1px solid var(--line2)}
 .stage svg{width:100%;height:100%;display:block}
-.star{animation:tw 3s infinite ease-in-out}@keyframes tw{50%{opacity:.2}}
-.ball{animation:pulse 2.4s infinite ease-in-out}@keyframes pulse{50%{filter:brightness(1.6)}}
-.swirl{animation:spin 9s linear infinite;transform-origin:200px 232px}@keyframes spin{to{transform:rotate(360deg)}}
-.bub{animation:rise 3s infinite ease-in;opacity:0}@keyframes rise{0%{opacity:0;transform:translateY(0)}20%{opacity:.9}100%{opacity:0;transform:translateY(-70px)}}
-.sway{animation:sway 4s infinite ease-in-out;transform-origin:200px 380px}@keyframes sway{50%{transform:rotate(-2deg)}}
-.hand{animation:wave 1.6s infinite ease-in-out;transform-origin:150px 270px}@keyframes wave{50%{transform:rotate(-12deg)}}
-.moon{animation:fl 6s infinite ease-in-out}@keyframes fl{50%{transform:translateY(-6px)}}
-.stage.cast .ball{animation-duration:.35s}.stage.cast .swirl{animation-duration:1s}
-.say{position:absolute;left:5%;right:5%;bottom:4%;background:#07040fd8;border:1px solid var(--p);border-radius:14px;padding:10px 14px;font-family:Fraunces,serif;font-style:italic;min-height:3.2em}
-@media(prefers-reduced-motion:reduce){*{animation:none!important}}
-.wallet{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
-.coin{display:inline-flex;align-items:center;gap:6px;font-weight:700;padding:6px 12px;border-radius:999px;background:#2a1e00;border:1px solid var(--y);color:var(--y)}
-.coin i{width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff6b0,#ffd25a 45%,#b07a00);box-shadow:0 0 10px #ffd25a}
-form label{display:block;font-weight:600;font-size:14px;margin:10px 0 4px}
-form input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#0a0616;color:var(--ink);font:inherit}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.btn{display:inline-block;border:0;cursor:pointer;padding:12px 18px;border-radius:999px;font:700 15px "DM Sans";color:#140a00;background:linear-gradient(90deg,var(--y),var(--o));text-decoration:none;margin-top:12px}
-.btn.alt{background:#ffffff14;color:var(--ink);border:1px solid var(--line)}.btn[disabled]{opacity:.5}
-.hint{font-size:13px;color:var(--mut)}
+.star{animation:tw 6s infinite ease-in-out}@keyframes tw{50%{opacity:.25}}
+.ball{animation:pulse 6s infinite ease-in-out}@keyframes pulse{50%{opacity:.8}}
+.swirl{animation:spin 40s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.bub{animation:rise 7s infinite ease-out;opacity:0}@keyframes rise{0%{opacity:0;transform:translateY(0)}25%{opacity:.5}100%{opacity:0;transform:translateY(-60px)}}
+.sway{animation:sway 9s infinite ease-in-out;transform-origin:200px 360px}@keyframes sway{50%{transform:translateY(-2px) rotate(-.6deg)}}
+.hand{animation:wave 7s infinite ease-in-out;transform-origin:160px 262px}@keyframes wave{50%{transform:rotate(-5deg)}}
+.moon{animation:fl 12s infinite ease-in-out}@keyframes fl{50%{transform:translateY(-4px)}}
+.ring{animation:spin 140s linear infinite;transform-origin:200px 190px}
+.stage.cast .ball{animation-duration:1.6s}.stage.cast .swirl{animation-duration:6s}.stage.cast .ring{animation-duration:30s}
+.say{position:absolute;left:5%;right:5%;bottom:4%;background:#05070dde;border:1px solid var(--line2);border-top-color:#c8a96a66;border-radius:10px;padding:11px 15px;font-family:Fraunces,Georgia,serif;font-style:italic;color:#d9dbe3;min-height:3.2em}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.wallet{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.coin{display:inline-flex;align-items:center;gap:8px;font-weight:600;padding:5px 12px;border-radius:999px;border:1px solid #c8a96a88;color:var(--gold2);font-size:14px}
+.coin i{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--gold);background:#c8a96a33}
+form label{display:block;font-weight:600;font-size:13px;letter-spacing:.02em;color:#c3c8d4;margin:14px 0 6px}
+form input{width:100%;padding:12px 13px;border-radius:10px;border:1px solid var(--line2);background:#070b14;color:var(--ink);font:inherit;min-height:46px;transition:border-color .2s}
+form input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px #c8a96a22}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--gold);cursor:pointer;padding:11px 22px;min-height:46px;border-radius:999px;font:600 15px "DM Sans",system-ui;color:#0b0d12;background:var(--gold);text-decoration:none;margin-top:16px;transition:background .2s,color .2s}
+.btn:hover{background:var(--gold2)}
+.btn.alt{background:transparent;color:var(--gold2);border-color:var(--line2)}.btn.alt:hover{border-color:var(--gold);color:#fff}.btn[disabled]{opacity:.5;cursor:wait}
 #out{display:none}
 .big3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.sg{text-align:center;padding:14px 6px;border-radius:16px;background:#ffffff08;border:1px solid var(--line)}
-.sg b{display:block;font-size:2.2rem;line-height:1}.sg span{display:block;font-weight:700}.sg small{color:var(--mut)}
-.grid{display:grid;gap:12px}@media(min-width:720px){.grid{grid-template-columns:1fr 1fr}}
-.bar{margin:8px 0}.bar div{height:10px;border-radius:9px;background:#ffffff10;overflow:hidden}.bar i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--p),var(--o));width:0;transition:width 1.2s}
-.bar label{display:flex;justify-content:space-between;font-size:14px}
+.sg{text-align:center;padding:16px 6px;border-radius:12px;background:#ffffff05;border:1px solid var(--line2)}
+.sg b{display:block;font:400 2rem/1 Georgia,serif;color:var(--gold);font-variant-emoji:text}.sg span{display:block;font-weight:600;margin-top:8px}.sg small{color:var(--mut)}
+.grid{display:grid;gap:14px}@media(min-width:720px){.grid{grid-template-columns:1fr 1fr}}
+.bar{margin:10px 0}.bar div{height:6px;border-radius:6px;background:#ffffff0d;overflow:hidden}.bar i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,#8a7446,var(--gold));width:0;transition:width 1.2s}
+.bar label{display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px}
 .num{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
-.nm{padding:12px;border-radius:14px;background:#ffffff08;border:1px solid var(--line)}.nm b{font:700 2rem Fraunces;color:var(--y)}.nm small{display:block;color:var(--mut);font-weight:600}
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.tc{perspective:800px;aspect-ratio:2/3;cursor:pointer}.tc .in{position:relative;width:100%;height:100%;transition:transform .8s;transform-style:preserve-3d}.tc.f .in{transform:rotateY(180deg)}
-.tc .fa,.tc .ba{position:absolute;inset:0;border-radius:12px;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px;text-align:center;border:1px solid var(--y)}
-.tc .fa{background:repeating-linear-gradient(45deg,#2a1050 0 8px,#1a0a33 8px 16px);font-size:2rem}
-.tc .ba{background:linear-gradient(#1b0c33,#3a1a05);transform:rotateY(180deg);font-size:12px}.tc .ba b{font:700 .95rem Fraunces;color:var(--y)}.tc .ba em{font-size:1.8rem;font-style:normal}
-table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{color:var(--y)}.tw{overflow-x:auto}
-.want{display:grid;gap:10px}@media(min-width:720px){.want{grid-template-columns:1fr 1fr}}
-.want div{padding:12px 14px;border-left:3px solid var(--o);background:#ffffff06;border-radius:0 12px 12px 0}
-.gc{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}@media(min-width:720px){.gc{grid-template-columns:repeat(4,1fr)}}
-.gc a{display:block;padding:14px;border-radius:16px;background:#ffffff08;border:1px solid var(--line);text-decoration:none;color:var(--ink);transition:.2s}.gc a:hover{transform:translateY(-3px);box-shadow:0 8px 28px #b06bff44}.gc a b{display:block;font-size:1.8rem}.gc a span{font-weight:700}.gc a small{display:block;color:var(--mut)}
-.disc{font-size:13px;color:var(--mut);border:1px dashed var(--line);border-radius:12px;padding:12px;margin-top:24px}
+.nm{padding:14px;border-radius:12px;background:#ffffff05;border:1px solid var(--line2)}.nm b{font:600 2rem Fraunces,Georgia,serif;color:var(--gold)}.nm small{display:block;color:var(--mut);font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:11px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:640px}
+.tc{perspective:900px;aspect-ratio:2/3;cursor:pointer}.tc .in{position:relative;width:100%;height:100%;transition:transform 1s cubic-bezier(.2,.7,.2,1);transform-style:preserve-3d}.tc.f .in{transform:rotateY(180deg)}
+.tc .fa,.tc .ba{position:absolute;inset:0;border-radius:10px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:10px;text-align:center;border:1px solid #c8a96a88;box-shadow:inset 0 0 0 5px #0a0f1a,inset 0 0 0 6px #c8a96a44}
+.tc .fa{background:repeating-linear-gradient(45deg,#0d1428 0 6px,#0a1020 6px 12px);font:400 1.8rem Georgia,serif;color:var(--gold);font-variant-emoji:text}
+.tc small{color:var(--mut);font-family:"DM Sans",system-ui;letter-spacing:.12em;text-transform:uppercase;font-size:10px!important}
+.tc .ba{background:linear-gradient(180deg,#101830,#0a0f1d);transform:rotateY(180deg);font-size:12px}.tc .ba b{font:600 .98rem Fraunces,Georgia,serif;color:var(--gold2)}.tc .ba em{display:none}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{color:var(--gold);font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase}.tw{overflow-x:auto}
+.want{display:grid;gap:12px}@media(min-width:720px){.want{grid-template-columns:1fr 1fr}}
+.want div{padding:14px 16px;border:1px solid var(--line2);border-left:2px solid var(--gold);background:#ffffff04;border-radius:0 12px 12px 0}
+.gc{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}@media(min-width:720px){.gc{grid-template-columns:repeat(3,1fr)}}@media(min-width:1000px){.gc{grid-template-columns:repeat(4,1fr)}}
+.gc a{display:flex;flex-direction:column;gap:4px;padding:16px;border-radius:14px;background:#0a0f1a;border:1px solid var(--line2);text-decoration:none;color:var(--ink);transition:transform .15s,border-color .2s}
+.gc a:hover{transform:translateY(-3px);border-color:#c8a96a99;box-shadow:0 10px 30px #000a}
+.gc a b{font:700 10px "DM Sans",system-ui;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}.gc a span{font:600 1.02rem/1.3 Fraunces,Georgia,serif}.gc a small{color:var(--mut);font-size:13px}
+.gc a.amz::after{content:"View on Amazon \2192";margin-top:auto;padding-top:10px;font-size:12.5px;font-weight:600;color:var(--gold2)}
+.disc{font-size:13px;color:var(--mut);border-top:1px solid var(--line);padding-top:16px;margin-top:28px}
+.sfoot{border-top:1px solid var(--line);margin-top:44px;padding:26px 18px}
+.sfoot .fin{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.sfoot .flogo{display:flex;align-items:center;gap:8px;font-weight:800;color:var(--ink);text-decoration:none}
+.sfoot nav{display:flex;gap:14px;flex-wrap:wrap}.sfoot nav a{color:var(--mut);text-decoration:none;font-size:13.5px}
+.sfoot .fcopy{color:var(--mut);font-size:12.5px}
 </style></head><body>
+<header class="top"><a class="home" href="/">&larr; LeonLink</a><a href="#teller">Fortune Teller</a><a href="#out">Your Reading</a><a href="#tarot">Tarot</a><a href="#today">Sky Today</a><a href="#compare">App Comparison</a><a href="#wants">What Users Want</a><a href="#learn">Resources</a><a href="#shop">Shop</a></header>
 <main>
-<p class="mut" style="margin:0;letter-spacing:.2em;font-size:13px">🌙 LEONLINK MYSTIC CENTER</p>
-<h1>Moons &amp; Cauldrons</h1>
-<p>Horoscope, numerology and a fortune teller who never blinks. Enter your birth details and Madame Afterglow brews your full reading: Sun, Moon and Rising signs, six core numbers, your birth moon phase, Chinese zodiac, element balance, a daily forecast and a three-card tarot spread.</p>
-<nav class="jump" aria-label="On this page"><a href="#teller">🔮 Fortune Teller</a><a href="#out">📜 Your Reading</a><a href="#tarot">🃏 Tarot</a><a href="#today">🌗 Sky Today</a><a href="#compare">📊 App Comparison</a><a href="#wants">💬 What Users Want</a><a href="#learn">📚 Resources</a><a href="#shop">🛒 Decks &amp; Books</a></nav>
+<div class="intro"><p class="kick">LeonLink &middot; Mystic Center</p>
+<h1>Moons <em>&amp;</em> Cauldrons</h1>
+<p class="lede">Horoscope, numerology and tarot in one considered reading. Share your birth details and Madame Afterglow will chart your Sun, Moon and Rising signs, your core numbers, birth moon phase, Chinese zodiac, element balance, a daily forecast and a three-card spread.</p>
+<svg class="orn" viewBox="0 0 240 18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1"><path d="M0 9h96M144 9h96"/><circle cx="120" cy="9" r="6"/><path d="M114 9a6 6 0 0 0 9 5 4.5 4.5 0 1 1 0-10 6 6 0 0 0-9 5z" fill="currentColor" stroke="none" opacity=".8"/><circle cx="104" cy="9" r="1.4" fill="currentColor"/><circle cx="136" cy="9" r="1.4" fill="currentColor"/></svg></div>
+
 
 <section id="teller" class="hero">
 <div class="stage" id="stage">
-<svg viewBox="0 0 400 400" role="img" aria-label="Animated fortune teller Madame Afterglow with crystal ball and bubbling cauldron">
-<defs><radialGradient id="bg1"><stop offset="0" stop-color="#e9d8ff"/><stop offset=".5" stop-color="#b06bff"/><stop offset="1" stop-color="#3a1070"/></radialGradient>
-<radialGradient id="gl"><stop offset="0" stop-color="#b06bff" stop-opacity=".7"/><stop offset="1" stop-color="#b06bff" stop-opacity="0"/></radialGradient>
-<radialGradient id="brew"><stop offset="0" stop-color="#9dff6a"/><stop offset="1" stop-color="#2a8a10"/></radialGradient></defs>
-<g fill="#fff"><circle class="star" cx="40" cy="40" r="1.6"/><circle class="star" style="animation-delay:.7s" cx="120" cy="22" r="1.2"/><circle class="star" style="animation-delay:1.4s" cx="300" cy="60" r="1.5"/><circle class="star" style="animation-delay:2s" cx="360" cy="30" r="1.1"/><circle class="star" style="animation-delay:.3s" cx="250" cy="18" r="1.3"/><circle class="star" style="animation-delay:1.1s" cx="70" cy="110" r="1"/><circle class="star" style="animation-delay:2.4s" cx="340" cy="130" r="1.2"/></g>
-<g class="moon"><circle cx="320" cy="78" r="30" fill="#ffe9a8"/><circle cx="334" cy="70" r="28" fill="#140a28"/></g>
+<svg viewBox="0 0 400 400" role="img" aria-label="Animated fortune teller Madame Afterglow at her crystal ball beneath a crescent moon">
+<defs><radialGradient id="bg1" cx=".4" cy=".35"><stop offset="0" stop-color="#eef1fb"/><stop offset=".45" stop-color="#8fa2c9"/><stop offset="1" stop-color="#1b2647"/></radialGradient>
+<radialGradient id="gl"><stop offset="0" stop-color="#c8a96a" stop-opacity=".28"/><stop offset="1" stop-color="#c8a96a" stop-opacity="0"/></radialGradient>
+<linearGradient id="robe" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c2544"/><stop offset="1" stop-color="#0d1328"/></linearGradient></defs>
+<g class="ring" fill="none" stroke="#c8a96a" stroke-opacity=".22" stroke-width=".7"><circle cx="200" cy="190" r="150"/><circle cx="200" cy="190" r="138" stroke-dasharray="1 5"/><path d="M200 40v8M200 332v8M50 190h8M342 190h8"/></g>
+<g fill="#e2cd9c"><circle class="star" cx="44" cy="46" r="1.2"/><circle class="star" style="animation-delay:1.5s" cx="118" cy="26" r=".9"/><circle class="star" style="animation-delay:3s" cx="282" cy="40" r="1.1"/><circle class="star" style="animation-delay:4.2s" cx="366" cy="96" r=".9"/><circle class="star" style="animation-delay:.8s" cx="250" cy="20" r="1"/><circle class="star" style="animation-delay:2.2s" cx="62" cy="128" r=".8"/><circle class="star" style="animation-delay:5s" cx="352" cy="170" r="1"/></g>
+<path d="M44 46L62 128M118 26L44 46M282 40L250 20" stroke="#c8a96a" stroke-opacity=".25" stroke-width=".6"/>
+<g class="moon"><path d="M330 58a26 26 0 1 0 14 44 21 21 0 1 1-14-44z" fill="none" stroke="#e2cd9c" stroke-width="1.4"/></g>
 <g class="sway">
-<path d="M200 70 L150 170 L250 170Z" fill="#2a1050"/><path d="M120 172 Q200 150 280 172 Q200 186 120 172Z" fill="#3a1a70"/><circle cx="214" cy="120" r="4" fill="#ffd25a"/><path d="M200 70 Q230 55 236 80" stroke="#2a1050" stroke-width="10" fill="none" stroke-linecap="round"/>
-<ellipse cx="200" cy="198" rx="34" ry="36" fill="#f1c9a5"/><path d="M166 190 Q160 240 140 270 L170 250Z M234 190 Q240 240 260 270 L230 250Z" fill="#4a1a10"/>
-<g><ellipse cx="187" cy="196" rx="5" ry="6" fill="#140a28"/><ellipse cx="213" cy="196" rx="5" ry="6" fill="#140a28"/><circle cx="189" cy="194" r="1.6" fill="#fff"/><circle cx="215" cy="194" r="1.6" fill="#fff"/></g>
-<path d="M190 216 Q200 224 210 216" stroke="#8a2a2a" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="178" cy="210" r="5" fill="#ff8a8a" opacity=".4"/><circle cx="222" cy="210" r="5" fill="#ff8a8a" opacity=".4"/>
-<path d="M150 236 Q200 226 250 236 L280 360 L120 360Z" fill="#3a1a70"/><path d="M186 236 L200 260 L214 236" fill="#ffd25a" opacity=".8"/>
-<g class="hand"><path d="M160 250 Q140 270 150 290" stroke="#3a1a70" stroke-width="16" fill="none" stroke-linecap="round"/><circle cx="152" cy="292" r="8" fill="#f1c9a5"/></g>
-<path d="M240 250 Q262 270 252 290" stroke="#3a1a70" stroke-width="16" fill="none" stroke-linecap="round"/><circle cx="250" cy="292" r="8" fill="#f1c9a5"/>
+<path d="M200 96c-34 0-52 34-56 70l-12 70c20-10 40-14 68-14s48 4 68 14l-12-70c-4-36-22-70-56-70z" fill="url(#robe)" stroke="#c8a96a" stroke-opacity=".55" stroke-width="1"/>
+<ellipse cx="200" cy="176" rx="25" ry="30" fill="#0a0f1d"/>
+<path d="M185 176q5 3 10 0M205 176q5 3 10 0" stroke="#e2cd9c" stroke-width="1.3" fill="none" stroke-linecap="round" opacity=".85"/>
+<path d="M195 192q5 3 10 0" stroke="#c8a96a" stroke-width="1" fill="none" opacity=".6"/>
+<circle cx="200" cy="136" r="2.4" fill="#c8a96a"/>
+<path d="M140 238c18-12 40-16 60-16s42 4 60 16l20 112H120z" fill="url(#robe)" stroke="#c8a96a" stroke-opacity=".4" stroke-width="1"/>
+<path d="M200 226v120" stroke="#c8a96a" stroke-opacity=".35" stroke-width=".8"/>
+<g class="hand"><path d="M162 252q-16 18-6 40" stroke="#1c2544" stroke-width="13" fill="none" stroke-linecap="round"/><circle cx="157" cy="293" r="6" fill="#c9b49a"/></g>
+<path d="M238 252q16 18 6 40" stroke="#1c2544" stroke-width="13" fill="none" stroke-linecap="round"/><circle cx="243" cy="293" r="6" fill="#c9b49a"/>
 </g>
-<circle cx="200" cy="232" r="90" fill="url(#gl)" opacity=".0"/>
-<rect x="60" y="330" width="280" height="20" rx="6" fill="#4a2208"/><rect x="60" y="342" width="280" height="70" fill="#2b1206"/>
-<g class="ball"><circle cx="200" cy="300" r="34" fill="url(#bg1)"/><g class="swirl" style="transform-origin:200px 300px"><path d="M182 300 Q200 280 218 300 Q200 320 186 306" stroke="#fff" stroke-width="2" fill="none" opacity=".7"/></g><ellipse cx="190" cy="288" rx="8" ry="5" fill="#fff" opacity=".6"/></g>
-<path d="M176 332 L224 332 L216 340 L184 340Z" fill="#ffd25a"/>
-<g transform="translate(305 300)"><path d="M-30 0 Q-34 40 0 44 Q34 40 30 0Z" fill="#1a1a1a"/><ellipse cx="0" cy="0" rx="32" ry="8" fill="url(#brew)"/><circle class="bub" cx="-8" cy="-2" r="4" fill="#9dff6a"/><circle class="bub" style="animation-delay:1s" cx="8" cy="-2" r="3" fill="#9dff6a"/><circle class="bub" style="animation-delay:2s" cx="0" cy="-2" r="5" fill="#c4ff9a"/><path d="M-10 46 L-14 52 M10 46 L14 52" stroke="#ff8a1f" stroke-width="4"/></g>
-<g transform="translate(70 318)"><path d="M-14 12 Q-20 -6 0 -10 Q20 -6 14 12Z" fill="#ff8a1f"/><path d="M-1 -10 L1 -16" stroke="#3a7a10" stroke-width="3"/><path d="M-7 0 L-3 -3 L-3 2Z M7 0 L3 -3 L3 2Z M-6 6 Q0 10 6 6" fill="#ffe14d"/></g>
+<circle cx="200" cy="300" r="80" fill="url(#gl)"/>
+<rect x="56" y="334" width="288" height="3" fill="#c8a96a" opacity=".55"/><rect x="56" y="337" width="288" height="70" fill="#0a0e1a"/>
+<g class="ball"><circle cx="200" cy="302" r="32" fill="url(#bg1)" opacity=".9"/><g class="swirl" style="transform-origin:200px 302px"><path d="M184 302q16-18 32 0q-16 16-28 4" stroke="#fff" stroke-width="1.2" fill="none" opacity=".5"/></g><ellipse cx="190" cy="290" rx="7" ry="4" fill="#fff" opacity=".45"/></g>
+<path d="M178 334h44l-6-6h-32z" fill="none" stroke="#c8a96a" stroke-width="1.2"/>
+<g transform="translate(310 312)" fill="none" stroke="#c8a96a" stroke-width="1.2"><path d="M-24 0q-2 22 24 22q26 0 24-22z" fill="#0a0e1a"/><ellipse cx="0" cy="0" rx="25" ry="5"/><circle class="bub" cx="-6" cy="-4" r="2.5"/><circle class="bub" style="animation-delay:2.4s" cx="6" cy="-4" r="2"/><circle class="bub" style="animation-delay:4.6s" cx="0" cy="-4" r="3"/></g>
+<g transform="translate(84 318)" fill="none" stroke="#c8a96a" stroke-opacity=".7" stroke-width="1"><path d="M-8 16h16M-6 16v-14h12v14M0 2v-6"/><path d="M0-4q-3-4 0-8q3 4 0 8" fill="#e2cd9c" fill-opacity=".6"/></g>
 </svg>
 <div class="say" id="say" aria-live="polite">"Come closer, traveler... tell me your name and the moment you arrived in this world."</div>
 </div>
@@ -106,19 +134,19 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:9px 8px;b
 <div class="row2"><div><label for="dob">Date of birth</label><input id="dob" type="date" required></div><div><label for="age">Age</label><input id="age" type="number" min="1" max="120" placeholder="Auto from birthday"></div></div>
 <label for="pl">Place of birth</label><input id="pl" required placeholder="City, State or Country, e.g. Dayton, Ohio">
 <label for="tm">Time of birth <span class="hint">(optional, needed for your Rising sign)</span></label><input id="tm" type="time">
-<button class="btn" type="submit" id="go">🔮 Read my fortune</button> <button class="btn alt" type="button" id="bonus">🌕 Daily moon bonus +15</button>
+<button class="btn" type="submit" id="go">Read my fortune</button> <button class="btn alt" type="button" id="bonus">Claim daily moon bonus (+15 Glow)</button>
 <p class="hint">Your details stay in your browser. The only thing sent out is your birthplace, to a free map service that finds its latitude, longitude and time zone.</p>
 </form></div>
 </section>
 
 <section id="out">
-<h2>📜 Your Reading <small id="who"></small></h2>
+<div class="shead"><p class="kick">I &middot; Your Chart</p><h2>Your Reading <small id="who"></small></h2></div>
 <div class="pan"><div class="big3" id="big3"></div><p id="bigtx" style="margin-bottom:0"></p></div>
 <div class="grid" style="margin-top:12px">
-<div class="pan"><h3 style="margin-top:0">🔥 Element balance</h3><div id="elem"></div><h3>⚖️ Modality</h3><div id="mode"></div></div>
-<div class="pan"><h3 style="margin-top:0">📅 Today's forecast</h3><div id="fc"></div></div>
+<div class="pan"><h3 style="margin-top:0">Element balance</h3><div id="elem"></div><h3>Modality</h3><div id="mode"></div></div>
+<div class="pan"><h3 style="margin-top:0">Today's forecast</h3><div id="fc"></div></div>
 </div>
-<h2>🔢 Numerology Profile <small>Pythagorean system, master numbers 11, 22 and 33 kept</small></h2>
+<div class="shead"><p class="kick">II &middot; Numbers</p><h2>Numerology Profile <small>Pythagorean system, master numbers 11, 22 and 33 kept</small></h2></div>
 <div class="num" id="num"></div><div class="pan" style="margin-top:12px" id="numtx"></div>
 <div class="grid" style="margin-top:12px">
 <div class="pan" id="moonb"></div><div class="pan" id="cz"></div>
@@ -127,18 +155,18 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:9px 8px;b
 </section>
 
 <section id="tarot">
-<h2>🃏 Three-Card Spread <small>Past · Present · Future. Tap each card to turn it.</small></h2>
+<div class="shead"><p class="kick">III &middot; Tarot</p><h2>Three-Card Spread <small>Past · Present · Future. Tap each card to turn it.</small></h2></div>
 <div class="cards" id="cards"></div>
 <button class="btn alt" id="redraw" type="button">Redraw spread (10 Glow)</button>
 </section>
 
 <section id="today">
-<h2>🌗 The Sky Today</h2>
+<div class="shead"><p class="kick">IV &middot; Tonight</p><h2>The Sky Today</h2></div>
 <div class="pan" id="sky"></div>
 </section>
 
 <section id="compare">
-<h2>📊 How the Top Apps Compare <small>Our study of the leading astrology, numerology and fortune apps and their user reviews, October 2026</small></h2>
+<div class="shead"><p class="kick">V &middot; Research</p><h2>How the Top Apps Compare <small>Our study of the leading astrology, numerology and fortune apps and their user reviews, October 2026</small></h2></div>
 <div class="pan tw"><table>
 <tr><th>App</th><th>Best at</th><th>What reviewers praise</th><th>Top complaint</th><th>Price</th></tr>
 <tr><td><b>Co-Star</b></td><td>Daily one-liners, friends</td><td>Blunt, shareable daily notes; real NASA ephemeris data; compare charts with friends</td><td>"Used to be free, now it's a paywall"; thin depth past the daily layer; harsh AI copy</td><td>Free + about $9/mo</td></tr>
@@ -154,7 +182,7 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:9px 8px;b
 </section>
 
 <section id="wants">
-<h2>💬 What Users Actually Want <small>The patterns that came up again and again in app-store reviews and comparison guides</small></h2>
+<div class="shead"><p class="kick">VI &middot; Research</p><h2>What Users Actually Want <small>The patterns that came up again and again in app-store reviews and comparison guides</small></h2></div>
 <div class="want">
 <div><b>1. Real free value.</b> The #1 complaint about the big apps is that they used to be free and now hide everything behind a paywall. People want the full chart without a credit card.</div>
 <div><b>2. "Scary accurate" depth.</b> Users rate apps highest when a reading feels personal: Sun, Moon and Rising together, not just a Sun-sign blurb.</div>
@@ -168,38 +196,43 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:9px 8px;b
 </section>
 
 <section id="learn">
-<h2>📚 In-Depth Resources <small>Where to go deeper, from free chart tools to the history behind it all</small></h2>
+<div class="shead"><p class="kick">VII &middot; Go Deeper</p><h2>In-Depth Resources <small>Where to go deeper, from free chart tools to the history behind it all</small></h2></div>
 <div class="gc">
-<a href="https://www.astro.com/horoscope" target="_blank" rel="noopener"><b>🪐</b><span>Astrodienst (Astro.com)</span><small>Free full natal chart with the Swiss Ephemeris, used by professional astrologers</small></a>
-<a href="https://cafeastrology.com/natal-chart-report.html" target="_blank" rel="noopener"><b>☕</b><span>Cafe Astrology</span><small>Free natal report with plain-English meanings for every placement</small></a>
-<a href="https://www.worldnumerology.com/" target="_blank" rel="noopener"><b>🔢</b><span>World Numerology</span><small>Hans Decoz's library on life path, expression and soul urge numbers</small></a>
-<a href="https://science.nasa.gov/moon/moon-phases/" target="_blank" rel="noopener"><b>🌕</b><span>NASA: Moon Phases</span><small>The real astronomy behind waxing, waning and full moons</small></a>
-<a href="https://en.wikipedia.org/wiki/Zodiac" target="_blank" rel="noopener"><b>♈</b><span>History of the Zodiac</span><small>How the 12 signs came from Babylonian astronomy</small></a>
-<a href="https://en.wikipedia.org/wiki/Numerology" target="_blank" rel="noopener"><b>📐</b><span>History of Numerology</span><small>Pythagoras, Chaldean and Kabbalah systems explained</small></a>
-<a href="https://en.wikipedia.org/wiki/Rider%E2%80%93Waite_Tarot" target="_blank" rel="noopener"><b>🃏</b><span>The Rider-Waite Deck</span><small>The 1909 deck behind most modern tarot meanings</small></a>
-<a href="/ebooks.html"><b>📖</b><span>LeonLink Ebooks</span><small>Spooky classics and free reads for a long moonlit night</small></a>
+<a href="https://www.astro.com/horoscope" target="_blank" rel="noopener"><b>Astrology</b><span>Astrodienst (Astro.com)</span><small>Free full natal chart with the Swiss Ephemeris, used by professional astrologers</small></a>
+<a href="https://cafeastrology.com/natal-chart-report.html" target="_blank" rel="noopener"><b>Astrology</b><span>Cafe Astrology</span><small>Free natal report with plain-English meanings for every placement</small></a>
+<a href="https://www.worldnumerology.com/" target="_blank" rel="noopener"><b>Numerology</b><span>World Numerology</span><small>Hans Decoz's library on life path, expression and soul urge numbers</small></a>
+<a href="https://science.nasa.gov/moon/moon-phases/" target="_blank" rel="noopener"><b>Astronomy</b><span>NASA: Moon Phases</span><small>The real astronomy behind waxing, waning and full moons</small></a>
+<a href="https://en.wikipedia.org/wiki/Zodiac" target="_blank" rel="noopener"><b>History</b><span>History of the Zodiac</span><small>How the 12 signs came from Babylonian astronomy</small></a>
+<a href="https://en.wikipedia.org/wiki/Numerology" target="_blank" rel="noopener"><b>History</b><span>History of Numerology</span><small>Pythagoras, Chaldean and Kabbalah systems explained</small></a>
+<a href="https://en.wikipedia.org/wiki/Rider%E2%80%93Waite_Tarot" target="_blank" rel="noopener"><b>Tarot</b><span>The Rider-Waite Deck</span><small>The 1909 deck behind most modern tarot meanings</small></a>
+<a href="/ebooks.html"><b>LeonLink</b><span>LeonLink Ebooks</span><small>Spooky classics and free reads for a long moonlit night</small></a>
 </div>
 </section>
 
 <section id="shop">
-<h2>🛒 Decks, Books &amp; Crystals <small>Hand-picked on Amazon</small></h2>
+<div class="shead"><p class="kick">VIII &middot; Shop</p><h2>Decks, Books &amp; Crystals <small>Hand-picked on Amazon</small></h2></div>
 <div class="gc">
-<a href="https://www.amazon.com/s?k=rider+waite+tarot+deck&amp;tag=leonlink-20" target="_blank" rel="nofollow sponsored noopener"><b>🃏</b><span>Rider-Waite Tarot Deck</span><small>The classic 78-card starter deck</small></a>
-<a href="https://www.amazon.com/s?k=the+only+astrology+book+you+will+ever+need&amp;tag=leonlink-20" target="_blank" rel="nofollow sponsored noopener"><b>📘</b><span>The Only Astrology Book You'll Ever Need</span><small>Joanna Martine Woolfolk's beginner bible</small></a>
-<a href="https://www.amazon.com/s?k=numerology+book+hans+decoz&amp;tag=leonlink-20" target="_blank" rel="nofollow sponsored noopener"><b>🔢</b><span>Numerology by Hans Decoz</span><small>Key to your inner self</small></a>
-<a href="https://www.amazon.com/s?k=crystal+ball+with+stand&amp;tag=leonlink-20" target="_blank" rel="nofollow sponsored noopener"><b>🔮</b><span>Crystal Ball with Stand</span><small>For your own fortune table</small></a>
-<a href="https://www.amazon.com/s?k=moon+phase+calendar+2027&amp;tag=leonlink-20" target="_blank" rel="nofollow sponsored noopener"><b>🌙</b><span>2027 Moon Calendar</span><small>Track every phase all year</small></a>
-<a href="https://www.amazon.com/s?k=healing+crystals+set&amp;tag=leonlink-20" target="_blank" rel="nofollow sponsored noopener"><b>💎</b><span>Crystal Starter Set</span><small>Match your lucky stones</small></a>
-<a href="https://www.amazon.com/s?k=cast+iron+cauldron+halloween&amp;tag=leonlink-20" target="_blank" rel="nofollow sponsored noopener"><b>🧪</b><span>Cast Iron Cauldron</span><small>Halloween into harvest decor</small></a>
-<a href="https://www.amazon.com/s?k=astrology+books+kindle&amp;i=digital-text&amp;tag=leonlink-20" target="_blank" rel="nofollow sponsored noopener"><b>📱</b><span>Astrology on Kindle</span><small>Read tonight on any device</small></a>
+<a href="https://www.amazon.com/s?k=rider+waite+tarot+deck&amp;tag=leonlink-20" target="_blank" rel="nofollow sponsored noopener" class="amz"><b>Tarot</b><span>Rider-Waite Tarot Deck</span><small>The classic 78-card starter deck</small></a>
+<a href="https://www.amazon.com/s?k=the+only+astrology+book+you+will+ever+need&amp;tag=leonlink-20" target="_blank" rel="nofollow sponsored noopener" class="amz"><b>Astrology</b><span>The Only Astrology Book You'll Ever Need</span><small>Joanna Martine Woolfolk's beginner bible</small></a>
+<a href="https://www.amazon.com/s?k=numerology+book+hans+decoz&amp;tag=leonlink-20" target="_blank" rel="nofollow sponsored noopener" class="amz"><b>Numerology</b><span>Numerology by Hans Decoz</span><small>Key to your inner self</small></a>
+<a href="https://www.amazon.com/s?k=crystal+ball+with+stand&amp;tag=leonlink-20" target="_blank" rel="nofollow sponsored noopener" class="amz"><b>Decor</b><span>Crystal Ball with Stand</span><small>For your own fortune table</small></a>
+<a href="https://www.amazon.com/s?k=moon+phase+calendar+2027&amp;tag=leonlink-20" target="_blank" rel="nofollow sponsored noopener" class="amz"><b>Calendar</b><span>2027 Moon Calendar</span><small>Track every phase all year</small></a>
+<a href="https://www.amazon.com/s?k=healing+crystals+set&amp;tag=leonlink-20" target="_blank" rel="nofollow sponsored noopener" class="amz"><b>Crystals</b><span>Crystal Starter Set</span><small>Match your lucky stones</small></a>
+<a href="https://www.amazon.com/s?k=cast+iron+cauldron+halloween&amp;tag=leonlink-20" target="_blank" rel="nofollow sponsored noopener" class="amz"><b>Decor</b><span>Cast Iron Cauldron</span><small>Halloween into harvest decor</small></a>
+<a href="https://www.amazon.com/s?k=astrology+books+kindle&amp;i=digital-text&amp;tag=leonlink-20" target="_blank" rel="nofollow sponsored noopener" class="amz"><b>Kindle</b><span>Astrology on Kindle</span><small>Read tonight on any device</small></a>
 </div>
 <p class="disc"><b>For entertainment and reflection only.</b> Astrology, numerology and tarot are not science and are not medical, legal or financial advice. Glow coins are play money with no cash value; they can't be bought, sold or redeemed. Planet positions use simplified astronomical formulas and can be off by a degree or so near sign edges. As an Amazon Associate, LeonLink earns from qualifying purchases.</p>
 </section>
 </main>
+<footer class="sfoot"><div class="fin">
+<a class="flogo" href="/"><img src="/img/logo-128.png" alt="" width="26" height="26" loading="lazy">LeonLink</a>
+<nav><a href="/games.html">Games</a><a href="/software.html">Software</a><a href="/lineup/">Lineup</a><a href="/watchline/">Watchline</a><a href="/ebooks.html">Ebooks</a><a href="/moons.html">Moons &amp; Cauldrons</a><a href="/blog.html">Blog</a><a href="/hire-me.html">Hire me</a></nav>
+<span class="fcopy">&copy; 2026 LeonLink</span>
+</div></footer>
 <script>
 (function(){
 var $=function(i){return document.getElementById(i)};
-var SG=[["Aries","♈","Fire","Cardinal","bold, quick to start, a born pioneer"],["Taurus","♉","Earth","Fixed","steady, loyal, built for comfort and slow wealth"],["Gemini","♊","Air","Mutable","curious, witty, always two ideas ahead"],["Cancer","♋","Water","Cardinal","protective, intuitive, home is your fortress"],["Leo","♌","Fire","Fixed","warm, proud, made for the spotlight"],["Virgo","♍","Earth","Mutable","precise, helpful, sees every detail"],["Libra","♎","Air","Cardinal","charming, fair, a natural peacemaker"],["Scorpio","♏","Water","Fixed","intense, private, impossible to fool"],["Sagittarius","♐","Fire","Mutable","free, honest, chasing the horizon"],["Capricorn","♑","Earth","Cardinal","ambitious, patient, playing the long game"],["Aquarius","♒","Air","Fixed","original, independent, ahead of your time"],["Pisces","♓","Water","Mutable","dreamy, empathic, an old soul"]];
+var SG=[["Aries","♈\uFE0E","Fire","Cardinal","bold, quick to start, a born pioneer"],["Taurus","♉\uFE0E","Earth","Fixed","steady, loyal, built for comfort and slow wealth"],["Gemini","♊\uFE0E","Air","Mutable","curious, witty, always two ideas ahead"],["Cancer","♋\uFE0E","Water","Cardinal","protective, intuitive, home is your fortress"],["Leo","♌\uFE0E","Fire","Fixed","warm, proud, made for the spotlight"],["Virgo","♍\uFE0E","Earth","Mutable","precise, helpful, sees every detail"],["Libra","♎\uFE0E","Air","Cardinal","charming, fair, a natural peacemaker"],["Scorpio","♏\uFE0E","Water","Fixed","intense, private, impossible to fool"],["Sagittarius","♐\uFE0E","Fire","Mutable","free, honest, chasing the horizon"],["Capricorn","♑\uFE0E","Earth","Cardinal","ambitious, patient, playing the long game"],["Aquarius","♒\uFE0E","Air","Fixed","original, independent, ahead of your time"],["Pisces","♓\uFE0E","Water","Mutable","dreamy, empathic, an old soul"]];
 var R=Math.PI/180;function nrm(a){a%=360;return a<0?a+360:a}
 function jd(ms){return ms/86400000+2440587.5}
 function sunLon(J){var d=J-2451545,g=(357.529+.98560028*d)*R,q=280.459+.98564736*d;return nrm(q+1.915*Math.sin(g)+.02*Math.sin(2*g))}
@@ -209,7 +242,7 @@ function asc(J,lat,lon){var T=(J-2451545)/36525,th=nrm(280.46061837+360.98564736
 return nrm(Math.atan2(Math.cos(th),-(Math.sin(th)*Math.cos(e)+Math.tan(f)*Math.sin(e)))/R)}
 function sign(l){return SG[Math.floor(l/30)]}
 function deg(l){var x=l%30;return Math.floor(x)+"°"+String(Math.floor((x%1)*60)).padStart(2,"0")+"'"}
-function phase(J){var a=nrm(moonLon(J)-sunLon(J)),ill=Math.round((1-Math.cos(a*R))/2*100),n=["🌑 New Moon","🌒 Waxing Crescent","🌓 First Quarter","🌔 Waxing Gibbous","🌕 Full Moon","🌖 Waning Gibbous","🌗 Last Quarter","🌘 Waning Crescent"][Math.floor(nrm(a+22.5)/45)%8];return{a:a,ill:ill,n:n}}
+function phase(J){var a=nrm(moonLon(J)-sunLon(J)),ill=Math.round((1-Math.cos(a*R))/2*100),n=["● New Moon","◔ Waxing Crescent","◑ First Quarter","◕ Waxing Gibbous","○ Full Moon","◕ Waning Gibbous","◐ Last Quarter","◔ Waning Crescent"][Math.floor(nrm(a+22.5)/45)%8];return{a:a,ill:ill,n:n}}
 var PH={"New":"Born at the new moon: you start things. Fresh chapters and beginnings are your gift.","Waxing Crescent":"Born under a waxing crescent: hopeful and driven, you build from nothing.","First Quarter":"Born at the first quarter: a doer who thrives on challenge and decisions.","Waxing Gibbous":"Born under a waxing gibbous: a refiner and perfectionist who polishes what others start.","Full":"Born at the full moon: you're aware, magnetic and relationship-minded, and you see both sides.","Waning Gibbous":"Born under a waning gibbous: a teacher who shares what you've learned.","Last Quarter":"Born at the last quarter: you clear out the old and question the rules.","Waning Crescent":"Born under a waning crescent: wise and intuitive, you sense what's coming."};
 function phTxt(n){for(var k in PH)if(n.indexOf(k)>-1)return PH[k];return""}
 function tzOff(tz,y,m,d,h,mi){try{var g=Date.UTC(y,m-1,d,h,mi),p=new Intl.DateTimeFormat("en-US",{timeZone:tz,hourCycle:"h23",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"}).formatToParts(new Date(g)),o={};p.forEach(function(x){o[x.type]=x.value});
@@ -222,7 +255,7 @@ function numer(name,y,m,d){var L=name.replace(/[^a-z]/gi,""),V=name.replace(/[^a
 function s(t){return t.split("").reduce(function(a,c){return a+lv(c)},0)}
 var lp=red(red(m)+red(d)+red(String(y).split("").reduce(function(a,b){return a+ +b},0))),ex=red(s(L)),su=red(s(V)),pe=red(s(C)),bd=red(d),now=new Date(),py=red(red(m)+red(d)+red(String(now.getFullYear()).split("").reduce(function(a,b){return a+ +b},0))),ma=red(lp+ex);
 return[["Life Path",lp,"Your road through life"],["Expression",ex,"Your natural talents (full name)"],["Soul Urge",su,"What your heart wants (vowels)"],["Personality",pe,"How others see you (consonants)"],["Birthday",bd,"A special gift you carry"],["Maturity",ma,"Who you grow into after 40"],["Personal Year "+now.getFullYear(),py>9&&py!=11&&py!=22?red(py):py,"The theme of your year"]]}
-var CZ=["Rat","Ox","Tiger","Rabbit","Dragon","Snake","Horse","Goat","Monkey","Rooster","Dog","Pig"],CZE=["🐀","🐂","🐅","🐇","🐉","🐍","🐎","🐐","🐒","🐓","🐕","🐖"],CZT=["clever and resourceful","strong and dependable","brave and competitive","gentle and lucky","powerful and charismatic","wise and mysterious","energetic and free","calm and creative","witty and inventive","confident and hardworking","loyal and honest","generous and warm"],CEL=["Metal","Metal","Water","Water","Wood","Wood","Fire","Fire","Earth","Earth"];
+var CZ=["Rat","Ox","Tiger","Rabbit","Dragon","Snake","Horse","Goat","Monkey","Rooster","Dog","Pig"],CZE=["","","","","","","","","","","",""],CZT=["clever and resourceful","strong and dependable","brave and competitive","gentle and lucky","powerful and charismatic","wise and mysterious","energetic and free","calm and creative","witty and inventive","confident and hardworking","loyal and honest","generous and warm"],CEL=["Metal","Metal","Water","Water","Wood","Wood","Fire","Fire","Earth","Earth"];
 function cz(y,m,d){var yy=(m<2||(m==2&&d<4))?y-1:y;return{a:CZ[nrm(yy-4)%12],e:CZE[nrm(yy-4)%12],t:CZT[nrm(yy-4)%12],el:CEL[nrm(yy)%10],note:(yy!=y?" (born before Lunar New Year, so counted in "+yy+")":"")}}
 var TAR=[["The Fool","🤹","new beginnings, a leap of faith"],["The Magician","🪄","skill, willpower, making it happen"],["The High Priestess","🌙","intuition, secrets, listen inward"],["The Empress","🌾","abundance, care, a harvest coming"],["The Emperor","👑","structure, authority, take command"],["The Hierophant","📜","tradition, a mentor, learning"],["The Lovers","💞","a choice of the heart, partnership"],["The Chariot","🏇","victory through drive"],["Strength","🦁","courage, patience, quiet power"],["The Hermit","🏮","solitude, searching, inner light"],["Wheel of Fortune","🎡","luck turning, a cycle shifts"],["Justice","⚖️","truth, fairness, consequences"],["The Hanged Man","🙃","pause, a new point of view"],["Death","🥀","an ending that clears the way"],["Temperance","🏺","balance, moderation, healing"],["The Devil","⛓️","temptation, habits to break"],["The Tower","🗼","sudden change, a wake-up call"],["The Star","⭐","hope, renewal, guidance"],["The Moon","🌕","illusion, dreams, trust your gut"],["The Sun","☀️","joy, success, clarity"],["Judgement","📯","a calling, a second chance"],["The World","🌍","completion, a goal reached"]];
 function rng(seed){var h=2166136261;for(var i=0;i<seed.length;i++){h^=seed.charCodeAt(i);h=Math.imul(h,16777619)}return function(){h^=h<<13;h^=h>>>17;h^=h<<5;return((h>>>0)%10000)/10000}}
@@ -237,7 +270,7 @@ var AREAS=["Love","Career","Money","Health","Luck"],FC={Love:["An honest talk cl
 function bar(lbl,v,max){return '<div class="bar"><label><span>'+lbl+'</span><span>'+v+'</span></label><div><i data-w="'+Math.round(v/max*100)+'"></i></div></div>'}
 function grow(){setTimeout(function(){document.querySelectorAll(".bar i").forEach(function(i){i.style.width=i.dataset.w+"%"})},60)}
 function deal(seed){var r=rng(seed),pool=TAR.slice(),h="",pos=["Past","Present","Future"];for(var i=0;i<3;i++){var c=pool.splice(Math.floor(r()*pool.length),1)[0],rev=r()<.25;
-h+='<div class="tc" tabindex="0" role="button" aria-label="Turn '+pos[i]+' card"><div class="in"><div class="fa">🌙<small style="font-size:12px">'+pos[i]+'</small></div><div class="ba"><small>'+pos[i]+'</small><em>'+c[1]+'</em><b>'+c[0]+(rev?" (reversed)":"")+'</b><span>'+(rev?"Blocked or delayed: ":"")+c[2]+'</span></div></div></div>'}
+h+='<div class="tc" tabindex="0" role="button" aria-label="Turn '+pos[i]+' card"><div class="in"><div class="fa">☾<small style="font-size:12px">'+pos[i]+'</small></div><div class="ba"><small>'+pos[i]+'</small><em>'+c[1]+'</em><b>'+c[0]+(rev?" (reversed)":"")+'</b><span>'+(rev?"Blocked or delayed: ":"")+c[2]+'</span></div></div></div>'}
 $("cards").innerHTML=h;document.querySelectorAll(".tc").forEach(function(t){t.onclick=t.onkeydown=function(e){if(e.type=="keydown"&&e.key!="Enter"&&e.key!=" ")return;t.classList.add("f")}})}
 function sky(){var J=jd(Date.now()),p=phase(J),s=sign(sunLon(J)),m=sign(moonLon(J));
 $("sky").innerHTML='<div class="big3"><div class="sg"><b>'+p.n.split(" ")[0]+'</b><span>'+p.n.slice(p.n.indexOf(" ")+1)+'</span><small>'+p.ill+'% lit</small></div><div class="sg"><b>'+s[1]+'</b><span>Sun in '+s[0]+'</span><small>'+s[2]+' season</small></div><div class="sg"><b>'+m[1]+'</b><span>Moon in '+m[0]+'</span><small>'+m[2]+' mood</small></div></div><p style="margin-bottom:0">Tonight the Moon in '+m[0]+' brings a '+m[4].split(",")[0]+' mood. '+(p.a<180?"The moon is growing: start, build and ask.":"The moon is shrinking: finish, clear out and rest.")+'</p>'}
@@ -257,18 +290,18 @@ if(known&&g)A=sign(asc(J,g.lat,g.lon));var first=name.split(" ")[0];
 $("who").textContent="for "+name+(g?", born in "+g.nm:"")+(known?" at "+tm:"")+(g?" ("+g.tz+")":"");
 function card(s,lab,l){return '<div class="sg"><b>'+s[1]+'</b><span>'+s[0]+'</span><small>'+lab+(l!=null?" · "+deg(l):"")+'</small></div>'}
 var al=A?asc(J,g.lat,g.lon):null;
-$("big3").innerHTML=card(S,"Sun",sl)+card(M,"Moon"+(known?"":" (approx.)"),ml)+(A?card(A,"Rising",al):'<div class="sg"><b>❔</b><span>Rising</span><small>Add birth time</small></div>');
+$("big3").innerHTML=card(S,"Sun",sl)+card(M,"Moon"+(known?"":" (approx.)"),ml)+(A?card(A,"Rising",al):'<div class="sg"><b>&middot;</b><span>Rising</span><small>Add birth time</small></div>');
 $("bigtx").innerHTML="<b>"+first+"</b>, your <b>Sun in "+S[0]+"</b> makes you "+S[4]+". Your <b>Moon in "+M[0]+"</b> shows how you feel inside: "+M[4]+"."+(A?" With <b>"+A[0]+" Rising</b>, people first meet someone "+A[4]+".":" Add your birth time to reveal your Rising sign, the mask you show the world.")+(!g?" <i>(We couldn't find that birthplace, so times are treated as UTC.)</i>":"");
 var pts=[S,M].concat(A?[A]:[]),E={Fire:0,Earth:0,Air:0,Water:0},Mo={Cardinal:0,Fixed:0,Mutable:0},wt=[3,2,2];pts.forEach(function(s,i){E[s[2]]+=wt[i];Mo[s[3]]+=wt[i]});var tot=pts.length==3?7:5;
-$("elem").innerHTML=Object.keys(E).map(function(k){return bar(({Fire:"🔥",Earth:"🌿",Air:"💨",Water:"💧"})[k]+" "+k,E[k],tot)}).join("");
+$("elem").innerHTML=Object.keys(E).map(function(k){return bar(k,E[k],tot)}).join("");
 $("mode").innerHTML=Object.keys(Mo).map(function(k){return bar(k,Mo[k],tot)}).join("");
 var r=rng(name+dob+today);$("fc").innerHTML=AREAS.map(function(a){var v=1+Math.floor(r()*5);return bar(a+" "+"★".repeat(v)+"☆".repeat(5-v),v,5)+'<p class="hint" style="margin:-4px 0 6px">'+FC[a][Math.floor(r()*4)]+'</p>'}).join("");
 var N=numer(name,y,m,d),lp=N[0][1],lk=LUCK[lp]||LUCK[red(lp)];
 $("num").innerHTML=N.map(function(n){return '<div class="nm"><small>'+n[0]+'</small><b>'+n[1]+'</b><div class="hint">'+n[2]+'</div></div>'}).join("");
 $("numtx").innerHTML="<p style='margin-top:0'><b>Life Path "+lp+":</b> "+NUM[lp]+"</p><p><b>Expression "+N[1][1]+":</b> "+NUM[N[1][1]]+"</p><p><b>Soul Urge "+N[2][1]+":</b> "+NUM[N[2][1]]+"</p><p style='margin-bottom:0'>🍀 <b>Lucky color:</b> "+lk[0]+" · <b>Stone:</b> "+lk[1]+" · <b>Day:</b> "+lk[2]+" · <b>Numbers:</b> "+[lp,N[1][1],N[4][1]].join(", ")+"</p>";
-var bp=phase(J);$("moonb").innerHTML="<h3 style='margin-top:0'>🌙 Your Birth Moon</h3><p style='font-size:1.4rem;margin:.2em 0'>"+bp.n+"</p>"+bar("Moon lit at birth",bp.ill,100)+"<p style='margin-bottom:0'>"+phTxt(bp.n)+"</p>";
-var c=cz(y,m,d);$("cz").innerHTML="<h3 style='margin-top:0'>🏮 Chinese Zodiac</h3><p style='font-size:1.4rem;margin:.2em 0'>"+c.e+" "+c.el+" "+c.a+"</p><p style='margin-bottom:0'>You're "+c.t+". The "+c.el+" element colors how you use it"+c.note+".</p>";
-$("chart").innerHTML="<h3 style='margin-top:0'>🪐 Chart data</h3><div class='tw'><table><tr><th>Point</th><th>Sign</th><th>Degree</th><th>Element</th><th>Mode</th></tr>"+[["☉ Sun",sl],["☽ Moon",ml]].concat(al!=null?[["↑ Ascendant",al]]:[]).map(function(p){var s=sign(p[1]);return "<tr><td>"+p[0]+"</td><td>"+s[1]+" "+s[0]+"</td><td>"+deg(p[1])+"</td><td>"+s[2]+"</td><td>"+s[3]+"</td></tr>"}).join("")+"</table></div><p class='hint' style='margin-bottom:0'>"+(g?"Coordinates "+g.lat.toFixed(2)+", "+g.lon.toFixed(2)+" · UTC offset "+(off/60)+"h at birth. ":"")+"Want every planet and house? Plug the same details into the free Astro.com chart linked below.</p>";
+var bp=phase(J);$("moonb").innerHTML="<h3 style='margin-top:0'>Your Birth Moon</h3><p style='font-size:1.4rem;margin:.2em 0'>"+bp.n+"</p>"+bar("Moon lit at birth",bp.ill,100)+"<p style='margin-bottom:0'>"+phTxt(bp.n)+"</p>";
+var c=cz(y,m,d);$("cz").innerHTML="<h3 style='margin-top:0'>Chinese Zodiac</h3><p style='font-size:1.4rem;margin:.2em 0'>"+c.el+" "+c.a+"</p><p style='margin-bottom:0'>You're "+c.t+". The "+c.el+" element colors how you use it"+c.note+".</p>";
+$("chart").innerHTML="<h3 style='margin-top:0'>Chart data</h3><div class='tw'><table><tr><th>Point</th><th>Sign</th><th>Degree</th><th>Element</th><th>Mode</th></tr>"+[["☉ Sun",sl],["☽ Moon",ml]].concat(al!=null?[["↑ Ascendant",al]]:[]).map(function(p){var s=sign(p[1]);return "<tr><td>"+p[0]+"</td><td>"+s[1]+" "+s[0]+"</td><td>"+deg(p[1])+"</td><td>"+s[2]+"</td><td>"+s[3]+"</td></tr>"}).join("")+"</table></div><p class='hint' style='margin-bottom:0'>"+(g?"Coordinates "+g.lat.toFixed(2)+", "+g.lon.toFixed(2)+" · UTC offset "+(off/60)+"h at birth. ":"")+"Want every planet and house? Plug the same details into the free Astro.com chart linked below.</p>";
 deal(name+dob+today);$("out").style.display="block";grow();say(first+", the cauldron has spoken. Your reading is ready below.");setTimeout(function(){$("out").scrollIntoView({behavior:"smooth"})},400)}
 ui();sky();deal("welcome"+today);
 })();
