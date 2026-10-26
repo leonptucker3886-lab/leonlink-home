@@ -213,22 +213,48 @@ body.kidmode .exitpet{display:block}
 .exitpet i{position:absolute;left:0;bottom:0;height:5px;width:0;background:#ff3fb4}
 .exitpet.holding i{width:100%;transition:width 2s linear}
 body.kidmode header{padding-left:70px}
-.bert{position:fixed;right:6px;bottom:calc(120px + env(safe-area-inset-bottom));z-index:60;width:118px;height:148px;border:0;background:none;padding:0;
+.bert{position:fixed;right:6px;bottom:calc(120px + env(safe-area-inset-bottom));z-index:60;width:124px;height:166px;border:0;background:none;padding:0;
  transform:translateY(220px) scale(.6);opacity:0;transition:transform .5s cubic-bezier(.3,1.6,.5,1),opacity .3s;pointer-events:none}
 .bert.show{transform:none;opacity:1;pointer-events:auto}
-.bertsvg{width:100%;height:100%;overflow:visible}
-.bertsvg .b-head{transform-origin:60px 90px;animation:bhead 2.4s ease-in-out infinite}
-.bertsvg .b-body{animation:bbreath 2.4s ease-in-out infinite;transform-origin:60px 140px}
-.bertsvg .b-arm{transform-origin:88px 108px;animation:bwave 1s ease-in-out infinite}
-.bertsvg .b-eyes{transform-origin:60px 66px;animation:bblink 4s infinite}
+.bertsvg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 6px 8px #0006)}
+.bertsvg g{transform-box:view-box}
+.bertsvg .b-all{transform-origin:60px 150px;animation:bidle 3s ease-in-out infinite}
+.bertsvg .b-head{transform-origin:60px 96px;animation:bhead 3s ease-in-out infinite}
+.bertsvg .b-body{transform-origin:60px 138px;animation:bbreath 3s ease-in-out infinite}
+.bertsvg .b-arm{transform-origin:86px 108px;animation:bwave 1.1s ease-in-out infinite}
+.bertsvg .b-arml{transform-origin:34px 108px;animation:barml 3s ease-in-out infinite}
+.bertsvg .b-eyes{transform-origin:60px 66px;animation:bblink 4.2s infinite}
+.bertsvg .b-pupils{transition:transform .35s cubic-bezier(.3,1.5,.5,1)}
+.bertsvg .b-brows{transform-origin:60px 53px}
+.bertsvg .b-shadow{transform-origin:60px 156px;animation:bshad 3s ease-in-out infinite}
+.bertsvg .b-spark{opacity:0}
 .bertsvg .b-talk{display:none}
-.talking .b-talk{display:block;transform-origin:60px 86px;animation:btalk .22s ease-in-out infinite alternate}
+.talking .b-talk{display:block;transform-origin:60px 85px;animation:btalk .18s ease-in-out infinite alternate}
 .talking .b-smile{display:none}
-@keyframes bhead{50%{transform:rotate(4deg) translateY(-2px)}}
-@keyframes bbreath{50%{transform:scaleY(1.03)}}
-@keyframes bwave{0%,100%{transform:rotate(0)}50%{transform:rotate(-28deg)}}
-@keyframes bblink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
-@keyframes btalk{from{transform:scaleY(.3)}to{transform:scaleY(1)}}
+.talking .b-brows{animation:bbrow .5s ease-in-out infinite alternate}
+.talking .b-head{animation:bnod .45s ease-in-out infinite alternate}
+.bert.show .b-all{animation:bpop .6s cubic-bezier(.3,1.7,.5,1),bidle 3s ease-in-out .6s infinite}
+.boing .b-all{animation:bboing .6s cubic-bezier(.3,1.6,.5,1)}
+.boing .b-spark,.cheer .b-spark{animation:bspark .9s ease-out}
+.cheer .b-all{animation:bhop 1.2s ease-in-out}
+.cheer .b-arml{animation:bcheer .3s ease-in-out 4 alternate}
+@keyframes bidle{0%,100%{transform:rotate(-1.5deg)}50%{transform:rotate(1.5deg) translateY(-1.5px)}}
+@keyframes bhead{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(4deg) translateY(-2px)}}
+@keyframes bnod{from{transform:rotate(-2deg)}to{transform:rotate(3deg) translateY(1.5px)}}
+@keyframes bbreath{50%{transform:scale(1.025,1.04)}}
+@keyframes bwave{0%,100%{transform:rotate(4deg)}50%{transform:rotate(-30deg)}}
+@keyframes barml{50%{transform:rotate(6deg)}}
+@keyframes bcheer{to{transform:rotate(110deg)}}
+@keyframes bblink{0%,90%,100%{transform:scaleY(1)}93%{transform:scaleY(.08)}96%{transform:scaleY(1)}}
+@keyframes btalk{from{transform:scale(.8,.25)}to{transform:scale(1,1.05)}}
+@keyframes bbrow{to{transform:translateY(-2.5px)}}
+@keyframes bshad{50%{transform:scaleX(.93)}}
+@keyframes bpop{0%{transform:translateY(40px) scale(.4,.6)}60%{transform:translateY(-12px) scale(1.08,.95)}100%{transform:none}}
+@keyframes bboing{0%{transform:none}25%{transform:scale(1.15,.8)}55%{transform:translateY(-18px) scale(.92,1.1)}80%{transform:scale(1.04,.96)}100%{transform:none}}
+@keyframes bhop{20%{transform:scale(1.08,.9)}45%{transform:translateY(-16px) rotate(-4deg)}70%{transform:scale(1.05,.95)}100%{transform:none}}
+@keyframes bspark{0%{opacity:0;transform:scale(.3)}40%{opacity:1;transform:scale(1.2)}100%{opacity:0;transform:scale(1) translateY(-8px)}}
+@media (prefers-reduced-motion:reduce){.bertsvg *{animation:none!important}}
+.pg-home{position:relative;z-index:2;touch-action:manipulation;cursor:pointer}.pg-home.going{opacity:.6}
 .bert .bubble{position:absolute;top:-34px;left:-30px;font-size:40px;background:#fff;border-radius:50%;width:64px;height:64px;line-height:64px;
  box-shadow:0 4px 12px #0006;animation:bub 1.2s ease-in-out infinite}
 @keyframes bub{50%{transform:translateY(-6px)}}

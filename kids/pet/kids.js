@@ -3,29 +3,46 @@
 (function(){
 const $q=s=>document.querySelector(s);
 // ---------- Bert: animated cartoon guide of all Bert games ----------
-const BERT_SVG=`<svg viewBox="0 0 120 150" class="bertsvg" aria-hidden="true">
-<ellipse cx="60" cy="146" rx="34" ry="4" fill="#0004"/>
-<g class="b-body"><path d="M28 140 Q30 98 60 96 Q90 98 92 140Z" fill="#2d6a4f"/><path d="M52 100 L60 116 L68 100Z" fill="#fff"/>
-<circle cx="60" cy="122" r="2.5" fill="#ffd166"/><circle cx="60" cy="132" r="2.5" fill="#ffd166"/>
-<rect x="34" y="104" width="12" height="5" rx="2" fill="#ffd166"/></g>
-<g class="b-arm"><path d="M88 108 Q104 96 104 78" stroke="#2d6a4f" stroke-width="11" fill="none" stroke-linecap="round"/><circle cx="104" cy="74" r="8" fill="#ffcc99"/></g>
-<path d="M32 110 Q22 124 28 136" stroke="#2d6a4f" stroke-width="11" fill="none" stroke-linecap="round"/>
-<g class="b-head"><circle cx="60" cy="62" r="34" fill="#ffcc99"/><circle cx="27" cy="64" r="7" fill="#ffb98a"/><circle cx="93" cy="64" r="7" fill="#ffb98a"/>
-<path d="M24 48 Q26 18 60 16 Q94 18 96 48Z" fill="#22b5c9"/><rect x="20" y="44" width="80" height="9" rx="4.5" fill="#1690a3"/>
-<text x="60" y="40" font-size="18" text-anchor="middle" fill="#fff">&#9875;</text>
-<circle cx="38" cy="78" r="6" fill="#ff8fa3" opacity=".55"/><circle cx="82" cy="78" r="6" fill="#ff8fa3" opacity=".55"/>
-<g class="b-eyes"><ellipse cx="46" cy="66" rx="6" ry="7.5" fill="#1b1b2f"/><ellipse cx="74" cy="66" rx="6" ry="7.5" fill="#1b1b2f"/>
-<circle cx="48" cy="63" r="2.2" fill="#fff"/><circle cx="76" cy="63" r="2.2" fill="#fff"/></g>
-<path class="b-smile" d="M48 82 Q60 92 72 82" stroke="#7a3b2e" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-<ellipse class="b-talk" cx="60" cy="86" rx="7" ry="5" fill="#7a3b2e"/></g></svg>`;
+const BERT_SVG=`<svg viewBox="0 0 120 160" class="bertsvg" aria-hidden="true">
+<defs><radialGradient id="bSk" cx=".4" cy=".35" r=".75"><stop offset="0" stop-color="#ffe2c6"/><stop offset=".7" stop-color="#ffc59a"/><stop offset="1" stop-color="#eda274"/></radialGradient>
+<linearGradient id="bJk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#46b981"/><stop offset="1" stop-color="#1f6b4a"/></linearGradient>
+<linearGradient id="bCp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ae8f8"/><stop offset="1" stop-color="#1597ad"/></linearGradient></defs>
+<ellipse class="b-shadow" cx="60" cy="156" rx="30" ry="4.5" fill="#0005"/>
+<g class="b-all">
+<g class="b-legs"><rect x="46" y="128" width="11" height="20" rx="5" fill="#2e3f7a"/><rect x="63" y="128" width="11" height="20" rx="5" fill="#2e3f7a"/>
+<path d="M41 151Q41 143 51 143Q58 143 58 151Z" fill="#6b4430"/><path d="M62 151Q62 143 69 143Q79 143 79 151Z" fill="#6b4430"/></g>
+<g class="b-body"><path d="M32 134Q32 100 60 98Q88 100 88 134Q88 138 84 138L36 138Q32 138 32 134Z" fill="url(#bJk)" stroke="#164d35" stroke-width="2"/>
+<path d="M52 100L60 114L68 100Z" fill="#fff"/><circle cx="64" cy="121" r="2.3" fill="#ffd166"/><circle cx="64" cy="130" r="2.3" fill="#ffd166"/></g>
+<g class="b-arml"><path d="M34 108Q22 120 28 134" stroke="url(#bJk)" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="28" cy="135" r="6.5" fill="url(#bSk)"/></g>
+<g class="b-arm"><path d="M86 108Q102 98 103 80" stroke="url(#bJk)" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="103" cy="75" r="7.5" fill="url(#bSk)" stroke="#d98c5f"/></g>
+<g class="b-head"><circle cx="27" cy="64" r="7.5" fill="url(#bSk)"/><circle cx="93" cy="64" r="7.5" fill="url(#bSk)"/>
+<ellipse cx="60" cy="62" rx="34" ry="33" fill="url(#bSk)" stroke="#d98c5f" stroke-width="1.5"/>
+<path d="M29 50q4 9 11 4q2 7 9 3l-4-9Z" fill="#6b3f22"/>
+<path d="M25 49Q26 17 60 15Q94 17 95 49Z" fill="url(#bCp)" stroke="#0f6f80" stroke-width="2"/>
+<path d="M38 27Q50 20 62 21" stroke="#fff9" stroke-width="3" fill="none" stroke-linecap="round"/>
+<path d="M19 47Q60 38 101 47Q103 54 98 54Q60 47 22 54Q17 54 19 47Z" fill="#1690a3"/>
+<g transform="translate(60 33)" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"><circle cy="-7" r="2.6"/><path d="M0-4V8M-6-1H6M-8 3Q-7 9 0 9Q7 9 8 3"/></g>
+<g class="b-brows" stroke="#5a3418" stroke-width="3" fill="none" stroke-linecap="round"><path d="M38 54Q45 50 52 53"/><path d="M68 53Q75 50 82 54"/></g>
+<ellipse cx="37" cy="79" rx="6.5" ry="4.5" fill="#ff7f99" opacity=".5"/><ellipse cx="83" cy="79" rx="6.5" ry="4.5" fill="#ff7f99" opacity=".5"/>
+<g class="b-eyes"><ellipse cx="46" cy="66" rx="8" ry="9.5" fill="#fff"/><ellipse cx="74" cy="66" rx="8" ry="9.5" fill="#fff"/>
+<g class="b-pupils"><circle cx="47" cy="67" r="5.5" fill="#1b1b3a"/><circle cx="75" cy="67" r="5.5" fill="#1b1b3a"/><circle cx="49" cy="64.5" r="2" fill="#fff"/><circle cx="77" cy="64.5" r="2" fill="#fff"/></g></g>
+<g class="b-smile"><path d="M47 81Q60 94 73 81Q60 86 47 81Z" fill="#7a2e2e"/><path d="M52 84Q60 87 68 84L67 82Q60 84 53 82Z" fill="#fff"/></g>
+<g class="b-talk"><ellipse cx="60" cy="85" rx="7.5" ry="6" fill="#7a2e2e"/><ellipse cx="60" cy="88" rx="4.5" ry="2.4" fill="#ff8a9a"/></g></g></g>
+<g class="b-spark" fill="#ffd166"><path d="M12 30l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/><path d="M108 20l1.5 3.5 3.5 1.5-3.5 1.5-1.5 3.5-1.5-3.5-3.5-1.5 3.5-1.5z"/></g></svg>`;
 let bertEl=null,talkT=0;
 function bert(){if(bertEl&&document.body.contains(bertEl))return bertEl;
  bertEl=document.createElement('button');bertEl.className='bert';bertEl.setAttribute('aria-label','Bert, your helper');
- bertEl.innerHTML=BERT_SVG+'<div class="bubble"></div>';bertEl.onclick=e=>{e.stopPropagation();onBertTap()};document.body.appendChild(bertEl);return bertEl}
+ bertEl.innerHTML=BERT_SVG+'<div class="bubble"></div>';bertEl.onclick=e=>{e.stopPropagation();bertBoing();onBertTap()};document.body.appendChild(bertEl);return bertEl}
 function bertSay(t,icon){const b=bert(),bb=b.querySelector('.bubble');b.classList.add('show','talking');bb.textContent=icon||'';
  bb.style.display=icon?'':'none';say(t);clearTimeout(talkT);talkT=setTimeout(()=>b.classList.remove('talking'),Math.min(6000,600+t.length*70))}
 function bertHide(){if(bertEl)bertEl.classList.remove('show','talking');document.querySelectorAll('.bpoint').forEach(e=>e.remove())}
-window.Bert={say:bertSay,hide:bertHide};
+function bertBoing(){const b=bertEl;if(!b)return;b.classList.remove('boing');void b.offsetWidth;b.classList.add('boing');setTimeout(()=>b.classList.remove('boing'),700)}
+function bertLook(x,y){document.querySelectorAll('.bertsvg .b-pupils').forEach(p=>{const r=p.ownerSVGElement.getBoundingClientRect();if(!r.width)return;
+ const dx=x-(r.left+r.width/2),dy=y-(r.top+r.height*.4),d=Math.hypot(dx,dy)||1;p.style.transform='translate('+(dx/d*2.6).toFixed(2)+'px,'+(dy/d*2.4).toFixed(2)+'px)'})}
+addEventListener('pointerdown',e=>bertLook(e.clientX,e.clientY),{passive:true});
+setInterval(()=>{if(!document.querySelector('.bertsvg'))return;if(Math.random()<.5)bertLook(Math.random()*innerWidth,Math.random()*innerHeight);
+ const b=bertEl;if(b&&b.classList.contains('show')&&!b.classList.contains('talking')&&Math.random()<.35){b.classList.add('cheer');setTimeout(()=>b.classList.remove('cheer'),1200)}},2600);
+window.Bert={say:bertSay,hide:bertHide,boing:bertBoing};
 // slower, friendlier voice for little ones
 window.say=function(t){try{if(S.mute||!t||!window.speechSynthesis)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.rate=.85;u.pitch=1.15;speechSynthesis.speak(u)}catch(e){}};
 // retire Ollie
@@ -91,7 +108,10 @@ function enter(){KM=true;document.body.classList.add('kidmode');goFull();history
  if(S.pet&&S.tut<TUT.length)setTimeout(tutShow,800);else if(S.pet){bertSay('Hi again! Your pet missed you!','👋');setTimeout(bertHide,4000)}}
 function gate(again){if($q('.playgate'))return;const g=document.createElement('div');g.className='playgate';
  g.innerHTML=`<div class="pg-bert">${BERT_SVG}</div><button class="pg-play" aria-label="Play">▶</button><a class="pg-home" href="/kids/" aria-label="Back to Kids Corner"><span>🏠</span><b>Kids Corner</b></a>`;
- g.querySelector('.pg-home').onclick=e=>{KM=false;say('Back to Kids Corner!');e.preventDefault();setTimeout(()=>location.href='/kids/',600)};
+ const hm=g.querySelector('.pg-home');let gone=0;const goKC=e=>{if(e)e.preventDefault();if(gone)return;gone=1;KM=false;
+ try{if(isFull())(document.exitFullscreen||document.webkitExitFullscreen).call(document)}catch(_){}
+ try{speechSynthesis.cancel()}catch(_){}hm.classList.add('going');location.assign(location.origin+'/kids/')};
+ hm.addEventListener('click',goKC);hm.addEventListener('pointerup',goKC);hm.addEventListener('touchend',goKC);
  g.querySelector('.pg-play').onclick=()=>{say(again?'Back to your pet!':'Let\'s play!');enter()};document.body.appendChild(g);
  const b=g.querySelector('.pg-bert');b.classList.add('talking');setTimeout(()=>b.classList.remove('talking'),2500)}
 function leave(){KM=false;document.body.classList.remove('kidmode');bertHide();closeSheet();
@@ -105,7 +125,7 @@ ex.addEventListener('pointerdown',e=>{e.preventDefault();ex.classList.add('holdi
 ex.addEventListener('click',e=>{e.preventDefault()});document.body.appendChild(ex);
 // while playing: back button, swipes, pinch, long-press menus and leaving the page are all blocked
 addEventListener('popstate',()=>{if(KM)history.pushState({pet:1},'')});
-addEventListener('beforeunload',e=>{if(KM){e.preventDefault();e.returnValue=''}});
+addEventListener('beforeunload',e=>{if(KM&&!e.target.activeElement?.classList?.contains('pg-home')){e.preventDefault();e.returnValue=''}});
 document.addEventListener('contextmenu',e=>{if(KM)e.preventDefault()});
 document.addEventListener('gesturestart',e=>{if(KM)e.preventDefault()});
 ['fullscreenchange','webkitfullscreenchange'].forEach(t=>document.addEventListener(t,()=>{if(KM&&!isFull())gate(true)}));
