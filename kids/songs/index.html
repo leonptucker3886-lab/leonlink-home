@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sing-Along Songs for Kids | LeonLink Kids Corner</title>
+<meta name="description" content="Free sing-along songs for kids with Pip: original songs with words that light up as the music plays. No ads, no logins.">
+<link rel="canonical" href="https://www.leonlink.net/kids/songs/">
+<meta property="og:type" content="website"><meta property="og:title" content="Sing-Along Songs with Pip | LeonLink Kids Corner">
+<meta property="og:description" content="Original sing-along songs for kids. Words light up as the music plays.">
+<meta property="og:url" content="https://www.leonlink.net/kids/songs/"><meta name="twitter:card" content="summary">
+<style>
+body{margin:0;font-family:system-ui,sans-serif;background:linear-gradient(#ffe3f1,#fff7d6);color:#18181B;min-height:100vh}
+.w{max-width:900px;margin:0 auto;padding:20px 16px 40px}h1{font-size:clamp(2rem,8vw,3rem);text-align:center;margin:12px 0 4px}.sub{text-align:center;font-size:1.15rem}
+.list{display:grid;gap:14px}@media(min-width:640px){.list{grid-template-columns:1fr 1fr}}
+.song{border:4px solid #fff;border-radius:22px;padding:16px;box-shadow:0 6px 0 #0002;cursor:pointer;text-align:left;font:inherit;color:inherit}
+.song .e{font-size:48px}.song h2{margin:4px 0}.song p{margin:0}
+#stage{display:none;background:#fff;border-radius:24px;padding:20px;box-shadow:0 8px 0 #0002}#stage h2{text-align:center}
+.lyr{font-size:clamp(1.3rem,5vw,1.9rem);line-height:1.6;text-align:center}.ln{padding:2px 8px;border-radius:12px}.on{background:#fff176;font-weight:800}
+.ctl{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:16px 0}
+.ctl button{background:#2A78D6;color:#fff;border:0;font-weight:900;font-size:1.2rem;padding:12px 24px;border-radius:999px;cursor:pointer}
+.ctl .alt{background:#8a5cf6}.home{display:block;text-align:center;margin-top:22px;color:#2A78D6;font-weight:800}.note{text-align:center}
+</style></head><body><main class="w">
+<h1>&#127925; Sing-Along Songs</h1><p class="sub">Sing with Pip! Tap a song, press Play, and follow the words as they light up.</p>
+<div class="list" id="list"></div>
+<section id="stage" aria-live="polite"><h2 id="title"></h2><div class="lyr" id="lyr"></div>
+<div class="ctl"><button id="play">&#9654; Play</button><button class="alt" id="slow">&#128034; Slow: off</button><button class="alt" id="back">&larr; All songs</button></div>
+<p class="note">Turn your sound on. Every song here is an original LeonLink song.</p></section>
+<a class="home" href="/kids/">&larr; Back to Kids Corner</a></main>
+<script>
+var SONGS=[
+{e:"&#128054;",c:"#ffd6e7",t:"Pip Says Hello",d:"A good-morning song for waving, clapping and stomping.",bpm:112,lines:[
+["Pip says hello, hello, hello!","C4:1 E4:1 G4:1 G4:1 A4:1 G4:1 E4:2"],
+["Wave your hands and off we go!","F4:1 F4:1 E4:1 E4:1 D4:1 D4:1 C4:2"],
+["Clap, clap, clap, and stomp your feet,","C4:1 C4:1 C4:1 E4:1 G4:1 G4:1 G4:2"],
+["Pip thinks you are super sweet!","A4:1 A4:1 G4:1 E4:1 D4:1 E4:1 C4:2"]]},
+{e:"&#129701;",c:"#c9f0ff",t:"Brush-a-Brush",d:"Toothbrushing fun, top to bottom.",bpm:120,lines:[
+["Brush-a-brush, the top teeth shine,","E4:1 D4:1 C4:1 D4:1 E4:1 E4:1 E4:2"],
+["Brush-a-brush, the bottom line,","D4:1 D4:1 D4:1 E4:1 G4:2 G4:2"],
+["Round and round and side to side,","E4:1 D4:1 C4:1 D4:1 E4:1 E4:1 E4:2"],
+["Show the world your smile so wide!","D4:1 D4:1 E4:1 D4:1 C4:2 C4:2"]]},
+{e:"&#127752;",c:"#fff3a6",t:"Rainbow Count",d:"Count the seven colors of the rainbow.",bpm:104,lines:[
+["Red is one and orange two,","G4:1 E4:1 E4:1 F4:1 D4:1 D4:2"],
+["Yellow three, the sun shines through,","C4:1 D4:1 E4:1 F4:1 G4:1 G4:1 G4:2"],
+["Green is four and blue is five,","G4:1 E4:1 E4:1 F4:1 D4:1 D4:1 D4:2"],
+["Indigo six, violet seven, the rainbow's alive!","C4:1 E4:1 G4:1 G4:1 E4:1 E4:1 D4:1 E4:1 C4:2"]]},
+{e:"&#127769;",c:"#e1d6ff",t:"Sleepy Stars",d:"A slow, calm lullaby for bedtime.",bpm:72,lines:[
+["Sleepy stars are in the sky,","E4:2 G4:1 E4:1 D4:1 C4:1 D4:2"],
+["Little moon is sailing by,","E4:2 G4:1 E4:1 D4:1 E4:1 C4:2"],
+["Close your eyes and dream tonight,","G4:2 A4:1 G4:1 E4:1 D4:1 E4:2"],
+["Pip says sleep tight, sleep tight.","D4:1 E4:1 D4:2 C4:2 C4:2"]]},
+{e:"&#127950;&#65039;",c:"#c8f7c5",t:"Vroom Vroom Bert",d:"A racing song for Bert Kart fans.",bpm:132,lines:[
+["Vroom, vroom, Bert is in his kart,","C4:1 C4:1 G4:1 G4:1 A4:1 A4:1 G4:2"],
+["Ready, set, it's time to start!","F4:1 F4:1 E4:1 E4:1 D4:1 D4:1 C4:2"],
+["Zoom around the twisty track,","G4:1 G4:1 F4:1 F4:1 E4:1 E4:1 D4:2"],
+["Wave to Ghost Bert, then come back!","G4:1 G4:1 F4:1 F4:1 E4:1 D4:1 C4:2"]]},
+{e:"&#129532;",c:"#ffe0c2",t:"Bubble Hands",d:"A handwashing song, about 20 seconds long.",bpm:116,lines:[
+["Bubbles here and bubbles there,","C4:1 D4:1 E4:1 C4:1 C4:1 D4:1 E4:1 C4:1"],
+["Rub your fingers everywhere,","E4:1 F4:1 G4:2 E4:1 F4:1 G4:2"],
+["Backs and thumbs and in between,","G4:1 A4:1 G4:1 F4:1 E4:1 C4:1 C4:2"],
+["Rinse away, now you are clean!","C4:1 G3:1 C4:2 C4:1 G3:1 C4:2"]]}];
+var SEMI={C:0,D:2,E:4,F:5,G:7,A:9,B:11};
+function hz(n){return 440*Math.pow(2,(SEMI[n[0]]+(+n.slice(-1)-4)*12-9)/12);}
+var ctx,cur,slow=false,playing=false,timers=[],oscs=[];
+var L=document.getElementById('list'),S=document.getElementById('stage'),P=document.getElementById('play');
+SONGS.forEach(function(s){var b=document.createElement('button');b.className='song';b.style.background=s.c;
+b.innerHTML='<div class="e">'+s.e+'</div><h2>'+s.t+'</h2><p>'+s.d+'</p>';b.onclick=function(){openSong(s)};L.appendChild(b);});
+function openSong(s){stop();cur=s;document.getElementById('title').innerHTML=s.e+' '+s.t;
+document.getElementById('lyr').innerHTML=s.lines.map(function(l,i){return '<div class="ln">'+l[0]+'</div>'}).join('');
+L.style.display='none';S.style.display='block';window.scrollTo(0,0);}
+function mark(i){document.querySelectorAll('.ln').forEach(function(e,j){e.classList.toggle('on',j===i)});}
+function stop(){playing=false;timers.forEach(clearTimeout);timers=[];oscs.forEach(function(o){try{o.stop()}catch(e){}});oscs=[];mark(-1);P.innerHTML='&#9654; Play';}
+function play(){if(playing){stop();return}
+ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();ctx.resume();playing=true;P.innerHTML='&#9632; Stop';
+var beat=60/(cur.bpm*(slow?0.7:1)),t=ctx.currentTime+0.15,t0=t;
+cur.lines.forEach(function(l,i){
+timers.push(setTimeout(function(){mark(i)},(t-t0)*1000));
+l[1].split(' ').forEach(function(tok){var p=tok.split(':'),d=+p[1]*beat;
+if(p[0]!=='R'){var o=ctx.createOscillator(),g=ctx.createGain();o.type='triangle';o.frequency.value=hz(p[0]);
+g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(0.25,t+0.02);g.gain.exponentialRampToValueAtTime(0.001,t+d*0.95);
+o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+d);oscs.push(o);}
+t+=d;});t+=beat*0.5;});
+timers.push(setTimeout(stop,(t-t0)*1000+200));}
+P.onclick=play;
+document.getElementById('slow').onclick=function(){slow=!slow;this.innerHTML='&#128034; Slow: '+(slow?'on':'off');if(playing){stop();play();}};
+document.getElementById('back').onclick=function(){stop();S.style.display='none';L.style.display='grid';};
+</script></body></html>
