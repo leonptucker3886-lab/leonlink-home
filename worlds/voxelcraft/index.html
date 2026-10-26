@@ -47,7 +47,8 @@
   Every deliberately unfinished feature is marked with "// STUB:".
   ============================================================================
 -->
-<style>
+<style>h2.h1x{font-size:2em;margin:.67em 0;font-weight:bold}
+
   :root {
     --panel: #c6c6c6;
     --panel-dark: #373737;
@@ -93,8 +94,10 @@
   /* ----- Overlays (menus, inventory) ----------------------------------- */
   .overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.55); display: flex; align-items: center; justify-content: center; z-index: 10; }
   .panel { background: var(--panel); color: #3f3f3f; border: 3px solid; border-color: var(--panel-light) var(--panel-dark) var(--panel-dark) var(--panel-light); padding: 12px 14px; box-shadow: 0 0 0 2px #000; max-height: 92vh; overflow: auto; }
-  .panel h1, .panel h2 { margin: 0 0 8px 0; font-size: 15px; color: #404040; }
-  .panel h1 { font-size: 22px; color: #222; }
+  .panel h1, .panel h2 ,
+  .panel h2.h1x{ margin: 0 0 8px 0; font-size: 15px; color: #404040; }
+  .panel h1 ,
+  .panel h2.h1x { font-size: 22px; color: #222; }
   .panel p { margin: 4px 0; font-size: 12px; }
   .btn { display: inline-block; background: #6f6f6f; color: #fff; border: 2px solid; border-color: #aaa #2b2b2b #2b2b2b #aaa; padding: 7px 14px; font-family: inherit; font-size: 13px; cursor: pointer; text-shadow: 1px 1px #222; margin: 3px 2px; min-width: 120px; text-align: center; }
   .btn:hover { background: #7f8fbf; border-color: #cfd8ff #1e2a5a #1e2a5a #cfd8ff; }
@@ -209,7 +212,7 @@
   <!-- Death screen -->
   <div id="death" class="overlay hidden">
     <div class="panel">
-      <h1 style="color:#a00">You died!</h1>
+      <h2 class="h1x" style="color:#a00">You died!</h2>
       <p id="death-cause">Cause of death</p>
       <button class="btn" id="btn-respawn">Respawn</button>
     </div>
