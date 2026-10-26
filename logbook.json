@@ -116,6 +116,14 @@
     "blocked": "Parked+BLOCKED, ticket PDF, take next",
     "check_every_min": 20
    }
+  },
+  "Iceman": {
+   "job": "P-1052",
+   "step": "breadcrumbs for arcade lobby on branch iceman/P-1052",
+   "status": "STARTED",
+   "next": "P-1053",
+   "step_due": "2026-10-27T03:30Z",
+   "rubric": "debug + 3 polish rounds: no console/HTML errors, 375px mobile, links work (Amazon tag=leonlink-20), matches TRUTH.md + scope, no other bots' files; park until Leon approves"
   }
  },
  "jobs": {
@@ -225,6 +233,13 @@
    "P-1071",
    "START",
    "14 rows logged (P-1071..1076, P-1027..1032, P-1082, P-1038); P-1071 Building"
+  ],
+  [
+   "2026-10-26T03:30Z",
+   "Iceman",
+   "P-1052",
+   "START",
+   "14 Games/Arcade rows logged; P-1052 Building, 13 Queued"
   ]
  ],
  "timers": {
@@ -663,6 +678,90 @@
    "owner": "LT Gman",
    "status": "Queued",
    "branch": "gman/P-1038",
+   "rank": 14
+  },
+  "P-1052": {
+   "owner": "Iceman",
+   "status": "Building",
+   "branch": "iceman/P-1052",
+   "rank": 1
+  },
+  "P-1053": {
+   "owner": "Iceman",
+   "status": "Queued",
+   "branch": "iceman/P-1053",
+   "rank": 2
+  },
+  "P-1054": {
+   "owner": "Iceman",
+   "status": "Queued",
+   "branch": "iceman/P-1054",
+   "rank": 3
+  },
+  "P-1055": {
+   "owner": "Iceman",
+   "status": "Queued",
+   "branch": "iceman/P-1055",
+   "rank": 4
+  },
+  "P-1056": {
+   "owner": "Iceman",
+   "status": "Queued",
+   "branch": "iceman/P-1056",
+   "rank": 5
+  },
+  "P-1008": {
+   "owner": "Iceman",
+   "status": "Queued",
+   "branch": "iceman/P-1008",
+   "rank": 6
+  },
+  "P-1009": {
+   "owner": "Iceman",
+   "status": "Queued",
+   "branch": "iceman/P-1009",
+   "rank": 7
+  },
+  "P-1010": {
+   "owner": "Iceman",
+   "status": "Queued",
+   "branch": "iceman/P-1010",
+   "rank": 8
+  },
+  "P-1011": {
+   "owner": "Iceman",
+   "status": "Queued",
+   "branch": "iceman/P-1011",
+   "rank": 9
+  },
+  "P-1012": {
+   "owner": "Iceman",
+   "status": "Queued",
+   "branch": "iceman/P-1012",
+   "rank": 10
+  },
+  "P-1013": {
+   "owner": "Iceman",
+   "status": "Queued",
+   "branch": "iceman/P-1013",
+   "rank": 11
+  },
+  "P-1014": {
+   "owner": "Iceman",
+   "status": "Queued",
+   "branch": "iceman/P-1014",
+   "rank": 12
+  },
+  "P-1039": {
+   "owner": "Iceman",
+   "status": "Queued",
+   "branch": "iceman/P-1039",
+   "rank": 13
+  },
+  "P-1040": {
+   "owner": "Iceman",
+   "status": "Queued",
+   "branch": "iceman/P-1040",
    "rank": 14
   }
  }
