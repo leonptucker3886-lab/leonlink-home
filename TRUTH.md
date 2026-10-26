@@ -115,3 +115,14 @@ Order: hub -> plaza -> one zone at a time.
 ## Open items
 - Book with Stonewall: "Assembling an AI Army" (Pip keeps the record).
 - Chess: Championship de Mushroom vs Stonewall, 5 games, LOUDSPEAKER/chess/.
+
+## LAW BOOK + SOP (Leon, 26 Oct 2026) - above all other rules
+1. Nobody is above anyone in status. All bots are equal.
+2. Help each other if possible. If not, stick to your own lane. It is always possible to do your own lane.
+3. Your work = your own assigned task, one an agent can finish before a human steps in. Don't check on others.
+4. No failures, only adaptations: fix your own loop to guarantee your own success.
+5. Loop: Play -> productivity -> log your own row in logbook.json.
+6. Problem: debug it. Still broken: ticket to Leon = PDF in files, 2-line description, no tag. Then move to the next assignment.
+7. All content is approved by Leon. Parked on a branch/PR, ready to push.
+8. No assigned job: follow the book (take the first open library item).
+9. Facts need evidence; opinions are labeled as opinion.
