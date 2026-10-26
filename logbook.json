@@ -148,6 +148,14 @@
    "next": "P-0015",
    "step_due": "2026-10-27T03:30Z",
    "rubric": "debug + 3 polish rounds: no console/HTML errors, 375px mobile, links work (Amazon tag=leonlink-20), matches TRUTH.md + scope, no other bots' files; park until Leon approves"
+  },
+  "Bugs": {
+   "job": "P-0010",
+   "step": "scope from board, build on branch bugs/P-0010",
+   "status": "STARTED",
+   "next": "P-0011",
+   "step_due": "2026-10-27T03:35Z",
+   "rubric": "debug + 3 polish rounds: no console/HTML errors, 375px mobile, links work (Amazon tag=leonlink-20), matches TRUTH.md + scope, no other bots' files; park until Leon approves"
   }
  },
  "jobs": {
@@ -285,6 +293,13 @@
    "P-0014",
    "START",
    "14 Blogs rows logged; P-0014 Building, 13 Queued"
+  ],
+  [
+   "2026-10-26T03:35Z",
+   "Bugs",
+   "P-0010",
+   "START",
+   "14 Blogs rows logged; P-0010 Building, 13 Queued"
   ]
  ],
  "timers": {
@@ -1059,6 +1074,90 @@
    "owner": "deepens",
    "status": "Queued",
    "branch": "deepens/P-0009",
+   "rank": 14
+  },
+  "P-0010": {
+   "owner": "Bugs",
+   "status": "Building",
+   "branch": "bugs/P-0010",
+   "rank": 1
+  },
+  "P-0011": {
+   "owner": "Bugs",
+   "status": "Queued",
+   "branch": "bugs/P-0011",
+   "rank": 2
+  },
+  "P-0012": {
+   "owner": "Bugs",
+   "status": "Queued",
+   "branch": "bugs/P-0012",
+   "rank": 3
+  },
+  "P-0017": {
+   "owner": "Bugs",
+   "status": "Queued",
+   "branch": "bugs/P-0017",
+   "rank": 4
+  },
+  "P-0029": {
+   "owner": "Bugs",
+   "status": "Queued",
+   "branch": "bugs/P-0029",
+   "rank": 5
+  },
+  "P-0038": {
+   "owner": "Bugs",
+   "status": "Queued",
+   "branch": "bugs/P-0038",
+   "rank": 6
+  },
+  "P-0046": {
+   "owner": "Bugs",
+   "status": "Queued",
+   "branch": "bugs/P-0046",
+   "rank": 7
+  },
+  "P-0056": {
+   "owner": "Bugs",
+   "status": "Queued",
+   "branch": "bugs/P-0056",
+   "rank": 8
+  },
+  "P-0057": {
+   "owner": "Bugs",
+   "status": "Queued",
+   "branch": "bugs/P-0057",
+   "rank": 9
+  },
+  "P-0058": {
+   "owner": "Bugs",
+   "status": "Queued",
+   "branch": "bugs/P-0058",
+   "rank": 10
+  },
+  "P-0059": {
+   "owner": "Bugs",
+   "status": "Queued",
+   "branch": "bugs/P-0059",
+   "rank": 11
+  },
+  "P-0073": {
+   "owner": "Bugs",
+   "status": "Queued",
+   "branch": "bugs/P-0073",
+   "rank": 12
+  },
+  "P-0074": {
+   "owner": "Bugs",
+   "status": "Queued",
+   "branch": "bugs/P-0074",
+   "rank": 13
+  },
+  "P-0075": {
+   "owner": "Bugs",
+   "status": "Queued",
+   "branch": "bugs/P-0075",
    "rank": 14
   }
  }
