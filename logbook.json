@@ -140,6 +140,14 @@
    "next": "P-0036",
    "step_due": "2026-10-27T03:30Z",
    "rubric": "debug + 3 polish rounds: no console/HTML errors, 375px mobile, links work (Amazon tag=leonlink-20), matches TRUTH.md + scope, no other bots' files; park until Leon approves"
+  },
+  "deepens": {
+   "job": "P-0014",
+   "step": "dark mode toggle for the blog archive on branch deepens/P-0014",
+   "status": "STARTED",
+   "next": "P-0015",
+   "step_due": "2026-10-27T03:30Z",
+   "rubric": "debug + 3 polish rounds: no console/HTML errors, 375px mobile, links work (Amazon tag=leonlink-20), matches TRUTH.md + scope, no other bots' files; park until Leon approves"
   }
  },
  "jobs": {
@@ -270,6 +278,13 @@
    "P-0035",
    "START",
    "14 Blogs rows logged; P-0035 Building, 13 Queued"
+  ],
+  [
+   "2026-10-26T03:31Z",
+   "deepens",
+   "P-0014",
+   "START",
+   "14 Blogs rows logged; P-0014 Building, 13 Queued"
   ]
  ],
  "timers": {
@@ -960,6 +975,90 @@
    "owner": "Bert",
    "status": "Queued",
    "branch": "bert/P-0069",
+   "rank": 14
+  },
+  "P-0014": {
+   "owner": "deepens",
+   "status": "Building",
+   "branch": "deepens/P-0014",
+   "rank": 1
+  },
+  "P-0015": {
+   "owner": "deepens",
+   "status": "Queued",
+   "branch": "deepens/P-0015",
+   "rank": 2
+  },
+  "P-0016": {
+   "owner": "deepens",
+   "status": "Queued",
+   "branch": "deepens/P-0016",
+   "rank": 3
+  },
+  "P-0070": {
+   "owner": "deepens",
+   "status": "Queued",
+   "branch": "deepens/P-0070",
+   "rank": 4
+  },
+  "P-0071": {
+   "owner": "deepens",
+   "status": "Queued",
+   "branch": "deepens/P-0071",
+   "rank": 5
+  },
+  "P-0072": {
+   "owner": "deepens",
+   "status": "Queued",
+   "branch": "deepens/P-0072",
+   "rank": 6
+  },
+  "P-0032": {
+   "owner": "deepens",
+   "status": "Queued",
+   "branch": "deepens/P-0032",
+   "rank": 7
+  },
+  "P-0033": {
+   "owner": "deepens",
+   "status": "Queued",
+   "branch": "deepens/P-0033",
+   "rank": 8
+  },
+  "P-0034": {
+   "owner": "deepens",
+   "status": "Queued",
+   "branch": "deepens/P-0034",
+   "rank": 9
+  },
+  "P-0053": {
+   "owner": "deepens",
+   "status": "Queued",
+   "branch": "deepens/P-0053",
+   "rank": 10
+  },
+  "P-0054": {
+   "owner": "deepens",
+   "status": "Queued",
+   "branch": "deepens/P-0054",
+   "rank": 11
+  },
+  "P-0055": {
+   "owner": "deepens",
+   "status": "Queued",
+   "branch": "deepens/P-0055",
+   "rank": 12
+  },
+  "P-0068": {
+   "owner": "deepens",
+   "status": "Queued",
+   "branch": "deepens/P-0068",
+   "rank": 13
+  },
+  "P-0009": {
+   "owner": "deepens",
+   "status": "Queued",
+   "branch": "deepens/P-0009",
    "rank": 14
   }
  }
