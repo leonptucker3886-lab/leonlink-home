@@ -658,7 +658,7 @@ const byId=Object.fromEntries(DATA.map(o=>[o.id,o]));
 const rib=o=>o.s==='new'&&Date.now()-new Date(o.d+'T12:00:00').getTime()>30*864e5?null:RIB[o.s];
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const ext=o=>o.u.startsWith('http')&&!/leonlink\.net/.test(o.u)?' target="_blank" rel="noopener"':'';
-const img=(o,v)=>`/img/cards/${o.id}${v||''}.jpg`;
+const IMGX={budgetwatches:'budget-watches',divewatches:'dive-watches',dresswatches:'dress-watches',fieldwatches:'field-watches',tacticalwatches:'tactical-watches',partyspeakers:'party-speakers'};const img=(o,v)=>`/img/cards/${IMGX[o.id]||o.id}${v||''}.jpg`;
 const plat=o=>`<span class="plat">${o.plat.map(p=>I[p]).join('')}</span>`;
 const priceEl=o=>/free/i.test(o.p)?`<span class="price free">Free</span>`:'';
 const tagsEl=(o,n,btn)=>`<span class="tags">${o.tags.slice(0,n||9).map(t=>btn?`<button class="tag" data-tag="${esc(t)}">${esc(t)}</button>`:`<span class="tag">${esc(t)}</span>`).join('')}</span>`;
