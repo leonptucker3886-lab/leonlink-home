@@ -130,6 +130,41 @@ document.addEventListener('contextmenu',e=>{if(KM)e.preventDefault()});
 document.addEventListener('gesturestart',e=>{if(KM)e.preventDefault()});
 ['fullscreenchange','webkitfullscreenchange'].forEach(t=>document.addEventListener(t,()=>{if(KM&&!isFull())gate(true)}));
 document.addEventListener('visibilitychange',()=>{if(KM&&!document.hidden&&!isFull())gate(true)});
+// ---------- Bert stays on screen, talks in words too, and tapping him shows what the child can do ----------
+let bubT=0,optRun=0;const _realHide=bertHide;
+bertHide=function(){if(!KM){_realHide();return}const b=bert();b.classList.add('show');b.classList.remove('talking');
+ const bb=b.querySelector('.bubble');if(bb)bb.classList.remove('on');document.querySelectorAll('.bpoint').forEach(e=>e.remove())};
+bertSay=function(t,icon,ms){const b=bert(),bb=b.querySelector('.bubble');b.classList.add('show','talking');bb.innerHTML='';
+ if(icon){const i=document.createElement('span');i.className='bi';i.textContent=icon;bb.appendChild(i)}
+ const w=document.createElement('span');w.className='bw';w.textContent=t;bb.appendChild(w);bb.style.display='';bb.classList.add('on');
+ say(t);clearTimeout(talkT);talkT=setTimeout(()=>b.classList.remove('talking'),Math.min(6000,600+t.length*70));
+ clearTimeout(bubT);bubT=setTimeout(()=>bb.classList.remove('on'),ms||Math.max(4500,t.length*95))};
+window.Bert={say:bertSay,hide:bertHide,boing:bertBoing};
+const vis=el=>{if(!el)return false;const r=el.getBoundingClientRect();return r.width>0&&r.height>0&&getComputedStyle(el).display!=='none'&&getComputedStyle(el).visibility!=='hidden'};
+function optList(){const L=[],v=document.body.dataset.v;
+ if(v==='map'){document.querySelectorAll('#app .spot').forEach(s=>{if(vis(s))L.push([s,s.dataset.say||s.getAttribute('aria-label')||'',s.textContent.trim()])});
+  const home=document.querySelector('#nav button, .navb, .d-back');if(vis(home))L.push([home,'Go home','🏠']);return L.slice(0,7)}
+ const st=$q('#stage');if(vis(st))L.push([st,'Tap your pet for a hug!','🤗']);
+ [['.dock .d-care','Bath and food','🛁'],['.dock .d-stuff','Your bag of toys and clothes','🎒'],['.dock .d-out','Go outside','🌳'],['.dock .d-photo','Take a picture','📸'],['.menub','The menu and the shop','☰']]
+  .forEach(([s,t,e])=>{const el=$q(s);if(vis(el))L.push([el,t,e])});
+ document.querySelectorAll('.sheet .slot:not(.empty), .sheet .item').forEach((el,i)=>{if(i<3&&vis(el))L.push([el,'Tap this to use it!','👆'])});
+ return L}
+function clearOpts(){document.querySelectorAll('.bhl').forEach(e=>e.classList.remove('bhl'));document.querySelectorAll('.bpoint').forEach(e=>e.remove())}
+function showOptions(){const run=++optRun,L=optList();clearOpts();
+ if(!L.length){bertSay('Tap your pet for a hug!','🤗');return}
+ L.forEach(([el])=>el.classList.add('bhl'));bertSay('Look! You can do these!','✨',2200);let i=0;
+ const step=()=>{if(run!==optRun)return;document.querySelectorAll('.bpoint').forEach(e=>e.remove());document.querySelectorAll('.bhl.now').forEach(e=>e.classList.remove('now'));
+  if(i>=L.length){setTimeout(()=>{if(run===optRun)clearOpts()},1500);return}
+  const [el,t,e]=L[i++];if(!document.body.contains(el)){step();return}el.classList.add('now');
+  const r=el.getBoundingClientRect(),p=document.createElement('div');p.className='bpoint';p.textContent='👆';
+  p.style.left=Math.max(4,Math.min(innerWidth-56,r.left+r.width/2-24))+'px';p.style.top=Math.min(innerHeight-60,r.top+r.height/2)+'px';document.body.appendChild(p);
+  bertSay(t,e,2300);setTimeout(step,2300)};
+ setTimeout(step,2000)}
+// any tap on a lit-up option ends the show
+document.addEventListener('pointerdown',e=>{if(e.target.closest&&!e.target.closest('.bert')&&document.querySelector('.bhl')){optRun++;clearOpts()}},true);
+const _tap=onBertTap;onBertTap=function(){if(S.tut<TUT.length){_tap();return}showOptions()};
+// keep Bert visible whenever the child is playing
+setInterval(()=>{if(KM&&S.pet&&bertEl&&!bertEl.classList.contains('show'))bertEl.classList.add('show');else if(KM&&S.pet&&!bertEl)bertHide()},1000);
 applyLocks();
 setTimeout(()=>gate(false),7100); // right after the splash
 })();

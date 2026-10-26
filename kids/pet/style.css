@@ -270,3 +270,17 @@ body.kidmode header{padding-left:70px}
 
 .pg-home{display:flex;align-items:center;gap:10px;margin-top:14px;padding:14px 26px;border-radius:999px;background:#fff;color:#2a2a4a;text-decoration:none;font:800 22px system-ui,sans-serif;box-shadow:0 6px 0 #c9c3e6,0 10px 24px rgba(0,0,0,.25)}
 .pg-home span{font-size:38px}.pg-home:active{transform:translateY(4px);box-shadow:0 2px 0 #c9c3e6}
+
+/* Bert stays on screen + word bubble + option highlights (26 Oct) */
+.bert .bubble{display:none;top:-8px;left:auto;right:108px;width:auto;height:auto;min-width:120px;max-width:min(62vw,300px);line-height:1.15;border-radius:22px;
+ padding:10px 14px;font:800 20px/1.2 system-ui,sans-serif;color:#1b1b2e;text-align:left;align-items:center;gap:8px;animation:none}
+.bert .bubble.on{display:flex;animation:bub 1.2s ease-in-out infinite}
+.bert .bubble::after{content:'';position:absolute;right:-12px;top:30px;border:8px solid transparent;border-left:14px solid #fff}
+.bert .bubble .bi{font-size:34px;line-height:1;flex:none}.bert .bubble .bw{flex:1}
+body[data-v=mg] .bert,body[data-v=out] .bert{display:none}
+body:has(.sheet) .bert.show{transform:scale(.62);transform-origin:right bottom;bottom:calc(72vh + 4px)}
+@media (max-height:620px){body:has(.sheet) .bert.show{bottom:auto;top:56px}}
+.bhl{outline:4px solid #ffd166;outline-offset:3px;box-shadow:0 0 0 6px #ffd16655,0 0 26px #ffd166!important;animation:bhl 1.2s ease-in-out infinite}
+.bhl.now{outline-width:6px;animation:newly 1s ease-in-out infinite}
+#stage.bhl{outline-offset:-6px;animation:none}
+@keyframes bhl{50%{filter:brightness(1.25)}}
