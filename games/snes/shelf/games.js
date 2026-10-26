@@ -1,0 +1,7 @@
+window.SHELF=[
+{id:"pink-wall",title:"Pink Wall",author:"BrunoRNS",genre:"Action",lic:"GPL-3.0",src:"https://github.com/BrunoRNS/pinkwall-showcase",licUrl:"https://github.com/BrunoRNS/pinkwall-showcase/blob/main/LICENSE",blurb:"Open-source SNES homebrew action game."},
+{id:"super-sudoku",title:"Super Sudoku",author:"Raphael Assenat (raphnet)",genre:"Puzzle",lic:"MIT",src:"https://github.com/raphnet/super_sudoku",licUrl:"https://github.com/raphnet/super_sudoku/blob/master/LICENSE",blurb:"Sudoku with generated puzzles, built for real SNES hardware."},
+{id:"poachermon",title:"Poachermon: Gotta Save 'Em All!",author:"Eoin Jordan (SNES Studio)",genre:"Adventure",lic:"MIT",src:"https://github.com/eoinjordan/snes-studio",licUrl:"https://github.com/eoinjordan/snes-studio/blob/main/LICENSE",blurb:"Creature-rescue adventure. Art credits: docs/ASSET_SOURCES.md in the source repo."},
+{id:"pocket-bugs",title:"Pocket Bugs",author:"Eoin Jordan (SNES Studio)",genre:"Adventure",lic:"MIT",src:"https://github.com/eoinjordan/snes-studio",licUrl:"https://github.com/eoinjordan/snes-studio/blob/main/LICENSE",blurb:"Bug-collecting game. Art credits: docs/ASSET_SOURCES.md in the source repo."},
+{id:"coin-dash",title:"Coin Dash",author:"Loic Laopane",genre:"Arcade",lic:"MIT",src:"https://github.com/loic-laopane/Snes-game",licUrl:"https://github.com/loic-laopane/Snes-game/blob/main/LICENSE",blurb:"Small arcade coin-grabbing game."}
+];
