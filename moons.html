@@ -108,7 +108,7 @@ button:hover,.btn:hover{box-shadow:0 0 22px #22f0ffaa;transform:translateY(-1px)
 input,select{border-color:#4b2a8f!important}input:focus,select:focus{outline:none;border-color:var(--neon2)!important;box-shadow:0 0 0 2px #22f0ff44,0 0 14px #22f0ff55}
 .ball{filter:drop-shadow(0 0 14px #22f0ff) drop-shadow(0 0 28px #ff3df2aa)}
 </style></head><body>
-<header class="top"><a class="home" href="/">&larr; LeonLink</a><a href="#teller">Fortune Teller</a><a href="#out">Your Reading</a><a href="#tarot">Tarot</a><a href="#today">Sky Today</a><a href="#shop">Shop</a></header>
+<header class="top"><a class="home" href="/">&larr; LeonLink</a><a href="#teller">Fortune Teller</a><a href="#out">Your Reading</a><a href="#tarot">Tarot</a><a href="#today">Sky Today</a><a href="#codex">Ask the Col</a><a href="#shop">Shop</a></header>
 <main>
 <div class="intro"><p class="kick">LeonLink &middot; Mystic Center</p>
 <h1>Moons <em>&amp;</em> Cauldrons</h1>
@@ -188,8 +188,21 @@ input,select{border-color:#4b2a8f!important}input:focus,select:focus{outline:non
 
 
 
+<section id="codex">
+<div class="shead"><p class="kick">V &middot; The Got-ursix Codex</p><h2>Ask the Col <small>A new system invented here, with no old astrology or numerology</small></h2></div>
+<p class="hint">Col Got-ursix uses no human-made star formula. His Codex chains the <b>days of the month</b> into 12 War Signs (the same days in every month) and ties each one to Fire, Earth, Wind or Water. Your birth month raises a <b>Banner</b>, and your name crossed with your birthday forges your <b>Star Rank, from 1 to 23</b>. The same name and birthday always give the same result. Enter your name and birthday above, then choose a reading.</p>
+<div class="cx-btns" style="display:flex;flex-wrap:wrap;gap:8px"><button class="btn" type="button" data-cx="codex">Codex Reading</button><button class="btn alt" type="button" data-cx="cap">Capability Calculator</button><button class="btn alt" type="button" data-cx="end">How Will I Go? Simulator</button><button class="btn alt" type="button" data-cx="more">Other Mystic Readings</button></div>
+<div id="cxout" class="pan" style="margin-top:14px" aria-live="polite"><p class="hint">The Col is waiting for your name and birthday.</p></div>
+<div class="pan" style="margin-top:14px"><label for="cxq">Ask the Col a question</label><input id="cxq" maxlength="160" placeholder="Will my new project succeed?"><button class="btn" type="button" id="cxask" style="margin-top:10px">Ask the Col (5 Glow)</button><p id="cxans" aria-live="polite"></p></div>
+<details class="pan" style="margin-top:14px"><summary><b>How the Codex works</b></summary><div class="hint">
+<p><b>War Signs (day chains):</b> days 1-3 Emberfang (Fire) &middot; 4-6 Stonewarden (Earth) &middot; 7-8 Galeborn (Wind) &middot; 9-11 Tidecaller (Water) &middot; 12-13 Ashcrown (Fire) &middot; 14-16 Rootkeeper (Earth) &middot; 17-19 Stormquill (Wind) &middot; 20-21 Deepmire (Water) &middot; 22-24 Flarewing (Fire) &middot; 25-27 Ironvale (Earth) &middot; 28-29 Skyrender (Wind) &middot; 30-31 Moonwell (Water). For example, Jan 5 and Oct 5 are both Stonewarden.</p>
+<p><b>Banner:</b> your birth month raises one of 12 war banners, which shapes how your sign fights.</p>
+<p><b>Star Rank:</b> multiply each letter's place in the alphabet by its position in your name, then add them up to get the Name Weight. The Birth Weight is day &times; 31 + month &times; 12 + the last two digits of your birth year. Star Rank = ((Name Weight + Birth Weight + 23) mod 23) + 1, so it always lands from 1 to 23.</p>
+<p><b>Capabilities:</b> five scores from 0 to 100, set by your element, banner and Star Rank, then mixed with your name and birthday.</p></div></details>
+</section>
+
 <section id="shop">
-<div class="shead"><p class="kick">V &middot; Shop</p><h2>Decks, Books &amp; Crystals <small>Hand-picked on Amazon</small></h2></div>
+<div class="shead"><p class="kick">VI &middot; Shop</p><h2>Decks, Books &amp; Crystals <small>Hand-picked on Amazon</small></h2></div>
 <div class="gc">
 <a href="https://www.amazon.com/s?k=rider+waite+tarot+deck&amp;tag=leonlink-20" target="_blank" rel="nofollow sponsored noopener" class="amz"><b>Tarot</b><span>Rider-Waite Tarot Deck</span><small>The classic 78-card starter deck</small></a>
 <a href="https://www.amazon.com/s?k=the+only+astrology+book+you+will+ever+need&amp;tag=leonlink-20" target="_blank" rel="nofollow sponsored noopener" class="amz"><b>Astrology</b><span>The Only Astrology Book You'll Ever Need</span><small>Joanna Martine Woolfolk's beginner bible</small></a>
@@ -286,6 +299,45 @@ var c=cz(y,m,d);$("cz").innerHTML="<h3 style='margin-top:0'>Chinese Zodiac</h3><
 $("chart").innerHTML="<h3 style='margin-top:0'>Chart data</h3><div class='tw'><table><tr><th>Point</th><th>Sign</th><th>Degree</th><th>Element</th><th>Mode</th></tr>"+[["☉ Sun",sl],["☽ Moon",ml]].concat(al!=null?[["↑ Ascendant",al]]:[]).map(function(p){var s=sign(p[1]);return "<tr><td>"+p[0]+"</td><td>"+s[1]+" "+s[0]+"</td><td>"+deg(p[1])+"</td><td>"+s[2]+"</td><td>"+s[3]+"</td></tr>"}).join("")+"</table></div><p class='hint' style='margin-bottom:0'>"+(g?"Coordinates "+g.lat.toFixed(2)+", "+g.lon.toFixed(2)+" · UTC offset "+(off/60)+"h at birth. ":"")+"Want every planet and house? Plug the same details into the free Astro.com chart linked below.</p>";
 deal(name+dob+today);$("out").style.display="block";grow();say(first+", the cauldron has spoken. Your reading is ready below.");setTimeout(function(){$("out").scrollIntoView({behavior:"smooth"})},400)}
 ui();sky();deal("welcome"+today);
+})();
+</script>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var SIGNS=[[1,3,"Emberfang","Fire","strikes first and lights the way"],[4,6,"Stonewarden","Earth","holds the line when others break"],[7,8,"Galeborn","Wind","moves fast and sees every angle"],[9,11,"Tidecaller","Water","reads people like a map"],[12,13,"Ashcrown","Fire","rises again from every loss"],[14,16,"Rootkeeper","Earth","builds things that last generations"],[17,19,"Stormquill","Wind","wins with words and ideas"],[20,21,"Deepmire","Water","keeps secrets and finds hidden roads"],[22,24,"Flarewing","Fire","turns courage into momentum"],[25,27,"Ironvale","Earth","outlasts every storm"],[28,29,"Skyrender","Wind","breaks old rules and makes new ones"],[30,31,"Moonwell","Water","heals the troops and remembers everything"]];
+var BAN=["First Dawn","Frozen March","Iron Spring","Rain Lances","Green Siege","Long Light","Burning Field","Golden Ranks","Harvest Shields","Lantern Watch","Veteran's Ash","Winter Crown"];
+var BANT=["leads the charge","endures where others freeze","rebuilds after battle","strikes from a distance","wins the patient siege","fights in the open","thrives under pressure","rallies the whole army","protects what was earned","guards the night","carries the lessons of old wars","ends every campaign with honor"];
+var EL={Fire:[24,8,0,4,6],Earth:[6,4,24,10,0],Wind:[4,24,0,6,10],Water:[0,8,6,10,24]};
+var CAPS=["Valor","Wit","Endurance","Fortune","Spirit"];
+var RANKS=["Recruit","Scout","Runner","Sentry","Corporal","Signal Keeper","Sergeant","Banner Bearer","Quartermaster","Lieutenant","Star Pilot","Captain","Comet Rider","Major","Void Walker","Colonel","Nebula Warden","Brigadier","Sun Breaker","General","Galaxy Marshal","Eternal Sentinel","Cosmic Sovereign"];
+function h(s){var x=2166136261;for(var i=0;i<s.length;i++){x^=s.charCodeAt(i);x=Math.imul(x,16777619)}return x>>>0}
+function pick(a,s){return a[h(s)%a.length]}
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function core(){
+ var nm=($("nm").value||"").trim(),v=$("dob").value||"",L=nm.toUpperCase().replace(/[^A-Z]/g,"");
+ if(!L||!/^\d{4}-\d{2}-\d{2}$/.test(v))return null;
+ var p=v.split("-"),y=+p[0],m=+p[1],d=+p[2];
+ if(m<1||m>12||d<1||d>31||y<1)return null;
+ var nw=0;for(var i=0;i<L.length;i++)nw+=(L.charCodeAt(i)-64)*(i+1);
+ var bw=d*31+m*12+(y%100),rank=((nw+bw+23)%23)+1,s=SIGNS[0];
+ for(var k=0;k<SIGNS.length;k++)if(d>=SIGNS[k][0]&&d<=SIGNS[k][1])s=SIGNS[k];
+ var key=L+"|"+v,el=EL[s[3]];
+ var caps=CAPS.map(function(c,j){return Math.min(100,30+el[j]+Math.round(rank*1.3)+((m+j*5)%12)+h(key+c)%15)});
+ return{first:nm.split(/\s+/)[0],y:y,m:m,d:d,nw:nw,bw:bw,rank:rank,rn:RANKS[rank-1],s:s,ban:"Banner of the "+BAN[m-1],bant:BANT[m-1],caps:caps,key:key}}
+function bar(l,v){return '<div class="bar"><label><span>'+l+'</span><span>'+v+'</span></label><div><i style="width:'+v+'%"></i></div></div>'}
+var R={
+codex:function(c){return '<div class="big3"><div class="sg"><b>'+c.s[3]+'</b><span>'+c.s[2]+'</span><small>Days '+c.s[0]+'-'+c.s[1]+' of every month</small></div><div class="sg"><b>'+c.m+'</b><span>'+c.ban+'</span><small>Your banner '+c.bant+'</small></div><div class="sg"><b>'+c.rank+'</b><span>'+c.rn+'</span><small>Star Rank, of 23</small></div></div><p>'+esc(c.first)+', you are a <b>'+c.s[2]+'</b> of '+c.s[3]+', one who '+c.s[4]+'. Under the '+c.ban+', your sign '+c.bant+'. At Star Rank '+c.rank+' ('+c.rn+'), '+pick(["your best years are still ahead of you.","the army already trusts your judgment.","you are one campaign away from promotion.","your quiet work is about to be noticed.","you lead best by example."],c.key+"cx")+'</p><p class="hint">Your math: Name Weight '+c.nw+' + Birth Weight '+c.bw+' + 23 = '+(c.nw+c.bw+23)+'. Mod 23 gives '+((c.nw+c.bw+23)%23)+', plus 1 = Star Rank '+c.rank+'.</p>'},
+cap:function(c){var t=c.caps.reduce(function(a,b){return a+b},0),top=CAPS[c.caps.indexOf(Math.max.apply(null,c.caps))],low=CAPS[c.caps.indexOf(Math.min.apply(null,c.caps))];return '<h3>Capability Calculator</h3>'+CAPS.map(function(n,i){return bar(n,c.caps[i])}).join("")+'<p><b>Total power: '+t+' / 500.</b> Your strongest capability is <b>'+top+'</b>, so lean on it when the fight gets hard. Your weakest is <b>'+low+'</b>, which is where you have the most room to grow.</p><p class="hint">Best mission for you: '+pick(["leading a new project","teaching others","building something by hand","solving a puzzle nobody else can","keeping a team together"],c.key+top)+'.</p>'},
+end:function(c){var age=80+h(c.key+"end")%33;return '<h3>How Will I Go? <small>Just for fun</small></h3><p>The Col peers through the smoke of ancient battles. '+esc(c.first)+', you will live to a grand old <b>'+age+'</b> and go '+pick(["peacefully in your favourite chair, mid-laugh, after telling the best story of your life","in your sleep, dreaming you finally won the cosmic chess championship","surrounded by family, right after the last bite of a perfect slice of pie","with your boots up on the porch, watching one last perfect sunset","at a victory party thrown in your honor, after one final dance"],c.key+"how")+'.</p><p>Final words: <em>"'+pick(["Tell them I won.","Save me a seat among the stars.","Was that the best I could do? Yes. Yes it was.","Feed the cat.","Worth every minute."],c.key+"w")+'"</em></p><p class="hint">This is a joke for entertainment, not a prediction.</p>'},
+more:function(c){var st=["Shield","Comet","Anvil","Lantern","Arrow","Crown","Compass","Gate","Tide","Ember","Root","Wing"],r=[0,1,2].map(function(i){return pick(st,c.key+"st"+i+new Date().toISOString().slice(0,10))});return '<h3>Starstone Cast <small>Today</small></h3><p>You drew <b>'+r.join("</b>, <b>")+'</b>. '+pick(["Move with purpose today.","Guard your energy until evening.","A door opens if you knock twice.","An old ally returns."],c.key+r.join(""))+'</p><h3>Aura Colour</h3><p><b>'+pick(["Neon magenta","Electric cyan","Ember gold","Deep violet","Storm silver","Moss green"],c.key+"au")+'</b>: '+pick(["people feel brave around you.","you calm every room you walk into.","your ideas spread like wildfire.","you see what others miss."],c.key+"aut")+'</p><h3>War Companion</h3><p>Your spirit companion is the <b>'+pick(["Iron Owl","Comet Fox","Ember Wolf","Tide Serpent","Stone Bear","Gale Hawk"],c.key+"an")+'</b>, which marches beside every '+c.s[2]+'.</p><h3>Past-Life Post</h3><p>In a past life you served as <b>'+pick(["a signal keeper on the Moon Wall","a map maker for the Comet Legion","a medic in the Nebula Wars","a drummer for the Sun Breaker army","a scout on the rings of Saturn"],c.key+"pl")+'</b>.</p>'}
+};
+function show(k){var c=core();if(!c){$("cxout").innerHTML='<p class="hint">Enter your full name and date of birth in the form above first.</p>';return}$("cxout").innerHTML=R[k](c);document.querySelectorAll("[data-cx]").forEach(function(b){b.className=b.dataset.cx==k?"btn":"btn alt"})}
+document.querySelectorAll("[data-cx]").forEach(function(b){b.onclick=function(){show(b.dataset.cx)}});
+var A=["Yes. The banners are already moving in your favour.","Not yet. Hold the line, and ask again after the next moon.","Yes, if you strike first.","The answer is hidden. Ask with a clearer heart.","No. That road is mined. Find another.","Without doubt. Old soldiers know a winning battle.","Only with an ally beside you.","The smoke says maybe. Your effort decides it.","Yes, but it costs more patience than you expect.","Retreat for now. Victory comes by another road."];
+$("cxask").onclick=function(){var c=core(),q=($("cxq").value||"").trim(),o=$("cxans");if(!c){o.textContent="Enter your name and birthday above first.";return}if(!q){o.textContent="Ask the Col a question first.";return}
+var g=window.LLGlow,u=g&&g.user()&&g.balance()!=null,bal=u?g.balance():(+localStorage.getItem("ll_glow_coins")||0);if(bal<5){o.textContent="Five Glow are needed. Claim the moon bonus or play Afterglow.";return}
+if(u)g.delta(-5,"moons-ask");else localStorage.setItem("ll_glow_coins",String(bal-5));var gl=$("glow");if(gl&&!u)gl.textContent=bal-5;
+o.innerHTML='<b>Col Got-ursix:</b> "'+pick(A,c.key+"|"+q.toLowerCase()+"|"+new Date().toISOString().slice(0,10))+'"'};
 })();
 </script>
 <script src="/js/nav.js"></script>
