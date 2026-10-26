@@ -78,6 +78,25 @@
    "step": "keep TRUTH + logbook, grade",
    "status": "STARTED",
    "next": null
+  },
+  "General": {
+   "job": "P-0048",
+   "step": "scope from board, build on branch general/P-0048",
+   "status": "STARTED",
+   "next": "P-0060",
+   "step_due": "2026-10-27T03:00Z",
+   "rubric": {
+    "loop": "pick next own row -> branch general/<id> -> build -> debug -> Polish 1/2/3 -> Parked -> next",
+    "pass_each_polish": [
+     "no console/HTML errors",
+     "mobile 375px ok",
+     "links work; Amazon tag=leonlink-20",
+     "matches TRUTH.md + scope",
+     "diff small, no other bot files"
+    ],
+    "blocked": "set Parked+BLOCKED, ticket PDF, take next",
+    "check_every_min": 20
+   }
   }
  },
  "jobs": {
@@ -173,6 +192,13 @@
    "REC",
    "MOVE",
    "Team Watches added; W-00 art+Amazon audit is #1; W-07 microbrand fix; W-08 daily top5"
+  ],
+  [
+   "2026-10-26T03:06Z",
+   "General",
+   "REC",
+   "START",
+   "General rubric + 18 queue rows logged (P-0048..P-1100); started P-0048"
   ]
  ],
  "timers": {
@@ -418,6 +444,116 @@
     "b@50f1f59f"
    ],
    "order": "W-00 first, then W-07, W-08 daily, then W-01..W-06"
+  }
+ },
+ "queue200": {
+  "P-0048": {
+   "owner": "General",
+   "status": "Building",
+   "branch": "general/P-0048",
+   "rank": 1
+  },
+  "P-0060": {
+   "owner": "General",
+   "status": "Queued",
+   "branch": "general/P-0060",
+   "rank": 2
+  },
+  "P-0061": {
+   "owner": "General",
+   "status": "Queued",
+   "branch": "general/P-0061",
+   "rank": 3
+  },
+  "P-0062": {
+   "owner": "General",
+   "status": "Queued",
+   "branch": "general/P-0062",
+   "rank": 4
+  },
+  "P-0063": {
+   "owner": "General",
+   "status": "Queued",
+   "branch": "general/P-0063",
+   "rank": 5
+  },
+  "P-0099": {
+   "owner": "General",
+   "status": "Queued",
+   "branch": "general/P-0099",
+   "rank": 6
+  },
+  "P-0100": {
+   "owner": "General",
+   "status": "Queued",
+   "branch": "general/P-0100",
+   "rank": 7
+  },
+  "P-1083": {
+   "owner": "General",
+   "status": "Queued",
+   "branch": "general/P-1083",
+   "rank": 8
+  },
+  "P-1084": {
+   "owner": "General",
+   "status": "Queued",
+   "branch": "general/P-1084",
+   "rank": 9
+  },
+  "P-1085": {
+   "owner": "General",
+   "status": "Queued",
+   "branch": "general/P-1085",
+   "rank": 10
+  },
+  "P-1086": {
+   "owner": "General",
+   "status": "Queued",
+   "branch": "general/P-1086",
+   "rank": 11
+  },
+  "P-1087": {
+   "owner": "General",
+   "status": "Queued",
+   "branch": "general/P-1087",
+   "rank": 12
+  },
+  "P-1088": {
+   "owner": "General",
+   "status": "Queued",
+   "branch": "general/P-1088",
+   "rank": 13
+  },
+  "P-1096": {
+   "owner": "General",
+   "status": "Queued",
+   "branch": "general/P-1096",
+   "rank": 14
+  },
+  "P-1097": {
+   "owner": "General",
+   "status": "Queued",
+   "branch": "general/P-1097",
+   "rank": 15
+  },
+  "P-1098": {
+   "owner": "General",
+   "status": "Queued",
+   "branch": "general/P-1098",
+   "rank": 16
+  },
+  "P-1099": {
+   "owner": "General",
+   "status": "Queued",
+   "branch": "general/P-1099",
+   "rank": 17
+  },
+  "P-1100": {
+   "owner": "General",
+   "status": "Queued",
+   "branch": "general/P-1100",
+   "rank": 18
   }
  }
 }
