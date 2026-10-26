@@ -245,6 +245,11 @@ function loop(){requestAnimationFrame(loop);const dt=Math.min(clock.getDelta(),.
   else if(f.toss){const a=f.t*2.8;f.o.position.set(f.from.x+Math.sin(a)*2.2,1+Math.abs(Math.sin(a*2))*2,f.from.z+Math.cos(a)*2.2);f.o.material.rotation=a*3}
   else{f.o.position.addScaledVector(f.v,dt);f.o.material.opacity=1-k}
   if(k>=1){scene.remove(f.o);fx.splice(i,1)}}
+
+ if(petG&&cv.isConnected){if(!petG.userData.pb){const g=new THREE.OctahedronGeometry(.28,0);g.scale(.75,1.35,.75);const pb=new THREE.Mesh(g,new THREE.MeshStandardMaterial({color:0x33dd55,emissive:0x116622,emissiveIntensity:.8,roughness:.25,metalness:.1,transparent:true,opacity:.92}));pb.name='plumbob';petG.add(pb);petG.userData.pb=pb}
+  const pb=petG.userData.pb,st=ST&&ST.st||{},vals=['h','j','c','en'].map(k=>st[k]??80).concat([ST&&ST.soc!=null?ST.soc:80]),mn=Math.min(...vals),col=new THREE.Color().setHSL(Math.max(0,Math.min(.33,(mn-15)/65*.33)),.85,.5);
+  pb.material.color.lerp(col,.08);pb.material.emissive.copy(pb.material.color).multiplyScalar(.45);pb.position.set(0,(3.3+Math.sin(t*2)*.08)/grow*grow,0);pb.rotation.y+=dt*1.6;pb.visible=!window.SimsHidePB;
+  if(TH){TH.t+=dt;const hp=petG.position;TH.o.position.set(hp.x+.7,3.1+Math.sin(t*2.5)*.06,hp.z);TH.o.material.opacity=Math.min(1,TH.t*4,(TH.life-TH.t)*3);if(TH.t>TH.life){scene.remove(TH.o);TH=null}}}
  ctl&&ctl.update();R&&cv.isConnected&&!document.hidden&&R.render(scene,cam)}
 function mount(el,S){ST=S;grow=.7+Math.min(S.days||1,9)*.035;need=S.st.h<35?'h':S.st.c<35?'c':S.st.en<35?'en':S.st.j<35?'j':null;if(!R)init();el.prepend(cv);el.classList.add('live');fit();
  const k=S.pet+'|'+S.home+'|'+S.placed.join(',')+'|'+S.wear;if(k===key)return;const[pp,ph]=key.split('|');key=k;
@@ -255,5 +260,8 @@ function mount(el,S){ST=S;grow=.7+Math.min(S.days||1,9)*.035;need=S.st.h<35?'h':
 function photo(name){R.render(scene,cam);const fn=(name||'my-pet')+'.png',dl=()=>{const a=document.createElement('a');a.download=fn;a.href=cv.toDataURL('image/png');a.click()};
  const fl=document.createElement('div');fl.className='flash';document.body.appendChild(fl);setTimeout(()=>fl.remove(),450);tone(1500,900,.12,'square',.06);
  if(navigator.canShare&&cv.toBlob){cv.toBlob(b=>{try{const f=new File([b],fn,{type:'image/png'});if(navigator.canShare({files:[f]}))navigator.share({files:[f]}).catch(()=>{});else dl()}catch(e){dl()}},'image/png')}else dl()}
-window.Pet3D={mount,act,photo,ready:true,get canvas(){return cv}};
+let TH=null;function think(txt,life=4){if(!scene)return;if(TH)scene.remove(TH.o);const c=document.createElement('canvas');c.width=c.height=160;const x=c.getContext('2d');x.fillStyle='#fff';x.strokeStyle='#18181b';x.lineWidth=5;x.beginPath();x.ellipse(88,62,64,52,0,0,7);x.fill();x.stroke();[[30,128,12],[14,148,7]].forEach(([a,b,r])=>{x.beginPath();x.arc(a,b,r,0,7);x.fill();x.stroke()});x.font='64px serif';x.textAlign='center';x.textBaseline='middle';x.fillText(txt,88,66);const o=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c),transparent:true,depthWrite:false}));o.scale.setScalar(1.3);o.renderOrder=9;scene.add(o);TH={o,t:0,life}}
+function walkTo(x,z){target.set(THREE.MathUtils.clamp(x,-5,5),0,THREE.MathUtils.clamp(z,-4,4))}
+function petPos(){return petG?{x:petG.position.x,z:petG.position.z}:{x:0,z:0}}
+window.Pet3D={mount,act,photo,think,walkTo,petPos,ready:true,get canvas(){return cv}};
 window.dispatchEvent(new Event('pet3d-ready'));
