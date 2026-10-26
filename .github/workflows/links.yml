@@ -1,0 +1,21 @@
+name: Broken link check
+on:
+  schedule: [{cron: '0 13 * * 1'}]
+  workflow_dispatch:
+permissions: {issues: write, contents: read}
+jobs:
+  lychee:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --no-progress --max-concurrency 8 --accept 200..=299,403,429 --root-dir "${{ github.workspace }}" './**/*.html'
+          fail: false
+      - if: steps.lychee.outputs.exit_code != 0
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: Weekly broken link report
+          content-filepath: ./lychee/out.md
+          labels: broken-links
