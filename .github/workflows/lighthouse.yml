@@ -1,0 +1,19 @@
+name: Lighthouse CI
+on:
+  push:
+    branches: [main]
+    paths: ['**.html']
+  workflow_dispatch:
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sleep 90  # let Vercel finish deploying
+      - uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            https://www.leonlink.net/
+            https://www.leonlink.net/blog.html
+            https://www.leonlink.net/journal/seo-is-dead.html
+          uploadArtifacts: true
+          temporaryPublicStorage: true
