@@ -87,6 +87,42 @@ function finishOut(id,caught){OT.forEach(clearInterval);OT=[];const o=OUTS[id];f
  const box=document.querySelector('.out');if(box)box.insertAdjacentHTML('beforeend',`<div class="oend">${emo}</div>`);say(msg);confetti(20);
  setTimeout(()=>{if(coins>0){const g=capCoins(coins);if(g>0)LeonLinkPet.addTokens(g)}if(S.cnt.out>=5)sticker('explore');if(id==='mud')sticker('muddy');S.view='map';save();render()},2200)}
 if(!STK.find(s=>s[0]==='explore'))STK.push(['explore','🗺️','Explorer'],['muddy','🟤','Muddy paws']);
+// ---------- EXPLORE DEPTH (26 Oct): finds jar, mischief moments, living map ----------
+const FINDS={roam:[['leaf','🍁','Red leaf'],['acorn','🌰','Acorn'],['feather','🪶','Feather'],['pinecone','🌲','Tiny tree']],
+ mud:[['frog','🐸','Frog friend'],['worm','🪱','Wiggly worm'],['snail','🐌','Snail'],['boot','🥾','Lost boot']],
+ pond:[['duckling','🐥','Duckling'],['lily','🪷','Lily flower'],['fish','🐠','Shiny fish'],['shell','🐚','Shell']],
+ snoop:[['cherry','🍒','Cherries'],['berry','🫐','Berries'],['donut','🍩','Donut'],['ant','🐜','Ant friend']],
+ dig:[['gem','💎','Gem'],['coin','🪙','Old coin'],['key','🗝️','Old key'],['rock','🪨','Cool rock']],
+ bugs:[['ladybug','🐞','Ladybug'],['bee','🐝','Bee'],['flower','🌸','Flower'],['clover','🍀','Lucky clover']]};
+const ALLF=Object.values(FINDS).flat();
+const MISCH={roam:['🐿️','A squirrel took your ball! Tap tap tap!'],mud:['🐷','A piggy wants to play! Tap tap tap!'],
+ pond:['🦆','The duck stole your hat! Tap tap tap!'],snoop:['🐦','A bird wants the snack! Tap tap tap!'],
+ dig:['🦔','A hedgehog is digging too! Tap tap tap!'],bugs:['🐸','A frog jumped in! Tap tap tap!']};
+let MIS=0;
+function giveFind(id,sure){const l=FINDS[id];if(!l||(!sure&&Math.random()>.6))return null;S.finds=S.finds||{};
+ const f=l[Math.random()*l.length|0];const fresh=!S.finds[f[0]];S.finds[f[0]]=(S.finds[f[0]]||0)+1;save();return [f,fresh]}
+const _goOut=window.goOut;window.goOut=function(id){MIS=0;_goOut(id);if(!OT.length)return;
+ OT.push(setTimeout(()=>{const box=document.querySelector('.out');if(!box)return;const m=MISCH[id];let n=0;say(m[1]);
+  const b=document.createElement('button');b.className='mis';b.textContent=m[0];b.setAttribute('aria-label','Tap');
+  b.onclick=()=>{n++;blip(900+n*120);b.classList.remove('wob');void b.offsetWidth;b.classList.add('wob');
+   if(n>=3){b.onclick=null;b.textContent='💖';MIS=1;S.st.j=clamp(S.st.j+10);say('Yay! Friends now!');setTimeout(()=>b.remove(),600)}};
+  box.appendChild(b);setTimeout(()=>{if(b.isConnected&&!MIS)b.remove()},4000)},3500))};
+const _fin=finishOut;finishOut=function(id,caught){_fin(id,caught);const r=giveFind(id,MIS);
+ if(r){const box=document.querySelector('.out');if(box)box.insertAdjacentHTML('beforeend',`<div class="ofind">${r[1]?'🆕':''}${r[0][1]}</div>`);
+  setTimeout(()=>say(r[1]?'A new find! '+r[0][2]+'! It goes in your jar.':'You found a '+r[0][2]+' again!'),900)}
+ setTimeout(()=>{if(Object.keys(S.finds||{}).length>=8)sticker('collector')},2300)};
+if(!STK.find(s=>s[0]==='collector'))STK.push(['collector','🫙','Collector']);
+// clearTimeout also works on intervals, so routing clears both kinds
+window.jarView=function(){closeSheet();const s=document.createElement('div');s.className='shade';s.onclick=closeSheet;document.body.appendChild(s);
+ const d=document.createElement('div');d.className='sheet';const got=S.finds||{};
+ d.innerHTML=`<div class="grab"></div><button class="x" aria-label="Close" data-say="Close" onclick="closeSheet()">✖️</button><div class="sbody"><div class="sec">🫙 ${Object.keys(got).length} / ${ALLF.length}</div><div class="grid sg jar">${
+  Object.entries(FINDS).map(([o,l])=>l.map(f=>got[f[0]]?`<button class="item tap" aria-label="${f[2]}" data-say="${f[2]}"><div class="e">${f[1]}</div>${got[f[0]]>1?`<div class="cnt">×${got[f[0]]}</div>`:''}</button>`:`<button class="item tap lock" aria-label="Not found yet" data-say="Not found yet. Go exploring!"><div class="e">${f[1]}</div><div class="go">${SPOTS.find(s=>s.id===o).e}</div></button>`).join('')).join('')}</div></div>`;
+ document.body.appendChild(d)};
+const _mv=mapView;mapView=function(){let h=_mv();const night=(new Date().getHours()>=19||new Date().getHours()<6);
+ const jar=`<button class="spot n" style="left:90%;top:70%;--s:1.07;z-index:70" aria-label="Finds jar" data-say="Your finds jar" onclick="jarView()"><b>🫙</b></button>`;
+ const crit=['🐿️','🐇','🦔','🐦'].map((e,i)=>`<button class="crit c${i}" aria-label="Hello" data-say="Hello!" onclick="this.classList.remove('hi');void this.offsetWidth;this.classList.add('hi');blip(1300)">${e}</button>`).join('');
+ h=h.replace('<span class="mpet"',jar+crit+(night?'<span class="moon">🌙</span>':'')+'<span class="mpet"');
+ return night?h.replace('<div class="map">','<div class="map night">'):h};
 // ---------- routing ----------
 // leaving a game or outing early stops its timers (no ghost coins or surprise jumps back)
 const _go=go;go=function(v){if(v!=='out'&&OT.length){OT.forEach(clearInterval);OT=[]}
