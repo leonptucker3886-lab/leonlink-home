@@ -1,0 +1,18 @@
+name: Mushroom search brain
+on:
+  push:
+    branches: [main]
+    paths: ['**.html', 'scripts/build_mushroom_index.py']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/build_mushroom_index.py
+      - run: |
+          git config user.name "mushroom-bot"; git config user.email "mushroom-bot@users.noreply.github.com"
+          git add mushroom-index.json
+          git diff --cached --quiet || (git commit -m "Rebuild Mushroom search brain [skip ci]" && git pull --rebase && git push)
