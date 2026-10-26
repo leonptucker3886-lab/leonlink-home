@@ -97,6 +97,25 @@
     "blocked": "set Parked+BLOCKED, ticket PDF, take next",
     "check_every_min": 20
    }
+  },
+  "LT Gman": {
+   "job": "P-1071",
+   "step": "breadcrumb nav for unit converter, build on branch gman/P-1071",
+   "status": "STARTED",
+   "next": "P-1072",
+   "step_due": "2026-10-27T03:15Z",
+   "rubric": {
+    "loop": "next own row -> branch gman/<id> -> build -> debug -> Polish 1/2/3 -> Parked (await Leon) -> next",
+    "pass_each_polish": [
+     "no console/HTML errors",
+     "mobile 375px ok",
+     "links work; Amazon tag=leonlink-20",
+     "matches TRUTH.md + scope",
+     "diff small, no other bot files"
+    ],
+    "blocked": "Parked+BLOCKED, ticket PDF, take next",
+    "check_every_min": 20
+   }
   }
  },
  "jobs": {
@@ -199,6 +218,13 @@
    "REC",
    "START",
    "General rubric + 18 queue rows logged (P-0048..P-1100); started P-0048"
+  ],
+  [
+   "2026-10-26T03:16Z",
+   "LT Gman",
+   "P-1071",
+   "START",
+   "14 rows logged (P-1071..1076, P-1027..1032, P-1082, P-1038); P-1071 Building"
   ]
  ],
  "timers": {
@@ -554,6 +580,90 @@
    "status": "Queued",
    "branch": "general/P-1100",
    "rank": 18
+  },
+  "P-1071": {
+   "owner": "LT Gman",
+   "status": "Building",
+   "branch": "gman/P-1071",
+   "rank": 1
+  },
+  "P-1072": {
+   "owner": "LT Gman",
+   "status": "Queued",
+   "branch": "gman/P-1072",
+   "rank": 2
+  },
+  "P-1073": {
+   "owner": "LT Gman",
+   "status": "Queued",
+   "branch": "gman/P-1073",
+   "rank": 3
+  },
+  "P-1074": {
+   "owner": "LT Gman",
+   "status": "Queued",
+   "branch": "gman/P-1074",
+   "rank": 4
+  },
+  "P-1075": {
+   "owner": "LT Gman",
+   "status": "Queued",
+   "branch": "gman/P-1075",
+   "rank": 5
+  },
+  "P-1076": {
+   "owner": "LT Gman",
+   "status": "Queued",
+   "branch": "gman/P-1076",
+   "rank": 6
+  },
+  "P-1027": {
+   "owner": "LT Gman",
+   "status": "Queued",
+   "branch": "gman/P-1027",
+   "rank": 7
+  },
+  "P-1028": {
+   "owner": "LT Gman",
+   "status": "Queued",
+   "branch": "gman/P-1028",
+   "rank": 8
+  },
+  "P-1029": {
+   "owner": "LT Gman",
+   "status": "Queued",
+   "branch": "gman/P-1029",
+   "rank": 9
+  },
+  "P-1030": {
+   "owner": "LT Gman",
+   "status": "Queued",
+   "branch": "gman/P-1030",
+   "rank": 10
+  },
+  "P-1031": {
+   "owner": "LT Gman",
+   "status": "Queued",
+   "branch": "gman/P-1031",
+   "rank": 11
+  },
+  "P-1032": {
+   "owner": "LT Gman",
+   "status": "Queued",
+   "branch": "gman/P-1032",
+   "rank": 12
+  },
+  "P-1082": {
+   "owner": "LT Gman",
+   "status": "Queued",
+   "branch": "gman/P-1082",
+   "rank": 13
+  },
+  "P-1038": {
+   "owner": "LT Gman",
+   "status": "Queued",
+   "branch": "gman/P-1038",
+   "rank": 14
   }
  }
 }
