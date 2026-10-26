@@ -1,0 +1,22 @@
+name: Uptime monitor
+on:
+  schedule: [{cron: '*/5 * * * *'}]
+  workflow_dispatch:
+permissions: {issues: write, contents: read}
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check leonlink.net
+        env: {GH_TOKEN: '${{ github.token }}', REPO: '${{ github.repository }}'}
+        run: |
+          down=""
+          for u in https://www.leonlink.net/ https://www.leonlink.net/blog.html https://www.leonlink.net/feed.xml; do
+            c=$(curl -s -o /dev/null -w '%{http_code}' -L --max-time 20 "$u" || echo 000)
+            echo "$u -> $c"; [ "$c" -ge 200 ] && [ "$c" -lt 400 ] || down="$down\n- $u returned $c"
+          done
+          open=$(gh issue list -R "$REPO" --label site-down --state open --json number -q '.[0].number')
+          if [ -n "$down" ]; then
+            [ -z "$open" ] && { gh label create site-down -R "$REPO" --color d73a4a 2>/dev/null || true; gh issue create -R "$REPO" --label site-down --title "leonlink.net is DOWN" --body "$(printf "Detected $(date -u):$down")"; }
+            exit 1
+          elif [ -n "$open" ]; then gh issue close "$open" -R "$REPO" -c "Back up $(date -u)"; fi
