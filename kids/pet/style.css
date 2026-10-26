@@ -191,3 +191,53 @@ body.clean{background:radial-gradient(ellipse at 50% -10%,#24244a,#0a0a16 55%,#0
 @keyframes chop{50%{transform:translateY(-22px) scale(1.2)}}
 .map.night .msky{background:linear-gradient(#1b2350,#4a4f8a)}.map.night .mland{filter:brightness(.72) saturate(.85)}
 .moon{position:absolute;right:8%;top:2%;font-size:34px;z-index:1}
+/* ---- Little Kids mode (26 Oct): play lock, Bert, simple bag, gentle unlocks ---- */
+html,body{overscroll-behavior:none}
+body.kidmode{touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+body.kidmode .wm{display:none}
+body.lock-bag .dock .d-stuff,body.lock-out .dock .d-out,body.lock-photo .dock .d-photo,body.lock-menu .menub{display:none}
+body.little .dock button{width:88px;height:88px;font-size:44px;border-radius:28px}
+body.little .trickf{display:none}
+@media(max-width:420px){body.little .dock button{width:76px;height:76px;font-size:38px}}
+.newly{animation:newly 1s ease-in-out 5}
+@keyframes newly{50%{transform:scale(1.18);box-shadow:0 0 0 8px #ffd16699,0 0 30px #ffd166}}
+.playgate{position:fixed;inset:0;z-index:9000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+ background:radial-gradient(circle at 50% 35%,#2a2a5a,#06060b 70%);animation:fi .3s}
+.pg-bert{width:170px}.pg-bert svg{width:100%;height:auto}
+.pg-play{width:150px;height:150px;border-radius:50%;border:0;font-size:70px;color:#fff;padding-left:14px;
+ background:linear-gradient(135deg,#22e5ff,#ff3fb4);box-shadow:0 8px 0 #0007,0 0 40px #22e5ff88;animation:pgp 1.4s ease-in-out infinite}
+@keyframes pgp{50%{transform:scale(1.08)}}
+.exitpet{display:none;position:fixed;top:calc(8px + env(safe-area-inset-top));left:8px;z-index:8000;width:54px;height:54px;border-radius:16px;
+ border:0;background:#ffffff1c;font-size:28px;overflow:hidden;touch-action:none}
+body.kidmode .exitpet{display:block}
+.exitpet i{position:absolute;left:0;bottom:0;height:5px;width:0;background:#ff3fb4}
+.exitpet.holding i{width:100%;transition:width 2s linear}
+body.kidmode header{padding-left:70px}
+.bert{position:fixed;right:6px;bottom:calc(120px + env(safe-area-inset-bottom));z-index:60;width:118px;height:148px;border:0;background:none;padding:0;
+ transform:translateY(220px) scale(.6);opacity:0;transition:transform .5s cubic-bezier(.3,1.6,.5,1),opacity .3s;pointer-events:none}
+.bert.show{transform:none;opacity:1;pointer-events:auto}
+.bertsvg{width:100%;height:100%;overflow:visible}
+.bertsvg .b-head{transform-origin:60px 90px;animation:bhead 2.4s ease-in-out infinite}
+.bertsvg .b-body{animation:bbreath 2.4s ease-in-out infinite;transform-origin:60px 140px}
+.bertsvg .b-arm{transform-origin:88px 108px;animation:bwave 1s ease-in-out infinite}
+.bertsvg .b-eyes{transform-origin:60px 66px;animation:bblink 4s infinite}
+.bertsvg .b-talk{display:none}
+.talking .b-talk{display:block;transform-origin:60px 86px;animation:btalk .22s ease-in-out infinite alternate}
+.talking .b-smile{display:none}
+@keyframes bhead{50%{transform:rotate(4deg) translateY(-2px)}}
+@keyframes bbreath{50%{transform:scaleY(1.03)}}
+@keyframes bwave{0%,100%{transform:rotate(0)}50%{transform:rotate(-28deg)}}
+@keyframes bblink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+@keyframes btalk{from{transform:scaleY(.3)}to{transform:scaleY(1)}}
+.bert .bubble{position:absolute;top:-34px;left:-30px;font-size:40px;background:#fff;border-radius:50%;width:64px;height:64px;line-height:64px;
+ box-shadow:0 4px 12px #0006;animation:bub 1.2s ease-in-out infinite}
+@keyframes bub{50%{transform:translateY(-6px)}}
+.bpoint{position:fixed;z-index:59;font-size:48px;pointer-events:none;animation:bpt .8s ease-in-out infinite;filter:drop-shadow(0 4px 6px #000a)}
+@keyframes bpt{50%{transform:translateY(16px)}}
+.inv .slots{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:6px 4px 14px}
+.inv .slot{aspect-ratio:1;border-radius:22px;border:3px solid #ffffff22;background:#ffffff12;position:relative;font-size:44px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 0 #0005}
+.inv .slot.on{border-color:#5ef08a;background:#5ef08a22}
+.inv .slot.empty{border-style:dashed;box-shadow:none;background:none}
+.inv .slot.shop{border-style:dashed;border-color:#ffd166}
+.inv .slot .n{position:absolute;right:4px;bottom:2px;font-size:16px;font-weight:900;background:#ff3fb4;color:#fff;border-radius:10px;padding:0 6px}
+.inv .slot:active{transform:scale(.92)}
