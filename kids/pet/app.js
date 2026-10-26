@@ -62,7 +62,7 @@ function playView(){return `<div class="card"><div class="row playbar"><button c
 function startGame(){if(G)return;let left=20,got=0;const box=$('game');box.innerHTML='';$('gt').style.width='100%';
  const spawn=()=>{const s=document.createElement('span');const big=Math.random()<.2;s.className='star';s.textContent=big?'🌟':'⭐';s.style.left=Math.random()*85+'%';s.style.top=Math.random()*78+'%';
   s.onpointerdown=()=>{got+=big?3:1;s.remove();$('gs').textContent='⭐ '+got};box.appendChild(s);setTimeout(()=>s.remove(),1300)};
- const sp=setInterval(spawn,600);G=setInterval(()=>{left--;$('gt').style.width=(left/20*100)+'%';if(left<=0){clearInterval(sp);clearInterval(G);G=null;box.innerHTML='<div class="demo">🎉</div>';LeonLinkPet.addTokens(window.capCoins?capCoins(got):got)}},1000)}
+ const sp=setInterval(spawn,600);G=setInterval(()=>{if(!$('gt')){clearInterval(sp);clearInterval(G);G=null;return}left--;$('gt').style.width=(left/20*100)+'%';if(left<=0){clearInterval(sp);clearInterval(G);G=null;box.innerHTML='<div class="demo">🎉</div>';LeonLinkPet.addTokens(window.capCoins?capCoins(got):got)}},1000)}
 function render(){$('tok').textContent=S.tokens;
  const v=S.pet?S.view:'adopt';$('nav').innerHTML=S.pet?[['home','🏠','My pet'],['shop','🛍️','Shop'],['homes','🏡','Homes'],['play','🎮','Play and win coins']].map(([k,l,w])=>`<button class="${v===k?'on':''}" aria-label="${w}" data-say="${w}" onclick="go('${k}')">${l}</button>`).join(''):'';
  if(G&&v==='play')return;$('app').innerHTML={adopt:adoptView,home:homeView,shop:shopView,homes:homesView,play:playView}[v]();const st=$('stage');if(st&&window.Pet3D)Pet3D.mount(st,S)}

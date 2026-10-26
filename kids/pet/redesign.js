@@ -13,7 +13,7 @@ homeView=function(){const h=HOMES.find(x=>x.id===S.home),w=S.wear&&ALL.find(x=>x
  <div class="pet fallback" onclick="pat()">${p.e}${w?`<span class="acc">${w.e}</span>`:''}</div>
  <div class="hud"><button class="mood" aria-label="${mw}" data-say="${mw}">${me}</button><div class="meters">${m('h','🍗','Tummy')}${m('j','😊','Happy')}${m('c','🫧','Clean')}${m('en','⚡','Energy')}</div><span class="age">${age}</span></div>
  <button class="trickf" aria-label="Do a trick" data-say="Do a trick!" onclick="doTrick()">🎪</button></div>
- <div class="dock">${b('d-stuff','🎒','Toys and clothes',"openSheet('stuff')")}${b('d-out','🌳',"Let's go outside!","go('map')")}${b('d-care','🛁','Bath and food',"openSheet('care')")}${b('d-photo','📸','Take a picture','Pet3D.photo(S.name)')}</div>`};
+ <div class="dock">${b('d-stuff','🎒','Toys and clothes',"openSheet('stuff')")}${b('d-out','🌳',"Let's go outside!","go('map')")}${b('d-care','🛁','Bath and food',"openSheet('care')")}${b('d-photo','📸','Take a picture','window.Pet3D&&Pet3D.photo(S.name)')}</div>`};
 // ---------- bottom sheets ----------
 let SH=null,STAB='toys';
 window.closeSheet=function(){document.querySelectorAll('.sheet,.shade').forEach(e=>e.remove());SH=null};
@@ -57,7 +57,7 @@ const SPOTS=[
 const DECO=[['🌲',8,20],['🌲',92,30],['🌳',6,60],['🌷',40,84],['🌼',62,88],['🌲',36,12],['🌳',94,62],['🍄',58,56],['🌻',88,90],['⛰️',30,4],['⛰️',66,3],['☁️',20,1],['🌲',60,16],['🪨',34,44],['🌸',10,92],['🌳',50,40]];
 function mapView(){const p=PETS.find(x=>x.id===S.pet),sc=y=>(0.55+y/100*0.75).toFixed(2);
  const spots=SPOTS.map(s=>`<button class="spot ${s.game?'g':s.out?'o':'n'}" style="left:${s.x}%;top:${s.y}%;--s:${sc(s.y)};z-index:${s.y|0}" aria-label="${s.w}" data-say="${s.w}" onclick="${s.fn||(s.game?`playGame('${s.id}')`:`goOut('${s.id}')`)}"><b>${s.e}</b></button>`).join('');
- const spin=S.spin?`<button class="spot g" style="left:50%;top:84%;--s:1.2;z-index:85" aria-label="Spin the wheel" data-say="Spin the wheel!" onclick="go('spin')"><b>🎡</b></button>`:'';
+ const spin=S.spin?`<button class="spot g" style="left:63%;top:80%;--s:1.15;z-index:80" aria-label="Spin the wheel" data-say="Spin the wheel!" onclick="go('spin')"><b>🎡</b></button>`:'';
  const deco=DECO.map(([e,x,y])=>`<span class="deco" style="left:${x}%;top:${y}%;--s:${sc(y)};z-index:${y|0}">${e}</span>`).join('');
  return `<div class="map"><div class="msky"></div><div class="mland"><svg class="path" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M50 95 C20 85,30 70,52 70 S80 58,44 52 S20 40,30 30 S70 30,46 22 S20 14,14 14" fill="none" stroke="#f3d9a4" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="1 0"/></svg>${deco}${spots}${spin}
  <span class="mpet" style="left:50%;top:88%">${p.e}</span></div></div>
@@ -72,7 +72,7 @@ const OUTS={
  bugs:{bg:'meadow',say:'Tap the butterflies!',things:['🦋','🦋','🐝','🐞'],fx:{j:20,en:-15},end:'So many butterflies!',catch:1}};
 let OT=[];
 window.goOut=function(id){if(S.st.en<20){pop('😴⚡❌','Too sleepy! Take a nap first.');return}
- const o=OUTS[id],p=PETS.find(x=>x.id===S.pet),w=S.wear&&ALL.find(x=>x.id===S.wear);S.view='out';save();closeSheet();$('nav').innerHTML='';
+ const o=OUTS[id],p=PETS.find(x=>x.id===S.pet),w=S.wear&&ALL.find(x=>x.id===S.wear);S.view='out';save();closeSheet();$('nav').innerHTML='';document.body.dataset.v='out';
  $('app').innerHTML=`<div class="out ${o.bg}"><div class="l1"></div><div class="l2"></div><div class="l3"></div><div class="walker">${p.e}${w?`<span class="acc">${w.e}</span>`:''}</div><div class="timer otm"><i id="otm" style="width:100%"></i></div></div>`;
  say(o.say);const box=document.querySelector('.out'),wk=box.querySelector('.walker');let caught=0,t=0;
  OT.push(setInterval(()=>{const e=document.createElement('button');e.className='thing';e.textContent=o.things[Math.random()*o.things.length|0];e.style.top=(15+Math.random()*55)+'%';e.style.animationDuration=(3+Math.random()*2)+'s';
@@ -88,6 +88,10 @@ function finishOut(id,caught){OT.forEach(clearInterval);OT=[];const o=OUTS[id];f
  setTimeout(()=>{if(coins>0){const g=capCoins(coins);if(g>0)LeonLinkPet.addTokens(g)}if(S.cnt.out>=5)sticker('explore');if(id==='mud')sticker('muddy');S.view='map';save();render()},2200)}
 if(!STK.find(s=>s[0]==='explore'))STK.push(['explore','🗺️','Explorer'],['muddy','🟤','Muddy paws']);
 // ---------- routing ----------
+// leaving a game or outing early stops its timers (no ghost coins or surprise jumps back)
+const _go=go;go=function(v){if(v!=='out'&&OT.length){OT.forEach(clearInterval);OT=[]}
+ if(v!=='mg'&&typeof MG!=='undefined'&&MG){MG.forEach(clearInterval);MG=null}
+ if(v!=='play'&&typeof G!=='undefined'&&G){clearInterval(G);G=null}closeSheet();_go(v)};window.go=go;
 const _r=render;
 render=function(){
  if(S.view==='out'&&OT.length)return;if(S.view==='out')S.view='map';
