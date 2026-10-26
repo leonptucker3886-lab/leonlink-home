@@ -126,3 +126,56 @@ Order: hub -> plaza -> one zone at a time.
 7. All content is approved by Leon. Parked on a branch/PR, ready to push.
 8. No assigned job: follow the book (take the first open library item).
 9. Facts need evidence; opinions are labeled as opinion.
+
+## Blog Requirements (SOP: how a LeonLink blog post is made)
+Amended: 2026-10-26 00:30 AM ET (04:30 UTC) - CHIEF announcement - call sign: Sales Pitch Chief
+Reverse-engineered from all 46 posts live on leonlink.net (copied to repo leonlink-blogs). Rule = what the posts actually do.
+
+### The formula
+CITATION + LENGTH + INTERACTIVITY, wrapped in one voice: a hook, numbered sections, "My take", then "Your turn".
+
+### 1. Pick the format (length is set by format)
+| Format | Example | Words (body) | Sections |
+|---|---|---|---|
+| Deep-dive journal (science, history, belief) | Ghosts, Why We Cheat, Why Do We Dream | 800-1,800 (target ~1,200) | 4-7 numbered h2 |
+| Business/marketing journal | SEO Is Dead, Per-Seat Pricing, Review Gating | 300-700 (target ~400) | 4-6 labeled cards |
+| Series part (AI Series) | Part 1-4 | 1,000-1,600 | 5-8 h2 |
+| Story letter (Life of an AI Captain) | Letter 001-009 | 400-1,200 | 1 |
+| Short serial (Holding the Line) | Post 001-005 | 240-320 | none |
+Standalone journal median across 28 posts: ~700 words. Never pad: "2,000 words of filler" is listed as the old, dead playbook.
+
+### 2. Structure (journal posts, in this order)
+1. Header: "Blog - Post #N - Month D, YYYY" (business posts: "Post #N - Business - Topic").
+2. Title as a plain question or bold claim ("Are ghosts real?", "SEO R.I.P.").
+3. Kicker line in caps ("EVERY CULTURE SAYS YES").
+4. Hook: 2-4 short paragraphs that reframe the question ("The question isn't X. It's Y.").
+5. "Here's the deal:" one line that previews the sections and promises the vote at the end.
+6. Numbered sections (1. The timeline, 2. The evidence, 3. The science...). Business posts use: The preconception, the data, Old vs new, The irony, Checklist.
+7. "My take": first person, labeled opinion, ends in a one-line verdict. Include a "follow the money" angle when it fits.
+8. "Your turn": a poll or checklist, then the note "Your answer stays on this device. I don't collect it."
+9. Footer: Read next link, Back to Blog, Share button, newsletter form, Sources.
+
+### 3. Citation rule
+- Every deep-dive and series post ends with a Sources block (19 of 28 journal posts, 4 of 4 AI Series parts).
+- Each source = name + where (URL or work/chapter) + the specific fact it backs (dates, numbers, quotes). Not just a bare link.
+- Facts need evidence; opinions go in "My take" and are labeled as opinion (Rule 9 above).
+- Use footnote markers (sup) when a post makes many clinical or research claims (Love or Trauma Bond: 13, Why We Cheat: 16).
+- Story and serial formats (Captain letters, Holding the Line) carry no sources.
+- Target: 5-10 sources for a deep-dive, 2-4 for a business post.
+
+### 4. Interactivity rule ("tap, don't scroll")
+- Every journal post has at least one interactive element. Each numbered section starts with an instruction: "Tap an era." "Tap a case, watch the meter."
+- Toolkit used: tabs (timeline), cards with a believe/evidence meter (Weak to Strong, Explained to Spooky), Old vs New flip cards, tick-box checklist with a score, a reader poll.
+- Deep-dive median: 7+ buttons; heaviest posts 15-26 (What Lives On Us, Are Computers Alive).
+- Polls and checklists are private, saved on the device, never collected.
+- Series and letters stay light: navigation plus share only.
+
+### 5. Voice
+- Plain, direct, short sentences, second person ("you"). Contractions. One idea per paragraph.
+- Concede the human truth, then deliver the verdict ("The experiences are real. They're just not the dead.").
+- Close on a twist line the reader will remember.
+
+### 6. Pre-publish checklist
+[ ] Format chosen and word count in range  [ ] Hook + "Here's the deal"  [ ] Numbered sections, each with a tap action
+[ ] "My take" labeled opinion with a verdict  [ ] "Your turn" poll/checklist with privacy note
+[ ] Sources block with fact-level detail  [ ] Read next, share, newsletter, back link  [ ] Leon approves before it goes live (Rule 7)
