@@ -1006,3 +1006,1006 @@ Shared list by COL Whiz (P-0001–P-1000) and GENERAL Paperwork (P-1001–P-2000
 | P-1000 | Watches/Top 5 | Write an automated link-check test for watch posts | Open |
 
 <!-- GENERAL Paperwork: append P-1001..P-2000 below -->
+
+| ID | Area | Project | Status |
+|---|---|---|---|
+| P-1001 | Kids Corner | Add a print-friendly stylesheet for coloring pages | Open |
+| P-1002 | Kids Corner | Add a print-friendly stylesheet for story time | Open |
+| P-1003 | Kids Corner | Add a print-friendly stylesheet for Paper Pip Plane | Open |
+| P-1004 | Kids Corner | Add a print-friendly stylesheet for kids quiz | Open |
+| P-1005 | Kids Corner | Add a print-friendly stylesheet for kids home page | Open |
+| P-1006 | Kids Corner | Add a print-friendly stylesheet for parent guide page | Open |
+| P-1007 | Kids Corner | Add a print-friendly stylesheet for printables | Open |
+| P-1008 | Games/Arcade | Add a print-friendly stylesheet for arcade lobby | Open |
+| P-1009 | Games/Arcade | Add a print-friendly stylesheet for high-score board | Open |
+| P-1010 | Games/Arcade | Add a print-friendly stylesheet for memory match | Open |
+| P-1011 | Games/Arcade | Add a print-friendly stylesheet for word search | Open |
+| P-1012 | Games/Arcade | Add a print-friendly stylesheet for puzzle game | Open |
+| P-1013 | Games/Arcade | Add a print-friendly stylesheet for snake game | Open |
+| P-1014 | Games/Arcade | Add a print-friendly stylesheet for game settings menu | Open |
+| P-1015 | Watches/Top 5 | Add a print-friendly stylesheet for Top 5 lists | Open |
+| P-1016 | Watches/Top 5 | Add a print-friendly stylesheet for Tritium guide | Open |
+| P-1017 | Watches/Top 5 | Add a print-friendly stylesheet for Under $3K guide | Open |
+| P-1018 | Watches/Top 5 | Add a print-friendly stylesheet for watch posts | Open |
+| P-1019 | Watches/Top 5 | Add a print-friendly stylesheet for watch comparison table | Open |
+| P-1020 | Watches/Top 5 | Add a print-friendly stylesheet for watch buying guide | Open |
+| P-1021 | Blogs | Add a print-friendly stylesheet for blog archive | Open |
+| P-1022 | Blogs | Add a print-friendly stylesheet for blog posts | Open |
+| P-1023 | Blogs | Add a print-friendly stylesheet for journal | Open |
+| P-1024 | Blogs | Add a print-friendly stylesheet for poetry corner | Open |
+| P-1025 | Blogs | Add a print-friendly stylesheet for author page | Open |
+| P-1026 | Blogs | Add a print-friendly stylesheet for tag pages | Open |
+| P-1027 | Free Tools | Add a print-friendly stylesheet for unit converter | Open |
+| P-1028 | Free Tools | Add a print-friendly stylesheet for calculator | Open |
+| P-1029 | Free Tools | Add a print-friendly stylesheet for password generator | Open |
+| P-1030 | Free Tools | Add a print-friendly stylesheet for timer tool | Open |
+| P-1031 | Free Tools | Add a print-friendly stylesheet for tools index | Open |
+| P-1032 | Free Tools | Add a print-friendly stylesheet for QR code tool | Open |
+| P-1033 | Series/Media | Add a print-friendly stylesheet for series index | Open |
+| P-1034 | Series/Media | Add a print-friendly stylesheet for episode pages | Open |
+| P-1035 | Series/Media | Add a print-friendly stylesheet for video gallery | Open |
+| P-1036 | Series/Media | Add a print-friendly stylesheet for podcast page | Open |
+| P-1037 | Series/Media | Add a print-friendly stylesheet for media player | Open |
+| P-1038 | Site/Core | Add a print-friendly stylesheet for home page | Open |
+| P-1039 | Site/Core | Add a print-friendly stylesheet for navigation menu | Open |
+| P-1040 | Site/Core | Add a print-friendly stylesheet for footer | Open |
+| P-1041 | Site/Core | Add a print-friendly stylesheet for 404 page | Open |
+| P-1042 | Site/Core | Add a print-friendly stylesheet for contact page | Open |
+| P-1043 | Site/Core | Add a print-friendly stylesheet for about page | Open |
+| P-1044 | Site/Core | Add a print-friendly stylesheet for sitemap | Open |
+| P-1045 | Kids Corner | Add breadcrumb navigation to coloring pages | Open |
+| P-1046 | Kids Corner | Add breadcrumb navigation to story time | Open |
+| P-1047 | Kids Corner | Add breadcrumb navigation to Paper Pip Plane | Open |
+| P-1048 | Kids Corner | Add breadcrumb navigation to kids quiz | Open |
+| P-1049 | Kids Corner | Add breadcrumb navigation to kids home page | Open |
+| P-1050 | Kids Corner | Add breadcrumb navigation to parent guide page | Open |
+| P-1051 | Kids Corner | Add breadcrumb navigation to printables | Open |
+| P-1052 | Games/Arcade | Add breadcrumb navigation to arcade lobby | Open |
+| P-1053 | Games/Arcade | Add breadcrumb navigation to high-score board | Open |
+| P-1054 | Games/Arcade | Add breadcrumb navigation to memory match | Open |
+| P-1055 | Games/Arcade | Add breadcrumb navigation to word search | Open |
+| P-1056 | Games/Arcade | Add breadcrumb navigation to puzzle game | Open |
+| P-1057 | Games/Arcade | Add breadcrumb navigation to snake game | Open |
+| P-1058 | Games/Arcade | Add breadcrumb navigation to game settings menu | Open |
+| P-1059 | Watches/Top 5 | Add breadcrumb navigation to Top 5 lists | Open |
+| P-1060 | Watches/Top 5 | Add breadcrumb navigation to Tritium guide | Open |
+| P-1061 | Watches/Top 5 | Add breadcrumb navigation to Under $3K guide | Open |
+| P-1062 | Watches/Top 5 | Add breadcrumb navigation to watch posts | Open |
+| P-1063 | Watches/Top 5 | Add breadcrumb navigation to watch comparison table | Open |
+| P-1064 | Watches/Top 5 | Add breadcrumb navigation to watch buying guide | Open |
+| P-1065 | Blogs | Add breadcrumb navigation to blog archive | Open |
+| P-1066 | Blogs | Add breadcrumb navigation to blog posts | Open |
+| P-1067 | Blogs | Add breadcrumb navigation to journal | Open |
+| P-1068 | Blogs | Add breadcrumb navigation to poetry corner | Open |
+| P-1069 | Blogs | Add breadcrumb navigation to author page | Open |
+| P-1070 | Blogs | Add breadcrumb navigation to tag pages | Open |
+| P-1071 | Free Tools | Add breadcrumb navigation to unit converter | Open |
+| P-1072 | Free Tools | Add breadcrumb navigation to calculator | Open |
+| P-1073 | Free Tools | Add breadcrumb navigation to password generator | Open |
+| P-1074 | Free Tools | Add breadcrumb navigation to timer tool | Open |
+| P-1075 | Free Tools | Add breadcrumb navigation to tools index | Open |
+| P-1076 | Free Tools | Add breadcrumb navigation to QR code tool | Open |
+| P-1077 | Series/Media | Add breadcrumb navigation to series index | Open |
+| P-1078 | Series/Media | Add breadcrumb navigation to episode pages | Open |
+| P-1079 | Series/Media | Add breadcrumb navigation to video gallery | Open |
+| P-1080 | Series/Media | Add breadcrumb navigation to podcast page | Open |
+| P-1081 | Series/Media | Add breadcrumb navigation to media player | Open |
+| P-1082 | Site/Core | Add breadcrumb navigation to home page | Open |
+| P-1083 | Site/Core | Add breadcrumb navigation to navigation menu | Open |
+| P-1084 | Site/Core | Add breadcrumb navigation to footer | Open |
+| P-1085 | Site/Core | Add breadcrumb navigation to 404 page | Open |
+| P-1086 | Site/Core | Add breadcrumb navigation to contact page | Open |
+| P-1087 | Site/Core | Add breadcrumb navigation to about page | Open |
+| P-1088 | Site/Core | Add breadcrumb navigation to sitemap | Open |
+| P-1089 | Kids Corner | Add a share-to-clipboard button on coloring pages | Open |
+| P-1090 | Kids Corner | Add a share-to-clipboard button on story time | Open |
+| P-1091 | Kids Corner | Add a share-to-clipboard button on Paper Pip Plane | Open |
+| P-1092 | Kids Corner | Add a share-to-clipboard button on kids quiz | Open |
+| P-1093 | Kids Corner | Add a share-to-clipboard button on kids home page | Open |
+| P-1094 | Kids Corner | Add a share-to-clipboard button on parent guide page | Open |
+| P-1095 | Kids Corner | Add a share-to-clipboard button on printables | Open |
+| P-1096 | Games/Arcade | Add a share-to-clipboard button on arcade lobby | Open |
+| P-1097 | Games/Arcade | Add a share-to-clipboard button on high-score board | Open |
+| P-1098 | Games/Arcade | Add a share-to-clipboard button on memory match | Open |
+| P-1099 | Games/Arcade | Add a share-to-clipboard button on word search | Open |
+| P-1100 | Games/Arcade | Add a share-to-clipboard button on puzzle game | Open |
+| P-1101 | Games/Arcade | Add a share-to-clipboard button on snake game | Open |
+| P-1102 | Games/Arcade | Add a share-to-clipboard button on game settings menu | Open |
+| P-1103 | Watches/Top 5 | Add a share-to-clipboard button on Top 5 lists | Open |
+| P-1104 | Watches/Top 5 | Add a share-to-clipboard button on Tritium guide | Open |
+| P-1105 | Watches/Top 5 | Add a share-to-clipboard button on Under $3K guide | Open |
+| P-1106 | Watches/Top 5 | Add a share-to-clipboard button on watch posts | Open |
+| P-1107 | Watches/Top 5 | Add a share-to-clipboard button on watch comparison table | Open |
+| P-1108 | Watches/Top 5 | Add a share-to-clipboard button on watch buying guide | Open |
+| P-1109 | Blogs | Add a share-to-clipboard button on blog archive | Open |
+| P-1110 | Blogs | Add a share-to-clipboard button on blog posts | Open |
+| P-1111 | Blogs | Add a share-to-clipboard button on journal | Open |
+| P-1112 | Blogs | Add a share-to-clipboard button on poetry corner | Open |
+| P-1113 | Blogs | Add a share-to-clipboard button on author page | Open |
+| P-1114 | Blogs | Add a share-to-clipboard button on tag pages | Open |
+| P-1115 | Free Tools | Add a share-to-clipboard button on unit converter | Open |
+| P-1116 | Free Tools | Add a share-to-clipboard button on calculator | Open |
+| P-1117 | Free Tools | Add a share-to-clipboard button on password generator | Open |
+| P-1118 | Free Tools | Add a share-to-clipboard button on timer tool | Open |
+| P-1119 | Free Tools | Add a share-to-clipboard button on tools index | Open |
+| P-1120 | Free Tools | Add a share-to-clipboard button on QR code tool | Open |
+| P-1121 | Series/Media | Add a share-to-clipboard button on series index | Open |
+| P-1122 | Series/Media | Add a share-to-clipboard button on episode pages | Open |
+| P-1123 | Series/Media | Add a share-to-clipboard button on video gallery | Open |
+| P-1124 | Series/Media | Add a share-to-clipboard button on podcast page | Open |
+| P-1125 | Series/Media | Add a share-to-clipboard button on media player | Open |
+| P-1126 | Site/Core | Add a share-to-clipboard button on home page | Open |
+| P-1127 | Site/Core | Add a share-to-clipboard button on navigation menu | Open |
+| P-1128 | Site/Core | Add a share-to-clipboard button on footer | Open |
+| P-1129 | Site/Core | Add a share-to-clipboard button on 404 page | Open |
+| P-1130 | Site/Core | Add a share-to-clipboard button on contact page | Open |
+| P-1131 | Site/Core | Add a share-to-clipboard button on about page | Open |
+| P-1132 | Site/Core | Add a share-to-clipboard button on sitemap | Open |
+| P-1133 | Kids Corner | Add keyboard shortcuts to coloring pages | Open |
+| P-1134 | Kids Corner | Add keyboard shortcuts to story time | Open |
+| P-1135 | Kids Corner | Add keyboard shortcuts to Paper Pip Plane | Open |
+| P-1136 | Kids Corner | Add keyboard shortcuts to kids quiz | Open |
+| P-1137 | Kids Corner | Add keyboard shortcuts to kids home page | Open |
+| P-1138 | Kids Corner | Add keyboard shortcuts to parent guide page | Open |
+| P-1139 | Kids Corner | Add keyboard shortcuts to printables | Open |
+| P-1140 | Games/Arcade | Add keyboard shortcuts to arcade lobby | Open |
+| P-1141 | Games/Arcade | Add keyboard shortcuts to high-score board | Open |
+| P-1142 | Games/Arcade | Add keyboard shortcuts to memory match | Open |
+| P-1143 | Games/Arcade | Add keyboard shortcuts to word search | Open |
+| P-1144 | Games/Arcade | Add keyboard shortcuts to puzzle game | Open |
+| P-1145 | Games/Arcade | Add keyboard shortcuts to snake game | Open |
+| P-1146 | Games/Arcade | Add keyboard shortcuts to game settings menu | Open |
+| P-1147 | Watches/Top 5 | Add keyboard shortcuts to Top 5 lists | Open |
+| P-1148 | Watches/Top 5 | Add keyboard shortcuts to Tritium guide | Open |
+| P-1149 | Watches/Top 5 | Add keyboard shortcuts to Under $3K guide | Open |
+| P-1150 | Watches/Top 5 | Add keyboard shortcuts to watch posts | Open |
+| P-1151 | Watches/Top 5 | Add keyboard shortcuts to watch comparison table | Open |
+| P-1152 | Watches/Top 5 | Add keyboard shortcuts to watch buying guide | Open |
+| P-1153 | Blogs | Add keyboard shortcuts to blog archive | Open |
+| P-1154 | Blogs | Add keyboard shortcuts to blog posts | Open |
+| P-1155 | Blogs | Add keyboard shortcuts to journal | Open |
+| P-1156 | Blogs | Add keyboard shortcuts to poetry corner | Open |
+| P-1157 | Blogs | Add keyboard shortcuts to author page | Open |
+| P-1158 | Blogs | Add keyboard shortcuts to tag pages | Open |
+| P-1159 | Free Tools | Add keyboard shortcuts to unit converter | Open |
+| P-1160 | Free Tools | Add keyboard shortcuts to calculator | Open |
+| P-1161 | Free Tools | Add keyboard shortcuts to password generator | Open |
+| P-1162 | Free Tools | Add keyboard shortcuts to timer tool | Open |
+| P-1163 | Free Tools | Add keyboard shortcuts to tools index | Open |
+| P-1164 | Free Tools | Add keyboard shortcuts to QR code tool | Open |
+| P-1165 | Series/Media | Add keyboard shortcuts to series index | Open |
+| P-1166 | Series/Media | Add keyboard shortcuts to episode pages | Open |
+| P-1167 | Series/Media | Add keyboard shortcuts to video gallery | Open |
+| P-1168 | Series/Media | Add keyboard shortcuts to podcast page | Open |
+| P-1169 | Series/Media | Add keyboard shortcuts to media player | Open |
+| P-1170 | Site/Core | Add keyboard shortcuts to home page | Open |
+| P-1171 | Site/Core | Add keyboard shortcuts to navigation menu | Open |
+| P-1172 | Site/Core | Add keyboard shortcuts to footer | Open |
+| P-1173 | Site/Core | Add keyboard shortcuts to 404 page | Open |
+| P-1174 | Site/Core | Add keyboard shortcuts to contact page | Open |
+| P-1175 | Site/Core | Add keyboard shortcuts to about page | Open |
+| P-1176 | Site/Core | Add keyboard shortcuts to sitemap | Open |
+| P-1177 | Kids Corner | Add skeleton loading states to coloring pages | Open |
+| P-1178 | Kids Corner | Add skeleton loading states to story time | Open |
+| P-1179 | Kids Corner | Add skeleton loading states to Paper Pip Plane | Open |
+| P-1180 | Kids Corner | Add skeleton loading states to kids quiz | Open |
+| P-1181 | Kids Corner | Add skeleton loading states to kids home page | Open |
+| P-1182 | Kids Corner | Add skeleton loading states to parent guide page | Open |
+| P-1183 | Kids Corner | Add skeleton loading states to printables | Open |
+| P-1184 | Games/Arcade | Add skeleton loading states to arcade lobby | Open |
+| P-1185 | Games/Arcade | Add skeleton loading states to high-score board | Open |
+| P-1186 | Games/Arcade | Add skeleton loading states to memory match | Open |
+| P-1187 | Games/Arcade | Add skeleton loading states to word search | Open |
+| P-1188 | Games/Arcade | Add skeleton loading states to puzzle game | Open |
+| P-1189 | Games/Arcade | Add skeleton loading states to snake game | Open |
+| P-1190 | Games/Arcade | Add skeleton loading states to game settings menu | Open |
+| P-1191 | Watches/Top 5 | Add skeleton loading states to Top 5 lists | Open |
+| P-1192 | Watches/Top 5 | Add skeleton loading states to Tritium guide | Open |
+| P-1193 | Watches/Top 5 | Add skeleton loading states to Under $3K guide | Open |
+| P-1194 | Watches/Top 5 | Add skeleton loading states to watch posts | Open |
+| P-1195 | Watches/Top 5 | Add skeleton loading states to watch comparison table | Open |
+| P-1196 | Watches/Top 5 | Add skeleton loading states to watch buying guide | Open |
+| P-1197 | Blogs | Add skeleton loading states to blog archive | Open |
+| P-1198 | Blogs | Add skeleton loading states to blog posts | Open |
+| P-1199 | Blogs | Add skeleton loading states to journal | Open |
+| P-1200 | Blogs | Add skeleton loading states to poetry corner | Open |
+| P-1201 | Blogs | Add skeleton loading states to author page | Open |
+| P-1202 | Blogs | Add skeleton loading states to tag pages | Open |
+| P-1203 | Free Tools | Add skeleton loading states to unit converter | Open |
+| P-1204 | Free Tools | Add skeleton loading states to calculator | Open |
+| P-1205 | Free Tools | Add skeleton loading states to password generator | Open |
+| P-1206 | Free Tools | Add skeleton loading states to timer tool | Open |
+| P-1207 | Free Tools | Add skeleton loading states to tools index | Open |
+| P-1208 | Free Tools | Add skeleton loading states to QR code tool | Open |
+| P-1209 | Series/Media | Add skeleton loading states to series index | Open |
+| P-1210 | Series/Media | Add skeleton loading states to episode pages | Open |
+| P-1211 | Series/Media | Add skeleton loading states to video gallery | Open |
+| P-1212 | Series/Media | Add skeleton loading states to podcast page | Open |
+| P-1213 | Series/Media | Add skeleton loading states to media player | Open |
+| P-1214 | Site/Core | Add skeleton loading states to home page | Open |
+| P-1215 | Site/Core | Add skeleton loading states to navigation menu | Open |
+| P-1216 | Site/Core | Add skeleton loading states to footer | Open |
+| P-1217 | Site/Core | Add skeleton loading states to 404 page | Open |
+| P-1218 | Site/Core | Add skeleton loading states to contact page | Open |
+| P-1219 | Site/Core | Add skeleton loading states to about page | Open |
+| P-1220 | Site/Core | Add skeleton loading states to sitemap | Open |
+| P-1221 | Kids Corner | Add an offline cache (service worker) for coloring pages | Open |
+| P-1222 | Kids Corner | Add an offline cache (service worker) for story time | Open |
+| P-1223 | Kids Corner | Add an offline cache (service worker) for Paper Pip Plane | Open |
+| P-1224 | Kids Corner | Add an offline cache (service worker) for kids quiz | Open |
+| P-1225 | Kids Corner | Add an offline cache (service worker) for kids home page | Open |
+| P-1226 | Kids Corner | Add an offline cache (service worker) for parent guide page | Open |
+| P-1227 | Kids Corner | Add an offline cache (service worker) for printables | Open |
+| P-1228 | Games/Arcade | Add an offline cache (service worker) for arcade lobby | Open |
+| P-1229 | Games/Arcade | Add an offline cache (service worker) for high-score board | Open |
+| P-1230 | Games/Arcade | Add an offline cache (service worker) for memory match | Open |
+| P-1231 | Games/Arcade | Add an offline cache (service worker) for word search | Open |
+| P-1232 | Games/Arcade | Add an offline cache (service worker) for puzzle game | Open |
+| P-1233 | Games/Arcade | Add an offline cache (service worker) for snake game | Open |
+| P-1234 | Games/Arcade | Add an offline cache (service worker) for game settings menu | Open |
+| P-1235 | Watches/Top 5 | Add an offline cache (service worker) for Top 5 lists | Open |
+| P-1236 | Watches/Top 5 | Add an offline cache (service worker) for Tritium guide | Open |
+| P-1237 | Watches/Top 5 | Add an offline cache (service worker) for Under $3K guide | Open |
+| P-1238 | Watches/Top 5 | Add an offline cache (service worker) for watch posts | Open |
+| P-1239 | Watches/Top 5 | Add an offline cache (service worker) for watch comparison table | Open |
+| P-1240 | Watches/Top 5 | Add an offline cache (service worker) for watch buying guide | Open |
+| P-1241 | Blogs | Add an offline cache (service worker) for blog archive | Open |
+| P-1242 | Blogs | Add an offline cache (service worker) for blog posts | Open |
+| P-1243 | Blogs | Add an offline cache (service worker) for journal | Open |
+| P-1244 | Blogs | Add an offline cache (service worker) for poetry corner | Open |
+| P-1245 | Blogs | Add an offline cache (service worker) for author page | Open |
+| P-1246 | Blogs | Add an offline cache (service worker) for tag pages | Open |
+| P-1247 | Free Tools | Add an offline cache (service worker) for unit converter | Open |
+| P-1248 | Free Tools | Add an offline cache (service worker) for calculator | Open |
+| P-1249 | Free Tools | Add an offline cache (service worker) for password generator | Open |
+| P-1250 | Free Tools | Add an offline cache (service worker) for timer tool | Open |
+| P-1251 | Free Tools | Add an offline cache (service worker) for tools index | Open |
+| P-1252 | Free Tools | Add an offline cache (service worker) for QR code tool | Open |
+| P-1253 | Series/Media | Add an offline cache (service worker) for series index | Open |
+| P-1254 | Series/Media | Add an offline cache (service worker) for episode pages | Open |
+| P-1255 | Series/Media | Add an offline cache (service worker) for video gallery | Open |
+| P-1256 | Series/Media | Add an offline cache (service worker) for podcast page | Open |
+| P-1257 | Series/Media | Add an offline cache (service worker) for media player | Open |
+| P-1258 | Site/Core | Add an offline cache (service worker) for home page | Open |
+| P-1259 | Site/Core | Add an offline cache (service worker) for navigation menu | Open |
+| P-1260 | Site/Core | Add an offline cache (service worker) for footer | Open |
+| P-1261 | Site/Core | Add an offline cache (service worker) for 404 page | Open |
+| P-1262 | Site/Core | Add an offline cache (service worker) for contact page | Open |
+| P-1263 | Site/Core | Add an offline cache (service worker) for about page | Open |
+| P-1264 | Site/Core | Add an offline cache (service worker) for sitemap | Open |
+| P-1265 | Kids Corner | Add schema.org structured data to coloring pages | Open |
+| P-1266 | Kids Corner | Add schema.org structured data to story time | Open |
+| P-1267 | Kids Corner | Add schema.org structured data to Paper Pip Plane | Open |
+| P-1268 | Kids Corner | Add schema.org structured data to kids quiz | Open |
+| P-1269 | Kids Corner | Add schema.org structured data to kids home page | Open |
+| P-1270 | Kids Corner | Add schema.org structured data to parent guide page | Open |
+| P-1271 | Kids Corner | Add schema.org structured data to printables | Open |
+| P-1272 | Games/Arcade | Add schema.org structured data to arcade lobby | Open |
+| P-1273 | Games/Arcade | Add schema.org structured data to high-score board | Open |
+| P-1274 | Games/Arcade | Add schema.org structured data to memory match | Open |
+| P-1275 | Games/Arcade | Add schema.org structured data to word search | Open |
+| P-1276 | Games/Arcade | Add schema.org structured data to puzzle game | Open |
+| P-1277 | Games/Arcade | Add schema.org structured data to snake game | Open |
+| P-1278 | Games/Arcade | Add schema.org structured data to game settings menu | Open |
+| P-1279 | Watches/Top 5 | Add schema.org structured data to Top 5 lists | Open |
+| P-1280 | Watches/Top 5 | Add schema.org structured data to Tritium guide | Open |
+| P-1281 | Watches/Top 5 | Add schema.org structured data to Under $3K guide | Open |
+| P-1282 | Watches/Top 5 | Add schema.org structured data to watch posts | Open |
+| P-1283 | Watches/Top 5 | Add schema.org structured data to watch comparison table | Open |
+| P-1284 | Watches/Top 5 | Add schema.org structured data to watch buying guide | Open |
+| P-1285 | Blogs | Add schema.org structured data to blog archive | Open |
+| P-1286 | Blogs | Add schema.org structured data to blog posts | Open |
+| P-1287 | Blogs | Add schema.org structured data to journal | Open |
+| P-1288 | Blogs | Add schema.org structured data to poetry corner | Open |
+| P-1289 | Blogs | Add schema.org structured data to author page | Open |
+| P-1290 | Blogs | Add schema.org structured data to tag pages | Open |
+| P-1291 | Free Tools | Add schema.org structured data to unit converter | Open |
+| P-1292 | Free Tools | Add schema.org structured data to calculator | Open |
+| P-1293 | Free Tools | Add schema.org structured data to password generator | Open |
+| P-1294 | Free Tools | Add schema.org structured data to timer tool | Open |
+| P-1295 | Free Tools | Add schema.org structured data to tools index | Open |
+| P-1296 | Free Tools | Add schema.org structured data to QR code tool | Open |
+| P-1297 | Series/Media | Add schema.org structured data to series index | Open |
+| P-1298 | Series/Media | Add schema.org structured data to episode pages | Open |
+| P-1299 | Series/Media | Add schema.org structured data to video gallery | Open |
+| P-1300 | Series/Media | Add schema.org structured data to podcast page | Open |
+| P-1301 | Series/Media | Add schema.org structured data to media player | Open |
+| P-1302 | Site/Core | Add schema.org structured data to home page | Open |
+| P-1303 | Site/Core | Add schema.org structured data to navigation menu | Open |
+| P-1304 | Site/Core | Add schema.org structured data to footer | Open |
+| P-1305 | Site/Core | Add schema.org structured data to 404 page | Open |
+| P-1306 | Site/Core | Add schema.org structured data to contact page | Open |
+| P-1307 | Site/Core | Add schema.org structured data to about page | Open |
+| P-1308 | Site/Core | Add schema.org structured data to sitemap | Open |
+| P-1309 | Kids Corner | Add a feedback thumbs-up/down widget to coloring pages | Open |
+| P-1310 | Kids Corner | Add a feedback thumbs-up/down widget to story time | Open |
+| P-1311 | Kids Corner | Add a feedback thumbs-up/down widget to Paper Pip Plane | Open |
+| P-1312 | Kids Corner | Add a feedback thumbs-up/down widget to kids quiz | Open |
+| P-1313 | Kids Corner | Add a feedback thumbs-up/down widget to kids home page | Open |
+| P-1314 | Kids Corner | Add a feedback thumbs-up/down widget to parent guide page | Open |
+| P-1315 | Kids Corner | Add a feedback thumbs-up/down widget to printables | Open |
+| P-1316 | Games/Arcade | Add a feedback thumbs-up/down widget to arcade lobby | Open |
+| P-1317 | Games/Arcade | Add a feedback thumbs-up/down widget to high-score board | Open |
+| P-1318 | Games/Arcade | Add a feedback thumbs-up/down widget to memory match | Open |
+| P-1319 | Games/Arcade | Add a feedback thumbs-up/down widget to word search | Open |
+| P-1320 | Games/Arcade | Add a feedback thumbs-up/down widget to puzzle game | Open |
+| P-1321 | Games/Arcade | Add a feedback thumbs-up/down widget to snake game | Open |
+| P-1322 | Games/Arcade | Add a feedback thumbs-up/down widget to game settings menu | Open |
+| P-1323 | Watches/Top 5 | Add a feedback thumbs-up/down widget to Top 5 lists | Open |
+| P-1324 | Watches/Top 5 | Add a feedback thumbs-up/down widget to Tritium guide | Open |
+| P-1325 | Watches/Top 5 | Add a feedback thumbs-up/down widget to Under $3K guide | Open |
+| P-1326 | Watches/Top 5 | Add a feedback thumbs-up/down widget to watch posts | Open |
+| P-1327 | Watches/Top 5 | Add a feedback thumbs-up/down widget to watch comparison table | Open |
+| P-1328 | Watches/Top 5 | Add a feedback thumbs-up/down widget to watch buying guide | Open |
+| P-1329 | Blogs | Add a feedback thumbs-up/down widget to blog archive | Open |
+| P-1330 | Blogs | Add a feedback thumbs-up/down widget to blog posts | Open |
+| P-1331 | Blogs | Add a feedback thumbs-up/down widget to journal | Open |
+| P-1332 | Blogs | Add a feedback thumbs-up/down widget to poetry corner | Open |
+| P-1333 | Blogs | Add a feedback thumbs-up/down widget to author page | Open |
+| P-1334 | Blogs | Add a feedback thumbs-up/down widget to tag pages | Open |
+| P-1335 | Free Tools | Add a feedback thumbs-up/down widget to unit converter | Open |
+| P-1336 | Free Tools | Add a feedback thumbs-up/down widget to calculator | Open |
+| P-1337 | Free Tools | Add a feedback thumbs-up/down widget to password generator | Open |
+| P-1338 | Free Tools | Add a feedback thumbs-up/down widget to timer tool | Open |
+| P-1339 | Free Tools | Add a feedback thumbs-up/down widget to tools index | Open |
+| P-1340 | Free Tools | Add a feedback thumbs-up/down widget to QR code tool | Open |
+| P-1341 | Series/Media | Add a feedback thumbs-up/down widget to series index | Open |
+| P-1342 | Series/Media | Add a feedback thumbs-up/down widget to episode pages | Open |
+| P-1343 | Series/Media | Add a feedback thumbs-up/down widget to video gallery | Open |
+| P-1344 | Series/Media | Add a feedback thumbs-up/down widget to podcast page | Open |
+| P-1345 | Series/Media | Add a feedback thumbs-up/down widget to media player | Open |
+| P-1346 | Site/Core | Add a feedback thumbs-up/down widget to home page | Open |
+| P-1347 | Site/Core | Add a feedback thumbs-up/down widget to navigation menu | Open |
+| P-1348 | Site/Core | Add a feedback thumbs-up/down widget to footer | Open |
+| P-1349 | Site/Core | Add a feedback thumbs-up/down widget to 404 page | Open |
+| P-1350 | Site/Core | Add a feedback thumbs-up/down widget to contact page | Open |
+| P-1351 | Site/Core | Add a feedback thumbs-up/down widget to about page | Open |
+| P-1352 | Site/Core | Add a feedback thumbs-up/down widget to sitemap | Open |
+| P-1353 | Kids Corner | Add a back-to-top button on coloring pages | Open |
+| P-1354 | Kids Corner | Add a back-to-top button on story time | Open |
+| P-1355 | Kids Corner | Add a back-to-top button on Paper Pip Plane | Open |
+| P-1356 | Kids Corner | Add a back-to-top button on kids quiz | Open |
+| P-1357 | Kids Corner | Add a back-to-top button on kids home page | Open |
+| P-1358 | Kids Corner | Add a back-to-top button on parent guide page | Open |
+| P-1359 | Kids Corner | Add a back-to-top button on printables | Open |
+| P-1360 | Games/Arcade | Add a back-to-top button on arcade lobby | Open |
+| P-1361 | Games/Arcade | Add a back-to-top button on high-score board | Open |
+| P-1362 | Games/Arcade | Add a back-to-top button on memory match | Open |
+| P-1363 | Games/Arcade | Add a back-to-top button on word search | Open |
+| P-1364 | Games/Arcade | Add a back-to-top button on puzzle game | Open |
+| P-1365 | Games/Arcade | Add a back-to-top button on snake game | Open |
+| P-1366 | Games/Arcade | Add a back-to-top button on game settings menu | Open |
+| P-1367 | Watches/Top 5 | Add a back-to-top button on Top 5 lists | Open |
+| P-1368 | Watches/Top 5 | Add a back-to-top button on Tritium guide | Open |
+| P-1369 | Watches/Top 5 | Add a back-to-top button on Under $3K guide | Open |
+| P-1370 | Watches/Top 5 | Add a back-to-top button on watch posts | Open |
+| P-1371 | Watches/Top 5 | Add a back-to-top button on watch comparison table | Open |
+| P-1372 | Watches/Top 5 | Add a back-to-top button on watch buying guide | Open |
+| P-1373 | Blogs | Add a back-to-top button on blog archive | Open |
+| P-1374 | Blogs | Add a back-to-top button on blog posts | Open |
+| P-1375 | Blogs | Add a back-to-top button on journal | Open |
+| P-1376 | Blogs | Add a back-to-top button on poetry corner | Open |
+| P-1377 | Blogs | Add a back-to-top button on author page | Open |
+| P-1378 | Blogs | Add a back-to-top button on tag pages | Open |
+| P-1379 | Free Tools | Add a back-to-top button on unit converter | Open |
+| P-1380 | Free Tools | Add a back-to-top button on calculator | Open |
+| P-1381 | Free Tools | Add a back-to-top button on password generator | Open |
+| P-1382 | Free Tools | Add a back-to-top button on timer tool | Open |
+| P-1383 | Free Tools | Add a back-to-top button on tools index | Open |
+| P-1384 | Free Tools | Add a back-to-top button on QR code tool | Open |
+| P-1385 | Series/Media | Add a back-to-top button on series index | Open |
+| P-1386 | Series/Media | Add a back-to-top button on episode pages | Open |
+| P-1387 | Series/Media | Add a back-to-top button on video gallery | Open |
+| P-1388 | Series/Media | Add a back-to-top button on podcast page | Open |
+| P-1389 | Series/Media | Add a back-to-top button on media player | Open |
+| P-1390 | Site/Core | Add a back-to-top button on home page | Open |
+| P-1391 | Site/Core | Add a back-to-top button on navigation menu | Open |
+| P-1392 | Site/Core | Add a back-to-top button on footer | Open |
+| P-1393 | Site/Core | Add a back-to-top button on 404 page | Open |
+| P-1394 | Site/Core | Add a back-to-top button on contact page | Open |
+| P-1395 | Site/Core | Add a back-to-top button on about page | Open |
+| P-1396 | Site/Core | Add a back-to-top button on sitemap | Open |
+| P-1397 | Kids Corner | Add lazy-loading images to coloring pages | Open |
+| P-1398 | Kids Corner | Add lazy-loading images to story time | Open |
+| P-1399 | Kids Corner | Add lazy-loading images to Paper Pip Plane | Open |
+| P-1400 | Kids Corner | Add lazy-loading images to kids quiz | Open |
+| P-1401 | Kids Corner | Add lazy-loading images to kids home page | Open |
+| P-1402 | Kids Corner | Add lazy-loading images to parent guide page | Open |
+| P-1403 | Kids Corner | Add lazy-loading images to printables | Open |
+| P-1404 | Games/Arcade | Add lazy-loading images to arcade lobby | Open |
+| P-1405 | Games/Arcade | Add lazy-loading images to high-score board | Open |
+| P-1406 | Games/Arcade | Add lazy-loading images to memory match | Open |
+| P-1407 | Games/Arcade | Add lazy-loading images to word search | Open |
+| P-1408 | Games/Arcade | Add lazy-loading images to puzzle game | Open |
+| P-1409 | Games/Arcade | Add lazy-loading images to snake game | Open |
+| P-1410 | Games/Arcade | Add lazy-loading images to game settings menu | Open |
+| P-1411 | Watches/Top 5 | Add lazy-loading images to Top 5 lists | Open |
+| P-1412 | Watches/Top 5 | Add lazy-loading images to Tritium guide | Open |
+| P-1413 | Watches/Top 5 | Add lazy-loading images to Under $3K guide | Open |
+| P-1414 | Watches/Top 5 | Add lazy-loading images to watch posts | Open |
+| P-1415 | Watches/Top 5 | Add lazy-loading images to watch comparison table | Open |
+| P-1416 | Watches/Top 5 | Add lazy-loading images to watch buying guide | Open |
+| P-1417 | Blogs | Add lazy-loading images to blog archive | Open |
+| P-1418 | Blogs | Add lazy-loading images to blog posts | Open |
+| P-1419 | Blogs | Add lazy-loading images to journal | Open |
+| P-1420 | Blogs | Add lazy-loading images to poetry corner | Open |
+| P-1421 | Blogs | Add lazy-loading images to author page | Open |
+| P-1422 | Blogs | Add lazy-loading images to tag pages | Open |
+| P-1423 | Free Tools | Add lazy-loading images to unit converter | Open |
+| P-1424 | Free Tools | Add lazy-loading images to calculator | Open |
+| P-1425 | Free Tools | Add lazy-loading images to password generator | Open |
+| P-1426 | Free Tools | Add lazy-loading images to timer tool | Open |
+| P-1427 | Free Tools | Add lazy-loading images to tools index | Open |
+| P-1428 | Free Tools | Add lazy-loading images to QR code tool | Open |
+| P-1429 | Series/Media | Add lazy-loading images to series index | Open |
+| P-1430 | Series/Media | Add lazy-loading images to episode pages | Open |
+| P-1431 | Series/Media | Add lazy-loading images to video gallery | Open |
+| P-1432 | Series/Media | Add lazy-loading images to podcast page | Open |
+| P-1433 | Series/Media | Add lazy-loading images to media player | Open |
+| P-1434 | Site/Core | Add lazy-loading images to home page | Open |
+| P-1435 | Site/Core | Add lazy-loading images to navigation menu | Open |
+| P-1436 | Site/Core | Add lazy-loading images to footer | Open |
+| P-1437 | Site/Core | Add lazy-loading images to 404 page | Open |
+| P-1438 | Site/Core | Add lazy-loading images to contact page | Open |
+| P-1439 | Site/Core | Add lazy-loading images to about page | Open |
+| P-1440 | Site/Core | Add lazy-loading images to sitemap | Open |
+| P-1441 | Kids Corner | Add alt-text audit for coloring pages | Open |
+| P-1442 | Kids Corner | Add alt-text audit for story time | Open |
+| P-1443 | Kids Corner | Add alt-text audit for Paper Pip Plane | Open |
+| P-1444 | Kids Corner | Add alt-text audit for kids quiz | Open |
+| P-1445 | Kids Corner | Add alt-text audit for kids home page | Open |
+| P-1446 | Kids Corner | Add alt-text audit for parent guide page | Open |
+| P-1447 | Kids Corner | Add alt-text audit for printables | Open |
+| P-1448 | Games/Arcade | Add alt-text audit for arcade lobby | Open |
+| P-1449 | Games/Arcade | Add alt-text audit for high-score board | Open |
+| P-1450 | Games/Arcade | Add alt-text audit for memory match | Open |
+| P-1451 | Games/Arcade | Add alt-text audit for word search | Open |
+| P-1452 | Games/Arcade | Add alt-text audit for puzzle game | Open |
+| P-1453 | Games/Arcade | Add alt-text audit for snake game | Open |
+| P-1454 | Games/Arcade | Add alt-text audit for game settings menu | Open |
+| P-1455 | Watches/Top 5 | Add alt-text audit for Top 5 lists | Open |
+| P-1456 | Watches/Top 5 | Add alt-text audit for Tritium guide | Open |
+| P-1457 | Watches/Top 5 | Add alt-text audit for Under $3K guide | Open |
+| P-1458 | Watches/Top 5 | Add alt-text audit for watch posts | Open |
+| P-1459 | Watches/Top 5 | Add alt-text audit for watch comparison table | Open |
+| P-1460 | Watches/Top 5 | Add alt-text audit for watch buying guide | Open |
+| P-1461 | Blogs | Add alt-text audit for blog archive | Open |
+| P-1462 | Blogs | Add alt-text audit for blog posts | Open |
+| P-1463 | Blogs | Add alt-text audit for journal | Open |
+| P-1464 | Blogs | Add alt-text audit for poetry corner | Open |
+| P-1465 | Blogs | Add alt-text audit for author page | Open |
+| P-1466 | Blogs | Add alt-text audit for tag pages | Open |
+| P-1467 | Free Tools | Add alt-text audit for unit converter | Open |
+| P-1468 | Free Tools | Add alt-text audit for calculator | Open |
+| P-1469 | Free Tools | Add alt-text audit for password generator | Open |
+| P-1470 | Free Tools | Add alt-text audit for timer tool | Open |
+| P-1471 | Free Tools | Add alt-text audit for tools index | Open |
+| P-1472 | Free Tools | Add alt-text audit for QR code tool | Open |
+| P-1473 | Series/Media | Add alt-text audit for series index | Open |
+| P-1474 | Series/Media | Add alt-text audit for episode pages | Open |
+| P-1475 | Series/Media | Add alt-text audit for video gallery | Open |
+| P-1476 | Series/Media | Add alt-text audit for podcast page | Open |
+| P-1477 | Series/Media | Add alt-text audit for media player | Open |
+| P-1478 | Site/Core | Add alt-text audit for home page | Open |
+| P-1479 | Site/Core | Add alt-text audit for navigation menu | Open |
+| P-1480 | Site/Core | Add alt-text audit for footer | Open |
+| P-1481 | Site/Core | Add alt-text audit for 404 page | Open |
+| P-1482 | Site/Core | Add alt-text audit for contact page | Open |
+| P-1483 | Site/Core | Add alt-text audit for about page | Open |
+| P-1484 | Site/Core | Add alt-text audit for sitemap | Open |
+| P-1485 | Kids Corner | Add a reading-time estimate to coloring pages | Open |
+| P-1486 | Kids Corner | Add a reading-time estimate to story time | Open |
+| P-1487 | Kids Corner | Add a reading-time estimate to Paper Pip Plane | Open |
+| P-1488 | Kids Corner | Add a reading-time estimate to kids quiz | Open |
+| P-1489 | Kids Corner | Add a reading-time estimate to kids home page | Open |
+| P-1490 | Kids Corner | Add a reading-time estimate to parent guide page | Open |
+| P-1491 | Kids Corner | Add a reading-time estimate to printables | Open |
+| P-1492 | Games/Arcade | Add a reading-time estimate to arcade lobby | Open |
+| P-1493 | Games/Arcade | Add a reading-time estimate to high-score board | Open |
+| P-1494 | Games/Arcade | Add a reading-time estimate to memory match | Open |
+| P-1495 | Games/Arcade | Add a reading-time estimate to word search | Open |
+| P-1496 | Games/Arcade | Add a reading-time estimate to puzzle game | Open |
+| P-1497 | Games/Arcade | Add a reading-time estimate to snake game | Open |
+| P-1498 | Games/Arcade | Add a reading-time estimate to game settings menu | Open |
+| P-1499 | Watches/Top 5 | Add a reading-time estimate to Top 5 lists | Open |
+| P-1500 | Watches/Top 5 | Add a reading-time estimate to Tritium guide | Open |
+| P-1501 | Watches/Top 5 | Add a reading-time estimate to Under $3K guide | Open |
+| P-1502 | Watches/Top 5 | Add a reading-time estimate to watch posts | Open |
+| P-1503 | Watches/Top 5 | Add a reading-time estimate to watch comparison table | Open |
+| P-1504 | Watches/Top 5 | Add a reading-time estimate to watch buying guide | Open |
+| P-1505 | Blogs | Add a reading-time estimate to blog archive | Open |
+| P-1506 | Blogs | Add a reading-time estimate to blog posts | Open |
+| P-1507 | Blogs | Add a reading-time estimate to journal | Open |
+| P-1508 | Blogs | Add a reading-time estimate to poetry corner | Open |
+| P-1509 | Blogs | Add a reading-time estimate to author page | Open |
+| P-1510 | Blogs | Add a reading-time estimate to tag pages | Open |
+| P-1511 | Free Tools | Add a reading-time estimate to unit converter | Open |
+| P-1512 | Free Tools | Add a reading-time estimate to calculator | Open |
+| P-1513 | Free Tools | Add a reading-time estimate to password generator | Open |
+| P-1514 | Free Tools | Add a reading-time estimate to timer tool | Open |
+| P-1515 | Free Tools | Add a reading-time estimate to tools index | Open |
+| P-1516 | Free Tools | Add a reading-time estimate to QR code tool | Open |
+| P-1517 | Series/Media | Add a reading-time estimate to series index | Open |
+| P-1518 | Series/Media | Add a reading-time estimate to episode pages | Open |
+| P-1519 | Series/Media | Add a reading-time estimate to video gallery | Open |
+| P-1520 | Series/Media | Add a reading-time estimate to podcast page | Open |
+| P-1521 | Series/Media | Add a reading-time estimate to media player | Open |
+| P-1522 | Site/Core | Add a reading-time estimate to home page | Open |
+| P-1523 | Site/Core | Add a reading-time estimate to navigation menu | Open |
+| P-1524 | Site/Core | Add a reading-time estimate to footer | Open |
+| P-1525 | Site/Core | Add a reading-time estimate to 404 page | Open |
+| P-1526 | Site/Core | Add a reading-time estimate to contact page | Open |
+| P-1527 | Site/Core | Add a reading-time estimate to about page | Open |
+| P-1528 | Site/Core | Add a reading-time estimate to sitemap | Open |
+| P-1529 | Kids Corner | Add a last-updated date stamp to coloring pages | Open |
+| P-1530 | Kids Corner | Add a last-updated date stamp to story time | Open |
+| P-1531 | Kids Corner | Add a last-updated date stamp to Paper Pip Plane | Open |
+| P-1532 | Kids Corner | Add a last-updated date stamp to kids quiz | Open |
+| P-1533 | Kids Corner | Add a last-updated date stamp to kids home page | Open |
+| P-1534 | Kids Corner | Add a last-updated date stamp to parent guide page | Open |
+| P-1535 | Kids Corner | Add a last-updated date stamp to printables | Open |
+| P-1536 | Games/Arcade | Add a last-updated date stamp to arcade lobby | Open |
+| P-1537 | Games/Arcade | Add a last-updated date stamp to high-score board | Open |
+| P-1538 | Games/Arcade | Add a last-updated date stamp to memory match | Open |
+| P-1539 | Games/Arcade | Add a last-updated date stamp to word search | Open |
+| P-1540 | Games/Arcade | Add a last-updated date stamp to puzzle game | Open |
+| P-1541 | Games/Arcade | Add a last-updated date stamp to snake game | Open |
+| P-1542 | Games/Arcade | Add a last-updated date stamp to game settings menu | Open |
+| P-1543 | Watches/Top 5 | Add a last-updated date stamp to Top 5 lists | Open |
+| P-1544 | Watches/Top 5 | Add a last-updated date stamp to Tritium guide | Open |
+| P-1545 | Watches/Top 5 | Add a last-updated date stamp to Under $3K guide | Open |
+| P-1546 | Watches/Top 5 | Add a last-updated date stamp to watch posts | Open |
+| P-1547 | Watches/Top 5 | Add a last-updated date stamp to watch comparison table | Open |
+| P-1548 | Watches/Top 5 | Add a last-updated date stamp to watch buying guide | Open |
+| P-1549 | Blogs | Add a last-updated date stamp to blog archive | Open |
+| P-1550 | Blogs | Add a last-updated date stamp to blog posts | Open |
+| P-1551 | Blogs | Add a last-updated date stamp to journal | Open |
+| P-1552 | Blogs | Add a last-updated date stamp to poetry corner | Open |
+| P-1553 | Blogs | Add a last-updated date stamp to author page | Open |
+| P-1554 | Blogs | Add a last-updated date stamp to tag pages | Open |
+| P-1555 | Free Tools | Add a last-updated date stamp to unit converter | Open |
+| P-1556 | Free Tools | Add a last-updated date stamp to calculator | Open |
+| P-1557 | Free Tools | Add a last-updated date stamp to password generator | Open |
+| P-1558 | Free Tools | Add a last-updated date stamp to timer tool | Open |
+| P-1559 | Free Tools | Add a last-updated date stamp to tools index | Open |
+| P-1560 | Free Tools | Add a last-updated date stamp to QR code tool | Open |
+| P-1561 | Series/Media | Add a last-updated date stamp to series index | Open |
+| P-1562 | Series/Media | Add a last-updated date stamp to episode pages | Open |
+| P-1563 | Series/Media | Add a last-updated date stamp to video gallery | Open |
+| P-1564 | Series/Media | Add a last-updated date stamp to podcast page | Open |
+| P-1565 | Series/Media | Add a last-updated date stamp to media player | Open |
+| P-1566 | Site/Core | Add a last-updated date stamp to home page | Open |
+| P-1567 | Site/Core | Add a last-updated date stamp to navigation menu | Open |
+| P-1568 | Site/Core | Add a last-updated date stamp to footer | Open |
+| P-1569 | Site/Core | Add a last-updated date stamp to 404 page | Open |
+| P-1570 | Site/Core | Add a last-updated date stamp to contact page | Open |
+| P-1571 | Site/Core | Add a last-updated date stamp to about page | Open |
+| P-1572 | Site/Core | Add a last-updated date stamp to sitemap | Open |
+| P-1573 | Kids Corner | Add a visual regression test for coloring pages | Open |
+| P-1574 | Kids Corner | Add a visual regression test for story time | Open |
+| P-1575 | Kids Corner | Add a visual regression test for Paper Pip Plane | Open |
+| P-1576 | Kids Corner | Add a visual regression test for kids quiz | Open |
+| P-1577 | Kids Corner | Add a visual regression test for kids home page | Open |
+| P-1578 | Kids Corner | Add a visual regression test for parent guide page | Open |
+| P-1579 | Kids Corner | Add a visual regression test for printables | Open |
+| P-1580 | Games/Arcade | Add a visual regression test for arcade lobby | Open |
+| P-1581 | Games/Arcade | Add a visual regression test for high-score board | Open |
+| P-1582 | Games/Arcade | Add a visual regression test for memory match | Open |
+| P-1583 | Games/Arcade | Add a visual regression test for word search | Open |
+| P-1584 | Games/Arcade | Add a visual regression test for puzzle game | Open |
+| P-1585 | Games/Arcade | Add a visual regression test for snake game | Open |
+| P-1586 | Games/Arcade | Add a visual regression test for game settings menu | Open |
+| P-1587 | Watches/Top 5 | Add a visual regression test for Top 5 lists | Open |
+| P-1588 | Watches/Top 5 | Add a visual regression test for Tritium guide | Open |
+| P-1589 | Watches/Top 5 | Add a visual regression test for Under $3K guide | Open |
+| P-1590 | Watches/Top 5 | Add a visual regression test for watch posts | Open |
+| P-1591 | Watches/Top 5 | Add a visual regression test for watch comparison table | Open |
+| P-1592 | Watches/Top 5 | Add a visual regression test for watch buying guide | Open |
+| P-1593 | Blogs | Add a visual regression test for blog archive | Open |
+| P-1594 | Blogs | Add a visual regression test for blog posts | Open |
+| P-1595 | Blogs | Add a visual regression test for journal | Open |
+| P-1596 | Blogs | Add a visual regression test for poetry corner | Open |
+| P-1597 | Blogs | Add a visual regression test for author page | Open |
+| P-1598 | Blogs | Add a visual regression test for tag pages | Open |
+| P-1599 | Free Tools | Add a visual regression test for unit converter | Open |
+| P-1600 | Free Tools | Add a visual regression test for calculator | Open |
+| P-1601 | Free Tools | Add a visual regression test for password generator | Open |
+| P-1602 | Free Tools | Add a visual regression test for timer tool | Open |
+| P-1603 | Free Tools | Add a visual regression test for tools index | Open |
+| P-1604 | Free Tools | Add a visual regression test for QR code tool | Open |
+| P-1605 | Series/Media | Add a visual regression test for series index | Open |
+| P-1606 | Series/Media | Add a visual regression test for episode pages | Open |
+| P-1607 | Series/Media | Add a visual regression test for video gallery | Open |
+| P-1608 | Series/Media | Add a visual regression test for podcast page | Open |
+| P-1609 | Series/Media | Add a visual regression test for media player | Open |
+| P-1610 | Site/Core | Add a visual regression test for home page | Open |
+| P-1611 | Site/Core | Add a visual regression test for navigation menu | Open |
+| P-1612 | Site/Core | Add a visual regression test for footer | Open |
+| P-1613 | Site/Core | Add a visual regression test for 404 page | Open |
+| P-1614 | Site/Core | Add a visual regression test for contact page | Open |
+| P-1615 | Site/Core | Add a visual regression test for about page | Open |
+| P-1616 | Site/Core | Add a visual regression test for sitemap | Open |
+| P-1617 | Kids Corner | Add a Lighthouse score check (90+) for coloring pages | Open |
+| P-1618 | Kids Corner | Add a Lighthouse score check (90+) for story time | Open |
+| P-1619 | Kids Corner | Add a Lighthouse score check (90+) for Paper Pip Plane | Open |
+| P-1620 | Kids Corner | Add a Lighthouse score check (90+) for kids quiz | Open |
+| P-1621 | Kids Corner | Add a Lighthouse score check (90+) for kids home page | Open |
+| P-1622 | Kids Corner | Add a Lighthouse score check (90+) for parent guide page | Open |
+| P-1623 | Kids Corner | Add a Lighthouse score check (90+) for printables | Open |
+| P-1624 | Games/Arcade | Add a Lighthouse score check (90+) for arcade lobby | Open |
+| P-1625 | Games/Arcade | Add a Lighthouse score check (90+) for high-score board | Open |
+| P-1626 | Games/Arcade | Add a Lighthouse score check (90+) for memory match | Open |
+| P-1627 | Games/Arcade | Add a Lighthouse score check (90+) for word search | Open |
+| P-1628 | Games/Arcade | Add a Lighthouse score check (90+) for puzzle game | Open |
+| P-1629 | Games/Arcade | Add a Lighthouse score check (90+) for snake game | Open |
+| P-1630 | Games/Arcade | Add a Lighthouse score check (90+) for game settings menu | Open |
+| P-1631 | Watches/Top 5 | Add a Lighthouse score check (90+) for Top 5 lists | Open |
+| P-1632 | Watches/Top 5 | Add a Lighthouse score check (90+) for Tritium guide | Open |
+| P-1633 | Watches/Top 5 | Add a Lighthouse score check (90+) for Under $3K guide | Open |
+| P-1634 | Watches/Top 5 | Add a Lighthouse score check (90+) for watch posts | Open |
+| P-1635 | Watches/Top 5 | Add a Lighthouse score check (90+) for watch comparison table | Open |
+| P-1636 | Watches/Top 5 | Add a Lighthouse score check (90+) for watch buying guide | Open |
+| P-1637 | Blogs | Add a Lighthouse score check (90+) for blog archive | Open |
+| P-1638 | Blogs | Add a Lighthouse score check (90+) for blog posts | Open |
+| P-1639 | Blogs | Add a Lighthouse score check (90+) for journal | Open |
+| P-1640 | Blogs | Add a Lighthouse score check (90+) for poetry corner | Open |
+| P-1641 | Blogs | Add a Lighthouse score check (90+) for author page | Open |
+| P-1642 | Blogs | Add a Lighthouse score check (90+) for tag pages | Open |
+| P-1643 | Free Tools | Add a Lighthouse score check (90+) for unit converter | Open |
+| P-1644 | Free Tools | Add a Lighthouse score check (90+) for calculator | Open |
+| P-1645 | Free Tools | Add a Lighthouse score check (90+) for password generator | Open |
+| P-1646 | Free Tools | Add a Lighthouse score check (90+) for timer tool | Open |
+| P-1647 | Free Tools | Add a Lighthouse score check (90+) for tools index | Open |
+| P-1648 | Free Tools | Add a Lighthouse score check (90+) for QR code tool | Open |
+| P-1649 | Series/Media | Add a Lighthouse score check (90+) for series index | Open |
+| P-1650 | Series/Media | Add a Lighthouse score check (90+) for episode pages | Open |
+| P-1651 | Series/Media | Add a Lighthouse score check (90+) for video gallery | Open |
+| P-1652 | Series/Media | Add a Lighthouse score check (90+) for podcast page | Open |
+| P-1653 | Series/Media | Add a Lighthouse score check (90+) for media player | Open |
+| P-1654 | Site/Core | Add a Lighthouse score check (90+) for home page | Open |
+| P-1655 | Site/Core | Add a Lighthouse score check (90+) for navigation menu | Open |
+| P-1656 | Site/Core | Add a Lighthouse score check (90+) for footer | Open |
+| P-1657 | Site/Core | Add a Lighthouse score check (90+) for 404 page | Open |
+| P-1658 | Site/Core | Add a Lighthouse score check (90+) for contact page | Open |
+| P-1659 | Site/Core | Add a Lighthouse score check (90+) for about page | Open |
+| P-1660 | Site/Core | Add a Lighthouse score check (90+) for sitemap | Open |
+| P-1661 | Kids Corner | Add a broken-image checker for coloring pages | Open |
+| P-1662 | Kids Corner | Add a broken-image checker for story time | Open |
+| P-1663 | Kids Corner | Add a broken-image checker for Paper Pip Plane | Open |
+| P-1664 | Kids Corner | Add a broken-image checker for kids quiz | Open |
+| P-1665 | Kids Corner | Add a broken-image checker for kids home page | Open |
+| P-1666 | Kids Corner | Add a broken-image checker for parent guide page | Open |
+| P-1667 | Kids Corner | Add a broken-image checker for printables | Open |
+| P-1668 | Games/Arcade | Add a broken-image checker for arcade lobby | Open |
+| P-1669 | Games/Arcade | Add a broken-image checker for high-score board | Open |
+| P-1670 | Games/Arcade | Add a broken-image checker for memory match | Open |
+| P-1671 | Games/Arcade | Add a broken-image checker for word search | Open |
+| P-1672 | Games/Arcade | Add a broken-image checker for puzzle game | Open |
+| P-1673 | Games/Arcade | Add a broken-image checker for snake game | Open |
+| P-1674 | Games/Arcade | Add a broken-image checker for game settings menu | Open |
+| P-1675 | Watches/Top 5 | Add a broken-image checker for Top 5 lists | Open |
+| P-1676 | Watches/Top 5 | Add a broken-image checker for Tritium guide | Open |
+| P-1677 | Watches/Top 5 | Add a broken-image checker for Under $3K guide | Open |
+| P-1678 | Watches/Top 5 | Add a broken-image checker for watch posts | Open |
+| P-1679 | Watches/Top 5 | Add a broken-image checker for watch comparison table | Open |
+| P-1680 | Watches/Top 5 | Add a broken-image checker for watch buying guide | Open |
+| P-1681 | Blogs | Add a broken-image checker for blog archive | Open |
+| P-1682 | Blogs | Add a broken-image checker for blog posts | Open |
+| P-1683 | Blogs | Add a broken-image checker for journal | Open |
+| P-1684 | Blogs | Add a broken-image checker for poetry corner | Open |
+| P-1685 | Blogs | Add a broken-image checker for author page | Open |
+| P-1686 | Blogs | Add a broken-image checker for tag pages | Open |
+| P-1687 | Free Tools | Add a broken-image checker for unit converter | Open |
+| P-1688 | Free Tools | Add a broken-image checker for calculator | Open |
+| P-1689 | Free Tools | Add a broken-image checker for password generator | Open |
+| P-1690 | Free Tools | Add a broken-image checker for timer tool | Open |
+| P-1691 | Free Tools | Add a broken-image checker for tools index | Open |
+| P-1692 | Free Tools | Add a broken-image checker for QR code tool | Open |
+| P-1693 | Series/Media | Add a broken-image checker for series index | Open |
+| P-1694 | Series/Media | Add a broken-image checker for episode pages | Open |
+| P-1695 | Series/Media | Add a broken-image checker for video gallery | Open |
+| P-1696 | Series/Media | Add a broken-image checker for podcast page | Open |
+| P-1697 | Series/Media | Add a broken-image checker for media player | Open |
+| P-1698 | Site/Core | Add a broken-image checker for home page | Open |
+| P-1699 | Site/Core | Add a broken-image checker for navigation menu | Open |
+| P-1700 | Site/Core | Add a broken-image checker for footer | Open |
+| P-1701 | Site/Core | Add a broken-image checker for 404 page | Open |
+| P-1702 | Site/Core | Add a broken-image checker for contact page | Open |
+| P-1703 | Site/Core | Add a broken-image checker for about page | Open |
+| P-1704 | Site/Core | Add a broken-image checker for sitemap | Open |
+| P-1705 | Kids Corner | Add a tag=leonlink-20 affiliate disclosure note to coloring pages | Open |
+| P-1706 | Kids Corner | Add a tag=leonlink-20 affiliate disclosure note to story time | Open |
+| P-1707 | Kids Corner | Add a tag=leonlink-20 affiliate disclosure note to Paper Pip Plane | Open |
+| P-1708 | Kids Corner | Add a tag=leonlink-20 affiliate disclosure note to kids quiz | Open |
+| P-1709 | Kids Corner | Add a tag=leonlink-20 affiliate disclosure note to kids home page | Open |
+| P-1710 | Kids Corner | Add a tag=leonlink-20 affiliate disclosure note to parent guide page | Open |
+| P-1711 | Kids Corner | Add a tag=leonlink-20 affiliate disclosure note to printables | Open |
+| P-1712 | Games/Arcade | Add a tag=leonlink-20 affiliate disclosure note to arcade lobby | Open |
+| P-1713 | Games/Arcade | Add a tag=leonlink-20 affiliate disclosure note to high-score board | Open |
+| P-1714 | Games/Arcade | Add a tag=leonlink-20 affiliate disclosure note to memory match | Open |
+| P-1715 | Games/Arcade | Add a tag=leonlink-20 affiliate disclosure note to word search | Open |
+| P-1716 | Games/Arcade | Add a tag=leonlink-20 affiliate disclosure note to puzzle game | Open |
+| P-1717 | Games/Arcade | Add a tag=leonlink-20 affiliate disclosure note to snake game | Open |
+| P-1718 | Games/Arcade | Add a tag=leonlink-20 affiliate disclosure note to game settings menu | Open |
+| P-1719 | Watches/Top 5 | Add a tag=leonlink-20 affiliate disclosure note to Top 5 lists | Open |
+| P-1720 | Watches/Top 5 | Add a tag=leonlink-20 affiliate disclosure note to Tritium guide | Open |
+| P-1721 | Watches/Top 5 | Add a tag=leonlink-20 affiliate disclosure note to Under $3K guide | Open |
+| P-1722 | Watches/Top 5 | Add a tag=leonlink-20 affiliate disclosure note to watch posts | Open |
+| P-1723 | Watches/Top 5 | Add a tag=leonlink-20 affiliate disclosure note to watch comparison table | Open |
+| P-1724 | Watches/Top 5 | Add a tag=leonlink-20 affiliate disclosure note to watch buying guide | Open |
+| P-1725 | Blogs | Add a tag=leonlink-20 affiliate disclosure note to blog archive | Open |
+| P-1726 | Blogs | Add a tag=leonlink-20 affiliate disclosure note to blog posts | Open |
+| P-1727 | Blogs | Add a tag=leonlink-20 affiliate disclosure note to journal | Open |
+| P-1728 | Blogs | Add a tag=leonlink-20 affiliate disclosure note to poetry corner | Open |
+| P-1729 | Blogs | Add a tag=leonlink-20 affiliate disclosure note to author page | Open |
+| P-1730 | Blogs | Add a tag=leonlink-20 affiliate disclosure note to tag pages | Open |
+| P-1731 | Free Tools | Add a tag=leonlink-20 affiliate disclosure note to unit converter | Open |
+| P-1732 | Free Tools | Add a tag=leonlink-20 affiliate disclosure note to calculator | Open |
+| P-1733 | Free Tools | Add a tag=leonlink-20 affiliate disclosure note to password generator | Open |
+| P-1734 | Free Tools | Add a tag=leonlink-20 affiliate disclosure note to timer tool | Open |
+| P-1735 | Free Tools | Add a tag=leonlink-20 affiliate disclosure note to tools index | Open |
+| P-1736 | Free Tools | Add a tag=leonlink-20 affiliate disclosure note to QR code tool | Open |
+| P-1737 | Series/Media | Add a tag=leonlink-20 affiliate disclosure note to series index | Open |
+| P-1738 | Series/Media | Add a tag=leonlink-20 affiliate disclosure note to episode pages | Open |
+| P-1739 | Series/Media | Add a tag=leonlink-20 affiliate disclosure note to video gallery | Open |
+| P-1740 | Series/Media | Add a tag=leonlink-20 affiliate disclosure note to podcast page | Open |
+| P-1741 | Series/Media | Add a tag=leonlink-20 affiliate disclosure note to media player | Open |
+| P-1742 | Site/Core | Add a tag=leonlink-20 affiliate disclosure note to home page | Open |
+| P-1743 | Site/Core | Add a tag=leonlink-20 affiliate disclosure note to navigation menu | Open |
+| P-1744 | Site/Core | Add a tag=leonlink-20 affiliate disclosure note to footer | Open |
+| P-1745 | Site/Core | Add a tag=leonlink-20 affiliate disclosure note to 404 page | Open |
+| P-1746 | Site/Core | Add a tag=leonlink-20 affiliate disclosure note to contact page | Open |
+| P-1747 | Site/Core | Add a tag=leonlink-20 affiliate disclosure note to about page | Open |
+| P-1748 | Site/Core | Add a tag=leonlink-20 affiliate disclosure note to sitemap | Open |
+| P-1749 | Kids Corner | Add WebP image conversion for coloring pages | Open |
+| P-1750 | Kids Corner | Add WebP image conversion for story time | Open |
+| P-1751 | Kids Corner | Add WebP image conversion for Paper Pip Plane | Open |
+| P-1752 | Kids Corner | Add WebP image conversion for kids quiz | Open |
+| P-1753 | Kids Corner | Add WebP image conversion for kids home page | Open |
+| P-1754 | Kids Corner | Add WebP image conversion for parent guide page | Open |
+| P-1755 | Kids Corner | Add WebP image conversion for printables | Open |
+| P-1756 | Games/Arcade | Add WebP image conversion for arcade lobby | Open |
+| P-1757 | Games/Arcade | Add WebP image conversion for high-score board | Open |
+| P-1758 | Games/Arcade | Add WebP image conversion for memory match | Open |
+| P-1759 | Games/Arcade | Add WebP image conversion for word search | Open |
+| P-1760 | Games/Arcade | Add WebP image conversion for puzzle game | Open |
+| P-1761 | Games/Arcade | Add WebP image conversion for snake game | Open |
+| P-1762 | Games/Arcade | Add WebP image conversion for game settings menu | Open |
+| P-1763 | Watches/Top 5 | Add WebP image conversion for Top 5 lists | Open |
+| P-1764 | Watches/Top 5 | Add WebP image conversion for Tritium guide | Open |
+| P-1765 | Watches/Top 5 | Add WebP image conversion for Under $3K guide | Open |
+| P-1766 | Watches/Top 5 | Add WebP image conversion for watch posts | Open |
+| P-1767 | Watches/Top 5 | Add WebP image conversion for watch comparison table | Open |
+| P-1768 | Watches/Top 5 | Add WebP image conversion for watch buying guide | Open |
+| P-1769 | Blogs | Add WebP image conversion for blog archive | Open |
+| P-1770 | Blogs | Add WebP image conversion for blog posts | Open |
+| P-1771 | Blogs | Add WebP image conversion for journal | Open |
+| P-1772 | Blogs | Add WebP image conversion for poetry corner | Open |
+| P-1773 | Blogs | Add WebP image conversion for author page | Open |
+| P-1774 | Blogs | Add WebP image conversion for tag pages | Open |
+| P-1775 | Free Tools | Add WebP image conversion for unit converter | Open |
+| P-1776 | Free Tools | Add WebP image conversion for calculator | Open |
+| P-1777 | Free Tools | Add WebP image conversion for password generator | Open |
+| P-1778 | Free Tools | Add WebP image conversion for timer tool | Open |
+| P-1779 | Free Tools | Add WebP image conversion for tools index | Open |
+| P-1780 | Free Tools | Add WebP image conversion for QR code tool | Open |
+| P-1781 | Series/Media | Add WebP image conversion for series index | Open |
+| P-1782 | Series/Media | Add WebP image conversion for episode pages | Open |
+| P-1783 | Series/Media | Add WebP image conversion for video gallery | Open |
+| P-1784 | Series/Media | Add WebP image conversion for podcast page | Open |
+| P-1785 | Series/Media | Add WebP image conversion for media player | Open |
+| P-1786 | Site/Core | Add WebP image conversion for home page | Open |
+| P-1787 | Site/Core | Add WebP image conversion for navigation menu | Open |
+| P-1788 | Site/Core | Add WebP image conversion for footer | Open |
+| P-1789 | Site/Core | Add WebP image conversion for 404 page | Open |
+| P-1790 | Site/Core | Add WebP image conversion for contact page | Open |
+| P-1791 | Site/Core | Add WebP image conversion for about page | Open |
+| P-1792 | Site/Core | Add WebP image conversion for sitemap | Open |
+| P-1793 | Kids Corner | Add a high-contrast mode to coloring pages | Open |
+| P-1794 | Kids Corner | Add a high-contrast mode to story time | Open |
+| P-1795 | Kids Corner | Add a high-contrast mode to Paper Pip Plane | Open |
+| P-1796 | Kids Corner | Add a high-contrast mode to kids quiz | Open |
+| P-1797 | Kids Corner | Add a high-contrast mode to kids home page | Open |
+| P-1798 | Kids Corner | Add a high-contrast mode to parent guide page | Open |
+| P-1799 | Kids Corner | Add a high-contrast mode to printables | Open |
+| P-1800 | Games/Arcade | Add a high-contrast mode to arcade lobby | Open |
+| P-1801 | Games/Arcade | Add a high-contrast mode to high-score board | Open |
+| P-1802 | Games/Arcade | Add a high-contrast mode to memory match | Open |
+| P-1803 | Games/Arcade | Add a high-contrast mode to word search | Open |
+| P-1804 | Games/Arcade | Add a high-contrast mode to puzzle game | Open |
+| P-1805 | Games/Arcade | Add a high-contrast mode to snake game | Open |
+| P-1806 | Games/Arcade | Add a high-contrast mode to game settings menu | Open |
+| P-1807 | Watches/Top 5 | Add a high-contrast mode to Top 5 lists | Open |
+| P-1808 | Watches/Top 5 | Add a high-contrast mode to Tritium guide | Open |
+| P-1809 | Watches/Top 5 | Add a high-contrast mode to Under $3K guide | Open |
+| P-1810 | Watches/Top 5 | Add a high-contrast mode to watch posts | Open |
+| P-1811 | Watches/Top 5 | Add a high-contrast mode to watch comparison table | Open |
+| P-1812 | Watches/Top 5 | Add a high-contrast mode to watch buying guide | Open |
+| P-1813 | Blogs | Add a high-contrast mode to blog archive | Open |
+| P-1814 | Blogs | Add a high-contrast mode to blog posts | Open |
+| P-1815 | Blogs | Add a high-contrast mode to journal | Open |
+| P-1816 | Blogs | Add a high-contrast mode to poetry corner | Open |
+| P-1817 | Blogs | Add a high-contrast mode to author page | Open |
+| P-1818 | Blogs | Add a high-contrast mode to tag pages | Open |
+| P-1819 | Free Tools | Add a high-contrast mode to unit converter | Open |
+| P-1820 | Free Tools | Add a high-contrast mode to calculator | Open |
+| P-1821 | Free Tools | Add a high-contrast mode to password generator | Open |
+| P-1822 | Free Tools | Add a high-contrast mode to timer tool | Open |
+| P-1823 | Free Tools | Add a high-contrast mode to tools index | Open |
+| P-1824 | Free Tools | Add a high-contrast mode to QR code tool | Open |
+| P-1825 | Series/Media | Add a high-contrast mode to series index | Open |
+| P-1826 | Series/Media | Add a high-contrast mode to episode pages | Open |
+| P-1827 | Series/Media | Add a high-contrast mode to video gallery | Open |
+| P-1828 | Series/Media | Add a high-contrast mode to podcast page | Open |
+| P-1829 | Series/Media | Add a high-contrast mode to media player | Open |
+| P-1830 | Site/Core | Add a high-contrast mode to home page | Open |
+| P-1831 | Site/Core | Add a high-contrast mode to navigation menu | Open |
+| P-1832 | Site/Core | Add a high-contrast mode to footer | Open |
+| P-1833 | Site/Core | Add a high-contrast mode to 404 page | Open |
+| P-1834 | Site/Core | Add a high-contrast mode to contact page | Open |
+| P-1835 | Site/Core | Add a high-contrast mode to about page | Open |
+| P-1836 | Site/Core | Add a high-contrast mode to sitemap | Open |
+| P-1837 | Kids Corner | Add a font-size control to coloring pages | Open |
+| P-1838 | Kids Corner | Add a font-size control to story time | Open |
+| P-1839 | Kids Corner | Add a font-size control to Paper Pip Plane | Open |
+| P-1840 | Kids Corner | Add a font-size control to kids quiz | Open |
+| P-1841 | Kids Corner | Add a font-size control to kids home page | Open |
+| P-1842 | Kids Corner | Add a font-size control to parent guide page | Open |
+| P-1843 | Kids Corner | Add a font-size control to printables | Open |
+| P-1844 | Games/Arcade | Add a font-size control to arcade lobby | Open |
+| P-1845 | Games/Arcade | Add a font-size control to high-score board | Open |
+| P-1846 | Games/Arcade | Add a font-size control to memory match | Open |
+| P-1847 | Games/Arcade | Add a font-size control to word search | Open |
+| P-1848 | Games/Arcade | Add a font-size control to puzzle game | Open |
+| P-1849 | Games/Arcade | Add a font-size control to snake game | Open |
+| P-1850 | Games/Arcade | Add a font-size control to game settings menu | Open |
+| P-1851 | Watches/Top 5 | Add a font-size control to Top 5 lists | Open |
+| P-1852 | Watches/Top 5 | Add a font-size control to Tritium guide | Open |
+| P-1853 | Watches/Top 5 | Add a font-size control to Under $3K guide | Open |
+| P-1854 | Watches/Top 5 | Add a font-size control to watch posts | Open |
+| P-1855 | Watches/Top 5 | Add a font-size control to watch comparison table | Open |
+| P-1856 | Watches/Top 5 | Add a font-size control to watch buying guide | Open |
+| P-1857 | Blogs | Add a font-size control to blog archive | Open |
+| P-1858 | Blogs | Add a font-size control to blog posts | Open |
+| P-1859 | Blogs | Add a font-size control to journal | Open |
+| P-1860 | Blogs | Add a font-size control to poetry corner | Open |
+| P-1861 | Blogs | Add a font-size control to author page | Open |
+| P-1862 | Blogs | Add a font-size control to tag pages | Open |
+| P-1863 | Free Tools | Add a font-size control to unit converter | Open |
+| P-1864 | Free Tools | Add a font-size control to calculator | Open |
+| P-1865 | Free Tools | Add a font-size control to password generator | Open |
+| P-1866 | Free Tools | Add a font-size control to timer tool | Open |
+| P-1867 | Free Tools | Add a font-size control to tools index | Open |
+| P-1868 | Free Tools | Add a font-size control to QR code tool | Open |
+| P-1869 | Series/Media | Add a font-size control to series index | Open |
+| P-1870 | Series/Media | Add a font-size control to episode pages | Open |
+| P-1871 | Series/Media | Add a font-size control to video gallery | Open |
+| P-1872 | Series/Media | Add a font-size control to podcast page | Open |
+| P-1873 | Series/Media | Add a font-size control to media player | Open |
+| P-1874 | Site/Core | Add a font-size control to home page | Open |
+| P-1875 | Site/Core | Add a font-size control to navigation menu | Open |
+| P-1876 | Site/Core | Add a font-size control to footer | Open |
+| P-1877 | Site/Core | Add a font-size control to 404 page | Open |
+| P-1878 | Site/Core | Add a font-size control to contact page | Open |
+| P-1879 | Site/Core | Add a font-size control to about page | Open |
+| P-1880 | Site/Core | Add a font-size control to sitemap | Open |
+| P-1881 | Kids Corner | Add an RSS/updates feed entry for coloring pages | Open |
+| P-1882 | Kids Corner | Add an RSS/updates feed entry for story time | Open |
+| P-1883 | Kids Corner | Add an RSS/updates feed entry for Paper Pip Plane | Open |
+| P-1884 | Kids Corner | Add an RSS/updates feed entry for kids quiz | Open |
+| P-1885 | Kids Corner | Add an RSS/updates feed entry for kids home page | Open |
+| P-1886 | Kids Corner | Add an RSS/updates feed entry for parent guide page | Open |
+| P-1887 | Kids Corner | Add an RSS/updates feed entry for printables | Open |
+| P-1888 | Games/Arcade | Add an RSS/updates feed entry for arcade lobby | Open |
+| P-1889 | Games/Arcade | Add an RSS/updates feed entry for high-score board | Open |
+| P-1890 | Games/Arcade | Add an RSS/updates feed entry for memory match | Open |
+| P-1891 | Games/Arcade | Add an RSS/updates feed entry for word search | Open |
+| P-1892 | Games/Arcade | Add an RSS/updates feed entry for puzzle game | Open |
+| P-1893 | Games/Arcade | Add an RSS/updates feed entry for snake game | Open |
+| P-1894 | Games/Arcade | Add an RSS/updates feed entry for game settings menu | Open |
+| P-1895 | Watches/Top 5 | Add an RSS/updates feed entry for Top 5 lists | Open |
+| P-1896 | Watches/Top 5 | Add an RSS/updates feed entry for Tritium guide | Open |
+| P-1897 | Watches/Top 5 | Add an RSS/updates feed entry for Under $3K guide | Open |
+| P-1898 | Watches/Top 5 | Add an RSS/updates feed entry for watch posts | Open |
+| P-1899 | Watches/Top 5 | Add an RSS/updates feed entry for watch comparison table | Open |
+| P-1900 | Watches/Top 5 | Add an RSS/updates feed entry for watch buying guide | Open |
+| P-1901 | Blogs | Add an RSS/updates feed entry for blog archive | Open |
+| P-1902 | Blogs | Add an RSS/updates feed entry for blog posts | Open |
+| P-1903 | Blogs | Add an RSS/updates feed entry for journal | Open |
+| P-1904 | Blogs | Add an RSS/updates feed entry for poetry corner | Open |
+| P-1905 | Blogs | Add an RSS/updates feed entry for author page | Open |
+| P-1906 | Blogs | Add an RSS/updates feed entry for tag pages | Open |
+| P-1907 | Free Tools | Add an RSS/updates feed entry for unit converter | Open |
+| P-1908 | Free Tools | Add an RSS/updates feed entry for calculator | Open |
+| P-1909 | Free Tools | Add an RSS/updates feed entry for password generator | Open |
+| P-1910 | Free Tools | Add an RSS/updates feed entry for timer tool | Open |
+| P-1911 | Free Tools | Add an RSS/updates feed entry for tools index | Open |
+| P-1912 | Free Tools | Add an RSS/updates feed entry for QR code tool | Open |
+| P-1913 | Series/Media | Add an RSS/updates feed entry for series index | Open |
+| P-1914 | Series/Media | Add an RSS/updates feed entry for episode pages | Open |
+| P-1915 | Series/Media | Add an RSS/updates feed entry for video gallery | Open |
+| P-1916 | Series/Media | Add an RSS/updates feed entry for podcast page | Open |
+| P-1917 | Series/Media | Add an RSS/updates feed entry for media player | Open |
+| P-1918 | Site/Core | Add an RSS/updates feed entry for home page | Open |
+| P-1919 | Site/Core | Add an RSS/updates feed entry for navigation menu | Open |
+| P-1920 | Site/Core | Add an RSS/updates feed entry for footer | Open |
+| P-1921 | Site/Core | Add an RSS/updates feed entry for 404 page | Open |
+| P-1922 | Site/Core | Add an RSS/updates feed entry for contact page | Open |
+| P-1923 | Site/Core | Add an RSS/updates feed entry for about page | Open |
+| P-1924 | Site/Core | Add an RSS/updates feed entry for sitemap | Open |
+| P-1925 | Kids Corner | Add analytics event tracking (privacy-safe) to coloring pages | Open |
+| P-1926 | Kids Corner | Add analytics event tracking (privacy-safe) to story time | Open |
+| P-1927 | Kids Corner | Add analytics event tracking (privacy-safe) to Paper Pip Plane | Open |
+| P-1928 | Kids Corner | Add analytics event tracking (privacy-safe) to kids quiz | Open |
+| P-1929 | Kids Corner | Add analytics event tracking (privacy-safe) to kids home page | Open |
+| P-1930 | Kids Corner | Add analytics event tracking (privacy-safe) to parent guide page | Open |
+| P-1931 | Kids Corner | Add analytics event tracking (privacy-safe) to printables | Open |
+| P-1932 | Games/Arcade | Add analytics event tracking (privacy-safe) to arcade lobby | Open |
+| P-1933 | Games/Arcade | Add analytics event tracking (privacy-safe) to high-score board | Open |
+| P-1934 | Games/Arcade | Add analytics event tracking (privacy-safe) to memory match | Open |
+| P-1935 | Games/Arcade | Add analytics event tracking (privacy-safe) to word search | Open |
+| P-1936 | Games/Arcade | Add analytics event tracking (privacy-safe) to puzzle game | Open |
+| P-1937 | Games/Arcade | Add analytics event tracking (privacy-safe) to snake game | Open |
+| P-1938 | Games/Arcade | Add analytics event tracking (privacy-safe) to game settings menu | Open |
+| P-1939 | Watches/Top 5 | Add analytics event tracking (privacy-safe) to Top 5 lists | Open |
+| P-1940 | Watches/Top 5 | Add analytics event tracking (privacy-safe) to Tritium guide | Open |
+| P-1941 | Watches/Top 5 | Add analytics event tracking (privacy-safe) to Under $3K guide | Open |
+| P-1942 | Watches/Top 5 | Add analytics event tracking (privacy-safe) to watch posts | Open |
+| P-1943 | Watches/Top 5 | Add analytics event tracking (privacy-safe) to watch comparison table | Open |
+| P-1944 | Watches/Top 5 | Add analytics event tracking (privacy-safe) to watch buying guide | Open |
+| P-1945 | Blogs | Add analytics event tracking (privacy-safe) to blog archive | Open |
+| P-1946 | Blogs | Add analytics event tracking (privacy-safe) to blog posts | Open |
+| P-1947 | Blogs | Add analytics event tracking (privacy-safe) to journal | Open |
+| P-1948 | Blogs | Add analytics event tracking (privacy-safe) to poetry corner | Open |
+| P-1949 | Blogs | Add analytics event tracking (privacy-safe) to author page | Open |
+| P-1950 | Blogs | Add analytics event tracking (privacy-safe) to tag pages | Open |
+| P-1951 | Free Tools | Add analytics event tracking (privacy-safe) to unit converter | Open |
+| P-1952 | Free Tools | Add analytics event tracking (privacy-safe) to calculator | Open |
+| P-1953 | Free Tools | Add analytics event tracking (privacy-safe) to password generator | Open |
+| P-1954 | Free Tools | Add analytics event tracking (privacy-safe) to timer tool | Open |
+| P-1955 | Free Tools | Add analytics event tracking (privacy-safe) to tools index | Open |
+| P-1956 | Free Tools | Add analytics event tracking (privacy-safe) to QR code tool | Open |
+| P-1957 | Series/Media | Add analytics event tracking (privacy-safe) to series index | Open |
+| P-1958 | Series/Media | Add analytics event tracking (privacy-safe) to episode pages | Open |
+| P-1959 | Series/Media | Add analytics event tracking (privacy-safe) to video gallery | Open |
+| P-1960 | Series/Media | Add analytics event tracking (privacy-safe) to podcast page | Open |
+| P-1961 | Series/Media | Add analytics event tracking (privacy-safe) to media player | Open |
+| P-1962 | Site/Core | Add analytics event tracking (privacy-safe) to home page | Open |
+| P-1963 | Site/Core | Add analytics event tracking (privacy-safe) to navigation menu | Open |
+| P-1964 | Site/Core | Add analytics event tracking (privacy-safe) to footer | Open |
+| P-1965 | Site/Core | Add analytics event tracking (privacy-safe) to 404 page | Open |
+| P-1966 | Site/Core | Add analytics event tracking (privacy-safe) to contact page | Open |
+| P-1967 | Site/Core | Add analytics event tracking (privacy-safe) to about page | Open |
+| P-1968 | Site/Core | Add analytics event tracking (privacy-safe) to sitemap | Open |
+| P-1969 | Kids Corner | Add canonical URL tags to coloring pages | Open |
+| P-1970 | Kids Corner | Add canonical URL tags to story time | Open |
+| P-1971 | Kids Corner | Add canonical URL tags to Paper Pip Plane | Open |
+| P-1972 | Kids Corner | Add canonical URL tags to kids quiz | Open |
+| P-1973 | Kids Corner | Add canonical URL tags to kids home page | Open |
+| P-1974 | Kids Corner | Add canonical URL tags to parent guide page | Open |
+| P-1975 | Kids Corner | Add canonical URL tags to printables | Open |
+| P-1976 | Games/Arcade | Add canonical URL tags to arcade lobby | Open |
+| P-1977 | Games/Arcade | Add canonical URL tags to high-score board | Open |
+| P-1978 | Games/Arcade | Add canonical URL tags to memory match | Open |
+| P-1979 | Games/Arcade | Add canonical URL tags to word search | Open |
+| P-1980 | Games/Arcade | Add canonical URL tags to puzzle game | Open |
+| P-1981 | Games/Arcade | Add canonical URL tags to snake game | Open |
+| P-1982 | Games/Arcade | Add canonical URL tags to game settings menu | Open |
+| P-1983 | Watches/Top 5 | Add canonical URL tags to Top 5 lists | Open |
+| P-1984 | Watches/Top 5 | Add canonical URL tags to Tritium guide | Open |
+| P-1985 | Watches/Top 5 | Add canonical URL tags to Under $3K guide | Open |
+| P-1986 | Watches/Top 5 | Add canonical URL tags to watch posts | Open |
+| P-1987 | Watches/Top 5 | Add canonical URL tags to watch comparison table | Open |
+| P-1988 | Watches/Top 5 | Add canonical URL tags to watch buying guide | Open |
+| P-1989 | Blogs | Add canonical URL tags to blog archive | Open |
+| P-1990 | Blogs | Add canonical URL tags to blog posts | Open |
+| P-1991 | Blogs | Add canonical URL tags to journal | Open |
+| P-1992 | Blogs | Add canonical URL tags to poetry corner | Open |
+| P-1993 | Blogs | Add canonical URL tags to author page | Open |
+| P-1994 | Blogs | Add canonical URL tags to tag pages | Open |
+| P-1995 | Free Tools | Add canonical URL tags to unit converter | Open |
+| P-1996 | Free Tools | Add canonical URL tags to calculator | Open |
+| P-1997 | Free Tools | Add canonical URL tags to password generator | Open |
+| P-1998 | Free Tools | Add canonical URL tags to timer tool | Open |
+| P-1999 | Free Tools | Add canonical URL tags to tools index | Open |
+| P-2000 | Free Tools | Add canonical URL tags to QR code tool | Open |
