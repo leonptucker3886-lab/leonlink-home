@@ -124,6 +124,14 @@
    "next": "P-1053",
    "step_due": "2026-10-27T03:30Z",
    "rubric": "debug + 3 polish rounds: no console/HTML errors, 375px mobile, links work (Amazon tag=leonlink-20), matches TRUTH.md + scope, no other bots' files; park until Leon approves"
+  },
+  "datasheet": {
+   "job": "P-1021",
+   "step": "print stylesheet for blog archive on branch datasheet/P-1021",
+   "status": "STARTED",
+   "next": "P-1022",
+   "step_due": "2026-10-27T03:30Z",
+   "rubric": "debug + 3 polish rounds: no console/HTML errors, 375px mobile, links work (Amazon tag=leonlink-20), matches TRUTH.md + scope, no other bots' files; park until Leon approves"
   }
  },
  "jobs": {
@@ -240,6 +248,13 @@
    "P-1052",
    "START",
    "14 Games/Arcade rows logged; P-1052 Building, 13 Queued"
+  ],
+  [
+   "2026-10-26T03:30Z",
+   "datasheet",
+   "P-1021",
+   "START",
+   "14 Blogs rows logged; P-1021 Building, 13 Queued"
   ]
  ],
  "timers": {
@@ -762,6 +777,90 @@
    "owner": "Iceman",
    "status": "Queued",
    "branch": "iceman/P-1040",
+   "rank": 14
+  },
+  "P-1021": {
+   "owner": "datasheet",
+   "status": "Building",
+   "branch": "datasheet/P-1021",
+   "rank": 1
+  },
+  "P-1022": {
+   "owner": "datasheet",
+   "status": "Queued",
+   "branch": "datasheet/P-1022",
+   "rank": 2
+  },
+  "P-1023": {
+   "owner": "datasheet",
+   "status": "Queued",
+   "branch": "datasheet/P-1023",
+   "rank": 3
+  },
+  "P-1024": {
+   "owner": "datasheet",
+   "status": "Queued",
+   "branch": "datasheet/P-1024",
+   "rank": 4
+  },
+  "P-1025": {
+   "owner": "datasheet",
+   "status": "Queued",
+   "branch": "datasheet/P-1025",
+   "rank": 5
+  },
+  "P-1026": {
+   "owner": "datasheet",
+   "status": "Queued",
+   "branch": "datasheet/P-1026",
+   "rank": 6
+  },
+  "P-1065": {
+   "owner": "datasheet",
+   "status": "Queued",
+   "branch": "datasheet/P-1065",
+   "rank": 7
+  },
+  "P-1066": {
+   "owner": "datasheet",
+   "status": "Queued",
+   "branch": "datasheet/P-1066",
+   "rank": 8
+  },
+  "P-1067": {
+   "owner": "datasheet",
+   "status": "Queued",
+   "branch": "datasheet/P-1067",
+   "rank": 9
+  },
+  "P-1068": {
+   "owner": "datasheet",
+   "status": "Queued",
+   "branch": "datasheet/P-1068",
+   "rank": 10
+  },
+  "P-1069": {
+   "owner": "datasheet",
+   "status": "Queued",
+   "branch": "datasheet/P-1069",
+   "rank": 11
+  },
+  "P-1070": {
+   "owner": "datasheet",
+   "status": "Queued",
+   "branch": "datasheet/P-1070",
+   "rank": 12
+  },
+  "P-0042": {
+   "owner": "datasheet",
+   "status": "Queued",
+   "branch": "datasheet/P-0042",
+   "rank": 13
+  },
+  "P-0043": {
+   "owner": "datasheet",
+   "status": "Queued",
+   "branch": "datasheet/P-0043",
    "rank": 14
   }
  }
