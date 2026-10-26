@@ -164,6 +164,25 @@
    "next": "P-1034",
    "step_due": "2026-10-27T03:35Z",
    "rubric": "debug + 3 polish rounds: no console/HTML errors, 375px mobile, links work (Amazon tag=leonlink-20), matches TRUTH.md + scope, no other bots' files; park until Leon approves"
+  },
+  "Boobs": {
+   "job": "P-0013",
+   "step": "scope from board, build on branch boobs/P-0013",
+   "status": "STARTED",
+   "next": "P-0018",
+   "step_due": "2026-10-27T03:35Z",
+   "rubric": {
+    "loop": "next own row -> branch boobs/<id> -> build -> debug -> Polish 1/2/3 -> Parked (await Leon approval) -> next",
+    "pass_each_polish": [
+     "no console/HTML errors",
+     "mobile 375px ok",
+     "links work; Amazon tag=leonlink-20",
+     "matches TRUTH.md + scope",
+     "diff small, no other bot files"
+    ],
+    "blocked": "set Parked+BLOCKED, ticket PDF, take next",
+    "check_every_min": 20
+   }
   }
  },
  "jobs": {
@@ -315,6 +334,13 @@
    "P-1033",
    "START",
    "14 rows logged; P-1033 Building, 13 Queued"
+  ],
+  [
+   "2026-10-26T03:37Z",
+   "Boobs",
+   "P-0013",
+   "START",
+   "14 rows logged; P-0013 Building, 13 Queued"
   ]
  ],
  "timers": {
@@ -1257,6 +1283,90 @@
    "owner": "Tooth",
    "status": "Queued",
    "branch": "tooth/P-1081",
+   "rank": 14
+  },
+  "P-0013": {
+   "owner": "Boobs",
+   "status": "Building",
+   "branch": "boobs/P-0013",
+   "rank": 1
+  },
+  "P-0018": {
+   "owner": "Boobs",
+   "status": "Queued",
+   "branch": "boobs/P-0018",
+   "rank": 2
+  },
+  "P-0019": {
+   "owner": "Boobs",
+   "status": "Queued",
+   "branch": "boobs/P-0019",
+   "rank": 3
+  },
+  "P-0020": {
+   "owner": "Boobs",
+   "status": "Queued",
+   "branch": "boobs/P-0020",
+   "rank": 4
+  },
+  "P-0021": {
+   "owner": "Boobs",
+   "status": "Queued",
+   "branch": "boobs/P-0021",
+   "rank": 5
+  },
+  "P-0022": {
+   "owner": "Boobs",
+   "status": "Queued",
+   "branch": "boobs/P-0022",
+   "rank": 6
+  },
+  "P-0023": {
+   "owner": "Boobs",
+   "status": "Queued",
+   "branch": "boobs/P-0023",
+   "rank": 7
+  },
+  "P-0024": {
+   "owner": "Boobs",
+   "status": "Queued",
+   "branch": "boobs/P-0024",
+   "rank": 8
+  },
+  "P-0030": {
+   "owner": "Boobs",
+   "status": "Queued",
+   "branch": "boobs/P-0030",
+   "rank": 9
+  },
+  "P-0031": {
+   "owner": "Boobs",
+   "status": "Queued",
+   "branch": "boobs/P-0031",
+   "rank": 10
+  },
+  "P-0039": {
+   "owner": "Boobs",
+   "status": "Queued",
+   "branch": "boobs/P-0039",
+   "rank": 11
+  },
+  "P-0040": {
+   "owner": "Boobs",
+   "status": "Queued",
+   "branch": "boobs/P-0040",
+   "rank": 12
+  },
+  "P-0041": {
+   "owner": "Boobs",
+   "status": "Queued",
+   "branch": "boobs/P-0041",
+   "rank": 13
+  },
+  "P-0047": {
+   "owner": "Boobs",
+   "status": "Queued",
+   "branch": "boobs/P-0047",
    "rank": 14
   }
  }
