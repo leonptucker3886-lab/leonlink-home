@@ -4,6 +4,7 @@
 <link>https://www.leonlink.net/blog.html</link>
 <description>Researched, interactive long-form posts from LeonLink.</description>
 <atom:link href="https://www.leonlink.net/feed.xml" rel="self" type="application/rss+xml"/>
+<atom:link href="https://pubsubhubbub.appspot.com/" rel="hub"/>
 <language>en-us</language>
 <item><title>Why Do We Procrastinate?</title><link>https://www.leonlink.net/journal/why-we-procrastinate.html</link><guid>https://www.leonlink.net/journal/why-we-procrastinate.html</guid><pubDate>Wed, 21 Oct 2026 12:00:00 +0000</pubDate><description>It&#x27;s not laziness. Procrastination is short-term mood repair. The procrastination equation, what it costs you, and the if-then trick with 94 studies behind it.</description></item>
 <item><title>Does Music Make You Smarter?</title><link>https://www.leonlink.net/journal/does-music-make-you-smarter.html</link><guid>https://www.leonlink.net/journal/does-music-make-you-smarter.html</guid><pubDate>Wed, 21 Oct 2026 12:00:00 +0000</pubDate><description>The Mozart effect, 30 years later. What the 1993 study really found and what the best studies say about music lessons.</description></item>
