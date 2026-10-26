@@ -1,0 +1,33 @@
+name: Auto-ping search & feeds
+on:
+  push:
+    branches: [main]
+    paths: ['**.html', 'feed.xml', 'sitemap.xml']
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Collect changed URLs
+        id: urls
+        run: |
+          BASE="https://www.leonlink.net"
+          FILES=$(git diff --name-only HEAD~1 HEAD -- '*.html' || true)
+          URLS="\"$BASE/\",\"$BASE/feed.xml\",\"$BASE/sitemap.xml\""
+          for f in $FILES; do [ -f "$f" ] && URLS="$URLS,\"$BASE/$f\""; done
+          echo "list=$URLS" >> "$GITHUB_OUTPUT"
+      - name: IndexNow
+        run: |
+          curl -s -o /dev/null -w "IndexNow %{http_code}\n" -X POST https://api.indexnow.org/indexnow \
+            -H "Content-Type: application/json; charset=utf-8" \
+            -d '{"host":"www.leonlink.net","key":"f1dd33cb53e4fe6c807300fac449359f","keyLocation":"https://www.leonlink.net/f1dd33cb53e4fe6c807300fac449359f.txt","urlList":[${{ steps.urls.outputs.list }}]}' || true
+      - name: WebSub
+        run: |
+          curl -s -o /dev/null -w "WebSub %{http_code}\n" -X POST https://pubsubhubbub.appspot.com/ \
+            -d hub.mode=publish -d hub.url=https://www.leonlink.net/feed.xml || true
+      - name: Ping-o-Matic
+        run: |
+          curl -s -w "\n" -X POST http://rpc.pingomatic.com/ -H "Content-Type: text/xml" \
+            -d '<?xml version="1.0"?><methodCall><methodName>weblogUpdates.extendedPing</methodName><params><param><value>LeonLink</value></param><param><value>https://www.leonlink.net/</value></param><param><value>https://www.leonlink.net/blog.html</value></param><param><value>https://www.leonlink.net/feed.xml</value></param></params></methodCall>' || true
