@@ -1,0 +1,14 @@
+name: SEO audit
+on:
+  push:
+    branches: [main]
+    paths: ['**.html']
+  schedule:
+    - cron: '0 14 * * 1'
+  workflow_dispatch:
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/seo-audit.py
