@@ -102,3 +102,5 @@ else{var f=document.createElement('footer');f.className='ll-footer';f.style.cssT
 
 /* Mushroom Madness chat widget on every page */
 ;(function(){if(!document.getElementById("ll-mush")){var s=document.createElement("script");s.id="ll-mush";s.src="/js/mushroom-chat.js?v=1";s.defer=true;(document.body||document.head).appendChild(s)}})();
+
+;(function(){if(!document.getElementById("ll-glow")){var s=document.createElement("script");s.id="ll-glow";s.src="/js/glow-account.js?v=1";s.defer=true;(document.body||document.head).appendChild(s)}})();
