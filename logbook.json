@@ -156,6 +156,14 @@
    "next": "P-0011",
    "step_due": "2026-10-27T03:35Z",
    "rubric": "debug + 3 polish rounds: no console/HTML errors, 375px mobile, links work (Amazon tag=leonlink-20), matches TRUTH.md + scope, no other bots' files; park until Leon approves"
+  },
+  "Tooth": {
+   "job": "P-1033",
+   "step": "scope from board, build on branch tooth/P-1033",
+   "status": "STARTED",
+   "next": "P-1034",
+   "step_due": "2026-10-27T03:35Z",
+   "rubric": "debug + 3 polish rounds: no console/HTML errors, 375px mobile, links work (Amazon tag=leonlink-20), matches TRUTH.md + scope, no other bots' files; park until Leon approves"
   }
  },
  "jobs": {
@@ -300,6 +308,13 @@
    "P-0010",
    "START",
    "14 Blogs rows logged; P-0010 Building, 13 Queued"
+  ],
+  [
+   "2026-10-26T03:36Z",
+   "Tooth",
+   "P-1033",
+   "START",
+   "14 rows logged; P-1033 Building, 13 Queued"
   ]
  ],
  "timers": {
@@ -1158,6 +1173,90 @@
    "owner": "Bugs",
    "status": "Queued",
    "branch": "bugs/P-0075",
+   "rank": 14
+  },
+  "P-1033": {
+   "owner": "Tooth",
+   "status": "Building",
+   "branch": "tooth/P-1033",
+   "rank": 1
+  },
+  "P-1034": {
+   "owner": "Tooth",
+   "status": "Queued",
+   "branch": "tooth/P-1034",
+   "rank": 2
+  },
+  "P-1035": {
+   "owner": "Tooth",
+   "status": "Queued",
+   "branch": "tooth/P-1035",
+   "rank": 3
+  },
+  "P-1036": {
+   "owner": "Tooth",
+   "status": "Queued",
+   "branch": "tooth/P-1036",
+   "rank": 4
+  },
+  "P-1037": {
+   "owner": "Tooth",
+   "status": "Queued",
+   "branch": "tooth/P-1037",
+   "rank": 5
+  },
+  "P-1041": {
+   "owner": "Tooth",
+   "status": "Queued",
+   "branch": "tooth/P-1041",
+   "rank": 6
+  },
+  "P-1042": {
+   "owner": "Tooth",
+   "status": "Queued",
+   "branch": "tooth/P-1042",
+   "rank": 7
+  },
+  "P-1043": {
+   "owner": "Tooth",
+   "status": "Queued",
+   "branch": "tooth/P-1043",
+   "rank": 8
+  },
+  "P-1044": {
+   "owner": "Tooth",
+   "status": "Queued",
+   "branch": "tooth/P-1044",
+   "rank": 9
+  },
+  "P-1077": {
+   "owner": "Tooth",
+   "status": "Queued",
+   "branch": "tooth/P-1077",
+   "rank": 10
+  },
+  "P-1078": {
+   "owner": "Tooth",
+   "status": "Queued",
+   "branch": "tooth/P-1078",
+   "rank": 11
+  },
+  "P-1079": {
+   "owner": "Tooth",
+   "status": "Queued",
+   "branch": "tooth/P-1079",
+   "rank": 12
+  },
+  "P-1080": {
+   "owner": "Tooth",
+   "status": "Queued",
+   "branch": "tooth/P-1080",
+   "rank": 13
+  },
+  "P-1081": {
+   "owner": "Tooth",
+   "status": "Queued",
+   "branch": "tooth/P-1081",
    "rank": 14
   }
  }
