@@ -13,7 +13,7 @@
 <link rel="icon" href="/favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Fraunces:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#05070d;--pan:#0a0f1ae6;--ink:#e6e8ef;--mut:#8e98ad;--gold:#c8a96a;--gold2:#e2cd9c;--line:#1a2233;--line2:#263149}
+:root{--bg:#07041a;--pan:#120a2ee6;--ink:#f4f1ff;--mut:#b3a8d9;--gold:#ffc94d;--gold2:#ffe08a;--line:#2a1a55;--line2:#4b2a8f;--neon1:#ff3df2;--neon2:#22f0ff;--neon3:#a8ff3d;--neon4:#ff8a1f}
 *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:60px;-webkit-text-size-adjust:100%}
 body{margin:0;background:radial-gradient(1100px 520px at 50% -8%,#121a33 0%,transparent 62%),var(--bg);color:var(--ink);font:16px/1.65 "DM Sans",system-ui,sans-serif;padding-bottom:env(safe-area-inset-bottom)}
 a{color:var(--gold2);text-decoration-color:#c8a96a66;text-underline-offset:3px}a:hover{color:#fff}
@@ -87,6 +87,26 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px 8px;
 .sfoot .flogo{display:flex;align-items:center;gap:8px;font-weight:800;color:var(--ink);text-decoration:none}
 .sfoot nav{display:flex;gap:14px;flex-wrap:wrap}.sfoot nav a{color:var(--mut);text-decoration:none;font-size:13.5px}
 .sfoot .fcopy{color:var(--mut);font-size:12.5px}
+
+/* Neon accents */
+body{background:radial-gradient(900px 480px at 15% -5%,#5b1aa866 0%,transparent 60%),radial-gradient(900px 480px at 90% 0%,#0a8fb055 0%,transparent 60%),radial-gradient(700px 400px at 50% 100%,#ff3df22a 0%,transparent 70%),var(--bg)}
+h1 em{color:var(--neon1);text-shadow:0 0 12px #ff3df2aa,0 0 32px #ff3df255}
+h1{text-shadow:0 0 18px #22f0ff33}
+.kick{color:var(--neon2);text-shadow:0 0 8px #22f0ff88}
+h2{background:linear-gradient(90deg,#ffe08a,#ff3df2 55%,#22f0ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+h3{color:var(--neon2)}
+.shead{border-bottom:1px solid transparent;border-image:linear-gradient(90deg,var(--neon1),var(--neon2),transparent) 1}
+.pan{border-color:#6b3fd0;box-shadow:0 0 0 1px #ff3df222,0 0 24px #8a3dff33,0 12px 30px #0008}
+.pan:hover{box-shadow:0 0 0 1px #22f0ff55,0 0 32px #22f0ff33,0 12px 30px #0008}
+.stage{background:linear-gradient(180deg,#1a0b45,#120a32 58%,#0a0620);border-color:var(--neon1);box-shadow:0 0 28px #ff3df255,inset 0 0 40px #22f0ff22}
+.orn{color:var(--neon1);filter:drop-shadow(0 0 6px #ff3df2)}
+a{color:var(--neon2)}a:hover{color:#fff;text-shadow:0 0 8px #22f0ff}
+header.top{border-bottom-color:#ff3df255;box-shadow:0 1px 18px #ff3df222}
+header.top .home{color:var(--neon1);text-shadow:0 0 8px #ff3df288}
+button,.btn{box-shadow:0 0 14px #ff3df266;transition:box-shadow .2s,transform .2s}
+button:hover,.btn:hover{box-shadow:0 0 22px #22f0ffaa;transform:translateY(-1px)}
+input,select{border-color:#4b2a8f!important}input:focus,select:focus{outline:none;border-color:var(--neon2)!important;box-shadow:0 0 0 2px #22f0ff44,0 0 14px #22f0ff55}
+.ball{filter:drop-shadow(0 0 14px #22f0ff) drop-shadow(0 0 28px #ff3df2aa)}
 </style></head><body>
 <header class="top"><a class="home" href="/">&larr; LeonLink</a><a href="#teller">Fortune Teller</a><a href="#out">Your Reading</a><a href="#tarot">Tarot</a><a href="#today">Sky Today</a><a href="#shop">Shop</a></header>
 <main>
