@@ -12,7 +12,8 @@
 <meta name="theme-color" content="#0b0b16">
 <link rel="icon" href="/favicon.png">
 <script src="/js/nav.js" defer></script>
-<style>
+<style>h2.h1x{font-size:2em;margin:.67em 0;font-weight:bold}
+
 *{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
 html,body{background:#0b0b16}
 body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef;user-select:none;-webkit-user-select:none;min-height:100dvh;display:flex;flex-direction:column;font-size:17px}
@@ -23,7 +24,8 @@ body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef;user-s
 main{flex:1 0 auto;display:flex;flex-direction:column;width:100%;max-width:520px;margin:0 auto;padding-bottom:96px}
 .view{display:none;flex-direction:column;padding:14px;gap:12px;width:100%}
 .view.on{display:flex}
-h1{font-size:34px;font-weight:900;letter-spacing:.01em}
+h1,
+h2.h1x{font-size:34px;font-weight:900;letter-spacing:.01em}
 .sub{color:#9b9dba;font-size:16px;line-height:1.45}
 .namerow{display:flex;gap:10px}
 #fname{flex:1;background:#141422;border:2px solid #33335a;color:#fff;border-radius:12px;padding:0 14px;font-size:19px;font-weight:700;min-height:58px;min-width:0}
@@ -105,7 +107,8 @@ h1{font-size:34px;font-weight:900;letter-spacing:.01em}
 .best{font-size:14px;color:#9b9dba;text-align:center}
 @media(min-width:560px){
   #dock{grid-template-columns:repeat(4,1fr)}
-  h1{font-size:40px}
+  h1,
+  h2.h1x{font-size:40px}
 }
 
 /* ---- overhaul: arena, motion, particles ---- */
@@ -177,7 +180,8 @@ h1{font-size:34px;font-weight:900;letter-spacing:.01em}
   .act{min-height:48px;padding:4px 6px}.act b{font-size:15px}.act span{font-size:10.5px}
   .plate{padding:5px 9px}.pname{font-size:14px}.hpbar{height:10px;margin-top:3px}
   #v-create.on,#v-gear.on,#v-end.on{max-width:640px;margin:0 auto}
-  h1{font-size:26px}
+  h1,
+  h2.h1x{font-size:26px}
 }
 @media (max-height:680px) and (orientation:portrait){
   #v-duel{height:calc(100dvh - 120px);min-height:420px}
@@ -271,14 +275,14 @@ h1{font-size:34px;font-weight:900;letter-spacing:.01em}
 </section>
 <!-- GEAR -->
 <section class="view" id="v-gear">
-  <h1>Rung <span id="gcleared"></span> clear.</h1>
+  <h2 class="h1x">Rung <span id="gcleared"></span> clear.</h2>
   <p class="sub" id="gheal"></p>
   <p class="sub" style="font-weight:800;color:#fff">Take one:</p>
   <div id="gears" style="display:flex;flex-direction:column;gap:10px"></div>
 </section>
 <!-- END -->
 <section class="view" id="v-end">
-  <h1 id="endtitle">K.O.</h1>
+  <h2 class="h1x" id="endtitle">K.O.</h2>
   <p class="sub" id="endsub"></p>
   <div class="statgrid">
     <div class="stat"><b id="st-rung">0</b><span>rungs cleared</span></div>

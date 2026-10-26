@@ -4,11 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Gift Cards</title>
-<style>
+<style>h2.h1x{font-size:2em;margin:.67em 0;font-weight:bold}
+
   * { box-sizing: border-box; }
   body { margin: 0; font-family: system-ui, -apple-system, sans-serif; background: #111; color: #fff; padding-bottom: 40px; }
   header { padding: 20px 16px 8px; }
-  h1 { font-size: 40px; margin: 0 0 4px; }
+  h1 ,
+  h2.h1x { font-size: 40px; margin: 0 0 4px; }
   #total { font-size: 32px; font-weight: 800; color: #4ade80; }
   #total-label { font-size: 16px; color: #aaa; }
   .wrap { padding: 0 16px; }
@@ -28,7 +30,8 @@
   input[type="text"], input[type="number"], input[type="password"] { width: 100%; background: #222; color: #fff; border: 1px solid #444; margin: 6px 0 14px; }
   label { font-size: 18px; color: #ccc; }
   #lock-screen { padding: 60px 16px 0; max-width: 420px; margin: 0 auto; text-align: center; }
-  #lock-screen h1 { margin-bottom: 20px; }
+  #lock-screen h1 ,
+  #lock-screen h2.h1x { margin-bottom: 20px; }
   #lock-screen p { font-size: 18px; color: #aaa; }
   #lock-screen input { text-align: center; letter-spacing: 6px; }
   #lock-screen button { width: 100%; margin-top: 6px; }
@@ -77,7 +80,7 @@
 
 <div id="app">
   <header>
-    <h1>Gift Cards</h1>
+    <h2 class="h1x">Gift Cards</h2>
     <div id="total-label">Total balance</div>
     <div id="total">$0.00</div>
     <div id="top-actions">

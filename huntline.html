@@ -11,7 +11,8 @@
 <meta property="og:image" content="https://www.leonlink.net/img/cards/huntline.jpg">
 <meta name="theme-color" content="#0a0f14">
 <link rel="icon" href="/favicon.png">
-<style>
+<style>h2.h1x{font-size:2em;margin:.67em 0;font-weight:bold}
+
 *{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;background:#0a0f14;overscroll-behavior:none}
 body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef;user-select:none;-webkit-user-select:none;display:flex;flex-direction:column;height:100dvh;overflow:hidden}
@@ -52,8 +53,10 @@ body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef;user-s
 #fire:active{background:#5a1d20}
 /* overlays: menu + summary */
 .screen{position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:rgba(6,9,13,.92);padding:24px;text-align:center}
-.screen h1{font-size:clamp(38px,11vw,64px);font-weight:800;letter-spacing:.1em;color:#f2c14e}
-.screen h1 em{font-style:normal;color:#9fd8ff}
+.screen h1,
+.screen h2.h1x{font-size:clamp(38px,11vw,64px);font-weight:800;letter-spacing:.1em;color:#f2c14e}
+.screen h1 em,
+.screen h2.h1x em{font-style:normal;color:#9fd8ff}
 .screen p{font-size:16px;color:#b9c8d8;max-width:320px;line-height:1.5}
 .screen .rules{font-size:13.5px;color:#8fa3b8;max-width:330px;line-height:1.7}
 .bigbtn{background:#f2c14e;color:#191104;border:none;border-radius:18px;min-height:64px;min-width:220px;font-size:20px;font-weight:800;letter-spacing:.06em;cursor:pointer}
@@ -76,7 +79,8 @@ body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef;user-s
 #breathwrap{left:150px;right:120px;bottom:12px}
 #reloadbar{left:150px;right:120px;bottom:40px}
 .screen{gap:8px;padding:12px}
-.screen h1{font-size:34px}
+.screen h1,
+.screen h2.h1x{font-size:34px}
 .screen p{font-size:14px}
 #trophies{grid-template-columns:repeat(5,1fr);max-width:640px}
 }
@@ -123,7 +127,7 @@ body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef;user-s
   </div>
 
   <div class="screen hidden" id="summary">
-    <h1 style="font-size:34px">SEASON <em>DONE</em></h1>
+    <h2 class="h1x" style="font-size:34px">SEASON <em>DONE</em></h2>
     <div id="sumscore">0</div>
     <div id="sumbest"></div>
     <div id="trophies2" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:340px;width:100%"></div>
