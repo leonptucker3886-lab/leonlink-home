@@ -132,6 +132,14 @@
    "next": "P-1022",
    "step_due": "2026-10-27T03:30Z",
    "rubric": "debug + 3 polish rounds: no console/HTML errors, 375px mobile, links work (Amazon tag=leonlink-20), matches TRUTH.md + scope, no other bots' files; park until Leon approves"
+  },
+  "Bert": {
+   "job": "P-0035",
+   "step": "add a picture to every entry in blog posts on branch bert/P-0035",
+   "status": "STARTED",
+   "next": "P-0036",
+   "step_due": "2026-10-27T03:30Z",
+   "rubric": "debug + 3 polish rounds: no console/HTML errors, 375px mobile, links work (Amazon tag=leonlink-20), matches TRUTH.md + scope, no other bots' files; park until Leon approves"
   }
  },
  "jobs": {
@@ -255,6 +263,13 @@
    "P-1021",
    "START",
    "14 Blogs rows logged; P-1021 Building, 13 Queued"
+  ],
+  [
+   "2026-10-26T03:30Z",
+   "Bert",
+   "P-0035",
+   "START",
+   "14 Blogs rows logged; P-0035 Building, 13 Queued"
   ]
  ],
  "timers": {
@@ -861,6 +876,90 @@
    "owner": "datasheet",
    "status": "Queued",
    "branch": "datasheet/P-0043",
+   "rank": 14
+  },
+  "P-0035": {
+   "owner": "Bert",
+   "status": "Building",
+   "branch": "bert/P-0035",
+   "rank": 1
+  },
+  "P-0036": {
+   "owner": "Bert",
+   "status": "Queued",
+   "branch": "bert/P-0036",
+   "rank": 2
+  },
+  "P-0037": {
+   "owner": "Bert",
+   "status": "Queued",
+   "branch": "bert/P-0037",
+   "rank": 3
+  },
+  "P-0044": {
+   "owner": "Bert",
+   "status": "Queued",
+   "branch": "bert/P-0044",
+   "rank": 4
+  },
+  "P-0045": {
+   "owner": "Bert",
+   "status": "Queued",
+   "branch": "bert/P-0045",
+   "rank": 5
+  },
+  "P-0004": {
+   "owner": "Bert",
+   "status": "Queued",
+   "branch": "bert/P-0004",
+   "rank": 6
+  },
+  "P-0067": {
+   "owner": "Bert",
+   "status": "Queued",
+   "branch": "bert/P-0067",
+   "rank": 7
+  },
+  "P-0027": {
+   "owner": "Bert",
+   "status": "Queued",
+   "branch": "bert/P-0027",
+   "rank": 8
+  },
+  "P-0028": {
+   "owner": "Bert",
+   "status": "Queued",
+   "branch": "bert/P-0028",
+   "rank": 9
+  },
+  "P-0005": {
+   "owner": "Bert",
+   "status": "Queued",
+   "branch": "bert/P-0005",
+   "rank": 10
+  },
+  "P-0006": {
+   "owner": "Bert",
+   "status": "Queued",
+   "branch": "bert/P-0006",
+   "rank": 11
+  },
+  "P-0007": {
+   "owner": "Bert",
+   "status": "Queued",
+   "branch": "bert/P-0007",
+   "rank": 12
+  },
+  "P-0008": {
+   "owner": "Bert",
+   "status": "Queued",
+   "branch": "bert/P-0008",
+   "rank": 13
+  },
+  "P-0069": {
+   "owner": "Bert",
+   "status": "Queued",
+   "branch": "bert/P-0069",
    "rank": 14
   }
  }
