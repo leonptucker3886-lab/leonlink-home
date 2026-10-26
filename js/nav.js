@@ -99,3 +99,6 @@ var box=document.createElement('div');box.className='ll-quote-art';box.innerHTML
 if(foot){if(!foot.querySelector('.ll-quote-art'))foot.appendChild(box);}
 else{var f=document.createElement('footer');f.className='ll-footer';f.style.cssText='border-top:1px solid rgba(128,128,128,.25);padding:22px 16px;text-align:center;';f.appendChild(box);document.body.appendChild(f);}
 }catch(e){}})();
+
+/* Mushroom Madness chat widget on every page */
+;(function(){if(!document.getElementById("ll-mush")){var s=document.createElement("script");s.id="ll-mush";s.src="/js/mushroom-chat.js?v=1";s.defer=true;(document.body||document.head).appendChild(s)}})();
