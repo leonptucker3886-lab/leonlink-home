@@ -1,54 +1,51 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Navigation Hub | LeonLink</title><meta name="description" content="Every part of LeonLink in one place: Top 5, blogs, software, games, ebooks and more."><link rel="icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}body{margin:0;background:#05050c;color:#eef3ff;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;overflow-x:hidden}
 .stage{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.beam{position:absolute;top:-10%;width:42vw;height:130vh;transform-origin:50% 0;filter:blur(8px);opacity:.55;mix-blend-mode:screen}
-.b1{left:-8vw;background:conic-gradient(from 170deg at 50% 0,transparent 0 6deg,rgba(34,240,255,.35) 10deg,transparent 16deg);animation:sw1 9s ease-in-out infinite alternate}
-.b2{right:-8vw;background:conic-gradient(from 170deg at 50% 0,transparent 0 6deg,rgba(255,43,214,.35) 10deg,transparent 16deg);animation:sw2 11s ease-in-out infinite alternate}
-.b3{left:29vw;background:conic-gradient(from 170deg at 50% 0,transparent 0 7deg,rgba(57,255,140,.22) 10deg,transparent 13deg);animation:sw3 13s ease-in-out infinite alternate}
+.beam{position:absolute;top:-10%;width:42vw;height:130vh;transform-origin:50% 0;filter:blur(8px);opacity:.5;mix-blend-mode:screen}
+.b1{left:-8vw;background:conic-gradient(from 170deg at 50% 0,transparent 0 6deg,rgba(34,240,255,.32) 10deg,transparent 16deg);animation:sw1 9s ease-in-out infinite alternate}
+.b2{right:-8vw;background:conic-gradient(from 170deg at 50% 0,transparent 0 6deg,rgba(255,43,214,.32) 10deg,transparent 16deg);animation:sw2 11s ease-in-out infinite alternate}
+.b3{left:29vw;background:conic-gradient(from 170deg at 50% 0,transparent 0 7deg,rgba(57,255,140,.2) 10deg,transparent 13deg);animation:sw3 13s ease-in-out infinite alternate}
 @keyframes sw1{from{transform:rotate(-28deg)}to{transform:rotate(18deg)}}@keyframes sw2{from{transform:rotate(28deg)}to{transform:rotate(-18deg)}}@keyframes sw3{from{transform:rotate(-15deg)}to{transform:rotate(15deg)}}
-.floor{position:absolute;bottom:0;left:0;right:0;height:35vh;background:radial-gradient(ellipse at 50% 100%,rgba(255,43,214,.18),transparent 70%)}
+.fog{position:absolute;bottom:0;left:0;right:0;height:35vh;background:radial-gradient(ellipse at 50% 100%,rgba(57,255,140,.14),transparent 70%)}
 header.top{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:14px;padding:22px 16px 6px}
-header.top img{width:64px;height:64px;border-radius:50%;box-shadow:0 0 0 2px #22f0ff,0 0 24px rgba(34,240,255,.8)}
-header.top .brand{font-weight:900;font-size:clamp(1.6rem,5vw,2.4rem);letter-spacing:.06em;color:#fff;text-shadow:0 0 8px #ff2bd6,0 0 22px #ff2bd6}
-header.top .brand small{display:block;font-size:.8rem;letter-spacing:.3em;color:#22f0ff;text-shadow:0 0 8px #22f0ff;font-weight:700}
-main{position:relative;z-index:2;max-width:980px;margin:0 auto;padding:16px 18px 70px;text-align:center}
-h1{font-size:clamp(2rem,6vw,3.2rem);margin:6px 0 8px;color:#22f0ff;text-shadow:0 0 14px rgba(34,240,255,.8);animation:flick 6s infinite}
-@keyframes flick{0%,92%,100%{opacity:1}93%{opacity:.4}94%{opacity:1}96%{opacity:.6}}
-p.sub{color:#9aa6c2;margin:0 0 28px}
-.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
-.g a{position:relative;display:block;padding:22px 16px;border:2px solid #ff2bd6;border-radius:16px;color:#fff;text-decoration:none;background:rgba(10,8,24,.75);box-shadow:0 0 14px rgba(255,43,214,.35);text-align:left;overflow:hidden;transition:transform .2s,box-shadow .2s}
-.g a:before{content:"";position:absolute;inset:-40%;background:radial-gradient(circle at var(--x,50%) var(--y,0%),rgba(34,240,255,.28),transparent 40%);opacity:0;transition:opacity .25s}
-.g a:hover,.g a:focus{transform:translateY(-4px);box-shadow:0 0 26px rgba(255,43,214,.7),0 0 6px #22f0ff}.g a:hover:before,.g a:focus:before{opacity:1}
-.g a.lit{box-shadow:0 0 30px rgba(34,240,255,.8);border-color:#22f0ff}
-.g b{position:relative;display:block;font-size:1.15rem;margin-bottom:4px}.g span{position:relative;color:#c9d2e8;font-size:.9rem}
-.back{display:inline-block;margin-top:30px;padding:12px 22px;border:2px solid #22f0ff;border-radius:999px;color:#22f0ff;text-decoration:none;font-weight:700;box-shadow:0 0 12px rgba(34,240,255,.5)}
-.witch{position:fixed;z-index:3;display:flex;align-items:center;gap:6px;text-decoration:none;animation:fly 18s linear infinite}
-.witch .w{font-size:42px;filter:drop-shadow(0 0 8px #39ff8c);transform:scaleX(-1)}
-.witch .say{background:#0b0b18;border:2px solid #39ff8c;color:#39ff8c;font-weight:800;font-size:.85rem;padding:7px 12px;border-radius:999px;box-shadow:0 0 14px rgba(57,255,140,.6);white-space:nowrap}
-.witch:hover .say{background:#39ff8c;color:#05050c}
-.w1{top:16vh}.w2{top:72vh;animation-duration:24s;animation-delay:-12s}
-@keyframes fly{0%{left:-260px;transform:translateY(0)}25%{transform:translateY(-18px)}50%{transform:translateY(10px)}75%{transform:translateY(-12px)}100%{left:105vw;transform:translateY(0)}}
-@media(prefers-reduced-motion:reduce){.beam,.witch,h1{animation:none}.w1{left:10px}.w2{right:10px;left:auto}}
+header.top img{width:60px;height:60px;border-radius:50%;box-shadow:0 0 0 2px #22f0ff,0 0 24px rgba(34,240,255,.8)}
+header.top .brand{font-family:Creepster,system-ui,cursive;font-size:clamp(1.8rem,6vw,2.6rem);letter-spacing:.08em;color:#fff;text-shadow:0 0 8px #ff2bd6,0 0 22px #ff2bd6}
+header.top .brand small{display:block;font-family:system-ui,sans-serif;font-size:.75rem;letter-spacing:.3em;color:#22f0ff;text-shadow:0 0 8px #22f0ff;font-weight:700}
+main{position:relative;z-index:2;max-width:760px;margin:0 auto;padding:10px 16px 60px;text-align:center}
+h1{font-family:Creepster,system-ui,cursive;font-weight:400;font-size:clamp(2.4rem,9vw,4rem);letter-spacing:.06em;margin:10px 0 6px;color:#39ff8c;text-shadow:0 0 6px #39ff8c,0 0 18px rgba(57,255,140,.7),0 4px 0 #0a3d1f;animation:flick 6s infinite}
+h1 .n{display:inline-block;transform-origin:15% 8%;animation:swing 2.6s ease-in-out infinite;color:#b8ffd4}
+@keyframes swing{0%{transform:rotate(12deg) translateY(4px)}50%{transform:rotate(32deg) translateY(8px)}100%{transform:rotate(12deg) translateY(4px)}}
+@keyframes flick{0%,90%,100%{opacity:1}91%{opacity:.35}92%{opacity:1}95%{opacity:.55}96%{opacity:1}}
+p.sub{color:#9aa6c2;margin:0 0 18px}
+.cta{display:flex;align-items:center;justify-content:center;gap:12px;margin:0 auto 24px;padding:14px 18px;max-width:440px;border:2px solid #39ff8c;border-radius:16px;background:rgba(8,20,12,.8);box-shadow:0 0 18px rgba(57,255,140,.5);color:#39ff8c;text-decoration:none;font-weight:800}
+.cta .w{font-size:34px;filter:drop-shadow(0 0 8px #39ff8c)}
+.cta:hover{background:#39ff8c;color:#05050c}
+.list{display:flex;flex-direction:column;gap:10px;text-align:left}
+.list a{display:flex;align-items:center;gap:12px;padding:8px 10px;border:1px solid #ff2bd6;border-radius:12px;background:rgba(10,8,24,.8);color:#fff;text-decoration:none;box-shadow:0 0 8px rgba(255,43,214,.3);transition:box-shadow .2s,border-color .2s}
+.list a:hover,.list a:focus{border-color:#22f0ff;box-shadow:0 0 16px rgba(34,240,255,.7)}
+.list img{width:56px;height:56px;object-fit:cover;border-radius:8px;flex:none;background:#111}
+.list b{display:block;font-size:1rem}.list span{color:#c9d2e8;font-size:.85rem}
+.back{display:inline-block;margin-top:24px;color:#22f0ff;text-decoration:none;font-weight:700}
+@media(prefers-reduced-motion:reduce){.beam,h1,h1 .n{animation:none}h1 .n{transform:rotate(20deg)}}
 </style></head><body>
-<div class="stage" aria-hidden="true"><div class="beam b1"></div><div class="beam b2"></div><div class="beam b3"></div><div class="floor"></div></div>
+<div class="stage" aria-hidden="true"><div class="beam b1"></div><div class="beam b2"></div><div class="beam b3"></div><div class="fog"></div></div>
 <header class="top"><a href="/"><img src="/img/logo-128.png" alt="LeonLink logo"></a><div class="brand">LEONLINK<small>BUILD WITH LEON</small></div></header>
-<a class="witch w1" href="/#start"><span class="w">🧙‍♀️</span><span class="say">Start your build →</span></a>
-<a class="witch w2" href="/#start"><span class="w">🧹</span><span class="say">Build with Leon →</span></a>
 <main>
-<h1>Navigation Hub</h1><p class="sub">Every part of LeonLink in one place. Pick where you want to go.</p>
-<nav class="g" aria-label="Site navigation">
-<a href="/lineup/"><b>Top 5</b><span>Picks and product lists</span></a>
-<a href="/blog.html"><b>Blogs</b><span>Posts and stories</span></a>
-<a href="/software.html"><b>Software</b><span>Ledgerline, Dashline and more</span></a>
-<a href="/free-tools.html"><b>Free Tools</b><span>Estimate, invoice and QR generators</span></a>
-<a href="/games.html"><b>Games</b><span>The games lobby</span></a>
-<a href="/ebooks.html"><b>Ebooks</b><span>The ebook store</span></a>
-<a href="/series.html"><b>Series</b><span>Life of an AI Captain and more</span></a>
-<a href="/about.html"><b>About</b><span>Who's behind LeonLink</span></a>
-<a href="/terms.html"><b>Terms &amp; Conditions</b><span>Full build terms</span></a>
+<h1 aria-label="Navigation Hub"><span aria-hidden="true">Navigatio<span class="n">n</span> Hub</span></h1>
+<p class="sub">Every part of LeonLink in one place.</p>
+<a class="cta" href="/#start"><span class="w">🧙‍♀️</span><span>Start your build with Leon →</span></a>
+<nav class="list" aria-label="Site navigation">
+<a href="/lineup/"><img src="/img/cards/budget-watches.jpg" alt=""><div><b>Top 5</b><span>Picks and product lists</span></div></a>
+<a href="/blog.html"><img src="/img/cards/ai-what.jpg" alt=""><div><b>Blogs</b><span>Posts and stories</span></div></a>
+<a href="/software.html"><img src="/img/cards/dashline.jpg" alt=""><div><b>Software &amp; Tools</b><span>Ledgerline, Dashline and free generators</span></div></a>
+<a href="/games.html"><img src="/img/cards/arcadeline.jpg" alt=""><div><b>Games</b><span>The games lobby</span></div></a>
+<a href="/ebooks.html"><img src="/img/ebook-art.jpg" alt=""><div><b>Ebooks</b><span>The ebook store</span></div></a>
+<a href="/series.html"><img src="/img/cards/ai-captain.jpg" alt=""><div><b>Series</b><span>Life of an AI Captain and more</span></div></a>
+<a href="/about.html"><img src="/img/logo-256.jpg" alt=""><div><b>About</b><span>Who's behind LeonLink</span></div></a>
+<a href="/terms.html"><img src="/img/logo-128.png" alt=""><div><b>Terms &amp; Conditions</b><span>Full build terms</span></div></a>
 </nav>
 <a class="back" href="/#build">← Back to Build with Leon</a>
 </main>
-<script>(function(){var c=[].slice.call(document.querySelectorAll('.g a'));c.forEach(function(a){a.addEventListener('pointermove',function(e){var r=a.getBoundingClientRect();a.style.setProperty('--x',(e.clientX-r.left)/r.width*100+'%');a.style.setProperty('--y',(e.clientY-r.top)/r.height*100+'%')})});var i=0;setInterval(function(){c.forEach(function(a){a.classList.remove('lit')});c[i%c.length].classList.add('lit');i++},1600)})();</script>
 </body></html>
