@@ -88,4 +88,5 @@ cv.addEventListener('touchmove',e=>{const t=e.touches[0],dx=t.clientX-sx,dy=t.cl
 $('go').onclick=()=>{$('ov').style.display='none';if(st=='over'||!grid){score=0;lives=3;level=1;setup(1);hud()}st='play'};
 setup(1);requestAnimationFrame(loop);
 setTimeout(()=>{$('s').style.opacity=0;setTimeout(()=>{$('s').style.display='none';$('ov').style.display='flex';st='menu'},800)},7000);
-</script></body></html>
+</script><script src="/js/bottom-nav.js" defer></script>
+</body></html>

@@ -190,4 +190,5 @@ window.ST={load,menu,levels,shop,help,resume:()=>{paused=false;hideOv()},buy:k=>
 let last=performance.now();function loop(n){const dt=Math.min(.033,(n-last)/1000);last=n;upd(dt);draw();requestAnimationFrame(loop)}
 lvI=0;menu();hud();requestAnimationFrame(loop);
 })();
-</script></body></html>
+</script><script src="/js/bottom-nav.js" defer></script>
+</body></html>

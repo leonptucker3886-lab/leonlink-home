@@ -14,4 +14,5 @@
 <footer>LeonLink presents &middot; SNES by Datasheet &middot; Powered by EmulatorJS &middot; Not affiliated with Nintendo</footer>
 <script src="games.js"></script><script>
 document.getElementById('g').innerHTML=SHELF.map(x=>`<div class="card"><h3>${x.title}</h3><p><span class="tag">${x.genre}</span><span class="tag">${x.lic}</span></p><p>${x.blurb}</p><p style="font-size:13px">By ${x.author}<br>Original: <a href="${x.src}" target="_blank" rel="noopener">${x.src.replace('https://','')}</a><br>License: <a href="${x.licUrl}" target="_blank" rel="noopener">${x.lic}</a></p><a class="btn" href="play.html?g=${x.id}">&#9654; Play</a></div>`).join('');
-</script></body></html>
+</script><script src="/js/bottom-nav.js" defer></script>
+</body></html>

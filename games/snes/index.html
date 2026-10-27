@@ -26,4 +26,5 @@ f.onchange=()=>f.files[0]&&start(f.files[0]);
 function start(file){d.remove();window.EJS_player='#game';window.EJS_core='snes';window.EJS_gameName=file.name.replace(/\.[^.]+$/,'');
 window.EJS_gameUrl=URL.createObjectURL(file);window.EJS_pathtodata='https://cdn.emulatorjs.org/stable/data/';window.EJS_startOnLoaded=true;window.EJS_color='#6b6bd6';
 const s=document.createElement('script');s.src='https://cdn.emulatorjs.org/stable/data/loader.js';document.body.appendChild(s);}
-</script></body></html>
+</script><script src="/js/bottom-nav.js" defer></script>
+</body></html>

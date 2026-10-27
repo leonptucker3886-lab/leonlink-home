@@ -9,4 +9,5 @@ document.getElementById('info').innerHTML=`<a href="./">&larr; Game Shelf</a> &m
 setTimeout(()=>{const i=document.getElementById('intro');i.style.opacity=0;setTimeout(()=>i.remove(),800);
 window.EJS_player='#game';window.EJS_core='snes';window.EJS_gameName=x.title;window.EJS_gameUrl='roms/'+x.id+'.sfc';window.EJS_pathtodata='https://cdn.emulatorjs.org/stable/data/';window.EJS_startOnLoaded=true;window.EJS_color='#6b6bd6';window.EJS_onGameStart=()=>{document.getElementById('info').classList.add('hide');document.getElementById('ib').style.display='block';};
 const s=document.createElement('script');s.src='https://cdn.emulatorjs.org/stable/data/loader.js';document.body.appendChild(s);},3800);}
-</script></body></html>
+</script><script src="/js/bottom-nav.js" defer></script>
+</body></html>

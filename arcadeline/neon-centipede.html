@@ -91,4 +91,5 @@ cv.addEventListener('touchend',e=>{if(!e.touches.length)touch=null});
 cv.addEventListener('mousedown',e=>{touch=tp(e)});addEventListener('mousemove',e=>{if(touch)touch=tp(e)});addEventListener('mouseup',()=>touch=null);
 $('go').onclick=()=>{$('ov').style.display='none';newGame();st='play'};
 newGame();setTimeout(()=>{$('s').style.opacity=0;setTimeout(()=>{$('s').remove();st='menu';$('ov').style.display='flex'},800)},7000);
-</script></body></html>
+</script><script src="/js/bottom-nav.js" defer></script>
+</body></html>

@@ -83,4 +83,5 @@ let sx=null,sy,lx,ly,mvd;bd.addEventListener('pointerdown',e=>{sx=lx=e.clientX;s
 bd.addEventListener('pointermove',e=>{if(sx==null||st!='play')return;const dx=e.clientX-lx;if(Math.abs(dx)>S){mv(dx>0?1:-1);lx=e.clientX;mvd=1}const dy=e.clientY-ly;if(dy>S){down(1);ly=e.clientY;mvd=1}});
 bd.addEventListener('pointerup',e=>{if(sx!=null&&st=='play'){const dy=e.clientY-sy,dx=e.clientX-sx;if(dy>S*4&&Math.abs(dx)<S*2&&dy>(ROWS*S)/4)hard();else if(!mvd)rot()}sx=null});
 setTimeout(()=>{const s=$('s');s.style.opacity=0;setTimeout(()=>{s.remove();size()},800)},6200);
-</script></body></html>
+</script><script src="/js/bottom-nav.js" defer></script>
+</body></html>

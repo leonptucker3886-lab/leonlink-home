@@ -97,4 +97,5 @@ g.shadowBlur=0}
 function loop(){if(st=='play'){keyAim();step()}else if(st=='pause'||st=='card');draw();requestAnimationFrame(loop)}
 load();loop();
 setTimeout(()=>{$('s').style.opacity=0;setTimeout(()=>{$('s').remove();st='menu';$('ov').style.display='flex'},800)},7000);
-</script></body></html>
+</script><script src="/js/bottom-nav.js" defer></script>
+</body></html>

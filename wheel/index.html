@@ -47,4 +47,5 @@ const fin=start+((end-start)%(2*Math.PI)+2*Math.PI)%(2*Math.PI)+2*Math.PI*7,T=50
 if(p<1)requestAnimationFrame(f);else{const k=cats[pick],idea=k.i[Math.floor(Math.random()*k.i.length)];
 res.innerHTML=`<b>${k.n}</b>${idea}`;const L=JSON.parse(localStorage.wheelLog||"[]");L.unshift(k.n+": "+idea);localStorage.wheelLog=JSON.stringify(L.slice(0,5));
 log.innerHTML="Last spins: "+L.slice(0,5).join(" · ");busy=false;spin.disabled=false}})(t0)};
-</script></body></html>
+</script><script src="/js/bottom-nav.js" defer></script>
+</body></html>
