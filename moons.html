@@ -34,7 +34,7 @@ h2 small{display:block;font:400 .95rem/1.5 "DM Sans",system-ui;color:var(--mut);
 .shead{border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:18px}
 h3{font-size:1.12rem;color:var(--gold2);margin:1.2em 0 .5em}
 .pan{background:var(--pan);border:1px solid var(--line2);border-radius:14px;padding:20px;box-shadow:0 12px 30px #0007}
-.hero{display:grid;gap:20px;padding-top:34px}@media(min-width:880px){.hero{grid-template-columns:1fr 1fr;align-items:stretch}}
+.hero{display:grid;gap:20px;padding-top:34px}@media(min-width:880px){.hero{max-width:640px;margin:0 auto}}
 .stage{position:relative;aspect-ratio:1/1;max-height:540px;border-radius:14px;overflow:hidden;background:linear-gradient(180deg,#0b1124,#0a0f1d 58%,#07090f);border:1px solid var(--line2)}
 .stage svg{width:100%;height:100%;display:block}
 .star{animation:tw 6s infinite ease-in-out}@keyframes tw{50%{opacity:.25}}
@@ -113,37 +113,10 @@ input,select{border-color:#4b2a8f!important}input:focus,select:focus{outline:non
 <div class="intro"><p class="kick">LeonLink &middot; Mystic Center</p>
 <h1>Moons <em>&amp;</em> Cauldrons</h1>
 <p class="lede">Horoscope, numerology and tarot in one considered reading. Share your birth details and our fortune teller will chart your Sun, Moon and Rising signs, your core numbers, birth moon phase, Chinese zodiac, element balance, a daily forecast and a three-card spread.</p>
-<svg class="orn" viewBox="0 0 240 18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1"><path d="M0 9h96M144 9h96"/><circle cx="120" cy="9" r="6"/><path d="M114 9a6 6 0 0 0 9 5 4.5 4.5 0 1 1 0-10 6 6 0 0 0-9 5z" fill="currentColor" stroke="none" opacity=".8"/><circle cx="104" cy="9" r="1.4" fill="currentColor"/><circle cx="136" cy="9" r="1.4" fill="currentColor"/></svg><figure style="margin:26px auto 0;max-width:760px"><img src="/img/cards/moons-cauldron.jpg" alt="A full moon over a bubbling cauldron on a stone altar at night" style="width:100%;height:auto;display:block;border-radius:14px;border:1px solid var(--line2)"></figure></div>
+<svg class="orn" viewBox="0 0 240 18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1"><path d="M0 9h96M144 9h96"/><circle cx="120" cy="9" r="6"/><path d="M114 9a6 6 0 0 0 9 5 4.5 4.5 0 1 1 0-10 6 6 0 0 0-9 5z" fill="currentColor" stroke="none" opacity=".8"/><circle cx="104" cy="9" r="1.4" fill="currentColor"/><circle cx="136" cy="9" r="1.4" fill="currentColor"/></svg></div>
 
 
 <section id="teller" class="hero">
-<div class="stage" id="stage">
-<svg viewBox="0 0 400 400" role="img" aria-label="Animated fortune teller at a crystal ball">
-<defs><radialGradient id="bg1" cx=".4" cy=".35"><stop offset="0" stop-color="#eef1fb"/><stop offset=".45" stop-color="#8fa2c9"/><stop offset="1" stop-color="#1b2647"/></radialGradient>
-<radialGradient id="gl"><stop offset="0" stop-color="#c8a96a" stop-opacity=".28"/><stop offset="1" stop-color="#c8a96a" stop-opacity="0"/></radialGradient>
-<linearGradient id="robe" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c2544"/><stop offset="1" stop-color="#0d1328"/></linearGradient></defs>
-<g class="ring" fill="none" stroke="#c8a96a" stroke-opacity=".22" stroke-width=".7"><circle cx="200" cy="190" r="150"/><circle cx="200" cy="190" r="138" stroke-dasharray="1 5"/><path d="M200 40v8M200 332v8M50 190h8M342 190h8"/></g>
-<g fill="#e2cd9c"><circle class="star" cx="44" cy="46" r="1.2"/><circle class="star" style="animation-delay:1.5s" cx="118" cy="26" r=".9"/><circle class="star" style="animation-delay:3s" cx="282" cy="40" r="1.1"/><circle class="star" style="animation-delay:4.2s" cx="366" cy="96" r=".9"/><circle class="star" style="animation-delay:.8s" cx="250" cy="20" r="1"/><circle class="star" style="animation-delay:2.2s" cx="62" cy="128" r=".8"/><circle class="star" style="animation-delay:5s" cx="352" cy="170" r="1"/></g>
-<path d="M44 46L62 128M118 26L44 46M282 40L250 20" stroke="#c8a96a" stroke-opacity=".25" stroke-width=".6"/>
-<g class="sway">
-<path d="M200 96c-34 0-52 34-56 70l-12 70c20-10 40-14 68-14s48 4 68 14l-12-70c-4-36-22-70-56-70z" fill="url(#robe)" stroke="#c8a96a" stroke-opacity=".55" stroke-width="1"/>
-<ellipse cx="200" cy="176" rx="25" ry="30" fill="#0a0f1d"/>
-<path d="M185 176q5 3 10 0M205 176q5 3 10 0" stroke="#e2cd9c" stroke-width="1.3" fill="none" stroke-linecap="round" opacity=".85"/>
-<path d="M195 192q5 3 10 0" stroke="#c8a96a" stroke-width="1" fill="none" opacity=".6"/>
-<circle cx="200" cy="136" r="2.4" fill="#c8a96a"/>
-<path d="M140 238c18-12 40-16 60-16s42 4 60 16l20 112H120z" fill="url(#robe)" stroke="#c8a96a" stroke-opacity=".4" stroke-width="1"/>
-<path d="M200 226v120" stroke="#c8a96a" stroke-opacity=".35" stroke-width=".8"/>
-<g class="hand"><path d="M162 252q-16 18-6 40" stroke="#1c2544" stroke-width="13" fill="none" stroke-linecap="round"/><circle cx="157" cy="293" r="6" fill="#c9b49a"/></g>
-<path d="M238 252q16 18 6 40" stroke="#1c2544" stroke-width="13" fill="none" stroke-linecap="round"/><circle cx="243" cy="293" r="6" fill="#c9b49a"/>
-</g>
-<circle cx="200" cy="300" r="80" fill="url(#gl)"/>
-<rect x="56" y="334" width="288" height="3" fill="#c8a96a" opacity=".55"/><rect x="56" y="337" width="288" height="70" fill="#0a0e1a"/>
-<g class="ball"><circle cx="200" cy="302" r="32" fill="url(#bg1)" opacity=".9"/><g class="swirl" style="transform-origin:200px 302px"><path d="M184 302q16-18 32 0q-16 16-28 4" stroke="#fff" stroke-width="1.2" fill="none" opacity=".5"/></g><ellipse cx="190" cy="290" rx="7" ry="4" fill="#fff" opacity=".45"/></g>
-<path d="M178 334h44l-6-6h-32z" fill="none" stroke="#c8a96a" stroke-width="1.2"/>
-<g transform="translate(84 318)" fill="none" stroke="#c8a96a" stroke-opacity=".7" stroke-width="1"><path d="M-8 16h16M-6 16v-14h12v14M0 2v-6"/><path d="M0-4q-3-4 0-8q3 4 0 8" fill="#e2cd9c" fill-opacity=".6"/></g>
-</svg>
-<div class="say" id="say" aria-live="polite">"Come closer, traveler... tell me your name and the moment you arrived in this world."</div>
-</div>
 <div class="pan">
 <div class="wallet"><span class="coin"><i></i><span id="glow">0</span> Glow</span><span class="hint" id="free"></span> <button class="btn alt" type="button" id="gsign" onclick="window.LLGlow&&window.LLGlow.open()" style="padding:6px 12px;font-size:13px">Sign in to use your Afterglow Glow</button></div>
 <p class="hint" style="margin-top:0">Readings run on <b>Glow coins</b>, the same play money used in <a href="https://afterglow.leonlink.net" target="_blank" rel="noopener">Afterglow</a>. Sign in with your Afterglow account to use your shared Glow balance; guests get 100 Glow saved on this device. Your first reading each day is free, a full reading after that costs 25 Glow and a tarot redraw costs 10. Win more Glow by playing Afterglow, or claim the daily moon bonus below.</p>
@@ -245,7 +218,7 @@ function acct(){var g=window.LLGlow,u=g&&g.user(),e=$("gsign");if(e)e.textConten
 function freeLeft(){return localStorage.getItem("ll_mc_free")!==today}
 function ui(){acct();$("glow").textContent=bal();$("free").textContent=freeLeft()?"✨ Today's reading is free":"Next full reading: 25 Glow";$("bonus").disabled=localStorage.getItem("ll_mc_bonus")===today}
 var lines=["Ahh... the cauldron stirs.","The moon is listening...","I see numbers rising from the smoke...","The stars are lining up for you..."];
-function say(t){$("say").textContent="\u201C"+t+"\u201D"}
+function say(t){var e=$("say");if(e)e.textContent="\u201C"+t+"\u201D"}
 var AREAS=["Love","Career","Money","Health","Luck"],FC={Love:["An honest talk clears the air.","Someone notices more than they say.","Make the first move; it lands well.","Give space today and it comes back to you."],Career:["Finish one thing before starting three.","A small win is bigger than it looks.","Speak up in the meeting; your idea fits.","Slow down and double-check the details."],Money:["Skip the impulse buy and thank yourself later.","An old lead pays off.","Review a subscription you forgot about.","Good day to plan, not to spend."],Health:["Drink water and get outside.","Sleep is your secret weapon tonight.","Stretch; your body is asking.","Cut the screen time an hour early."],Luck:["Pay attention to the number 7 today.","Say yes to an unexpected invite.","Wear your lucky color.","A coincidence is a message."]};
 function bar(lbl,v,max){return '<div class="bar"><label><span>'+lbl+'</span><span>'+v+'</span></label><div><i data-w="'+Math.round(v/max*100)+'"></i></div></div>'}
 function grow(){setTimeout(function(){document.querySelectorAll(".bar i").forEach(function(i){i.style.width=i.dataset.w+"%"})},60)}
@@ -261,7 +234,7 @@ function geo(q){return fetch("https://geocoding-api.open-meteo.com/v1/search?cou
 $("f").onsubmit=function(e){e.preventDefault();
 var name=$("nm").value.trim(),dob=$("dob").value,pl=$("pl").value.trim(),tm=$("tm").value;if(!name||!dob||!pl)return;
 var cost=freeLeft()?0:25;if(bal()<cost){say("Twenty-five Glow are needed, and your purse holds "+bal()+". Play Afterglow or claim the moon bonus.");return}
-var st=$("stage");st.classList.add("cast");var k=0,iv=setInterval(function(){say(lines[k++%lines.length])},900);$("go").disabled=true;
+var st=$("stage")||document.createElement("div");st.classList.add("cast");var k=0,iv=setInterval(function(){say(lines[k++%lines.length])},900);$("go").disabled=true;
 geo(pl).then(function(g){setTimeout(function(){clearInterval(iv);st.classList.remove("cast");$("go").disabled=false;
 if(cost)setBal(bal()-cost);else localStorage.setItem("ll_mc_free",today);ui();render(name,dob,tm,pl,g)},2600)})};
 function render(name,dob,tm,pl,g){var P=dob.split("-").map(Number),y=P[0],m=P[1],d=P[2],hh=12,mi=0,known=!!tm;if(known){hh=+tm.split(":")[0];mi=+tm.split(":")[1]}
