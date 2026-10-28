@@ -5,7 +5,7 @@ var PAGES=[
  ["games arcade play puzzle casino chess","We've got a whole arcade! <a href='/games.html'>Games</a>, built mobile-first for phones."],
  ["watch watches gshock casio casionaut watchline top5 top five timepiece smartwatch","Watch fans, this way: start with <a href='/journal/casionaut-g-shock-2500.html'>The CasioNaut: G-Shock 2500</a>, then browse the <a href='/blog.html'>Blog</a> for more watch posts and Top 5 picks."],
  ["ebook ebooks library store bookshelf","Our <a href='/ebooks.html'>Ebooks</a> store has Kindle picks, a Free Classics Library and an Open-Source Bookshelf. Ask me for one, like \"spooky book\" or \"free python book\"!"],
- ["horoscope astrology zodiac numerology tarot fortune moon moons cauldron cauldrons sign psychic mystic gotursix","Visit <a href='/moons.html'>Moons &amp; Cauldrons</a> and let Col Got-ursix, the veteran mystic of ancient wars in the cosmos, read your stars, numbers and tarot. Just for fun!"],
+ ["horoscope astrology zodiac numerology tarot fortune moon moons cauldron cauldrons sign psychic mystic","Visit <a href='/moons.html'>Moons &amp; Cauldrons</a> for your stars, numbers and tarot. Just for fun!"],
  ["kid kids child children pet nursery rhyme toddler pip song songs sing lullaby","Kids Corner is our family zone with games, a virtual pet and new <a href='/kids/songs/'>Sing-Along Songs</a>: <a href='/kids/'>Kids Corner</a>."],
  ["blog post posts article articles journal news","Fresh reads live on the <a href='/blog.html'>Blog</a> and the <a href='/journal/'>Journal</a>."],
  ["software tool tools app apps invoice estimate qr generator","Free tools: <a href='/software.html'>Software</a> and <a href='/free-tools.html'>Free Tools</a> (invoice, estimate and QR generators)."],
