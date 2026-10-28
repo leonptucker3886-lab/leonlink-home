@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crumb & Co. Bakery</title>
+<meta name="description" content="Crumb & Co. Bakery website template. Replace the sample details with your own.">
+<!-- Template from LeonLink — replace sample details with your own. -->
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fdeee2;color:#111;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.5}
+main{max-width:720px;margin:0 auto;padding:32px 18px 60px}
+.banner{height:110px;border-radius:14px;background:linear-gradient(135deg,#c2410c,#fb923c);margin-bottom:10px}
+h1{font-size:clamp(2.2rem,8vw,3.2rem);margin:8px 0;color:#c2410c}
+h2{font-size:1.5rem;margin:36px 0 8px;color:#c2410c}
+p{margin:8px 0}
+.sample{color:#666;font-size:.85rem}
+.card{border:1px solid #fb923c;border-left:5px solid #c2410c;border-radius:12px;padding:16px;margin:10px 0;background:#fff}
+.steps{padding-left:20px}
+label{display:block;margin:12px 0 4px;font-weight:600}
+input,select,textarea{width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;font:inherit;background:#fff}
+button{margin-top:14px;padding:12px 20px;border:0;border-radius:10px;background:#c2410c;color:#fff;font:inherit;font-weight:700;cursor:pointer}
+details{border:1px solid #fb923c;border-radius:10px;padding:12px;margin:8px 0;background:#fff}
+summary{font-weight:600;color:#c2410c}
+footer{margin-top:40px;color:#666;font-size:.85rem}
+</style>
+</head>
+<body>
+<main>
+<div class="banner" aria-hidden="true"></div>
+<p class="sample">Sample business name and prices — replace with yours.</p>
+<h1>Crumb & Co. Bakery</h1>
+<p>Baked this morning, gone by afternoon. Cakes, breads, and bakes in [Your Town].</p>
+
+<h2>What we bake</h2>
+<div class="card"><strong>Custom Cakes</strong><p>Birthdays, weddings, and celebrations — designed with you, baked from scratch.</p></div>
+<div class="card"><strong>Daily Breads & Pastries</strong><p>Sourdough, croissants, and buns, out of the oven every morning.</p></div>
+<div class="card"><strong>Dessert Tables</strong><p>A full spread for parties and events, set up and ready to serve.</p></div>
+
+<h2>How it works</h2>
+<ol class="steps">
+<li>Order below and tell us the occasion, date, and how many people.</li>
+<li>We confirm the design, flavours, and price before we bake.</li>
+<li>Collect from the shop, or ask about local delivery.</li>
+</ol>
+
+<h2>Prices <span class="sample">(sample — replace)</span></h2>
+<div class="card"><strong>Custom cake — from $75</strong><p>Price depends on size and design. Quoted before baking.</p></div>
+<div class="card"><strong>Sourdough loaf — $8</strong><p>Baked daily. Sells out most mornings.</p></div>
+<div class="card"><strong>Dessert table — from $250</strong><p>For 30 or more guests. Includes setup.</p></div>
+
+<h2>Questions</h2>
+<details><summary>How far ahead do I order a custom cake?</summary><p>At least one week. Two weeks for wedding cakes.</p></details>
+<details><summary>Do you do gluten-free or vegan bakes?</summary><p>Yes — a separate range, baked first each morning. Tell us about allergies when you order.</p></details>
+<details><summary>Do you deliver?</summary><p>Yes, within [your area] for $12. Collection is free.</p></details>
+
+<h2>Hours</h2>
+<p>Tuesday to Sunday, 7:00 AM to 3:00 PM. Closed Monday. <span class="sample">Sample hours — replace.</span></p>
+
+<h2>Place an order</h2>
+<form id="bookForm">
+<label for="name">Your name</label>
+<input id="name" type="text" name="name" required>
+<label for="email">Your email</label>
+<input id="email" type="email" name="email" required>
+<label for="service">What do you need?</label>
+<select id="service" name="service" required><option>Custom Cake</option><option>Daily Breads & Pastries</option><option>Dessert Table</option></select>
+<label for="date">Date needed</label>
+<input id="date" type="date" name="date" required>
+<label for="notes">Occasion, servings, flavours, allergies</label>
+<textarea id="notes" name="notes" rows="4"></textarea>
+<button type="submit">Send request</button>
+</form>
+<p class="sample">This form opens your visitor's email app addressed to sample@example.com. Replace that address in the page code with your own. Confirm every booking yourself.</p>
+
+<footer>© [Year] Crumb & Co. Bakery. All rights reserved.</footer>
+</main>
+<script>
+var FIELDS = [{"id": "name", "label": "Your name"}, {"id": "email", "label": "Your email"}, {"id": "service", "label": "What do you need?"}, {"id": "date", "label": "Date needed"}, {"id": "notes", "label": "Occasion, servings, flavours, allergies"}];
+document.getElementById('bookForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var lines = FIELDS.map(function(f){
+    var el = document.getElementById(f.id);
+    return f.label + ': ' + (el ? el.value : '');
+  });
+  var subject = encodeURIComponent('Crumb & Co. Bakery enquiry');
+  var body = encodeURIComponent(lines.join('\n'));
+  window.location.href = 'mailto:sample@example.com?subject=' + subject + '&body=' + body;
+});
+</script>
+</body>
+</html>
