@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alex Morgan Tutoring</title>
+<meta name="description" content="Tutoring website template. Replace the sample details with your own.">
+<!-- Free template from LeonLink. Replace every sample detail with your own. -->
+<style>
+*{box-sizing:border-box}body{margin:0;background:#fff;color:#111;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.5}
+main{max-width:720px;margin:0 auto;padding:32px 18px 60px}
+h1{font-size:clamp(2.2rem,8vw,3.2rem);margin:8px 0}h2{font-size:1.5rem;margin:36px 0 8px}
+p{margin:8px 0}.sample{color:#666;font-size:.85rem}
+.card{border:1px solid #ddd;border-radius:12px;padding:16px;margin:10px 0}
+.steps{padding-left:20px}label{display:block;margin:12px 0 4px;font-weight:600}
+input,select,textarea{width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;font:inherit}
+button{margin-top:14px;padding:12px 20px;border:0;border-radius:10px;background:#111;color:#fff;font:inherit;font-weight:700;cursor:pointer}
+details{border:1px solid #ddd;border-radius:10px;padding:12px;margin:8px 0}
+footer{margin-top:40px;color:#666;font-size:.85rem}
+</style>
+</head>
+<body>
+<main>
+<p class="sample">Sample name, subjects, and prices — replace with yours.</p>
+<h1>Alex Morgan Tutoring</h1>
+<p>Patient, one-to-one help that builds confidence. In person in [Your Town] and online.</p>
+
+<h2>Subjects</h2>
+<div class="card"><strong>Math</strong><p>Grades 3 to 10. Homework help, test prep, and catching up.</p></div>
+<div class="card"><strong>Reading</strong><p>Reading fluency and comprehension, with short, regular practice.</p></div>
+<div class="card"><strong>Science</strong><p>Clear explanations and hands-on examples that stick.</p></div>
+
+<h2>How it works</h2>
+<ol class="steps">
+<li>Book a free 15-minute chat below.</li>
+<li>We agree a plan: what to work on, and how often.</li>
+<li>Weekly sessions, with short practice between them.</li>
+</ol>
+
+<h2>Prices <span class="sample">(sample — replace)</span></h2>
+<div class="card"><strong>Single session, 60 minutes — $40</strong><p>One-to-one, in person or online.</p></div>
+<div class="card"><strong>4-session pack — $140</strong><p>Save $20. Use within 6 weeks.</p></div>
+
+<h2>Questions</h2>
+<details><summary>Where do sessions happen?</summary><p>In person in [your town] or online by video call.</p></details>
+<details><summary>What ages do you teach?</summary><p>[Ages / grades you teach]. Ask if you are unsure.</p></details>
+<details><summary>Can I cancel?</summary><p>Yes. Give 24 hours' notice and there is no charge.</p></details>
+
+<h2>Hours</h2>
+<p>Monday to Friday, 3:00 PM to 7:00 PM. Saturday morning by request. <span class="sample">Sample hours — replace.</span></p>
+
+<h2>Book a free chat</h2>
+<form id="bookForm">
+<label for="parent">Your name</label><input id="parent" name="parent" required>
+<label for="student">Student's name and grade</label><input id="student" name="student" required>
+<label for="subject">Subject</label>
+<select id="subject" name="subject"><option>Math</option><option>Reading</option><option>Science</option></select>
+<label for="message">What do you need help with?</label><textarea id="message" name="message" rows="4"></textarea>
+<button type="submit">Send booking request</button>
+</form>
+<p class="sample">This form opens your visitor's email app addressed to sample@example.com. Replace that address in the page code with your own. Confirm every booking yourself.</p>
+
+<footer>© [Year] Alex Morgan Tutoring. All rights reserved.</footer>
+</main>
+<script>
+document.getElementById('bookForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var subject = encodeURIComponent('Tutoring enquiry: ' + document.getElementById('subject').value);
+  var body = encodeURIComponent('Name: ' + document.getElementById('parent').value + '\nStudent: ' + document.getElementById('student').value + '\nMessage: ' + document.getElementById('message').value);
+  window.location.href = 'mailto:sample@example.com?subject=' + subject + '&body=' + body;
+});
+</script>
+</body>
+</html>
