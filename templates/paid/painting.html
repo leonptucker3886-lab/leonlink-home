@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fresh Coat Painting</title>
+<meta name="description" content="Fresh Coat Painting website template. Replace the sample details with your own.">
+<!-- Template from LeonLink — replace sample details with your own. -->
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#e8effd;color:#111;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.5}
+main{max-width:720px;margin:0 auto;padding:32px 18px 60px}
+.banner{height:110px;border-radius:14px;background:linear-gradient(135deg,#1d4ed8,#60a5fa);margin-bottom:10px}
+h1{font-size:clamp(2.2rem,8vw,3.2rem);margin:8px 0;color:#1d4ed8}
+h2{font-size:1.5rem;margin:36px 0 8px;color:#1d4ed8}
+p{margin:8px 0}
+.sample{color:#666;font-size:.85rem}
+.card{border:1px solid #60a5fa;border-left:5px solid #1d4ed8;border-radius:12px;padding:16px;margin:10px 0;background:#fff}
+.steps{padding-left:20px}
+label{display:block;margin:12px 0 4px;font-weight:600}
+input,select,textarea{width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;font:inherit;background:#fff}
+button{margin-top:14px;padding:12px 20px;border:0;border-radius:10px;background:#1d4ed8;color:#fff;font:inherit;font-weight:700;cursor:pointer}
+details{border:1px solid #60a5fa;border-radius:10px;padding:12px;margin:8px 0;background:#fff}
+summary{font-weight:600;color:#1d4ed8}
+footer{margin-top:40px;color:#666;font-size:.85rem}
+</style>
+</head>
+<body>
+<main>
+<div class="banner" aria-hidden="true"></div>
+<p class="sample">Sample business name and prices — replace with yours.</p>
+<h1>Fresh Coat Painting</h1>
+<p>Crisp lines, even coats, and rooms you want to live in. Interior and exterior painting in [Your Area].</p>
+
+<h2>Painting services</h2>
+<div class="card"><strong>Interior Walls</strong><p>Rooms, halls, and ceilings — prepped, primed, and painted with care.</p></div>
+<div class="card"><strong>Exterior Painting</strong><p>Weatherproof finishes for houses, fences, and trim.</p></div>
+<div class="card"><strong>Cabinets & Trim</strong><p>Kitchen cabinets, doors, and trim sprayed or hand-finished.</p></div>
+
+<h2>How it works</h2>
+<ol class="steps">
+<li>Tell us the project below, with photos if you can.</li>
+<li>We visit, measure, and give a written quote with the paint specified.</li>
+<li>We prep, paint, and tidy daily. You inspect before we leave.</li>
+</ol>
+
+<h2>Prices <span class="sample">(sample — replace)</span></h2>
+<div class="card"><strong>One room, interior — from $350</strong><p>Two coats, walls only. Paint included in the quote.</p></div>
+<div class="card"><strong>Exterior house — from $1,800</strong><p>Wash, prep, prime, and two coats. Quoted by size.</p></div>
+<div class="card"><strong>Kitchen cabinets — from $900</strong><p>Degreased, sanded, primed, and finished in your colour.</p></div>
+
+<h2>Questions</h2>
+<details><summary>Do you supply the paint?</summary><p>Yes, unless you prefer your own. We use trade paint and can advise on colours.</p></details>
+<details><summary>How long does a room take?</summary><p>Most rooms take one to two days, including drying time.</p></details>
+<details><summary>Do I need to move furniture?</summary><p>No. We move it, cover it, and put it back.</p></details>
+
+<h2>Hours</h2>
+<p>Monday to Friday, 8:00 AM to 5:00 PM. <span class="sample">Sample hours — replace.</span></p>
+
+<h2>Get a quote</h2>
+<form id="bookForm">
+<label for="name">Your name</label>
+<input id="name" type="text" name="name" required>
+<label for="phone">Your phone</label>
+<input id="phone" type="tel" name="phone" required>
+<label for="service">Project</label>
+<select id="service" name="service" required><option>Interior Walls</option><option>Exterior Painting</option><option>Cabinets & Trim</option></select>
+<label for="date">Preferred start date</label>
+<input id="date" type="date" name="date" required>
+<label for="notes">Rooms / area size and colours you like</label>
+<textarea id="notes" name="notes" rows="4"></textarea>
+<button type="submit">Send request</button>
+</form>
+<p class="sample">This form opens your visitor's email app addressed to sample@example.com. Replace that address in the page code with your own. Confirm every booking yourself.</p>
+
+<footer>© [Year] Fresh Coat Painting. All rights reserved.</footer>
+</main>
+<script>
+var FIELDS = [{"id": "name", "label": "Your name"}, {"id": "phone", "label": "Your phone"}, {"id": "service", "label": "Project"}, {"id": "date", "label": "Preferred start date"}, {"id": "notes", "label": "Rooms / area size and colours you like"}];
+document.getElementById('bookForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var lines = FIELDS.map(function(f){
+    var el = document.getElementById(f.id);
+    return f.label + ': ' + (el ? el.value : '');
+  });
+  var subject = encodeURIComponent('Fresh Coat Painting enquiry');
+  var body = encodeURIComponent(lines.join('\n'));
+  window.location.href = 'mailto:sample@example.com?subject=' + subject + '&body=' + body;
+});
+</script>
+</body>
+</html>
