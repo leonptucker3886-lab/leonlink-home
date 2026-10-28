@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BrightNest Cleaning</title>
+<meta name="description" content="BrightNest Cleaning website template. Replace the sample details with your own.">
+<!-- Template from LeonLink — replace sample details with your own. -->
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fdeef1;color:#111;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.5}
+main{max-width:720px;margin:0 auto;padding:32px 18px 60px}
+.banner{height:110px;border-radius:14px;background:linear-gradient(135deg,#be123c,#fb7185);margin-bottom:10px}
+h1{font-size:clamp(2.2rem,8vw,3.2rem);margin:8px 0;color:#be123c}
+h2{font-size:1.5rem;margin:36px 0 8px;color:#be123c}
+p{margin:8px 0}
+.sample{color:#666;font-size:.85rem}
+.card{border:1px solid #fb7185;border-left:5px solid #be123c;border-radius:12px;padding:16px;margin:10px 0;background:#fff}
+.steps{padding-left:20px}
+label{display:block;margin:12px 0 4px;font-weight:600}
+input,select,textarea{width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;font:inherit;background:#fff}
+button{margin-top:14px;padding:12px 20px;border:0;border-radius:10px;background:#be123c;color:#fff;font:inherit;font-weight:700;cursor:pointer}
+details{border:1px solid #fb7185;border-radius:10px;padding:12px;margin:8px 0;background:#fff}
+summary{font-weight:600;color:#be123c}
+footer{margin-top:40px;color:#666;font-size:.85rem}
+</style>
+</head>
+<body>
+<main>
+<div class="banner" aria-hidden="true"></div>
+<p class="sample">Sample business name and prices — replace with yours.</p>
+<h1>BrightNest Cleaning</h1>
+<p>A clean home, without the weekend lost to it. Regular, deep, and move-out cleans in [Your Area].</p>
+
+<h2>Cleaning services</h2>
+<div class="card"><strong>Regular Home Cleaning</strong><p>The weekly reset: floors, bathrooms, kitchen, and dust, done properly.</p></div>
+<div class="card"><strong>Deep Clean</strong><p>The full works — inside ovens, fridges, skirting, and all the forgotten corners.</p></div>
+<div class="card"><strong>Move-In / Move-Out Clean</strong><p>Empty-home cleans that pass inspections and handovers.</p></div>
+
+<h2>How it works</h2>
+<ol class="steps">
+<li>Tell us your home size and what you need below.</li>
+<li>We quote a fixed price and agree a time that suits you.</li>
+<li>We clean, you check, and we only leave when you are happy.</li>
+</ol>
+
+<h2>Prices <span class="sample">(sample — replace)</span></h2>
+<div class="card"><strong>Regular clean — from $110</strong><p>Two-bedroom home, about 2.5 hours.</p></div>
+<div class="card"><strong>Deep clean — from $220</strong><p>Full top-to-bottom clean, about 5 hours.</p></div>
+<div class="card"><strong>Move-out clean — from $260</strong><p>Empty home, inspection-ready, guarantee included.</p></div>
+
+<h2>Questions</h2>
+<details><summary>Do I need to provide products?</summary><p>No. We bring everything, including eco-friendly options on request.</p></details>
+<details><summary>What about pets?</summary><p>We love them. Tell us in advance and we will plan around them.</p></details>
+<details><summary>How do I give you access?</summary><p>Key safe, a neighbour, or be home — whatever you prefer. We never copy keys.</p></details>
+
+<h2>Hours</h2>
+<p>Monday to Saturday, 8:00 AM to 5:00 PM. <span class="sample">Sample hours — replace.</span></p>
+
+<h2>Book a clean</h2>
+<form id="bookForm">
+<label for="name">Your name</label>
+<input id="name" type="text" name="name" required>
+<label for="email">Your email</label>
+<input id="email" type="email" name="email" required>
+<label for="service">Service</label>
+<select id="service" name="service" required><option>Regular Home Cleaning</option><option>Deep Clean</option><option>Move-In / Move-Out Clean</option></select>
+<label for="date">Preferred date</label>
+<input id="date" type="date" name="date" required>
+<label for="notes">Home size, bedrooms/bathrooms, pets, access notes</label>
+<textarea id="notes" name="notes" rows="4"></textarea>
+<button type="submit">Send request</button>
+</form>
+<p class="sample">This form opens your visitor's email app addressed to sample@example.com. Replace that address in the page code with your own. Confirm every booking yourself.</p>
+
+<footer>© [Year] BrightNest Cleaning. All rights reserved.</footer>
+</main>
+<script>
+var FIELDS = [{"id": "name", "label": "Your name"}, {"id": "email", "label": "Your email"}, {"id": "service", "label": "Service"}, {"id": "date", "label": "Preferred date"}, {"id": "notes", "label": "Home size, bedrooms/bathrooms, pets, access notes"}];
+document.getElementById('bookForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var lines = FIELDS.map(function(f){
+    var el = document.getElementById(f.id);
+    return f.label + ': ' + (el ? el.value : '');
+  });
+  var subject = encodeURIComponent('BrightNest Cleaning enquiry');
+  var body = encodeURIComponent(lines.join('\n'));
+  window.location.href = 'mailto:sample@example.com?subject=' + subject + '&body=' + body;
+});
+</script>
+</body>
+</html>
