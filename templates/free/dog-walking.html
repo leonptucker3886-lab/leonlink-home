@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Paws Dog Walking</title>
+<meta name="description" content="Dog walking website template. Replace the sample details with your own.">
+<!-- Free template from LeonLink. Replace every sample detail with your own. -->
+<style>
+*{box-sizing:border-box}body{margin:0;background:#fff;color:#111;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.5}
+main{max-width:720px;margin:0 auto;padding:32px 18px 60px}
+h1{font-size:clamp(2.2rem,8vw,3.2rem);margin:8px 0}h2{font-size:1.5rem;margin:36px 0 8px}
+p{margin:8px 0}.sample{color:#666;font-size:.85rem}
+.card{border:1px solid #ddd;border-radius:12px;padding:16px;margin:10px 0}
+.steps{padding-left:20px}label{display:block;margin:12px 0 4px;font-weight:600}
+input,select,textarea{width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;font:inherit}
+button{margin-top:14px;padding:12px 20px;border:0;border-radius:10px;background:#111;color:#fff;font:inherit;font-weight:700;cursor:pointer}
+details{border:1px solid #ddd;border-radius:10px;padding:12px;margin:8px 0}
+footer{margin-top:40px;color:#666;font-size:.85rem}
+</style>
+</head>
+<body>
+<main>
+<p class="sample">Sample business name and prices — replace with yours.</p>
+<h1>Happy Paws Dog Walking</h1>
+<p>Walks, play, and a photo update every time. Serving [Your Area].</p>
+
+<h2>Services</h2>
+<div class="card"><strong>Solo walk</strong><p>One dog, full attention, at your dog's pace.</p></div>
+<div class="card"><strong>Group walk</strong><p>Small groups of friendly dogs, up to four.</p></div>
+<div class="card"><strong>Puppy visit</strong><p>Short visit for young dogs: toilet break, play, and company.</p></div>
+
+<h2>How it works</h2>
+<ol class="steps">
+<li>Book a walk below and tell me about your dog.</li>
+<li>We meet first, free, so your dog knows me.</li>
+<li>Your dog walks, and you get a photo update after.</li>
+</ol>
+
+<h2>Prices <span class="sample">(sample — replace)</span></h2>
+<div class="card"><strong>Solo walk, 30 minutes — $25</strong><p>One dog. Photo update included.</p></div>
+<div class="card"><strong>Solo walk, 60 minutes — $35</strong><p>One dog. Longer route, water and rest stops.</p></div>
+<div class="card"><strong>Puppy visit — $18</strong><p>Up to 20 minutes. Play, toilet break, and company.</p></div>
+
+<h2>Questions</h2>
+<details><summary>What areas do you cover?</summary><p>[Your area]. Ask if you are just outside it.</p></details>
+<details><summary>Do you walk dogs in bad weather?</summary><p>Yes, rain or shine, unless it is unsafe. I will message you if plans change.</p></details>
+<details><summary>Can I meet you first?</summary><p>Yes. The first meet-and-greet is free.</p></details>
+
+<h2>Hours</h2>
+<p>Monday to Saturday, 7:00 AM to 6:00 PM. <span class="sample">Sample hours — replace.</span></p>
+
+<h2>Book a walk</h2>
+<form id="bookForm">
+<label for="owner">Your name</label><input id="owner" name="owner" required>
+<label for="dog">Your dog's name and breed</label><input id="dog" name="dog" required>
+<label for="service">Service</label>
+<select id="service" name="service"><option>Solo walk, 30 minutes — $25</option><option>Solo walk, 60 minutes — $35</option><option>Puppy visit — $18</option></select>
+<label for="date">Preferred date</label><input id="date" type="date" name="date">
+<label for="notes">Anything I should know?</label><textarea id="notes" name="notes" rows="4"></textarea>
+<button type="submit">Send booking request</button>
+</form>
+<p class="sample">This form opens your visitor's email app addressed to sample@example.com. Replace that address in the page code with your own. Confirm every booking yourself before you walk.</p>
+
+<footer>© [Year] Happy Paws Dog Walking. All rights reserved.</footer>
+</main>
+<script>
+document.getElementById('bookForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var subject = encodeURIComponent('Walk booking: ' + document.getElementById('service').value);
+  var body = encodeURIComponent('Name: ' + document.getElementById('owner').value + '\nDog: ' + document.getElementById('dog').value + '\nDate: ' + document.getElementById('date').value + '\nNotes: ' + document.getElementById('notes').value);
+  window.location.href = 'mailto:sample@example.com?subject=' + subject + '&body=' + body;
+});
+</script>
+</body>
+</html>
