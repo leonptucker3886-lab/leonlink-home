@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golden Hour Events</title>
+<meta name="description" content="Golden Hour Events website template. Replace the sample details with your own.">
+<!-- Template from LeonLink — replace sample details with your own. -->
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fdeef1;color:#111;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.5}
+main{max-width:720px;margin:0 auto;padding:32px 18px 60px}
+.banner{height:110px;border-radius:14px;background:linear-gradient(135deg,#be123c,#fb7185);margin-bottom:10px}
+h1{font-size:clamp(2.2rem,8vw,3.2rem);margin:8px 0;color:#be123c}
+h2{font-size:1.5rem;margin:36px 0 8px;color:#be123c}
+p{margin:8px 0}
+.sample{color:#666;font-size:.85rem}
+.card{border:1px solid #fb7185;border-left:5px solid #be123c;border-radius:12px;padding:16px;margin:10px 0;background:#fff}
+.steps{padding-left:20px}
+label{display:block;margin:12px 0 4px;font-weight:600}
+input,select,textarea{width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;font:inherit;background:#fff}
+button{margin-top:14px;padding:12px 20px;border:0;border-radius:10px;background:#be123c;color:#fff;font:inherit;font-weight:700;cursor:pointer}
+details{border:1px solid #fb7185;border-radius:10px;padding:12px;margin:8px 0;background:#fff}
+summary{font-weight:600;color:#be123c}
+footer{margin-top:40px;color:#666;font-size:.85rem}
+</style>
+</head>
+<body>
+<main>
+<div class="banner" aria-hidden="true"></div>
+<p class="sample">Sample business name and prices — replace with yours.</p>
+<h1>Golden Hour Events</h1>
+<p>Parties, corporate days, and weddings — planned down to the last detail. In [Your Area].</p>
+
+<h2>Events we plan</h2>
+<div class="card"><strong>Birthday Parties</strong><p>Themes, venues, food, and entertainment — planned so you can enjoy it.</p></div>
+<div class="card"><strong>Corporate Events</strong><p>Conferences, launches, and team days that run on time and on brand.</p></div>
+<div class="card"><strong>Weddings & Receptions</strong><p>The full day, from ceremony to last dance, planned with you.</p></div>
+
+<h2>How it works</h2>
+<ol class="steps">
+<li>Tell us the event, date, and guest count below.</li>
+<li>We meet, talk through ideas, and send a plan with a fixed quote.</li>
+<li>We plan, book, and run the day. You turn up and enjoy it.</li>
+</ol>
+
+<h2>Prices <span class="sample">(sample — replace)</span></h2>
+<div class="card"><strong>Birthday party — from $850</strong><p>Up to 40 guests. Venue, food, and entertainment arranged.</p></div>
+<div class="card"><strong>Corporate event — from $1,500</strong><p>Up to 100 guests. AV, catering, and schedule included.</p></div>
+<div class="card"><strong>Wedding — from $3,200</strong><p>Full planning, suppliers, and on-the-day coordination.</p></div>
+
+<h2>Questions</h2>
+<details><summary>How far ahead should I book?</summary><p>Weddings: 9 to 12 months. Parties and corporate events: 6 to 8 weeks is ideal.</p></details>
+<details><summary>Do you take a deposit?</summary><p>Yes, 25% to hold your date, with the balance due two weeks before the event.</p></details>
+<details><summary>What if it rains?</summary><p>Every outdoor plan has a wet-weather backup agreed in advance — no surprises.</p></details>
+
+<h2>Hours</h2>
+<p>By appointment, seven days a week. <span class="sample">Sample hours — replace.</span></p>
+
+<h2>Plan your event</h2>
+<form id="bookForm">
+<label for="name">Your name</label>
+<input id="name" type="text" name="name" required>
+<label for="email">Your email</label>
+<input id="email" type="email" name="email" required>
+<label for="service">Event type</label>
+<select id="service" name="service" required><option>Birthday Party</option><option>Corporate Event</option><option>Wedding / Reception</option></select>
+<label for="date">Event date</label>
+<input id="date" type="date" name="date" required>
+<label for="notes">Guest count, venue, and what you have in mind</label>
+<textarea id="notes" name="notes" rows="4"></textarea>
+<button type="submit">Send request</button>
+</form>
+<p class="sample">This form opens your visitor's email app addressed to sample@example.com. Replace that address in the page code with your own. Confirm every booking yourself.</p>
+
+<footer>© [Year] Golden Hour Events. All rights reserved.</footer>
+</main>
+<script>
+var FIELDS = [{"id": "name", "label": "Your name"}, {"id": "email", "label": "Your email"}, {"id": "service", "label": "Event type"}, {"id": "date", "label": "Event date"}, {"id": "notes", "label": "Guest count, venue, and what you have in mind"}];
+document.getElementById('bookForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var lines = FIELDS.map(function(f){
+    var el = document.getElementById(f.id);
+    return f.label + ': ' + (el ? el.value : '');
+  });
+  var subject = encodeURIComponent('Golden Hour Events enquiry');
+  var body = encodeURIComponent(lines.join('\n'));
+  window.location.href = 'mailto:sample@example.com?subject=' + subject + '&body=' + body;
+});
+</script>
+</body>
+</html>
