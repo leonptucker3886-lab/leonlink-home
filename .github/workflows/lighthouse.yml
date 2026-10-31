@@ -16,4 +16,6 @@ jobs:
             https://www.leonlink.net/blog.html
             https://www.leonlink.net/journal/seo-is-dead.html
           uploadArtifacts: true
-          temporaryPublicStorage: true
+          # Public temporary storage upload was failing the job ('LHCI upload failed').
+          # Reports are still saved as workflow artifacts.
+          temporaryPublicStorage: false
