@@ -18,63 +18,6 @@ if(rd){im.onload=function(){dr(0)};dr(0)}else{var t0=performance.now();(function
 })();
 (function(){if(document.getElementById("lfx-js"))return;var s=document.createElement("script");s.id="lfx-js";s.src="/js/fx.js?v=1";s.defer=true;document.head.appendChild(s)})();
 
-/* HALLOWEEN SKIN — Oct 2026 (auto-expires after Nov 1) */
-(function(){
-try{
-var now=new Date(); if(now>new Date('2026-11-01T23:59:59')) return;
-var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-var css=''
-+'.lnx .lg{position:relative}'
-+'.lnx{overflow:hidden}'
-+'.hw-drips{position:absolute;left:2px;top:40px;width:44px;height:30px;pointer-events:none;z-index:5}'
-+'.hw-drips i{position:absolute;top:0;width:5px;border-radius:0 0 6px 6px;background:linear-gradient(#f21636,#8f0c22);transform-origin:top}'
-+'.hw-drips i:after{content:"";position:absolute;left:0;bottom:-4px;width:5px;height:7px;border-radius:50%;background:#c01028}'
-+(RM?'':'.hw-drips i{animation:hwDrip 3.6s ease-in infinite}.hw-drips i:after{animation:hwDrop 3.6s ease-in infinite}')
-+'@keyframes hwDrip{0%{transform:scaleY(.25)}55%{transform:scaleY(1)}100%{transform:scaleY(1)}}'
-+'@keyframes hwDrop{0%,55%{transform:translateY(0);opacity:0}62%{opacity:1}88%{transform:translateY(24px);opacity:1}100%{transform:translateY(30px);opacity:0}}'
-+'.hw-hline{position:absolute;left:0;right:0;bottom:-7px;height:8px;pointer-events:none}'
-+'.hw-hline i{position:absolute;top:-1px;width:6px;border-radius:0 0 6px 6px;background:linear-gradient(#d40f2a,#7d0a1e)}'
-+'.hw-witch{position:fixed;top:0;left:0;pointer-events:none;z-index:10001;will-change:transform;filter:drop-shadow(0 0 5px rgba(255,140,40,.95)) drop-shadow(0 0 10px rgba(170,70,255,.7))}.hw-witch svg *{fill:#1b0f2a}'
-+(RM?'':'@keyframes hwFlyR{0%{transform:translate3d(-16vw,0,0)}25%{transform:translate3d(16vw,-12px,0)}50%{transform:translate3d(48vw,6px,0)}75%{transform:translate3d(80vw,-10px,0)}100%{transform:translate3d(112vw,0,0)}}@keyframes hwFlyL{0%{transform:translate3d(112vw,0,0) scaleX(-1)}25%{transform:translate3d(80vw,-12px,0) scaleX(-1)}50%{transform:translate3d(48vw,6px,0) scaleX(-1)}75%{transform:translate3d(16vw,-10px,0) scaleX(-1)}100%{transform:translate3d(-16vw,0,0) scaleX(-1)}}')
-+'.hw-dude{position:fixed;bottom:0;pointer-events:none;z-index:1;opacity:.13}'
-+'.hw-dudebar{position:absolute;right:118px;top:4px;height:54px;opacity:.32;pointer-events:none}'
-+'.hw-dudefoot{position:absolute;right:10px;bottom:0;height:120px;opacity:.28;pointer-events:none}';
-var st=document.createElement('style'); st.textContent=css; document.head.appendChild(st);
-var DUDE='<svg viewBox="0 0 60 160" xmlns="http://www.w3.org/2000/svg"><ellipse cx="30" cy="14" rx="17" ry="4.5" fill="#050508"/><path d="M22 12 L38 12 L36 26 L24 26 Z" fill="#050508"/><circle cx="30" cy="33" r="8.5" fill="#050508"/><circle cx="27" cy="32" r="1.3" fill="#d8d8e2" opacity=".55"/><circle cx="33" cy="32" r="1.3" fill="#d8d8e2" opacity=".55"/><path d="M18 44 C18 40 42 40 42 44 L47 158 L13 158 Z" fill="#050508"/><path d="M18 48 L6 120 L11 121 L20 60 Z" fill="#050508"/><path d="M42 48 L54 120 L49 121 L40 60 Z" fill="#050508"/></svg>';
-var WITCH='<svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg"><path d="M2 38 L16 41 L4 54 L18 47 L30 44 L28 39 L14 35 Z" fill="#0a0a12"/><rect x="24" y="39.5" width="46" height="3" rx="1.5" transform="rotate(-4 24 39)" fill="#0a0a12"/><path d="M59 4 L66 20 L51 20 Z" fill="#0a0a12"/><ellipse cx="58" cy="21" rx="11" ry="2.4" fill="#0a0a12"/><circle cx="57" cy="26" r="4.4" fill="#0a0a12"/><path d="M53 29 C46 34 41 39 36 46 L62 44 C60 38 58 32 57 29 Z" fill="#0a0a12"/><path d="M55 32 L66 38 L65 40.5 L54 35 Z" fill="#0a0a12"/><path d="M58 41 L72 42.5 L71.6 45.4 L57.6 44 Z" fill="#0a0a12"/></svg>';
-function go(){
-  var lg=document.querySelector('.lnx .lg');
-  if(lg && !lg.querySelector('.hw-drips')){
-    var d=document.createElement('div'); d.className='hw-drips';
-    var specs=[[3,15],[13,22],[24,12],[35,19]];
-    specs.forEach(function(s,i){var el=document.createElement('i');el.style.left=s[0]+'px';el.style.height=s[1]+'px';el.style.animationDelay=(i*0.9)+'s';d.appendChild(el);});
-    lg.appendChild(d);
-    var dude=document.createElement('div'); dude.className='hw-dudebar'; dude.innerHTML=DUDE;
-    var lnx=document.querySelector('.lnx'); if(lnx){lnx.appendChild(dude);
-      var hl=document.createElement('div'); hl.className='hw-hline';
-      [[6,9],[19,13],[47,8],[63,12],[81,9],[92,14]].forEach(function(s){var el=document.createElement('i');el.style.left=s[0]+'%';el.style.height=s[1]+'px';hl.appendChild(el);});
-      lnx.appendChild(hl);}
-  }
-  var foot=document.querySelector('footer');
-  if(foot && !foot.querySelector('.hw-dudefoot')){foot.style.position='relative';var fd=document.createElement('div');fd.className='hw-dudefoot';fd.innerHTML=DUDE;foot.appendChild(fd);}
-  var watcher=document.createElement('div'); watcher.className='hw-dude'; watcher.style.left='-14px'; watcher.style.height='42vh'; watcher.innerHTML=DUDE; document.body.appendChild(watcher);
-  if(!RM){
-    var N=window.innerWidth<700?3:4;
-    for(var i=0;i<N;i++){
-      var p=document.createElement('div'); p.className='hw-witch';
-      var sz=54+Math.random()*34;
-      p.style.top=(2+Math.random()*Math.max(0,54-sz*0.6))+'px'; p.style.width=sz+'px'; p.style.opacity=(0.8+Math.random()*0.2);
-      p.innerHTML=WITCH;
-      var L=Math.random()<0.5;
-      p.style.animation=(L?'hwFlyL ':'hwFlyR ')+(17+Math.random()*12)+'s linear '+(-Math.random()*20)+'s infinite';
-      document.body.appendChild(p);
-    }
-    
-  }
-}
-if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',go); else go();
-}catch(e){}
-})();
 
 /* Floating Share button: page headers sit under the site nav, so surface Share here */
 (function(){try{var sb=document.querySelector('.sharebtn');if(!sb||document.querySelector('.lsf'))return;
