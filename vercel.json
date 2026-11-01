@@ -83,6 +83,16 @@
     {
       "source": "/__llid",
       "destination": "/__llid.html"
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "wall.leonlink.net"
+        }
+      ],
+      "destination": "/wall.html"
     }
   ],
   "redirects": [
