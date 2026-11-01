@@ -400,7 +400,7 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 <header class="gh"><div class="in">
   <a class="logo" href="/" aria-label="LeonLink home"><canvas id="logoFx" width="72" height="72" style="width:36px;height:36px;display:block" role="img" aria-label="LeonLink logo"></canvas><b>LEON<span>LINK</span></b></a>
 <script>(function(){var cv=document.getElementById('logoFx');if(!cv||!cv.getContext)return;var ctx=cv.getContext('2d');var img=new Image();img.src='/img/logo-128.png';var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;var embers=[],i;for(i=0;i<9;i++)embers.push({x:8+Math.random()*56,y:Math.random()*72,s:1+Math.random()*1.8,v:6+Math.random()*10,ph:Math.random()*6.28});function draw(t){ctx.clearRect(0,0,72,72);ctx.save();ctx.translate(36,66);if(!reduce)ctx.rotate(Math.sin(t*1.4)*0.085);ctx.translate(-36,-66);ctx.shadowColor='rgba(34,240,255,.9)';ctx.shadowBlur=reduce?8:9+4*Math.sin(t*6.3)+2.5*Math.sin(t*11.7);if(img.complete&&img.naturalWidth)ctx.drawImage(img,5,5,62,62);ctx.restore();if(!reduce){for(i=0;i<embers.length;i++){var e=embers[i];e.y-=e.v/60;if(e.y<2){e.y=70;e.x=8+Math.random()*56}var x=e.x+Math.sin(t*3+e.ph)*4;ctx.fillStyle='rgba(140,235,255,'+(0.25+0.6*(e.y/72))+')';ctx.beginPath();ctx.arc(x,e.y,e.s,0,6.29);ctx.fill();}}}if(reduce){draw(0)}else{var t0=performance.now();(function loop(n){draw((n-t0)/1000);requestAnimationFrame(loop)})(t0)}})();</script>
-  <nav class="gnav" aria-label="Main">
+  <nav class="gnav" aria-label="Main"><a href="/lineup/">Starting Lineup</a>
     <a href="/">Home</a>
     <a href="/games.html">Work</a>
     <a href="/software.html">Software</a>
@@ -410,10 +410,10 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
   </nav><style>.gnav a.fire{position:relative;color:#fff;font-weight:800;padding:6px 14px;border-radius:999px;background:linear-gradient(0deg,#ff3d00,#ff9100,#ffd600);background-size:100% 220%;animation:flm 1.2s ease-in-out infinite alternate,flk .18s steps(2) infinite;text-shadow:0 0 6px #ff6d00,0 -2px 10px #ffab00}.gnav a.fire:before{content:"";position:absolute;inset:-6px -2px 40% -2px;border-radius:50%;background:radial-gradient(ellipse at bottom,rgba(255,145,0,.7),transparent 70%);filter:blur(6px);z-index:-1;animation:flk .25s infinite alternate}@keyframes flm{to{background-position:0 100%;box-shadow:0 0 18px #ff6d00,0 -4px 22px #ffab00}}@keyframes flk{50%{opacity:.85}}@media (prefers-reduced-motion:reduce){.gnav a.fire,.gnav a.fire:before{animation:none}}</style>
   <a class="btn" href="https://app.leonlink.net">Get Ledgerline</a>
 </div></header>
-<div class="snav-wrap"><nav class="snav" aria-label="Store">
+<div class="snav-wrap"><nav class="snav" aria-label="Store"><a href="/lineup/">Starting Lineup</a>
   <div class="tabs">
     
-    <a href="/lineup/">Starting Lineup</a>
+    
     <a href="/games.html">Games</a>
     <a href="/software.html">Software</a>
     <a href="/blog.html">Blog</a>
@@ -446,11 +446,11 @@ footer .in{max-width:1240px;margin:0 auto;display:grid;gap:26px}
 
 </main>
 </div>
-<nav class="bnav" aria-label="Quick navigation">
+<nav class="bnav" aria-label="Quick navigation"><a href="/lineup/" class=""><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg>Lineup</a>
   <a href="/" class=""><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</a>
   <a href="/games.html" class=""><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 11v3M5.5 12.5h3M15.5 12h.01M18 13.5h.01"/></svg>Games</a>
   <a href="/software.html" class=""><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Software</a>
-  <a href="/lineup/" class=""><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg>Lineup</a>
+  
   <a href="/blog.html" class="sec-pink on"><svg viewBox="0 0 24 24"><path d="M12 3c-4 0-7 3-7 7v4l-2 3h18l-2-3v-4c0-4-3-7-7-7z"/><circle cx="9.5" cy="10.5" r="1.2"/><circle cx="14.5" cy="10.5" r="1.2"/></svg>Blog</a>
   <a href="/" class=""><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1 2-2z"/></svg>Hire me</a>
 </nav>
@@ -595,7 +595,7 @@ render();
 </script>
 <script>(function(){try{var p=location.pathname;fetch("/api/track?p="+encodeURIComponent(p)+"&r="+encodeURIComponent(document.referrer||""),{mode:"no-cors",keepalive:true}).catch(function(){})}catch(e){}})();</script>
 <footer class="ll-footer" style="border-top:1px solid rgba(128,128,128,.25);padding:22px 16px;text-align:center;font:14px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#0b0b0f;color:#cfcfd6;position:relative;z-index:5;clear:both">
-  <nav style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-bottom:8px"><a href="/" style="color:inherit;text-decoration:none">Home</a><a href="/blog.html" style="color:inherit;text-decoration:none">Blog</a><a href="/software.html" style="color:inherit;text-decoration:none">Software</a><a href="/watchline/" style="color:inherit;text-decoration:none">Watches</a><a href="/games.html" style="color:inherit;text-decoration:none">Games</a></nav>
+  <nav style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-bottom:8px"><a href="/lineup/">Starting Lineup</a><a href="/" style="color:inherit;text-decoration:none">Home</a><a href="/blog.html" style="color:inherit;text-decoration:none">Blog</a><a href="/software.html" style="color:inherit;text-decoration:none">Software</a><a href="/watchline/" style="color:inherit;text-decoration:none">Watches</a><a href="/games.html" style="color:inherit;text-decoration:none">Games</a></nav>
   <div>&copy; 2026 LeonLink</div>
 </footer>
 <script src="/js/ll-notepad.js" defer></script>
