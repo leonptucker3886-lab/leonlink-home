@@ -1,0 +1,47 @@
+/* LeonLink redesign kit v1 — profile-style design system.
+   Space theme, big type, minimal words. One kit for the homepage,
+   the dashboard, and every page that follows. No dependencies. */
+:root{
+  --ll-bg:#070a12; --ll-panel:rgba(255,255,255,.05); --ll-line:rgba(255,255,255,.12);
+  --ll-teal:#22e6c8; --ll-pink:#ff5da2; --ll-text:#f2f5f7; --ll-dim:rgba(242,245,247,.68);
+}
+*{box-sizing:border-box}
+body.ll{background:var(--ll-bg);color:var(--ll-text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;margin:0}
+.ll-wrap{max-width:1060px;margin:0 auto;padding:0 20px 110px}
+.ll-head{display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding:18px 0}
+.ll-logo{font-weight:900;font-size:22px;letter-spacing:.02em;text-decoration:none;color:var(--ll-text)}
+.ll-logo b{color:var(--ll-teal)}
+.ll-nav{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;font-weight:600}
+.ll-nav a{color:var(--ll-text);opacity:.75;text-decoration:none}
+.ll-nav a:hover{opacity:1;color:var(--ll-teal)}
+.ll-btn{display:inline-block;background:var(--ll-teal);color:#041016;font-weight:800;text-decoration:none;padding:12px 22px;border-radius:999px;border:0;cursor:pointer;font-size:15px}
+.ll-btn:hover{filter:brightness(1.1)}
+.ll-btn-ghost{display:inline-block;background:transparent;color:var(--ll-text);font-weight:700;text-decoration:none;padding:11px 20px;border-radius:999px;border:1px solid var(--ll-line);cursor:pointer;font-size:15px}
+.ll-hero{display:flex;gap:22px;align-items:center;flex-wrap:wrap;padding:34px 0 8px}
+.ll-avatar{width:84px;height:84px;border-radius:50%;border:3px solid var(--ll-teal);display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:900;background:var(--ll-panel);flex:0 0 auto}
+.ll-hero h1{font-size:clamp(2rem,6vw,3.4rem);line-height:1;margin:0 0 6px}
+.ll-hero p{margin:0;color:var(--ll-dim);font-size:17px}
+.ll-balance{font-size:clamp(1.8rem,5vw,2.8rem);font-weight:900;color:var(--ll-teal);margin:6px 0 0}
+.ll-balance span{font-size:1rem;color:var(--ll-dim);font-weight:600}
+.ll-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:26px 0}
+@media(max-width:720px){.ll-stats{grid-template-columns:repeat(2,1fr)}}
+.ll-stat{background:var(--ll-panel);border:1px solid var(--ll-line);border-radius:16px;padding:18px}
+.ll-stat b{display:block;font-size:clamp(1.4rem,4vw,2rem);line-height:1.1}
+.ll-stat span{color:var(--ll-dim);font-size:13px;font-weight:600}
+.ll-section{margin:38px 0 0}
+.ll-sec-t{font-size:clamp(1.4rem,4vw,2rem);font-weight:900;margin:0 0 4px}
+.ll-sec-s{color:var(--ll-dim);margin:0 0 16px;font-size:15px}
+.ll-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.ll-card{background:var(--ll-panel);border:1px solid var(--ll-line);border-radius:16px;padding:18px;text-decoration:none;color:var(--ll-text);display:block}
+.ll-card:hover{border-color:var(--ll-teal)}
+.ll-card h3{margin:8px 0 6px;font-size:18px}
+.ll-card p{margin:0;color:var(--ll-dim);font-size:14px;line-height:1.5}
+.ll-tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ll-teal)}
+.ll-badge{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:var(--ll-pink);color:#160812;padding:4px 9px;border-radius:999px}
+.ll-badge.soon{background:rgba(255,255,255,.14);color:var(--ll-text)}
+.ll-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.ll-bottomnav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(7,10,18,.88);backdrop-filter:blur(8px);border-top:1px solid #222;display:flex;gap:22px;overflow-x:auto;padding:14px 20px;font-size:14px;font-weight:600;white-space:nowrap}
+.ll-bottomnav a{opacity:.75;text-decoration:none;color:var(--ll-text)}
+.ll-bottomnav a:hover{opacity:1;color:var(--ll-teal)}
+.ll-bottomnav a:first-child{color:var(--ll-teal);opacity:1}
+.ll-empty{color:var(--ll-dim);font-size:15px;line-height:1.6}
