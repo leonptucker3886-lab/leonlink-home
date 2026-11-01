@@ -301,6 +301,11 @@
       "source": "/news.html",
       "destination": "/blog.html",
       "permanent": true
+    },
+    {
+      "source": "/moons.html",
+      "destination": "/games/moons.html",
+      "permanent": true
     }
   ],
   "headers": [
