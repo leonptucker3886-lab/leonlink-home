@@ -1,6 +1,16 @@
 {
   "rewrites": [
     {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "wall.leonlink.net"
+        }
+      ],
+      "destination": "/wall.html"
+    },
+    {
       "source": "/arcadeline/",
       "destination": "https://arcadeline.leonlink.net/"
     },
@@ -83,16 +93,6 @@
     {
       "source": "/__llid",
       "destination": "/__llid.html"
-    },
-    {
-      "source": "/(.*)",
-      "has": [
-        {
-          "type": "host",
-          "value": "wall.leonlink.net"
-        }
-      ],
-      "destination": "/wall.html"
     }
   ],
   "redirects": [
