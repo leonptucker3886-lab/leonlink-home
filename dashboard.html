@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Your dashboard | LeonLink</title>
+<meta name="description" content="Your LeonLink dashboard — your Glow balance, your stats, your tools.">
+<link rel="stylesheet" href="/css/ll-kit.css">
+<script src="/js/bottom-nav.js" defer></script>
+<script src="/js/ll-notepad.js" defer></script>
+</head>
+<body class="ll">
+<div class="ll-wrap">
+  <header class="ll-head">
+    <a class="ll-logo" href="/">● <b>LEON</b>LINK</a>
+    <nav class="ll-nav">
+      <a href="/lineup/">Top 5</a>
+      <a href="/software.html">Software</a>
+      <a href="/arcadeline/">Arcade</a>
+      <a href="https://afterglow.leonlink.net/">Casino</a>
+      <a href="/blog.html">Blogs</a>
+    </nav>
+    <span style="flex:1"></span>
+    <a id="acct-btn" class="ll-btn-ghost" href="/account?next=/dashboard.html">Sign in</a>
+  </header>
+
+  <main>
+    <section class="ll-hero">
+      <div id="avatar" class="ll-avatar">L</div>
+      <div>
+        <h1 id="who">Your dashboard</h1>
+        <p id="who-sub">Sign in to see your stats, your Glow, and cards picked for your taste.</p>
+        <p id="glow-line" class="ll-balance" hidden><span id="glow-num">0</span> <span>Glow</span></p>
+        <div class="ll-row" id="hero-actions">
+          <a class="ll-btn" href="/account?next=/dashboard.html">Sign in</a>
+          <a class="ll-btn-ghost" href="/lineup/">See the Top 5</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="ll-stats" aria-label="Your stats">
+      <div class="ll-stat"><b id="st-glow">—</b><span>Glow balance</span></div>
+      <div class="ll-stat"><b id="st-games">—</b><span>Games played</span></div>
+      <div class="ll-stat"><b id="st-streak">—</b><span>Day streak</span></div>
+      <div class="ll-stat"><b id="st-top">—</b><span>Top score</span></div>
+    </section>
+
+    <section class="ll-section" aria-label="Picked for you">
+      <h2 class="ll-sec-t">Picked for you</h2>
+      <p class="ll-sec-s">Cards shaped by what you played and saved. Play or save more and this row learns your taste.</p>
+      <div id="taste" class="ll-grid"></div>
+    </section>
+
+    <section class="ll-section" aria-label="Your tools">
+      <h2 class="ll-sec-t">Your tools</h2>
+      <p class="ll-sec-s">Everything in one place.</p>
+      <div class="ll-grid">
+        <div class="ll-card">
+          <span class="ll-badge">Coming soon</span>
+          <h3>Gift cards</h3>
+          <p>LeonLink gift cards are on the way. No purchase yet.</p>
+        </div>
+        <a class="ll-card" href="/packs.html">
+          <span class="ll-tag">Founder's Card</span>
+          <h3>Sign up</h3>
+          <p>Join the Founder's Card. →</p>
+        </a>
+        <a class="ll-card" href="/whitepaper.html">
+          <span class="ll-tag">Crypto journey</span>
+          <h3>Read the whitepaper</h3>
+          <p>How Glow works, where it's going. →</p>
+        </a>
+        <a class="ll-card" href="/blog.html">
+          <span class="ll-tag">Blogs</span>
+          <h3>Popular blogs</h3>
+          <p>The posts people keep coming back to. →</p>
+        </a>
+        <div class="ll-card">
+          <span class="ll-badge soon">Coming soon</span>
+          <h3>Messages</h3>
+          <p>Send messages to other users. On the way.</p>
+        </div>
+        <div class="ll-card">
+          <span class="ll-badge soon">Soon</span>
+          <h3>Easter egg basket</h3>
+          <p>Your found eggs, in one basket. Coming.</p>
+        </div>
+        <a class="ll-card" href="#saved">
+          <span class="ll-tag">Saved</span>
+          <h3>Saved articles</h3>
+          <p>What you saved while reading. ↓</p>
+        </a>
+        <div class="ll-card">
+          <span class="ll-tag">Notepad</span>
+          <h3>Notes</h3>
+          <p>Capture it while you read. It stays in this browser.</p>
+          <div class="ll-row"><button class="ll-btn" type="button" onclick="window.LLNotepad&&LLNotepad.open()">Open notepad</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ll-section" id="saved" aria-label="Saved articles">
+      <h2 class="ll-sec-t">Saved articles</h2>
+      <p class="ll-sec-s">Tap Save on a post below and it lands here.</p>
+      <div id="saved-list"></div>
+    </section>
+
+    <section class="ll-section" aria-label="From the blog">
+      <h2 class="ll-sec-t">From the blog</h2>
+      <p class="ll-sec-s">Save the ones you want to keep.</p>
+      <div id="blog-row" class="ll-grid"></div>
+    </section>
+  </main>
+
+  <footer style="text-align:center;padding:28px 0;color:rgba(242,245,247,.68);font-size:14px">LEONLINK — Sold. Started. Secured. Shipped. · <a href="/about.html" style="color:inherit;text-decoration:none">About</a> · <a href="/terms.html" style="color:inherit;text-decoration:none">Terms</a></footer>
+</div>
+
+<script type="module">
+/* Dashboard logic — best effort, guest view is the fallback.
+   Same Supabase project as /account and the arcade. Nothing here
+   throws into the page: every read is guarded, failures stay silent. */
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+var PROJECT_URL = 'https://cjtutkvhyzjsgclqvylg.supabase.co';
+var PUBLISHABLE_KEY = 'sb_publishable_E48ovT9wWxduLxnzPXL_5g_SnNl2rqz';
+var ARCADE = 'https://arcadeline.leonlink.net/';
+var GAME_NAMES = { maze: 'Glowmaze', linetrap: 'Line Trap', ludo: 'Ludo', flap: 'Glow Flap', merge: 'Merge Glow', dailysudoku: 'Daily Sudoku' };
+var BLOGS = [
+  { t: 'Three Minutes, Not Several Hours', u: '/blog/three-minutes-not-several-hours.html' },
+  { t: 'Blocked at 2200: The Five-Minute Rule', u: '/blog/blocked-at-2200-five-minute-rule.html' },
+  { t: 'Life of an AI — Week of the Ranks', u: '/blog/life-of-an-ai-week-of-the-ranks.html' },
+  { t: 'Why Do We Procrastinate?', u: '/journal/why-we-procrastinate.html' },
+  { t: 'Does Music Make You Smarter?', u: '/journal/does-music-make-you-smarter.html' },
+  { t: 'Review gating is fraud with a smile', u: '/journal/review-gating.html' }
+];
+
+function $(id) { return document.getElementById(id); }
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+function readJSON(key, fallback) {
+  try { var v = JSON.parse(localStorage.getItem(key) || 'null'); return v == null ? fallback : v; }
+  catch (e) { return fallback; }
+}
+function fmt(n) { return Number(n || 0).toLocaleString('en-US'); }
+
+/* --- local state: works signed out too --- */
+var played = readJSON('arc_ll_played', []);
+if (!Array.isArray(played)) played = [];
+var daily = readJSON('arc_ll_daily', {});
+var today = new Date().toISOString().slice(0, 10);
+var yesterday = new Date(Date.now() - 864e5).toISOString().slice(0, 10);
+var streak = (daily.last === today || daily.last === yesterday) ? (daily.n || 0) : 0;
+var saved = readJSON('ll_saved', []);
+if (!Array.isArray(saved)) saved = [];
+
+function renderSaved() {
+  var box = $('saved-list');
+  if (!saved.length) {
+    box.innerHTML = '<p class="ll-empty">Nothing saved yet. Tap Save on a post below and it shows up here.</p>';
+    return;
+  }
+  box.innerHTML = '<div class="ll-grid">' + saved.map(function (a, i) {
+    return '<div class="ll-card"><h3>' + esc(a.t) + '</h3><div class="ll-row"><a class="ll-btn-ghost" href="' + esc(a.u) + '">Read →</a><button class="ll-btn-ghost" type="button" data-rm="' + i + '">Remove</button></div></div>';
+  }).join('') + '</div>';
+  box.querySelectorAll('[data-rm]').forEach(function (b) {
+    b.onclick = function () { saved.splice(Number(b.getAttribute('data-rm')), 1); try { localStorage.setItem('ll_saved', JSON.stringify(saved)); } catch (e) {} renderSaved(); };
+  });
+}
+function renderTaste() {
+  var box = $('taste');
+  var cards = [];
+  played.slice(0, 4).forEach(function (id) {
+    cards.push('<a class="ll-card" href="' + ARCADE + '"><span class="ll-tag">Play again</span><h3>' + esc(GAME_NAMES[id] || id) + '</h3><p>Back to the arcade. →</p></a>');
+  });
+  saved.slice(0, 4).forEach(function (a) {
+    cards.push('<a class="ll-card" href="' + esc(a.u) + '"><span class="ll-tag">Your saved read</span><h3>' + esc(a.t) + '</h3><p>Pick up where you left off. →</p></a>');
+  });
+  if (!cards.length) {
+    cards = [
+      '<a class="ll-card" href="/lineup/"><span class="ll-tag">Start here</span><h3>Top 5</h3><p>The lists that pay the bills. →</p></a>',
+      '<a class="ll-card" href="/blog.html"><span class="ll-tag">Start here</span><h3>Blogs</h3><p>Read one, save it, and this row starts learning. →</p></a>',
+      '<a class="ll-card" href="' + ARCADE + '"><span class="ll-tag">Start here</span><h3>Arcade</h3><p>Play a game and it shows up here. →</p></a>'
+    ];
+  }
+  box.innerHTML = cards.join('');
+}
+function renderBlogs() {
+  $('blog-row').innerHTML = BLOGS.map(function (b) {
+    var isSaved = saved.some(function (a) { return a.u === b.u; });
+    return '<div class="ll-card"><h3>' + esc(b.t) + '</h3><div class="ll-row"><a class="ll-btn-ghost" href="' + esc(b.u) + '">Read →</a><button class="ll-btn-ghost" type="button" data-save="' + esc(b.u) + '" data-title="' + esc(b.t) + '">' + (isSaved ? 'Saved ✓' : 'Save') + '</button></div></div>';
+  }).join('');
+  document.querySelectorAll('[data-save]').forEach(function (b) {
+    b.onclick = function () {
+      var u = b.getAttribute('data-save'), t = b.getAttribute('data-title');
+      if (!saved.some(function (a) { return a.u === u; })) saved.push({ t: t, u: u });
+      try { localStorage.setItem('ll_saved', JSON.stringify(saved)); } catch (e) {}
+      renderSaved(); renderBlogs(); renderTaste();
+    };
+  });
+}
+function paintStats(games, top) {
+  $('st-games').textContent = fmt(games);
+  $('st-streak').textContent = fmt(streak);
+  $('st-top').textContent = top == null ? '—' : fmt(top);
+}
+renderSaved();
+renderBlogs();
+renderTaste();
+paintStats(new Set(played).size, null);
+
+/* --- signed-in state: same project as /account --- */
+try {
+  var sb = createClient(PROJECT_URL, PUBLISHABLE_KEY);
+  var sess = await sb.auth.getSession();
+  var user = sess && sess.data && sess.data.session && sess.data.session.user;
+  if (user) {
+    var pr = await sb.from('arc_profiles').select('nickname,tokens,avatar,frame,color,title').eq('id', user.id).maybeSingle();
+    var profile = (pr && pr.data) || null;
+    var name = (profile && profile.nickname) || (user.email || 'Player').split('@')[0];
+    $('who').textContent = name;
+    $('who-sub').textContent = (profile && profile.title) || 'Your LeonLink dashboard.';
+    var glow = (profile && profile.tokens) || 0;
+    $('glow-line').hidden = false;
+    $('glow-num').textContent = fmt(glow);
+    $('st-glow').textContent = fmt(glow);
+    var av = $('avatar');
+    var base = name.charAt(0).toUpperCase() || 'L';
+    av.textContent = base;
+    if (profile && profile.color && /^#[0-9a-f]{3,8}$/i.test(profile.color)) av.style.borderColor = profile.color;
+    if (profile && profile.avatar) {
+      try {
+        var it = await sb.from('arc_items').select('*').eq('id', profile.avatar).maybeSingle();
+        var glyph = it && it.data && (it.data.emoji || it.data.icon || it.data.glyph);
+        if (glyph) av.textContent = glyph;
+      } catch (e) {}
+    }
+    var heroActions = $('hero-actions');
+    if (heroActions) heroActions.style.display = 'none';
+    var acct = $('acct-btn');
+    if (acct) { acct.textContent = 'Account'; acct.href = '/account'; }
+    try {
+      var sc = await sb.from('arc_scores').select('game,score').eq('user_id', user.id);
+      var rows = (sc && sc.data) || [];
+      var games = new Set(rows.map(function (r) { return r.game; }));
+      played.forEach(function (g) { games.add(g); });
+      var top = rows.reduce(function (m, r) { return Math.max(m, r.score || 0); }, 0);
+      paintStats(games.size, rows.length ? top : null);
+    } catch (e) { paintStats(new Set(played).size, null); }
+  } else {
+    $('st-glow').textContent = '—';
+  }
+} catch (e) { /* guest view stays */ }
+</script>
+</body>
+</html>
