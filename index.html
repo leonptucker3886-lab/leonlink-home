@@ -70,6 +70,28 @@
   .bottomnav a{opacity:.75}
   .bottomnav a:hover{opacity:1;color:#22e6c8}
   .bottomnav a:first-child{color:#22e6c8;opacity:1}
+
+ .ll-flipdeck{padding:28px 0 4px}
+ .ll-viewport{position:relative;touch-action:pan-y}
+ .ll-card{max-width:520px;margin:0 auto}
+ .ll-card-inner{position:relative;height:210px;transform-style:preserve-3d;transition:transform .45s}
+ .ll-card.flipped .ll-card-inner{transform:rotateY(180deg)}
+ .ll-face{position:absolute;inset:0;border-radius:20px;border:1px solid #222;background:rgba(18,22,29,.88);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:20px;text-align:center}
+ .ll-back{transform:rotateY(180deg)}
+ .ll-name{font-family:"Bebas Neue",sans-serif;font-size:64px;letter-spacing:4px;line-height:1}
+ .ll-hint{font-size:13px;opacity:.55}
+ .ll-go{position:absolute;top:14px;right:16px;background:#ff5da2;color:#fff;font-weight:800;font-size:13px;padding:8px 14px;border-radius:999px}
+ .ll-back p{font-size:19px}
+ .ll-btn{background:#ff5da2;color:#fff;font-weight:800;font-size:15px;padding:12px 22px;border-radius:999px}
+ .ll-dots{display:flex;justify-content:center;gap:10px;margin-top:16px}
+ .ll-dot{width:10px;height:10px;border-radius:50%;border:0;background:#333;cursor:pointer;padding:0}
+ .ll-dot.on{background:#ff5da2}
+ .ll-arrows{display:flex;justify-content:space-between;max-width:520px;margin:10px auto 0}
+ .ll-prev,.ll-next{background:none;border:1px solid #333;color:#f2f2f0;font-size:14px;font-weight:700;padding:8px 16px;border-radius:999px;cursor:pointer}
+ .ll-js .ll-card{display:none}
+ .ll-js .ll-card.on{display:block}
+ @keyframes ll-pop{from{transform:scale(.92);opacity:.4}to{transform:scale(1);opacity:1}}
+ .ll-js .ll-card.on.pop .ll-card-inner{animation:ll-pop .25s ease}
 </style>
 </head>
 <body>
@@ -82,6 +104,47 @@
 </div></div>
 
 <div class="wrap">
+<div class="ll-flipdeck" id="ll-flipdeck">
+  <div class="ll-viewport">
+    <article class="ll-card"><div class="ll-card-inner">
+      <div class="ll-face ll-front"><span class="ll-name">BLOG</span><span class="ll-hint">Tap to flip</span><a class="ll-go" href="/blog.html">Go →</a></div>
+      <div class="ll-face ll-back"><p>Fresh reads.</p><a class="ll-btn" href="/blog.html">Go →</a></div>
+    </div></article>
+    <article class="ll-card"><div class="ll-card-inner">
+      <div class="ll-face ll-front"><span class="ll-name">CASINO</span><span class="ll-hint">Tap to flip</span><a class="ll-go" href="https://afterglow.leonlink.net/">Go →</a></div>
+      <div class="ll-face ll-back"><p>Play for fun.</p><a class="ll-btn" href="https://afterglow.leonlink.net/">Go →</a></div>
+    </div></article>
+    <article class="ll-card"><div class="ll-card-inner">
+      <div class="ll-face ll-front"><span class="ll-name">TOP 5</span><span class="ll-hint">Tap to flip</span><a class="ll-go" href="/lineup/">Go →</a></div>
+      <div class="ll-face ll-back"><p>Five picks. One list.</p><a class="ll-btn" href="/lineup/">Go →</a></div>
+    </div></article>
+    <article class="ll-card"><div class="ll-card-inner">
+      <div class="ll-face ll-front"><span class="ll-name">WATCHES</span><span class="ll-hint">Tap to flip</span><a class="ll-go" href="/watchline/">Go →</a></div>
+      <div class="ll-face ll-back"><p>Seiko. Citizen. Bulova.</p><a class="ll-btn" href="/watchline/">Go →</a></div>
+    </div></article>
+    <article class="ll-card"><div class="ll-card-inner">
+      <div class="ll-face ll-front"><span class="ll-name">BLOG</span><span class="ll-hint">Tap to flip</span><a class="ll-go" href="/blog.html">Go →</a></div>
+      <div class="ll-face ll-back"><p>Fresh reads.</p><a class="ll-btn" href="/blog.html">Go →</a></div>
+    </div></article>
+    <article class="ll-card"><div class="ll-card-inner">
+      <div class="ll-face ll-front"><span class="ll-name">TOP 5</span><span class="ll-hint">Tap to flip</span><a class="ll-go" href="/lineup/">Go →</a></div>
+      <div class="ll-face ll-back"><p>Five picks. One list.</p><a class="ll-btn" href="/lineup/">Go →</a></div>
+    </div></article>
+  </div>
+  <div class="ll-dots">
+    <button class="ll-dot" aria-label="Card 1"></button>
+    <button class="ll-dot" aria-label="Card 2"></button>
+    <button class="ll-dot" aria-label="Card 3"></button>
+    <button class="ll-dot" aria-label="Card 4"></button>
+    <button class="ll-dot" aria-label="Card 5"></button>
+    <button class="ll-dot" aria-label="Card 6"></button>
+  </div>
+  <div class="ll-arrows">
+    <button class="ll-prev">← Prev</button>
+    <button class="ll-next">Next →</button>
+  </div>
+</div>
+<script src="/js/ll-flipdeck.js"></script>
   <header class="hero">
     <p class="kicker">LEONLINK PRESENTS</p>
     <h1>WE BUILD<br><span>ANYTHING.</span></h1>
