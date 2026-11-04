@@ -3,7 +3,8 @@ const save=()=>localStorage.setItem('llpet',JSON.stringify(S));
 const decay=m=>{for(const k in S.st)S.st[k]=Math.max(10,S.st[k]-m*0.3);S.t=Date.now()};
 decay((Date.now()-S.t)/60000);
 const today=new Date().toDateString();let gift=0;if(S.lastDay!==today){if(S.pet){S.days=(S.days||0)+1;S.spin=1}S.lastDay=S.pet?today:null;save()}
-function mute(){S.mute=!S.mute;save();render()}
+function mute(){S.mute=!S.mute;save();window.PetSound&&PetSound.setMuted(S.mute);render()}
+if(window.PetSound)S.mute=PetSound.isMuted();addEventListener('petsound-mute',e=>{S.mute=e.detail;save();if(S.view==='home')render()});
 setInterval(()=>{decay(1);save();if(S.view==='home')(window.refreshMeters?refreshMeters():render())},60000);
 const $=id=>document.getElementById(id);
 // Picture-first UI: buttons speak their name so kids who can't read hear what they do.
@@ -12,7 +13,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-say]');if(
 function pop(emo,words){toast(emo);if(words)setTimeout(()=>say(words),350)}
 function toast(m){const t=$('toast');t.textContent=m;t.classList.add('s');clearTimeout(t._);t._=setTimeout(()=>t.classList.remove('s'),1800)}
 // Hook for LeonLink Kids games: LeonLinkPet.addTokens(10), postMessage({type:'leonlink-tokens',amount:10}), or ?earn=10
-window.LeonLinkPet={addTokens(n){n=Math.max(0,n|0);S.tokens+=n;save();render();pop('🪙 +'+n+' 🎉',n+' coins!')},get tokens(){return S.tokens}};
+window.LeonLinkPet={addTokens(n){n=Math.max(0,n|0);S.tokens+=n;save();render();if(n>0&&window.PetSound)PetSound.play('coin');pop('🪙 +'+n+' 🎉',n+' coins!')},get tokens(){return S.tokens}};
 addEventListener('message',e=>{if(e.data&&e.data.type==='leonlink-tokens')LeonLinkPet.addTokens(e.data.amount)});
 function go(v){S.view=v;save();render()}
 function eff(i){const m={h:'🍗',j:'😊',c:'🫧',en:'⚡'};return Object.keys(m).filter(k=>i[k]).map(k=>m[k]+'+'+i[k]).join(' ')}
@@ -26,7 +27,7 @@ function wear(id){S.wear=S.wear===id?null:id;save();render()}
 function buyHome(id){const h=HOMES.find(x=>x.id===id);if(S.homes.includes(id)){S.home=id;save();return go('home')}
  if(S.tokens<h.p)return pop('🪙❌ ➡️ 🎮','Not enough coins yet!');S.tokens-=h.p;S.homes.push(id);S.home=id;save();go('home');pop(h.e+' 🎉','Welcome to your new home!')}
 function bounce(){const p=document.querySelector('.pet');if(p){p.classList.remove('bounce');void p.offsetWidth;p.classList.add('bounce')}}
-function pat(fromScene){if(!fromScene&&window.Pet3D)return Pet3D.act('pat');S.st.j=Math.min(100,S.st.j+2);save();bounce();render()}
+function pat(fromScene){window.PetSound&&PetSound.play('pat');if(!fromScene&&window.Pet3D)return Pet3D.act('pat');S.st.j=Math.min(100,S.st.j+2);save();bounce();render()}
 function tickle(){S.st.j=Math.min(100,S.st.j+3);save();render();pop('😆','Hee hee!')}
 const kindOf=i=>SHOP.food.includes(i)?'eat':SHOP.toys.includes(i)?'play':i.c?'wash':'happy';
 function quick(k){const cat=k==='eat'?SHOP.food:k==='play'?SHOP.toys:SHOP.care.filter(i=>i.c);const i=cat.find(x=>S.inv[x.id]>0);if(!i){S.tab=k==='eat'?'food':k==='play'?'toys':'care';pop('🎒❌ ➡️ 🛍️','None left! Let\'s go to the shop.');return go('shop')};use(i.id)}
@@ -49,7 +50,7 @@ function homeView(){const h=HOMES.find(x=>x.id===S.home),p=PETS.find(x=>x.id===S
  return `<div class="card"><div class="stage home" id="stage" style="background:${h.bg}">
  <button class="mood" aria-label="${mw}" data-say="${mw}">${me}</button><span class="age">${age}</span>
  <span class="hint">👆</span>${furn}<div class="pet fallback" onclick="pat()">${p.e}${w?`<span class="acc">${w.e}</span>`:''}</div>
- <div class="acts">${act("quick('eat')",'🍎','Feed')}${act("quick('play')",'⚽','Play')}${act("quick('wash')",'🧼','Wash')}${act('pat()','🤗','Hug')}${act('nap()','💤','Sleep')}${act('Pet3D.photo(S.name)','📸','Photo')}${act('mute()',S.mute?'🔇':'🔊',S.mute?'Sound on':'Sound off')}</div></div>
+ <div class="acts">${act("quick('eat')",'🍎','Feed')}${act("quick('play')",'⚽','Play')}${act("quick('wash')",'🧼','Wash')}${act('pat()','✋','Pat')}${act('pat()','🤗','Hug')}${act('nap()','💤','Sleep')}${act('Pet3D.photo(S.name)','📸','Photo')}${act('mute()',S.mute?'🔇':'🔊',S.mute?'Sound on':'Sound off')}</div></div>
  <div class="meters">${meter('h','🍗','Tummy')}${meter('j','😊','Happy')}${meter('c','🫧','Clean')}${meter('en','⚡','Energy')}</div></div>
  <div class="card"><div class="sec">🎒</div>${bag.length?`<div class="grid">${bag.map(i=>`<button class="item tap" aria-label="${i.n}" data-say="${i.n}" onclick="use('${i.id}')"><div class="e">${i.e}</div><div class="cnt">${'●'.repeat(Math.min(S.inv[i.id],5))}${S.inv[i.id]>5?'+':''}</div></button>`).join('')}</div>`:`<button class="empty tap" data-say="Empty! Go to the shop." onclick="go('shop')">🎒❌ ➡️ 🛍️</button>`}</div>
  <div class="card"><div class="sec">🛋️👑</div>${ALL.some(i=>S.owned[i.id])?`<div class="grid">${ALL.filter(i=>S.owned[i.id]).map(i=>{const on=i.keep?S.placed.includes(i.id):S.wear===i.id;return `<button class="item tap ${on?'on':''}" aria-label="${i.n}" data-say="${i.n}" onclick="${i.keep?'place':'wear'}('${i.id}')"><div class="e">${i.e}</div><div class="go">${on?'✅':'⬜'}</div></button>`}).join('')}</div>`:`<button class="empty tap" data-say="Buy furniture and hats in the shop" onclick="go('shop')">🛍️ ➡️ 🛋️👑</button>`}</div>`}
@@ -61,7 +62,7 @@ let G=null;
 function playView(){return `<div class="card"><div class="row playbar"><button class="startbtn" aria-label="Start" data-say="Tap the stars!" onclick="startGame()">▶️⭐</button><b id="gs" class="score">⭐ 0</b></div><div class="timer"><i id="gt" style="width:100%"></i></div><div id="game"><div class="demo">👆⭐ = 🪙</div></div></div>`}
 function startGame(){if(G)return;let left=20,got=0;const box=$('game');box.innerHTML='';$('gt').style.width='100%';
  const spawn=()=>{const s=document.createElement('span');const big=Math.random()<.2;s.className='star';s.textContent=big?'🌟':'⭐';s.style.left=Math.random()*85+'%';s.style.top=Math.random()*78+'%';
-  s.onpointerdown=()=>{got+=big?3:1;s.remove();$('gs').textContent='⭐ '+got};box.appendChild(s);setTimeout(()=>s.remove(),1300)};
+  s.onpointerdown=()=>{window.PetSound&&PetSound.play('tap');got+=big?3:1;s.remove();$('gs').textContent='⭐ '+got};box.appendChild(s);setTimeout(()=>s.remove(),1300)};
  const sp=setInterval(spawn,600);G=setInterval(()=>{if(!$('gt')){clearInterval(sp);clearInterval(G);G=null;return}left--;$('gt').style.width=(left/20*100)+'%';if(left<=0){clearInterval(sp);clearInterval(G);G=null;box.innerHTML='<div class="demo">🎉</div>';LeonLinkPet.addTokens(window.capCoins?capCoins(got):got)}},1000)}
 function render(){$('tok').textContent=S.tokens;
  const v=S.pet?S.view:'adopt';$('nav').innerHTML=S.pet?[['home','🏠','My pet'],['shop','🛍️','Shop'],['homes','🏡','Homes'],['play','🎮','Play and win coins']].map(([k,l,w])=>`<button class="${v===k?'on':''}" aria-label="${w}" data-say="${w}" onclick="go('${k}')">${l}</button>`).join(''):'';
