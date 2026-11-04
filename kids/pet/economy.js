@@ -16,7 +16,7 @@
     pop('\uD83C\uDF81 \uD83C\uDF4E','A free apple for '+(S.name||'your pet')+'!');return true}
   // 2) Care reward: +1 coin per caring action (food, wash, toys), capped at 10 a day.
   if(typeof use==='function'){var _use=use;window.use=use=function(id){var had=S.inv[id]>0;_use.apply(this,arguments);
-    if(had){var e=econ();if(e.care<CARE_CAP){e.care++;S.tokens+=1;save()}}}}
+    if(had){var e=econ();if(e.care<CARE_CAP){e.care++;if(window.LeonLinkPet&&LeonLinkPet.addTokens)LeonLinkPet.addTokens(1);else{S.tokens+=1;save()}}}}}
   // Wrap buy: if a child taps food they can't afford, help instead of only saying "not enough".
   if(typeof buy==='function'){var _buy=buy;window.buy=buy=function(id){var i=ALL.find(function(x){return x.id===id});
     if(i&&S.tokens<i.p&&SHOP.food.indexOf(i)>=0&&safetyNet())return;return _buy.apply(this,arguments)}}
