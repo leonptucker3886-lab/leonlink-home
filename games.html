@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#07060f">
 <title>Glowline Games Hub — Afterglow &amp; Arcadeline | LeonLink</title>
 <style>
-:root{--bg:#07060f;--glow:#ff3df2;--cyan:#22e6ff;--gold:#ffd25a;--txt:#f3eefe}
+:root{--bg:#07060f;--glow:#ff3df2;--cyan:#22e6ff;--gold:#ffd25a;--snes:#9a9af0;--txt:#f3eefe}
 *{box-sizing:border-box;margin:0;padding:0}
 body{min-height:100vh;background:radial-gradient(ellipse at top,#2a0b45 0%,var(--bg) 60%);color:var(--txt);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;overflow-x:hidden}
 body:before{content:"";position:fixed;inset:0;background:repeating-linear-gradient(90deg,transparent 0 79px,rgba(34,230,255,.05) 80px),repeating-linear-gradient(0deg,transparent 0 79px,rgba(255,61,242,.05) 80px);pointer-events:none}
@@ -85,7 +85,7 @@ nav a{margin:0;padding:8px 12px;border-radius:999px;border:1px solid #ffffff1f;f
 .door:hover .fan i{opacity:.6}.door:hover .fan i:nth-child(1){transform:rotate(-32deg) translateY(-10%)}.door:hover .fan i:nth-child(4){transform:rotate(32deg) translateY(-10%)}
 .casino .fan i{display:flex;align-items:center;justify-content:center;font:900 clamp(.7rem,1.4vw,1.1rem)/1.1 system-ui;color:#fff;text-align:center;text-shadow:0 0 10px var(--glow);border-color:var(--glow)}
 .door:before{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse at center,rgba(7,6,15,.55),rgba(7,6,15,.2) 70%);pointer-events:none}
-.doors{grid-template-columns:repeat(3,1fr)!important}.bangers-door{box-shadow:0 0 0 1px var(--gold) inset}.bangers-door:hover{box-shadow:0 0 40px rgba(255,200,80,.5),0 0 0 1px var(--gold) inset}.bangers-door h2{color:var(--gold);text-shadow:0 0 14px var(--gold)}.bangers-door .btn{background:var(--gold)}@media(max-width:640px){.doors{grid-template-columns:1fr 1fr!important}.bangers-door{grid-column:1/-1}}
+.doors{grid-template-columns:repeat(4,1fr)!important}.bangers-door{box-shadow:0 0 0 1px var(--gold) inset}.bangers-door:hover{box-shadow:0 0 40px rgba(255,200,80,.5),0 0 0 1px var(--gold) inset}.bangers-door h2{color:var(--gold);text-shadow:0 0 14px var(--gold)}.bangers-door .btn{background:var(--gold)}@media(max-width:640px){.doors{grid-template-columns:1fr 1fr!important}}
 .buyglow{display:inline-block;margin-top:12px;padding:9px 20px;border-radius:999px;font-weight:700;font-size:.85rem;color:var(--gold);border:1.5px solid var(--gold);background:rgba(0,0,0,.35);cursor:pointer;position:relative;z-index:3}.buyglow:hover{background:var(--gold);color:#07060f}.door .btn+.buyglow{margin-left:8px}@media(max-width:640px){.door .btn+.buyglow{margin-left:0;display:block}}
 .door{background-size:cover!important;background-position:center!important}
 .door:before{background:linear-gradient(180deg,rgba(7,6,15,.35),rgba(7,6,15,.85))!important}
@@ -93,6 +93,8 @@ nav a{margin:0;padding:8px 12px;border-radius:999px;border:1px solid #ffffff1f;f
 .casino{background-image:radial-gradient(circle at 30% 30%,#ff3df2aa,transparent 50%),radial-gradient(circle at 70% 70%,#22e6ff88,transparent 50%),linear-gradient(160deg,#2a0b45,#07060f)!important}
 .arcade{background-image:url(https://www.leonlink.net/img/cards/dominion.jpg)!important}
 .bangers-door{background-image:url(https://www.leonlink.net/img/cards/sootfather.jpg)!important}
+.snes-door{box-shadow:0 0 0 1px var(--snes) inset}.snes-door:hover{box-shadow:0 0 40px rgba(154,154,240,.5),0 0 0 1px var(--snes) inset}.snes-door h2{color:var(--snes);text-shadow:0 0 14px var(--snes)}.snes-door .btn{background:var(--snes)}.snes-door .ftab{background:var(--snes)}
+.snes-door{background-image:radial-gradient(circle at 30% 30%,#6b6bd688,transparent 50%),linear-gradient(160deg,#2a2a40,#18181B)!important}
 
 /* folder look */
 .doors{padding:28px 8px 0!important;gap:14px!important;align-items:end}
@@ -123,7 +125,7 @@ nav a{margin:0;padding:8px 12px;border-radius:999px;border:1px solid #ffffff1f;f
 <body>
 <header>
   <div class="logo">Glowline</div>
-  <nav><a href="https://afterglow.leonlink.net">Casino</a><a href="https://arcadeline.leonlink.net">Arcade</a><a href="https://glowline.leonlink.net/bangers.html">Original Bangers</a><a href="https://leonlink.net">LeonLink</a></nav>
+  <nav><a href="https://afterglow.leonlink.net">Casino</a><a href="https://arcadeline.leonlink.net">Arcade</a><a href="https://glowline.leonlink.net/bangers.html">Original Bangers</a><a href="/games/snes/">SNES</a><a href="https://leonlink.net">LeonLink</a></nav>
 </header>
 <section class="hero">
   <p class="welcome" style="font-size:1.25rem;font-weight:700;letter-spacing:.08em;color:var(--cyan);text-shadow:0 0 12px var(--cyan);margin-bottom:12px">Welcome to the Glowline Station</p>
@@ -133,18 +135,19 @@ nav a{margin:0;padding:8px 12px;border-radius:999px;border:1px solid #ffffff1f;f
 </section>
 <section class="doors">
   <a class="door casino" href="https://afterglow.leonlink.net">
-    <span class="ftab">Casino</span><div class="tag">Folder</div>
+    <span class="ftab">Casino</span>
     <h2>Casino</h2>
     <ul><li>Slots: Neon, Sun n Fun, Zeus and more</li><li>Table games and mines</li><li>Glow store and wallet</li></ul>
-    <span class="btn">Open folder</span>
+    <span class="btn">Open →</span>
   </a>
   <a class="door arcade" href="https://arcadeline.leonlink.net">
-    <span class="ftab">Arcade</span><div class="tag">Folder</div>
+    <span class="ftab">Arcade</span>
     <h2>Arcade</h2>
     <ul><li>Skill and arcade games</li><li>Your player dashboard</li><li>Leaderboards and progress</li></ul>
-    <span class="btn">Open folder</span>
+    <span class="btn">Open →</span>
   </a>
-<a class="door bangers-door" href="https://glowline.leonlink.net/bangers.html"><span class="ftab">Original Bangers</span><div class="tag">Folder</div><h2>Original Bangers</h2><ul><li>16 original games</li><li>Adventure, racing, survival</li><li>New drops coming soon</li></ul><span class="btn">Open folder</span></a>
+<a class="door bangers-door" href="https://glowline.leonlink.net/bangers.html"><span class="ftab">Original Bangers</span><h2>Original Bangers</h2><ul><li>16 original games</li><li>Adventure, racing, survival</li><li>New drops coming soon</li></ul><span class="btn">Open →</span></a>
+<a class="door snes-door" href="/games/snes/"><span class="ftab">SNES</span><h2>SNES</h2><ul><li>Play SNES games you own</li><li>Right in your browser</li><li>Controls guide and FAQ</li></ul><span class="btn">Open →</span></a>
 </section>
 
 <p class="coins">Your Glow balance follows you everywhere you sign in.</p>
