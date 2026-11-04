@@ -107,7 +107,7 @@ function enter(){KM=true;document.body.classList.add('kidmode');goFull();history
  const o=$q('.playgate');if(o)o.remove();
  if(S.pet&&S.tut<TUT.length)setTimeout(tutShow,800);else if(S.pet){bertSay('Hi again! Your pet missed you!','👋');setTimeout(bertHide,4000)}}
 function gate(again){if($q('.playgate'))return;const g=document.createElement('div');g.className='playgate';
- g.innerHTML=`<div class="pg-bert">${BERT_SVG}</div><button class="pg-play" aria-label="Play">▶</button><a class="pg-home" href="/kids/" aria-label="Back to Kids Corner"><span>🏠</span><b>Kids Corner</b></a>`;
+ g.innerHTML=`<div class="pg-bert">${BERT_SVG}</div><div class="pg-mode" style="font:800 22px system-ui,sans-serif;color:#fff;background:#7c4dff;border-radius:999px;padding:8px 18px;margin:8px auto;display:inline-block">🧸 Little Kids mode</div><button class="pg-play" aria-label="Play in Little Kids mode">▶</button><a class="pg-home" href="/kids/" aria-label="Back to Kids Corner"><span>🏠</span><b>Kids Corner</b></a>`;
  const hm=g.querySelector('.pg-home');let gone=0;const goKC=e=>{if(e)e.preventDefault();if(gone)return;gone=1;KM=false;
  try{if(isFull())(document.exitFullscreen||document.webkitExitFullscreen).call(document)}catch(_){}
  try{speechSynthesis.cancel()}catch(_){}hm.classList.add('going');location.assign(location.origin+'/kids/')};
