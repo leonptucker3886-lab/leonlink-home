@@ -1,5 +1,6 @@
 /* LeonLink shared bottom navigation — one source for every page (new theme: Top 5 first, text links, scrolls) */
 (function(){
+if(location.pathname.indexOf("/kids/pet")===0)return; /* kids pet: no site links */
 if(window.__llBottomNav)return;window.__llBottomNav=1;
 var p=location.pathname;
 function on(h){return h=="/"?(p=="/"||p=="/index.html"):p.indexOf(h.replace(/\/$/,""))==0;}
