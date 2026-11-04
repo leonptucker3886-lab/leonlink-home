@@ -12,22 +12,26 @@
     feed:function(){tone(330,0,0.1,'triangle',440);tone(392,0.12,0.1,'triangle',523);},
     pat:function(){tone(523,0,0.18,'sine',440);tone(659,0.1,0.2,'sine',587);},
     coin:function(){tone(988,0,0.08,'square');tone(1319,0.08,0.18,'square');},
+    play:function(){tone(440,0,0.07,'triangle',660);tone(660,0.09,0.07,'triangle',880);tone(880,0.18,0.12,'triangle',1100);},
     happy:function(){tone(784,0,0.09,'sine',988);tone(988,0.1,0.09,'sine',1175);tone(1175,0.2,0.16,'sine',1568);}
   };
-  function play(n){ if(SFX[n])try{SFX[n]();}catch(e){} }
-  window.PetSound={play:play,isMuted:function(){return muted;}};
+  var last={}; function play(n){ var now=Date.now(); if(!SFX[n]||now-(last[n]||0)<250)return; last[n]=now; try{SFX[n]();}catch(e){} }
+  var btnUpd=null; function setMuted(m){ muted=!!m; localStorage.setItem(KEY,muted?'1':'0'); if(btnUpd)btnUpd(); try{window.dispatchEvent(new CustomEvent('petsound-mute',{detail:muted}));}catch(e){} }
+  window.PetSound={play:play,isMuted:function(){return muted;},setMuted:setMuted};
   function kind(el){ var s=((el.id||'')+' '+(el.className||'')+' '+(el.textContent||'')+' '+(el.getAttribute('aria-label')||'')).toLowerCase();
     if(/feed|food|eat|snack|🍎|🍖/.test(s))return 'feed';
     if(/\bpat\b|pet it|cuddle|hug|love|stroke|❤/.test(s))return 'pat';
-    if(/coin|buy|shop|reward|🪙/.test(s))return 'coin';
-    if(/play|ball|toy|dance|bath|wash|sleep/.test(s))return 'happy';
+    if(el.matches&&el.matches('.pet,#stage canvas'))return 'pat';
+    if(/play and win|shop|coin|buy|reward|🪙/.test(s))return 'tap';
+    if(/play|ball|toy/.test(s))return 'play';
+    if(/dance|bath|wash|sleep/.test(s))return 'happy';
     return 'tap'; }
-  document.addEventListener('pointerup',function(e){ var el=e.target.closest&&e.target.closest('button,[role=button],a.btn,.btn'); if(!el||el.id==='llpetMute')return; play(kind(el)); },true);
+  document.addEventListener('pointerup',function(e){ var el=e.target.closest&&e.target.closest('button,[role=button],a.btn,.btn,.pet,#stage canvas'); if(!el||el.id==='llpetMute')return; play(kind(el)); },true);
   function addBtn(){ if(document.getElementById('llpetMute'))return; var b=document.createElement('button'); b.id='llpetMute'; b.type='button';
     b.setAttribute('aria-label','Sound on or off');
     b.style.cssText='position:fixed;top:10px;right:10px;z-index:99999;width:52px;height:52px;border-radius:50%;border:3px solid #22f0ff;background:#0b1a2a;color:#fff;font-size:26px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.4)';
-    function upd(){b.textContent=muted?'🔇':'🔊';} upd();
-    b.addEventListener('click',function(){ muted=!muted; localStorage.setItem(KEY,muted?'1':'0'); upd(); if(!muted)play('happy'); });
+    function upd(){b.textContent=muted?'🔇':'🔊';} btnUpd=upd; upd();
+    b.addEventListener('click',function(){ setMuted(!muted); if(!muted)play('happy'); });
     document.body.appendChild(b); }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',addBtn); else addBtn();
 })();
