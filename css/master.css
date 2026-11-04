@@ -1,0 +1,74 @@
+/* LeonLink master design v2 - matched to index.html (leonlink-home, design/master-site).
+   Chrome-source agnostic: same classes/data-chrome hooks for static markup or nav.js-injected chrome.
+   Fonts: <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800;900&family=Bebas+Neue&display=swap" rel="stylesheet"> */
+:root{
+  --bg:#070a12; --bar-bg:rgba(11,14,19,.92); --nav-bg:rgba(7,10,18,.85);
+  --surface:rgba(18,22,29,.72); --line:#222; --line-soft:#1d222b; --line-strong:#444;
+  --text:#f2f2f0; --accent:#22e6c8; --pink:#ff5da2; --pink-hover:#ff7ab3; --gold:#ffd166;
+  --font:Archivo,system-ui,sans-serif; --display:"Bebas Neue",sans-serif;
+  --fs-hero:clamp(64px,11vw,132px); --fs-h2:clamp(38px,6vw,64px); --fs-sub:clamp(18px,2.6vw,26px);
+  --max:1080px; --narrow:640px; --radius:16px; --pill:999px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.4}
+a{color:inherit;text-decoration:none}
+.wrap,.container{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+/* LEONLINK PRESENTS bar (sticky top, logo + main nav + CTA) */
+.bar,[data-chrome="presents"]{position:sticky;top:0;z-index:10;background:var(--bar-bg);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:var(--max);margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:28px}
+.logo{font-family:var(--display);font-size:30px;letter-spacing:3px}
+.logo b{color:var(--accent)}
+.bar nav{display:flex;gap:20px;flex-wrap:wrap;font-size:14px;font-weight:600}
+.bar nav a{opacity:.75} .bar nav a:hover{opacity:1;color:var(--accent)}
+.cta{margin-left:auto;background:var(--pink);color:#fff;font-weight:800;font-size:14px;padding:11px 20px;border-radius:var(--pill);white-space:nowrap}
+.cta:hover{background:var(--pink-hover)}
+@media(max-width:640px){
+  .bar-in{flex-wrap:wrap;gap:12px;padding:14px 20px}
+  .logo{font-size:24px} .cta{flex-shrink:0;padding:10px 16px}
+  .bar nav a{display:none} .bar nav a[href^="/account"]{display:inline}
+}
+
+/* Big type */
+.hero{padding:88px 0 64px}
+.kicker{color:var(--accent);font-weight:800;letter-spacing:4px;font-size:14px;margin-bottom:18px}
+h1{font-family:var(--display);font-size:var(--fs-hero);line-height:.9;letter-spacing:1px}
+h1 span,h2 span{color:var(--accent)}
+h2{font-family:var(--display);font-size:var(--fs-h2);letter-spacing:1px;line-height:1;margin-bottom:8px}
+.sub{font-size:var(--fs-sub);max-width:var(--narrow);margin:24px 0 32px;opacity:.85}
+.sec-sub{opacity:.65;margin-bottom:28px;font-size:17px}
+section{padding:56px 0;border-top:1px solid var(--line-soft)}
+
+/* Buttons */
+.btnrow{display:flex;gap:14px;flex-wrap:wrap}
+.btn{display:inline-block;font-weight:800;padding:15px 28px;border-radius:var(--pill);font-size:16px}
+.btn-pink{background:var(--pink);color:#fff} .btn-pink:hover{background:var(--pink-hover)}
+.btn-ghost{border:1px solid var(--line-strong);color:#fff}
+
+/* Compact blog-style card grid */
+.grid,.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.card,.panel,.step{display:block;background:var(--surface);backdrop-filter:blur(6px);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+.card h3{font-size:20px;margin-bottom:6px}
+.card p{opacity:.65;font-size:15px}
+.card .tag{color:var(--accent);font-weight:800;font-size:12px;letter-spacing:2px}
+.card img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin-bottom:10px;display:block}
+.card:hover{border-color:var(--accent)}
+.panel{padding:26px} .panel h3{font-size:22px;margin-bottom:8px} .panel p{opacity:.7;font-size:16px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.step .num{font-family:var(--display);font-size:44px;color:var(--gold)}
+.step h3{font-size:19px;margin:6px 0} .step p{opacity:.65;font-size:15px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:640px){.two{grid-template-columns:1fr}.card-grid{grid-template-columns:1fr 1fr;gap:12px}}
+
+/* Footer (single) */
+footer,.site-footer,[data-chrome="footer"]{border-top:1px solid var(--line-soft);padding:28px 0 40px;opacity:.55;font-size:14px;text-align:center}
+
+/* Fixed bottom nav, Top 5 first (first link highlighted) */
+.bottomnav,[data-chrome="bottom-nav"]{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--nav-bg);backdrop-filter:blur(8px);border-top:1px solid var(--line);display:flex;flex-wrap:nowrap;gap:22px;overflow-x:auto;padding:14px 20px;padding-bottom:calc(14px + env(safe-area-inset-bottom));font-size:14px;font-weight:600;white-space:nowrap}
+.bottomnav a{opacity:.75}
+.bottomnav a:hover,.bottomnav a[aria-current]{opacity:1;color:var(--accent)}
+.bottomnav a:first-child{color:var(--accent);opacity:1}
+body:has(.bottomnav),body.has-bottom-nav{padding-bottom:56px}
+
+/* Double-chrome safety net (siblings only; not a substitute for the header decision) */
+.bar ~ .bar,.bottomnav ~ .bottomnav,footer ~ footer{display:none}
