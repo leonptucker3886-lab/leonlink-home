@@ -3,6 +3,12 @@
 // moves to the next card with a pop-in. Tap the card body flips it;
 // Go links navigate normally. No-JS fallback: all cards stack and the
 // Go links still work.
+// Phone tap fix (Nov 4): after a tap, mobile browsers fire emulated
+// mouse events. Without a guard, mouseup re-ran the tap logic and
+// flipped the card straight back off, so taps looked dead while
+// desktop clicks worked. touchend now cancels the emulated sequence
+// for non-link taps, and mouse handlers ignore anything arriving
+// within 600ms of a touch.
 (function () {
   var deck = document.getElementById('ll-flipdeck');
   if (!deck) return;
@@ -40,7 +46,7 @@
   });
 
   var vp = deck.querySelector('.ll-viewport');
-  var x0 = null, y0 = null, moved = false;
+  var x0 = null, y0 = null, moved = false, lastTouchEnd = 0;
   function start(x, y) { x0 = x; y0 = y; moved = false; }
   function move(x, y) {
     if (x0 === null) return;
@@ -59,6 +65,7 @@
       if (card) card.classList.toggle('flipped');
     }
   }
+  function freshMouse() { return Date.now() - lastTouchEnd < 600; }
   vp.addEventListener('touchstart', function (e) {
     var t = e.touches[0]; start(t.clientX, t.clientY);
   }, { passive: true });
@@ -71,11 +78,14 @@
     }
   }, { passive: false });
   vp.addEventListener('touchend', function (e) {
-    var t = e.changedTouches[0]; end(t.clientX, t.clientY, e.target);
-  });
-  vp.addEventListener('mousedown', function (e) { start(e.clientX, e.clientY); });
-  vp.addEventListener('mousemove', function (e) { move(e.clientX, e.clientY); });
-  vp.addEventListener('mouseup', function (e) { end(e.clientX, e.clientY, e.target); });
+    lastTouchEnd = Date.now();
+    var t = e.changedTouches[0];
+    if (!e.target.closest('a')) e.preventDefault();
+    end(t.clientX, t.clientY, e.target);
+  }, { passive: false });
+  vp.addEventListener('mousedown', function (e) { if (freshMouse()) return; start(e.clientX, e.clientY); });
+  vp.addEventListener('mousemove', function (e) { if (freshMouse()) return; move(e.clientX, e.clientY); });
+  vp.addEventListener('mouseup', function (e) { if (freshMouse()) return; end(e.clientX, e.clientY, e.target); });
 
   show(0, false);
 })();
