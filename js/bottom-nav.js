@@ -1,17 +1,18 @@
-/* LeonLink shared bottom navigation — one source for every page (new theme: Top 5 first, text links, scrolls) */
+/* LeonLink shared bottom navigation — one source for every page. Works with master.css: uses .bottomnav + data-chrome="bottom-nav"; skips if a page already has static bottom-nav markup. Top 5 first. */
 (function(){
 if(location.pathname.indexOf("/kids")===0)return; /* all kids pages: no site links */
 if(window.__llBottomNav)return;window.__llBottomNav=1;
 var p=location.pathname;
 function on(h){return h=="/"?(p=="/"||p=="/index.html"):p.indexOf(h.replace(/\/$/,""))==0;}
 var M=[["Top 5","/lineup/"],["Casino","https://afterglow.leonlink.net/"],["How-To","/how-to/"],["Watches","/watchline/"],["Software","/software.html"],["Arcade","/arcadeline/"],["Games","/games.html"],["Ebooks","/ebooks.html"],["Blogs","/blog.html"],["Series","/series.html"],["Moons","/games/moons.html"],["SNES","/games/snes/"]];
-var css="body{padding-bottom:calc(56px + env(safe-area-inset-bottom))!important}.lbn{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:9999;background:rgba(7,10,18,.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-top:1px solid rgba(255,255,255,.08);padding:14px 20px calc(14px + env(safe-area-inset-bottom));gap:22px;overflow-x:auto;white-space:nowrap}.lbn a{flex:none;font:600 14px system-ui,-apple-system,Segoe UI,Roboto,sans-serif;text-decoration:none;color:rgba(255,255,255,.75)}.lbn a.on{color:#22e6c8}";
+/* fallback styles only apply when master.css is not loaded */
+var css="body.has-bottom-nav{padding-bottom:calc(56px + env(safe-area-inset-bottom))}.lbn{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:9999;background:rgba(7,10,18,.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-top:1px solid rgba(255,255,255,.08);padding:14px 20px calc(14px + env(safe-area-inset-bottom));gap:22px;overflow-x:auto;white-space:nowrap}.lbn a{flex:none;font:600 14px system-ui,-apple-system,Segoe UI,Roboto,sans-serif;text-decoration:none;color:rgba(255,255,255,.75)}.lbn a:first-child{color:#ffc93c}.lbn a.on{color:#22e6c8}";
 function init(){
-if(document.querySelector("nav.lbn"))return;
+if(document.querySelector('nav.lbn,.bottomnav,[data-chrome="bottom-nav"]')){document.body.classList.add("has-bottom-nav");return;}
 var s=document.createElement("style");s.id="lbn-css";s.textContent=css;document.head.appendChild(s);
-var bn=document.createElement("nav");bn.className="lbn";bn.setAttribute("aria-label","Bottom navigation");
+var bn=document.createElement("nav");bn.className="lbn bottomnav";bn.setAttribute("data-chrome","bottom-nav");bn.setAttribute("data-injected","bottom-nav.js");bn.setAttribute("aria-label","Bottom navigation");
 bn.innerHTML=M.map(function(x){return '<a href="'+x[1]+'"'+(on(x[1])?' class="on" aria-current="page"':'')+'>'+x[0]+'</a>';}).join("");
-document.body.appendChild(bn);
+document.body.appendChild(bn);document.body.classList.add("has-bottom-nav");
 }
 if(document.body)init();else document.addEventListener("DOMContentLoaded",init);
 })();
