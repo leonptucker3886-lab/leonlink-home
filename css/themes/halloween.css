@@ -1,0 +1,14 @@
+/* LeonLink theme layer: Halloween. Opt-in: <link rel="stylesheet" href="/css/themes/halloween.css"> after master.css,
+   or add class "theme-halloween" to <html>. Remove the link/class to switch off. Design only; no content changes. */
+:root,.theme-halloween{--accent:#ff7a18;--accent-2:#9b5cff;--bar-bg:rgba(18,8,24,.92);--nav-bg:rgba(18,8,24,.88);--line:rgba(255,122,24,.22)}
+body{background:radial-gradient(ellipse at top,#2a0f3a 0%,#0b0610 60%) fixed;color:#f3e9ff}
+.bar,[data-chrome="presents"]{border-bottom-color:var(--line);box-shadow:0 2px 18px rgba(255,122,24,.18)}
+h1,h2{text-shadow:0 0 18px rgba(255,122,24,.35)}
+.card{border-color:rgba(155,92,255,.28)}
+.card:hover{box-shadow:0 0 0 1px var(--accent),0 10px 30px rgba(255,122,24,.25);transform:translateY(-2px);transition:.2s}
+.bottomnav a:first-child,[data-chrome="bottom-nav"] a:first-child{color:var(--accent)}
+.bottomnav a[aria-current],.bottomnav a.on{color:var(--accent-2)}
+/* light animation: slow-drifting bats, behind content */
+body::before{content:"\1F987  \1F987   \1F987";position:fixed;top:12%;left:-20%;z-index:0;font-size:22px;opacity:.35;pointer-events:none;animation:ll-bats 38s linear infinite;white-space:pre}
+@keyframes ll-bats{0%{transform:translate(0,0)}50%{transform:translate(70vw,6vh)}100%{transform:translate(140vw,-2vh)}}
+@media (prefers-reduced-motion:reduce){body::before{animation:none;display:none}.card:hover{transform:none}}
