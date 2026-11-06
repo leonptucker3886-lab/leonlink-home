@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bastion Line - Tower Defense | LeonLink</title>
+<style>
+html,body{margin:0;height:100%;background:#0b0f1a;color:#fff;font-family:system-ui,sans-serif;overflow:hidden;touch-action:none}
+#intro{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(#1b2547,#05070d);z-index:5}
+.pres{letter-spacing:.4em;font-size:5vmin;opacity:0;animation:f 1.5s .3s forwards}
+.spin{width:22vmin;height:22vmin;margin:6vmin;border:3px solid #ffb800;transform:rotate(45deg);opacity:0;animation:s 2s linear infinite,f 1s 1.6s forwards;box-shadow:0 0 30px #ffb800}
+.title{font-size:11vmin;font-weight:900;background:linear-gradient(90deg,#ffb800,#ff3c6f,#4cc9ff);-webkit-background-clip:text;color:transparent;opacity:0;animation:f 1s 3s forwards;text-align:center}
+#play{margin-top:5vmin;padding:3vmin 9vmin;font-size:5vmin;border:0;border-radius:99px;background:#ffb800;font-weight:800;opacity:0;animation:f 1s 3.8s forwards}
+@keyframes f{to{opacity:1}}@keyframes s{to{transform:rotate(405deg)}}
+#hud{position:fixed;top:0;left:0;right:0;display:flex;justify-content:space-around;padding:8px;font-weight:700;background:#0008;z-index:2}
+#bar{position:fixed;bottom:0;left:0;right:0;display:flex;gap:8px;padding:10px;justify-content:center;background:#0008;z-index:2}
+#bar button{flex:1;max-width:140px;padding:12px 4px;border-radius:12px;border:2px solid #444;background:#1a2238;color:#fff;font-weight:700}
+#bar button.sel{border-color:#ffb800}
+canvas{display:block;width:100vw;height:100vh}
+#msg{position:fixed;inset:0;display:none;align-items:center;justify-content:center;flex-direction:column;background:#000c;z-index:4;font-size:7vmin}
+</style></head><body>
+<div id="intro"><div class="pres">LEONLINK PRESENTS</div><div class="spin"></div><div class="title">BASTION LINE</div><button id="play">DEFEND</button></div>
+<div id="hud"><span id="g">Gold 100</span><span id="l">Lives 20</span><span id="w">Wave 0</span></div>
+<canvas id="c"></canvas>
+<div id="bar"><button data-t="0" class="sel">Gun 50</button><button data-t="1">Frost 70</button><button data-t="2">Cannon 120</button><button id="nw">Next Wave</button></div>
+<div id="msg"><div id="mt"></div><button onclick="location.reload()" style="margin-top:20px;padding:12px 30px;font-size:20px;border-radius:99px;border:0;background:#ffb800">Retry</button></div>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');let W,H,path=[];
+const T=[{n:'Gun',cost:50,r:.22,rate:20,dmg:6,col:'#4cc9ff'},{n:'Frost',cost:70,r:.2,rate:30,dmg:2,slow:.5,col:'#a0f0ff'},{n:'Cannon',cost:120,r:.3,rate:60,dmg:25,splash:.08,col:'#ff3c6f'}];
+let gold=100,lives=20,wave=0,sel=0,towers=[],en=[],shots=[],spawn=0,run=false;
+function rs(){W=c.width=innerWidth;H=c.height=innerHeight;const p=[[.1,0],[.1,.3],[.8,.3],[.8,.55],[.2,.55],[.2,.8],[.9,.8],[.9,1]];path=p.map(a=>[a[0]*W,a[1]*H]);}
+addEventListener('resize',rs);rs();
+const S=()=>Math.min(W,H);
+function near(px,py){for(let i=0;i<path.length-1;i++){const[a,b]=path[i],[cc,d]=path[i+1];const dx=cc-a,dy=d-b,t=Math.max(0,Math.min(1,((px-a)*dx+(py-b)*dy)/(dx*dx+dy*dy)));if(Math.hypot(px-a-t*dx,py-b-t*dy)<S()*.06)return true}return false}
+c.addEventListener('pointerdown',e=>{const t=T[sel];if(e.clientY<50||e.clientY>H-70||gold<t.cost||near(e.clientX,e.clientY))return;if(towers.some(o=>Math.hypot(o.x-e.clientX,o.y-e.clientY)<S()*.07))return;gold-=t.cost;towers.push({x:e.clientX,y:e.clientY,t,cd:0});});
+document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{sel=+b.dataset.t;document.querySelectorAll('[data-t]').forEach(z=>z.classList.remove('sel'));b.classList.add('sel')});
+document.getElementById('nw').onclick=()=>{if(spawn<=0&&en.length==0){wave++;spawn=6+wave*3}};
+document.getElementById('play').onclick=()=>{document.getElementById('intro').remove();run=true};
+let st=0;
+function step(){if(!run)return;st++;
+if(spawn>0&&st%40==0){spawn--;const hp=10+wave*8;en.push({i:0,x:path[0][0],y:path[0][1],hp,max:hp,sp:S()*.003*(1+wave*.04),slow:0,boss:spawn==0&&wave%5==0})}
+en.forEach(e=>{if(e.boss&&!e.b){e.b=1;e.hp*=8;e.max*=8}const tg=path[e.i+1];if(!tg){e.dead=1;lives-=e.boss?5:1;return}const dx=tg[0]-e.x,dy=tg[1]-e.y,d=Math.hypot(dx,dy),v=e.sp*(e.slow>0?.5:1);e.slow--;if(d<v){e.i++;e.x=tg[0];e.y=tg[1]}else{e.x+=dx/d*v;e.y+=dy/d*v}});
+towers.forEach(o=>{if(--o.cd>0)return;const R=o.t.r*S();const tg=en.find(e=>!e.dead&&Math.hypot(e.x-o.x,e.y-o.y)<R);if(!tg)return;o.cd=o.t.rate;shots.push({x:o.x,y:o.y,e:tg,t:o.t})});
+shots.forEach(s=>{const dx=s.e.x-s.x,dy=s.e.y-s.y,d=Math.hypot(dx,dy),v=S()*.02;if(d<v||s.e.dead){s.done=1;if(s.e.dead)return;if(s.t.splash)en.forEach(e=>{if(Math.hypot(e.x-s.e.x,e.y-s.e.y)<s.t.splash*S())e.hp-=s.t.dmg});else s.e.hp-=s.t.dmg;if(s.t.slow)s.e.slow=60}else{s.x+=dx/d*v;s.y+=dy/d*v}});
+en.forEach(e=>{if(e.hp<=0&&!e.dead){e.dead=1;gold+=e.boss?50:5}});
+en=en.filter(e=>!e.dead);shots=shots.filter(s=>!s.done);
+if(lives<=0){run=false;document.getElementById('mt').textContent='Bastion fell on wave '+wave;document.getElementById('msg').style.display='flex'}}
+function draw(){x.fillStyle='#0b0f1a';x.fillRect(0,0,W,H);x.strokeStyle='#2a3558';x.lineWidth=S()*.09;x.lineCap=x.lineJoin='round';x.beginPath();path.forEach((p,i)=>i?x.lineTo(...p):x.moveTo(...p));x.stroke();
+towers.forEach(o=>{x.fillStyle=o.t.col;x.beginPath();x.arc(o.x,o.y,S()*.03,0,7);x.fill()});
+en.forEach(e=>{const r=S()*(e.boss?.035:.02);x.fillStyle=e.slow>0?'#a0f0ff':(e.boss?'#ff3c6f':'#ffb800');x.beginPath();x.arc(e.x,e.y,r,0,7);x.fill();x.fillStyle='#0f0';x.fillRect(e.x-r,e.y-r-6,2*r*e.hp/e.max,3)});
+shots.forEach(s=>{x.fillStyle=s.t.col;x.fillRect(s.x-3,s.y-3,6,6)});
+document.getElementById('g').textContent='Gold '+gold;document.getElementById('l').textContent='Lives '+lives;document.getElementById('w').textContent='Wave '+wave;}
+(function loop(){step();draw();requestAnimationFrame(loop)})();
+</script></body></html>
