@@ -1,0 +1,35 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Star Wanderer — LeonLink Games</title>
+<style>html,body{margin:0;height:100%;background:#05060f;color:#e8f0ff;font-family:system-ui,sans-serif;overflow:hidden;touch-action:none}
+canvas{display:block;width:100vw;height:100vh}#intro{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(#141a3a,#05060f);z-index:5;transition:opacity .8s}
+#intro .p{letter-spacing:.4em;font-size:14px;opacity:0;animation:f 1s .3s forwards}#orb{width:80px;height:80px;margin:28px;border-radius:50%;background:conic-gradient(#5cf,#a6f,#f6c,#5cf);box-shadow:0 0 40px #7af;animation:s 1.2s linear infinite,f .8s 1.2s both}
+#intro h1{font-size:clamp(32px,9vw,64px);margin:0;background:linear-gradient(90deg,#5cf,#f6c);-webkit-background-clip:text;color:transparent;opacity:0;animation:f 1s 2.2s forwards}
+#intro button{margin-top:28px;padding:14px 36px;font-size:18px;border:0;border-radius:30px;background:#5cf;color:#05060f;font-weight:700;opacity:0;animation:f 1s 3s forwards}
+@keyframes s{to{transform:rotate(360deg)}}@keyframes f{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+#hud{position:fixed;top:8px;left:8px;right:8px;display:flex;justify-content:space-between;font-size:14px;text-shadow:0 0 4px #000;pointer-events:none}
+#msg{position:fixed;bottom:18px;width:100%;text-align:center;font-size:15px;pointer-events:none}</style></head><body>
+<div id="intro"><div class="p">LEONLINK PRESENTS</div><div id="orb"></div><h1>STAR WANDERER</h1><button id="go">LAUNCH</button></div>
+<canvas id="c"></canvas><div id="hud"><span id="st"></span><span id="xp"></span></div><div id="msg">Touch / drag to fly. Visit planets to scan. Avoid asteroids.</div>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');let W,H;function rs(){W=c.width=innerWidth*devicePixelRatio;H=c.height=innerHeight*devicePixelRatio}rs();onresize=rs;
+const P={x:0,y:0,vx:0,vy:0,hp:100,fuel:100,xp:0,lvl:1,cr:0};let tgt=null,run=false;
+const stars=[...Array(300)].map(()=>({x:Math.random()*4000-2000,y:Math.random()*4000-2000,z:Math.random()*.8+.2}));
+const col=['#5cf','#f6c','#fc5','#6f9','#a6f'];const pl=[...Array(14)].map((_,i)=>({x:Math.cos(i)*(400+i*160),y:Math.sin(i*1.7)*(400+i*160),r:30+Math.random()*40,c:col[i%5],done:false}));
+let ast=[...Array(25)].map(()=>({x:Math.random()*3000-1500,y:Math.random()*3000-1500,vx:Math.random()-.5,vy:Math.random()-.5,r:12+Math.random()*14}));
+const msg=t=>document.getElementById('msg').textContent=t;
+function pt(e){const t=e.touches?e.touches[0]:e;tgt={x:t.clientX*devicePixelRatio,y:t.clientY*devicePixelRatio}}
+c.addEventListener('pointerdown',pt);c.addEventListener('pointermove',e=>{if(tgt)pt(e)});addEventListener('pointerup',()=>tgt=null);
+document.getElementById('go').onclick=()=>{const i=document.getElementById('intro');i.style.opacity=0;setTimeout(()=>i.remove(),800);run=true};
+function step(){if(run&&P.hp>0){if(tgt&&P.fuel>0){const a=Math.atan2(tgt.y-H/2,tgt.x-W/2);P.vx+=Math.cos(a)*.25;P.vy+=Math.sin(a)*.25;P.fuel-=.03}
+P.vx*=.98;P.vy*=.98;P.x+=P.vx;P.y+=P.vy;
+for(const p of pl){const d=Math.hypot(p.x-P.x,p.y-P.y);if(d<p.r+20){P.fuel=Math.min(100,P.fuel+.5);if(!p.done){p.done=true;P.xp+=40;P.cr+=25;msg('Planet scanned! +40 XP +25 credits');if(P.xp>=P.lvl*100){P.xp-=P.lvl*100;P.lvl++;P.hp=100;msg('LEVEL UP! Hull restored. Level '+P.lvl)}}}}
+for(const a of ast){a.x+=a.vx;a.y+=a.vy;if(Math.hypot(a.x-P.x,a.y-P.y)<a.r+14){P.hp-=10;a.x+=600;P.vx*=-.5;P.vy*=-.5;msg('Hull hit!')}}
+if(P.hp<=0)msg('Ship lost. Tap LAUNCH... reload to retry.');if(pl.every(p=>p.done))msg('Sector charted! You are a true Star Wanderer.')}
+x.fillStyle='#05060f';x.fillRect(0,0,W,H);const s=devicePixelRatio;
+for(const t of stars){x.fillStyle='rgba(255,255,255,'+t.z+')';x.fillRect(((t.x-P.x*t.z)%W+W)%W,((t.y-P.y*t.z)%H+H)%H,2*s*t.z,2*s*t.z)}
+x.save();x.translate(W/2-P.x*s,H/2-P.y*s);x.scale(s,s);
+for(const p of pl){x.shadowBlur=30;x.shadowColor=p.c;x.fillStyle=p.c;x.globalAlpha=p.done?.5:1;x.beginPath();x.arc(p.x,p.y,p.r,0,7);x.fill()}x.globalAlpha=1;x.shadowBlur=0;
+x.fillStyle='#887';for(const a of ast){x.beginPath();x.arc(a.x,a.y,a.r,0,7);x.fill()}x.restore();
+x.save();x.translate(W/2,H/2);x.rotate(Math.atan2(P.vy,P.vx));x.scale(s,s);x.fillStyle='#e8f0ff';x.beginPath();x.moveTo(16,0);x.lineTo(-10,-9);x.lineTo(-6,0);x.lineTo(-10,9);x.fill();
+if(tgt){x.fillStyle='#fc5';x.beginPath();x.moveTo(-8,-4);x.lineTo(-18-Math.random()*6,0);x.lineTo(-8,4);x.fill()}x.restore();
+document.getElementById('st').textContent=`Hull ${P.hp|0}  Fuel ${P.fuel|0}`;document.getElementById('xp').textContent=`Lv ${P.lvl}  XP ${P.xp}  ¢${P.cr}`;requestAnimationFrame(step)}step();
+</script></body></html>
