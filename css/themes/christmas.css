@@ -1,0 +1,11 @@
+/* LeonLink theme: Christmas (opt-in). Enable: <link rel="stylesheet" href="/css/themes/christmas.css"> after master.css. Disable: remove the link. */
+:root{--theme-accent:#c8102e;--theme-accent-2:#0b6e3b;--theme-gold:#e8c15a;--theme-bg:#0d1f17;--theme-text:#fdf8f0}
+body{background:var(--theme-bg);color:var(--theme-text)}
+[data-chrome="header"],.bottomnav,[data-chrome="bottom-nav"]{background:linear-gradient(90deg,var(--theme-accent),var(--theme-accent-2));border-color:var(--theme-gold)}
+h1,h2,h3{color:var(--theme-gold);text-shadow:0 0 8px rgba(232,193,90,.45)}
+a{color:#ffd9de}a:hover{color:var(--theme-gold)}
+.card,article{border:1px solid rgba(232,193,90,.35);border-radius:12px;transition:transform .2s,box-shadow .2s}
+.card:hover,article:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(200,16,46,.35)}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;background-image:radial-gradient(2px 2px at 20px 30px,#fff,transparent),radial-gradient(2px 2px at 120px 80px,#fff,transparent),radial-gradient(3px 3px at 200px 150px,#fff,transparent),radial-gradient(2px 2px at 300px 40px,#fff,transparent);background-size:320px 220px;animation:ll-snow 18s linear infinite;opacity:.7}
+@keyframes ll-snow{from{background-position:0 -220px}to{background-position:40px 220px}}
+@media (prefers-reduced-motion:reduce){body::before{animation:none}.card,article{transition:none}}
