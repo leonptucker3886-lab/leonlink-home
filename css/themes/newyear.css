@@ -1,0 +1,11 @@
+/* LeonLink theme: New Year's (opt-in). Enable: <link rel="stylesheet" href="/css/themes/newyear.css"> after master.css. Disable: remove the link. */
+:root{--theme-accent:#d4af37;--theme-accent-2:#c0c0c0;--theme-bg:#07070f;--theme-text:#f5f3ea}
+body{background:radial-gradient(ellipse at top,#1a1a33,var(--theme-bg) 70%);color:var(--theme-text)}
+[data-chrome="header"],.bottomnav,[data-chrome="bottom-nav"]{background:#0e0e1c;border-color:var(--theme-accent)}
+h1,h2,h3{background:linear-gradient(90deg,var(--theme-accent),#fff4c2,var(--theme-accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+a{color:#f3dc8a}a:hover{color:#fff}
+.card,article{border:1px solid rgba(212,175,55,.4);border-radius:12px;transition:transform .2s,box-shadow .2s}
+.card:hover,article:hover{transform:translateY(-3px);box-shadow:0 0 18px rgba(212,175,55,.45)}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;background-image:radial-gradient(3px 3px at 15% 20%,#d4af37,transparent),radial-gradient(2px 2px at 70% 30%,#c0c0c0,transparent),radial-gradient(3px 3px at 40% 60%,#fff4c2,transparent),radial-gradient(2px 2px at 85% 75%,#d4af37,transparent);animation:ll-sparkle 3s ease-in-out infinite alternate;opacity:.6}
+@keyframes ll-sparkle{from{opacity:.25}to{opacity:.75}}
+@media (prefers-reduced-motion:reduce){body::before{animation:none}.card,article{transition:none}}
