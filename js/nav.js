@@ -2,7 +2,7 @@
 /* Chrome guard: kids pages stay chrome-free; pages with static master.css chrome keep theirs (no double header) */
 if(location.pathname.indexOf("/kids")===0)return;
 if(window.__llNav)return;window.__llNav=1;
-if(document.querySelector('[data-chrome="presents"]:not([data-injected]),.bar:not([data-injected])'))return;
+if(document.querySelector('[data-chrome="presents"]:not([data-injected]),.bar:not([data-injected]),header.gh,nav.gnav,body>header:not([data-injected])'))return; /* 6f1d676 skip-fix: legacy static headers count as chrome */
 var L=[["Top 5","/lineup/"],["Home","/"],["Software","/software.html"],["Games","/games.html"],["Blog","/blog.html"],["How-To","/how-to/"],["Watchline","/watchline/"],["Ebooks","/ebooks.html"],["Moons & Cauldrons","/games/moons.html"],["What's New","/whats-new.html"],["About","/about.html"]];
 var p=location.pathname;
 function on(h){return h=="/"?(p=="/"||p=="/index.html"):p.indexOf(h.replace(/\/$/,""))==0;}
