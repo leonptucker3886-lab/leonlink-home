@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neon Dash - LeonLink</title>
+<style>
+html,body{margin:0;height:100%;background:#0b0b1a;color:#fff;font-family:system-ui,sans-serif;overflow:hidden;touch-action:manipulation}
+#intro,#over{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#0b0b1a;z-index:2}
+.pre{letter-spacing:.4em;font-size:14px;opacity:0;animation:f 1.2s .2s forwards}
+.orb{width:60px;height:60px;border-radius:50%;margin:24px;background:radial-gradient(#0ff,#606);animation:s 1.5s linear infinite}
+h1{font-size:44px;margin:8px;color:#0ff;opacity:0;animation:f 1s 1.4s forwards}
+button{font-size:22px;padding:14px 40px;border:0;border-radius:30px;background:#f0f;color:#fff;opacity:0;animation:f 1s 2s forwards}
+#over{display:none}#over button{opacity:1;animation:none}
+canvas{display:block;width:100vw;height:100vh}
+#hud{position:fixed;top:10px;left:12px;font-size:18px}
+@keyframes f{to{opacity:1}}@keyframes s{to{transform:rotate(360deg)}}
+</style></head><body>
+<div id="intro"><div class="pre">LEONLINK PRESENTS</div><div class="orb"></div><h1>NEON DASH</h1><button id="go">RUN</button></div>
+<div id="over"><h1 style="opacity:1;animation:none">CRASHED</h1><p id="fs"></p><button id="re">RUN AGAIN</button></div>
+<div id="hud">Score 0</div><canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d'),hud=document.getElementById('hud');
+let W,H,lane,p,obs,coins,t,score,speed,run=false,best=+localStorage.nd||0,sx=null;
+function rs(){W=c.width=innerWidth;H=c.height=innerHeight}addEventListener('resize',rs);rs();
+function start(){lane=1;p={y:0,vy:0};obs=[];coins=[];t=0;score=0;speed=6;run=true;
+document.getElementById('intro').style.display='none';document.getElementById('over').style.display='none';requestAnimationFrame(loop)}
+function lx(l){return W*(l+.5)/3}
+function jump(){if(p.y===0)p.vy=16}
+function mv(d){lane=Math.max(0,Math.min(2,lane+d))}
+addEventListener('keydown',e=>{if(!run)return;if(e.key=='ArrowLeft')mv(-1);if(e.key=='ArrowRight')mv(1);if(e.key=='ArrowUp'||e.key==' ')jump()});
+c.addEventListener('touchstart',e=>{sx=[e.touches[0].clientX,e.touches[0].clientY]},{passive:true});
+c.addEventListener('touchend',e=>{if(!sx)return;const dx=e.changedTouches[0].clientX-sx[0],dy=e.changedTouches[0].clientY-sx[1];
+if(Math.abs(dx)<25&&Math.abs(dy)<25)jump();else if(Math.abs(dx)>Math.abs(dy))mv(dx>0?1:-1);else if(dy<0)jump();sx=null});
+function loop(){if(!run)return;t++;speed+=.003;score+=Math.round(speed/6);
+if(t%Math.max(30,Math.round(70-speed*2))==0)obs.push({l:Math.random()*3|0,y:-60});
+if(t%45==0)coins.push({l:Math.random()*3|0,y:-30});
+p.y+=p.vy;p.vy-=1;if(p.y<0){p.y=0;p.vy=0}
+const py=H-120;x.fillStyle='#0b0b1a';x.fillRect(0,0,W,H);
+x.strokeStyle='#606';for(let i=1;i<3;i++){x.beginPath();x.moveTo(W*i/3,0);x.lineTo(W*i/3,H);x.stroke()}
+obs.forEach(o=>{o.y+=speed;x.fillStyle='#f33';x.fillRect(lx(o.l)-30,o.y,60,40);
+if(o.l==lane&&o.y+40>py&&o.y<py+50&&p.y<40)end()});
+coins=coins.filter(k=>{k.y+=speed;x.fillStyle='#ff0';x.beginPath();x.arc(lx(k.l),k.y,12,0,7);x.fill();
+if(k.l==lane&&Math.abs(k.y-py-25)<35){score+=50;return false}return k.y<H});
+obs=obs.filter(o=>o.y<H);
+x.fillStyle='#0ff';x.fillRect(lx(lane)-20,py-p.y,40,50);
+hud.textContent='Score '+score+'  Best '+best;requestAnimationFrame(loop)}
+function end(){run=false;if(score>best){best=score;localStorage.nd=best}
+document.getElementById('fs').textContent='Score '+score+' | Best '+best;document.getElementById('over').style.display='flex'}
+document.getElementById('go').onclick=start;document.getElementById('re').onclick=start;
+</script></body></html>
