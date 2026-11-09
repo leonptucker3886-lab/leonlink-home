@@ -26,8 +26,6 @@ var f=document.createElement('button');f.type='button';f.className='lsf';f.setAt
 f.onclick=function(){sb.click();if(!navigator.share){var s=f.querySelector('span');s.textContent='Link copied';setTimeout(function(){s.textContent='Share'},2000)}};
 document.body.appendChild(f)}catch(e){}})();
 
-(function(){if(document.querySelector('script[src="/js/bottom-nav.js"]'))return;var s=document.createElement("script");s.src="/js/bottom-nav.js";s.defer=true;document.head.appendChild(s);})();
-
 ;(function(){if(location.pathname.indexOf("/journal/")===0&&!document.getElementById("ll-pt")){var s=document.createElement("script");s.id="ll-pt";s.src="/js/post-tools.js?v=1";s.defer=true;document.head.appendChild(s)}})();
 
 /* Crew art in the header: faded group portrait on every page */
