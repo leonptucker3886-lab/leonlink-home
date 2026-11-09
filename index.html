@@ -140,20 +140,9 @@
   @media(max-width:700px){.mnav{display:block}}
   .pitem .pgo{align-self:flex-start;font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px;margin-top:6px;color:#041016;background:#22f0ff}
 </style>
+<script src="/js/nav.js" defer></script>
 </head>
 <body>
-<header class="gh"><div class="in">
-  <a class="logo" href="/" aria-label="LeonLink home"><canvas id="logoFx" width="72" height="72" style="width:40px;height:40px;display:block" role="img" aria-label="LeonLink logo"></canvas><b>LEON<span>LINK</span></b></a>
-<script>(function(){var cv=document.getElementById('logoFx');if(!cv||!cv.getContext)return;var ctx=cv.getContext('2d');var img=new Image();img.src='/img/logo-128.png';var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;var embers=[],i;for(i=0;i<9;i++)embers.push({x:8+Math.random()*56,y:Math.random()*72,s:1+Math.random()*1.8,v:6+Math.random()*10,ph:Math.random()*6.28});function draw(t){ctx.clearRect(0,0,72,72);ctx.save();ctx.translate(36,66);if(!reduce)ctx.rotate(Math.sin(t*1.4)*0.085);ctx.translate(-36,-66);ctx.shadowColor='rgba(34,240,255,.9)';ctx.shadowBlur=reduce?8:9+4*Math.sin(t*6.3)+2.5*Math.sin(t*11.7);if(img.complete&&img.naturalWidth)ctx.drawImage(img,5,5,62,62);ctx.restore();if(!reduce){for(i=0;i<embers.length;i++){var e=embers[i];e.y-=e.v/60;if(e.y<2){e.y=70;e.x=8+Math.random()*56}var x=e.x+Math.sin(t*3+e.ph)*4;ctx.fillStyle='rgba(140,235,255,'+(0.25+0.6*(e.y/72))+')';ctx.beginPath();ctx.arc(x,e.y,e.s,0,6.29);ctx.fill();}}}if(reduce){draw(0)}else{var t0=performance.now();(function loop(n){draw((n-t0)/1000);requestAnimationFrame(loop)})(t0)}})();</script>
-  <a class="acct" href="/account"><span class="dot"></span><span class="nm">leonlinktucker388</span></a>
-  <button class="mnav" aria-label="Menu" aria-expanded="false">☰</button>
-</div>
-</header>
-<nav class="mdrop" aria-label="Site">
-  <a href="/">Home</a><a href="/lineup/">Top 5</a><a href="/blog.html">Blogs</a><a href="/watchline/">Watches</a><a href="https://afterglow.leonlink.net/">Casino</a><a href="/arcadeline/">Arcade</a><a href="/games/snes/">SNES</a><a href="/software.html">Software</a><a href="/games/moons.html">Moons</a><a href="/how-to/">How-To</a><a href="/games.html">Games</a><a href="/series.html">Series</a><a href="/ebooks.html">Ebooks</a><a href="/kids/">Kids Corner</a>
-</nav>
-<script>(function(){var b=document.querySelector('.mnav'),d=document.querySelector('.mdrop');if(!b||!d)return;b.addEventListener('click',function(){var o=d.classList.toggle('op');b.textContent=o?'✕':'☰';b.setAttribute('aria-expanded',o);});d.addEventListener('click',function(e){if(e.target.tagName==='A'){d.classList.remove('op');b.textContent='☰';b.setAttribute('aria-expanded','false');}});})();</script>
-
 <div class="wrap">
 <section class="cat">
     <div class="rowhead"><h2>TOP 5</h2><a href="/lineup/">See all &rarr;</a></div>
@@ -282,9 +271,6 @@
 </div>
 
 <footer>LEONLINK — Sold. Started. Secured. Shipped. · <a href="/about.html">About</a> · <a href="/terms.html">Terms</a></footer>
-<nav class="bottomnav">
-  <a href="/lineup/">Top 5</a><a href="https://afterglow.leonlink.net/">Casino</a><a href="/how-to/">How-To</a><a href="/watchline/">Watches</a><a href="/software.html">Software</a><a href="/arcadeline/">Arcade</a><a href="/games.html">Games</a><a href="/ebooks.html">Ebooks</a><a href="/blog.html">Blogs</a><a href="/series.html">Series</a><a href="/games/moons.html">Moons</a><a href="/games/snes/">SNES</a>
-</nav>
 
 </body>
 </html>
