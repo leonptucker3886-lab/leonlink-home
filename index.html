@@ -128,8 +128,10 @@
   .logo{display:flex;align-items:center;gap:10px;flex-shrink:0;text-decoration:none}
   .logo b{font-family:"Fraunces",Georgia,serif;font-size:22px;font-weight:700;color:#ffffff;letter-spacing:-.01em}
   .logo b span{color:#22f0ff;text-shadow:0 0 12px rgba(34,240,255,.7)}
-  .acct{margin-left:auto;display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;border:1px solid rgba(34,240,255,.55);color:#fff;text-decoration:none;font-weight:700;font-size:15px;background:rgba(6,6,11,.6);white-space:nowrap}
+  .acct{margin-left:auto;display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;border:1px solid rgba(34,240,255,.55);color:#fff;text-decoration:none;font-weight:700;font-size:15px;background:rgba(6,6,11,.6);white-space:nowrap;min-width:0}
   .acct .dot{width:9px;height:9px;border-radius:50%;background:#22c55e;box-shadow:0 0 8px rgba(34,197,94,.8);flex-shrink:0}
+  .acct .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+  @media(max-width:560px){.plist{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.pitem .pbd{padding:8px 10px 10px}.pitem h3{font-size:14px}.pitem p{font-size:12px}.gh .in{padding:0 12px;gap:12px;height:58px}.logo b{font-size:18px}.acct{font-size:13px;padding:6px 10px;gap:6px}}
   .pitem .pgo{align-self:flex-start;font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px;margin-top:6px;color:#041016;background:#22f0ff}
 </style>
 </head>
@@ -138,7 +140,7 @@
 <header class="gh"><div class="in">
   <a class="logo" href="/" aria-label="LeonLink home"><canvas id="logoFx" width="72" height="72" style="width:36px;height:36px;display:block" role="img" aria-label="LeonLink logo"></canvas><b>LEON<span>LINK</span></b></a>
 <script>(function(){var cv=document.getElementById('logoFx');if(!cv||!cv.getContext)return;var ctx=cv.getContext('2d');var img=new Image();img.src='/img/logo-128.png';var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;var embers=[],i;for(i=0;i<9;i++)embers.push({x:8+Math.random()*56,y:Math.random()*72,s:1+Math.random()*1.8,v:6+Math.random()*10,ph:Math.random()*6.28});function draw(t){ctx.clearRect(0,0,72,72);ctx.save();ctx.translate(36,66);if(!reduce)ctx.rotate(Math.sin(t*1.4)*0.085);ctx.translate(-36,-66);ctx.shadowColor='rgba(34,240,255,.9)';ctx.shadowBlur=reduce?8:9+4*Math.sin(t*6.3)+2.5*Math.sin(t*11.7);if(img.complete&&img.naturalWidth)ctx.drawImage(img,5,5,62,62);ctx.restore();if(!reduce){for(i=0;i<embers.length;i++){var e=embers[i];e.y-=e.v/60;if(e.y<2){e.y=70;e.x=8+Math.random()*56}var x=e.x+Math.sin(t*3+e.ph)*4;ctx.fillStyle='rgba(140,235,255,'+(0.25+0.6*(e.y/72))+')';ctx.beginPath();ctx.arc(x,e.y,e.s,0,6.29);ctx.fill();}}}if(reduce){draw(0)}else{var t0=performance.now();(function loop(n){draw((n-t0)/1000);requestAnimationFrame(loop)})(t0)}})();</script>
-  <a class="acct" href="/account"><span class="dot"></span>leonlinktucker388</a>
+  <a class="acct" href="/account"><span class="dot"></span><span class="nm">leonlinktucker388</span></a>
 </div></header>
 
 <section class="cat">
