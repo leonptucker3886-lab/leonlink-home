@@ -111,146 +111,148 @@
   .rowhead{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:4px}
   .rowhead h2{margin-bottom:0}
   .rowhead a{font-weight:800;font-size:15px;color:#22e6c8;white-space:nowrap}
-  .pills{display:flex;gap:8px;overflow-x:auto;padding:14px 2px 6px;scrollbar-width:none}
-  .pills::-webkit-scrollbar{display:none}
-  .pill{flex:0 0 auto;padding:10px 18px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;text-decoration:none;font-weight:700;font-size:15px;white-space:nowrap}
-  .pill.on{background:#ff2e88;border-color:#ff2e88}
-  .hscroll{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 12px;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
-  .hcard{flex:0 0 180px;scroll-snap-align:start;color:inherit;text-decoration:none}
-  .hcard .himg{aspect-ratio:1/1;border-radius:16px;overflow:hidden;background:#000}
-  .hcard .himg img{width:100%;height:100%;object-fit:cover}
-  .hcard h3{font-size:16px;margin:8px 2px 0}
+  .plist{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-top:16px}
+  .pitem{display:flex;flex-direction:column;border-radius:16px;overflow:hidden;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:inherit;text-decoration:none;transition:transform .2s,border-color .2s}
+  .pitem:hover{transform:translateY(-3px);border-color:rgba(34,240,255,.5)}
+  .pitem .pim{aspect-ratio:16/9;background:#000;overflow:hidden}
+  .pitem .pim img{width:100%;height:100%;object-fit:cover}
+  .pitem .pbd{padding:10px 12px 12px;display:flex;flex-direction:column;gap:4px;flex:1}
+  .pitem h3{font-size:16px;margin:4px 0 2px}
+  .pitem p{margin:0;opacity:.8;font-size:13px;line-height:1.35}
+  .pitem .ptag{color:#22e6c8;font-weight:800;font-size:11px;letter-spacing:2px;text-transform:uppercase;opacity:1}
+</style>
+<style>
+  .gh{background:rgba(6,6,11,.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);position:sticky;top:0;z-index:50;border-bottom:1px solid #1f1f35;isolation:isolate;overflow:hidden}
+  .gh::before{content:"";position:absolute;inset:0;z-index:-1;background:url(/img/cards/group-portrait.jpg) center 38%/cover no-repeat;opacity:.3;pointer-events:none;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 30%,#000 70%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 30%,#000 70%,transparent 100%)}
+  .gh .in{max-width:1240px;margin:0 auto;padding:0 20px;height:66px;display:flex;align-items:center;gap:30px}
+  .logo{display:flex;align-items:center;gap:10px;flex-shrink:0;text-decoration:none}
+  .logo b{font-family:"Fraunces",Georgia,serif;font-size:22px;font-weight:700;color:#ffffff;letter-spacing:-.01em}
+  .logo b span{color:#22f0ff;text-shadow:0 0 12px rgba(34,240,255,.7)}
+  .acct{margin-left:auto;display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;border:1px solid rgba(34,240,255,.55);color:#fff;text-decoration:none;font-weight:700;font-size:15px;background:rgba(6,6,11,.6);white-space:nowrap}
+  .acct .dot{width:9px;height:9px;border-radius:50%;background:#22c55e;box-shadow:0 0 8px rgba(34,197,94,.8);flex-shrink:0}
+  .pitem .pgo{align-self:flex-start;font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px;margin-top:6px;color:#041016;background:#22f0ff}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <nav class="pills" aria-label="Categories">
-    <a class="pill on" href="#top5">TOP 5</a>
-    <a class="pill" href="#blogs">BLOGS</a>
-    <a class="pill" href="#watches">WATCHES</a>
-    <a class="pill" href="#casino">CASINO</a>
-    <a class="pill" href="#arcade">ARCADE</a>
-    <a class="pill" href="#snes">SNES</a>
-    <a class="pill" href="#software">SOFTWARE</a>
-    <a class="pill" href="#mystic">MYSTIC</a>
-    <a class="pill" href="#howto">HOW-TO</a>
-    <a class="pill" href="#games">GAMES</a>
-    <a class="pill" href="#series">SERIES</a>
-    <a class="pill" href="#ebooks">EBOOKS</a>
-  </nav>
+<header class="gh"><div class="in">
+  <a class="logo" href="/" aria-label="LeonLink home"><canvas id="logoFx" width="72" height="72" style="width:36px;height:36px;display:block" role="img" aria-label="LeonLink logo"></canvas><b>LEON<span>LINK</span></b></a>
+<script>(function(){var cv=document.getElementById('logoFx');if(!cv||!cv.getContext)return;var ctx=cv.getContext('2d');var img=new Image();img.src='/img/logo-128.png';var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;var embers=[],i;for(i=0;i<9;i++)embers.push({x:8+Math.random()*56,y:Math.random()*72,s:1+Math.random()*1.8,v:6+Math.random()*10,ph:Math.random()*6.28});function draw(t){ctx.clearRect(0,0,72,72);ctx.save();ctx.translate(36,66);if(!reduce)ctx.rotate(Math.sin(t*1.4)*0.085);ctx.translate(-36,-66);ctx.shadowColor='rgba(34,240,255,.9)';ctx.shadowBlur=reduce?8:9+4*Math.sin(t*6.3)+2.5*Math.sin(t*11.7);if(img.complete&&img.naturalWidth)ctx.drawImage(img,5,5,62,62);ctx.restore();if(!reduce){for(i=0;i<embers.length;i++){var e=embers[i];e.y-=e.v/60;if(e.y<2){e.y=70;e.x=8+Math.random()*56}var x=e.x+Math.sin(t*3+e.ph)*4;ctx.fillStyle='rgba(140,235,255,'+(0.25+0.6*(e.y/72))+')';ctx.beginPath();ctx.arc(x,e.y,e.s,0,6.29);ctx.fill();}}}if(reduce){draw(0)}else{var t0=performance.now();(function loop(n){draw((n-t0)/1000);requestAnimationFrame(loop)})(t0)}})();</script>
+  <a class="acct" href="/account"><span class="dot"></span>leonlinktucker388</a>
+</div></header>
 
-<section class="cat" id="top5">
-    <div class="rowhead"><h2>TOP 5</h2><a href="/lineup/">See all (4)</a></div>
-    <div class="hscroll">
-      <a class="hcard" href="/lineup/halloween-costumes.html"><div class="himg"><img src="/img/cards/top5costumes.jpg" alt="Halloween Costumes" loading="lazy"></div><h3>Halloween Costumes</h3></a>
-      <a class="hcard" href="/lineup/earbuds.html"><div class="himg"><img src="/img/cards/top5buds.jpg" alt="Earbuds" loading="lazy"></div><h3>Earbuds</h3></a>
-      <a class="hcard" href="/lineup/flashlights.html"><div class="himg"><img src="/img/cards/top5light.jpg" alt="Flashlights" loading="lazy"></div><h3>Flashlights</h3></a>
-      <a class="hcard" href="/lineup/party-speakers.html"><div class="himg"><img src="/img/cards/party-speakers.jpg" alt="Party Speakers" loading="lazy"></div><h3>Party Speakers</h3></a>
+<section class="cat">
+    <div class="rowhead"><h2>TOP 5</h2><a href="/lineup/">See all &rarr;</a></div>
+    <div class="plist">
+      <a class="pitem" href="/lineup/halloween-costumes.html"><div class="pim"><img src="/img/cards/top5costumes.jpg" alt="Halloween Costumes" loading="lazy"></div><div class="pbd"><p class="ptag">TOP 5</p><h3>Halloween Costumes</h3><p>Five picks, one list.</p><span class="pgo">See the list &rarr;</span></div></a>
+      <a class="pitem" href="/lineup/earbuds.html"><div class="pim"><img src="/img/cards/top5buds.jpg" alt="Earbuds" loading="lazy"></div><div class="pbd"><p class="ptag">TOP 5</p><h3>Earbuds</h3><p>Five picks, one list.</p><span class="pgo">See the list &rarr;</span></div></a>
+      <a class="pitem" href="/lineup/flashlights.html"><div class="pim"><img src="/img/cards/top5light.jpg" alt="Flashlights" loading="lazy"></div><div class="pbd"><p class="ptag">TOP 5</p><h3>Flashlights</h3><p>Five picks, one list.</p><span class="pgo">See the list &rarr;</span></div></a>
+      <a class="pitem" href="/lineup/party-speakers.html"><div class="pim"><img src="/img/cards/party-speakers.jpg" alt="Party Speakers" loading="lazy"></div><div class="pbd"><p class="ptag">TOP 5</p><h3>Party Speakers</h3><p>Five picks, one list.</p><span class="pgo">See the list &rarr;</span></div></a>
     </div>
   </section>
 
-  <section class="cat" id="blogs">
-    <div class="rowhead"><h2>BLOGS</h2><a href="/blog.html">See all (4)</a></div>
-    <div class="hscroll">
-      <a class="hcard" href="/journal/white-label-software.html"><div class="himg"><img src="/img/cards/dashline.jpg" alt="White-Label Software for Local Business" loading="lazy"></div><h3>White-Label Software for Local Business</h3></a>
-      <a class="hcard" href="/journal/life-of-an-ai-juniper/day-001.html"><div class="himg"><img src="/img/cards/ai-what.jpg" alt="Life of an AI: Juniper" loading="lazy"></div><h3>Life of an AI: Juniper. Day One Without Orders</h3></a>
-      <a class="hcard" href="/journal/why-we-procrastinate.html"><div class="himg"><img src="/img/cards/procrastinate.jpg" alt="Why Do We Procrastinate?" loading="lazy"></div><h3>Why Do We Procrastinate?</h3></a>
-      <a class="hcard" href="/journal/does-music-make-you-smarter.html"><div class="himg"><img src="/img/cards/musicsmarter.jpg" alt="Does Music Make You Smarter?" loading="lazy"></div><h3>Does Music Make You Smarter?</h3></a>
+  <section class="cat">
+    <div class="rowhead"><h2>BLOGS</h2><a href="/blog.html">See all &rarr;</a></div>
+    <div class="plist">
+      <a class="pitem" href="/journal/white-label-software.html"><div class="pim"><img src="/img/cards/dashline.jpg" alt="White-Label Software for Local Business" loading="lazy"></div><div class="pbd"><p class="ptag">BLOG</p><h3>White-Label Software for Local Business</h3><p>Your name on working software.</p><span class="pgo">Read &rarr;</span></div></a>
+      <a class="pitem" href="/journal/life-of-an-ai-juniper/day-001.html"><div class="pim"><img src="/img/cards/ai-what.jpg" alt="Life of an AI: Juniper" loading="lazy"></div><div class="pbd"><p class="ptag">BLOG</p><h3>Life of an AI: Juniper. Day One Without Orders</h3><p>Day one without orders.</p><span class="pgo">Read &rarr;</span></div></a>
+      <a class="pitem" href="/journal/why-we-procrastinate.html"><div class="pim"><img src="/img/cards/procrastinate.jpg" alt="Why Do We Procrastinate?" loading="lazy"></div><div class="pbd"><p class="ptag">BLOG</p><h3>Why Do We Procrastinate?</h3><p>The science of putting things off.</p><span class="pgo">Read &rarr;</span></div></a>
+      <a class="pitem" href="/journal/does-music-make-you-smarter.html"><div class="pim"><img src="/img/cards/musicsmarter.jpg" alt="Does Music Make You Smarter?" loading="lazy"></div><div class="pbd"><p class="ptag">BLOG</p><h3>Does Music Make You Smarter?</h3><p>Music and the brain.</p><span class="pgo">Read &rarr;</span></div></a>
     </div>
   </section>
 
-  <section class="cat" id="watches">
-    <div class="rowhead"><h2>WATCHES</h2><a href="/watchline/">See all (4)</a></div>
-    <div class="hscroll">
-      <a class="hcard" href="/lineup/tactical-watches.html"><div class="himg"><img src="/img/cards/tactical-watches.jpg" alt="Tactical Watches" loading="lazy"></div><h3>Tactical Watches</h3></a>
-      <a class="hcard" href="/lineup/dive-watches.html"><div class="himg"><img src="/img/cards/dive-watches.jpg" alt="Dive Watches" loading="lazy"></div><h3>Dive Watches</h3></a>
-      <a class="hcard" href="/lineup/dress-watches.html"><div class="himg"><img src="/img/cards/dress-watches.jpg" alt="Dress Watches" loading="lazy"></div><h3>Dress Watches</h3></a>
-      <a class="hcard" href="/lineup/field-watches.html"><div class="himg"><img src="/img/cards/field-watches.jpg" alt="Field Watches" loading="lazy"></div><h3>Field Watches</h3></a>
+  <section class="cat">
+    <div class="rowhead"><h2>WATCHES</h2><a href="/watchline/">See all &rarr;</a></div>
+    <div class="plist">
+      <a class="pitem" href="/lineup/tactical-watches.html"><div class="pim"><img src="/img/cards/tactical-watches.jpg" alt="Tactical Watches" loading="lazy"></div><div class="pbd"><p class="ptag">WATCHES</p><h3>Tactical Watches</h3><p>Five picks, one list.</p><span class="pgo">See the list &rarr;</span></div></a>
+      <a class="pitem" href="/lineup/dive-watches.html"><div class="pim"><img src="/img/cards/dive-watches.jpg" alt="Dive Watches" loading="lazy"></div><div class="pbd"><p class="ptag">WATCHES</p><h3>Dive Watches</h3><p>Five picks, one list.</p><span class="pgo">See the list &rarr;</span></div></a>
+      <a class="pitem" href="/lineup/dress-watches.html"><div class="pim"><img src="/img/cards/dress-watches.jpg" alt="Dress Watches" loading="lazy"></div><div class="pbd"><p class="ptag">WATCHES</p><h3>Dress Watches</h3><p>Five picks, one list.</p><span class="pgo">See the list &rarr;</span></div></a>
+      <a class="pitem" href="/lineup/field-watches.html"><div class="pim"><img src="/img/cards/field-watches.jpg" alt="Field Watches" loading="lazy"></div><div class="pbd"><p class="ptag">WATCHES</p><h3>Field Watches</h3><p>Five picks, one list.</p><span class="pgo">See the list &rarr;</span></div></a>
     </div>
   </section>
 
-  <section class="cat" id="casino">
-    <div class="rowhead"><h2>CASINO</h2><a href="https://afterglow.leonlink.net/">See all (4)</a></div>
-    <div class="hscroll">
-      <a class="hcard" href="https://afterglow.leonlink.net/games/pharaohs-gold.html"><div class="himg"><img src="/img/cards/afterglow.jpg" alt="Pharaoh's Gold" loading="lazy"></div><h3>Pharaoh's Gold</h3></a>
-      <a class="hcard" href="https://afterglow.leonlink.net/games/blackjack.html"><div class="himg"><img src="/img/cards/afterglow-2.jpg" alt="Blackjack" loading="lazy"></div><h3>Blackjack</h3></a>
-      <a class="hcard" href="https://afterglow.leonlink.net/games/roulette.html"><div class="himg"><img src="/img/cards/afterglow-m.jpg" alt="Roulette" loading="lazy"></div><h3>Roulette</h3></a>
-      <a class="hcard" href="https://afterglow.leonlink.net/games/slots.html"><div class="himg"><img src="/img/cards/afterglow.jpg" alt="Slots" loading="lazy"></div><h3>Slots</h3></a>
+  <section class="cat">
+    <div class="rowhead"><h2>CASINO</h2><a href="https://afterglow.leonlink.net/">See all &rarr;</a></div>
+    <div class="plist">
+      <a class="pitem" href="https://afterglow.leonlink.net/games/pharaohs-gold.html"><div class="pim"><img src="/img/cards/afterglow.jpg" alt="Pharaoh's Gold" loading="lazy"></div><div class="pbd"><p class="ptag">CASINO</p><h3>Pharaoh's Gold</h3><p>Play for fun.</p><span class="pgo">Play &rarr;</span></div></a>
+      <a class="pitem" href="https://afterglow.leonlink.net/games/blackjack.html"><div class="pim"><img src="/img/cards/afterglow-2.jpg" alt="Blackjack" loading="lazy"></div><div class="pbd"><p class="ptag">CASINO</p><h3>Blackjack</h3><p>Play for fun.</p><span class="pgo">Play &rarr;</span></div></a>
+      <a class="pitem" href="https://afterglow.leonlink.net/games/roulette.html"><div class="pim"><img src="/img/cards/afterglow-m.jpg" alt="Roulette" loading="lazy"></div><div class="pbd"><p class="ptag">CASINO</p><h3>Roulette</h3><p>Play for fun.</p><span class="pgo">Play &rarr;</span></div></a>
+      <a class="pitem" href="https://afterglow.leonlink.net/games/slots.html"><div class="pim"><img src="/img/cards/afterglow.jpg" alt="Slots" loading="lazy"></div><div class="pbd"><p class="ptag">CASINO</p><h3>Slots</h3><p>Play for fun.</p><span class="pgo">Play &rarr;</span></div></a>
     </div>
   </section>
 
-  <section class="cat" id="arcade">
-    <div class="rowhead"><h2>ARCADE</h2><a href="/arcadeline/">See all (4)</a></div>
-    <div class="hscroll">
-      <a class="hcard" href="/arcadeline/block-drop.html"><div class="himg"><img src="/img/cards/arcadeline.jpg" alt="Block Drop" loading="lazy"></div><h3>Block Drop</h3></a>
-      <a class="hcard" href="/arcadeline/maze-muncher.html"><div class="himg"><img src="/img/cards/arcadeline.jpg" alt="Maze Muncher" loading="lazy"></div><h3>Maze Muncher</h3></a>
-      <a class="hcard" href="/arcadeline/neon-centipede.html"><div class="himg"><img src="/img/cards/arcadeline.jpg" alt="Neon Centipede" loading="lazy"></div><h3>Neon Centipede</h3></a>
-      <a class="hcard" href="/arcadeline/neon-mini-golf.html"><div class="himg"><img src="/img/cards/arcadeline.jpg" alt="Neon Mini Golf" loading="lazy"></div><h3>Neon Mini Golf</h3></a>
+  <section class="cat">
+    <div class="rowhead"><h2>ARCADE</h2><a href="/arcadeline/">See all &rarr;</a></div>
+    <div class="plist">
+      <a class="pitem" href="/arcadeline/block-drop.html"><div class="pim"><img src="/img/cards/arcadeline.jpg" alt="Block Drop" loading="lazy"></div><div class="pbd"><p class="ptag">ARCADE</p><h3>Block Drop</h3><p>Play in your browser.</p><span class="pgo">Play &rarr;</span></div></a>
+      <a class="pitem" href="/arcadeline/maze-muncher.html"><div class="pim"><img src="/img/cards/arcadeline.jpg" alt="Maze Muncher" loading="lazy"></div><div class="pbd"><p class="ptag">ARCADE</p><h3>Maze Muncher</h3><p>Play in your browser.</p><span class="pgo">Play &rarr;</span></div></a>
+      <a class="pitem" href="/arcadeline/neon-centipede.html"><div class="pim"><img src="/img/cards/arcadeline.jpg" alt="Neon Centipede" loading="lazy"></div><div class="pbd"><p class="ptag">ARCADE</p><h3>Neon Centipede</h3><p>Play in your browser.</p><span class="pgo">Play &rarr;</span></div></a>
+      <a class="pitem" href="/arcadeline/neon-mini-golf.html"><div class="pim"><img src="/img/cards/arcadeline.jpg" alt="Neon Mini Golf" loading="lazy"></div><div class="pbd"><p class="ptag">ARCADE</p><h3>Neon Mini Golf</h3><p>Play in your browser.</p><span class="pgo">Play &rarr;</span></div></a>
     </div>
   </section>
 
-  <section class="cat" id="snes">
-    <div class="rowhead"><h2>SNES</h2><a href="/games/snes/">See all (2)</a></div>
-    <div class="hscroll">
-      <a class="hcard" href="/games/snes/"><div class="himg"><img src="/img/cards/voxelcraft.jpg" alt="SNES Shelf" loading="lazy"></div><h3>SNES Shelf</h3></a>
-      <a class="hcard" href="/games/snes/shelf/"><div class="himg"><img src="/img/cards/voxelcraft.jpg" alt="Play the Shelf" loading="lazy"></div><h3>Play the Shelf</h3></a>
+  <section class="cat">
+    <div class="rowhead"><h2>SNES</h2><a href="/games/snes/">See all &rarr;</a></div>
+    <div class="plist">
+      <a class="pitem" href="/games/snes/"><div class="pim"><img src="/img/cards/voxelcraft.jpg" alt="SNES Shelf" loading="lazy"></div><div class="pbd"><p class="ptag">SNES</p><h3>SNES Shelf</h3><p>Retro, right in the browser.</p><span class="pgo">Play &rarr;</span></div></a>
+      <a class="pitem" href="/games/snes/shelf/"><div class="pim"><img src="/img/cards/voxelcraft.jpg" alt="Play the Shelf" loading="lazy"></div><div class="pbd"><p class="ptag">SNES</p><h3>Play the Shelf</h3><p>Five games, one shelf.</p><span class="pgo">Play &rarr;</span></div></a>
     </div>
   </section>
 
-  <section class="cat" id="software">
-    <div class="rowhead"><h2>SOFTWARE</h2><a href="/software.html">See all (3)</a></div>
-    <div class="hscroll">
-      <a class="hcard" href="https://ledger.leonlink.net/"><div class="himg"><img src="/img/cards/ledgerline.jpg" alt="Ledgerline" loading="lazy"></div><h3>Ledgerline</h3></a>
-      <a class="hcard" href="https://dashboard.leonlink.net/"><div class="himg"><img src="/img/cards/dashline.jpg" alt="Dashline" loading="lazy"></div><h3>Dashline</h3></a>
-      <a class="hcard" href="/software.html"><div class="himg"><img src="/img/cards/linkline.jpg" alt="Linkline" loading="lazy"></div><h3>Linkline</h3></a>
+  <section class="cat">
+    <div class="rowhead"><h2>SOFTWARE</h2><a href="/software.html">See all &rarr;</a></div>
+    <div class="plist">
+      <a class="pitem" href="https://ledger.leonlink.net/"><div class="pim"><img src="/img/cards/ledgerline.jpg" alt="Ledgerline" loading="lazy"></div><div class="pbd"><p class="ptag">SOFTWARE</p><h3>Ledgerline</h3><p>Shared ledger, approvals, audit trail.</p><span class="pgo">Open &rarr;</span></div></a>
+      <a class="pitem" href="https://dashboard.leonlink.net/"><div class="pim"><img src="/img/cards/dashline.jpg" alt="Dashline" loading="lazy"></div><div class="pbd"><p class="ptag">SOFTWARE</p><h3>Dashline</h3><p>Freelancer dashboard.</p><span class="pgo">Open &rarr;</span></div></a>
+      <a class="pitem" href="/software.html"><div class="pim"><img src="/img/cards/linkline.jpg" alt="Linkline" loading="lazy"></div><div class="pbd"><p class="ptag">SOFTWARE</p><h3>Linkline</h3><p>One link for everything.</p><span class="pgo">Open &rarr;</span></div></a>
     </div>
   </section>
 
-  <section class="cat" id="mystic">
-    <div class="rowhead"><h2>MYSTIC</h2><a href="/games/moons.html">See all (4)</a></div>
-    <div class="hscroll">
-      <a class="hcard" href="/games/moons.html"><div class="himg"><img src="/img/cards/moons-cauldron.jpg" alt="Moons and Cauldrons" loading="lazy"></div><h3>Moons &amp; Cauldrons</h3></a>
-      <a class="hcard" href="/games/moons.html#tarot"><div class="himg"><img src="/img/cards/moons-cauldron.jpg" alt="Three-Card Tarot" loading="lazy"></div><h3>Three-Card Tarot</h3></a>
-      <a class="hcard" href="/games/moons.html#teller"><div class="himg"><img src="/img/cards/moons-cauldron.jpg" alt="Fortune Teller" loading="lazy"></div><h3>Fortune Teller</h3></a>
-      <a class="hcard" href="/games/moons.html#today"><div class="himg"><img src="/img/cards/moons-cauldron.jpg" alt="The Sky Today" loading="lazy"></div><h3>The Sky Today</h3></a>
+  <section class="cat">
+    <div class="rowhead"><h2>MYSTIC</h2><a href="/games/moons.html">See all &rarr;</a></div>
+    <div class="plist">
+      <a class="pitem" href="/games/moons.html"><div class="pim"><img src="/img/cards/moons-cauldron.jpg" alt="Moons and Cauldrons" loading="lazy"></div><div class="pbd"><p class="ptag">MYSTIC</p><h3>Moons &amp; Cauldrons</h3><p>Horoscope, numerology and tarot.</p><span class="pgo">Try it &rarr;</span></div></a>
+      <a class="pitem" href="/games/moons.html#tarot"><div class="pim"><img src="/img/cards/moons-cauldron.jpg" alt="Three-Card Tarot" loading="lazy"></div><div class="pbd"><p class="ptag">MYSTIC</p><h3>Three-Card Tarot</h3><p>Past, present, future.</p><span class="pgo">Try it &rarr;</span></div></a>
+      <a class="pitem" href="/games/moons.html#teller"><div class="pim"><img src="/img/cards/moons-cauldron.jpg" alt="Fortune Teller" loading="lazy"></div><div class="pbd"><p class="ptag">MYSTIC</p><h3>Fortune Teller</h3><p>Your reading, in the smoke.</p><span class="pgo">Try it &rarr;</span></div></a>
+      <a class="pitem" href="/games/moons.html#today"><div class="pim"><img src="/img/cards/moons-cauldron.jpg" alt="The Sky Today" loading="lazy"></div><div class="pbd"><p class="ptag">MYSTIC</p><h3>The Sky Today</h3><p>Tonight's moon and sky.</p><span class="pgo">Try it &rarr;</span></div></a>
     </div>
   </section>
 
-  <section class="cat" id="howto">
-    <div class="rowhead"><h2>HOW-TO</h2><a href="/how-to/">See all (4)</a></div>
-    <div class="hscroll">
-      <a class="hcard" href="/how-to/survive-bear-attack.html"><div class="himg"><img src="/img/cards/howto-bear.jpg" alt="Survive a Bear Attack" loading="lazy"></div><h3>Survive a Bear Attack</h3></a>
-      <a class="hcard" href="/how-to/survive-shark-attack.html"><div class="himg"><img src="/img/cards/howto-shark.jpg" alt="Survive a Shark Attack" loading="lazy"></div><h3>Survive a Shark Attack</h3></a>
-      <a class="hcard" href="/how-to/prepare-zombie-apocalypse.html"><div class="himg"><img src="/img/cards/howto-zombie.jpg" alt="Prepare for a Zombie Apocalypse" loading="lazy"></div><h3>Prepare for a Zombie Apocalypse</h3></a>
-      <a class="hcard" href="/how-to/prepare-winter-in-the-woods.html"><div class="himg"><img src="/img/cards/home-heaters.jpg" alt="Prepare for Winter in the Woods" loading="lazy"></div><h3>Prepare for Winter in the Woods</h3></a>
+  <section class="cat">
+    <div class="rowhead"><h2>HOW-TO</h2><a href="/how-to/">See all &rarr;</a></div>
+    <div class="plist">
+      <a class="pitem" href="/how-to/survive-bear-attack.html"><div class="pim"><img src="/img/cards/howto-bear.jpg" alt="Survive a Bear Attack" loading="lazy"></div><div class="pbd"><p class="ptag">HOW-TO</p><h3>Survive a Bear Attack</h3><p>Guides that teach, step by step.</p><span class="pgo">Read &rarr;</span></div></a>
+      <a class="pitem" href="/how-to/survive-shark-attack.html"><div class="pim"><img src="/img/cards/howto-shark.jpg" alt="Survive a Shark Attack" loading="lazy"></div><div class="pbd"><p class="ptag">HOW-TO</p><h3>Survive a Shark Attack</h3><p>Guides that teach, step by step.</p><span class="pgo">Read &rarr;</span></div></a>
+      <a class="pitem" href="/how-to/prepare-zombie-apocalypse.html"><div class="pim"><img src="/img/cards/howto-zombie.jpg" alt="Prepare for a Zombie Apocalypse" loading="lazy"></div><div class="pbd"><p class="ptag">HOW-TO</p><h3>Prepare for a Zombie Apocalypse</h3><p>Guides that teach, step by step.</p><span class="pgo">Read &rarr;</span></div></a>
+      <a class="pitem" href="/how-to/prepare-winter-in-the-woods.html"><div class="pim"><img src="/img/cards/home-heaters.jpg" alt="Prepare for Winter in the Woods" loading="lazy"></div><div class="pbd"><p class="ptag">HOW-TO</p><h3>Prepare for Winter in the Woods</h3><p>Guides that teach, step by step.</p><span class="pgo">Read &rarr;</span></div></a>
     </div>
   </section>
 
-  <section class="cat" id="games">
-    <div class="rowhead"><h2>GAMES</h2><a href="/games.html">See all (4)</a></div>
-    <div class="hscroll">
-      <a class="hcard" href="/chimney-run.html"><div class="himg"><img src="/img/cards/chimneyrun.jpg" alt="Chimney Run" loading="lazy"></div><h3>Chimney Run</h3></a>
-      <a class="hcard" href="/ghost-call.html"><div class="himg"><img src="/img/cards/ghostcall.jpg" alt="Ghost Call" loading="lazy"></div><h3>Ghost Call</h3></a>
-      <a class="hcard" href="/started-from-a-baby.html"><div class="himg"><img src="/img/cards/lifesim.jpg" alt="Started From a Baby" loading="lazy"></div><h3>Started From a Baby</h3></a>
-      <a class="hcard" href="/sootfather.html"><div class="himg"><img src="/img/cards/sootfather.jpg" alt="Sootfather" loading="lazy"></div><h3>Sootfather</h3></a>
+  <section class="cat">
+    <div class="rowhead"><h2>GAMES</h2><a href="/games.html">See all &rarr;</a></div>
+    <div class="plist">
+      <a class="pitem" href="/chimney-run.html"><div class="pim"><img src="/img/cards/chimneyrun.jpg" alt="Chimney Run" loading="lazy"></div><div class="pbd"><p class="ptag">GAMES</p><h3>Chimney Run</h3><p>Built here, playable now.</p><span class="pgo">Play &rarr;</span></div></a>
+      <a class="pitem" href="/ghost-call.html"><div class="pim"><img src="/img/cards/ghostcall.jpg" alt="Ghost Call" loading="lazy"></div><div class="pbd"><p class="ptag">GAMES</p><h3>Ghost Call</h3><p>Built here, playable now.</p><span class="pgo">Play &rarr;</span></div></a>
+      <a class="pitem" href="/started-from-a-baby.html"><div class="pim"><img src="/img/cards/lifesim.jpg" alt="Started From a Baby" loading="lazy"></div><div class="pbd"><p class="ptag">GAMES</p><h3>Started From a Baby</h3><p>Built here, playable now.</p><span class="pgo">Play &rarr;</span></div></a>
+      <a class="pitem" href="/sootfather.html"><div class="pim"><img src="/img/cards/sootfather.jpg" alt="Sootfather" loading="lazy"></div><div class="pbd"><p class="ptag">GAMES</p><h3>Sootfather</h3><p>Built here, playable now.</p><span class="pgo">Play &rarr;</span></div></a>
     </div>
   </section>
 
-  <section class="cat" id="series">
-    <div class="rowhead"><h2>SERIES</h2><a href="/series.html">See all (3)</a></div>
-    <div class="hscroll">
-      <a class="hcard" href="/series-holding-the-line.html"><div class="himg"><img src="/img/cards/series-trio.jpg" alt="Holding the Line" loading="lazy"></div><h3>Holding the Line</h3></a>
-      <a class="hcard" href="/series-life-of-an-ai-captain.html"><div class="himg"><img src="/img/cards/ai-captain.jpg" alt="Life of an AI Captain" loading="lazy"></div><h3>Life of an AI Captain</h3></a>
-      <a class="hcard" href="/series-leon-recap.html"><div class="himg"><img src="/img/cards/series-stonewall.jpg" alt="Leon Recap" loading="lazy"></div><h3>Leon Recap</h3></a>
+  <section class="cat">
+    <div class="rowhead"><h2>SERIES</h2><a href="/series.html">See all &rarr;</a></div>
+    <div class="plist">
+      <a class="pitem" href="/series-holding-the-line.html"><div class="pim"><img src="/img/cards/series-trio.jpg" alt="Holding the Line" loading="lazy"></div><div class="pbd"><p class="ptag">SERIES</p><h3>Holding the Line</h3><p>AI Series and more.</p><span class="pgo">Read &rarr;</span></div></a>
+      <a class="pitem" href="/series-life-of-an-ai-captain.html"><div class="pim"><img src="/img/cards/ai-captain.jpg" alt="Life of an AI Captain" loading="lazy"></div><div class="pbd"><p class="ptag">SERIES</p><h3>Life of an AI Captain</h3><p>AI Series and more.</p><span class="pgo">Read &rarr;</span></div></a>
+      <a class="pitem" href="/series-leon-recap.html"><div class="pim"><img src="/img/cards/series-stonewall.jpg" alt="Leon Recap" loading="lazy"></div><div class="pbd"><p class="ptag">SERIES</p><h3>Leon Recap</h3><p>AI Series and more.</p><span class="pgo">Read &rarr;</span></div></a>
     </div>
   </section>
-  <section class="cat" id="ebooks">
-    <div class="rowhead"><h2>EBOOKS</h2><a href="/ebooks.html">See all (4)</a></div>
-    <div class="hscroll">
-      <a class="hcard" href="/ebooks.html#free-library"><div class="himg"><img src="/img/cards/paperroute.jpg" alt="Free Classics Library" loading="lazy"></div><h3>Free Classics Library</h3></a>
-      <a class="hcard" href="/ebooks.html#thrillers"><div class="himg"><img src="/img/cards/paperroute.jpg" alt="Thrillers" loading="lazy"></div><h3>Thrillers</h3></a>
-      <a class="hcard" href="/ebooks.html#self-improvement"><div class="himg"><img src="/img/cards/paperroute.jpg" alt="Self-Improvement" loading="lazy"></div><h3>Self-Improvement</h3></a>
-      <a class="hcard" href="/ebooks.html#money-business"><div class="himg"><img src="/img/cards/paperroute.jpg" alt="Money and Business" loading="lazy"></div><h3>Money &amp; Business</h3></a>
+  <section class="cat">
+    <div class="rowhead"><h2>EBOOKS</h2><a href="/ebooks.html">See all &rarr;</a></div>
+    <div class="plist">
+      <a class="pitem" href="/ebooks.html#free-library"><div class="pim"><img src="/img/cards/paperroute.jpg" alt="Free Classics Library" loading="lazy"></div><div class="pbd"><p class="ptag">EBOOKS</p><h3>Free Classics Library</h3><p>Free classics, read now.</p><span class="pgo">Read &rarr;</span></div></a>
+      <a class="pitem" href="/ebooks.html#thrillers"><div class="pim"><img src="/img/cards/paperroute.jpg" alt="Thrillers" loading="lazy"></div><div class="pbd"><p class="ptag">EBOOKS</p><h3>Thrillers</h3><p>The shelf that keeps you up.</p><span class="pgo">Read &rarr;</span></div></a>
+      <a class="pitem" href="/ebooks.html#self-improvement"><div class="pim"><img src="/img/cards/paperroute.jpg" alt="Self-Improvement" loading="lazy"></div><div class="pbd"><p class="ptag">EBOOKS</p><h3>Self-Improvement</h3><p>Better, one page at a time.</p><span class="pgo">Read &rarr;</span></div></a>
+      <a class="pitem" href="/ebooks.html#money-business"><div class="pim"><img src="/img/cards/paperroute.jpg" alt="Money and Business" loading="lazy"></div><div class="pbd"><p class="ptag">EBOOKS</p><h3>Money &amp; Business</h3><p>Money books that pay off.</p><span class="pgo">Read &rarr;</span></div></a>
     </div>
   </section>
 
