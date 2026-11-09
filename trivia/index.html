@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>LeonLink Trivia</title>
+<style>body{font-family:system-ui,sans-serif;background:#0f172a;color:#e2e8f0;margin:0;display:flex;justify-content:center;padding:24px}#trivia-root{max-width:560px;width:100%}button.opt{display:block;width:100%;margin:8px 0;padding:14px;font-size:1rem;border:0;border-radius:10px;background:#1e293b;color:#e2e8f0;cursor:pointer;text-align:left}.ok{background:#15803d!important}.bad{background:#b91c1c!important}#next{margin-top:12px;padding:12px 20px;border:0;border-radius:10px;background:#6366f1;color:#fff;font-size:1rem}</style></head>
+<body><div id="trivia-root"><h1>LeonLink Trivia</h1><p id="score">Score: 0</p><h2 id="q"></h2><div id="opts"></div><button id="next" hidden>Next</button></div>
+<script>
+const Q=[["What does HTML stand for?",["HyperText Markup Language","High Tech Modern Language","Hyperlink Text Mode Language"],0],["Which planet is largest?",["Earth","Jupiter","Saturn"],1],["How many bits in a byte?",["4","8","16"],1],["Which language runs natively in browsers?",["Python","JavaScript","C"],1],["What is 7 x 8?",["54","56","64"],1]];
+let i=0,s=0;const q=document.getElementById('q'),o=document.getElementById('opts'),n=document.getElementById('next'),sc=document.getElementById('score');
+function show(){if(i>=Q.length){q.textContent='Done! '+s+'/'+Q.length;o.innerHTML='';n.textContent='Play again';n.hidden=false;return}const[t,a,c]=Q[i];q.textContent=t;o.innerHTML='';n.hidden=true;a.forEach((x,k)=>{const b=document.createElement('button');b.className='opt';b.textContent=x;b.onclick=()=>{[...o.children].forEach(e=>e.disabled=true);if(k===c){b.classList.add('ok');s++}else{b.classList.add('bad');o.children[c].classList.add('ok')}sc.textContent='Score: '+s;n.textContent='Next';n.hidden=false};o.appendChild(b)})}
+n.onclick=()=>{if(i>=Q.length){i=0;s=0;sc.textContent='Score: 0'}else i++;show()};show();
+</script></body></html>
