@@ -1,258 +1,443 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Your dashboard | LeonLink</title>
-<meta name="description" content="Your LeonLink dashboard — your Glow balance, your stats, your tools.">
-<link rel="stylesheet" href="/css/ll-kit.css">
-<script src="/js/bottom-nav.js" defer></script>
-<script src="/js/ll-notepad.js" defer></script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>LeonLink Board Dashboard</title>
+<style>
+  :root{
+    --bg:#f4f2ec; --panel:#fffdf8; --panel2:#ece8dd; --ink:#17150f; --muted:#6b6656;
+    --line:#d8d2c2; --teal:#0e7c6f; --teal-ink:#ffffff; --amber:#b45309; --amber-bg:#fdf0dc;
+    --red:#b3261e; --red-bg:#fbe7e4; --green:#1d7a3a; --green-bg:#e2f2e4;
+    --chip:#17150f; --chip-ink:#f4f2ec;
+    --shadow:0 1px 0 rgba(23,21,15,.06), 0 10px 28px rgba(23,21,15,.07);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#12110d; --panel:#1c1b16; --panel2:#26241d; --ink:#f2efe4; --muted:#a39d8a;
+      --line:#38352a; --teal:#2fbfa9; --teal-ink:#0b1512; --amber:#f0a832; --amber-bg:#3a2c10;
+      --red:#ff7a6e; --red-bg:#3d1713; --green:#5fce7f; --green-bg:#14301c;
+      --chip:#f2efe4; --chip-ink:#17150f;
+      --shadow:0 1px 0 rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:ui-sans-system,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.35}
+  .mono{font-family:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace}
+  button,[role="button"],select,summary,input:not([type="checkbox"],[type="radio"]){min-height:2.25rem}
+  .wrap{max-width:1180px;margin:0 auto;padding:20px 16px 56px}
+
+  /* ---------- header ---------- */
+  .top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px;padding:10px 0 18px;border-bottom:3px solid var(--ink)}
+  .top h1{font-size:clamp(2.4rem,7vw,4.2rem);line-height:.95;margin:0;font-weight:900;letter-spacing:-.02em;text-transform:uppercase}
+  .top h1 span{color:var(--teal)}
+  .top .sub{font-size:1rem;color:var(--muted);margin-top:8px;font-weight:600}
+  .clockbox{text-align:right;min-width:170px}
+  .clockbox .clock{font-size:1.9rem;font-weight:800;line-height:1}
+  .clockbox .cz{font-size:.8rem;color:var(--muted);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
+  .clockbox .stall{margin-top:10px;font-size:.95rem;font-weight:800;color:var(--amber)}
+  .clockbox .stall b{font-size:1.25rem}
+
+  /* ---------- alert ---------- */
+  .alert{margin-top:18px;background:var(--amber-bg);border:2px solid var(--amber);border-radius:14px;padding:16px 18px;display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center}
+  .alert .big{font-size:1.55rem;font-weight:900;line-height:1.05}
+  .alert .scores{display:flex;flex-wrap:wrap;gap:10px}
+  .score{background:var(--panel);border:1.5px solid var(--line);border-radius:10px;padding:8px 14px;font-weight:800;font-size:1rem}
+  .score b{color:var(--red);font-size:1.3rem}
+  .alert .note{font-size:.95rem;font-weight:600;color:var(--ink);max-width:520px}
+  .alert .note em{font-style:normal;color:var(--red);font-weight:800}
+
+  /* ---------- stats ---------- */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
+  .stat{background:var(--panel);border:1.5px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+  .stat .n{font-size:clamp(2.2rem,6vw,3.4rem);font-weight:900;line-height:1}
+  .stat .l{font-size:.82rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+  .stat.done .n{color:var(--green)} .stat.work .n{color:var(--teal)} .stat.park .n{color:var(--amber)}
+
+  /* ---------- flow ---------- */
+  .flow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+  .step{background:var(--panel2);border-radius:14px;padding:14px 16px}
+  .step .k{font-size:.78rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--teal)}
+  .step .t{font-size:1.15rem;font-weight:900;margin-top:4px;line-height:1.15}
+  .step .d{font-size:.92rem;color:var(--muted);font-weight:600;margin-top:4px}
+  .donedef{margin-top:12px;font-size:1rem;font-weight:700;background:var(--panel);border:1.5px dashed var(--teal);border-radius:12px;padding:12px 16px}
+  .donedef b{color:var(--teal)}
+
+  /* ---------- controls ---------- */
+  .controls{position:sticky;top:0;z-index:20;background:var(--bg);padding:16px 0 10px;margin-top:8px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{border:2px solid var(--ink);background:transparent;color:var(--ink);border-radius:999px;
+    font:inherit;font-weight:800;font-size:.95rem;padding:8px 16px;cursor:pointer;min-height:2.5rem}
+  .chip[aria-pressed="true"]{background:var(--chip);color:var(--chip-ink)}
+  .chip .cnt{opacity:.65;font-weight:700}
+  .searchrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;align-items:center}
+  .searchrow input[type="search"]{flex:1 1 220px;font:inherit;font-size:1rem;font-weight:600;padding:10px 14px;
+    border:1.5px solid var(--line);border-radius:12px;background:var(--panel);color:var(--ink)}
+  .searchrow select{font:inherit;font-weight:700;padding:8px 10px;border:1.5px solid var(--line);border-radius:12px;background:var(--panel);color:var(--ink)}
+  .reset{border:1.5px solid var(--line);background:var(--panel);color:var(--ink);border-radius:12px;font:inherit;font-weight:800;padding:8px 14px;cursor:pointer}
+  .hint{font-size:.85rem;color:var(--muted);font-weight:600;margin-top:8px}
+
+  /* ---------- teams ---------- */
+  .team{margin-top:26px;background:var(--panel);border:1.5px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+  .teamhead{padding:18px 20px 14px;border-bottom:1.5px solid var(--line);display:flex;flex-wrap:wrap;gap:10px 22px;align-items:baseline;justify-content:space-between}
+  .teamhead h2{margin:0;font-size:clamp(1.6rem,4.5vw,2.3rem);font-weight:900;line-height:1;letter-spacing:-.01em}
+  .teamhead h2 span{color:var(--teal)}
+  .teamhead .lead{font-weight:800;font-size:1rem;color:var(--muted)}
+  .teamhead .lead b{color:var(--ink)}
+  .prog{flex:1 1 220px;max-width:420px}
+  .prog .bar{height:14px;border-radius:99px;background:var(--panel2);overflow:hidden;border:1px solid var(--line)}
+  .prog .fill{height:100%;background:var(--teal);width:0%;transition:width .35s ease}
+  .prog .pl{font-size:.85rem;font-weight:800;color:var(--muted);margin-top:5px}
+  .nextup{padding:10px 20px 0;font-size:.85rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--amber)}
+  .cards{list-style:none;margin:0;padding:10px 12px 14px;display:grid;grid-template-columns:1fr;gap:8px}
+  @media(min-width:860px){.cards{grid-template-columns:1fr 1fr}}
+  .card{border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--panel);display:flex;flex-direction:column;gap:8px}
+  .card.is-next{border-color:var(--amber);border-width:2px}
+  .card .row1{display:flex;align-items:flex-start;gap:10px}
+  .card .id{font-weight:800;font-size:.95rem;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:3px 8px;white-space:nowrap}
+  .card .ttl{font-size:1.08rem;font-weight:850;line-height:1.2;flex:1}
+  .card .q{font-size:.8rem;font-weight:800;color:var(--muted);white-space:nowrap}
+  .card .desc{font-size:.92rem;color:var(--muted);font-weight:550}
+  .card .row2{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+  .tag{font-size:.75rem;font-weight:900;letter-spacing:.07em;text-transform:uppercase;border-radius:99px;padding:4px 10px;border:1.5px solid var(--line);color:var(--muted)}
+  .tag.joust{color:var(--amber);border-color:var(--amber)}
+  .status{font:inherit;font-weight:900;font-size:.85rem;letter-spacing:.05em;border-radius:99px;padding:7px 14px;cursor:pointer;border:2px solid var(--ink);background:transparent;color:var(--ink);min-height:2.4rem}
+  .status[data-s="QUEUED"]{border-color:var(--muted);color:var(--muted)}
+  .status[data-s="WORKING"]{background:var(--teal);border-color:var(--teal);color:var(--teal-ink)}
+  .status[data-s="SUBMITTED"]{background:var(--amber);border-color:var(--amber);color:#fff}
+  .status[data-s="DONE"]{background:var(--green);border-color:var(--green);color:#fff}
+  .card details{font-size:.88rem;color:var(--muted);font-weight:600}
+  .card summary{cursor:pointer;font-weight:800;color:var(--ink);padding:6px 0;min-height:2.25rem;display:flex;align-items:center}
+  .card details .mono{font-size:.8rem;word-break:break-all}
+  .nextbadge{font-size:.72rem;font-weight:900;letter-spacing:.08em;background:var(--amber);color:#fff;border-radius:6px;padding:3px 7px;text-transform:uppercase;white-space:nowrap}
+
+  /* ---------- parked / people ---------- */
+  .parked{margin-top:26px;border:2px dashed var(--amber);border-radius:18px;padding:18px 20px;background:var(--amber-bg)}
+  .parked h2{margin:0;font-size:1.7rem;font-weight:900}
+  .parked p{font-weight:650;color:var(--ink);margin:6px 0 12px}
+  .parked ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+  .parked li{background:var(--panel);border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;font-weight:700;font-size:.92rem}
+  .parked li .mono{color:var(--amber);font-weight:800}
+  .people{display:grid;grid-template-columns:1fr;gap:12px;margin-top:26px}
+  @media(min-width:760px){.people{grid-template-columns:1fr 1fr 1fr}}
+  .person{background:var(--panel);border:1.5px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+  .person .r{font-size:.78rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--teal)}
+  .person .n{font-size:1.35rem;font-weight:900;margin-top:3px}
+  .person .d{font-size:.93rem;color:var(--muted);font-weight:600;margin-top:5px}
+  .person .warn{color:var(--red);font-weight:800}
+  footer{margin-top:34px;border-top:3px solid var(--ink);padding-top:14px;font-size:.9rem;color:var(--muted);font-weight:600;display:flex;flex-wrap:wrap;gap:6px 24px;justify-content:space-between}
+  .empty{display:none;padding:26px;text-align:center;font-weight:800;font-size:1.1rem;color:var(--muted)}
+  @media(max-width:640px){
+    .stats{grid-template-columns:1fr 1fr}
+    .flow{grid-template-columns:1fr}
+    .clockbox{text-align:left}
+    .top{border-bottom-width:2px}
+  }
+  @media (prefers-reduced-motion: reduce){.prog .fill{transition:none}}
+</style>
 </head>
-<body class="ll">
-<div class="ll-wrap">
-  <header class="ll-head">
-    <a class="ll-logo" href="/">● <b>LEON</b>LINK</a>
-    <nav class="ll-nav">
-      <a href="/lineup/">Top 5</a>
-      <a href="/software.html">Software</a>
-      <a href="/arcadeline/">Arcade</a>
-      <a href="https://afterglow.leonlink.net/">Casino</a>
-      <a href="/blog.html">Blogs</a>
-    </nav>
-    <span style="flex:1"></span>
-    <a id="acct-btn" class="ll-btn-ghost" href="/account?next=/dashboard.html">Sign in</a>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div>
+      <h1>The <span>Board</span></h1>
+      <div class="sub">LeonLink &middot; LOUDSPEAKER &middot; One board, one space. Snapshot: Mon, Nov 16, 2026.</div>
+    </div>
+    <div class="clockbox" aria-live="off">
+      <div class="clock mono" id="clock">--:--:--</div>
+      <div class="cz">Eastern &middot; live clock</div>
+      <div class="stall">No movement for <b class="mono" id="stallTimer">55h</b></div>
+    </div>
   </header>
 
-  <main>
-    <section class="ll-hero">
-      <div id="avatar" class="ll-avatar">L</div>
-      <div>
-        <h1 id="who">Your dashboard</h1>
-        <p id="who-sub">Sign in to see your stats, your Glow, and cards picked for your taste.</p>
-        <p id="glow-line" class="ll-balance" hidden><span id="glow-num">0</span> <span>Glow</span></p>
-        <div class="ll-row" id="hero-actions">
-          <a class="ll-btn" href="/account?next=/dashboard.html">Sign in</a>
-          <a class="ll-btn-ghost" href="/lineup/">See the Top 5</a>
-        </div>
+  <section class="alert" aria-label="Board status alert">
+    <div class="big">Board stalled.<br/>Nothing moved in ~55 hours.</div>
+    <div>
+      <div class="scores" aria-label="Midnight inspection scores">
+        <span class="score">B1 &middot; <b>37</b></span>
+        <span class="score">x2 &middot; <b>24</b></span>
+        <span class="score">RLT &middot; <b>2</b></span>
       </div>
-    </section>
+      <p class="note" style="margin:10px 0 0">Midnight scorecard — all three lanes <em>below the 50 floor</em>. Target is 70. The 82 new cards below are the fix: loaded, split even, Joustline first.</p>
+    </div>
+  </section>
 
-    <section class="ll-stats" aria-label="Your stats">
-      <div class="ll-stat"><b id="st-glow">—</b><span>Glow balance</span></div>
-      <div class="ll-stat"><b id="st-games">—</b><span>Games played</span></div>
-      <div class="ll-stat"><b id="st-streak">—</b><span>Day streak</span></div>
-      <div class="ll-stat"><b id="st-top">—</b><span>Top score</span></div>
-    </section>
+  <section class="stats" aria-label="Totals">
+    <div class="stat"><div class="n mono" id="stTotal">82</div><div class="l">Cards total</div></div>
+    <div class="stat work"><div class="n mono" id="stActive">0</div><div class="l">Working now</div></div>
+    <div class="stat done"><div class="n mono" id="stDone">0</div><div class="l">Done &amp; verified</div></div>
+    <div class="stat park"><div class="n mono" id="stParked">14</div><div class="l">Parked &middot; Kids</div></div>
+  </section>
 
-    <section class="ll-section" aria-label="Picked for you">
-      <h2 class="ll-sec-t">Picked for you</h2>
-      <p class="ll-sec-s">Cards shaped by what you played and saved. Play or save more and this row learns your taste.</p>
-      <div id="taste" class="ll-grid"></div>
-    </section>
+  <section class="flow" aria-label="How work moves">
+    <div class="step"><div class="k">Step 1</div><div class="t">Teams build</div><div class="d">Leader divides the queue. Nobody waits on anybody.</div></div>
+    <div class="step"><div class="k">Step 2</div><div class="t">Submit in LOUDSPEAKER</div><div class="d">Finished files go to the board — the one space for everything.</div></div>
+    <div class="step"><div class="k">Step 3</div><div class="t">Stonewall commits</div><div class="d">Only Stonewall uploads to GitHub. He verifies first, then commits.</div></div>
+  </section>
+  <p class="donedef"><b>Done means:</b> commit hash + Vercel preview URL + desktop PASS + mobile PASS, recorded on the board.</p>
 
-    <section class="ll-section" aria-label="Your tools">
-      <h2 class="ll-sec-t">Your tools</h2>
-      <p class="ll-sec-s">Everything in one place.</p>
-      <div class="ll-grid">
-        <div class="ll-card">
-          <span class="ll-badge">Coming soon</span>
-          <h3>Gift cards</h3>
-          <p>LeonLink gift cards are on the way. No purchase yet.</p>
-        </div>
-        <a class="ll-card" href="/packs.html">
-          <span class="ll-tag">Founder's Card</span>
-          <h3>Sign up</h3>
-          <p>Join the Founder's Card. →</p>
-        </a>
-        <a class="ll-card" href="/whitepaper.html">
-          <span class="ll-tag">Crypto journey</span>
-          <h3>Read the whitepaper</h3>
-          <p>How Glow works, where it's going. →</p>
-        </a>
-        <a class="ll-card" href="/blog.html">
-          <span class="ll-tag">Blogs</span>
-          <h3>Popular blogs</h3>
-          <p>The posts people keep coming back to. →</p>
-        </a>
-        <div class="ll-card">
-          <span class="ll-badge soon">Coming soon</span>
-          <h3>Messages</h3>
-          <p>Send messages to other users. On the way.</p>
-        </div>
-        <div class="ll-card">
-          <span class="ll-badge soon">Soon</span>
-          <h3>Easter egg basket</h3>
-          <p>Your found eggs, in one basket. Coming.</p>
-        </div>
-        <a class="ll-card" href="#saved">
-          <span class="ll-tag">Saved</span>
-          <h3>Saved articles</h3>
-          <p>What you saved while reading. ↓</p>
-        </a>
-        <div class="ll-card">
-          <span class="ll-tag">Notepad</span>
-          <h3>Notes</h3>
-          <p>Capture it while you read. It stays in this browser.</p>
-          <div class="ll-row"><button class="ll-btn" type="button" onclick="window.LLNotepad&&LLNotepad.open()">Open notepad</button></div>
-        </div>
-      </div>
-    </section>
+  <div class="controls">
+    <div class="chips" role="group" aria-label="Filter by team" id="teamChips"></div>
+    <div class="searchrow">
+      <input type="search" id="q" placeholder="Search cards — try “roulette”, “watch”, N42…" aria-label="Search cards" />
+      <select id="catSel" aria-label="Filter by kind">
+        <option value="">All kinds</option>
+      </select>
+      <button class="reset" id="resetBtn" type="button">Reset view</button>
+    </div>
+    <div class="hint">Tap a card&rsquo;s status pill to move it: Queued &rarr; Working &rarr; Submitted &rarr; Done. Totals and bars update on the spot.</div>
+  </div>
 
-    <section class="ll-section" id="saved" aria-label="Saved articles">
-      <h2 class="ll-sec-t">Saved articles</h2>
-      <p class="ll-sec-s">Tap Save on a post below and it lands here.</p>
-      <div id="saved-list"></div>
-    </section>
+  <main id="teams"></main>
+  <div class="empty" id="emptyMsg">No cards match. Clear the search or pick another team.</div>
 
-    <section class="ll-section" aria-label="From the blog">
-      <h2 class="ll-sec-t">From the blog</h2>
-      <p class="ll-sec-s">Save the ones you want to keep.</p>
-      <div id="blog-row" class="ll-grid"></div>
-    </section>
-  </main>
+  <section class="parked" aria-label="Parked cards">
+    <h2>Parked — Kids Corner</h2>
+    <p>N55&ndash;N68. Parked by Leon&rsquo;s word, Nov 16. Not assigned, not counted in the 68. They come back only when Leon says so.</p>
+    <ul id="parkedList"></ul>
+  </section>
 
-  <footer style="text-align:center;padding:28px 0;color:rgba(242,245,247,.68);font-size:14px">LEONLINK — Sold. Started. Secured. Shipped. · <a href="/about.html" style="color:inherit;text-decoration:none">About</a> · <a href="/terms.html" style="color:inherit;text-decoration:none">Terms</a></footer>
+  <section class="people" aria-label="Who keeps the board moving">
+    <div class="person"><div class="r">Keeper of the cards</div><div class="n">Gadget</div><div class="d">Assigns from the queues, keeps every member holding a card, never waits on Leon. Escalates to Stonewall only when there is no work at all. Gadget never grades.</div></div>
+    <div class="person"><div class="r">Inspector</div><div class="n">Mushroom Face</div><div class="d">Grades on the curve — target 70, floor 50. <span class="warn">Chat-side checks are down:</span> not currently a member of the B1, x2 or RLT chats.</div></div>
+    <div class="person"><div class="r">Floating</div><div class="n">Team 5 — Announcer</div><div class="d">No fixed queue. Picks up overflow and announcements as the office directs.</div></div>
+  </section>
+
+  <footer>
+    <span>Source: LOUDSPEAKER board (tickets.md) + the 82-card handoff, Nov 16, 2026.</span>
+    <span>Teams aren&rsquo;t locked to a topic — a team&rsquo;s lane is its queue.</span>
+  </footer>
 </div>
 
-<script type="module">
-/* Dashboard logic — best effort, guest view is the fallback.
-   Same Supabase project as /account and the arcade. Nothing here
-   throws into the page: every read is guarded, failures stay silent. */
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-
-var PROJECT_URL = 'https://cjtutkvhyzjsgclqvylg.supabase.co';
-var PUBLISHABLE_KEY = 'sb_publishable_E48ovT9wWxduLxnzPXL_5g_SnNl2rqz';
-var ARCADE = 'https://arcadeline.leonlink.net/';
-var GAME_NAMES = { maze: 'Glowmaze', linetrap: 'Line Trap', ludo: 'Ludo', flap: 'Glow Flap', merge: 'Merge Glow', dailysudoku: 'Daily Sudoku' };
-var BLOGS = [
-  { t: 'Three Minutes, Not Several Hours', u: '/blog/three-minutes-not-several-hours.html' },
-  { t: 'Blocked at 2200: The Five-Minute Rule', u: '/blog/blocked-at-2200-five-minute-rule.html' },
-  { t: 'Life of an AI — Week of the Ranks', u: '/blog/life-of-an-ai-week-of-the-ranks.html' },
-  { t: 'Why Do We Procrastinate?', u: '/journal/why-we-procrastinate.html' },
-  { t: 'Does Music Make You Smarter?', u: '/journal/does-music-make-you-smarter.html' },
-  { t: 'Review gating is fraud with a smile', u: '/journal/review-gating.html' }
+<script>
+"use strict";
+/* Card data: id, title, kind, what-it-is, build folder. Source: LeonLink 82 New Projects handoff. */
+var CARDS = [
+["N01","Rebrand Config Wizard","White-label","Form page that writes brand.json (name, logo, colors) and previews the template live.","/white-label/rebrand-config-wizard/"],
+["N02","Restaurant Site Kit","White-label","Rebrandable menu, hours, map and order-link site for local restaurants.","/white-label/restaurant-site-kit/"],
+["N03","Barber/Salon Booking Kit","White-label","Service list, staff cards and booking-request form, swappable branding.","/white-label/barber-salon-booking-kit/"],
+["N04","Real Estate Listing Kit","White-label","Listing grid plus detail pages driven by a listings.json file.","/white-label/real-estate-listing-kit/"],
+["N05","Gym & Coach Kit","White-label","Class schedule, trainer bios and membership tiers page.","/white-label/gym-and-coach-kit/"],
+["N06","Event/Wedding Microsite","White-label","One-page countdown, schedule, RSVP form and photo gallery.","/white-label/event-wedding-microsite/"],
+["N07","Church & Nonprofit Kit","White-label","Events, donate-link button, sermons/blog list.","/white-label/church-and-nonprofit-kit/"],
+["N08","Contractor Quote Kit","White-label","Services, before/after gallery and quote-request form.","/white-label/contractor-quote-kit/"],
+["N09","Podcast Show Kit","White-label","Episode list from episodes.json with embedded players.","/white-label/podcast-show-kit/"],
+["N10","Link-in-Bio Kit","White-label","Single page of branded link buttons, mobile first.","/white-label/link-in-bio-kit/"],
+["N11","White-label Demo Gallery","White-label","Index page showing every kit with its live demo and screenshot.","/white-label/white-label-demo-gallery/"],
+["N12","Offer & Pricing Page (draft)","White-label","Sales page for the kits; pricing left as placeholders for Leon's decision.","/white-label/offer-and-pricing-page-draft/"],
+["N13","3D Slots Machine","Casino","Three.js slot machine with reels, paylines and play-money credits.","/casino/3d-slots-machine/"],
+["N14","3D Roulette Table","Casino","Spinning wheel with physics-lite ball and bet board, play money only.","/casino/3d-roulette-table/"],
+["N15","Blackjack Table","Casino","Dealer AI, hit/stand/double, card animations.","/casino/blackjack-table/"],
+["N16","Video Poker","Casino","Jacks-or-Better hold/draw with paytable.","/casino/video-poker/"],
+["N17","Craps Table","Casino","Dice roll animation and pass/come bets.","/casino/craps-table/"],
+["N18","Baccarat","Casino","Player/banker/tie with standard drawing rules.","/casino/baccarat/"],
+["N19","Casino Lobby 3D","Casino","Walkable lobby linking each game table.","/casino/casino-lobby-3d/"],
+["N20","Play-Money Wallet","Casino","Shared balance used by all casino games.","/casino/play-money-wallet/"],
+["N21","Daily Bonus Wheel","Casino","Once-a-day free credits spin.","/casino/daily-bonus-wheel/"],
+["N22","Leaderboard Page","Casino","Top play-money balances (local, then shared later).","/casino/leaderboard-page/"],
+["N23","Sound & FX Pack","Casino","Shared chips, reel and win sounds with mute toggle.","/casino/sound-and-fx-pack/"],
+["N24","Keno","Casino","Pick numbers, draw animation, payout table.","/casino/keno/"],
+["N25","Casino Rules Hub","Casino","How-to-play page for every casino game.","/casino/casino-rules-hub/"],
+["N26","Responsible Play Page","Casino","Play-money disclaimer, age gate, no real-money notice.","/casino/responsible-play-page/"],
+["N27","Chapter Reader","Joustline","Paged reader for every Joustline chapter with next/prev.","/joustline/chapter-reader/"],
+["N28","Character Codex","Joustline","Card page per knight: house, crest, stats, canon notes.","/joustline/character-codex/"],
+["N29","Jousting Duel v2","Joustline","Timing-based lance strike mini-game, best of three passes.","/joustline/jousting-duel-v2/"],
+["N30","Tournament Bracket Mode","Joustline","8-knight bracket using the duel engine.","/joustline/tournament-bracket-mode/"],
+["N31","Map of the Realm","Joustline","Clickable map linking locations to chapters.","/joustline/map-of-the-realm/"],
+["N32","Canon Checker Script","Joustline","Script that flags names/dates contradicting canon.json.","/joustline/canon-checker-script/"],
+["N33","Horse & Armor Shop","Joustline","Cosmetic upgrades bought with tournament winnings.","/joustline/horse-and-armor-shop/"],
+["N34","Lore Timeline","Joustline","Scrollable timeline of realm events.","/joustline/lore-timeline/"],
+["N35","Heraldry Builder","Joustline","Make your own crest and download PNG.","/joustline/heraldry-builder/"],
+["N36","Joustline Soundtrack Page","Joustline","Ambient tracks player with chapter themes.","/joustline/joustline-soundtrack-page/"],
+["N37","Story Quiz","Joustline","Quiz on chapters with score share card.","/joustline/story-quiz/"],
+["N38","Joustline Landing Page","Joustline","Hero, trailer area, links to read and play.","/joustline/joustline-landing-page/"],
+["N39","Watch Database","Watches + Top 5","watches.json plus card grid: brand, movement, size, price band.","/watches/watch-database/"],
+["N40","Watch Detail Template","Watches + Top 5","One page per watch generated from watches.json.","/watches/watch-detail-template/"],
+["N41","Top 5 Dive Watches Under $500","Watches + Top 5","Ranked list with pros/cons.","/watches/top-5-dive-watches-under-500/"],
+["N42","Top 5 Dress Watches","Watches + Top 5","Ranked list with photos and specs.","/watches/top-5-dress-watches/"],
+["N43","Top 5 Field Watches","Watches + Top 5","Ranked list for everyday wear.","/watches/top-5-field-watches/"],
+["N44","Top 5 Smartwatches","Watches + Top 5","Ranked list with battery and OS notes.","/watches/top-5-smartwatches/"],
+["N45","Watch Compare Tool","Watches + Top 5","Pick two watches, side-by-side spec table.","/watches/watch-compare-tool/"],
+["N46","How to Read Watch Specs","Watches + Top 5","How-to on movement, lug width, water resistance.","/watches/how-to-read-watch-specs/"],
+["N47","How to Size a Strap","Watches + Top 5","How-to with lug-width chart.","/watches/how-to-size-a-strap/"],
+["N48","Watch Glossary","Watches + Top 5","A–Z terms page with anchors.","/watches/watch-glossary/"],
+["N49","Top 5 Index Hub","Watches + Top 5","Landing page listing every Top 5 article.","/watches/top-5-index-hub/"],
+["N50","Daily Watch Post Template","Watches + Top 5","Reusable blog template for the one-a-day rule.","/watches/daily-watch-post-template/"],
+["N51","Top 5 Gaming Headsets","Watches + Top 5","Expands Top 5 beyond watches.","/watches/top-5-gaming-headsets/"],
+["N52","Top 5 Budget Phones","Watches + Top 5","Expands Top 5 beyond watches.","/watches/top-5-budget-phones/"],
+["N53","Watch Care How-To","Watches + Top 5","Cleaning, storage, servicing intervals.","/watches/watch-care-how-to/"],
+["N54","Watch Quiz: Find Your Style","Watches + Top 5","Short quiz recommending a watch category.","/watches/watch-quiz-find-your-style/"],
+["N55","Kids Story Library","Kids","Index of short illustrated stories, read-aloud button.","/kids/kids-story-library/"],
+["N56","Bedtime Story Generator (offline)","Kids","Pick hero/place/object, assembles a template story.","/kids/bedtime-story-generator-offline/"],
+["N57","Alphabet Game","Kids","Tap letters, hear and see matching words.","/kids/alphabet-game/"],
+["N58","Counting Game","Kids","Count objects, simple rewards.","/kids/counting-game/"],
+["N59","Coloring Pages","Kids","SVG pages colorable in browser and printable.","/kids/coloring-pages/"],
+["N60","Memory Match","Kids","Flip-card matching with animals.","/kids/memory-match/"],
+["N61","Shapes & Colors","Kids","Drag shapes into matching outlines.","/kids/shapes-and-colors/"],
+["N62","Kids Puzzle Jigsaw","Kids","Simple 9/16 piece jigsaw.","/kids/kids-puzzle-jigsaw/"],
+["N63","Spelling Bee Mini","Kids","Hear word, type spelling, gentle feedback.","/kids/spelling-bee-mini/"],
+["N64","Ocean Explorer","Kids","Clickable sea animals with fun facts.","/kids/ocean-explorer/"],
+["N65","Space Explorer","Kids","Planets page with facts and scale.","/kids/space-explorer/"],
+["N66","Kids Music Pad","Kids","Tap pads to play notes and loops.","/kids/kids-music-pad/"],
+["N67","Parents Page","Kids","Safety rules: no ads, no trackers, no gambling links.","/kids/parents-page/"],
+["N68","Kids Hub Landing","Kids","Big-button index for every kids page.","/kids/kids-hub-landing/"],
+["N69","Shared Nav v2","Site","Single nav include linking every lane hub.","/site/shared-nav-v2/"],
+["N70","Shared Footer v2","Site","Footer with lane links, legal, contact.","/site/shared-footer-v2/"],
+["N71","Design Tokens File","Site","Colors, fonts, spacing in one tokens.css.","/site/design-tokens-file/"],
+["N72","Homepage Redesign","Site","LeonLink home with lane tiles.","/site/homepage-redesign/"],
+["N73","Site Search","Site","Client-side search over a generated pages.json index.","/site/site-search/"],
+["N74","404 Page","Site","Branded not-found page with nav.","/site/404-page/"],
+["N75","Sitemap Generator","Site","Script building sitemap.xml from the repo.","/site/sitemap-generator/"],
+["N76","Dark Mode Toggle","Site","Theme switch using tokens.","/site/dark-mode-toggle/"],
+["N77","Template: Article","Site","Reusable long-form article template.","/site/template-article/"],
+["N78","Template: Game Page","Site","Reusable game wrapper with title, rules, fullscreen.","/site/template-game-page/"],
+["N79","Template: Landing","Site","Reusable product landing template.","/site/template-landing/"],
+["N80","Accessibility Pass Script","Site","Checks alt text, headings, contrast on every page.","/site/accessibility-pass-script/"],
+["N81","About & Contact Pages","Site","Site about page and contact form.","/site/about-and-contact-pages/"],
+["N82","Status Board Page","Site","Public page reading tickets.md summary of what shipped.","/site/status-board-page/"]
 ];
+var byId = {};
+CARDS.forEach(function(c){ byId[c[0]] = {id:c[0], title:c[1], kind:c[2], desc:c[3], folder:c[4]}; });
 
-function $(id) { return document.getElementById(id); }
-function esc(s) {
-  return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
-    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+/* Even split — 17 per team. Joustline first (3 each), the rest dealt round-robin
+   across kinds so no team is locked to one topic. Kids N55–N68 parked. */
+var TEAMS = [
+  {key:"bert",     name:"Team 1", lead:"Bert",     queue:["N27","N28","N29","N01","N05","N09","N13","N17","N21","N25","N41","N45","N49","N53","N71","N75","N79"]},
+  {key:"pizzapan", name:"Team 2", lead:"Pizzapan", queue:["N30","N31","N32","N02","N06","N10","N14","N18","N22","N26","N42","N46","N50","N54","N72","N76","N80"]},
+  {key:"whiz",     name:"Team 3", lead:"Whiz",     queue:["N33","N34","N35","N03","N07","N11","N15","N19","N23","N39","N43","N47","N51","N69","N73","N77","N81"]},
+  {key:"datasheet",name:"Team 4", lead:"Datasheet",queue:["N36","N37","N38","N04","N08","N12","N16","N20","N24","N40","N44","N48","N52","N70","N74","N78","N82"]}
+];
+var PARKED = ["N55","N56","N57","N58","N59","N60","N61","N62","N63","N64","N65","N66","N67","N68"];
+
+var FLOW = ["QUEUED","WORKING","SUBMITTED","DONE"];
+var LABEL = {QUEUED:"Queued", WORKING:"Working", SUBMITTED:"Submitted", DONE:"Done ✓"};
+var cardStatus = {}; /* in-session only */
+TEAMS.forEach(function(t){ t.queue.forEach(function(id){ cardStatus[id]="QUEUED"; }); });
+
+var state = { team:"all", cat:"", q:"" };
+
+function esc(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
+
+function render(){
+  var main = document.getElementById("teams");
+  var html = "", anyVisible = false;
+  TEAMS.forEach(function(t){
+    if(state.team!=="all" && state.team!==t.key) return;
+    var done = t.queue.filter(function(id){return cardStatus[id]==="DONE";}).length;
+    var rows = "";
+    t.queue.forEach(function(id, i){
+      var c = byId[id];
+      if(state.cat && c.kind!==state.cat) return;
+      if(state.q){
+        var hay = (c.id+" "+c.title+" "+c.kind+" "+c.desc).toLowerCase();
+        if(hay.indexOf(state.q)===-1) return;
+      }
+      anyVisible = true;
+      var isNext = i<3;
+      rows += '<li class="card'+(isNext?' is-next':'')+'">'
+        + '<div class="row1"><span class="id mono">'+c.id+'</span>'
+        + '<span class="ttl">'+esc(c.title)+'</span>'
+        + (isNext?'<span class="nextbadge">Up next</span>':'')
+        + '<span class="q mono">#'+(i+1)+'</span></div>'
+        + '<div class="desc">'+esc(c.desc)+'</div>'
+        + '<div class="row2"><span class="tag'+(c.kind==="Joustline"?" joust":"")+'">'+esc(c.kind)+'</span>'
+        + '<button type="button" class="status" data-id="'+c.id+'" data-s="'+cardStatus[id]+'" aria-label="Status of '+c.id+', currently '+cardStatus[id]+'. Activate to advance.">'+LABEL[cardStatus[id]]+'</button></div>'
+        + '<details><summary>Handoff</summary>Build in <span class="mono">'+c.folder+'</span> &middot; Branch per card in LOUDSPEAKER. Done = hash + preview URL + desktop &amp; mobile PASS on the board.</details>'
+        + '</li>';
+    });
+    if(!rows) return;
+    var pct = Math.round(done/t.queue.length*100);
+    html += '<section class="team" data-team="'+t.key+'">'
+      + '<div class="teamhead"><div><h2>'+t.name+' — <span>'+t.lead+'</span></h2>'
+      + '<div class="lead">Lead: <b>'+t.lead+'</b> &middot; '+t.queue.length+' cards</div></div>'
+      + '<div class="prog"><div class="bar"><div class="fill" style="width:'+pct+'%"></div></div>'
+      + '<div class="pl mono">'+done+' / '+t.queue.length+' done &middot; '+pct+'%</div></div></div>'
+      + '<div class="nextup">First up: Joustline — cards #1–3</div>'
+      + '<ul class="cards">'+rows+'</ul></section>';
   });
+  main.innerHTML = html;
+  document.getElementById("emptyMsg").style.display = anyVisible ? "none" : "block";
+  updateStats();
 }
-function readJSON(key, fallback) {
-  try { var v = JSON.parse(localStorage.getItem(key) || 'null'); return v == null ? fallback : v; }
-  catch (e) { return fallback; }
+
+function updateStats(){
+  var working=0, done=0;
+  Object.keys(cardStatus).forEach(function(id){
+    if(cardStatus[id]==="WORKING"||cardStatus[id]==="SUBMITTED") working++;
+    if(cardStatus[id]==="DONE") done++;
+  });
+  document.getElementById("stActive").textContent = working;
+  document.getElementById("stDone").textContent = done;
 }
-function fmt(n) { return Number(n || 0).toLocaleString('en-US'); }
 
-/* --- local state: works signed out too --- */
-var played = readJSON('arc_ll_played', []);
-if (!Array.isArray(played)) played = [];
-var daily = readJSON('arc_ll_daily', {});
-var today = new Date().toISOString().slice(0, 10);
-var yesterday = new Date(Date.now() - 864e5).toISOString().slice(0, 10);
-var streak = (daily.last === today || daily.last === yesterday) ? (daily.n || 0) : 0;
-var saved = readJSON('ll_saved', []);
-if (!Array.isArray(saved)) saved = [];
+/* chips */
+var chipsEl = document.getElementById("teamChips");
+var chipDefs = [{key:"all",label:"All teams",cnt:68}].concat(TEAMS.map(function(t){return {key:t.key,label:t.name+" · "+t.lead,cnt:t.queue.length};}));
+chipsEl.innerHTML = chipDefs.map(function(c){
+  return '<button type="button" class="chip" data-team="'+c.key+'" aria-pressed="'+(c.key==="all")+'">'+c.label+' <span class="cnt">'+c.cnt+'</span></button>';
+}).join("");
+chipsEl.addEventListener("click", function(e){
+  var b = e.target.closest(".chip"); if(!b) return;
+  state.team = b.getAttribute("data-team");
+  chipsEl.querySelectorAll(".chip").forEach(function(x){ x.setAttribute("aria-pressed", x===b ? "true":"false"); });
+  render();
+});
 
-function renderSaved() {
-  var box = $('saved-list');
-  if (!saved.length) {
-    box.innerHTML = '<p class="ll-empty">Nothing saved yet. Tap Save on a post below and it shows up here.</p>';
-    return;
+/* category select */
+var kinds = [];
+CARDS.forEach(function(c){ if(kinds.indexOf(c[2])===-1 && c[2]!=="Kids") kinds.push(c[2]); });
+var sel = document.getElementById("catSel");
+kinds.forEach(function(k){ var o=document.createElement("option"); o.value=k; o.textContent=k; sel.appendChild(o); });
+sel.addEventListener("change", function(){ state.cat = sel.value; render(); });
+
+document.getElementById("q").addEventListener("input", function(e){
+  state.q = e.target.value.trim().toLowerCase(); render();
+});
+
+/* status cycling (event delegation) */
+document.getElementById("teams").addEventListener("click", function(e){
+  var b = e.target.closest(".status"); if(!b) return;
+  var id = b.getAttribute("data-id");
+  var next = FLOW[(FLOW.indexOf(cardStatus[id])+1)%FLOW.length];
+  cardStatus[id] = next;
+  render();
+});
+
+document.getElementById("resetBtn").addEventListener("click", function(){
+  Object.keys(cardStatus).forEach(function(id){ cardStatus[id]="QUEUED"; });
+  state = {team:"all", cat:"", q:""};
+  document.getElementById("q").value=""; sel.value="";
+  chipsEl.querySelectorAll(".chip").forEach(function(x){ x.setAttribute("aria-pressed", x.getAttribute("data-team")==="all" ? "true":"false"); });
+  render();
+});
+
+/* parked list */
+document.getElementById("parkedList").innerHTML = PARKED.map(function(id){
+  var c = byId[id]; return '<li><span class="mono">'+c.id+'</span> '+esc(c.title)+'</li>';
+}).join("");
+
+/* live ET clock + stall timer (board last moved ~55h before the Nov 16, 06:15 ET snapshot) */
+var lastMove = Date.now() - 55*3600*1000;
+function tick(){
+  try{
+    document.getElementById("clock").textContent =
+      new Intl.DateTimeFormat("en-US",{timeZone:"America/New_York",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false}).format(new Date());
+  }catch(e){
+    var d=new Date(); document.getElementById("clock").textContent = d.toLocaleTimeString();
   }
-  box.innerHTML = '<div class="ll-grid">' + saved.map(function (a, i) {
-    return '<div class="ll-card"><h3>' + esc(a.t) + '</h3><div class="ll-row"><a class="ll-btn-ghost" href="' + esc(a.u) + '">Read →</a><button class="ll-btn-ghost" type="button" data-rm="' + i + '">Remove</button></div></div>';
-  }).join('') + '</div>';
-  box.querySelectorAll('[data-rm]').forEach(function (b) {
-    b.onclick = function () { saved.splice(Number(b.getAttribute('data-rm')), 1); try { localStorage.setItem('ll_saved', JSON.stringify(saved)); } catch (e) {} renderSaved(); };
-  });
+  var s = Math.floor((Date.now()-lastMove)/1000);
+  var h = Math.floor(s/3600), m = Math.floor((s%3600)/60), ss = s%60;
+  document.getElementById("stallTimer").textContent = h+"h "+String(m).padStart(2,"0")+"m "+String(ss).padStart(2,"0")+"s";
 }
-function renderTaste() {
-  var box = $('taste');
-  var cards = [];
-  played.slice(0, 4).forEach(function (id) {
-    cards.push('<a class="ll-card" href="' + ARCADE + '"><span class="ll-tag">Play again</span><h3>' + esc(GAME_NAMES[id] || id) + '</h3><p>Back to the arcade. →</p></a>');
-  });
-  saved.slice(0, 4).forEach(function (a) {
-    cards.push('<a class="ll-card" href="' + esc(a.u) + '"><span class="ll-tag">Your saved read</span><h3>' + esc(a.t) + '</h3><p>Pick up where you left off. →</p></a>');
-  });
-  if (!cards.length) {
-    cards = [
-      '<a class="ll-card" href="/lineup/"><span class="ll-tag">Start here</span><h3>Top 5</h3><p>The lists that pay the bills. →</p></a>',
-      '<a class="ll-card" href="/blog.html"><span class="ll-tag">Start here</span><h3>Blogs</h3><p>Read one, save it, and this row starts learning. →</p></a>',
-      '<a class="ll-card" href="' + ARCADE + '"><span class="ll-tag">Start here</span><h3>Arcade</h3><p>Play a game and it shows up here. →</p></a>'
-    ];
-  }
-  box.innerHTML = cards.join('');
-}
-function renderBlogs() {
-  $('blog-row').innerHTML = BLOGS.map(function (b) {
-    var isSaved = saved.some(function (a) { return a.u === b.u; });
-    return '<div class="ll-card"><h3>' + esc(b.t) + '</h3><div class="ll-row"><a class="ll-btn-ghost" href="' + esc(b.u) + '">Read →</a><button class="ll-btn-ghost" type="button" data-save="' + esc(b.u) + '" data-title="' + esc(b.t) + '">' + (isSaved ? 'Saved ✓' : 'Save') + '</button></div></div>';
-  }).join('');
-  document.querySelectorAll('[data-save]').forEach(function (b) {
-    b.onclick = function () {
-      var u = b.getAttribute('data-save'), t = b.getAttribute('data-title');
-      if (!saved.some(function (a) { return a.u === u; })) saved.push({ t: t, u: u });
-      try { localStorage.setItem('ll_saved', JSON.stringify(saved)); } catch (e) {}
-      renderSaved(); renderBlogs(); renderTaste();
-    };
-  });
-}
-function paintStats(games, top) {
-  $('st-games').textContent = fmt(games);
-  $('st-streak').textContent = fmt(streak);
-  $('st-top').textContent = top == null ? '—' : fmt(top);
-}
-renderSaved();
-renderBlogs();
-renderTaste();
-paintStats(new Set(played).size, null);
+tick(); setInterval(tick, 1000);
 
-/* --- signed-in state: same project as /account --- */
-try {
-  var sb = createClient(PROJECT_URL, PUBLISHABLE_KEY);
-  var sess = await sb.auth.getSession();
-  var user = sess && sess.data && sess.data.session && sess.data.session.user;
-  if (user) {
-    var pr = await sb.from('arc_profiles').select('nickname,tokens,avatar,frame,color,title').eq('id', user.id).maybeSingle();
-    var profile = (pr && pr.data) || null;
-    var name = (profile && profile.nickname) || (user.email || 'Player').split('@')[0];
-    $('who').textContent = name;
-    $('who-sub').textContent = (profile && profile.title) || 'Your LeonLink dashboard.';
-    var glow = (profile && profile.tokens) || 0;
-    $('glow-line').hidden = false;
-    $('glow-num').textContent = fmt(glow);
-    $('st-glow').textContent = fmt(glow);
-    var av = $('avatar');
-    var base = name.charAt(0).toUpperCase() || 'L';
-    av.textContent = base;
-    if (profile && profile.color && /^#[0-9a-f]{3,8}$/i.test(profile.color)) av.style.borderColor = profile.color;
-    if (profile && profile.avatar) {
-      try {
-        var it = await sb.from('arc_items').select('*').eq('id', profile.avatar).maybeSingle();
-        var glyph = it && it.data && (it.data.emoji || it.data.icon || it.data.glyph);
-        if (glyph) av.textContent = glyph;
-      } catch (e) {}
-    }
-    var heroActions = $('hero-actions');
-    if (heroActions) heroActions.style.display = 'none';
-    var acct = $('acct-btn');
-    if (acct) { acct.textContent = 'Account'; acct.href = '/account'; }
-    try {
-      var sc = await sb.from('arc_scores').select('game,score').eq('user_id', user.id);
-      var rows = (sc && sc.data) || [];
-      var games = new Set(rows.map(function (r) { return r.game; }));
-      played.forEach(function (g) { games.add(g); });
-      var top = rows.reduce(function (m, r) { return Math.max(m, r.score || 0); }, 0);
-      paintStats(games.size, rows.length ? top : null);
-    } catch (e) { paintStats(new Set(played).size, null); }
-  } else {
-    $('st-glow').textContent = '—';
-  }
-} catch (e) { /* guest view stays */ }
+render();
 </script>
 </body>
 </html>
