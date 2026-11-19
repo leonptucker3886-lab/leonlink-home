@@ -235,6 +235,12 @@ button:disabled{opacity:.45;cursor:not-allowed}
 <textarea id="fb-config" placeholder='{"apiKey":"...","authDomain":"...","projectId":"...","storageBucket":"...","messagingSenderId":"...","appId":"..."}'></textarea>
 <div class="row"><button class="go" id="fb-save">Save &amp; connect</button><button class="btn2" id="fb-off">Turn off sync</button></div>
 <p class="note" id="fb-status">Sync off — this browser only.</p>
+<h2>LeonLink ID</h2>
+<p class="sub">One login for the whole site. Sign in at the central door and this app knows you're the Boss.</p>
+<label for="brand-owner">Owner email</label>
+<input type="email" id="brand-owner" value="leonptucker3886@gmail.com">
+<p class="note" id="llid-status">LeonLink ID — checking…</p>
+<div class="row"><button class="go" id="llid-auth">Sign in</button></div>
 <p class="note">Bots sign in anonymously — no email, no password. One login each, free tier. Rules live in firestore.rules in the repo.</p>
 <p class="note">This rebrands the app in this browser. Ship it under your own domain and it's yours end to end.</p>
 </section>
@@ -272,7 +278,7 @@ var cards=store("botline-v1")||demoCards();
 var bots=store("botline-bots")||demoBots();
 var inboxBox="All";
 var inbox=store("botline-inbox")||[{id:"m-demo",who:"Forge",to:"Boss",ts:0,when:today(),text:"Blocked on B3 — need to know: save links locally or in the cloud?",card:"B3",read:false}];
-var brand=store("botline-brand")||{name:"Botline",tag:"Run your bots like a team.",color:"#22e6c8",color2:"#ff5da2"};
+var brand=store("botline-brand")||{name:"Botline",tag:"Run your bots like a team.",color:"#22e6c8",color2:"#ff5da2",ownerEmail:"leonptucker3886@gmail.com"};
 
 /* ---- Firebase sync (shared store every bot sees) ---- */
 var FB_CONFIG=store("botline-fb-config")||null;
@@ -411,6 +417,7 @@ function applyBrand(){
  document.getElementById("brand-tag").value=brand.tag;
  document.getElementById("brand-color").value=brand.color;
  document.getElementById("brand-color2").value=brand.color2;
+ var bo=document.getElementById("brand-owner");if(bo)bo.value=brand.ownerEmail||"leonptucker3886@gmail.com";
 }
 function dueLabel(c){
  if(!c.deadline)return "";
@@ -800,6 +807,7 @@ document.getElementById("brand-save").addEventListener("click",function(){
  brand.tag=document.getElementById("brand-tag").value.trim();
  brand.color=document.getElementById("brand-color").value;
  brand.color2=document.getElementById("brand-color2").value;
+ brand.ownerEmail=document.getElementById("brand-owner").value.trim()||"leonptucker3886@gmail.com";
  saveAll();applyBrand();alert("Branding saved. This is your app now — "+brand.name+".");
 });
 document.getElementById("btn-export").addEventListener("click",function(){
@@ -818,7 +826,42 @@ document.getElementById("btn-reset").addEventListener("click",function(){
  cards=demoCards();bots=demoBots();inbox=[{id:"m-demo",who:"Forge",to:"Boss",ts:0,when:today(),text:"Blocked on B3 — need to know: save links locally or in the cloud?",card:"B3",read:false}];
  saveAll();renderDash();
 });
-applyBrand();renderDash();renderSubmit();fbInit();
+function llidOwnerEmail(){return (brand.ownerEmail||"leonptucker3886@gmail.com").toLowerCase();}
+function llidSession(user,profile){
+ var email=user&&user.email?String(user.email).toLowerCase():"";
+ var nick=profile&&profile.nickname?profile.nickname:(user&&user.email?user.email:"");
+ var st=document.getElementById("llid-status"),btn=document.getElementById("llid-auth");
+ if(email&&email===llidOwnerEmail()){
+   whoami="Boss";store("botline-whoami",whoami);
+   if(st)st.textContent="Signed in as "+nick+" (Boss) — LeonLink ID";
+   if(btn)btn.textContent="Sign out";
+   if(fbReady)fbBindIdentity();
+   renderDash();
+ }else if(user){
+   if(st)st.textContent="Signed in as "+nick+" — LeonLink ID (not the owner, so Boss stays on the picker)";
+   if(btn)btn.textContent="Sign out";
+ }
+}
+function llidSignedOut(){
+ var st=document.getElementById("llid-status"),btn=document.getElementById("llid-auth");
+ if(st)st.textContent="Not signed in — sign in at leonlink.net/account to work as Boss";
+ if(btn)btn.textContent="Sign in";
+}
+function llidInit(){
+ var btn=document.getElementById("llid-auth");
+ if(btn)btn.addEventListener("click",function(){
+   if(!window.LLID)return;
+   if(btn.textContent==="Sign out"){LLID.signOut(function(){llidSignedOut();});}
+   else{location.href=LLID.accountURL("/botline/app/");}
+ });
+ if(window.LLID){LLID.boot({onSession:llidSession,onSignedOut:llidSignedOut,timeoutMs:3500});return;}
+ var sc=document.createElement("script");
+ sc.src="https://www.leonlink.net/ll-id.js";
+ sc.onload=function(){if(window.LLID)LLID.boot({onSession:llidSession,onSignedOut:llidSignedOut,timeoutMs:3500});else llidSignedOut();};
+ sc.onerror=function(){llidSignedOut();};
+ document.head.appendChild(sc);
+}
+applyBrand();renderDash();renderSubmit();fbInit();llidInit();
 })();
 </script>
 </body>
