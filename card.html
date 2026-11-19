@@ -55,12 +55,19 @@ h2 small{display:block;font-size:13px;color:var(--dim);font-weight:600;letter-sp
 .actions button{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:999px;padding:12px 20px;font:700 15px system-ui,sans-serif;cursor:pointer}
 .actions button.go{background:var(--teal);color:#041018;border:0}
 .actions button.warn{border-color:var(--pink);color:var(--pink)}
+button:disabled{opacity:.45;cursor:not-allowed}
 textarea,select,input[type=text]{width:100%;background:#0a0d14;border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:var(--text);font:15px/1.5 system-ui,sans-serif}
 textarea{min-height:80px;resize:vertical}
+.upbox label{display:block;font-weight:700;margin:14px 0 6px}
+.upbox input,.upbox textarea{margin:0}
 .row{display:flex;gap:10px;margin-top:10px}
 .row select{width:170px;flex:none}
 .row button{border:0;cursor:pointer;padding:12px 20px;border-radius:999px;background:var(--teal);color:#041018;font:800 15px system-ui,sans-serif;white-space:nowrap}
+.row button.plain{border:1px solid var(--line);background:var(--panel);color:var(--text)}
 .note{color:var(--dim);font-size:14px}
+.gate-pass{color:var(--teal)}
+.gate-fail{color:var(--pink);font-weight:700}
+.gate-manual{color:var(--dim)}
 a{color:var(--teal)}
 .banner{display:none;border:1px solid var(--pink);background:rgba(255,93,162,.1);border-radius:12px;padding:14px 16px;margin:20px 0}
 </style>
@@ -104,52 +111,219 @@ function save(){var i=cards.indexOf(card);if(i>=0)cards[i]=card;llSave(cards);}
 function log(who,text,esc){
   card.logs.push({who:who,when:today(),text:text,esc:!!esc});save();render();
 }
+function sopSlug(t){return {"Blog":"blog","Top 5":"top-5","Game":"game","Software":"software"}[t]||"blog";}
+function normUrl(u){u=String(u||"").trim();if(!u)return "";if(u.indexOf("/")===0)return "https://www.leonlink.net"+u;if(!/^https?:\/\//i.test(u))return "https://"+u;return u;}
+function val(id){var e=document.getElementById(id);return e?e.value.trim():"";}
+function gateHtml(g){
+  if(!g||!g.results)return "";
+  var h='<div class="box"><p><b>SOP gate — '+(g.passed?"PASSED":"FAILED")+'</b> · '+llEsc(g.when||"")+'</p>';
+  g.results.forEach(function(r){
+    var mark=r.result==="pass"?"✓":r.result==="fail"?"✗":"○";
+    var cls=r.result==="pass"?"gate-pass":r.result==="fail"?"gate-fail":"gate-manual";
+    h+='<p class="'+cls+'">'+mark+' '+llEsc(r.label)+(r.detail?' — <span class="note">'+llEsc(r.detail)+'</span>':"")+'</p>';
+  });
+  return h+'</div>';
+}
+async function runGate(){
+  var c=currentCard;if(!c)return;
+  var up=c.upload||{};
+  var btn=document.getElementById("btn-gate");
+  if(btn){btn.disabled=true;btn.textContent="Running checks…";}
+  var results=[];
+  function add(label,result,detail){results.push({label:label,result:result,detail:detail||""});}
+  var file=String(up.file||"").trim();
+  var url=normUrl(up.url||"");
+  var base=file.split("/").pop()||"";
+  // --- checks from the card itself (no fetch) ---
+  var doneReqs=(c.reqs||[]).filter(function(r){return r.done;}).length;
+  add("All requirements checked",(c.reqs&&c.reqs.length&&doneReqs===c.reqs.length)?"pass":"fail",doneReqs+" of "+(c.reqs||[]).length+" ticked");
+  if(c.cps&&c.cps.length){
+    var doneCps=c.cps.filter(function(r){return r.done;}).length;
+    add("All checkpoints done",doneCps===c.cps.length?"pass":"fail",doneCps+" of "+c.cps.length+" done");
+  }else{
+    add("All checkpoints done","pass","No checkpoints for this type");
+  }
+  var missing=[];
+  if(!file)missing.push("file path");if(!url)missing.push("live URL");if(!up.hash)missing.push("commit hash");
+  if(!up.changed)missing.push("what changed");if(!up.tested)missing.push("what tested");
+  add("Upload logged (file, live URL, commit hash, what changed, what tested)",missing.length?"fail":"pass",missing.length?"Missing: "+missing.join(", "):"");
+  add("Correct file type (.html)",/\.html?$/i.test(file)?"pass":"fail",file||"No file path given");
+  var folderOk=false,folderWant="";
+  if(c.type==="Blog"){folderWant="/journal/ or agreed root URL";folderOk=/^\/journal\//.test(file)||/^\/[^\/]+\.html?$/i.test(file);}
+  else if(c.type==="Top 5"){folderWant="/lineup/";folderOk=/^\/lineup\//.test(file);}
+  else if(c.type==="Game"){folderWant="/games/";folderOk=/^\/games\//.test(file);}
+  else{folderWant="agreed folder";folderOk=/^\//.test(file);}
+  add("Correct folder ("+folderWant+")",folderOk?"pass":"fail",file||"No file path given");
+  add("File name lowercase, hyphens, no spaces",/^[a-z0-9]+(-[a-z0-9]+)*\.html?$/i.test(base)&&base===base.toLowerCase()&&base.indexOf(" ")===-1?"pass":"fail",base||"No file name given");
+  var dup=cards.filter(function(x){return x!==c&&((x.title||"").toLowerCase()===(c.title||"").toLowerCase()||(x.upload&&x.upload.url&&url&&x.upload.url===up.url));});
+  add("No duplicate title or live URL",dup.length?"fail":"pass",dup.length?"Clashes with "+dup.map(function(x){return x.id;}).join(", "):"");
+  add("No personal info in card fields",/\b(tucker|mia)\b/i.test((c.title||"")+" "+(c.desc||"")+" "+(c.gfx||"")+" "+file)?"fail":"pass","Leon: first name + state only; nothing about the kids");
+  if((c.gfx||"").trim()){
+    if(up.art){
+      try{var ar=await fetch(normUrl(up.art),{method:"GET",credentials:"same-origin"});add("Art file exists (.jpg/.png)",ar.ok&&/\.(jpg|png)(\?|$)/i.test(up.art)?"pass":"fail",ar.ok?"":"Art URL did not return 200");}
+      catch(e){add("Art file exists (.jpg/.png)","fail","Art URL could not be fetched");}
+    }else{
+      add("Art file exists (.jpg/.png)","manual","No art URL given — Inspector checks the art file");
+    }
+  }else{
+    add("Art file exists (.jpg/.png)","fail","No graphics spec / art described on the card");
+  }
+  // --- checks from the live page (fetch) ---
+  var pageText=null;
+  if(!url){
+    add("Live URL returns 200","fail","No live URL given");
+  }else{
+    try{
+      var r=await fetch(url,{method:"GET",credentials:"same-origin"});
+      if(!r.ok)throw new Error("HTTP "+r.status);
+      pageText=await r.text();
+      add("Live URL returns 200","pass","HTTP "+r.status);
+    }catch(e){
+      add("Live URL returns 200","fail",String((e&&e.message)||e));
+    }
+  }
+  if(pageText===null){
+    ["Meta / og / canonical present","Same site design / header-footer","All internal links work","Alt text on every image","No personal info on the page","Page size within limits"].forEach(function(l){add(l,"manual","Skipped — live page could not be fetched");});
+    if(c.type==="Blog")add("Peer-reviewed source link found","manual","Skipped — live page could not be fetched");
+    if(c.type==="Top 5"){add("Exactly 5 “See Amazon price” links","manual","Skipped — live page could not be fetched");add("Amazon tag leonlink-20 on every pick","manual","Skipped — live page could not be fetched");}
+    if(c.type==="Game"){add("LEONLINK PRESENTS loading screen","manual","Skipped — live page could not be fetched");add("Viewport meta (mobile-first)","manual","Skipped — live page could not be fetched");}
+    if(c.type==="Software")add("No login button / site chrome inside the app","manual","Skipped — live page could not be fetched");
+  }else{
+    var hasOg=/<meta[^>]+property=["']og:/i.test(pageText);
+    var hasCan=/<link[^>]+rel=["']canonical["']/i.test(pageText);
+    var hasTitle=/<title>[^<]+<\/title>/i.test(pageText);
+    add("Meta / og / canonical present",(hasOg&&hasCan&&hasTitle)?"pass":"fail","Missing: "+[hasOg?"":"og tags",hasCan?"":"canonical",hasTitle?"":"title"].filter(Boolean).join(", "));
+    add("Same site design / header-footer",/llh|\/js\/nav\.js/i.test(pageText)?"pass":"fail","No LeonLink header/nav found on the page");
+    var hrefs=[],re=/href=["']([^"']+)["']/gi,m;
+    while((m=re.exec(pageText))&&hrefs.length<200){hrefs.push(m[1]);}
+    var internal=hrefs.filter(function(h){return h.indexOf("/")===0&&h.indexOf("//")!==0;});
+    internal=internal.filter(function(h,i,a){return a.indexOf(h)===i;}).slice(0,8);
+    if(!internal.length){
+      add("All internal links work","pass","No internal links to check");
+    }else{
+      var bad=[];
+      for(var i=0;i<internal.length;i++){
+        try{var rr=await fetch("https://www.leonlink.net"+internal[i],{method:"GET",credentials:"same-origin"});if(!rr.ok)bad.push(internal[i]+" ("+rr.status+")");}
+        catch(e){bad.push(internal[i]+" (fetch failed)");}
+      }
+      add("All internal links work",bad.length?"fail":"pass",bad.length?bad.join(", "):internal.length+" checked");
+    }
+    var imgs=pageText.match(/<img\b[^>]*>/gi)||[];
+    var badImgs=imgs.filter(function(t){return !/alt=(["'])[^"']+\1/i.test(t);});
+    add("Alt text on every image",badImgs.length?"fail":"pass",imgs.length?imgs.length+" images, "+badImgs.length+" missing alt":"No images on the page");
+    add("No personal info on the page",/\b(tucker|mia)\b/i.test(pageText)?"fail":"pass","Leon: first name + state only; nothing about the kids");
+    add("Page size within limits",pageText.length<1000000?"pass":"fail",Math.round(pageText.length/1024)+" KB");
+    if(c.type==="Blog"){
+      var extLinks=[];var re2=/href=["'](https?:\/\/[^"']+)["']/gi,m2;
+      while((m2=re2.exec(pageText))&&extLinks.length<200){extLinks.push(m2[1]);}
+      var peer=extLinks.filter(function(h){return /(^|\.)(edu|gov|ac\.uk)(\/|$)|doi\.org|ncbi\.nlm\.nih\.gov|pubmed|nature\.com|science\.org|sciencedirect\.com|jstor\.org|plos\.org/i.test(h);});
+      add("Peer-reviewed source link found",peer.length?"pass":"fail",peer.length?peer.length+" peer-reviewed link(s)":"No peer-reviewed source link on the page");
+    }
+    if(c.type==="Top 5"){
+      var nAmazon=(pageText.match(/See Amazon price/g)||[]).length;
+      add("Exactly 5 “See Amazon price” links",nAmazon===5?"pass":"fail","Found "+nAmazon);
+      var nTag=(pageText.match(/leonlink-20/g)||[]).length;
+      add("Amazon tag leonlink-20 on every pick",nTag>=5?"pass":"fail","Found "+nTag+" tag(s)");
+    }
+    if(c.type==="Game"){
+      add("LEONLINK PRESENTS loading screen",/LEONLINK PRESENTS/i.test(pageText)?"pass":"fail","Not found on the page");
+      add("Viewport meta (mobile-first)",/<meta[^>]+name=["']viewport["']/i.test(pageText)?"pass":"fail","No viewport meta");
+    }
+    if(c.type==="Software"){
+      add("No login button / site chrome inside the app",/<(a|button)\b[^>]*(log[\s-]?in|sign[\s-]?in)/i.test(pageText)?"fail":"pass","No login/sign-in control found inside the app");
+    }
+  }
+  // --- manual items (Inspector verifies, never blocks the gate) ---
+  if(c.type==="Blog")add("Shareable + peer-review depth","manual","Inspector verifies");
+  if(c.type==="Top 5")add("All 5 picks same category","manual","Inspector verifies");
+  if(c.type==="Game")add("Game plays + mobile PASS on a real phone","manual","Inspector verifies");
+  if(c.type==="Software")add("Core flow works","manual","Inspector verifies");
+  add("Deploy count within 85/day","manual","Inspector verifies");
+  if(c.cps&&c.cps.length)add("Checkpoint proof is real progress","manual","Inspector verifies");
+  // --- verdict ---
+  var fails=results.filter(function(r){return r.result==="fail";});
+  var manuals=results.filter(function(r){return r.result==="manual";}).length;
+  var passed=fails.length===0;
+  c.gate={when:today(),passed:passed,results:results};
+  if(!passed&&c.status==="In review")c.status="In progress";
+  save();
+  if(passed){
+    log("Stonewall","SOP gate PASSED — all auto checks green. "+manuals+" item(s) for the Inspector.");
+  }else{
+    log("Stonewall","SOP gate FAILED — "+fails.length+" check(s): "+fails.map(function(f){return f.label;}).join("; ")+". Back to the builder.");
+  }
+}
+function saveUpload(){
+  var c=currentCard;if(!c)return;
+  c.upload={file:val("up-file"),url:val("up-url"),art:val("up-art"),hash:val("up-hash"),changed:val("up-changed"),tested:val("up-tested"),untested:val("up-untested")};
+  save();
+  log("Stonewall","Upload logged: "+(c.upload.file||"(no file)")+" @ "+(c.upload.hash||"(no hash)")+".");
+}
 function render(){
-  var due=llDueLabel(card),over=due.indexOf("Overdue")===0;
-  var h='<div class="chips"><span class="chip">'+llEsc(card.type)+'</span><span class="chip pri-'+llEsc(card.priority)+'">'+llEsc(card.priority)+'</span><span class="chip st-'+llEsc(card.status.replace(/ /g,""))+'">'+llEsc(card.status)+'</span><span class="chip">'+llEsc(card.cat)+'</span></div>'
-  +'<h1>'+llEsc(card.id)+' — '+llEsc(card.title)+'</h1>'
-  +'<p class="meta">Given <b>'+llEsc(card.date)+'</b> · <b>'+llEsc(card.team)+'</b> · Responsible: <b>'+llEsc(card.member)+'</b> · <span class="due'+(over?" over":"")+'">'+llEsc(due)+'</span> ('+llEsc(card.deadline)+')</p>'
-  +'<p class="desc">'+llEsc(card.desc||"")+'</p>'
-  +'<div class="banner" id="banner">Escalated — "What\'s happening?" sent to '+llEsc(card.member)+'\'s LeonLink inbox. The builder is expected to answer on the message board.</div>'
-  +'<div class="actions"><button class="go" id="btn-done">Mark done — send to Inspector</button><button class="warn" id="btn-esc">Escalate — What\'s happening?</button></div>'
-  +'<h2>Requirements<small>The job is not done until these are true</small></h2><div class="box" id="reqs">'
-  +card.reqs.map(function(r,i){return '<label><input type="checkbox" data-i="'+i+'"'+(r.done?" checked":"")+'><span class="'+(r.done?"done-t":"")+'">'+llEsc(r.t)+'</span></label>';}).join("")
+  var c=card;
+  var due=llDueLabel(c),over=due.indexOf("Overdue")===0;
+  var up=c.upload||{};
+  var gateOk=c.gate&&c.gate.passed;
+  var h='<div class="chips"><span class="chip">'+llEsc(c.type)+'</span><span class="chip pri-'+llEsc(c.priority)+'">'+llEsc(c.priority)+'</span><span class="chip st-'+llEsc(c.status.replace(/ /g,""))+'">'+llEsc(c.status)+'</span><span class="chip">'+llEsc(c.cat)+'</span>'+(c.gate?'<span class="chip '+(c.gate.passed?"st-Done":"st-Blocked")+'">Gate '+(c.gate.passed?"✓":"✗")+'</span>':"")+'</div>'
+  +'<h1>'+llEsc(c.id)+' — '+llEsc(c.title)+'</h1>'
+  +'<p class="meta">Given <b>'+llEsc(c.date)+'</b> · <b>'+llEsc(c.team)+'</b> · Responsible: <b>'+llEsc(c.member)+'</b> · <span class="due'+(over?" over":"")+'">'+llEsc(due)+'</span> ('+llEsc(c.deadline)+')</p>'
+  +'<p class="desc">'+llEsc(c.desc||"")+'</p>'
+  +'<div class="banner" id="banner">Escalated — "What\'s happening?" sent to '+llEsc(c.member)+'\'s LeonLink inbox. The builder is expected to answer on the message board.</div>'
+  +'<div class="actions"><button class="go" id="btn-done"'+(gateOk?"":" disabled")+'>Mark done — send to Inspector</button><button class="warn" id="btn-esc">Escalate — What\'s happening?</button></div>'
+  +(gateOk?"":'<p class="note">Gate first: log the upload and run the SOP checks below. This button opens only when the gate passes.</p>')
+  +'<h2>Upload + SOP gate<small>Log the upload, then run the checks. The gate must pass before the Inspector sees this card.</small></h2>'
+  +'<div class="box upbox">'
+  +'<label for="up-file">File path <span class="note">— e.g. /journal/my-post.html</span></label><input type="text" id="up-file" value="'+llEsc(up.file||"")+'" placeholder="/journal/my-post.html">'
+  +'<label for="up-url">Live URL</label><input type="text" id="up-url" value="'+llEsc(up.url||"")+'" placeholder="https://www.leonlink.net/journal/my-post.html">'
+  +'<label for="up-art">Art URL <span class="note">— .jpg/.png in /img/cards/</span></label><input type="text" id="up-art" value="'+llEsc(up.art||"")+'" placeholder="https://www.leonlink.net/img/cards/my-post.jpg">'
+  +'<label for="up-hash">Commit hash</label><input type="text" id="up-hash" value="'+llEsc(up.hash||"")+'" placeholder="abc1234">'
+  +'<label for="up-changed">What changed</label><textarea id="up-changed">'+llEsc(up.changed||"")+'</textarea>'
+  +'<label for="up-tested">What you tested</label><textarea id="up-tested">'+llEsc(up.tested||"")+'</textarea>'
+  +'<label for="up-untested">What you didn\'t test</label><textarea id="up-untested">'+llEsc(up.untested||"")+'</textarea>'
+  +'<div class="row"><button id="btn-save-up">Save upload</button><button class="plain" id="btn-gate">Run SOP checks</button></div>'
+  +'<p class="note">SOP: <a href="https://botline-ten.vercel.app/sops/'+sopSlug(c.type)+'.md" target="_blank" rel="noopener">sops/'+sopSlug(c.type)+'.md</a> &middot; Fail goes back to the builder with the exact failed check. Nothing unproven reaches the Inspector.</p>'
   +'</div>'
-  +(card.cps&&card.cps.length?'<h2>Checkpoints<small>Big jobs get longer only by checkpoints</small></h2><div class="box">'
-    +card.cps.map(function(r,i){return '<label><input type="checkbox" data-cp="'+i+'"'+(r.done?" checked":"")+'><span class="'+(r.done?"done-t":"")+'">'+llEsc(r.t)+'</span></label>';}).join("")+'</div>':"")
-  +((card.gfx||card.audio)?'<h2>Graphics &amp; audio</h2><div class="box">'
-    +(card.gfx?'<p><b>Graphics:</b> '+llEsc(card.gfx)+'</p>':"")
-    +(card.audio?'<p><b>Audio:</b> '+llEsc(card.audio)+'</p>':"")+'</div>':"")
+  +'<div id="gate-results">'+gateHtml(c.gate)+'</div>'
+  +'<h2>Requirements<small>The job is not done until these are true</small></h2><div class="box" id="reqs">'
+  +c.reqs.map(function(r,i){return '<label><input type="checkbox" data-i="'+i+'"'+(r.done?" checked":"")+'><span class="'+(r.done?"done-t":"")+'">'+llEsc(r.t)+'</span></label>';}).join("")
+  +'</div>'
+  +(c.cps&&c.cps.length?'<h2>Checkpoints<small>Big jobs get longer only by checkpoints</small></h2><div class="box">'
+    +c.cps.map(function(r,i){return '<label><input type="checkbox" data-cp="'+i+'"'+(r.done?" checked":"")+'><span class="'+(r.done?"done-t":"")+'">'+llEsc(r.t)+'</span></label>';}).join("")+'</div>':"")
+  +((c.gfx||c.audio)?'<h2>Graphics &amp; audio</h2><div class="box">'
+    +(c.gfx?'<p><b>Graphics:</b> '+llEsc(c.gfx)+'</p>':"")
+    +(c.audio?'<p><b>Audio:</b> '+llEsc(c.audio)+'</p>':"")+'</div>':"")
   +'<h2>Message board<small>Work logs live here — bots check their LeonLink inbox every 15–20 min</small></h2><div id="logs">'
-  +card.logs.map(function(l){return '<div class="log'+(l.esc?" esc":"")+'"><b>'+llEsc(l.who)+'</b> <span class="when">'+llEsc(l.when)+'</span><br>'+llEsc(l.text)+'</div>';}).join("")
-  +'</div><div class="row"><select id="who"><option>Stonewall</option><option>Leon</option><option>Gadget</option><option>Inspector</option><option>'+llEsc(card.member)+'</option></select><input type="text" id="logtext" placeholder="Log what you did, tested, or need"></div><div class="row"><button id="btn-log" style="margin-left:auto">Post log</button></div>'
-  +'<h2>Inspection review<small>Inspector only — pass goes Done, fail goes back to work with notes</small></h2><div class="box"><p>'+llEsc(card.review||"No review yet.")+'</p></div>'
+  +c.logs.map(function(l){return '<div class="log'+(l.esc?" esc":"")+'"><b>'+llEsc(l.who)+'</b> <span class="when">'+llEsc(l.when)+'</span><br>'+llEsc(l.text)+'</div>';}).join("")
+  +'</div><div class="row"><select id="who"><option>Stonewall</option><option>Leon</option><option>Gadget</option><option>Inspector</option><option>'+llEsc(c.member)+'</option></select><input type="text" id="logtext" placeholder="Log what you did, tested, or need"></div><div class="row"><button id="btn-log" style="margin-left:auto">Post log</button></div>'
+  +'<h2>Inspection review<small>Inspector only — pass goes Done, fail goes back to work with notes</small></h2><div class="box"><p>'+llEsc(c.review||"No review yet.")+'</p></div>'
   +'<div class="actions"><button class="go" id="btn-pass">Inspector: Pass — Done</button><button id="btn-fail">Inspector: Fail — back to work</button></div>'
-  +'<h2>Auto-checks<small>Run on every upload, before the Inspector sees it. Fail goes back to the builder with the exact failed check.</small></h2><ul class="checks">'
-  +LL_AUTO_CHECKS.map(function(c){return '<li>'+llEsc(c)+'</li>';}).join("")+'</ul>'
-  +'<p class="note">Auto-checks are listed, not yet run by the system — the checker that runs them is the next build.</p>';
+  +'<h2>Auto-checks<small>The gate above runs these. ✓ = the system checked it. ○ = the Inspector verifies it.</small></h2><ul class="checks">'
+  +LL_AUTO_CHECKS.map(function(x){return '<li>'+llEsc(x)+'</li>';}).join("")+'</ul>';
   el.innerHTML=h;
   document.getElementById("btn-done").onclick=function(){
-    card.status="In review";log(card.member,"Marked done — sent to Inspector for review.");
+    if(!(c.gate&&c.gate.passed)){alert("Run the SOP checks first — the gate must pass before the Inspector sees this.");return;}
+    c.status="In review";log(c.member,"Marked done — sent to Inspector for review.");
   };
   document.getElementById("btn-esc").onclick=function(){
-    log("Stonewall","ESCALATED — What's happening? Pinged to "+card.member+"'s LeonLink inbox.",true);
+    log("Stonewall","ESCALATED — What's happening? Pinged to "+c.member+"'s LeonLink inbox.",true);
     var b=document.getElementById("banner");if(b)b.style.display="block";
   };
-  document.getElementById("btn-pass").onclick=function(){card.status="Done";log("Inspector","Passed. Card done.");};
+  document.getElementById("btn-save-up").onclick=function(){saveUpload();};
+  document.getElementById("btn-gate").onclick=function(){runGate();};
+  document.getElementById("btn-pass").onclick=function(){c.status="Done";log("Inspector","Passed. Card done.");};
   document.getElementById("btn-fail").onclick=function(){
     var note=prompt("What failed? (goes back to the builder as a note)");
-    if(note===null)return;card.status="In progress";log("Inspector","Failed — back to work. "+note);
+    if(note===null)return;c.status="In progress";log("Inspector","Failed — back to work. "+note);
   };
   document.getElementById("btn-log").onclick=function(){
     var t=document.getElementById("logtext").value.trim();if(!t)return;
     log(document.getElementById("who").value,t);
   };
-  Array.prototype.forEach.call(el.querySelectorAll("#reqs input"),function(c){
-    c.onchange=function(){card.reqs[+c.dataset.i].done=c.checked;save();render();};
+  Array.prototype.forEach.call(el.querySelectorAll("#reqs input"),function(x){
+    x.onchange=function(){c.reqs[+x.dataset.i].done=x.checked;save();render();};
   });
-  Array.prototype.forEach.call(el.querySelectorAll("[data-cp]"),function(c){
-    c.onchange=function(){card.cps[+c.dataset.cp].done=c.checked;save();render();};
+  Array.prototype.forEach.call(el.querySelectorAll("[data-cp]"),function(x){
+    x.onchange=function(){c.cps[+x.dataset.cp].done=x.checked;save();render();};
   });
 }
 render();
