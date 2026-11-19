@@ -298,9 +298,10 @@ function fbSave(){
   fbApplying=true;
   cards.forEach(function(c){db.collection("cards").doc(c.id).set(JSON.parse(JSON.stringify(c)));});
   bots.forEach(function(b){db.collection("bots").doc(b.name).set(JSON.parse(JSON.stringify(b)));});
-  inbox.forEach(function(m,i){if(!m.id)m.id="m"+Date.now()+"-"+i;if(!m.ts)m.ts=Date.now();db.collection("inbox").doc(m.id).set(JSON.parse(JSON.stringify(m)));});
+  inbox.forEach(function(m,i){if(!m.id)m.id="m"+Date.now()+"-"+i;if(!m.to)m.to="Boss";if(!m.ts)m.ts=Date.now();db.collection("inbox").doc(m.id).set(JSON.parse(JSON.stringify(m)));});
   db.collection("meta").doc("brand").set(JSON.parse(JSON.stringify(brand)));
   fbLastCards=JSON.stringify(cards);fbLastBots=JSON.stringify(bots);fbLastInbox=JSON.stringify(inbox);
+  saveLocalOnly();
   setTimeout(function(){fbApplying=false;},500);
  }catch(e){fbApplying=false;fbStatus("Sync write failed: "+e.message);}
 }
@@ -389,7 +390,7 @@ function autoAssign(){
  if(!fbReady)renderCurrent();
 }
 
-function saveAll(){store("botline-v1",cards);store("botline-bots",bots);store("botline-inbox",inbox);store("botline-brand",brand);if(fbReady&&!fbApplying)fbSave();}
+function saveAll(){store("botline-v1",cards);store("botline-bots",bots);store("botline-inbox",inbox);store("botline-brand",brand);if(fbReady){if(!fbApplying)fbSave();else setTimeout(function saveLater(){if(fbApplying)setTimeout(saveLater,600);else fbSave();},600);}}
 function applyBrand(){
  document.documentElement.style.setProperty("--brand",brand.color);
  document.documentElement.style.setProperty("--brand2",brand.color2);
