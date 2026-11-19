@@ -284,6 +284,10 @@ function roleTypes(role){
  if(/build|game|dev/i.test(role||""))return ["Game","Software"];
  return []; /* Worker / Boss / anything else: any open card */
 }
+function fbBindIdentity(){
+ if(!fbReady||!fbUid)return;
+ try{fbDb().collection("uids").doc(fbUid).set({name:whoami,role:myRole(),updatedAt:firebase.firestore.FieldValue.serverTimestamp()});}catch(e){}
+}
 function fbDb(){try{return firebase.firestore();}catch(e){return null;}}
 function fbSave(){
  if(!fbReady)return;
@@ -337,7 +341,7 @@ function fbInit(){
   firebase.auth().signInAnonymously().then(function(cred){
    fbUid=cred.user.uid;fbReady=true;
    fbStatus("Synced — signed in as "+fbUid.slice(0,8)+"… (anonymous, no email).");
-   fbListen();fbSave();renderDash();
+   fbListen();fbSave();fbBindIdentity();renderDash();
   }).catch(function(e){fbStatus("Firebase sign-in failed: "+e.message);});
  }catch(e){fbStatus("Firebase init failed: "+e.message);}
 }
@@ -759,7 +763,7 @@ document.getElementById("inbox-list").addEventListener("click",function(e){
 document.querySelectorAll(".swatches button").forEach(function(b){
  b.addEventListener("click",function(){document.getElementById("brand-color").value=b.dataset.c;});
 });
-document.getElementById("whoami").addEventListener("change",function(){whoami=this.value;store("botline-whoami",whoami);renderDash();});
+document.getElementById("whoami").addEventListener("change",function(){whoami=this.value;store("botline-whoami",whoami);if(fbReady)fbBindIdentity();renderDash();});
 document.getElementById("fb-save").addEventListener("click",function(){var v=document.getElementById("fb-config").value.trim();if(!v){alert("Paste the Firebase web config JSON first.");return;}try{var cfg=JSON.parse(v);if(!cfg.apiKey||!cfg.projectId)throw new Error("needs apiKey and projectId");store("botline-fb-config",cfg);location.reload();}catch(e){alert("That config didn't parse: "+e.message);}});
 document.getElementById("fb-off").addEventListener("click",function(){if(!confirm("Turn off Firebase sync? This browser keeps its local copy."))return;try{localStorage.removeItem("botline-fb-config");}catch(e){}location.reload();});
 var fc=document.getElementById("fb-config");if(fc&&FB_CONFIG)fc.value=JSON.stringify(FB_CONFIG);
