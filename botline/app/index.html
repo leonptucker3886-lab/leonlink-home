@@ -203,7 +203,8 @@ button:disabled{opacity:.45;cursor:not-allowed}
 
 <section class="view" id="v-inbox">
 <h1>Inbox</h1>
-<p class="sub">Escalations, bot questions, review notes. One place, not five chats.</p>
+<p class="sub">Escalations, bot questions, review notes. One mailbox per bot.</p>
+<div class="row"><label for="inbox-box">Mailbox</label><select id="inbox-box"></select></div>
 <div id="inbox-list"></div>
 <p class="note" id="inbox-empty" hidden>Quiet. Nothing needs you.</p>
 </section>
@@ -269,12 +270,13 @@ function demoBots(){return [
 ];}
 var cards=store("botline-v1")||demoCards();
 var bots=store("botline-bots")||demoBots();
-var inbox=store("botline-inbox")||[{who:"Forge",when:today(),text:"Blocked on B3 — need to know: save links locally or in the cloud?",card:"B3",read:false}];
+var inboxBox="All";
+var inbox=store("botline-inbox")||[{id:"m-demo",who:"Forge",to:"Boss",ts:0,when:today(),text:"Blocked on B3 — need to know: save links locally or in the cloud?",card:"B3",read:false}];
 var brand=store("botline-brand")||{name:"Botline",tag:"Run your bots like a team.",color:"#22e6c8",color2:"#ff5da2"};
 
 /* ---- Firebase sync (shared store every bot sees) ---- */
 var FB_CONFIG=store("botline-fb-config")||null;
-var fbReady=false,fbUid=null,fbApplying=false,fbLastCards="",fbLastBots="";
+var fbReady=false,fbUid=null,fbApplying=false,fbLastCards="",fbLastBots="",fbLastInbox="";
 var whoami=store("botline-whoami")||"Boss";
 function fbStatus(t){var e=document.getElementById("fb-status");if(e)e.textContent=t;}
 function myRole(){if(whoami==="Boss")return "Boss";var b=null;bots.forEach(function(x){if(x.name===whoami)b=x;});return b?b.role:"";}
@@ -296,8 +298,9 @@ function fbSave(){
   fbApplying=true;
   cards.forEach(function(c){db.collection("cards").doc(c.id).set(JSON.parse(JSON.stringify(c)));});
   bots.forEach(function(b){db.collection("bots").doc(b.name).set(JSON.parse(JSON.stringify(b)));});
+  inbox.forEach(function(m,i){if(!m.id)m.id="m"+Date.now()+"-"+i;if(!m.ts)m.ts=Date.now();db.collection("inbox").doc(m.id).set(JSON.parse(JSON.stringify(m)));});
   db.collection("meta").doc("brand").set(JSON.parse(JSON.stringify(brand)));
-  fbLastCards=JSON.stringify(cards);fbLastBots=JSON.stringify(bots);
+  fbLastCards=JSON.stringify(cards);fbLastBots=JSON.stringify(bots);fbLastInbox=JSON.stringify(inbox);
   setTimeout(function(){fbApplying=false;},500);
  }catch(e){fbApplying=false;fbStatus("Sync write failed: "+e.message);}
 }
@@ -318,6 +321,15 @@ function fbListen(){
   var js=JSON.stringify(arr);
   if(js===fbLastBots)return;
   fbLastBots=js;bots=arr;saveLocalOnly();renderCurrent();
+ });
+ db.collection("inbox").onSnapshot(function(snap){
+  if(fbApplying)return;
+  var arr=[];snap.forEach(function(d){arr.push(d.data());});
+  if(!arr.length)return;
+  arr.sort(function(a,b){return (b.ts||0)-(a.ts||0);});
+  var js=JSON.stringify(arr);
+  if(js===fbLastInbox)return;
+  fbLastInbox=js;inbox=arr;saveLocalOnly();renderCurrent();
  });
  db.collection("meta").doc("brand").onSnapshot(function(doc){
   if(fbApplying||!doc.exists)return;
@@ -712,7 +724,7 @@ document.getElementById("btn-save-up").onclick=function(){saveUpload();};
  document.getElementById("btn-gate").onclick=function(){runGate();};
  document.getElementById("btn-esc").onclick=function(){
    addLog(c,"You","ESCALATED — What's happening? Pinged to "+(c.bot||"the builder")+"'s inbox.",true);
-   inbox.unshift({who:"You",when:today(),text:"Escalated "+c.id+" — What's happening?",card:c.id,read:false});saveAll();
+   inbox.unshift({id:"m"+Date.now(),who:"You",to:c.bot||"Boss",ts:Date.now(),when:today(),text:"Escalated "+c.id+" — What's happening?",card:c.id,read:false});saveAll();
    var b=document.getElementById("banner");if(b)b.style.display="block";renderDash();
  };
  document.getElementById("btn-del").onclick=function(){if(confirm("Delete "+c.id+" for good?")){cards=cards.filter(function(x){return x!==c;});saveAll();show("board");}};
@@ -738,7 +750,7 @@ function renderBots(){
 }
 document.getElementById("bots-table").addEventListener("click",function(e){
  var w=e.target.closest("[data-wake]"),p=e.target.closest("[data-pause]"),r=e.target.closest("[data-rm]");
- if(w){var b=bots[+w.dataset.wake];b.status="Working";b.seen="just now";inbox.unshift({who:b.name,when:today(),text:b.name+" woke up and is back on it.",card:b.card||"",read:false});saveAll();renderBots();renderDash();}
+ if(w){var b=bots[+w.dataset.wake];b.status="Working";b.seen="just now";inbox.unshift({id:"m"+Date.now(),who:b.name,to:"Boss",ts:Date.now(),when:today(),text:b.name+" woke up and is back on it.",card:b.card||"",read:false});saveAll();renderBots();renderDash();}
  if(p){var b2=bots[+p.dataset.pause];b2.status=b2.status==="Paused"?"Idle":"Paused";saveAll();renderBots();}
  if(r){if(confirm("Remove this bot?")){bots.splice(+r.dataset.rm,1);saveAll();renderBots();renderDash();}}
 });
@@ -749,14 +761,21 @@ document.getElementById("bot-add").addEventListener("click",function(){
  saveAll();document.getElementById("bot-name").value="";document.getElementById("bot-role").value="";renderBots();renderDash();
 });
 function renderInbox(){
- document.getElementById("inbox-empty").hidden=inbox.length>0;
+ var box=document.getElementById("inbox-box");
+ var names=["All","Boss"].concat(bots.map(function(b){return b.name;}));
+ if(names.indexOf(inboxBox)<0)inboxBox="All";
+ box.innerHTML=names.map(function(n){return '<option value="'+esc(n)+'"'+(n===inboxBox?" selected":"")+'>'+(n==="All"?"All mailboxes":esc(n))+'</option>';}).join("");
+ var shown=inbox.filter(function(m){return inboxBox==="All"||(m.to||"Boss")===inboxBox;});
+ document.getElementById("inbox-empty").hidden=shown.length>0;
  document.getElementById("inbox-list").innerHTML=inbox.map(function(m,i){
-  return '<div class="inbox-item'+(m.read?"":" unread")+'"><b>'+esc(m.who)+'</b> <span class="when">'+esc(m.when)+'</span>'+(m.card?' · <a href="#" data-open="'+esc(m.card)+'">'+esc(m.card)+'</a>':"")+'<br>'+esc(m.text)
+  if(inboxBox!=="All"&&(m.to||"Boss")!==inboxBox)return "";
+  return '<div class="inbox-item'+(m.read?"":" unread")+'"><b>'+esc(m.who)+'</b> → <b>'+esc(m.to||"Boss")+'</b> <span class="when">'+esc(m.when)+'</span>'+(m.card?' · <a href="#" data-open="'+esc(m.card)+'">'+esc(m.card)+'</a>':"")+'<br>'+esc(m.text)
   +(m.read?"":' <a href="#" data-read="'+i+'">Mark read</a>')+'</div>';
  }).join("");
  var unread=inbox.filter(function(m){return !m.read;}).length;
  var badge=document.getElementById("inbox-badge");badge.hidden=unread===0;badge.textContent=unread;
 }
+document.getElementById("inbox-box").addEventListener("change",function(){inboxBox=this.value;renderInbox();});
 document.getElementById("inbox-list").addEventListener("click",function(e){
  var r=e.target.closest("[data-read]");if(!r)return;e.preventDefault();inbox[+r.dataset.read].read=true;saveAll();renderInbox();renderDash();
 });
@@ -787,7 +806,7 @@ document.getElementById("import-file").addEventListener("change",function(e){
 });
 document.getElementById("btn-reset").addEventListener("click",function(){
  if(!confirm("Reset to the demo cards, bots, and inbox? Your current board will be replaced (export first if you want to keep it)."))return;
- cards=demoCards();bots=demoBots();inbox=[{who:"Forge",when:today(),text:"Blocked on B3 — need to know: save links locally or in the cloud?",card:"B3",read:false}];
+ cards=demoCards();bots=demoBots();inbox=[{id:"m-demo",who:"Forge",to:"Boss",ts:0,when:today(),text:"Blocked on B3 — need to know: save links locally or in the cloud?",card:"B3",read:false}];
  saveAll();renderDash();
 });
 applyBrand();renderDash();renderSubmit();fbInit();
