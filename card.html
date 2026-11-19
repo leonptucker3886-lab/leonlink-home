@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Card | LeonLink Board</title>
+<meta name="description" content="One LeonLink job: type, date, who is responsible, status, checkpoints, message board, inspection review.">
+<link rel="canonical" href="https://www.leonlink.net/cards.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Card | LeonLink Board">
+<meta property="og:url" content="https://www.leonlink.net/cards.html">
+<meta property="og:image" content="https://www.leonlink.net/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#04060a">
+<link rel="icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&display=swap" rel="stylesheet">
+<script src="/js/nav.js" defer></script>
+<script src="/js/cards-data.js" defer></script>
+<style>
+:root{--bg:#070a12;--panel:rgba(255,255,255,.05);--line:rgba(255,255,255,.12);--teal:#22e6c8;--pink:#ff5da2;--gold:#e9a93b;--text:#f2f5f7;--dim:rgba(242,245,247,.68)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:17px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:760px;margin:0 auto;padding:48px 20px 80px}
+.back{color:var(--dim);text-decoration:none;font-size:15px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:18px 0 10px}
+.chip{font:700 11px/1 system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:6px 9px;border-radius:999px;background:rgba(255,255,255,.08);color:var(--dim)}
+.chip.pri-Urgent{background:rgba(255,93,162,.2);color:var(--pink)}
+.chip.pri-High{background:rgba(233,169,59,.18);color:var(--gold)}
+.chip.st-Done{background:rgba(34,230,200,.15);color:var(--teal)}
+.chip.st-Blocked{background:rgba(255,93,162,.15);color:var(--pink)}
+h1{font-family:Fraunces,serif;font-size:clamp(1.9rem,6vw,3rem);line-height:1.1;margin:0 0 10px}
+.meta{color:var(--dim);font-size:15px;margin-bottom:8px}
+.meta b{color:var(--text)}
+.due{color:var(--gold);font-weight:700}
+.due.over{color:var(--pink)}
+.desc{font-size:19px;margin:18px 0 30px}
+h2{font-size:1.4rem;margin:36px 0 12px}
+h2 small{display:block;font-size:13px;color:var(--dim);font-weight:600;letter-spacing:.04em;margin-top:4px}
+.box{border:1px solid var(--line);border-radius:12px;padding:6px 18px;background:var(--panel);margin-bottom:8px}
+.box p{margin:12px 0}
+.box label{display:flex;gap:10px;align-items:flex-start;font-weight:500;margin:12px 0;cursor:pointer}
+.box input{margin-top:4px;width:18px;height:18px;accent-color:var(--teal)}
+.done-t{text-decoration:line-through;color:var(--dim)}
+.log{border-left:3px solid var(--teal);padding:2px 0 2px 14px;margin:14px 0}
+.log b{color:var(--teal)}
+.log .when{color:var(--dim);font-size:13px}
+.log.esc{border-left-color:var(--pink)}
+.log.esc b{color:var(--pink)}
+.checks{list-style:none;padding:0;margin:0}
+.checks li{padding:9px 0 9px 28px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+.checks li:last-child{border-bottom:0}
+.checks li:before{content:"○";position:absolute;left:0;color:var(--dim)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:28px 0}
+.actions button{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:999px;padding:12px 20px;font:700 15px system-ui,sans-serif;cursor:pointer}
+.actions button.go{background:var(--teal);color:#041018;border:0}
+.actions button.warn{border-color:var(--pink);color:var(--pink)}
+textarea,select,input[type=text]{width:100%;background:#0a0d14;border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:var(--text);font:15px/1.5 system-ui,sans-serif}
+textarea{min-height:80px;resize:vertical}
+.row{display:flex;gap:10px;margin-top:10px}
+.row select{width:170px;flex:none}
+.row button{border:0;cursor:pointer;padding:12px 20px;border-radius:999px;background:var(--teal);color:#041018;font:800 15px system-ui,sans-serif;white-space:nowrap}
+.note{color:var(--dim);font-size:14px}
+a{color:var(--teal)}
+.banner{display:none;border:1px solid var(--pink);background:rgba(255,93,162,.1);border-radius:12px;padding:14px 16px;margin:20px 0}
+</style>
+</head>
+<body>
+<style id="llh-css">.llh{all:initial;display:block;background:#06060b;border-bottom:1px solid rgba(255,255,255,.08);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;position:relative;z-index:60}.llh *{box-sizing:border-box}.llh .llin{max-width:1240px;margin:0 auto;padding:0 14px;min-height:58px;display:flex;align-items:center;gap:14px}.llh .lllogo{display:flex;align-items:center;gap:8px;text-decoration:none;color:#fff;font-weight:900;letter-spacing:.06em;font-size:16px;flex:none}.llh .lllogo img{width:30px;height:30px;border-radius:50%;object-fit:cover}.llh .lllogo span{color:#22f0ff}.llh .gnav{display:flex;gap:4px;flex:1;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:8px 2px}.llh .gnav::-webkit-scrollbar{display:none}.llh .gnav a{flex:none;font-size:14.5px;font-weight:500;color:#a7a7b8;padding:7px 14px;border-radius:999px;text-decoration:none;white-space:nowrap;transition:background .2s,color .2s}.llh .gnav a:hover{color:#fff;background:rgba(255,255,255,.08)}.llh .gnav a.on{color:#06060b;background:#f4f4f8}.llh .llbtn{flex:none;text-decoration:none;color:#06060b;background:#22f0ff;font-weight:700;font-size:13.5px;padding:9px 14px;border-radius:999px;white-space:nowrap}@media(max-width:760px){.llh .llin{flex-wrap:wrap;gap:6px;padding:6px 12px}.llh .gnav{order:3;flex-basis:100%;padding:2px 0 8px}.llh .llbtn{margin-left:auto}}.llh .gnav a.fire{position:relative;color:#fff;font-weight:800;padding:6px 14px;border-radius:999px;background:linear-gradient(0deg,#ff3d00,#ff9100,#ffd600);background-size:100% 220%;animation:flm 1.2s ease-in-out infinite alternate,flk .18s steps(2) infinite;text-shadow:0 0 6px #ff6d00,0 -2px 10px #ffab00}.llh .gnav a.fire:before{content:"";position:absolute;inset:-6px -2px 40% -2px;border-radius:50%;background:radial-gradient(ellipse at bottom,rgba(255,145,0,.7),transparent 70%);filter:blur(6px);z-index:-1;animation:flk .25s infinite alternate}@keyframes flm{to{background-position:0 100%;box-shadow:0 0 18px #ff6d00,0 -4px 22px #ffab00}}@keyframes flk{50%{opacity:.85}}@media (prefers-reduced-motion:reduce){.llh .gnav a.fire,.llh .gnav a.fire:before{animation:none}}.llh .gnav a.casino{color:#ff4fd8;font-weight:800;text-shadow:0 0 8px rgba(255,79,216,.8)}</style>
+<div class="llh" role="banner"><div class="llin">
+  <a class="lllogo" href="/" aria-label="LeonLink home"><img src="/img/logo-128.png" alt="">LEON<span>LINK</span></a>
+  <nav class="gnav" aria-label="Main">
+    <a href="/">Home</a>
+    <a href="/games.html">Work</a>
+    <a href="/software.html">Software</a>
+    <a href="/blog.html">Blog</a>
+    <a href="/watchline/">Watchline</a>
+    <a href="https://afterglow.leonlink.net" class="casino">&#127920; Casino</a>
+  </nav>
+  <a class="llbtn" href="https://app.leonlink.net">Get Ledgerline</a>
+</div></div>
+<main id="main">
+<a class="back" href="/cards.html">&larr; Back to the board</a>
+<div id="card"></div>
+</main>
+<footer class="ll-footer" style="border-top:1px solid rgba(128,128,128,.25);padding:22px 16px;text-align:center;font:14px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#0b0b0f;color:#cfcfd6;position:relative;z-index:5;clear:both">
+  <nav style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-bottom:8px"><a href="/" style="color:inherit;text-decoration:none">Home</a><a href="/blog.html" style="color:inherit;text-decoration:none">Blog</a><a href="/software.html" style="color:inherit;text-decoration:none">Software</a><a href="/watchline/" style="color:inherit;text-decoration:none">Watches</a><a href="https://afterglow.leonlink.net" style="color:inherit;text-decoration:none">Casino</a><a href="/games.html" style="color:inherit;text-decoration:none">Games</a><a href="https://arcadeline.leonlink.net" style="color:inherit;text-decoration:none">Arcadeline</a></nav>
+  <div>&copy; 2026 LeonLink</div>
+</footer>
+<script>
+(function(){
+var params=new URLSearchParams(location.search);
+var id=params.get("id")||"";
+var cards=llLoad();
+var card=null;cards.forEach(function(c){if(c.id===id)card=c;});
+var el=document.getElementById("card");
+if(!card){
+  el.innerHTML="<h1>Card not found</h1><p class='note'>No card "+llEsc(id)+" on the board. <a href='/cards.html'>Back to the board</a> or <a href='/submit.html'>submit a new one</a>.</p>";
+  return;
+}
+document.title=card.id+" — "+card.title+" | LeonLink Board";
+function today(){return new Date().toISOString().slice(0,10);}
+function save(){var i=cards.indexOf(card);if(i>=0)cards[i]=card;llSave(cards);}
+function log(who,text,esc){
+  card.logs.push({who:who,when:today(),text:text,esc:!!esc});save();render();
+}
+function render(){
+  var due=llDueLabel(card),over=due.indexOf("Overdue")===0;
+  var h='<div class="chips"><span class="chip">'+llEsc(card.type)+'</span><span class="chip pri-'+llEsc(card.priority)+'">'+llEsc(card.priority)+'</span><span class="chip st-'+llEsc(card.status.replace(/ /g,""))+'">'+llEsc(card.status)+'</span><span class="chip">'+llEsc(card.cat)+'</span></div>'
+  +'<h1>'+llEsc(card.id)+' — '+llEsc(card.title)+'</h1>'
+  +'<p class="meta">Given <b>'+llEsc(card.date)+'</b> · <b>'+llEsc(card.team)+'</b> · Responsible: <b>'+llEsc(card.member)+'</b> · <span class="due'+(over?" over":"")+'">'+llEsc(due)+'</span> ('+llEsc(card.deadline)+')</p>'
+  +'<p class="desc">'+llEsc(card.desc||"")+'</p>'
+  +'<div class="banner" id="banner">Escalated — "What\'s happening?" sent to '+llEsc(card.member)+'\'s LeonLink inbox. The builder is expected to answer on the message board.</div>'
+  +'<div class="actions"><button class="go" id="btn-done">Mark done — send to Inspector</button><button class="warn" id="btn-esc">Escalate — What\'s happening?</button></div>'
+  +'<h2>Requirements<small>The job is not done until these are true</small></h2><div class="box" id="reqs">'
+  +card.reqs.map(function(r,i){return '<label><input type="checkbox" data-i="'+i+'"'+(r.done?" checked":"")+'><span class="'+(r.done?"done-t":"")+'">'+llEsc(r.t)+'</span></label>';}).join("")
+  +'</div>'
+  +(card.cps&&card.cps.length?'<h2>Checkpoints<small>Big jobs get longer only by checkpoints</small></h2><div class="box">'
+    +card.cps.map(function(r,i){return '<label><input type="checkbox" data-cp="'+i+'"'+(r.done?" checked":"")+'><span class="'+(r.done?"done-t":"")+'">'+llEsc(r.t)+'</span></label>';}).join("")+'</div>':"")
+  +((card.gfx||card.audio)?'<h2>Graphics &amp; audio</h2><div class="box">'
+    +(card.gfx?'<p><b>Graphics:</b> '+llEsc(card.gfx)+'</p>':"")
+    +(card.audio?'<p><b>Audio:</b> '+llEsc(card.audio)+'</p>':"")+'</div>':"")
+  +'<h2>Message board<small>Work logs live here — bots check their LeonLink inbox every 15–20 min</small></h2><div id="logs">'
+  +card.logs.map(function(l){return '<div class="log'+(l.esc?" esc":"")+'"><b>'+llEsc(l.who)+'</b> <span class="when">'+llEsc(l.when)+'</span><br>'+llEsc(l.text)+'</div>';}).join("")
+  +'</div><div class="row"><select id="who"><option>Stonewall</option><option>Leon</option><option>Gadget</option><option>Inspector</option><option>'+llEsc(card.member)+'</option></select><input type="text" id="logtext" placeholder="Log what you did, tested, or need"></div><div class="row"><button id="btn-log" style="margin-left:auto">Post log</button></div>'
+  +'<h2>Inspection review<small>Inspector only — pass goes Done, fail goes back to work with notes</small></h2><div class="box"><p>'+llEsc(card.review||"No review yet.")+'</p></div>'
+  +'<div class="actions"><button class="go" id="btn-pass">Inspector: Pass — Done</button><button id="btn-fail">Inspector: Fail — back to work</button></div>'
+  +'<h2>Auto-checks<small>Run on every upload, before the Inspector sees it. Fail goes back to the builder with the exact failed check.</small></h2><ul class="checks">'
+  +LL_AUTO_CHECKS.map(function(c){return '<li>'+llEsc(c)+'</li>';}).join("")+'</ul>'
+  +'<p class="note">Auto-checks are listed, not yet run by the system — the checker that runs them is the next build.</p>';
+  el.innerHTML=h;
+  document.getElementById("btn-done").onclick=function(){
+    card.status="In review";log(card.member,"Marked done — sent to Inspector for review.");
+  };
+  document.getElementById("btn-esc").onclick=function(){
+    log("Stonewall","ESCALATED — What's happening? Pinged to "+card.member+"'s LeonLink inbox.",true);
+    var b=document.getElementById("banner");if(b)b.style.display="block";
+  };
+  document.getElementById("btn-pass").onclick=function(){card.status="Done";log("Inspector","Passed. Card done.");};
+  document.getElementById("btn-fail").onclick=function(){
+    var note=prompt("What failed? (goes back to the builder as a note)");
+    if(note===null)return;card.status="In progress";log("Inspector","Failed — back to work. "+note);
+  };
+  document.getElementById("btn-log").onclick=function(){
+    var t=document.getElementById("logtext").value.trim();if(!t)return;
+    log(document.getElementById("who").value,t);
+  };
+  Array.prototype.forEach.call(el.querySelectorAll("#reqs input"),function(c){
+    c.onchange=function(){card.reqs[+c.dataset.i].done=c.checked;save();render();};
+  });
+  Array.prototype.forEach.call(el.querySelectorAll("[data-cp]"),function(c){
+    c.onchange=function(){card.cps[+c.dataset.cp].done=c.checked;save();render();};
+  });
+}
+render();
+})();
+</script>
+</body>
+</html>
