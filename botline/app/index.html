@@ -296,6 +296,14 @@ function fbSave(){
  try{
   var db=fbDb();if(!db)return;
   fbApplying=true;
+  // One-time cleanup: drop duplicate messages the old code seeded (ids
+  // like m<timestamp>-<n>), keeping the newest of each (who, text, card).
+  // Genuine messages (ids m<timestamp> or m-demo) are never touched, and
+  // the extra Firestore docs are deleted when this browser is the Boss
+  // (the rules enforce that; a refused delete is ignored).
+  var seenK={},dups=[];
+  inbox=inbox.filter(function(m){var k=m.who+"|"+m.text+"|"+(m.card||"");if(/^m\d+-\d+$/.test(m.id||"")&&seenK[k]){dups.push(m);return false;}seenK[k]=1;return true;});
+  dups.forEach(function(m){db.collection("inbox").doc(m.id).delete().catch(function(){});});
   cards.forEach(function(c){db.collection("cards").doc(c.id).set(JSON.parse(JSON.stringify(c)));});
   bots.forEach(function(b){db.collection("bots").doc(b.name).set(JSON.parse(JSON.stringify(b)));});
   inbox.forEach(function(m,i){if(!m.id)m.id="m"+Date.now()+"-"+i;if(!m.to)m.to="Boss";if(!m.ts)m.ts=Date.now();db.collection("inbox").doc(m.id).set(JSON.parse(JSON.stringify(m)));});
