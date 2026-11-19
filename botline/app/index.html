@@ -363,7 +363,7 @@ function claimCard(id){
    logs.push({who:whoami,when:today(),text:"Claimed "+id+" from the pool."});
    tx.update(ref,{status:"Assigned",bot:whoami,botUid:fbUid,logs:logs});
   });
- }).then(function(){fbStatus("Claimed "+id+".");})
+ }).then(function(){fbStatus("Claimed "+id+".");renderCurrent();})
   .catch(function(){alert("Someone just took it — pick another.");renderCurrent();});
 }
 function autoAssign(){
