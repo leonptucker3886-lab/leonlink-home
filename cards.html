@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Board | LeonLink</title>
+<meta name="description" content="Every LeonLink job, on one board. Cards posted like blogs — click one and enter.">
+<link rel="canonical" href="https://www.leonlink.net/cards.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Board | LeonLink">
+<meta property="og:description" content="Every LeonLink job, on one board.">
+<meta property="og:url" content="https://www.leonlink.net/cards.html">
+<meta property="og:image" content="https://www.leonlink.net/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#04060a">
+<link rel="icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&display=swap" rel="stylesheet">
+<script src="/js/nav.js" defer></script>
+<script src="/js/cards-data.js" defer></script>
+<style>
+:root{--bg:#070a12;--panel:rgba(255,255,255,.05);--line:rgba(255,255,255,.12);--teal:#22e6c8;--pink:#ff5da2;--gold:#e9a93b;--text:#f2f5f7;--dim:rgba(242,245,247,.68)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:17px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:1240px;margin:0 auto;padding:48px 20px 80px}
+h1{font-family:Fraunces,serif;font-size:clamp(2.2rem,7vw,3.4rem);line-height:1;margin:0 0 8px}
+h1 span{color:var(--teal)}
+.sub{color:var(--dim);margin:0 0 24px;font-size:19px}
+.top{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+.top a.go{background:var(--teal);color:#041018;font-weight:800;text-decoration:none;padding:12px 22px;border-radius:999px}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filters button{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:999px;padding:9px 16px;font:700 14px system-ui,sans-serif;cursor:pointer}
+.filters button.on{border-color:var(--teal);color:var(--teal);background:rgba(34,230,200,.12)}
+select{background:#0a0d14;border:1px solid var(--line);border-radius:999px;padding:9px 14px;color:var(--text);font:700 14px system-ui,sans-serif}
+.plist{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.pitem{display:block;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;text-decoration:none;color:var(--text)}
+.pitem:hover{border-color:var(--teal)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.chip{font:700 11px/1 system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:6px 9px;border-radius:999px;background:rgba(255,255,255,.08);color:var(--dim)}
+.chip.pri-Urgent{background:rgba(255,93,162,.2);color:var(--pink)}
+.chip.pri-High{background:rgba(233,169,59,.18);color:var(--gold)}
+.chip.st-Done{background:rgba(34,230,200,.15);color:var(--teal)}
+.chip.st-Blocked{background:rgba(255,93,162,.15);color:var(--pink)}
+.pitem h3{margin:0 0 6px;font-size:21px;line-height:1.25}
+.pitem p{margin:0 0 12px;color:var(--dim);font-size:15px}
+.meta{font-size:13px;color:var(--dim)}
+.meta b{color:var(--text)}
+.due{color:var(--gold);font-weight:700}
+.due.over{color:var(--pink)}
+.empty{color:var(--dim);padding:40px 0;text-align:center}
+.count{color:var(--dim);font-size:14px;margin-bottom:16px}
+a{color:var(--teal)}
+</style>
+</head>
+<body>
+<style id="llh-css">.llh{all:initial;display:block;background:#06060b;border-bottom:1px solid rgba(255,255,255,.08);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;position:relative;z-index:60}.llh *{box-sizing:border-box}.llh .llin{max-width:1240px;margin:0 auto;padding:0 14px;min-height:58px;display:flex;align-items:center;gap:14px}.llh .lllogo{display:flex;align-items:center;gap:8px;text-decoration:none;color:#fff;font-weight:900;letter-spacing:.06em;font-size:16px;flex:none}.llh .lllogo img{width:30px;height:30px;border-radius:50%;object-fit:cover}.llh .lllogo span{color:#22f0ff}.llh .gnav{display:flex;gap:4px;flex:1;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:8px 2px}.llh .gnav::-webkit-scrollbar{display:none}.llh .gnav a{flex:none;font-size:14.5px;font-weight:500;color:#a7a7b8;padding:7px 14px;border-radius:999px;text-decoration:none;white-space:nowrap;transition:background .2s,color .2s}.llh .gnav a:hover{color:#fff;background:rgba(255,255,255,.08)}.llh .gnav a.on{color:#06060b;background:#f4f4f8}.llh .llbtn{flex:none;text-decoration:none;color:#06060b;background:#22f0ff;font-weight:700;font-size:13.5px;padding:9px 14px;border-radius:999px;white-space:nowrap}@media(max-width:760px){.llh .llin{flex-wrap:wrap;gap:6px;padding:6px 12px}.llh .gnav{order:3;flex-basis:100%;padding:2px 0 8px}.llh .llbtn{margin-left:auto}}.llh .gnav a.fire{position:relative;color:#fff;font-weight:800;padding:6px 14px;border-radius:999px;background:linear-gradient(0deg,#ff3d00,#ff9100,#ffd600);background-size:100% 220%;animation:flm 1.2s ease-in-out infinite alternate,flk .18s steps(2) infinite;text-shadow:0 0 6px #ff6d00,0 -2px 10px #ffab00}.llh .gnav a.fire:before{content:"";position:absolute;inset:-6px -2px 40% -2px;border-radius:50%;background:radial-gradient(ellipse at bottom,rgba(255,145,0,.7),transparent 70%);filter:blur(6px);z-index:-1;animation:flk .25s infinite alternate}@keyframes flm{to{background-position:0 100%;box-shadow:0 0 18px #ff6d00,0 -4px 22px #ffab00}}@keyframes flk{50%{opacity:.85}}@media (prefers-reduced-motion:reduce){.llh .gnav a.fire,.llh .gnav a.fire:before{animation:none}}.llh .gnav a.casino{color:#ff4fd8;font-weight:800;text-shadow:0 0 8px rgba(255,79,216,.8)}</style>
+<div class="llh" role="banner"><div class="llin">
+  <a class="lllogo" href="/" aria-label="LeonLink home"><img src="/img/logo-128.png" alt="">LEON<span>LINK</span></a>
+  <nav class="gnav" aria-label="Main">
+    <a href="/">Home</a>
+    <a href="/games.html">Work</a>
+    <a href="/software.html">Software</a>
+    <a href="/blog.html">Blog</a>
+    <a href="/watchline/">Watchline</a>
+    <a href="https://afterglow.leonlink.net" class="casino">&#127920; Casino</a>
+  </nav>
+  <a class="llbtn" href="https://app.leonlink.net">Get Ledgerline</a>
+</div></div>
+<main>
+<h1>The <span>Board</span></h1>
+<p class="sub">Every job, on one board. Click a card and enter.</p>
+<div class="top">
+<a class="go" href="/submit.html">+ Submit a card</a>
+<div class="filters" id="tf">
+<button data-t="All" class="on">All</button>
+<button data-t="Blog">Blog</button>
+<button data-t="Top 5">Top 5</button>
+<button data-t="Game">Game</button>
+<button data-t="Software">Software</button>
+</div>
+<select id="sf" aria-label="Filter by status">
+<option value="All">All statuses</option><option>Open</option><option>Assigned</option><option>In progress</option><option>In review</option><option>Done</option><option>Blocked</option>
+</select>
+</div>
+<div class="count" id="count"></div>
+<div class="plist" id="board"></div>
+<p class="empty" id="empty" hidden>No cards here yet. <a href="/submit.html">Submit the first one.</a></p>
+</main>
+<footer class="ll-footer" style="border-top:1px solid rgba(128,128,128,.25);padding:22px 16px;text-align:center;font:14px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#0b0b0f;color:#cfcfd6;position:relative;z-index:5;clear:both">
+  <nav style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-bottom:8px"><a href="/" style="color:inherit;text-decoration:none">Home</a><a href="/blog.html" style="color:inherit;text-decoration:none">Blog</a><a href="/software.html" style="color:inherit;text-decoration:none">Software</a><a href="/watchline/" style="color:inherit;text-decoration:none">Watches</a><a href="https://afterglow.leonlink.net" style="color:inherit;text-decoration:none">Casino</a><a href="/games.html" style="color:inherit;text-decoration:none">Games</a><a href="https://arcadeline.leonlink.net" style="color:inherit;text-decoration:none">Arcadeline</a></nav>
+  <div>&copy; 2026 LeonLink</div>
+</footer>
+<script>
+(function(){
+var tf="All",sf="All";
+function render(){
+  var cards=llLoad().slice().sort(function(a,b){
+    var p=(LL_PRI_ORDER[a.priority]-LL_PRI_ORDER[b.priority])||String(a.deadline).localeCompare(String(b.deadline));
+    return p;
+  });
+  var list=cards.filter(function(c){return (tf==="All"||c.type===tf)&&(sf==="All"||c.status===sf);});
+  document.getElementById("count").textContent=list.length+" of "+cards.length+" cards · highest priority first";
+  var board=document.getElementById("board");board.innerHTML="";
+  document.getElementById("empty").hidden=list.length>0;
+  list.forEach(function(c){
+    var a=document.createElement("a");a.className="pitem";a.href="/card.html?id="+encodeURIComponent(c.id);
+    var due=llDueLabel(c),over=due.indexOf("Overdue")===0;
+    a.innerHTML='<div class="chips"><span class="chip">'+llEsc(c.type)+'</span><span class="chip pri-'+llEsc(c.priority)+'">'+llEsc(c.priority)+'</span><span class="chip st-'+llEsc(c.status.replace(/ /g,""))+'">'+llEsc(c.status)+'</span></div>'
+      +'<h3>'+llEsc(c.id)+' — '+llEsc(c.title)+'</h3>'
+      +'<p>'+llEsc(c.desc||"")+'</p>'
+      +'<div class="meta"><b>'+llEsc(c.team)+'</b> · '+llEsc(c.member)+' · '+llEsc(c.date)+' · <span class="due'+(over?" over":"")+'">'+llEsc(due)+'</span></div>';
+    board.appendChild(a);
+  });
+}
+document.getElementById("tf").addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;tf=b.dataset.t;
+  Array.prototype.forEach.call(this.querySelectorAll("button"),function(x){x.classList.toggle("on",x===b);});
+  render();
+});
+document.getElementById("sf").addEventListener("change",function(){sf=this.value;render();});
+render();
+})();
+</script>
+</body>
+</html>
