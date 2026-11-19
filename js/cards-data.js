@@ -5190,6 +5190,32 @@ var LL_SEED = [
   "review": ""
  }
 ];
+/* Time limits, agreed Nov 19: Blog 1 day, Top 5 1 day, Game 3 days in
+   checkpoints, Software 7 days in checkpoints. Urgent = hours, Low = a bit longer. */
+var LL_LIMITS = {Blog:1,"Top 5":1,Game:3,Software:7};
+var LL_REQ_TEMPLATES = {
+ Blog:["Peer-reviewed sources, links working","Shareable","House blog style","Own card art — no fallback image"],
+ "Top 5":["Exactly 5 picks, same category","Every pick on Amazon, See Amazon price, tag leonlink-20","Own card art — no fallback image"],
+ Game:["~5s LEONLINK PRESENTS loading screen","Loads and plays","Mobile-first","Own card art — no fallback image"],
+ Software:["Loads","Core flow works","No login button / no site chrome inside the app","Own card art — no fallback image"]
+};
+var LL_AUTO_CHECKS = [
+ "File exists in repo + commit hash present",
+ "Live URL returns 200 (no redirect to a dead project)",
+ "Desktop + mobile render PASS",
+ "All links on the page work",
+ "Same site design / header-footer present",
+ "Correct file type for the job (.html pages, .md docs, images .jpg/.png only)",
+ "Correct folder (blog /journal/, Top 5 /lineup/, games /games/, images /img/cards/)",
+ "Right repo, right branch, deploy succeeds, preview URL works",
+ "Meta / og / canonical tags present; Amazon tag leonlink-20 on Top 5 picks",
+ "No duplicate title or slug — never overwrite another page",
+ "File name lowercase, hyphens, no spaces, matches the slug",
+ "No secrets or personal info (Leon: first name + state only; nothing about the kids)",
+ "Images and audio owned or generated, not lifted",
+ "Alt text on every image",
+ "Log with every upload: did / tested / didn't test"
+];
 function llLoad(){
   try{var raw=localStorage.getItem("ll-cards-v2");if(raw){var d=JSON.parse(raw);if(d&&d.length)return d;}}catch(e){}
   return LL_SEED.map(function(c){return JSON.parse(JSON.stringify(c));});
