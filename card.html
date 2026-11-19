@@ -291,9 +291,10 @@ function render(){
   +'</div>'
   +(c.cps&&c.cps.length?'<h2>Checkpoints<small>Big jobs get longer only by checkpoints</small></h2><div class="box">'
     +c.cps.map(function(r,i){return '<label><input type="checkbox" data-cp="'+i+'"'+(r.done?" checked":"")+'><span class="'+(r.done?"done-t":"")+'">'+llEsc(r.t)+'</span></label>';}).join("")+'</div>':"")
-  +((c.gfx||c.audio)?'<h2>Graphics &amp; audio</h2><div class="box">'
-    +(c.gfx?'<p><b>Graphics:</b> '+llEsc(c.gfx)+'</p>':"")
-    +(c.audio?'<p><b>Audio:</b> '+llEsc(c.audio)+'</p>':"")+'</div>':"")
+  +'<h2>Graphics &amp; audio</h2><div class="box" id="gfxbox">'
+  +(c.gfx?'<p><b>Graphics:</b> '+llEsc(c.gfx)+'</p>':'<p class="note">No graphics spec yet — the gate needs one.</p>')
+  +(c.audio?'<p><b>Audio:</b> '+llEsc(c.audio)+'</p>':'<p class="note">No audio spec yet.</p>')
+  +'<div class="row"><button class="plain" id="btn-gfx">Edit graphics &amp; audio</button></div></div>'
   +'<h2>Message board<small>Work logs live here — bots check their LeonLink inbox every 15–20 min</small></h2><div id="logs">'
   +c.logs.map(function(l){return '<div class="log'+(l.esc?" esc":"")+'"><b>'+llEsc(l.who)+'</b> <span class="when">'+llEsc(l.when)+'</span><br>'+llEsc(l.text)+'</div>';}).join("")
   +'</div><div class="row"><select id="who"><option>Stonewall</option><option>Leon</option><option>Gadget</option><option>Inspector</option><option>'+llEsc(c.member)+'</option></select><input type="text" id="logtext" placeholder="Log what you did, tested, or need"></div><div class="row"><button id="btn-log" style="margin-left:auto">Post log</button></div>'
@@ -320,6 +321,15 @@ function render(){
   document.getElementById("btn-log").onclick=function(){
     var t=document.getElementById("logtext").value.trim();if(!t)return;
     log(document.getElementById("who").value,t);
+  };
+  document.getElementById("btn-gfx").onclick=function(){
+    var b=document.getElementById("gfxbox");if(!b)return;
+    b.innerHTML='<label>Graphics</label><textarea id="gfx-in" style="width:100%;min-height:70px">'+llEsc(c.gfx||"")+'</textarea><label>Audio</label><textarea id="audio-in" style="width:100%;min-height:70px">'+llEsc(c.audio||"")+'</textarea><div class="row"><button class="go" id="btn-gfx-save">Save graphics &amp; audio</button></div>';
+    document.getElementById("btn-gfx-save").onclick=function(){
+      c.gfx=document.getElementById("gfx-in").value.trim();
+      c.audio=document.getElementById("audio-in").value.trim();
+      save();log("Stonewall","Graphics & audio updated.");render();
+    };
   };
   Array.prototype.forEach.call(el.querySelectorAll("#reqs input"),function(x){
     x.onchange=function(){c.reqs[+x.dataset.i].done=x.checked;save();render();};
