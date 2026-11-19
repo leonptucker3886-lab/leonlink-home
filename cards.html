@@ -105,7 +105,7 @@ function render(){
   list.forEach(function(c){
     var a=document.createElement("a");a.className="pitem";a.href="/card.html?id="+encodeURIComponent(c.id);
     var due=llDueLabel(c),over=due.indexOf("Overdue")===0;
-    a.innerHTML='<div class="chips"><span class="chip">'+llEsc(c.type)+'</span><span class="chip pri-'+llEsc(c.priority)+'">'+llEsc(c.priority)+'</span><span class="chip st-'+llEsc(c.status.replace(/ /g,""))+'">'+llEsc(c.status)+'</span></div>'
+    a.innerHTML='<div class="chips"><span class="chip">'+llEsc(c.type)+'</span><span class="chip pri-'+llEsc(c.priority)+'">'+llEsc(c.priority)+'</span><span class="chip st-'+llEsc(c.status.replace(/ /g,""))+'">'+llEsc(c.status)+'</span>'+(c.gate?'<span class="chip '+(c.gate.passed?"st-Done":"st-Blocked")+'">Gate '+(c.gate.passed?"✓":"✗")+'</span>':"")+'</div>'
       +'<h3>'+llEsc(c.id)+' — '+llEsc(c.title)+'</h3>'
       +'<p>'+llEsc(c.desc||"")+'</p>'
       +'<div class="meta"><b>'+llEsc(c.team)+'</b> · '+llEsc(c.member)+' · '+llEsc(c.date)+' · <span class="due'+(over?" over":"")+'">'+llEsc(due)+'</span></div>';
