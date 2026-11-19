@@ -125,7 +125,7 @@ function gateHtml(g){
   return h+'</div>';
 }
 async function runGate(){
-  var c=currentCard;if(!c)return;
+  var c=card;if(!c)return;
   var up=c.upload||{};
   var btn=document.getElementById("btn-gate");
   if(btn){btn.disabled=true;btn.textContent="Running checks…";}
@@ -254,7 +254,7 @@ async function runGate(){
   }
 }
 function saveUpload(){
-  var c=currentCard;if(!c)return;
+  var c=card;if(!c)return;
   c.upload={file:val("up-file"),url:val("up-url"),art:val("up-art"),hash:val("up-hash"),changed:val("up-changed"),tested:val("up-tested"),untested:val("up-untested")};
   save();
   log("Stonewall","Upload logged: "+(c.upload.file||"(no file)")+" @ "+(c.upload.hash||"(no hash)")+".");
@@ -281,7 +281,7 @@ function render(){
   +'<label for="up-tested">What you tested</label><textarea id="up-tested">'+llEsc(up.tested||"")+'</textarea>'
   +'<label for="up-untested">What you didn\'t test</label><textarea id="up-untested">'+llEsc(up.untested||"")+'</textarea>'
   +'<div class="row"><button id="btn-save-up">Save upload</button><button class="plain" id="btn-gate">Run SOP checks</button></div>'
-  +'<p class="note">SOP: <a href="https://botline-ten.vercel.app/sops/'+sopSlug(c.type)+'.md" target="_blank" rel="noopener">sops/'+sopSlug(c.type)+'.md</a> &middot; Fail goes back to the builder with the exact failed check. Nothing unproven reaches the Inspector.</p>'
+  +'<p class="note">SOP: <a href="/sops/'+sopSlug(c.type)+'.md" target="_blank" rel="noopener">sops/'+sopSlug(c.type)+'.md</a> &middot; Fail goes back to the builder with the exact failed check. Nothing unproven reaches the Inspector.</p>'
   +'</div>'
   +'<div id="gate-results">'+gateHtml(c.gate)+'</div>'
   +'<h2>Requirements<small>The job is not done until these are true</small></h2><div class="box" id="reqs">'
