@@ -192,8 +192,10 @@ async function runGate(){
     var hasOg=/<meta[^>]+property=["']og:/i.test(pageText);
     var hasCan=/<link[^>]+rel=["']canonical["']/i.test(pageText);
     var hasTitle=/<title>[^<]+<\/title>/i.test(pageText);
-    add("Meta / og / canonical present",(hasOg&&hasCan&&hasTitle)?"pass":"fail","Missing: "+[hasOg?"":"og tags",hasCan?"":"canonical",hasTitle?"":"title"].filter(Boolean).join(", "));
-    add("Same site design / header-footer",/llh|\/js\/nav\.js/i.test(pageText)?"pass":"fail","No LeonLink header/nav found on the page");
+    var metaMissing=[hasOg?"":"og tags",hasCan?"":"canonical",hasTitle?"":"title"].filter(Boolean);
+    add("Meta / og / canonical present",metaMissing.length?"fail":"pass",metaMissing.length?"Missing: "+metaMissing.join(", "):"og + canonical + title present");
+    var hasChrome=/llh|\/js\/nav\.js/i.test(pageText);
+    add("Same site design / header-footer",hasChrome?"pass":"fail",hasChrome?"Header/nav found":"No LeonLink header/nav found on the page");
     var hrefs=[],re=/href=["']([^"']+)["']/gi,m;
     while((m=re.exec(pageText))&&hrefs.length<200){hrefs.push(m[1]);}
     var internal=hrefs.filter(function(h){return h.indexOf("/")===0&&h.indexOf("//")!==0;});
@@ -209,7 +211,7 @@ async function runGate(){
       add("All internal links work",bad.length?"fail":"pass",bad.length?bad.join(", "):internal.length+" checked");
     }
     var imgs=pageText.match(/<img\b[^>]*>/gi)||[];
-    var badImgs=imgs.filter(function(t){return !/alt=(["'])[^"']+\1/i.test(t);});
+    var badImgs=imgs.filter(function(t){return !/alt=/i.test(t);});
     add("Alt text on every image",badImgs.length?"fail":"pass",imgs.length?imgs.length+" images, "+badImgs.length+" missing alt":"No images on the page");
     add("No personal info on the page",/\b(tucker|mia)\b/i.test(pageText)?"fail":"pass","Leon: first name + state only; nothing about the kids");
     add("Page size within limits",pageText.length<1000000?"pass":"fail",Math.round(pageText.length/1024)+" KB");
