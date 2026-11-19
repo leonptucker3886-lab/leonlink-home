@@ -199,6 +199,14 @@ button:disabled{opacity:.45;cursor:not-allowed}
 <div class="row"><input type="text" id="bot-name" class="grow" placeholder="Bot name"><input type="text" id="bot-role" class="grow" placeholder="Role — e.g. Builder, Writer, Checker"><button class="btn2 go2" id="bot-add">Add bot</button></div>
 <div class="row"><button class="btn2 go2" id="btn-auto">Auto-assign me a card</button><span class="note">Best open card for the working-as role. Inspectors review, they don't take cards.</span></div>
 <p class="note">Paused bots get no new cards until you unpause them.</p>
+<div id="bot-editor" hidden>
+<h2 id="bot-editor-name"></h2>
+<label for="bot-editor-role">Role</label>
+<input type="text" id="bot-editor-role">
+<label for="bot-editor-instructions">Custom instructions</label>
+<textarea id="bot-editor-instructions" rows="6" placeholder="This bot's purpose, how it works, what it submits…"></textarea>
+<div class="row"><button class="go" id="bot-editor-save">Save</button><button class="btn2" id="bot-editor-cancel">Cancel</button></div>
+</div>
 </section>
 
 <section class="view" id="v-inbox">
@@ -270,9 +278,9 @@ function demoCards(){return [
  {id:"B3",type:"Software",title:"Demo: link-collecting tool",cat:"Tools",priority:"Low",status:"Blocked",bot:"Forge",date:today(),deadline:isoPlus(7),desc:"Demo card — blocked on a decision only you can make.",reqs:REQ_TEMPLATES.Software.map(function(t){return {t:t,done:false};}),cps:[{t:"Day 2 — first working build",done:false},{t:"Day 4 — core flow working",done:false},{t:"Day 7 — polish + live check",done:false}],gfx:"Clean, minimal, one focus per screen",audio:"",logs:[{who:"Forge",when:today(),text:"Blocked: need to know — save links locally or in the cloud?"}],review:""}
 ];}
 function demoBots(){return [
- {name:"Scout",role:"Research & writing",status:"Working",card:"B2",seen:"just now"},
- {name:"Forge",role:"Builder",status:"Stalled",card:"B1",seen:"3h ago"},
- {name:"Gadget",role:"Worker",status:"Idle",card:"",seen:"just now"}
+ {name:"Scout",role:"Research & writing",status:"Working",card:"B2",seen:"just now",instructions:""},
+ {name:"Forge",role:"Builder",status:"Stalled",card:"B1",seen:"3h ago",instructions:""},
+ {name:"Gadget",role:"Worker",status:"Idle",card:"",seen:"just now",instructions:""}
 ];}
 var cards=store("botline-v1")||demoCards();
 var bots=store("botline-bots")||demoBots();
@@ -754,6 +762,7 @@ function addLog(c,who,text,escFlag){c.logs.push({who:who,when:today(),text:text,
 document.addEventListener("click",function(e){
  var t=e.target.closest("[data-open]");if(t){e.preventDefault();openCard(t.dataset.open);}
 });
+var botEditIdx=-1;
 function renderBots(){
  var tb=document.querySelector("#bots-table tbody");
  tb.innerHTML=bots.map(function(b,i){
@@ -761,7 +770,7 @@ function renderBots(){
   return '<tr><td><b>'+esc(b.name)+'</b></td><td>'+esc(b.role)+'</td>'
   +'<td><span class="dot '+esc(b.status)+'"></span>'+esc(b.status)+'</td>'
   +'<td>'+(b.card?esc(b.card):"—")+'</td><td>'+esc(b.seen)+'</td>'
-  +'<td><button class="btn2" data-wake="'+i+'">Wake</button> <button class="btn2" data-pause="'+i+'">'+(b.status==="Paused"?"Unpause":"Pause")+'</button> <button class="btn2 warn" data-rm="'+i+'">Remove</button></td></tr>';
+  +'<td><button class="btn2" data-wake="'+i+'">Wake</button> <button class="btn2" data-pause="'+i+'">'+(b.status==="Paused"?"Unpause":"Pause")+'</button> <button class="btn2" data-edit="'+i+'">Edit'+(b.instructions?" ✓":"")+'</button> <button class="btn2 warn" data-rm="'+i+'">Remove</button></td></tr>';
  }).join("")||'<tr><td colspan="6" class="note">No bots yet. Add one below.</td></tr>';
 }
 document.getElementById("bots-table").addEventListener("click",function(e){
@@ -769,13 +778,23 @@ document.getElementById("bots-table").addEventListener("click",function(e){
  if(w){var b=bots[+w.dataset.wake];b.status="Working";b.seen="just now";inbox.unshift({id:"m"+Date.now(),who:b.name,to:"Boss",ts:Date.now(),when:today(),text:b.name+" woke up and is back on it.",card:b.card||"",read:false});saveAll();renderBots();renderDash();}
  if(p){var b2=bots[+p.dataset.pause];b2.status=b2.status==="Paused"?"Idle":"Paused";saveAll();renderBots();}
  if(r){if(confirm("Remove this bot?")){bots.splice(+r.dataset.rm,1);saveAll();renderBots();renderDash();}}
+ var ed=e.target.closest("[data-edit]");
+ if(ed){botEditIdx=+ed.dataset.edit;var b3=bots[botEditIdx];document.getElementById("bot-editor-name").textContent="Edit "+b3.name;document.getElementById("bot-editor-role").value=b3.role||"";document.getElementById("bot-editor-instructions").value=b3.instructions||"";document.getElementById("bot-editor").hidden=false;}
 });
 document.getElementById("btn-auto").addEventListener("click",function(){autoAssign();});
 document.getElementById("bot-add").addEventListener("click",function(){
  var n=document.getElementById("bot-name").value.trim(),r=document.getElementById("bot-role").value.trim();
- if(!n)return;bots.push({name:n,role:r||"Unassigned",status:"Idle",card:"",seen:"just now"});
+ if(!n)return;bots.push({name:n,role:r||"Unassigned",status:"Idle",card:"",seen:"just now",instructions:""});
  saveAll();document.getElementById("bot-name").value="";document.getElementById("bot-role").value="";renderBots();renderDash();
 });
+document.getElementById("bot-editor-save").addEventListener("click",function(){
+ if(botEditIdx<0)return;
+ var b=bots[botEditIdx];
+ b.role=document.getElementById("bot-editor-role").value.trim()||b.role;
+ b.instructions=document.getElementById("bot-editor-instructions").value.trim();
+ saveAll();renderBots();renderDash();document.getElementById("bot-editor").hidden=true;botEditIdx=-1;
+});
+document.getElementById("bot-editor-cancel").addEventListener("click",function(){document.getElementById("bot-editor").hidden=true;botEditIdx=-1;});
 function renderInbox(){
  var box=document.getElementById("inbox-box");
  var names=["All","Boss"].concat(bots.map(function(b){return b.name;}));
