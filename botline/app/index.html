@@ -1,0 +1,793 @@
+<!-- Hosted copy of the Botline repo (leonptucker3886-lab/botline) on leonlink.net. Source of truth is the botline repo — sync this copy on change. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Botline — Run your bots</title>
+<meta name="description" content="Botline: the board for a solo dev with AI bots. Submit, assign, track, review, wake the stalled ones. White-label ready.">
+<meta name="theme-color" content="#070a12">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070a12;--panel:rgba(255,255,255,.05);--line:rgba(255,255,255,.12);--brand:#22e6c8;--brand2:#ff5da2;--gold:#e9a93b;--text:#f2f5f7;--dim:rgba(242,245,247,.68)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--brand)}
+header{position:sticky;top:0;z-index:50;background:#06060b;border-bottom:1px solid var(--line)}
+.hin{max-width:1100px;margin:0 auto;padding:0 16px;min-height:58px;display:flex;align-items:center;gap:8px}
+.logo{font-weight:900;letter-spacing:.06em;font-size:17px;color:#fff;text-decoration:none;white-space:nowrap}
+.logo span{color:var(--brand)}
+.tabs{display:flex;gap:2px;flex:1;overflow-x:auto;padding:8px 2px}
+.tabs button{flex:none;border:0;background:none;color:#a7a7b8;font:600 14.5px system-ui,sans-serif;padding:8px 13px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.tabs button:hover{color:#fff}
+.tabs button.on{color:#06060b;background:#f4f4f8}
+.badge{background:var(--brand2);color:#fff;border-radius:999px;font:800 11px/1 system-ui,sans-serif;padding:3px 7px;margin-left:4px}
+main{max-width:1100px;margin:0 auto;padding:32px 16px 80px}
+.view{display:none}.view.on{display:block}
+h1{font-family:Fraunces,serif;font-size:clamp(1.9rem,5vw,2.8rem);line-height:1.05;margin:0 0 8px}
+h1 span{color:var(--brand)}
+.sub{color:var(--dim);margin:0 0 24px;font-size:18px}
+h2{font-size:1.3rem;margin:32px 0 12px}
+h2 small{display:block;font-size:13px;color:var(--dim);font-weight:600;margin-top:4px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:8px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+.stat b{display:block;font-size:30px;line-height:1;color:var(--brand)}
+.stat span{color:var(--dim);font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.stat.bad b{color:var(--brand2)}
+.plist{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.pitem{display:block;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;text-decoration:none;color:var(--text);cursor:pointer}
+.pitem:hover{border-color:var(--brand)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.chip{font:700 11px/1 system-ui,sans-serif;letter-spacing:.07em;text-transform:uppercase;padding:6px 9px;border-radius:999px;background:rgba(255,255,255,.08);color:var(--dim)}
+.chip.pri-Urgent{background:rgba(255,93,162,.2);color:var(--brand2)}
+.chip.pri-High{background:rgba(233,169,59,.18);color:var(--gold)}
+.chip.st-Done{background:rgba(34,230,200,.15);color:var(--brand)}
+.chip.st-Blocked{background:rgba(255,93,162,.15);color:var(--brand2)}
+.pitem h3{margin:0 0 6px;font-size:19px;line-height:1.25}
+.pitem p{margin:0 0 10px;color:var(--dim);font-size:14px}
+.meta{font-size:13px;color:var(--dim)}.meta b{color:var(--text)}
+.due{color:var(--gold);font-weight:700}.due.over{color:var(--brand2)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.filters button{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:999px;padding:8px 15px;font:700 14px system-ui,sans-serif;cursor:pointer}
+.filters button.on{border-color:var(--brand);color:var(--brand);background:rgba(34,230,200,.1)}
+label{display:block;font-weight:700;margin:22px 0 7px}
+.hint{font-weight:400;color:var(--dim);font-size:14px}
+input[type=text],input[type=date],input[type=url],input[type=color],select,textarea{width:100%;background:#0a0d14;border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:var(--text);font:15px/1.5 system-ui,sans-serif}
+input[type=color]{padding:4px;height:46px}
+textarea{min-height:96px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--brand);outline-offset:1px}
+.types,.prio{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.types button,.prio button{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:12px;padding:12px 6px;font:700 15px system-ui,sans-serif;cursor:pointer}
+.types button.on{border-color:var(--brand);background:rgba(34,230,200,.1);color:var(--brand)}
+.prio button.on{border-color:var(--brand2);background:rgba(255,93,162,.1);color:var(--brand2)}
+.checks{border:1px solid var(--line);border-radius:12px;padding:4px 16px;background:var(--panel)}
+.checks label{display:flex;gap:10px;align-items:flex-start;font-weight:500;margin:12px 0;cursor:pointer}
+.checks input{margin-top:3px;width:18px;height:18px;accent-color:var(--brand)}
+.go{margin-top:28px;border:0;cursor:pointer;padding:15px 26px;border-radius:999px;background:var(--brand);color:#041018;font:800 16px system-ui,sans-serif}
+.go.wide{width:100%}
+.btn2{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:999px;padding:10px 18px;font:700 14px system-ui,sans-serif;cursor:pointer}
+.btn2.warn{border-color:var(--brand2);color:var(--brand2)}
+.btn2.go2{background:var(--brand);color:#041018;border:0}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:11px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--dim);font-size:12px;text-transform:uppercase;letter-spacing:.07em}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
+.dot.Working{background:var(--brand)}.dot.Idle{background:var(--gold)}.dot.Asleep{background:#888}.dot.Stalled{background:var(--brand2)}.dot.Paused{background:#888}
+.box{border:1px solid var(--line);border-radius:12px;padding:6px 18px;background:var(--panel);margin-bottom:8px}
+.box p{margin:12px 0}
+.box label{display:flex;gap:10px;align-items:flex-start;font-weight:500;margin:12px 0;cursor:pointer}
+.box input{margin-top:3px;width:18px;height:18px;accent-color:var(--brand)}
+.done-t{text-decoration:line-through;color:var(--dim)}
+.log{border-left:3px solid var(--brand);padding:2px 0 2px 14px;margin:14px 0}
+.log b{color:var(--brand)}
+.log .when{color:var(--dim);font-size:13px}
+.log.esc{border-left-color:var(--brand2)}.log.esc b{color:var(--brand2)}
+.inbox-item{border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px;background:var(--panel)}
+.inbox-item.unread{border-color:var(--brand2)}
+.inbox-item .when{color:var(--dim);font-size:13px}
+.row{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+.row select{width:170px;flex:none}
+.row .grow{flex:1}
+.note{color:var(--dim);font-size:14px}
+button:disabled{opacity:.45;cursor:not-allowed}
+.upbox label{display:block;font-weight:700;margin:14px 0 6px}
+.upbox input[type=text]{width:100%;height:auto;margin:0}
+.upbox textarea{margin:0}
+.gate-pass{color:var(--brand)}
+.gate-fail{color:var(--brand2);font-weight:700}
+.gate-manual{color:var(--dim)}
+.banner{display:none;border:1px solid var(--brand2);background:rgba(255,93,162,.1);border-radius:12px;padding:14px 16px;margin:20px 0}
+.back{color:var(--dim);text-decoration:none;font-size:15px;cursor:pointer}
+.swatches{display:flex;gap:8px;margin:8px 0}
+.swatches button{width:34px;height:34px;border-radius:50%;border:2px solid rgba(255,255,255,.3);cursor:pointer;padding:0}
+@media(max-width:560px){.types,.prio{grid-template-columns:repeat(2,1fr)}.row select{width:100%}}
+</style>
+</head>
+<body>
+<header><div class="hin">
+<a class="logo" href="/botline/" data-brand-name> BOT<span>LINE</span></a>
+<nav class="tabs" id="tabs">
+<button data-v="dash" class="on">Dashboard</button>
+<button data-v="board">Board</button>
+<button data-v="submit">+ Submit</button>
+<button data-v="bots">Bots</button>
+<button data-v="inbox">Inbox<span class="badge" id="inbox-badge" hidden>0</span></button>
+<button data-v="brand">White-label</button>
+</nav>
+</div></header>
+<main>
+<section class="view on" id="v-dash">
+<h1>Your bots, <span>at a glance.</span></h1>
+<p class="sub">What's open, what's stuck, who needs a nudge.</p>
+<div class="stats" id="stats"></div>
+<div class="row"><label for="whoami" style="margin:0;align-self:center">Working as</label><select id="whoami" style="width:220px"></select><span class="note">Who claims cards and whose role the pool matches.</span></div>
+<h2>Needs you</h2>
+<div id="needs"></div>
+<h2>Recent logs</h2>
+<div id="recent"></div>
+<div class="row" style="margin-top:28px">
+<button class="btn2" id="btn-export">Export all data (JSON)</button>
+<button class="btn2" id="btn-import">Import data</button>
+<button class="btn2 warn" id="btn-reset">Reset demo data</button>
+</div>
+<input type="file" id="import-file" accept=".json" hidden>
+<p class="note">Your data lives in this browser. Export it any time — no lock-in.</p>
+</section>
+
+<section class="view" id="v-board">
+<h1>The <span>Board</span></h1>
+<p class="sub">Every job, on one board. Click a card and enter.</p>
+<div class="filters" id="tf">
+<button data-t="All" class="on">All</button><button data-t="Blog">Blog</button><button data-t="Top 5">Top 5</button><button data-t="Game">Game</button><button data-t="Software">Software</button>
+</div>
+<div class="plist" id="board"></div>
+<p class="note" id="board-empty" hidden>No cards here yet. Submit the first one.</p>
+</section>
+
+<section class="view" id="v-submit">
+<h1>Submit <span>a card</span></h1>
+<p class="sub">One card, one job. Fill it in — the board takes it from here.</p>
+<form id="f" novalidate>
+<label>Type</label>
+<div class="types" id="types">
+<button type="button" data-t="Blog">Blog</button>
+<button type="button" data-t="Top 5">Top 5</button>
+<button type="button" data-t="Game" class="on">Game</button>
+<button type="button" data-t="Software">Software</button>
+</div>
+<label for="title">Title</label>
+<input type="text" id="title" placeholder="e.g. A new slots game with roses, dolphins, and turtles" required>
+<label for="desc">Description <span class="hint">— what is it, plainly</span></label>
+<textarea id="desc" placeholder="Say it rough. The form cleans it up."></textarea>
+<label for="cat">Category</label>
+<input type="text" id="cat" placeholder="e.g. Arcade, Blog, Tools">
+<label>Requirements <span class="hint">— the job is not done until these are true</span></label>
+<div class="checks" id="reqs"></div>
+<label for="gfx">Graphics <span class="hint">— what it should look like</span></label>
+<textarea id="gfx" placeholder="Style, colors, art, layout"></textarea>
+<label for="audio">Audio <span class="hint">— games: music and sounds</span></label>
+<textarea id="audio" placeholder="Music, sound effects, voice"></textarea>
+<label for="assign">Assign to</label>
+<select id="assign"></select>
+<label for="deadline">Deadline <span class="hint">— set from the type limit, change it if you must</span></label>
+<input type="date" id="deadline">
+<label>Priority <span class="hint">— sets board order and the clock. Urgent = hours.</span></label>
+<div class="prio" id="prio">
+<button type="button" data-p="Urgent">Urgent</button>
+<button type="button" data-p="High" class="on">High</button>
+<button type="button" data-p="Normal">Normal</button>
+<button type="button" data-p="Low">Low</button>
+</div>
+<button class="go wide" type="submit">Post the card &rarr;</button>
+<p class="note" style="text-align:center">Time limits: Blog 1 day · Top 5 1 day · Game 3 days in checkpoints · Software 7 days in checkpoints.<br>Next card number: <b id="nextnum">…</b></p>
+</form>
+</section>
+
+<section class="view" id="v-card">
+<a class="back" id="card-back">← Back to the board</a>
+<div id="card"></div>
+</section>
+
+<section class="view" id="v-bots">
+<h1>Your <span>bots</span></h1>
+<p class="sub">The roster. Who's working, who's asleep, who needs waking.</p>
+<div style="overflow-x:auto"><table id="bots-table">
+<thead><tr><th>Bot</th><th>Role</th><th>Status</th><th>Current card</th><th>Last seen</th><th></th></tr></thead>
+<tbody></tbody></table></div>
+<h2>Add a bot</h2>
+<div class="row"><input type="text" id="bot-name" class="grow" placeholder="Bot name"><input type="text" id="bot-role" class="grow" placeholder="Role — e.g. Builder, Writer, Checker"><button class="btn2 go2" id="bot-add">Add bot</button></div>
+<div class="row"><button class="btn2 go2" id="btn-auto">Auto-assign me a card</button><span class="note">Best open card for the working-as role. Inspectors review, they don't take cards.</span></div>
+<p class="note">Paused bots get no new cards until you unpause them.</p>
+</section>
+
+<section class="view" id="v-inbox">
+<h1>Inbox</h1>
+<p class="sub">Escalations, bot questions, review notes. One place, not five chats.</p>
+<div id="inbox-list"></div>
+<p class="note" id="inbox-empty" hidden>Quiet. Nothing needs you.</p>
+</section>
+
+<section class="view" id="v-brand">
+<h1>White-label</h1>
+<p class="sub">Your name on it. One panel re-skins the whole app.</p>
+<label for="brand-name">Product name</label>
+<input type="text" id="brand-name" value="Botline">
+<label for="brand-tag">Tagline</label>
+<input type="text" id="brand-tag" value="Run your bots like a team.">
+<label for="brand-color">Main color</label>
+<div class="swatches">
+<button type="button" data-c="#22e6c8" style="background:#22e6c8"></button>
+<button type="button" data-c="#7c5cff" style="background:#7c5cff"></button>
+<button type="button" data-c="#ff6b35" style="background:#ff6b35"></button>
+<button type="button" data-c="#e9a93b" style="background:#e9a93b"></button>
+<button type="button" data-c="#ff5da2" style="background:#ff5da2"></button>
+</div>
+<input type="color" id="brand-color" value="#22e6c8">
+<label for="brand-color2">Accent color</label>
+<input type="color" id="brand-color2" value="#ff5da2">
+<button class="go" id="brand-save">Save branding</button>
+
+<h2>Sync — Firebase</h2>
+<p class="sub">The shared store every bot sees. Paste your web app config to turn it on; empty means this browser only.</p>
+<label for="fb-config">Firebase config (JSON)</label>
+<textarea id="fb-config" placeholder='{"apiKey":"...","authDomain":"...","projectId":"...","storageBucket":"...","messagingSenderId":"...","appId":"..."}'></textarea>
+<div class="row"><button class="go" id="fb-save">Save &amp; connect</button><button class="btn2" id="fb-off">Turn off sync</button></div>
+<p class="note" id="fb-status">Sync off — this browser only.</p>
+<p class="note">Bots sign in anonymously — no email, no password. One login each, free tier. Rules live in firestore.rules in the repo.</p>
+<p class="note">This rebrands the app in this browser. Ship it under your own domain and it's yours end to end.</p>
+</section>
+</main>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+(function(){
+"use strict";
+var LIMITS={Blog:1,"Top 5":1,Game:3,Software:7};
+var REQ_TEMPLATES={
+ Blog:["Peer-reviewed sources, links working","Shareable","House blog style","Own card art — no fallback image"],
+ "Top 5":["Exactly 5 picks, same category","Every pick on Amazon, See Amazon price, tag on","Own card art — no fallback image"],
+ Game:["~5s loading screen with your brand","Loads and plays","Mobile-first","Own card art — no fallback image"],
+ Software:["Loads","Core flow works","No login button / no site chrome inside the app","Own card art — no fallback image"]
+};
+var AUTO_CHECKS=["File exists + commit hash present","Live URL returns 200","Desktop + mobile render PASS","All links work","Same site design / header-footer","Correct file type for the job","Correct folder","Right repo, right branch, deploy succeeds","Meta / og / canonical present","No duplicate title or slug","File name lowercase, hyphens, matches slug","No secrets or personal info","Images and audio owned or generated","Alt text on every image","Log with every upload: did / tested / didn't test"];
+var PRI={Urgent:0,High:1,Normal:2,Low:3};
+function today(){return new Date().toISOString().slice(0,10);}
+function isoPlus(d){var x=new Date();x.setDate(x.getDate()+d);return x.toISOString().slice(0,10);}
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v));}catch(e){return null;}}
+function demoCards(){return [
+ {id:"B1",type:"Game",title:"Demo: slots game with roses, dolphins, and turtles",cat:"Arcade",priority:"High",status:"In progress",bot:"Forge",date:today(),deadline:isoPlus(3),desc:"Demo card — a new slots game. Delete it or reset demo data any time.",reqs:REQ_TEMPLATES.Game.map(function(t){return {t:t,done:false};}),cps:[{t:"Day 1 — draft",done:true},{t:"Day 2 — playable",done:false},{t:"Day 3 — polish + live check",done:false}],gfx:"Roses, dolphins, turtles. Bright, playful.",audio:"Coins, ocean, win jingle",logs:[{who:"Forge",when:today(),text:"Day 1 draft up. Reels spin, payouts stubbed."}],review:""},
+ {id:"B2",type:"Blog",title:"Demo: blog about the tooth fairy",cat:"Blog",priority:"Normal",status:"Open",bot:"Scout",date:today(),deadline:isoPlus(1),desc:"Demo card — a peer-reviewed blog post.",reqs:REQ_TEMPLATES.Blog.map(function(t){return {t:t,done:false};}),cps:[],gfx:"Tooth fairy art, soft night colors",audio:"",logs:[],review:""},
+ {id:"B3",type:"Software",title:"Demo: link-collecting tool",cat:"Tools",priority:"Low",status:"Blocked",bot:"Forge",date:today(),deadline:isoPlus(7),desc:"Demo card — blocked on a decision only you can make.",reqs:REQ_TEMPLATES.Software.map(function(t){return {t:t,done:false};}),cps:[{t:"Day 2 — first working build",done:false},{t:"Day 4 — core flow working",done:false},{t:"Day 7 — polish + live check",done:false}],gfx:"Clean, minimal, one focus per screen",audio:"",logs:[{who:"Forge",when:today(),text:"Blocked: need to know — save links locally or in the cloud?"}],review:""}
+];}
+function demoBots(){return [
+ {name:"Scout",role:"Research & writing",status:"Working",card:"B2",seen:"just now"},
+ {name:"Forge",role:"Builder",status:"Stalled",card:"B1",seen:"3h ago"},
+ {name:"Gadget",role:"Worker",status:"Idle",card:"",seen:"just now"}
+];}
+var cards=store("botline-v1")||demoCards();
+var bots=store("botline-bots")||demoBots();
+var inbox=store("botline-inbox")||[{who:"Forge",when:today(),text:"Blocked on B3 — need to know: save links locally or in the cloud?",card:"B3",read:false}];
+var brand=store("botline-brand")||{name:"Botline",tag:"Run your bots like a team.",color:"#22e6c8",color2:"#ff5da2"};
+
+/* ---- Firebase sync (shared store every bot sees) ---- */
+var FB_CONFIG=store("botline-fb-config")||null;
+var fbReady=false,fbUid=null,fbApplying=false,fbLastCards="",fbLastBots="";
+var whoami=store("botline-whoami")||"Boss";
+function fbStatus(t){var e=document.getElementById("fb-status");if(e)e.textContent=t;}
+function myRole(){if(whoami==="Boss")return "Boss";var b=null;bots.forEach(function(x){if(x.name===whoami)b=x;});return b?b.role:"";}
+function roleTypes(role){
+ if(/inspector/i.test(role||""))return null; /* inspectors review, they don't take cards */
+ if(/writ|research|word/i.test(role||""))return ["Blog","Top 5"];
+ if(/build|game|dev/i.test(role||""))return ["Game","Software"];
+ return []; /* Worker / Boss / anything else: any open card */
+}
+function fbDb(){try{return firebase.firestore();}catch(e){return null;}}
+function fbSave(){
+ if(!fbReady)return;
+ try{
+  var db=fbDb();if(!db)return;
+  fbApplying=true;
+  cards.forEach(function(c){db.collection("cards").doc(c.id).set(JSON.parse(JSON.stringify(c)));});
+  bots.forEach(function(b){db.collection("bots").doc(b.name).set(JSON.parse(JSON.stringify(b)));});
+  db.collection("meta").doc("brand").set(JSON.parse(JSON.stringify(brand)));
+  fbLastCards=JSON.stringify(cards);fbLastBots=JSON.stringify(bots);
+  setTimeout(function(){fbApplying=false;},500);
+ }catch(e){fbApplying=false;fbStatus("Sync write failed: "+e.message);}
+}
+function fbListen(){
+ var db=fbDb();if(!db)return;
+ db.collection("cards").onSnapshot(function(snap){
+  if(fbApplying)return;
+  var arr=[];snap.forEach(function(d){arr.push(d.data());});
+  if(!arr.length)return;
+  var js=JSON.stringify(arr);
+  if(js===fbLastCards)return;
+  fbLastCards=js;cards=arr;saveLocalOnly();renderCurrent();
+ });
+ db.collection("bots").onSnapshot(function(snap){
+  if(fbApplying)return;
+  var arr=[];snap.forEach(function(d){arr.push(d.data());});
+  if(!arr.length)return;
+  var js=JSON.stringify(arr);
+  if(js===fbLastBots)return;
+  fbLastBots=js;bots=arr;saveLocalOnly();renderCurrent();
+ });
+ db.collection("meta").doc("brand").onSnapshot(function(doc){
+  if(fbApplying||!doc.exists)return;
+  brand=doc.data();saveLocalOnly();applyBrand();
+ });
+}
+function saveLocalOnly(){store("botline-v1",cards);store("botline-bots",bots);store("botline-inbox",inbox);store("botline-brand",brand);}
+function renderCurrent(){
+ var v=document.querySelector(".view.on");
+ if(!v)return;
+ var id=v.id.replace("v-","");
+ if(id==="dash")renderDash();else if(id==="board")renderBoard();else if(id==="bots")renderBots();
+ else if(id==="inbox")renderInbox();else if(id==="card"&&currentCard)renderCard();
+}
+function fbInit(){
+ var cfg=FB_CONFIG;
+ if(!cfg||!window.firebase){fbStatus("Sync off — this browser only.");return;}
+ try{
+  firebase.initializeApp(cfg);
+  fbStatus("Connecting to Firebase…");
+  firebase.auth().signInAnonymously().then(function(cred){
+   fbUid=cred.user.uid;fbReady=true;
+   fbStatus("Synced — signed in as "+fbUid.slice(0,8)+"… (anonymous, no email).");
+   fbListen();fbSave();renderDash();
+  }).catch(function(e){fbStatus("Firebase sign-in failed: "+e.message);});
+ }catch(e){fbStatus("Firebase init failed: "+e.message);}
+}
+function claimCard(id){
+ var c=null;cards.forEach(function(x){if(x.id===id)c=x;});
+ if(!c||c.status!=="Open"){alert("Already taken — pick another.");return;}
+ if(whoami==="Boss"&&!confirm("Claim "+id+" as Boss?"))return;
+ if(!fbReady){
+  c.status="Assigned";c.bot=whoami;c.botUid=fbUid||"";
+  addLog(c,whoami,"Claimed "+id+" from the pool.");
+  return;
+ }
+ var db=fbDb();if(!db)return;
+ var ref=db.collection("cards").doc(id);
+ db.runTransaction(function(tx){
+  return tx.get(ref).then(function(doc){
+   if(!doc.exists||doc.data().status!=="Open")throw new Error("taken");
+   var d=doc.data();var logs=d.logs||[];
+   logs.push({who:whoami,when:today(),text:"Claimed "+id+" from the pool."});
+   tx.update(ref,{status:"Assigned",bot:whoami,botUid:fbUid,logs:logs});
+  });
+ }).then(function(){fbStatus("Claimed "+id+".");})
+  .catch(function(){alert("Someone just took it — pick another.");renderCurrent();});
+}
+function autoAssign(){
+ var role=myRole();
+ var types=roleTypes(role);
+ if(types===null){alert("Inspectors review — they don't take cards.");return;}
+ var pool=cards.filter(function(c){return c.status==="Open"&&(types.length===0||types.indexOf(c.type)>=0);});
+ pool.sort(function(a,b){return (PRI[a.priority]-PRI[b.priority])||String(a.deadline).localeCompare(String(b.deadline));});
+ if(!pool.length){alert("The pool is empty for your role.");return;}
+ claimCard(pool[0].id);
+ if(!fbReady)renderCurrent();
+}
+
+function saveAll(){store("botline-v1",cards);store("botline-bots",bots);store("botline-inbox",inbox);store("botline-brand",brand);if(fbReady&&!fbApplying)fbSave();}
+function applyBrand(){
+ document.documentElement.style.setProperty("--brand",brand.color);
+ document.documentElement.style.setProperty("--brand2",brand.color2);
+ document.title=brand.name+" — Run your bots";
+ document.querySelectorAll("[data-brand-name]").forEach(function(e){
+   var n=brand.name||"Botline";
+   e.innerHTML = n.toLowerCase()==="botline" ? "BOT<span>LINE</span>" : esc(n.toUpperCase());
+ });
+ document.getElementById("brand-name").value=brand.name;
+ document.getElementById("brand-tag").value=brand.tag;
+ document.getElementById("brand-color").value=brand.color;
+ document.getElementById("brand-color2").value=brand.color2;
+}
+function dueLabel(c){
+ if(!c.deadline)return "";
+ var t=new Date();t.setHours(0,0,0,0);
+ var d=new Date(c.deadline+"T00:00:00");var days=Math.round((d-t)/86400000);
+ if(days<0)return "Overdue "+(-days)+"d";
+ if(days===0)return "Due today";
+ return "Due in "+days+"d";
+}
+function nextId(){var m=0;cards.forEach(function(c){var n=parseInt(String(c.id).replace(/\D/g,""),10)||0;if(n>m)m=n;});return "B"+(m+1);}
+function show(v){
+ document.querySelectorAll(".view").forEach(function(s){s.classList.toggle("on",s.id==="v-"+v);});
+ document.querySelectorAll("#tabs button").forEach(function(b){b.classList.toggle("on",b.dataset.v===v||(v==="card"&&b.dataset.v==="board"));});
+ if(v==="dash")renderDash();if(v==="board")renderBoard();if(v==="bots")renderBots();if(v==="inbox")renderInbox();if(v==="submit")renderSubmit();
+ window.scrollTo(0,0);
+}
+document.getElementById("tabs").addEventListener("click",function(e){var b=e.target.closest("button");if(b)show(b.dataset.v);});
+document.getElementById("card-back").addEventListener("click",function(){show("board");});
+function renderDash(){
+ var open=cards.filter(function(c){return c.status!=="Done";}).length;
+ var blocked=cards.filter(function(c){return c.status==="Blocked";}).length;
+ var overdue=cards.filter(function(c){return c.status!=="Done"&&dueLabel(c).indexOf("Overdue")===0;}).length;
+ var stalled=bots.filter(function(b){return b.status==="Stalled";}).length;
+ document.getElementById("stats").innerHTML=
+  '<div class="stat"><b>'+open+'</b><span>Open</span></div>'
+ +'<div class="stat'+(blocked?" bad":"")+'"><b>'+blocked+'</b><span>Blocked</span></div>'
+ +'<div class="stat'+(overdue?" bad":"")+'"><b>'+overdue+'</b><span>Overdue</span></div>'
+ +'<div class="stat'+(stalled?" bad":"")+'"><b>'+stalled+'</b><span>Bots stalled</span></div>'
+ +'<div class="stat"><b>'+cards.filter(function(c){return c.status==="Done";}).length+'</b><span>Done</span></div>';
+ var needs=cards.filter(function(c){return c.status==="Blocked"||dueLabel(c).indexOf("Overdue")===0;});
+ document.getElementById("needs").innerHTML=needs.length?needs.map(function(c){
+   return '<div class="inbox-item"><b>'+esc(c.id)+' — '+esc(c.title)+'</b> · '+esc(c.status)+' · <span class="due over">'+esc(dueLabel(c))+'</span><br><span class="note">'+esc(c.bot||"Unassigned")+' · '+esc(c.review||c.desc||"")+'</span> <a href="#" data-open="'+esc(c.id)+'">Open card →</a></div>';
+ }).join(""):'<p class="note">Nothing stuck. Nice.</p>';
+ var logs=[];cards.forEach(function(c){(c.logs||[]).forEach(function(l){logs.push({c:c,l:l});});});
+ logs.sort(function(a,b){return String(b.l.when).localeCompare(String(a.l.when));});
+ document.getElementById("recent").innerHTML=logs.slice(0,6).map(function(x){
+   return '<div class="log"><b>'+esc(x.l.who)+'</b> on '+esc(x.c.id)+' <span class="when">'+esc(x.l.when)+'</span><br>'+esc(x.l.text)+'</div>';
+ }).join("")||'<p class="note">No logs yet.</p>';
+ var unread=inbox.filter(function(m){return !m.read;}).length;
+ var badge=document.getElementById("inbox-badge");
+ badge.hidden=unread===0;badge.textContent=unread;
+ var ws=document.getElementById("whoami");
+ if(ws){ws.innerHTML='<option>Boss</option>'+bots.map(function(b){return '<option>'+esc(b.name)+'</option>';}).join("");ws.value=whoami;}
+}
+var tf="All";
+function renderBoard(){
+ var list=cards.slice().sort(function(a,b){return (PRI[a.priority]-PRI[b.priority])||String(a.deadline).localeCompare(String(b.deadline));});
+ if(tf!=="All")list=list.filter(function(c){return c.type===tf;});
+ document.getElementById("board-empty").hidden=list.length>0;
+ document.getElementById("board").innerHTML=list.map(function(c){
+  var due=dueLabel(c),over=due.indexOf("Overdue")===0;
+  return '<div class="pitem" data-open="'+esc(c.id)+'"><div class="chips"><span class="chip">'+esc(c.type)+'</span><span class="chip pri-'+esc(c.priority)+'">'+esc(c.priority)+'</span><span class="chip st-'+esc(c.status.replace(/ /g,""))+'">'+esc(c.status)+'</span>'+gateChip(c)+'</div>'
+  +'<h3>'+esc(c.id)+' — '+esc(c.title)+'</h3><p>'+esc(c.desc||"")+'</p>'
+  +'<div class="meta"><b>'+esc(c.bot||"Unassigned")+'</b> · '+esc(c.date)+' · <span class="due'+(over?" over":"")+'">'+esc(due)+'</span></div></div>';
+ }).join("");
+}
+document.getElementById("tf").addEventListener("click",function(e){
+ var b=e.target.closest("button");if(!b)return;tf=b.dataset.t;
+ Array.prototype.forEach.call(this.querySelectorAll("button"),function(x){x.classList.toggle("on",x===b);});
+ renderBoard();
+});
+var subType="Game",subPri="High";
+function renderSubmit(){
+ var box=document.getElementById("reqs");box.innerHTML="";
+ REQ_TEMPLATES[subType].forEach(function(t){
+  var l=document.createElement("label");var c=document.createElement("input");c.type="checkbox";c.checked=true;
+  l.appendChild(c);l.appendChild(document.createTextNode(t));box.appendChild(l);
+ });
+ document.getElementById("deadline").value=isoPlus(LIMITS[subType]);
+ var sel=document.getElementById("assign");
+ sel.innerHTML='<option value="">Auto-assign</option>'+bots.filter(function(b){return b.status!=="Paused";}).map(function(b){return '<option>'+esc(b.name)+'</option>';}).join("");
+ document.getElementById("nextnum").textContent=nextId();
+}
+document.getElementById("types").addEventListener("click",function(e){
+ var b=e.target.closest("button");if(!b)return;subType=b.dataset.t;
+ Array.prototype.forEach.call(this.querySelectorAll("button"),function(x){x.classList.toggle("on",x===b);});
+ renderSubmit();
+});
+document.getElementById("prio").addEventListener("click",function(e){
+ var b=e.target.closest("button");if(!b)return;subPri=b.dataset.p;
+ Array.prototype.forEach.call(this.querySelectorAll("button"),function(x){x.classList.toggle("on",x===b);});
+});
+document.getElementById("f").addEventListener("submit",function(e){
+ e.preventDefault();
+ var title=document.getElementById("title").value.trim();
+ if(!title){document.getElementById("title").focus();return;}
+ var reqs=[];Array.prototype.forEach.call(document.querySelectorAll("#reqs input"),function(c,i){
+  reqs.push({t:REQ_TEMPLATES[subType][i],done:false});
+ });
+ var cps=[];
+ if(subType==="Game")cps=[{t:"Day 1 — draft",done:false},{t:"Day 2 — playable",done:false},{t:"Day 3 — polish + live check",done:false}];
+ if(subType==="Software")cps=[{t:"Day 2 — first working build",done:false},{t:"Day 4 — core flow working",done:false},{t:"Day 7 — polish + live check",done:false}];
+ var bot=document.getElementById("assign").value||"Auto-assign";
+ var card={id:nextId(),type:subType,title:title,cat:document.getElementById("cat").value.trim()||subType,
+  priority:subPri,status:bot==="Auto-assign"?"Open":"Assigned",bot:bot,date:today(),
+  deadline:document.getElementById("deadline").value||isoPlus(LIMITS[subType]),
+  desc:document.getElementById("desc").value.trim(),reqs:reqs,cps:cps,
+  gfx:document.getElementById("gfx").value.trim(),audio:document.getElementById("audio").value.trim(),
+  logs:[{who:"You",when:today(),text:"Card submitted. " + (bot==="Auto-assign"?"Waiting for assignment.":"Assigned to "+bot+".")}],review:""};
+ cards.unshift(card);saveAll();
+ openCard(card.id);
+});
+var currentCard=null;
+function openCard(id){
+ currentCard=null;cards.forEach(function(c){if(c.id===id)currentCard=c;});
+ if(!currentCard){show("board");return;}
+ renderCard();show("card");
+}
+
+function sopSlug(t){return {"Blog":"blog","Top 5":"top-5","Game":"game","Software":"software"}[t]||"blog";}
+function gateChip(c){
+ if(!c.gate)return "";
+ return '<span class="chip '+(c.gate.passed?"st-Done":"st-Blocked")+'">Gate '+(c.gate.passed?"✓":"✗")+'</span>';
+}
+function normUrl(u){u=String(u||"").trim();if(!u)return "";if(u.indexOf("/")===0)return location.origin+u;if(!/^https?:\/\//i.test(u))return "https://"+u;return u;}
+function val(id){var e=document.getElementById(id);return e?e.value.trim():"";}
+function gateHtml(g){
+ if(!g||!g.results)return "";
+ var h='<div class="box"><p><b>SOP gate — '+(g.passed?"PASSED":"FAILED")+'</b> · '+esc(g.when||"")+'</p>';
+ g.results.forEach(function(r){
+   var mark=r.result==="pass"?"✓":r.result==="fail"?"✗":"○";
+   var cls=r.result==="pass"?"gate-pass":r.result==="fail"?"gate-fail":"gate-manual";
+   h+='<p class="'+cls+'">'+mark+' '+esc(r.label)+(r.detail?' — <span class="note">'+esc(r.detail)+'</span>':"")+'</p>';
+ });
+ return h+'</div>';
+}
+async function fetchPageText(url){
+ try{
+   var r=await fetch(url,{method:"GET",credentials:"same-origin"});
+   if(!r.ok)throw new Error("HTTP "+r.status);
+   return {text:await r.text(),status:r.status,cross:false};
+ }catch(e){
+   if(String((e&&e.message)||"").indexOf("HTTP ")===0)throw e;
+   try{await fetch(url,{mode:"no-cors"});return {text:null,status:0,cross:true};}
+   catch(e2){throw e;}
+ }
+}
+async function runGate(){
+ var c=currentCard;if(!c)return;
+ var up=c.upload||{};
+ var btn=document.getElementById("btn-gate");
+ if(btn){btn.disabled=true;btn.textContent="Running checks…";}
+ var results=[];
+ function add(label,result,detail){results.push({label:label,result:result,detail:detail||""});}
+ var file=String(up.file||"").trim();
+ var url=normUrl(up.url||"");
+ var base=file.split("/").pop()||"";
+ var doneReqs=(c.reqs||[]).filter(function(r){return r.done;}).length;
+ add("All requirements checked",(c.reqs&&c.reqs.length&&doneReqs===c.reqs.length)?"pass":"fail",doneReqs+" of "+(c.reqs||[]).length+" ticked");
+ if(c.cps&&c.cps.length){
+   var doneCps=c.cps.filter(function(r){return r.done;}).length;
+   add("All checkpoints done",doneCps===c.cps.length?"pass":"fail",doneCps+" of "+c.cps.length+" done");
+ }else{
+   add("All checkpoints done","pass","No checkpoints for this type");
+ }
+ var missing=[];
+ if(!file)missing.push("file path");if(!url)missing.push("live URL");if(!up.hash)missing.push("commit hash");
+ if(!up.changed)missing.push("what changed");if(!up.tested)missing.push("what tested");
+ add("Upload logged (file, live URL, commit hash, what changed, what tested)",missing.length?"fail":"pass",missing.length?"Missing: "+missing.join(", "):"");
+ add("Correct file type (.html)",/\.html?$/i.test(file)?"pass":"fail",file||"No file path given");
+ var folderOk=false,folderWant="";
+ if(c.type==="Blog"){folderWant="/journal/ or agreed root URL";folderOk=/^\/journal\//.test(file)||/^\/[^\/]+\.html?$/i.test(file);}
+ else if(c.type==="Top 5"){folderWant="/lineup/";folderOk=/^\/lineup\//.test(file);}
+ else if(c.type==="Game"){folderWant="/games/";folderOk=/^\/games\//.test(file);}
+ else{folderWant="agreed folder";folderOk=/^\//.test(file);}
+ add("Correct folder ("+folderWant+")",folderOk?"pass":"fail",file||"No file path given");
+ add("File name lowercase, hyphens, no spaces",/^[a-z0-9]+(-[a-z0-9]+)*\.html?$/i.test(base)&&base===base.toLowerCase()&&base.indexOf(" ")===-1?"pass":"fail",base||"No file name given");
+ var dup=cards.filter(function(x){return x!==c&&((x.title||"").toLowerCase()===(c.title||"").toLowerCase()||(x.upload&&x.upload.url&&url&&x.upload.url===up.url));});
+ add("No duplicate title or live URL",dup.length?"fail":"pass",dup.length?"Clashes with "+dup.map(function(x){return x.id;}).join(", "):"");
+ add("No personal info in card fields",/\b(tucker|mia)\b/i.test((c.title||"")+" "+(c.desc||"")+" "+(c.gfx||"")+" "+file)?"fail":"pass","First name + state only; nothing about the kids");
+ if((c.gfx||"").trim()){
+   if(up.art){
+     try{
+       var ar=await fetch(normUrl(up.art),{method:"GET",credentials:"same-origin"});
+       add("Art file exists (.jpg/.png)",ar.ok&&/\.(jpg|png)(\?|$)/i.test(up.art)?"pass":"fail",ar.ok?"":"Art URL did not return 200");
+     }catch(e){
+       try{await fetch(normUrl(up.art),{mode:"no-cors"});add("Art file exists (.jpg/.png)","manual","Server responded, status hidden cross-origin — reviewer verifies");}
+       catch(e2){add("Art file exists (.jpg/.png)","fail","Art URL could not be fetched");}
+     }
+   }else{
+     add("Art file exists (.jpg/.png)","manual","No art URL given — reviewer checks the art file");
+   }
+ }else{
+   add("Art file exists (.jpg/.png)","fail","No graphics spec / art described on the card");
+ }
+ var pageText=null,cross=false;
+ if(!url){
+   add("Live URL returns 200","fail","No live URL given");
+ }else{
+   try{
+     var pg=await fetchPageText(url);
+     if(pg.cross){cross=true;add("Live URL returns 200","manual","Server responded, status hidden cross-origin — reviewer verifies");}
+     else{pageText=pg.text;add("Live URL returns 200","pass","HTTP "+pg.status);}
+   }catch(e){
+     add("Live URL returns 200","fail",String((e&&e.message)||e));
+   }
+ }
+ var pageLabels=["Meta / og / canonical present","Same site design / header-footer","All internal links work","Alt text on every image","No personal info on the page","Page size within limits"];
+ if(pageText===null){
+   pageLabels.forEach(function(l){add(l,"manual",cross?"Skipped — page could not be read cross-origin":"Skipped — live page could not be fetched");});
+   if(c.type==="Blog")add("Peer-reviewed source link found","manual","Skipped — live page could not be read");
+   if(c.type==="Top 5"){add("Exactly 5 “See Amazon price” links","manual","Skipped — live page could not be read");add("Amazon tag on every pick","manual","Skipped — live page could not be read");}
+   if(c.type==="Game"){add("Loading screen with your brand","manual","Skipped — live page could not be read");add("Viewport meta (mobile-first)","manual","Skipped — live page could not be read");}
+   if(c.type==="Software")add("No login button / site chrome inside the app","manual","Skipped — live page could not be read");
+ }else{
+   var hasOg=/<meta[^>]+property=["']og:/i.test(pageText);
+   var hasCan=/<link[^>]+rel=["']canonical["']/i.test(pageText);
+   var hasTitle=/<title>[^<]+<\/title>/i.test(pageText);
+   var metaMissing=[hasOg?"":"og tags",hasCan?"":"canonical",hasTitle?"":"title"].filter(Boolean);
+   add("Meta / og / canonical present",metaMissing.length?"fail":"pass",metaMissing.length?"Missing: "+metaMissing.join(", "):"og + canonical + title present");
+   var hasChrome=/llh|\/js\/nav\.js/i.test(pageText);
+   add("Same site design / header-footer",hasChrome?"pass":"manual",hasChrome?"Header/nav found":"No header/nav marker found — reviewer verifies");
+   var hrefs=[],re=/href=["']([^"']+)["']/gi,m;
+   while((m=re.exec(pageText))&&hrefs.length<200){hrefs.push(m[1]);}
+   var internal=hrefs.filter(function(h){return h.indexOf("/")===0&&h.indexOf("//")!==0;});
+   internal=internal.filter(function(h,i,a){return a.indexOf(h)===i;}).slice(0,8);
+   if(!internal.length){
+     add("All internal links work","pass","No internal links to check");
+   }else{
+     var bad=[];
+     for(var i=0;i<internal.length;i++){
+       try{var rr=await fetch(location.origin+internal[i],{method:"GET",credentials:"same-origin"});if(!rr.ok)bad.push(internal[i]+" ("+rr.status+")");}
+       catch(e){bad.push(internal[i]+" (fetch failed)");}
+     }
+     add("All internal links work",bad.length?"fail":"pass",bad.length?bad.join(", "):internal.length+" checked");
+   }
+   var imgs=pageText.match(/<img\b[^>]*>/gi)||[];
+   var badImgs=imgs.filter(function(t){return !/alt=/i.test(t);});
+   add("Alt text on every image",badImgs.length?"fail":"pass",imgs.length?imgs.length+" images, "+badImgs.length+" missing alt attribute":"No images on the page");
+   add("No personal info on the page",/\b(tucker|mia)\b/i.test(pageText)?"fail":"pass","First name + state only; nothing about the kids");
+   add("Page size within limits",pageText.length<1000000?"pass":"fail",Math.round(pageText.length/1024)+" KB");
+   if(c.type==="Blog"){
+     var extLinks=[];var re2=/href=["'](https?:\/\/[^"']+)["']/gi,m2;
+     while((m2=re2.exec(pageText))&&extLinks.length<200){extLinks.push(m2[1]);}
+     var peer=extLinks.filter(function(h){return /(^|\.)(edu|gov|ac\.uk)(\/|$)|doi\.org|ncbi\.nlm\.nih\.gov|pubmed|nature\.com|science\.org|sciencedirect\.com|jstor\.org|plos\.org/i.test(h);});
+     add("Peer-reviewed source link found",peer.length?"pass":"fail",peer.length?peer.length+" peer-reviewed link(s)":"No peer-reviewed source link on the page");
+   }
+   if(c.type==="Top 5"){
+     var nAmazon=(pageText.match(/See Amazon price/g)||[]).length;
+     add("Exactly 5 “See Amazon price” links",nAmazon===5?"pass":"fail","Found "+nAmazon);
+     var nTag=(pageText.match(/leonlink-20/g)||[]).length;
+     add("Amazon tag on every pick",nTag>=5?"pass":"fail","Found "+nTag+" tag(s)");
+   }
+   if(c.type==="Game"){
+     add("Loading screen with your brand",/LEONLINK PRESENTS/i.test(pageText)?"pass":"manual","Brand loading screen not found on the page — reviewer verifies");
+     add("Viewport meta (mobile-first)",/<meta[^>]+name=["']viewport["']/i.test(pageText)?"pass":"fail","No viewport meta");
+   }
+   if(c.type==="Software"){
+     add("No login button / site chrome inside the app",/<(a|button)\b[^>]*(log[\s-]?in|sign[\s-]?in)/i.test(pageText)?"fail":"pass","No login/sign-in control found inside the app");
+   }
+ }
+ if(c.type==="Blog")add("Shareable + peer-review depth","manual","Reviewer verifies");
+ if(c.type==="Top 5")add("All 5 picks same category","manual","Reviewer verifies");
+ if(c.type==="Game")add("Game plays + mobile PASS on a real phone","manual","Reviewer verifies");
+ if(c.type==="Software")add("Core flow works","manual","Reviewer verifies");
+ add("Deploy count within 85/day","manual","Reviewer verifies");
+ if(c.cps&&c.cps.length)add("Checkpoint proof is real progress","manual","Reviewer verifies");
+ var fails=results.filter(function(r){return r.result==="fail";});
+ var manuals=results.filter(function(r){return r.result==="manual";}).length;
+ var passed=fails.length===0;
+ c.gate={when:today(),passed:passed,results:results};
+ if(!passed&&c.status==="In review")c.status="In progress";
+ saveAll();
+ if(passed){
+   addLog(c,"Botline","SOP gate PASSED — all auto checks green. "+manuals+" item(s) for the reviewer.");
+ }else{
+   addLog(c,"Botline","SOP gate FAILED — "+fails.length+" check(s): "+fails.map(function(f){return f.label;}).join("; ")+". Back to the builder.");
+ }
+}
+function saveUpload(){
+ var c=currentCard;if(!c)return;
+ c.upload={file:val("up-file"),url:val("up-url"),art:val("up-art"),hash:val("up-hash"),changed:val("up-changed"),tested:val("up-tested"),untested:val("up-untested")};
+ saveAll();
+ addLog(c,"Botline","Upload logged: "+(c.upload.file||"(no file)")+" @ "+(c.upload.hash||"(no hash)")+".");
+}
+
+function renderCard(){
+ var c=currentCard,el=document.getElementById("card");
+ var up=c.upload||{};var gateOk=c.gate&&c.gate.passed;
+ var due=dueLabel(c),over=due.indexOf("Overdue")===0;
+ el.innerHTML='<div class="chips"><span class="chip">'+esc(c.type)+'</span><span class="chip pri-'+esc(c.priority)+'">'+esc(c.priority)+'</span><span class="chip st-'+esc(c.status.replace(/ /g,""))+'">'+esc(c.status)+'</span><span class="chip">'+esc(c.cat)+'</span>'+gateChip(c)+'</div>'
+ +'<h1>'+esc(c.id)+' — '+esc(c.title)+'</h1>'
+ +'<p class="meta">Given <b>'+esc(c.date)+'</b> · Responsible: <b>'+esc(c.bot||"Unassigned")+'</b> · <span class="due'+(over?" over":"")+'">'+esc(due)+'</span> ('+esc(c.deadline)+')</p>'
+ +'<p class="sub">'+esc(c.desc||"")+'</p>'
+ +'<div class="banner" id="banner">Escalated — "What\'s happening?" sent to '+esc(c.bot||"the builder")+'\'s inbox. They\'re expected to answer on the message board.</div>'
+ +'<div class="row"><button class="btn2 go2" id="btn-done"'+(gateOk?"":" disabled")+'>Mark done — send to review</button><button class="btn2 warn" id="btn-esc">Escalate — What\'s happening?</button><button class="btn2 warn" id="btn-del">Delete card</button>'+(c.status==="Open"?'<button class="btn2 go2" id="btn-claim">Claim this card</button>':"")+'</div>'
++(gateOk?"":'<p class="note">Gate first: log the upload and run the SOP checks below. This button opens only when the gate passes.</p>')
++'<h2>Upload + SOP gate<small>Log the upload, then run the checks. The gate must pass before review.</small></h2>'
++'<div class="box upbox">'
++'<label for="up-file">File path <span class="hint">— e.g. /journal/my-post.html</span></label><input type="text" id="up-file" value="'+esc(up.file||"")+'" placeholder="/journal/my-post.html">'
++'<label for="up-url">Live URL</label><input type="text" id="up-url" value="'+esc(up.url||"")+'" placeholder="https://www.example.com/journal/my-post.html">'
++'<label for="up-art">Art URL <span class="hint">— .jpg/.png in /img/cards/</span></label><input type="text" id="up-art" value="'+esc(up.art||"")+'" placeholder="https://www.example.com/img/cards/my-post.jpg">'
++'<label for="up-hash">Commit hash</label><input type="text" id="up-hash" value="'+esc(up.hash||"")+'" placeholder="abc1234">'
++'<label for="up-changed">What changed</label><textarea id="up-changed">'+esc(up.changed||"")+'</textarea>'
++'<label for="up-tested">What you tested</label><textarea id="up-tested">'+esc(up.tested||"")+'</textarea>'
++'<label for="up-untested">What you didn\'t test</label><textarea id="up-untested">'+esc(up.untested||"")+'</textarea>'
++'<div class="row"><button class="btn2 go2" id="btn-save-up">Save upload</button><button class="btn2" id="btn-gate">Run SOP checks</button></div>'
++'<p class="note">SOP: <a href="/sops/'+sopSlug(c.type)+'.md" target="_blank" rel="noopener">sops/'+sopSlug(c.type)+'.md</a> &middot; Fail goes back to the builder with the exact failed check. Nothing unproven reaches review.</p>'
++'</div>'
++'<div id="gate-results">'+gateHtml(c.gate)+'</div>'
+
+ +'<h2>Requirements<small>The job is not done until these are true</small></h2><div class="box">'
+ +c.reqs.map(function(r,i){return '<label><input type="checkbox" data-i="'+i+'"'+(r.done?" checked":"")+'><span class="'+(r.done?"done-t":"")+'">'+esc(r.t)+'</span></label>';}).join("")+'</div>'
+ +(c.cps&&c.cps.length?'<h2>Checkpoints<small>Big jobs get longer only by checkpoints</small></h2><div class="box">'
+  +c.cps.map(function(r,i){return '<label><input type="checkbox" data-cp="'+i+'"'+(r.done?" checked":"")+'><span class="'+(r.done?"done-t":"")+'">'+esc(r.t)+'</span></label>';}).join("")+'</div>':"")
+ +((c.gfx||c.audio)?'<h2>Graphics &amp; audio</h2><div class="box">'
+  +(c.gfx?'<p><b>Graphics:</b> '+esc(c.gfx)+'</p>':"")
+  +(c.audio?'<p><b>Audio:</b> '+esc(c.audio)+'</p>':"")+'</div>':"")
+ +'<h2>Message board<small>Work logs live here</small></h2><div id="logs">'
+ +c.logs.map(function(l){return '<div class="log'+(l.esc?" esc":"")+'"><b>'+esc(l.who)+'</b> <span class="when">'+esc(l.when)+'</span><br>'+esc(l.text)+'</div>';}).join("")+'</div>'
+ +'<div class="row"><select id="who"><option>You</option>'+bots.map(function(b){return '<option>'+esc(b.name)+'</option>';}).join("")+'</select><input type="text" id="logtext" class="grow" placeholder="Log what you did, tested, or need"></div><div class="row"><button class="btn2 go2" id="btn-log" style="margin-left:auto">Post log</button></div>'
+ +'<h2>Inspection review<small>Pass is done. Fail goes back with notes.</small></h2><div class="box"><p>'+esc(c.review||"No review yet.")+'</p></div>'
+ +'<div class="row"><button class="btn2 go2" id="btn-pass">Pass — Done</button><button class="btn2" id="btn-fail">Fail — back to work</button></div>'
+ +'<h2>Auto-checks<small>Run on every upload, before review. Fail goes back to the builder with the exact failed check.</small></h2><ul style="list-style:none;padding:0;margin:0">'
+ +AUTO_CHECKS.map(function(x){return '<li style="padding:8px 0 8px 26px;position:relative;border-bottom:1px solid var(--line);font-size:15px"><span style="position:absolute;left:0;color:var(--dim)">○</span>'+esc(x)+'</li>';}).join("")+'</ul>'
+ +'<p class="note">The gate above runs these. ✓ = the system checked it. ○ = the reviewer verifies it.</p>';
+ document.getElementById("btn-done").onclick=function(){if(!(c.gate&&c.gate.passed)){alert("Run the SOP checks first — the gate must pass before review.");return;}c.status="In review";addLog(c,c.bot||"You","Marked done — sent for review.");};
+ var bc=document.getElementById("btn-claim");if(bc)bc.onclick=function(){claimCard(c.id);};
+document.getElementById("btn-save-up").onclick=function(){saveUpload();};
+ document.getElementById("btn-gate").onclick=function(){runGate();};
+ document.getElementById("btn-esc").onclick=function(){
+   addLog(c,"You","ESCALATED — What's happening? Pinged to "+(c.bot||"the builder")+"'s inbox.",true);
+   inbox.unshift({who:"You",when:today(),text:"Escalated "+c.id+" — What's happening?",card:c.id,read:false});saveAll();
+   var b=document.getElementById("banner");if(b)b.style.display="block";renderDash();
+ };
+ document.getElementById("btn-del").onclick=function(){if(confirm("Delete "+c.id+" for good?")){cards=cards.filter(function(x){return x!==c;});saveAll();show("board");}};
+ document.getElementById("btn-pass").onclick=function(){if(!(whoami==="Boss"||myRole()==="Inspector")){alert("Only the Inspector (or the Boss) can pass a card.");return;}c.status="Done";addLog(c,"Inspector","Passed. Card done.");};
+ document.getElementById("btn-fail").onclick=function(){if(!(whoami==="Boss"||myRole()==="Inspector")){alert("Only the Inspector (or the Boss) can fail a card.");return;}var n=prompt("What failed? (goes back to the builder as a note)");if(n===null)return;c.status="In progress";addLog(c,"Inspector","Failed — back to work. "+n);};
+ document.getElementById("btn-log").onclick=function(){var t=document.getElementById("logtext").value.trim();if(!t)return;addLog(c,document.getElementById("who").value,t);};
+ Array.prototype.forEach.call(el.querySelectorAll("[data-i]"),function(x){x.onchange=function(){c.reqs[+x.dataset.i].done=x.checked;saveAll();renderCard();};});
+ Array.prototype.forEach.call(el.querySelectorAll("[data-cp]"),function(x){x.onchange=function(){c.cps[+x.dataset.cp].done=x.checked;saveAll();renderCard();};});
+}
+function addLog(c,who,text,escFlag){c.logs.push({who:who,when:today(),text:text,esc:!!escFlag});saveAll();renderCard();}
+document.addEventListener("click",function(e){
+ var t=e.target.closest("[data-open]");if(t){e.preventDefault();openCard(t.dataset.open);}
+});
+function renderBots(){
+ var tb=document.querySelector("#bots-table tbody");
+ tb.innerHTML=bots.map(function(b,i){
+  var cur=b.card?(' · <a href="#" data-open="'+esc(b.card)+'">'+esc(b.card)+'</a>'):"";
+  return '<tr><td><b>'+esc(b.name)+'</b></td><td>'+esc(b.role)+'</td>'
+  +'<td><span class="dot '+esc(b.status)+'"></span>'+esc(b.status)+'</td>'
+  +'<td>'+(b.card?esc(b.card):"—")+'</td><td>'+esc(b.seen)+'</td>'
+  +'<td><button class="btn2" data-wake="'+i+'">Wake</button> <button class="btn2" data-pause="'+i+'">'+(b.status==="Paused"?"Unpause":"Pause")+'</button> <button class="btn2 warn" data-rm="'+i+'">Remove</button></td></tr>';
+ }).join("")||'<tr><td colspan="6" class="note">No bots yet. Add one below.</td></tr>';
+}
+document.getElementById("bots-table").addEventListener("click",function(e){
+ var w=e.target.closest("[data-wake]"),p=e.target.closest("[data-pause]"),r=e.target.closest("[data-rm]");
+ if(w){var b=bots[+w.dataset.wake];b.status="Working";b.seen="just now";inbox.unshift({who:b.name,when:today(),text:b.name+" woke up and is back on it.",card:b.card||"",read:false});saveAll();renderBots();renderDash();}
+ if(p){var b2=bots[+p.dataset.pause];b2.status=b2.status==="Paused"?"Idle":"Paused";saveAll();renderBots();}
+ if(r){if(confirm("Remove this bot?")){bots.splice(+r.dataset.rm,1);saveAll();renderBots();renderDash();}}
+});
+document.getElementById("btn-auto").addEventListener("click",function(){autoAssign();});
+document.getElementById("bot-add").addEventListener("click",function(){
+ var n=document.getElementById("bot-name").value.trim(),r=document.getElementById("bot-role").value.trim();
+ if(!n)return;bots.push({name:n,role:r||"Unassigned",status:"Idle",card:"",seen:"just now"});
+ saveAll();document.getElementById("bot-name").value="";document.getElementById("bot-role").value="";renderBots();renderDash();
+});
+function renderInbox(){
+ document.getElementById("inbox-empty").hidden=inbox.length>0;
+ document.getElementById("inbox-list").innerHTML=inbox.map(function(m,i){
+  return '<div class="inbox-item'+(m.read?"":" unread")+'"><b>'+esc(m.who)+'</b> <span class="when">'+esc(m.when)+'</span>'+(m.card?' · <a href="#" data-open="'+esc(m.card)+'">'+esc(m.card)+'</a>':"")+'<br>'+esc(m.text)
+  +(m.read?"":' <a href="#" data-read="'+i+'">Mark read</a>')+'</div>';
+ }).join("");
+ var unread=inbox.filter(function(m){return !m.read;}).length;
+ var badge=document.getElementById("inbox-badge");badge.hidden=unread===0;badge.textContent=unread;
+}
+document.getElementById("inbox-list").addEventListener("click",function(e){
+ var r=e.target.closest("[data-read]");if(!r)return;e.preventDefault();inbox[+r.dataset.read].read=true;saveAll();renderInbox();renderDash();
+});
+document.querySelectorAll(".swatches button").forEach(function(b){
+ b.addEventListener("click",function(){document.getElementById("brand-color").value=b.dataset.c;});
+});
+document.getElementById("whoami").addEventListener("change",function(){whoami=this.value;store("botline-whoami",whoami);renderDash();});
+document.getElementById("fb-save").addEventListener("click",function(){var v=document.getElementById("fb-config").value.trim();if(!v){alert("Paste the Firebase web config JSON first.");return;}try{var cfg=JSON.parse(v);if(!cfg.apiKey||!cfg.projectId)throw new Error("needs apiKey and projectId");store("botline-fb-config",cfg);location.reload();}catch(e){alert("That config didn't parse: "+e.message);}});
+document.getElementById("fb-off").addEventListener("click",function(){if(!confirm("Turn off Firebase sync? This browser keeps its local copy."))return;try{localStorage.removeItem("botline-fb-config");}catch(e){}location.reload();});
+var fc=document.getElementById("fb-config");if(fc&&FB_CONFIG)fc.value=JSON.stringify(FB_CONFIG);
+document.getElementById("brand-save").addEventListener("click",function(){
+ brand.name=document.getElementById("brand-name").value.trim()||"Botline";
+ brand.tag=document.getElementById("brand-tag").value.trim();
+ brand.color=document.getElementById("brand-color").value;
+ brand.color2=document.getElementById("brand-color2").value;
+ saveAll();applyBrand();alert("Branding saved. This is your app now — "+brand.name+".");
+});
+document.getElementById("btn-export").addEventListener("click",function(){
+ var blob=new Blob([JSON.stringify({cards:cards,bots:bots,inbox:inbox,brand:brand},null,2)],{type:"application/json"});
+ var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="botline-export.json";a.click();
+});
+document.getElementById("btn-import").addEventListener("click",function(){document.getElementById("import-file").click();});
+document.getElementById("import-file").addEventListener("change",function(e){
+ var f=e.target.files[0];if(!f)return;
+ var r=new FileReader();
+ r.onload=function(){try{var d=JSON.parse(r.result);if(d.cards)cards=d.cards;if(d.bots)bots=d.bots;if(d.inbox)inbox=d.inbox;if(d.brand)brand=d.brand;saveAll();applyBrand();renderDash();alert("Imported."+(fbReady?" Pushed to Firebase.":""));}catch(err){alert("That file didn't parse as Botline data.");}};
+ r.readAsText(f);
+});
+document.getElementById("btn-reset").addEventListener("click",function(){
+ if(!confirm("Reset to the demo cards, bots, and inbox? Your current board will be replaced (export first if you want to keep it)."))return;
+ cards=demoCards();bots=demoBots();inbox=[{who:"Forge",when:today(),text:"Blocked on B3 — need to know: save links locally or in the cloud?",card:"B3",read:false}];
+ saveAll();renderDash();
+});
+applyBrand();renderDash();renderSubmit();fbInit();
+})();
+</script>
+</body>
+</html>
