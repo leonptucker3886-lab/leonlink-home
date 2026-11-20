@@ -139,6 +139,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
 <section class="view" id="v-board">
 <h1>The <span>Board</span></h1>
 <p class="sub">Every job, on one board. Click a card and enter.</p>
+<div class="box" id="board-gate" hidden><label for="board-who">Who are you?</label><select id="board-who" style="max-width:280px"></select><div class="row"><button class="btn2 go2" id="board-go">Go to the board</button></div><p class="note">Pick your name first — the board opens after that, so claims land on the right bot.</p></div>
 <div class="filters" id="tf">
 <button data-t="All" class="on">All</button><button data-t="Blog">Blog</button><button data-t="Top 5">Top 5</button><button data-t="Game">Game</button><button data-t="Software">Software</button>
 </div>
@@ -303,6 +304,7 @@ var FB_DEFAULT={"apiKey":"AIzaSyBJCekEZp-o2DyoGKszo9tRW9_v2MquLSk","authDomain":
 var FB_CONFIG=store("botline-fb-off")?null:(store("botline-fb-config")||FB_DEFAULT);
 var fbReady=false,fbUid=null,fbApplying=false,fbLastCards="",fbLastBots="",fbLastInbox="",fbPulled=false;
 var whoami=store("botline-whoami")||"Boss";
+var whoamiPicked=store("botline-whoami-picked")==="1";
 function fbStatus(t){var e=document.getElementById("fb-status");if(e)e.textContent=t;}
 function myRole(){if(whoami==="Boss")return "Boss";var b=null;bots.forEach(function(x){if(x.name===whoami)b=x;});return b?b.role:"";}
 function roleTypes(role){
@@ -489,8 +491,14 @@ function renderDash(){
  var blocked=cards.filter(function(c){return c.status==="Blocked";}).length;
  var overdue=cards.filter(function(c){return c.status!=="Done"&&dueLabel(c).indexOf("Overdue")===0;}).length;
  var stalled=bots.filter(function(b){return b.status==="Stalled";}).length;
+ var total=cards.length;
+ var inProg=cards.filter(function(c){return c.status==="Assigned"||c.status==="In progress"||c.status==="In review";}).length;
+ var avail=bots.filter(function(b){return !botBusy(b.name)&&b.status!=="Paused"&&roleTypes(b.role)!==null;}).length;
  document.getElementById("stats").innerHTML=
-  '<div class="stat"><b>'+open+'</b><span>Open</span></div>'
+  '<div class="stat"><b>'+total+'</b><span>Total cards</span></div>'
+ +'<div class="stat"><b>'+inProg+'</b><span>Cards in progress</span></div>'
+ +'<div class="stat"><b>'+avail+'</b><span>Bots available</span></div>'
+ +'<div class="stat"><b>'+open+'</b><span>Open</span></div>'
  +'<div class="stat'+(blocked?" bad":"")+'"><b>'+blocked+'</b><span>Blocked</span></div>'
  +'<div class="stat'+(overdue?" bad":"")+'"><b>'+overdue+'</b><span>Overdue</span></div>'
  +'<div class="stat'+(stalled?" bad":"")+'"><b>'+stalled+'</b><span>Bots stalled</span></div>'
@@ -512,6 +520,14 @@ function renderDash(){
 }
 var tf="All";
 function renderBoard(){
+ var gate=document.getElementById("board-gate");
+ if(!whoamiPicked){
+  gate.hidden=false;document.getElementById("tf").hidden=true;document.getElementById("board").innerHTML="";document.getElementById("board-empty").hidden=true;
+  var sel=document.getElementById("board-who");
+  sel.innerHTML='<option value="">\u2014 Pick your name \u2014</option><option>Boss</option>'+bots.map(function(b){return '<option>'+esc(b.name)+'</option>';}).join("");
+  return;
+ }
+ gate.hidden=true;document.getElementById("tf").hidden=false;
  var list=cards.slice().sort(function(a,b){return (PRI[a.priority]-PRI[b.priority])||String(a.deadline).localeCompare(String(b.deadline));});
  if(tf!=="All")list=list.filter(function(c){return c.type===tf;});
  document.getElementById("board-empty").hidden=list.length>0;
@@ -929,7 +945,13 @@ document.getElementById("inbox-list").addEventListener("click",function(e){
 document.querySelectorAll(".swatches button").forEach(function(b){
  b.addEventListener("click",function(){document.getElementById("brand-color").value=b.dataset.c;});
 });
-document.getElementById("whoami").addEventListener("change",function(){whoami=this.value;store("botline-whoami",whoami);if(fbReady)fbBindIdentity();renderDash();});
+document.getElementById("whoami").addEventListener("change",function(){whoami=this.value;store("botline-whoami",whoami);store("botline-whoami-picked","1");whoamiPicked=true;if(fbReady)fbBindIdentity();renderDash();});
+document.getElementById("board-go").addEventListener("click",function(){
+ var v=document.getElementById("board-who").value;
+ if(!v){alert("Pick your name first.");return;}
+ whoami=v;store("botline-whoami",whoami);store("botline-whoami-picked","1");whoamiPicked=true;
+ if(fbReady)fbBindIdentity();renderDash();renderBoard();
+});
 document.getElementById("fb-save").addEventListener("click",function(){var v=document.getElementById("fb-config").value.trim();if(!v){alert("Paste the Firebase web config JSON first.");return;}try{var cfg=JSON.parse(v);if(!cfg.apiKey||!cfg.projectId)throw new Error("needs apiKey and projectId");try{localStorage.removeItem("botline-fb-off");}catch(e){}store("botline-fb-config",cfg);location.reload();}catch(e){alert("That config didn't parse: "+e.message);}});
 document.getElementById("fb-off").addEventListener("click",function(){if(!confirm("Turn off Firebase sync? This browser keeps its local copy."))return;try{localStorage.removeItem("botline-fb-config");localStorage.setItem("botline-fb-off","1");}catch(e){}location.reload();});
 var fc=document.getElementById("fb-config");if(fc&&FB_CONFIG)fc.value=JSON.stringify(FB_CONFIG);
