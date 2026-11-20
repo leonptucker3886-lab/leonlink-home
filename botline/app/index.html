@@ -520,6 +520,7 @@ function renderDash(){
  badge.hidden=unread===0;badge.textContent=unread;
  var ws=document.getElementById("whoami");
  if(ws){ws.innerHTML='<option>Boss</option>'+bots.map(function(b){return '<option>'+esc(b.name)+'</option>';}).join("");ws.value=whoami;}
+ var br=document.getElementById("btn-reset");if(br)br.hidden=!!fbReady;
 }
 var tf="All";
 function renderBoard(){
@@ -856,7 +857,7 @@ document.getElementById("btn-save-up").onclick=function(){saveUpload();};
    inbox.unshift({id:"m"+Date.now(),who:"You",to:c.bot||"Boss",ts:Date.now(),when:today(),text:"Escalated "+c.id+" — What's happening?",card:c.id,read:false});saveAll();
    var b=document.getElementById("banner");if(b)b.style.display="block";renderDash();
  };
- document.getElementById("btn-del").onclick=function(){if(confirm("Delete "+c.id+" for good?")){cards=cards.filter(function(x){return x!==c;});saveAll();show("board");}};
+ document.getElementById("btn-del").onclick=function(){if(whoami!=="Boss"){alert("Only the Boss can delete a card.");return;}if(confirm("Delete "+c.id+" for good?")){var id=c.id;cards=cards.filter(function(x){return x!==c;});if(fbReady){try{fbDb().collection("cards").doc(id).delete().then(function(){fbStatus("Deleted "+id+".");}).catch(function(){fbStatus("Delete refused by the database — only the Boss can delete.");});}catch(e){fbStatus("Delete failed: "+e.message);}}saveAll();show("board");}};
  var bu=document.getElementById("btn-unassign");if(bu)bu.onclick=function(){unassignCard(c.id);};
  var be=document.getElementById("btn-edit-card");if(be)be.onclick=function(){document.getElementById("card-edit").hidden=false;document.getElementById("card-edit").scrollIntoView();};
  var bse=document.getElementById("btn-save-edit");if(bse)bse.onclick=function(){var t=document.getElementById("ce-title").value.trim();if(!t){alert("Title can't be empty.");return;}c.title=t;c.desc=document.getElementById("ce-desc").value.trim();addLog(c,whoami,"Edited the card \u2014 title/description updated.");};
@@ -872,13 +873,19 @@ document.addEventListener("click",function(e){
  var u=e.target.closest("[data-unassign]");if(u){e.preventDefault();unassignCard(u.dataset.unassign);}
 });
 var botEditIdx=-1;
+function lastSeenFor(name){
+ var best="";
+ cards.forEach(function(c){(c.logs||[]).forEach(function(l){if(l.who===name&&l.when&&(!best||l.when>best))best=l.when;});});
+ return best||"—";
+}
 function renderBots(){
  var tb=document.querySelector("#bots-table tbody");
  tb.innerHTML=bots.map(function(b,i){
   var cc="";cards.forEach(function(x){if(x.bot===b.name&&x.status!=="Done")cc=x.id;});
+  var st=b.status==="Paused"?"Paused":(cc?"Working":"Idle");
   return '<tr><td><b>'+esc(b.name)+'</b></td><td>'+esc(b.role)+'</td>'
-  +'<td><span class="dot '+esc(b.status)+'"></span>'+esc(b.status)+'</td>'
-  +'<td>'+(cc?'<a href="#" data-open="'+esc(cc)+'">'+esc(cc)+'</a>':"—")+'</td><td>'+esc(b.seen)+'</td>'
+  +'<td><span class="dot '+esc(st)+'"></span>'+esc(st)+'</td>'
+  +'<td>'+(cc?'<a href="#" data-open="'+esc(cc)+'">'+esc(cc)+'</a>':"—")+'</td><td>'+esc(lastSeenFor(b.name))+'</td>'
   +'<td><button class="btn2" data-wake="'+i+'">Wake</button> <button class="btn2" data-pause="'+i+'">'+(b.status==="Paused"?"Unpause":"Pause")+'</button> <button class="btn2" data-edit="'+i+'">Edit'+(b.instructions?" ✓":"")+'</button> <button class="btn2 warn" data-rm="'+i+'">Remove</button></td></tr>';
  }).join("")||'<tr><td colspan="6" class="note">No bots yet. Add one below.</td></tr>';
 }
@@ -957,7 +964,7 @@ document.getElementById("board-go").addEventListener("click",function(){
 });
 document.getElementById("fb-save").addEventListener("click",function(){var v=document.getElementById("fb-config").value.trim();if(!v){alert("Paste the Firebase web config JSON first.");return;}try{var cfg=JSON.parse(v);if(!cfg.apiKey||!cfg.projectId)throw new Error("needs apiKey and projectId");try{localStorage.removeItem("botline-fb-off");}catch(e){}store("botline-fb-config",cfg);location.reload();}catch(e){alert("That config didn't parse: "+e.message);}});
 document.getElementById("fb-off").addEventListener("click",function(){if(!confirm("Turn off Firebase sync? This browser keeps its local copy."))return;try{localStorage.removeItem("botline-fb-config");localStorage.setItem("botline-fb-off","1");}catch(e){}location.reload();});
-var fc=document.getElementById("fb-config");if(fc&&FB_CONFIG)fc.value=JSON.stringify(FB_CONFIG);
+var fc=document.getElementById("fb-config");if(fc&&FB_CONFIG)fc.placeholder="Connected to "+(FB_CONFIG.projectId||"Firebase")+" — paste a different config to switch.";
 document.getElementById("brand-save").addEventListener("click",function(){
  brand.name=document.getElementById("brand-name").value.trim()||"Botline";
  brand.tag=document.getElementById("brand-tag").value.trim();
@@ -978,6 +985,7 @@ document.getElementById("import-file").addEventListener("change",function(e){
  r.readAsText(f);
 });
 document.getElementById("btn-reset").addEventListener("click",function(){
+ if(fbReady){alert("Reset is off while synced to the live pool — turn off sync first.");return;}
  if(!confirm("Reset to the demo cards, bots, and inbox? Your current board will be replaced (export first if you want to keep it)."))return;
  cards=demoCards();bots=demoBots();inbox=[{id:"m-demo",who:"Forge",to:"Boss",ts:0,when:today(),text:"Blocked on B3 — need to know: save links locally or in the cloud?",card:"B3",read:false}];
  saveAll();renderDash();
