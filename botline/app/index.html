@@ -110,6 +110,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
 <nav class="tabs" id="tabs">
 <button data-v="dash" class="on">Dashboard</button>
 <button data-v="board">Board</button>
+<button data-v="assign">Assignments</button>
 <button data-v="submit">+ Submit</button>
 <button data-v="bots">Bots</button>
 <button data-v="inbox">Inbox<span class="badge" id="inbox-badge" hidden>0</span></button>
@@ -143,6 +144,12 @@ button:disabled{opacity:.45;cursor:not-allowed}
 </div>
 <div class="plist" id="board"></div>
 <p class="note" id="board-empty" hidden>No cards here yet. Submit the first one.</p>
+</section>
+
+<section class="view" id="v-assign">
+<h1>Who is on <span>what.</span></h1>
+<p class="sub">Assigned cards, and who is free.</p>
+<div id="assign-list"></div>
 </section>
 
 <section class="view" id="v-submit">
@@ -369,7 +376,7 @@ function renderCurrent(){
  var v=document.querySelector(".view.on");
  if(!v)return;
  var id=v.id.replace("v-","");
- if(id==="dash")renderDash();else if(id==="board")renderBoard();else if(id==="bots")renderBots();
+ if(id==="dash")renderDash();else if(id==="board")renderBoard();else if(id==="assign")renderAssign();else if(id==="bots")renderBots();
  else if(id==="inbox")renderInbox();else if(id==="card"&&currentCard)renderCard();
 }
 function fbInit(){
@@ -472,7 +479,7 @@ function nextId(){var m=0;cards.forEach(function(c){var n=parseInt(String(c.id).
 function show(v){
  document.querySelectorAll(".view").forEach(function(s){s.classList.toggle("on",s.id==="v-"+v);});
  document.querySelectorAll("#tabs button").forEach(function(b){b.classList.toggle("on",b.dataset.v===v||(v==="card"&&b.dataset.v==="board"));});
- if(v==="dash")renderDash();if(v==="board")renderBoard();if(v==="bots")renderBots();if(v==="inbox")renderInbox();if(v==="submit")renderSubmit();
+ if(v==="dash")renderDash();if(v==="board")renderBoard();if(v==="assign")renderAssign();if(v==="bots")renderBots();if(v==="inbox")renderInbox();if(v==="submit")renderSubmit();
  window.scrollTo(0,0);
 }
 document.getElementById("tabs").addEventListener("click",function(e){var b=e.target.closest("button");if(b)show(b.dataset.v);});
@@ -872,6 +879,20 @@ document.getElementById("bot-editor-save").addEventListener("click",function(){
  saveAll();renderBots();renderDash();document.getElementById("bot-editor").hidden=true;botEditIdx=-1;
 });
 document.getElementById("bot-editor-cancel").addEventListener("click",function(){document.getElementById("bot-editor").hidden=true;botEditIdx=-1;});
+function renderAssign(){
+ var busy=bots.filter(function(b){return botBusy(b.name);});
+ var free=bots.filter(function(b){return !botBusy(b.name)&&b.status!=="Paused"&&roleTypes(b.role)!==null;});
+ var box=document.getElementById("assign-list");
+ var h="<h2>Working ("+busy.length+")</h2>";
+ h+=busy.length?busy.map(function(b){
+  var c=null;cards.forEach(function(x){if(x.bot===b.name&&x.status!=="Done")c=x;});
+  return '<div class="pitem"><h3>'+esc(b.name)+' &mdash; <a href="#" data-open="'+esc(c?c.id:"")+'">'+esc(c?c.id:"")+'</a></h3><p>'+esc(c?c.title:"")+'</p><div class="meta"><b>'+esc(c?c.type:"")+'</b> &middot; '+esc(c?dueLabel(c):"")+'</div></div>';
+ }).join(""):'<p class="note">Nobody has a card yet.</p>';
+ h+="<h2>Free ("+free.length+")</h2>";
+ h+=free.length?free.map(function(b){return '<div class="pitem"><h3>'+esc(b.name)+'</h3><p>'+esc(b.role||"")+'</p></div>';}).join(""):'<p class="note">Nobody is free &mdash; every bot has a card.</p>';
+ h+='<p class="note">Paused bots and Inspectors are not listed &mdash; paused take nothing, Inspectors review.</p>';
+ box.innerHTML=h;
+}
 function renderInbox(){
  var box=document.getElementById("inbox-box");
  var names=["All","Boss"].concat(bots.map(function(b){return b.name;}));
