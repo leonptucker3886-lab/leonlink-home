@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sun N Fun — Escape the Trailer Park</title>
+<style>
+/* ============ PALETTE (from the uploaded intro) ============ */
+:root{--night:#0a0c10;--gold:#e8b84a;--gold-dim:#c4922e;--neon:#ff6b35;--text:#f0e6d0;--muted:#9a8b72;--panel:#141210;--border:#3a3020}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--night);color:var(--text);font-family:"Segoe UI",system-ui,sans-serif;overflow-x:hidden}
+.screen{display:none;min-height:100vh;width:100%}
+.screen.active{display:flex;flex-direction:column;align-items:center}
+.hidden{display:none!important}
+.btn{appearance:none;border:none;cursor:pointer;font-family:inherit;font-size:.95rem;font-weight:700;letter-spacing:.06em;padding:.9rem 1.7rem;border-radius:8px;transition:.15s}
+.btn:hover{transform:translateY(-2px)}
+.btn-spin{background:linear-gradient(180deg,#f0c060,var(--gold-dim));color:#1a1008;box-shadow:0 6px 24px rgba(232,184,74,.4)}
+.btn-ghost{background:0;color:var(--muted);border:1px solid #3a3020}
+.btn-ghost:hover{border-color:var(--gold);color:var(--text)}
+.btn-danger{border:1px solid #a33;color:#f88;background:0}
+.btn-danger:hover{border-color:#f88;background:rgba(160,40,40,.25)}
+.btn-wide{width:100%;text-align:center}
+
+/* ============ SPLASH ============ */
+#splash-screen{justify-content:center;background:#000;cursor:pointer}
+.splash-title{font-size:clamp(1.8rem,7vw,3rem);font-weight:900;letter-spacing:.35em;color:var(--gold);text-align:center;text-shadow:0 0 40px rgba(232,184,74,.5)}
+.splash-sub{margin-top:1rem;font-size:.8rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+.splash-skip{position:absolute;bottom:2rem;font-size:.75rem;color:#5a4a38;letter-spacing:.2em;text-transform:uppercase}
+
+/* ============ PROMO (from the uploaded intro, fixed) ============ */
+#promo-screen{justify-content:center;background:radial-gradient(ellipse 100% 60% at 50% -10%,rgba(232,184,74,.12),transparent 55%),var(--night);padding:2rem 1rem 3rem}
+.promo-inner{max-width:720px;width:100%;text-align:center}
+.promo-badge{display:inline-block;font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(232,184,74,.4);padding:.35rem .9rem;border-radius:999px;margin-bottom:1.2rem}
+.promo-title{font-size:clamp(2.4rem,9vw,4.2rem);font-weight:900;letter-spacing:.06em;background:linear-gradient(180deg,#fff3c4,var(--gold) 40%,var(--gold-dim));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 40px rgba(232,184,74,.35));margin-bottom:.35rem}
+.promo-tag{font-size:clamp(1rem,3vw,1.35rem);letter-spacing:.18em;text-transform:uppercase;color:var(--neon);margin-bottom:1.6rem}
+.promo-desc{font-size:1rem;line-height:1.65;color:#c8b898;max-width:520px;margin:0 auto 1.8rem}
+.promo-desc strong{color:var(--gold)}
+.slot-strip{display:flex;justify-content:center;gap:.5rem;margin-bottom:1.8rem}
+.slot-reel{width:64px;height:72px;background:#1a1610;border:2px solid #4a3a20;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;box-shadow:inset 0 0 12px rgba(0,0,0,.5)}
+.slot-reel span{animation:reelSpin 2.5s ease-in-out infinite}
+@keyframes reelSpin{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.promo-cta{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center}
+.promo-note{margin-top:1.8rem;font-size:.78rem;color:#6a5a48}
+
+/* ============ CUTSCENE ============ */
+.cutscene-layer{position:fixed;inset:0;z-index:300;background:#000;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity 1.1s,visibility 1.1s}
+.cutscene-layer.fade-out{opacity:0;visibility:hidden;pointer-events:none}
+.cut-line{font-size:clamp(1.05rem,2.8vw,1.55rem);letter-spacing:.06em;text-align:center;opacity:0;transform:translateY(14px);transition:.85s;max-width:90%;line-height:1.55;color:#e0d4b8;margin:.2rem 0}
+.cut-line.show{opacity:1;transform:translateY(0)}
+.cut-line.dim{color:#8a7a68;font-size:.92em}
+.cut-line.who{color:var(--gold);font-weight:700}
+/* garage scene: concrete wall, bunny man, axe man */
+.garage-scene{width:min(420px,88vw);height:170px;margin-bottom:1.6rem;border-radius:8px;position:relative;overflow:hidden;opacity:0;transition:opacity 1s;border:1px solid #2a2218;
+  background:repeating-linear-gradient(0deg,#232323 0 22px,#1a1a1a 22px 24px),repeating-linear-gradient(90deg,transparent 0 58px,rgba(0,0,0,.35) 58px 60px),#1e1e1e}
+.garage-scene.show{opacity:1}
+.garage-floor{position:absolute;left:0;right:0;bottom:0;height:34px;background:#141414;border-top:2px solid #2e2e2e}
+.garage-fig{position:absolute;bottom:34px;width:34px;height:64px;border-radius:8px 8px 0 0}
+.garage-bunny{left:50%;margin-left:-17px;background:#3a3a3a}
+.garage-bunny::before{content:"";position:absolute;top:-26px;left:50%;margin-left:-13px;width:26px;height:26px;border-radius:50%;background:#e8e2d2}
+.garage-bunny::after{content:"";position:absolute;top:-44px;left:50%;margin-left:-11px;width:6px;height:20px;background:#e8e2d2;border-radius:4px;box-shadow:16px 0 0 #e8e2d2}
+.garage-axe{right:18%;background:#2a2a30}
+.garage-axe::before{content:"";position:absolute;top:-20px;left:50%;margin-left:-10px;width:20px;height:20px;border-radius:50%;background:#3a3a48}
+.garage-axe::after{content:"";position:absolute;top:6px;right:-16px;width:26px;height:5px;background:#777;border-radius:2px;transform:rotate(-35deg)}
+.garage-lamp{position:absolute;top:10px;left:50%;margin-left:-30px;width:60px;height:8px;background:#3a2f14;border-radius:4px;box-shadow:0 0 34px 12px rgba(232,184,74,.22)}
+
+/* ============ HUD ============ */
+#game-screen{align-items:stretch;padding:0}
+#hud{position:sticky;top:0;z-index:150;background:linear-gradient(180deg,rgba(10,12,16,.97),rgba(10,12,16,.88));border-bottom:2px solid #3a3020;padding:.55rem .8rem}
+.hud-row{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.hud-brand{font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-size:.85rem;white-space:nowrap}
+.hud-meter{flex:1;min-width:120px}
+.hud-meter-label{display:flex;justify-content:space-between;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem}
+.hud-meter-bar{height:10px;background:#1a1610;border:1px solid #3a3020;border-radius:999px;overflow:hidden}
+#suspicion-fill{height:100%;width:30%;background:var(--gold);transition:width .5s}
+.hud-btns{display:flex;gap:.35rem}
+.hud-btn{appearance:none;border:1px solid #4a3a28;background:#1a1610;color:#c8b898;padding:.4rem .65rem;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer}
+.hud-btn:hover,.hud-btn.active{border-color:var(--gold);color:var(--gold)}
+.hud-btn.danger{border-color:#7a2a2a;color:#f88}
+#game-body{flex:1;width:100%;max-width:720px;margin:0 auto;padding:1rem 1rem 3rem}
+.view-title{font-size:1.5rem;font-weight:900;letter-spacing:.04em;color:var(--gold);margin-bottom:.3rem}
+.view-sub{color:var(--muted);font-size:.92rem;line-height:1.5;margin-bottom:1.1rem}
+.hint{border:1px solid rgba(232,184,74,.4);background:rgba(232,184,74,.07);border-radius:8px;padding:.7rem .9rem;font-size:.88rem;line-height:1.5;color:#e8d9b0;margin-bottom:1rem}
+.hint strong{color:var(--gold)}
+
+/* ============ MAP ============ */
+.map-wrap{background:#d8ecd2;border:2px solid #3a3020;border-radius:10px;overflow:hidden;margin-bottom:1rem}
+.map-wrap svg{display:block;width:100%;height:auto}
+.map-node{cursor:pointer}
+.map-node circle{fill:var(--gold);stroke:#1a1008;stroke-width:2}
+.map-node text{fill:#1f2a33;font-size:10.5px;font-weight:800;paint-order:stroke;stroke:#fff;stroke-width:3px}
+.map-street{fill:#33414f;font-size:12px;font-weight:700;font-style:italic;paint-order:stroke;stroke:#fff;stroke-width:3px}
+#player-marker circle.core{fill:#ff6b35;stroke:#fff;stroke-width:2}
+#player-marker circle.ring{fill:none;stroke:#ff6b35;stroke-width:2;opacity:.7;animation:ping 1.6s ease-out infinite}
+@keyframes ping{0%{r:8;opacity:.8}100%{r:20;opacity:0}}
+.map-loc-list{display:grid;gap:.5rem}
+.map-loc-btn{display:flex;justify-content:space-between;align-items:center;background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:.8rem 1rem;cursor:pointer;font-size:.95rem;font-weight:700;color:var(--text);text-align:left;width:100%}
+.map-loc-btn:hover{border-color:var(--gold)}
+.map-loc-btn span{color:var(--muted);font-weight:400;font-size:.8rem}
+
+/* ============ LOCATION / DIALOGUE ============ */
+.card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:1rem;margin-bottom:1rem}
+.char-row{display:flex;align-items:center;gap:.8rem;padding:.7rem .2rem;border-bottom:1px solid #241f18}
+.char-row:last-child{border-bottom:0}
+.char-face{width:44px;height:44px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:900;border:2px solid #4a3a28;background:#1a1610;color:var(--gold)}
+.char-name{font-weight:800;font-size:1rem}
+.char-note{font-size:.82rem;color:var(--muted)}
+.char-talk{margin-left:auto}
+.say{font-size:1.1rem;line-height:1.6;color:#e0d4b8;margin-bottom:1rem}
+.say .who{color:var(--gold);font-weight:800}
+.choice{display:block;width:100%;text-align:left;background:#0e0c0a;border:1px solid #3a3020;border-radius:8px;padding:.85rem 1rem;margin-bottom:.55rem;cursor:pointer;font-size:1rem;color:var(--text);line-height:1.45}
+.choice:hover{border-color:var(--gold);background:#1a1610}
+.choice.locked{opacity:.45}
+.reply{font-size:1rem;line-height:1.6;color:#c8b898;margin-bottom:1rem}
+.reply .who{color:var(--gold);font-weight:800}
+
+/* ============ CLUES ============ */
+.clue-item{border:1px solid var(--border);border-radius:8px;padding:.8rem .9rem;margin-bottom:.6rem;background:#0e0c0a}
+.clue-item.fresh{border-color:var(--gold)}
+.clue-name{font-weight:800;color:var(--gold);margin-bottom:.2rem}
+.clue-text{font-size:.92rem;line-height:1.5;color:#c8b898}
+.clue-empty{color:var(--muted);font-size:.92rem;line-height:1.6}
+
+/* ============ ACCUSE / END ============ */
+.accuse-suspect{display:block;width:100%;text-align:left;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:1rem;margin-bottom:.6rem;cursor:pointer;color:var(--text)}
+.accuse-suspect:hover{border-color:var(--neon)}
+.accuse-suspect .nm{font-weight:800;font-size:1.05rem}
+.accuse-suspect .ds{font-size:.88rem;color:var(--muted);line-height:1.5;margin-top:.2rem}
+.evidence{border:1px solid var(--border);border-radius:8px;padding:.8rem .9rem;margin-bottom:1rem;font-size:.92rem;line-height:1.6;color:#c8b898;background:#0e0c0a}
+.evidence strong{color:var(--gold)}
+.end-title{font-size:clamp(2rem,8vw,3rem);font-weight:900;letter-spacing:.05em;text-align:center;margin:1.5rem 0 .8rem}
+.end-title.win{color:var(--gold)}
+.end-title.lose{color:var(--neon)}
+.end-body{font-size:1.05rem;line-height:1.7;color:#e0d4b8;text-align:center;max-width:520px;margin:0 auto 1.6rem}
+.end-body .who{color:var(--gold);font-weight:800}
+.center{text-align:center}
+
+/* ============ TOAST ============ */
+#toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1610;border:2px solid var(--gold);border-radius:10px;padding:.85rem 1.4rem;z-index:400;opacity:0;pointer-events:none;transition:.4s;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.5);max-width:92vw;font-size:.92rem;line-height:1.45}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#toast strong{color:var(--gold)}
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash-screen" class="screen active" onclick="skipSplash()">
+  <div class="splash-title">LEONLINK<br>PRESENTS</div>
+  <div class="splash-sub">Sun N Fun &mdash; Escape the Trailer Park</div>
+  <div class="splash-skip">Tap to skip</div>
+</div>
+
+<!-- PROMO -->
+<div id="promo-screen" class="screen">
+  <div class="promo-inner">
+    <div class="promo-badge">Now Playing</div>
+    <h1 class="promo-title">Sun N Fun</h1>
+    <p class="promo-tag">Escape the Trailer Park</p>
+    <p class="promo-desc">Run run all you want<br>Sun n Fun will eat you up<br><br><strong>LEONLINK PRESENTS<br></strong>Kentucky's finest mobile home community<br></p>
+    <div class="slot-strip"><div class="slot-reel"><span>7</span></div><div class="slot-reel"><span>BAR</span></div><div class="slot-reel"><span>7</span></div></div>
+    <div class="promo-cta"><button class="btn btn-spin" onclick="startIntro()">You know what time it is</button></div>
+    <p class="promo-note">.."i just love people on my pizza"</p>
+  </div>
+</div>
+
+<!-- CUTSCENE -->
+<div id="cutscene" class="cutscene-layer hidden">
+  <div class="garage-scene" id="garage-scene">
+    <div class="garage-lamp"></div>
+    <div class="garage-fig garage-bunny"></div>
+    <div class="garage-fig garage-axe"></div>
+    <div class="garage-floor"></div>
+  </div>
+  <div id="cut-lines"></div>
+  <div style="height:1.4rem"></div>
+  <button class="btn btn-ghost hidden" id="cut-continue" onclick="startGame()">Tap to continue</button>
+</div>
+
+<!-- GAME -->
+<div id="game-screen" class="screen">
+  <div id="hud">
+    <div class="hud-row">
+      <div class="hud-brand">Sun N Fun</div>
+      <div class="hud-meter">
+        <div class="hud-meter-label"><span>Suspicion</span><span id="suspicion-num">30 / 100</span></div>
+        <div class="hud-meter-bar"><div id="suspicion-fill"></div></div>
+      </div>
+      <div class="hud-btns">
+        <button class="hud-btn" id="hud-map" onclick="renderMap()">Map</button>
+        <button class="hud-btn" id="hud-clues" onclick="renderClues()">Clues <span id="clue-count">0/8</span></button>
+        <button class="hud-btn danger" id="hud-accuse" onclick="openAccuse()">Accuse</button>
+      </div>
+    </div>
+  </div>
+  <div id="game-body"></div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ============================================================================
+   SUN N FUN — ESCAPE THE TRAILER PARK
+   A talk-to-people, find-clues escape game. No slots. No money. No runner.
+   ----------------------------------------------------------------------------
+   CAST — THE WHOLE CAST LIVES HERE. Leon renames / replaces people here.
+   Each character: id, name, face (emoji shown in the circle), note (one line),
+   where they stand, and their dialogue stages.
+   The snitch is picked at random from SUSPECTS every new game. Earl is the
+   witness: he always tells the truth — unless HE is the snitch, and then he
+   says nothing at all.
+   ============================================================================ */
+var CAST = {
+  bunny: {
+    name: "The Bunny Man", face: "🐰", where: "garage",
+    note: "Sits across from you. Never gives his name. He is the court.",
+    stages: [
+      { say: "<span class='who'>BUNNY:</span> You slept through a raid, friend. Cops took Mikey last night. Three cruisers. Somebody pointed.",
+        choices: [
+          { t: "I didn't talk to anybody.", r: "<span class='who'>BUNNY:</span> That's what they all say. Every time.", s: 5, next: 1 },
+          { t: "Who got busted?", r: "<span class='who'>BUNNY:</span> Mikey. Somebody knew his schedule. Somebody always knows.", s: 0, next: 1 },
+          { t: "I owe nothing. Prove it.", r: "<span class='who'>BUNNY:</span> Bold. Wrong, but bold. Razor likes bold.", s: 10, next: 1 }
+        ]},
+      { say: "<span class='who'>BUNNY:</span> Two things, friend. The debt. And the snitch. Sort both, and you walk out that gate. Get one wrong, and Razor gets to work.",
+        choices: [
+          { t: "Who says I owe?", r: "<span class='who'>BUNNY:</span> Dwayne says. Dwayne collects. Ask Dwayne.", s: 0, next: "end" },
+          { t: "The axe man ever talk?", r: "<span class='who'>BUNNY:</span> Razor talks with the stone. Listen close.", s: 0, next: "end" },
+          { t: "I'm going.", r: "<span class='who'>BUNNY:</span> Go on, then. The park is small. The night is long.", s: 0, next: "end" }
+        ]}
+    ]
+  },
+  razor: {
+    name: "Razor", face: "🪓", where: "garage",
+    note: "The axe sharpener. He does not hurry. That is the whole threat.",
+    stages: [
+      { say: "<span class='who'>RAZOR:</span> Shhk. Shhk. He doesn't look up from the stone.",
+        choices: [
+          { t: "Nice axe.", r: "<span class='who'>RAZOR:</span> It was nicer before the last guy.", s: 5, next: 1 },
+          { t: "What did the last guy do?", r: "<span class='who'>RAZOR:</span> He guessed wrong.", s: 0, next: 1 },
+          { t: "Leave him alone.", r: "You leave.", s: 0, next: "end" }
+        ]},
+      { say: "<span class='who'>RAZOR:</span> Shhk. Shhk. The stone is dry. The axe hasn't been swung in weeks.",
+        choices: [
+          { t: "Look closer at the whetstone.", r: "<span class='who'>RAZOR:</span> No filings. No fresh edge. The blade is for show — but the man holding it isn't.", s: 0, clue: "whetstone", next: "end" },
+          { t: "You ever cut anybody?", r: "<span class='who'>RAZOR:</span> Not yet. Don't be the first.", s: 5, next: "end" }
+        ]}
+    ]
+  },
+  marlene: {
+    name: "Marlene", face: "📋", where: "office",
+    note: "Park manager. Keeps the books, the office, and the office phone.",
+    suspect: true,
+    accuseLine: "Park manager. Keeps the books and the office phone.",
+    stages: [
+      { say: "<span class='who'>MARLENE:</span> Office hours are over. And you're not supposed to be in here.",
+        choices: [
+          { t: "I need to see the debt book.", r: "<span class='who'>MARLENE:</span> You need a warrant. Or manners.", s: 5, next: 1 },
+          { t: "Who called the cops last night?", r: "<span class='who'>MARLENE:</span> Somebody who knew Mikey's schedule. I keep the books, not the secrets.", s: 0, next: 1 },
+          { t: "Nice office.", r: "<span class='who'>MARLENE:</span> Flattery. Cute. Leave.", s: 0, next: "end" }
+        ]},
+      { say: "<span class='who'>MARLENE:</span> Well? I'm waiting. The park doesn't run itself.",
+        choices: [
+          { t: "Please. Somebody's trying to bury me.", r: "<span class='who'>MARLENE:</span> ...Fine. One look at the desk. Then out. And if I hear a drawer, I hear everything.", s: 0, flag: "marleneAllowed", next: "end" },
+          { t: "You got a phone log?", r: "<span class='who'>MARLENE:</span> Office phone's mine. I don't call the law on my own people.", s: 0, next: "end" },
+          { t: "I'm going.", r: "<span class='who'>MARLENE:</span> Go on.", s: 0, next: "end" }
+        ]}
+    ]
+  },
+  dwayne: {
+    name: "Dwayne", face: "💰", where: "laundry",
+    note: "The collector. Pushes the $400 debt. Collects for somebody.",
+    suspect: true,
+    accuseLine: "The collector. Pushes the $400 debt.",
+    stages: [
+      { say: "<span class='who'>DWAYNE:</span> Well well. The drunk with the debt.",
+        choices: [
+          { t: "What debt? Name the number.", r: "<span class='who'>DWAYNE:</span> Four hundred. Cash. Tonight.", s: 0, next: 1 },
+          { t: "I was passed out. I don't remember any bet.", r: "<span class='who'>DWAYNE:</span> Convenient memory. Everybody in this park remembers but you.", s: 5, next: 1 },
+          { t: "Who'd you hear it from?", r: "<span class='who'>DWAYNE:</span> A little bird with a ledger. Pay up.", s: 0, next: 1 }
+        ]},
+      { say: "<span class='who'>DWAYNE:</span> Four hundred. Don't make me come find you twice.",
+        choices: [
+          { t: "Show him the ledger page — your name isn't in it.", r: "<span class='who'>DWAYNE:</span> ...Fine. Fine! You owed twenty bucks for beer. Somebody wanted you scared, so I made the rest up. Happy?", s: 0, clue: "confession", next: "end", need: { clue: "ledger" } },
+          { t: "Call his bluff.", r: "<span class='who'>DWAYNE:</span> Bluff? Son, I got an axe man on retainer.", s: 10, next: "end" },
+          { t: "Walk away.", r: "<span class='who'>DWAYNE:</span> Tonight, friend. Four hundred.", s: 0, next: "end" }
+        ]}
+    ]
+  },
+  tanya: {
+    name: "Tanya", face: "👁️", where: "pond",
+    note: "Neighbor on Tomahawk. Saw the cops come. Lives by the pond.",
+    suspect: true,
+    accuseLine: "Neighbor on Tomahawk. Saw the cops come.",
+    stages: [
+      { say: "<span class='who'>TANYA:</span> You shouldn't be here. The cops were here. They're coming back.",
+        choices: [
+          { t: "What did you see last night?", r: "<span class='who'>TANYA:</span> Three cruisers, 3 AM. Somebody pointed at Mikey's place. Then a phone light, down by the pond.", s: 0, next: 1, flag: "phoneHint" },
+          { t: "Was it me? Did you see me?", r: "<span class='who'>TANYA:</span> You were facedown in the garage all night. Everybody knows that. That's why this stinks.", s: -5, next: 1 },
+          { t: "Who points a finger in this park?", r: "<span class='who'>TANYA:</span> Somebody who wants Mikey's lot. Or somebody the cops already own.", s: 0, next: 1 }
+        ]},
+      { say: "<span class='who'>TANYA:</span> I already said too much. What else?",
+        choices: [
+          { t: "The phone light — where exactly?", r: "<span class='who'>TANYA:</span> In the pond. I saw it go in. If you want it, wade for it.", s: 0, next: "end" },
+          { t: "Who sees everything around here?", r: "<span class='who'>TANYA:</span> Earl. Earl sees everything and says nothing — till you ask right.", s: 0, next: "end" },
+          { t: "I'm going.", r: "<span class='who'>TANYA:</span> Careful out there.", s: 0, next: "end" }
+        ]}
+    ]
+  },
+  earl: {
+    name: "Earl", face: "🔥", where: "bonfire",
+    note: "Old-timer. Forty years in the park. Sits by the bonfire and sees everything.",
+    suspect: true,
+    accuseLine: "Old-timer. Forty years by the bonfire. Sees everything.",
+    stages: [
+      { say: "<span class='who'>EARL:</span> Sit. Fire's warm. Night's cold. Same as always.",
+        choices: [
+          { t: "What happened last night?", r: "<span class='who'>EARL:</span> Cops. Mikey. Somebody talked, sure as the fire burns.", s: 0, next: 1 },
+          { t: "You been here long?", r: "<span class='who'>EARL:</span> Forty years. Seen every kind of trouble this park can grow.", s: 0, next: 1 },
+          { t: "You believe I owe four hundred?", r: "<span class='who'>EARL:</span> Son, you couldn't owe four hundred. You ain't got four hundred. Somebody's running a game on you.", s: -5, next: 1 }
+        ]},
+      { say: "<span class='who'>EARL:</span> The fire's dying. Ask what you came to ask.",
+        choices: [
+          { t: "Did you see anybody by the pond?", r: "EARL_SAW", s: 0, next: "end" },
+          { t: "Who else was up at 3 AM?", r: "<span class='who'>EARL:</span> Dogs. Cops. And one shape by the water. That's all I got.", s: 0, next: "end" },
+          { t: "I'm going.", r: "<span class='who'>EARL:</span> Watch your back, son. It's a small park.", s: 0, next: "end" }
+        ]}
+    ]
+  }
+};
+
+/* Suspects: the snitch is one of these, picked at random every new game. */
+var SUSPECTS = ["marlene", "dwayne", "tanya", "earl"];
+
+/* What Earl saw — depends on who the snitch is. If Earl IS the snitch,
+   he says nothing at all. The pond phone is the ground truth. */
+var EARL_SAW = {
+  marlene: "<span class='who'>EARL:</span> Around 3. A shape, down by the water. Clipboard under the arm. Office folk walk like that.",
+  dwayne: "<span class='who'>EARL:</span> Around 3. A shape by the water. Gold chain caught the porch light. I know that glint.",
+  tanya: "<span class='who'>EARL:</span> Around 3. A shape by the water. Pink case in the hand, glowing like a firefly.",
+  earl: "<span class='who'>EARL:</span> Didn't see a thing. Fire was low. I was asleep."
+};
+/* The mark on the pond phone — the physical evidence. Matches Earl's story. */
+var PHONE_MARKS = {
+  marlene: "an office key tag on a lanyard, still clipped on.",
+  dwayne: "a scratched \u201CDW\u201D on the back.",
+  tanya: "a chipped pink case with a daisy sticker.",
+  earl: "a faded flag sticker, peeling at the corner."
+};
+/* What the snitch says when you show them the phone. */
+var CONFRONT = {
+  marlene: "<span class='who'>MARLENE:</span> ...So it surfaced. I did what I had to. Mikey was going to burn us all.",
+  dwayne: "<span class='who'>DWAYNE:</span> That phone... Look. Mikey owed ME. The cops were the only collection I had left.",
+  tanya: "<span class='who'>TANYA:</span> Please. They said if I didn't, they'd take my boy too. Please don't tell them.",
+  earl: "<span class='who'>EARL:</span> ...Forty years in this park. And it ends like this."
+};
+/* ============================================================================
+   LOCATIONS — six places on the map. The map is the real street layout:
+   Boone Rd (paved, vertical, left), Wampum Rd (horizontal), Mustang Ln
+   (diagonal), Tomahawk Trail, the Cochise Ct loop, and the pond on Tomahawk.
+   HARD RULE: no house numbers anywhere, nothing marked as a home address.
+   The start is a fictional lot: "Lot 7 — the garage".
+   ============================================================================ */
+var LOCS = {
+  garage: { name: "Lot 7 — the Garage", desc: "Concrete walls. A cot. The smell of last night.",
+    chars: ["bunny", "razor"],
+    search: { clue: "slip", text: "You dig through the trash by the cot. A betting slip, torn in half." } },
+  pond: { name: "The Pond", desc: "Still water on Tomahawk Trail. Something glints under the surface.",
+    chars: ["tanya"],
+    search: { clue: "pondphone", text: "You wade in, cold to the knees, and pull something out of the mud." } },
+  office: { name: "Manager's Office", desc: "Marlene's trailer. A desk, a ledger, a phone that never stops.",
+    chars: ["marlene"],
+    search: { clue: ["ledger", "phonelog"], text: "You go through the desk drawers.", risk: true } },
+  bonfire: { name: "Bonfire Pit", desc: "A ring of stones and a fire that never quite goes out.",
+    chars: ["earl"],
+    search: { clue: "matchbook", text: "You poke through the ashes around the fire ring." } },
+  laundry: { name: "Laundry Shed", desc: "Washers that eat quarters and a door that never locks.",
+    chars: ["dwayne"],
+    search: { clue: "bootprint", text: "You check the mud by the shed door." } },
+  gate: { name: "Boone Gate", desc: "The gate out to Boone Rd. The world, one chain-link away.",
+    chars: [],
+    search: { clue: null, text: "Padlocked from the outside. You're not walking out till Bunny says so." } }
+};
+/* Map coordinates for each location (viewBox 0 0 400 560). */
+var MAP_POS = { garage: [265, 175], pond: [320, 398], office: [255, 455], bonfire: [165, 455], laundry: [120, 415], gate: [30, 420] };
+
+/* ============================================================================
+   CLUES — eight of them. Two tracks:
+   DEBT track (proves the $400 was fake): ledger, confession, slip.
+   SNITCH track (names the snitch): pond phone (ground truth) + Earl's sighting.
+   To win you need: the right name + debt proof + at least 4 clues.
+   ============================================================================ */
+var CLUES = {
+  slip: { name: "Torn betting slip", s: -5,
+    text: "A betting slip, torn in half. The numbers on it don't match the $400 Dwayne claims." },
+  whetstone: { name: "Dry whetstone", s: -5,
+    text: "The stone is dry. No fresh filings. The axe hasn't cut anything in weeks. The threat is real, but the blade is dull." },
+  ledger: { name: "The debt ledger", s: -10, debt: true,
+    text: "The park's debt ledger. Your name isn't in it. No entry, no debt. The $400 was never written down." },
+  phonelog: { name: "Office phone log", s: 0,
+    text: "Office phone log: last call 9:40 PM, the parts store. Nothing at 3 AM. Marlene didn't call from this phone." },
+  pondphone: { name: "Phone from the pond", s: 0, dyn: true },
+  confession: { name: "Dwayne's confession", s: -10, debt: true,
+    text: "Dwayne folded: you owed twenty bucks for beer. The rest was made up. Somebody wanted you scared." },
+  matchbook: { name: "Dew Drop matchbook", s: 0,
+    text: "A matchbook from the Dew Drop Inn, one match left. Somebody sat by the fire late, waiting on something." },
+  bootprint: { name: "Muddy boot print", s: 0,
+    text: "A size-12 boot print by the shed door, heading toward the pond. Somebody went down to the water that night." }
+};
+var CLUE_ORDER = ["slip", "whetstone", "ledger", "phonelog", "pondphone", "confession", "matchbook", "bootprint"];
+
+/* ============================================================================
+   STATE
+   ============================================================================ */
+var S = {
+  loc: "garage",
+  suspicion: 30,
+  clues: [],
+  flags: {},
+  snitch: SUSPECTS[Math.floor(Math.random() * SUSPECTS.length)],
+  talkStage: {},
+  searched: {},
+  seenMapHint: false,
+  over: false
+};
+
+function el(id) { return document.getElementById(id); }
+function esc(s) { return s; }
+
+var toastTimer = null;
+function toast(html) {
+  var t = el("toast");
+  t.innerHTML = html;
+  t.classList.add("show");
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(function () { t.classList.remove("show"); }, 3400);
+}
+
+function updateHUD() {
+  el("suspicion-num").textContent = S.suspicion + " / 100";
+  var f = el("suspicion-fill");
+  f.style.width = S.suspicion + "%";
+  f.style.background = S.suspicion >= 80 ? "#ff4444" : (S.suspicion >= 50 ? "#ff6b35" : "#e8b84a");
+  el("clue-count").textContent = S.clues.length + "/8";
+}
+
+function susp(d) {
+  if (S.over) return;
+  S.suspicion = Math.max(0, Math.min(100, S.suspicion + d));
+  updateHUD();
+  if (S.suspicion >= 100) endGame("suspicion");
+}
+
+function hasClue(id) { return S.clues.indexOf(id) !== -1; }
+function hasDebtProof() {
+  return hasClue("ledger") || hasClue("confession");
+}
+function pondPhoneText() {
+  return "A phone, fished out of the pond. The call log was wiped — but the last number dialed was the sheriff, 3:12 AM. The case: " + PHONE_MARKS[S.snitch];
+}
+function clueText(id) {
+  if (id === "pondphone") return pondPhoneText();
+  return CLUES[id].text;
+}
+function addClue(id) {
+  if (hasClue(id)) return false;
+  S.clues.push(id);
+  if (CLUES[id].s) susp(CLUES[id].s);
+  updateHUD();
+  toast("<strong>CLUE FOUND</strong><br>" + CLUES[id].name);
+  return true;
+}
+
+/* ============================================================================
+   SCREENS: splash -> promo -> cutscene -> game
+   ============================================================================ */
+function showScreen(id) {
+  var screens = document.querySelectorAll(".screen");
+  for (var i = 0; i < screens.length; i++) screens[i].classList.remove("active");
+  el(id).classList.add("active");
+  window.scrollTo(0, 0);
+}
+
+var splashTimer = setTimeout(function () { showScreen("promo-screen"); }, 5000);
+function skipSplash() {
+  clearTimeout(splashTimer);
+  showScreen("promo-screen");
+}
+
+var CUT_LINES = [
+  "Your head pounds. Concrete. Cold floor.",
+  "You wake up in a garage that isn't yours.",
+  "Across from you: a man in a bunny mask. He does not move.",
+  "To his right: a man sharpening an axe. Slow. Patient.",
+  "<span class='who'>BUNNY:</span> \u201CYou owe. And somebody talked. Which is it, friend?\u201D"
+];
+var cutTimers = [];
+function startIntro() {
+  showScreen("promo-screen"); /* keep promo under the layer */
+  var layer = el("cutscene");
+  layer.classList.remove("hidden");
+  el("cut-continue").classList.add("hidden");
+  el("cut-lines").innerHTML = "";
+  setTimeout(function () { el("garage-scene").classList.add("show"); }, 150);
+  CUT_LINES.forEach(function (line, i) {
+    cutTimers.push(setTimeout(function () {
+      var d = document.createElement("div");
+      d.className = "cut-line" + (i === 4 ? " who" : (i < 2 ? " dim" : ""));
+      d.innerHTML = line;
+      el("cut-lines").appendChild(d);
+      setTimeout(function () { d.classList.add("show"); }, 60);
+    }, 900 + i * 1700));
+  });
+  cutTimers.push(setTimeout(function () {
+    el("cut-continue").classList.remove("hidden");
+  }, 900 + CUT_LINES.length * 1700 + 400));
+}
+function startGame() {
+  cutTimers.forEach(function (t) { clearTimeout(t); });
+  var layer = el("cutscene");
+  layer.classList.add("fade-out");
+  setTimeout(function () { layer.classList.add("hidden"); layer.classList.remove("fade-out"); }, 1100);
+  showScreen("game-screen");
+  updateHUD();
+  renderMap();
+}
+
+/* ============================================================================
+   MAP — SVG of the real street layout from the screenshot.
+   Boone Rd (paved) vertical left. Wampum Rd horizontal. Mustang Ln diagonal.
+   Tomahawk Trail up to the right. Cochise Ct loop at the top. Pond on Tomahawk.
+   ============================================================================ */
+function mapSVG() {
+  var roads = [
+    "M 34 -10 L 26 570",
+    "M 26 420 L 395 405",
+    "M 60 570 L 300 330",
+    "M 235 480 C 280 440, 330 400, 375 355",
+    "M 210 305 L 195 210 C 190 165, 220 130, 265 125 C 310 120, 340 150, 335 195 C 330 235, 300 255, 265 250 C 235 245, 220 270, 215 305",
+    "M 265 125 L 330 95 L 355 140 L 335 195"
+  ];
+  var svg = '<svg viewBox="0 0 400 560" xmlns="http://www.w3.org/2000/svg">';
+  svg += '<rect x="0" y="0" width="400" height="560" fill="#d8ecd2"/>';
+  svg += '<ellipse cx="90" cy="120" rx="70" ry="40" fill="#cbe4bf"/>';
+  svg += '<ellipse cx="320" cy="505" rx="80" ry="40" fill="#cbe4bf"/>';
+  roads.forEach(function (d) {
+    svg += '<path d="' + d + '" fill="none" stroke="#9aa7ad" stroke-width="12" stroke-linecap="round"/>';
+    svg += '<path d="' + d + '" fill="none" stroke="#c3ccd2" stroke-width="9" stroke-linecap="round"/>';
+  });
+  /* trailers for flavor */
+  var trailers = [[150, 175], [250, 205], [330, 275], [120, 355], [205, 445], [330, 470]];
+  trailers.forEach(function (t) {
+    svg += '<rect x="' + t[0] + '" y="' + t[1] + '" width="26" height="12" rx="2" fill="#e8e0c8" stroke="#a89a70" stroke-width="1.5"/>';
+  });
+  /* ponds */
+  svg += '<ellipse cx="320" cy="398" rx="16" ry="9" fill="#7ec8e3" stroke="#5aa8c8" stroke-width="1.5"/>';
+  svg += '<ellipse cx="275" cy="55" rx="12" ry="6" fill="#7ec8e3" stroke="#5aa8c8" stroke-width="1.5"/>';
+  /* street labels */
+  svg += '<text class="map-street" x="16" y="300" transform="rotate(-92 16 300)">Boone Rd</text>';
+  svg += '<text class="map-street" x="210" y="406">Wampum Rd</text>';
+  svg += '<text class="map-street" x="105" y="525" transform="rotate(-45 105 525)">Mustang Ln</text>';
+  svg += '<text class="map-street" x="300" y="445" transform="rotate(-38 300 445)">Tomahawk Trail</text>';
+  svg += '<text class="map-street" x="158" y="240" transform="rotate(-78 158 240)">Cochise Ct</text>';
+  svg += '<text class="map-street" x="250" y="290" transform="rotate(8 250 290)">Cochise Ct</text>';
+  /* location nodes */
+  var nodes = [
+    ["garage", "Lot 7 — Garage", 265, 152],
+    ["pond", "The Pond", 320, 378],
+    ["office", "Manager's Office", 255, 478],
+    ["bonfire", "Bonfire Pit", 165, 478],
+    ["laundry", "Laundry Shed", 120, 397],
+    ["gate", "Boone Gate", 62, 424]
+  ];
+  nodes.forEach(function (n) {
+    var p = MAP_POS[n[0]];
+    var anchor = n[0] === "gate" ? "start" : "middle";
+    svg += '<g class="map-node" onclick="goTo(\'' + n[0] + '\')">';
+    svg += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="11"/>';
+    svg += '<text x="' + n[2] + '" y="' + n[3] + '" text-anchor="' + anchor + '">' + n[1] + '</text>';
+    svg += '</g>';
+  });
+  /* player marker */
+  var pp = MAP_POS[S.loc];
+  svg += '<g id="player-marker" transform="translate(' + pp[0] + ',' + pp[1] + ')">';
+  svg += '<circle class="ring" r="8"/><circle class="core" r="6"/></g>';
+  svg += '</svg>';
+  return svg;
+}
+
+function renderMap() {
+  if (S.over) return;
+  var hint = "";
+  if (!S.seenMapHint) {
+    hint = '<div class="hint"><strong>How this works.</strong> Tap a place to go there. Talk to people. Search for clues. Prove the debt is fake, name the snitch — and don\'t let suspicion hit 100, or Razor gets to work.</div>';
+    S.seenMapHint = true;
+  }
+  var list = "";
+  Object.keys(LOCS).forEach(function (id) {
+    var here = (id === S.loc) ? " — you are here" : "";
+    list += '<button class="map-loc-btn" onclick="goTo(\'' + id + '\')">' + LOCS[id].name + '<span>' + LOCS[id].chars.length + ' here' + here + '</span></button>';
+  });
+  el("game-body").innerHTML =
+    '<div class="view-title">Sun N Fun Trailer Park</div>' +
+    '<div class="view-sub">Boone Rd runs the west side. Wampum and Mustang cut through the park. The pond sits on Tomahawk. You are at <strong>' + LOCS[S.loc].name + '</strong>.</div>' +
+    hint +
+    '<div class="map-wrap">' + mapSVG() + '</div>' +
+    '<div class="map-loc-list">' + list + '</div>';
+  setActiveHud("hud-map");
+}
+
+function setActiveHud(id) {
+  ["hud-map", "hud-clues", "hud-accuse"].forEach(function (b) { el(b).classList.remove("active"); });
+  if (id) el(id).classList.add("active");
+}
+
+function goTo(loc) {
+  if (S.over) return;
+  S.loc = loc;
+  renderLocation(loc);
+}
+
+/* ============================================================================
+   LOCATIONS — talk, search, leave
+   ============================================================================ */
+function renderLocation(loc) {
+  if (S.over) return;
+  var L = LOCS[loc];
+  var html = '<div class="view-title">' + L.name + '</div>' +
+    '<div class="view-sub">' + L.desc + '</div>';
+  if (L.chars.length) {
+    html += '<div class="card">';
+    L.chars.forEach(function (cid) {
+      var c = CAST[cid];
+      html += '<div class="char-row"><div class="char-face">' + c.face + '</div>' +
+        '<div><div class="char-name">' + c.name + '</div><div class="char-note">' + c.note + '</div></div>' +
+        '<button class="btn btn-ghost char-talk" onclick="talk(\'' + cid + '\')">Talk</button></div>';
+    });
+    html += '</div>';
+  }
+  var searched = S.searched[loc];
+  html += '<button class="btn btn-spin btn-wide" style="margin-bottom:.6rem" ' +
+    (searched ? 'disabled style="opacity:.45;margin-bottom:.6rem"' : '') +
+    ' onclick="searchLoc(\'' + loc + '\')">' + (searched ? 'Searched — nothing left' : 'Search this place') + '</button>';
+  html += '<button class="btn btn-ghost btn-wide" onclick="renderMap()">Back to the map</button>';
+  el("game-body").innerHTML = html;
+  setActiveHud(null);
+}
+
+function searchLoc(loc) {
+  if (S.over || S.searched[loc]) return;
+  S.searched[loc] = true;
+  var L = LOCS[loc];
+  var msg = L.search.text;
+  var caught = false;
+  if (L.search.risk && !S.flags.marleneAllowed) {
+    caught = true;
+    msg += " Marlene catches you in her drawer. She throws you out — but not before you see the desk.";
+  }
+  var got = L.search.clue;
+  var names = [];
+  if (got) {
+    var arr = Array.isArray(got) ? got : [got];
+    arr.forEach(function (cid) { if (addClue(cid)) names.push(CLUES[cid].name); });
+  }
+  if (caught) susp(15);
+  var html = '<div class="view-title">' + L.name + '</div><div class="card"><p class="reply">' + msg + '</p>';
+  if (names.length) {
+    html += '<p class="reply"><strong style="color:#e8b84a">Found:</strong> ' + names.join(", ") + '.</p>';
+  } else if (!got) {
+    html += '<p class="reply">Nothing here but the truth you already knew.</p>';
+  }
+  html += '</div><button class="btn btn-spin btn-wide" onclick="renderLocation(\'' + loc + '\')">Back</button>';
+  el("game-body").innerHTML = html;
+}
+/* ============================================================================
+   TALK — dialogue stages with choices. Choices can move suspicion, hand out
+   clues, set flags, or open the next stage. `need` gates a choice:
+   {clue:"ledger"} needs a clue, {flag:"x"} needs a flag, {notflag:"x"} hides
+   a choice once a flag is set.
+   ============================================================================ */
+function canShow(choice) {
+  if (!choice.need) return true;
+  var n = choice.need;
+  if (n.clue && !hasClue(n.clue)) return false;
+  if (n.flag && !S.flags[n.flag]) return false;
+  if (n.notflag && S.flags[n.notflag]) return false;
+  if (n.snitch && S.snitch !== n.snitch) return false;
+  return true;
+}
+
+function talk(cid) {
+  if (S.over) return;
+  var stage = S.talkStage[cid] || 0;
+  renderTalk(cid, stage);
+}
+
+function renderTalk(cid, stage) {
+  var c = CAST[cid];
+  var st = c.stages[stage];
+  if (!st) { renderLocation(S.loc); return; }
+  var html = '<div class="view-title">' + c.name + '</div>' +
+    '<div class="card"><p class="say">' + st.say + '</p>';
+  var anyChoice = false;
+  st.choices.forEach(function (ch, i) {
+    if (!canShow(ch)) return;
+    anyChoice = true;
+    html += '<button class="choice" onclick="choose(\'' + cid + '\',' + stage + ',' + i + ')">' + ch.t + '</button>';
+  });
+  /* Confront: if you hold the pond phone, you can show any suspect their mark. */
+  if (c.suspect && hasClue("pondphone") && !S.flags["confronted_" + cid]) {
+    anyChoice = true;
+    html += '<button class="choice" onclick="confront(\'' + cid + '\')">Show them the phone from the pond.</button>';
+  }
+  if (!anyChoice) {
+    html += '<button class="btn btn-ghost btn-wide" onclick="renderLocation(\'' + S.loc + '\')">Back</button>';
+  }
+  html += '</div>';
+  el("game-body").innerHTML = html;
+  setActiveHud(null);
+}
+
+function choose(cid, stage, i) {
+  if (S.over) return;
+  var ch = CAST[cid].stages[stage].choices[i];
+  if (ch.s) susp(ch.s);
+  if (ch.flag) S.flags[ch.flag] = true;
+  if (ch.clue) addClue(ch.clue);
+  var reply = ch.r;
+  if (reply === "EARL_SAW") reply = EARL_SAW[S.snitch];
+  var html = '<div class="view-title">' + CAST[cid].name + '</div>' +
+    '<div class="card"><p class="reply">' + reply + '</p></div>';
+  if (ch.next === "end") {
+    html += '<button class="btn btn-spin btn-wide" onclick="renderLocation(\'' + S.loc + '\')">Back</button>';
+  } else {
+    S.talkStage[cid] = ch.next;
+    html += '<button class="btn btn-spin btn-wide" onclick="talk(\'' + cid + '\')">Continue</button>';
+  }
+  el("game-body").innerHTML = html;
+}
+
+function confront(cid) {
+  if (S.over) return;
+  S.flags["confronted_" + cid] = true;
+  var html = '<div class="view-title">' + CAST[cid].name + '</div>' +
+    '<div class="card"><p class="reply">' + CONFRONT[cid] + '</p></div>' +
+    '<button class="btn btn-spin btn-wide" onclick="renderLocation(\'' + S.loc + '\')">Back</button>';
+  el("game-body").innerHTML = html;
+}
+
+/* ============================================================================
+   CLUES PANEL
+   ============================================================================ */
+function renderClues() {
+  if (S.over) return;
+  var html = '<div class="view-title">Clues — ' + S.clues.length + ' of 8</div>' +
+    '<div class="view-sub">What you\'ve found so far. The debt and the snitch are two different puzzles.</div>';
+  if (!S.clues.length) {
+    html += '<p class="clue-empty">Nothing yet. Search places. Talk to people. The pond is a good place to start — Tanya saw something go in.</p>';
+  }
+  CLUE_ORDER.forEach(function (id) {
+    if (!hasClue(id)) return;
+    html += '<div class="clue-item"><div class="clue-name">' + CLUES[id].name + '</div>' +
+      '<div class="clue-text">' + clueText(id) + '</div></div>';
+  });
+  html += '<button class="btn btn-spin btn-wide" onclick="renderMap()">Back to the map</button>';
+  el("game-body").innerHTML = html;
+  setActiveHud("hud-clues");
+}
+
+/* ============================================================================
+   ACCUSE — name the snitch in front of the park. Wrong name, or not enough
+   proof, and Razor gets to work.
+   ============================================================================ */
+function openAccuse() {
+  if (S.over) return;
+  var html = '<div class="view-title">Name the snitch</div>' +
+    '<div class="view-sub">Bunny and Razor aren\'t on the list. They\'re the court, not the suspects. Pick one. If you\'re wrong, the axe comes out.</div>';
+  SUSPECTS.forEach(function (id) {
+    var c = CAST[id];
+    html += '<button class="accuse-suspect" onclick="confirmAccuse(\'' + id + '\')">' +
+      '<div class="nm">' + c.name + '</div><div class="ds">' + c.accuseLine + '</div></button>';
+  });
+  html += '<button class="btn btn-ghost btn-wide" onclick="renderMap()">Not yet — keep looking</button>';
+  el("game-body").innerHTML = html;
+  setActiveHud("hud-accuse");
+}
+
+function confirmAccuse(id) {
+  if (S.over) return;
+  var c = CAST[id];
+  var proof = hasDebtProof();
+  var html = '<div class="view-title">You\'re naming ' + c.name + '</div>' +
+    '<div class="evidence"><strong>Your evidence:</strong><br>' +
+    'Clues found: <strong>' + S.clues.length + ' of 8</strong> (Bunny wants at least 4)<br>' +
+    'Debt proof: <strong>' + (proof ? 'YES — the $400 was fake' : 'NO — you haven\'t proved the debt yet') + '</strong><br>' +
+    'If you\'re wrong, Razor works. If you\'re right but short on proof, Bunny sends you back.</div>' +
+    '<button class="btn btn-danger btn-wide" style="margin-bottom:.6rem" onclick="resolveAccuse(\'' + id + '\')">Name them</button>' +
+    '<button class="btn btn-ghost btn-wide" onclick="openAccuse()">Keep looking</button>';
+  el("game-body").innerHTML = html;
+}
+
+function resolveAccuse(id) {
+  if (S.over) return;
+  if (id === S.snitch && hasDebtProof() && S.clues.length >= 4) {
+    endGame("win");
+    return;
+  }
+  if (id === S.snitch) {
+    var html = '<div class="view-title">Not enough</div>' +
+      '<div class="card"><p class="reply"><span class="who">BUNNY:</span> Right name. Wrong weight. Come back with the ledger and more than a hunch — or don\'t come back at all.</p></div>' +
+      '<button class="btn btn-spin btn-wide" onclick="renderMap()">Back to the park</button>';
+    el("game-body").innerHTML = html;
+    susp(10);
+    return;
+  }
+  endGame("wrong");
+}
+
+/* ============================================================================
+   ENDINGS
+   ============================================================================ */
+function endGame(kind) {
+  S.over = true;
+  var title = "", body = "", cls = "";
+  if (kind === "win") {
+    title = "YOU WALK OUT";
+    cls = "win";
+    body = "Bunny stands. <span class='who'>\u201CWalk.\u201D</span><br><br>" +
+      "The debt was a lie. The snitch was <span class='who'>" + CAST[S.snitch].name + "</span>. " +
+      "You walk out the Boone Rd gate at dawn, and Sun N Fun lets you go — this time.";
+  } else if (kind === "wrong") {
+    title = "WRONG NAME";
+    cls = "lose";
+    body = "Bunny shakes his head. <span class='who'>\u201CThat's not the one.\u201D</span><br><br>" +
+      "Razor stands. The stone stops. The axe doesn't.<br><br>The park keeps its secrets.";
+  } else {
+    title = "THE WHISPERS WON";
+    cls = "lose";
+    body = "Too many eyes, too many words. Bunny nods. Razor stands.<br><br>The park keeps its secrets.";
+  }
+  el("game-body").innerHTML =
+    '<div class="end-title ' + cls + '">' + title + '</div>' +
+    '<div class="end-body">' + body + '</div>' +
+    '<div class="center"><button class="btn btn-spin" onclick="location.reload()">Play again — new snitch</button></div>';
+  setActiveHud(null);
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
