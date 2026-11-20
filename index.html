@@ -7,11 +7,8 @@
 <link rel="canonical" href="https://www.leonlink.net/">
 <link rel="icon" href="/favicon.png">
 <title>LeonLink — Built by Leon</title>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
-<!--
-  OPEN: the business-side name is undecided. Leon is considering "Stonewall".
-  Placeholder used here: "Website design". Swap the name when he calls it.
--->
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800;900&family=Bebas+Neue&family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
+
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
   body{background:#070a12;color:#f2f2f0;font-family:Archivo,system-ui,sans-serif;line-height:1.4}
@@ -50,6 +47,11 @@
   .card p{opacity:.6;font-size:15px}
   .card .tag{color:#22e6c8;font-weight:800;font-size:12px;letter-spacing:2px}
   .more-link{display:inline-block;margin-top:24px;font-weight:800;color:#22e6c8;font-size:17px}
+  .split{margin:48px 0 8px}
+  .split img{width:100%;display:block;border-radius:20px;border:1px solid #222}
+  .sides{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+  @media(max-width:640px){.sides{grid-template-columns:1fr}}
+  .fun-h{font-family:"Fredoka",sans-serif}
   /* More — plain link rows */
   .rows a{display:flex;justify-content:space-between;gap:16px;align-items:baseline;padding:20px 4px;border-bottom:1px solid #1d222b;font-size:19px;font-weight:700}
   .rows a:hover{color:#22e6c8}
@@ -81,54 +83,24 @@
     </div>
   </div>
 
-  <section>
-    <h2>Two <span>sides.</span></h2>
-    <div class="doors">
-      <a class="door" href="/about.html">
-        <p class="tag">THE PERSONAL SIDE</p>
-        <h3>Leon &amp; Mushroom</h3>
-        <p>One guy, one dog. Blogs, games, and whatever we felt like making.</p>
-        <span class="go">About us &rarr;</span>
-      </a>
-      <!-- OPEN: business-side name. Placeholder "Website design" until Leon calls it. -->
-      <a class="door" href="/build.html#start">
-        <p class="tag">THE BUSINESS SIDE</p>
-        <h3>Website design</h3>
-        <p>A website for your shop. Built for you, yours to keep.</p>
-        <p class="fine">10% to start &middot; 40% to build &middot; 50% when live</p>
-        <span class="go">Start your build &rarr;</span>
-      </a>
-    </div>
-  </section>
+  <div class="split"><img src="/img/home-split-stonewall.webp" alt="Stonewall — half ready for work, half mossy"></div>
 
-  <section id="play">
-    <h2>Play<span>.</span></h2>
-    <div class="grid">
-      <a class="card" href="/chimney-run.html"><p class="tag">GAME</p><h3>Chimney Run</h3><p>Run. Jump. Don't fall.</p></a>
-      <a class="card" href="/sootfather.html"><p class="tag">GAME</p><h3>Sootfather</h3><p>A mafia story. Your call.</p></a>
-      <a class="card" href="/started-from-a-baby.html"><p class="tag">GAME</p><h3>Started From a Baby</h3><p>One life. Live it.</p></a>
-      <a class="card" href="/ghost-call.html"><p class="tag">GAME</p><h3>Ghost Call</h3><p>A call that isn't real.</p></a>
+  <section class="sides">
+    <div class="side">
+      <h2>The Stonewall.</h2>
+      <div class="rows">
+        <a href="/software.html">Apps <span>White-labeled, your name on it &rarr;</span></a>
+        <a href="/build.html#start">Website design <span>Built for your shop &rarr;</span></a>
+        <a href="/lineup/">Starting Five <span>See all 43 lists &rarr;</span></a>
+      </div>
     </div>
-    <a class="more-link" href="/games.html">All games &rarr;</a>
-    &nbsp;&nbsp;<a class="more-link" href="/arcadeline/">Arcade &rarr;</a>
-  </section>
-
-  <section>
-    <h2>Read<span>.</span></h2>
-    <div class="grid">
-      <a class="card" href="/journal/white-label-software.html"><p class="tag">BLOG</p><h3>White-Label Software for Local Business</h3><p>Your name on it. Not mine.</p></a>
-      <a class="card" href="/journal/why-we-procrastinate.html"><p class="tag">BLOG</p><h3>Why Do We Procrastinate?</h3><p>The science, plainly.</p></a>
-      <a class="card" href="/journal/does-music-make-you-smarter.html"><p class="tag">BLOG</p><h3>Does Music Make You Smarter?</h3><p>What the research says.</p></a>
-    </div>
-    <a class="more-link" href="/blog.html">All blogs &rarr;</a>
-  </section>
-
-  <section>
-    <h2>More<span>.</span></h2>
-    <div class="rows">
-      <a href="/lineup/">Top 5 <span>G-Shock &middot; Power Banks &middot; Coffee Makers &middot; Fire Pits &mdash; see all 43 lists &rarr;</span></a>
-      <a href="/watchline/">Watches <span>Seiko &middot; Citizen &middot; Bulova &mdash; and more &rarr;</span></a>
-      <a href="/software.html">Software <span>Ledgerline &middot; Dashline &middot; Linkline &rarr;</span></a>
+    <div class="side">
+      <h2 class="fun-h">Mushroom and Friends.</h2>
+      <div class="rows">
+        <a href="/games/moons.html">Moons <span>Moons &amp; Cauldrons &rarr;</span></a>
+        <a href="/games.html">Games <span>All games &rarr;</span></a>
+        <a href="/blog.html">Blogs <span>All blogs &rarr;</span></a>
+      </div>
     </div>
   </section>
 
