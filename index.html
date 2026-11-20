@@ -47,10 +47,12 @@
   .card p{opacity:.6;font-size:15px}
   .card .tag{color:#22e6c8;font-weight:800;font-size:12px;letter-spacing:2px}
   .more-link{display:inline-block;margin-top:24px;font-weight:800;color:#22e6c8;font-size:17px}
-  .split{margin:48px 0 8px}
-  .split img{width:100%;display:block;border-radius:20px;border:1px solid #222}
+  .split{margin:48px 0 8px;width:100vw;margin-left:calc(50% - 50vw)}
+  .split img{width:100%;height:auto;display:block;border:0;border-radius:0}
+  @media(min-width:900px){.split img{height:82vh;object-fit:cover;object-position:center 35%}}
   .sides{display:grid;grid-template-columns:1fr 1fr;gap:32px}
   @media(max-width:640px){.sides{grid-template-columns:1fr}}
+  @media(min-width:641px){.side:first-child{border-right:1px solid #222;padding-right:32px}}
   .fun-h{font-family:"Fredoka",sans-serif}
   /* More — plain link rows */
   .rows a{display:flex;justify-content:space-between;gap:16px;align-items:baseline;padding:20px 4px;border-bottom:1px solid #1d222b;font-size:19px;font-weight:700}
@@ -83,7 +85,7 @@
     </div>
   </div>
 
-  <div class="split"><img src="/img/home-split-stonewall.webp" alt="Stonewall — half ready for work, half mossy"></div>
+  <div class="split"><img src="/img/home-split-stonewall-full.webp" alt="Stonewall — mossy on the bright side, general on the dark side"></div>
 
   <section class="sides">
     <div class="side">
