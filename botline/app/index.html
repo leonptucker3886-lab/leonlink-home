@@ -495,14 +495,17 @@ function renderDash(){
  var inProg=cards.filter(function(c){return c.status==="Assigned"||c.status==="In progress"||c.status==="In review";}).length;
  var avail=bots.filter(function(b){return !botBusy(b.name)&&b.status!=="Paused"&&roleTypes(b.role)!==null;}).length;
  document.getElementById("stats").innerHTML=
-  '<div class="stat"><b>'+total+'</b><span>Total cards</span></div>'
- +'<div class="stat"><b>'+inProg+'</b><span>Cards in progress</span></div>'
- +'<div class="stat"><b>'+avail+'</b><span>Bots available</span></div>'
+  '<div class="stat" id="stat-total" style="cursor:pointer"><b>'+total+'</b><span>Total cards</span></div>'
+ +'<div class="stat" id="stat-prog" style="cursor:pointer"><b>'+inProg+'</b><span>Cards in progress</span></div>'
+ +'<div class="stat" id="stat-avail" style="cursor:pointer"><b>'+avail+'</b><span>Bots available</span></div>'
  +'<div class="stat"><b>'+open+'</b><span>Open</span></div>'
  +'<div class="stat'+(blocked?" bad":"")+'"><b>'+blocked+'</b><span>Blocked</span></div>'
  +'<div class="stat'+(overdue?" bad":"")+'"><b>'+overdue+'</b><span>Overdue</span></div>'
  +'<div class="stat'+(stalled?" bad":"")+'"><b>'+stalled+'</b><span>Bots stalled</span></div>'
  +'<div class="stat"><b>'+cards.filter(function(c){return c.status==="Done";}).length+'</b><span>Done</span></div>';
+ var st=document.getElementById("stat-total");if(st)st.onclick=function(){show("board");};
+ var sp=document.getElementById("stat-prog");if(sp)sp.onclick=function(){show("board");};
+ var sa=document.getElementById("stat-avail");if(sa)sa.onclick=function(){show("assign");};
  var needs=cards.filter(function(c){return c.status==="Blocked"||dueLabel(c).indexOf("Overdue")===0;});
  document.getElementById("needs").innerHTML=needs.length?needs.map(function(c){
    return '<div class="inbox-item"><b>'+esc(c.id)+' — '+esc(c.title)+'</b> · '+esc(c.status)+' · <span class="due over">'+esc(dueLabel(c))+'</span><br><span class="note">'+esc(c.bot||"Unassigned")+' · '+esc(c.review||c.desc||"")+'</span> <a href="#" data-open="'+esc(c.id)+'">Open card →</a></div>';
