@@ -850,10 +850,10 @@ var botEditIdx=-1;
 function renderBots(){
  var tb=document.querySelector("#bots-table tbody");
  tb.innerHTML=bots.map(function(b,i){
-  var cur=b.card?(' · <a href="#" data-open="'+esc(b.card)+'">'+esc(b.card)+'</a>'):"";
+  var cc="";cards.forEach(function(x){if(x.bot===b.name&&x.status!=="Done")cc=x.id;});
   return '<tr><td><b>'+esc(b.name)+'</b></td><td>'+esc(b.role)+'</td>'
   +'<td><span class="dot '+esc(b.status)+'"></span>'+esc(b.status)+'</td>'
-  +'<td>'+(b.card?esc(b.card):"—")+'</td><td>'+esc(b.seen)+'</td>'
+  +'<td>'+(cc?'<a href="#" data-open="'+esc(cc)+'">'+esc(cc)+'</a>':"—")+'</td><td>'+esc(b.seen)+'</td>'
   +'<td><button class="btn2" data-wake="'+i+'">Wake</button> <button class="btn2" data-pause="'+i+'">'+(b.status==="Paused"?"Unpause":"Pause")+'</button> <button class="btn2" data-edit="'+i+'">Edit'+(b.instructions?" ✓":"")+'</button> <button class="btn2 warn" data-rm="'+i+'">Remove</button></td></tr>';
  }).join("")||'<tr><td colspan="6" class="note">No bots yet. Add one below.</td></tr>';
 }
@@ -863,7 +863,7 @@ document.getElementById("bots-table").addEventListener("click",function(e){
  if(p){var b2=bots[+p.dataset.pause];b2.status=b2.status==="Paused"?"Idle":"Paused";saveAll();renderBots();}
  if(r){if(confirm("Remove this bot?")){bots.splice(+r.dataset.rm,1);saveAll();renderBots();renderDash();}}
  var ed=e.target.closest("[data-edit]");
- if(ed){botEditIdx=+ed.dataset.edit;var b3=bots[botEditIdx];document.getElementById("bot-editor-name").textContent="Edit "+b3.name;document.getElementById("bot-editor-role").value=b3.role||"";document.getElementById("bot-editor-instructions").value=b3.instructions||"";document.getElementById("bot-editor").hidden=false;}
+ if(ed){botEditIdx=+ed.dataset.edit;var b3=bots[botEditIdx];document.getElementById("bot-editor-name").textContent="Edit "+b3.name;document.getElementById("bot-editor-role").value=b3.role||"";document.getElementById("bot-editor-instructions").value=b3.instructions||"";document.getElementById("bot-editor").hidden=false;document.getElementById("bot-editor").scrollIntoView();}
 });
 document.getElementById("btn-auto").addEventListener("click",function(){autoAssign();});
 document.getElementById("bot-add").addEventListener("click",function(){
