@@ -409,6 +409,27 @@ function claimCard(id){
  }).then(function(){fbStatus("Claimed "+id+".");renderCurrent();})
   .catch(function(){alert("Someone just took it — pick another.");renderCurrent();});
 }
+function assignCard(id,botName){
+ var c=null;cards.forEach(function(x){if(x.id===id)c=x;});
+ if(!c||c.status!=="Open"){alert("Already taken — pick another.");return;}
+ if(!confirm("Assign "+id+" to "+botName+"?"))return;
+ if(!fbReady){
+  c.status="Assigned";c.bot=botName;c.botUid="";
+  addLog(c,whoami,"Assigned "+id+" to "+botName+".");
+  return;
+ }
+ var db=fbDb();if(!db)return;
+ var ref=db.collection("cards").doc(id);
+ db.runTransaction(function(tx){
+  return tx.get(ref).then(function(doc){
+   if(!doc.exists||doc.data().status!=="Open")throw new Error("taken");
+   var d=doc.data();var logs=d.logs||[];
+   logs.push({who:whoami,when:today(),text:"Assigned "+id+" to "+botName+"."});
+   tx.update(ref,{status:"Assigned",bot:botName,botUid:"",logs:logs});
+  });
+ }).then(function(){fbStatus("Assigned "+id+" to "+botName+".");renderCurrent();})
+  .catch(function(){alert("Someone just took it — pick another.");renderCurrent();});
+}
 function autoAssign(){
  var role=myRole();
  var types=roleTypes(role);
@@ -719,7 +740,7 @@ function renderCard(){
  +'<p class="meta">Given <b>'+esc(c.date)+'</b> · Responsible: <b>'+esc(c.bot||"Unassigned")+'</b> · <span class="due'+(over?" over":"")+'">'+esc(due)+'</span> ('+esc(c.deadline)+')</p>'
  +'<p class="sub">'+esc(c.desc||"")+'</p>'
  +'<div class="banner" id="banner">Escalated — "What\'s happening?" sent to '+esc(c.bot||"the builder")+'\'s inbox. They\'re expected to answer on the message board.</div>'
- +'<div class="row"><button class="btn2 go2" id="btn-done"'+(gateOk?"":" disabled")+'>Mark done — send to review</button><button class="btn2 warn" id="btn-esc">Escalate — What\'s happening?</button><button class="btn2 warn" id="btn-del">Delete card</button>'+(c.status==="Open"?'<button class="btn2 go2" id="btn-claim">Claim this card</button>':"")+'</div>'
+ +'<div class="row"><button class="btn2 go2" id="btn-done"'+(gateOk?"":" disabled")+'>Mark done — send to review</button><button class="btn2 warn" id="btn-esc">Escalate — What\'s happening?</button><button class="btn2 warn" id="btn-del">Delete card</button>'+(c.status==="Open"?'<button class="btn2 go2" id="btn-claim">Claim this card</button>':"")+(c.status==="Open"?'<select id="assign-to" style="max-width:220px"><option value="">Assign to...</option>'+bots.filter(function(b){return b.status!=="Paused"&&roleTypes(b.role)!==null;}).map(function(b){return '<option value="'+esc(b.name)+'">'+esc(b.name)+' — '+esc(b.role||"")+'</option>';}).join("")+'</select><button class="btn2" id="btn-assign">Assign</button>':"")+'</div>'
 +(gateOk?"":'<p class="note">Gate first: log the upload and run the SOP checks below. This button opens only when the gate passes.</p>')
 +'<h2>Upload + SOP gate<small>Log the upload, then run the checks. The gate must pass before review.</small></h2>'
 +'<div class="box upbox">'
@@ -752,6 +773,7 @@ function renderCard(){
  +'<p class="note">The gate above runs these. ✓ = the system checked it. ○ = the reviewer verifies it.</p>';
  document.getElementById("btn-done").onclick=function(){if(!(c.gate&&c.gate.passed)){alert("Run the SOP checks first — the gate must pass before review.");return;}c.status="In review";addLog(c,c.bot||"You","Marked done — sent for review.");};
  var bc=document.getElementById("btn-claim");if(bc)bc.onclick=function(){claimCard(c.id);};
+ var ba=document.getElementById("btn-assign");if(ba)ba.onclick=function(){var s=document.getElementById("assign-to");var n=s?s.value:"";if(!n){alert("Pick a bot first.");return;}assignCard(c.id,n);};
 document.getElementById("btn-save-up").onclick=function(){saveUpload();};
  document.getElementById("btn-gate").onclick=function(){runGate();};
  document.getElementById("btn-esc").onclick=function(){
