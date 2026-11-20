@@ -18,23 +18,18 @@
   .hero-img{position:relative;width:100vw;margin-left:calc(50% - 50vw);min-height:100vh;min-height:100svh;display:flex;align-items:flex-start;overflow:hidden}
   .hero-img>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block}
   .hero-img::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.45),rgba(0,0,0,0) 55%);pointer-events:none}
-  .hero-sides{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:24px;width:100%;max-width:1080px;margin:0 auto;padding:40px 20px 0}
-  @media(min-width:641px){.hero-sides{gap:32px;padding:48px 24px 0}}
+  .hero-sides{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:24px;width:100%;max-width:1080px;margin:0 auto;padding:8px 20px 0}
+  @media(min-width:641px){.hero-sides{gap:32px;padding:12px 24px 0}}
   @media(max-width:640px){
-    .hero-sides{gap:16px;padding:32px 16px 0}
+    .hero-sides{gap:16px;padding:8px 16px 0}
     .hero-side h2{font-size:clamp(26px,7.5vw,34px);margin-bottom:16px}
     .hero-side .rows a{flex-direction:column;align-items:flex-start;gap:2px;padding:14px 2px;font-size:16px}
     .hero-side .rows a span{font-size:14px;text-align:left}
   }
-  .hero-side h2{text-shadow:0 2px 14px rgba(0,0,0,.6)}
-  .hero-side.biz{color:#0e1a0e}
-  .hero-side.biz h2{text-shadow:0 1px 6px rgba(255,255,255,.5)}
-  .hero-side.fun{color:#fff}
+  .hero-side{color:#fff}
+  .hero-side h2{text-shadow:0 2px 14px rgba(0,0,0,.65)}
   .hero-side .rows a{border-bottom-color:rgba(255,255,255,.35);text-shadow:0 1px 8px rgba(0,0,0,.7),0 0 3px rgba(0,0,0,.8)}
-  .hero-side .rows a span{font-weight:600}
-  .hero-side.biz .rows a{border-bottom-color:rgba(0,0,0,.25);text-shadow:0 1px 6px rgba(255,255,255,.55)}
-  .hero-side.biz .rows a span{opacity:.8}
-  .hero-side.fun .rows a span{opacity:.95}
+  .hero-side .rows a span{font-weight:600;opacity:.95}
   .fun-h{font-family:"Fredoka",sans-serif}
   .stonewall-head{grid-column:1/-1;justify-self:center;color:#fff;font-size:clamp(40px,10vw,84px);margin-bottom:16px;text-shadow:0 2px 16px rgba(0,0,0,.65)}
   /* Sections */
@@ -84,7 +79,7 @@
     <img src="/img/home-split-stonewall-full.webp" alt="Stonewall — mossy on the bright side, general on the dark side">
     <div class="hero-sides">
       <h2 class="stonewall-head">The Stonewall.</h2>
-      <div class="hero-side biz">
+      <div class="hero-side">
         <h2 class="fun-h">Fun.</h2>
         <div class="rows">
           <a href="/games/moons.html">Moons <span>Moons &amp; Cauldrons &rarr;</span></a>
@@ -92,7 +87,7 @@
           <a href="/blog.html">Blogs <span>All blogs &rarr;</span></a>
         </div>
       </div>
-      <div class="hero-side fun">
+      <div class="hero-side">
         <h2>Work.</h2>
         <div class="rows">
           <a href="/software.html">Apps <span>White-labeled, your name on it &rarr;</span></a>
