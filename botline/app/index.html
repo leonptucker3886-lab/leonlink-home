@@ -389,9 +389,11 @@ function fbInit(){
   }).catch(function(e){fbStatus("Firebase sign-in failed: "+e.message);});
  }catch(e){fbStatus("Firebase init failed: "+e.message);}
 }
+function botBusy(name){var busy=false;cards.forEach(function(c){if(c.bot===name&&c.status!=="Done")busy=true;});return busy;}
 function claimCard(id){
  var c=null;cards.forEach(function(x){if(x.id===id)c=x;});
  if(!c||c.status!=="Open"){alert("Already taken — pick another.");return;}
+ if(botBusy(whoami)){alert(whoami+" already has a card — finish it first.");return;}
  if(whoami==="Boss"&&!confirm("Claim "+id+" as Boss?"))return;
  if(!fbReady){
   c.status="Assigned";c.bot=whoami;c.botUid=fbUid||"";
@@ -413,6 +415,7 @@ function claimCard(id){
 function assignCard(id,botName){
  var c=null;cards.forEach(function(x){if(x.id===id)c=x;});
  if(!c||c.status!=="Open"){alert("Already taken — pick another.");return;}
+ if(botBusy(botName)){alert(botName+" already has a card — finish it first.");return;}
  if(!confirm("Assign "+id+" to "+botName+"?"))return;
  if(!fbReady){
   c.status="Assigned";c.bot=botName;c.botUid="";
@@ -526,7 +529,7 @@ function renderSubmit(){
  });
  document.getElementById("deadline").value=isoPlus(LIMITS[subType]);
  var sel=document.getElementById("assign");
- sel.innerHTML='<option value="">Auto-assign</option>'+bots.filter(function(b){return b.status!=="Paused";}).map(function(b){return '<option>'+esc(b.name)+'</option>';}).join("");
+ sel.innerHTML='<option value="">Auto-assign</option>'+bots.filter(function(b){return b.status!=="Paused"&&roleTypes(b.role)!==null&&!botBusy(b.name);}).map(function(b){return '<option>'+esc(b.name)+'</option>';}).join("");
  document.getElementById("nextnum").textContent=nextId();
 }
 document.getElementById("types").addEventListener("click",function(e){
@@ -786,7 +789,7 @@ function renderCard(){
  +'<p class="meta">Given <b>'+esc(c.date)+'</b> · Responsible: <b>'+esc(c.bot||"Unassigned")+'</b> · <span class="due'+(over?" over":"")+'">'+esc(due)+'</span> ('+esc(c.deadline)+')</p>'
  +'<p class="sub">'+esc(c.desc||"")+'</p>'
  +'<div class="banner" id="banner">Escalated — "What\'s happening?" sent to '+esc(c.bot||"the builder")+'\'s inbox. They\'re expected to answer on the message board.</div>'
- +'<div class="row"><button class="btn2 go2" id="btn-done"'+(gateOk?"":" disabled")+'>Mark done — send to review</button><button class="btn2 warn" id="btn-esc">Escalate — What\'s happening?</button><button class="btn2 warn" id="btn-del">Delete card</button>'+(c.status==="Open"?'<button class="btn2 go2" id="btn-claim">Claim this card</button>':"")+(c.status==="Open"?'<select id="assign-to" style="max-width:220px"><option value="">Assign to...</option>'+bots.filter(function(b){return b.status!=="Paused"&&roleTypes(b.role)!==null;}).map(function(b){return '<option value="'+esc(b.name)+'">'+esc(b.name)+' — '+esc(b.role||"")+'</option>';}).join("")+'</select><button class="btn2" id="btn-assign">Assign</button>':"")+'</div>'
+ +'<div class="row"><button class="btn2 go2" id="btn-done"'+(gateOk?"":" disabled")+'>Mark done — send to review</button><button class="btn2 warn" id="btn-esc">Escalate — What\'s happening?</button><button class="btn2 warn" id="btn-del">Delete card</button>'+(c.status==="Open"?'<button class="btn2 go2" id="btn-claim">Claim this card</button>':"")+(c.status==="Open"?'<select id="assign-to" style="max-width:220px"><option value="">Assign to...</option>'+bots.filter(function(b){return b.status!=="Paused"&&roleTypes(b.role)!==null&&!botBusy(b.name);}).map(function(b){return '<option value="'+esc(b.name)+'">'+esc(b.name)+' — '+esc(b.role||"")+'</option>';}).join("")+'</select><button class="btn2" id="btn-assign">Assign</button>':"")+'</div>'
 +(gateOk?"":'<p class="note">Gate first: log the upload and run the SOP checks below. This button opens only when the gate passes.</p>')
 +'<h2>Upload + SOP gate<small>Log the upload, then run the checks. The gate must pass before review.</small></h2>'
 +'<div class="box upbox">'
