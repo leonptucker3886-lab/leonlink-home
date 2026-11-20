@@ -1,0 +1,2107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#05070a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Syntax of Excision</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=IBM+Plex+Mono:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg0:#05070a; --bone:#e8e4d8; --bone-dim:rgba(232,228,216,.62);
+  --blood:#8b1a1a; --blood-bright:#c0392b;
+  --gold:#c9a961; --gold-dim:rgba(201,169,97,.55);
+  --neon:#39ff14; --lb:5vh;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  background:var(--bg0);color:var(--bone);overflow:hidden;
+  font-family:'IBM Plex Mono',ui-monospace,monospace;
+  user-select:none;-webkit-user-select:none;
+  font-size:15px;line-height:1.5;overscroll-behavior:none;touch-action:manipulation;
+}
+button{font-family:inherit;color:inherit;border:0;background:transparent;cursor:pointer}
+
+#stage{
+  position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(139,26,26,.08), transparent 60%),
+    radial-gradient(ellipse at 50% 110%, rgba(57,255,20,.03), transparent 55%),
+    var(--bg0);
+  overflow:hidden;
+}
+#stage::after{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:5;
+  background:radial-gradient(ellipse at 50% 50%, transparent 35%, rgba(0,0,0,.72) 100%);
+}
+#stage::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:6;
+  background-image:repeating-linear-gradient(0deg, rgba(255,255,255,.014) 0px, rgba(255,255,255,.014) 1px, transparent 1px, transparent 3px);
+  opacity:.5;
+}
+#corruption{
+  position:fixed;inset:0;pointer-events:none;z-index:7;
+  background:radial-gradient(ellipse at 50% 50%, transparent 20%, rgba(139,26,26,.5) 100%);
+  opacity:0;transition:opacity 1.4s ease;
+}
+#scars-overlay{
+  position:fixed;inset:0;pointer-events:none;z-index:8;
+  background:
+    radial-gradient(ellipse at 22% 34%, rgba(180,30,30,.22), transparent 32%),
+    radial-gradient(ellipse at 78% 62%, rgba(180,30,30,.18), transparent 30%);
+  opacity:0;transition:opacity 1.2s ease;
+}
+#grain{
+  position:fixed;inset:0;z-index:50;pointer-events:none;opacity:.055;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, #fff, transparent),
+    radial-gradient(1px 1px at 60% 70%, #fff, transparent),
+    radial-gradient(1px 1px at 80% 20%, #fff, transparent),
+    radial-gradient(1px 1px at 33% 88%, #fff, transparent),
+    radial-gradient(1px 1px at 72% 45%, #fff, transparent),
+    radial-gradient(1px 1px at 10% 60%, #fff, transparent);
+  background-size:200px 200px;
+  animation:grain .7s steps(2) infinite;
+}
+@keyframes grain{
+  0%{background-position:0 0}25%{background-position:-40px -20px}
+  50%{background-position:20px -40px}75%{background-position:-30px 30px}
+  100%{background-position:0 0}
+}
+.letterbox{
+  position:fixed;left:0;right:0;height:0;background:#000;z-index:40;
+  transition:height .8s cubic-bezier(.7,0,.3,1);pointer-events:none;
+}
+.letterbox.top{top:0} .letterbox.bot{bottom:0} .letterbox.open{height:var(--lb)}
+
+#topbar{
+  position:fixed;top:0;left:0;right:0;z-index:45;
+  padding:calc(6px + env(safe-area-inset-top)) 10px 6px;
+  display:flex;align-items:center;gap:5px;
+  font-family:'Cinzel',serif;pointer-events:none;
+}
+#topbar.hidden{display:none}
+.corruption-bar{flex:1;height:2px;background:rgba(0,0,0,.6);position:relative;overflow:hidden;border:1px solid rgba(201,169,97,.18)}
+.corruption-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--blood-bright));box-shadow:0 0 8px rgba(139,26,26,.7);transition:width 1s cubic-bezier(.4,0,.2,1)}
+.hud-tag{
+  padding:3px 6px;border:1px solid rgba(201,169,97,.3);background:rgba(0,0,0,.6);
+  font-size:7.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);
+  backdrop-filter:blur(6px);white-space:nowrap;
+}
+.hud-tag .n{font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:700;color:var(--bone);margin-left:4px;letter-spacing:0}
+.hud-tag.blood{border-color:rgba(139,26,26,.5);color:#e77} .hud-tag.blood .n{color:#fbb}
+.hud-tag.neon{border-color:rgba(57,255,20,.4);color:var(--neon)}
+
+.screen{
+  position:absolute;inset:0;z-index:3;display:none;flex-direction:column;
+  padding:calc(var(--lb) + 22px) 20px calc(var(--lb) + 22px);
+  overflow:hidden;
+}
+.screen.on{display:flex;animation:screenIn .7s cubic-bezier(.4,0,.2,1)}
+@keyframes screenIn{from{opacity:0}to{opacity:1}}
+.screen.compact{padding-left:14px;padding-right:14px}
+
+.title-xl{font-family:'Cinzel',serif;font-weight:900;font-size:clamp(22px,6.5vw,40px);line-height:1.05;letter-spacing:.05em;text-align:center}
+.title-lg{font-family:'Cinzel',serif;font-weight:700;font-size:clamp(18px,4.6vw,28px);line-height:1.15;letter-spacing:.06em}
+.small-caps{font-family:'Cinzel',serif;font-weight:500;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold-dim)}
+.mono{font-family:'IBM Plex Mono',monospace}
+.serif{font-family:'Cormorant Garamond',serif}
+.ital{font-style:italic}
+.blood{color:var(--blood-bright)} .gold{color:var(--gold)} .neon{color:var(--neon)} .dim{color:var(--bone-dim)}
+
+.subtitle{position:absolute;left:0;right:0;bottom:calc(var(--lb) + 22px);padding:0 22px;text-align:center;z-index:10;pointer-events:none}
+.subtitle-text{
+  display:inline-block;font-family:'Cormorant Garamond',serif;font-weight:500;font-style:italic;
+  font-size:clamp(16px,4.3vw,21px);line-height:1.5;color:var(--bone);
+  text-shadow:0 2px 12px rgba(0,0,0,.95);max-width:620px;
+}
+.subtitle-text .cursor{display:inline-block;width:7px;background:var(--bone);margin-left:3px;animation:blink .9s steps(2) infinite;vertical-align:middle}
+@keyframes blink{50%{opacity:0}}
+.speaker{
+  display:block;font-family:'Cinzel',serif;font-weight:700;
+  font-size:9.5px;letter-spacing:.34em;text-transform:uppercase;margin-bottom:8px;
+  text-shadow:0 0 14px currentColor;
+}
+
+.portrait{
+  position:absolute;left:50%;top:32%;transform:translate(-50%,-50%);
+  font-size:clamp(70px,26vw,130px);line-height:1;
+  filter:drop-shadow(0 0 30px rgba(0,0,0,.85)) drop-shadow(0 0 60px currentColor);
+  z-index:2;animation:portraitIn .9s cubic-bezier(.34,1.4,.64,1);
+}
+@keyframes portraitIn{
+  from{opacity:0;transform:translate(-50%,-50%) scale(.7);filter:blur(20px)}
+  to{opacity:1;transform:translate(-50%,-50%) scale(1);filter:blur(0)}
+}
+/* Portrait temperament animations */
+.portrait.ecstatic{animation:portraitIn .9s ease, tempo-ecstatic 1.6s ease-in-out infinite}
+@keyframes tempo-ecstatic{
+  0%,100%{transform:translate(-50%,-50%) scale(1)}
+  25%{transform:translate(-50%,-50%) scale(1.04) rotate(-1deg)}
+  75%{transform:translate(-50%,-50%) scale(.99) rotate(1deg)}
+}
+.portrait.patient{animation:portraitIn .9s ease, tempo-patient 5s ease-in-out infinite}
+@keyframes tempo-patient{
+  0%,100%{transform:translate(-50%,-50%) scale(1)}
+  50%{transform:translate(-50%,-50%) scale(1.02)}
+}
+.portrait.precise{animation:portraitIn .9s ease, tempo-precise 2.4s steps(4) infinite}
+@keyframes tempo-precise{
+  0%,100%{transform:translate(-50%,-50%) scale(1)}
+  50%{transform:translate(-50%,-50%) scale(1.01) translateY(-2px)}
+}
+.portrait.quiet{animation:portraitIn 1.4s ease, tempo-quiet 6s ease-in-out infinite}
+@keyframes tempo-quiet{
+  0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.85}
+  50%{transform:translate(-50%,-50%) scale(1.01);opacity:1}
+}
+.portrait.martial{animation:portraitIn .5s cubic-bezier(.4,0,.2,1), tempo-martial 1s ease-in-out infinite}
+@keyframes tempo-martial{
+  0%,100%{transform:translate(-50%,-50%) scale(1)}
+  50%{transform:translate(-50%,-50%) scale(1.015) translateX(1px)}
+}
+.portrait.gentle{animation:portraitIn 1.2s ease, tempo-gentle 3.4s ease-in-out infinite}
+@keyframes tempo-gentle{
+  0%,100%{transform:translate(-50%,-50%) scale(1)}
+  50%{transform:translate(-50%,-50%) scale(1.025) translateY(-3px)}
+}
+.portrait.kind{animation:portraitIn 1s ease, tempo-kind 4s ease-in-out infinite}
+@keyframes tempo-kind{
+  0%,100%{transform:translate(-50%,-50%) scale(1)}
+  50%{transform:translate(-50%,-50%) scale(1.03) rotate(1deg)}
+}
+.portrait.cold{animation:portraitIn .8s ease, tempo-cold 8s linear infinite}
+@keyframes tempo-cold{
+  0%{transform:translate(-50%,-50%) scale(1)}
+  50%{transform:translate(-50%,-50%) scale(1.005) rotate(-0.5deg)}
+  100%{transform:translate(-50%,-50%) scale(1)}
+}
+
+.choices-veil{
+  position:absolute;left:0;right:0;bottom:calc(var(--lb) + 12px);
+  padding:12px 16px calc(16px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg,transparent,rgba(0,0,0,.88) 25%,rgba(0,0,0,.97));
+  z-index:11;display:flex;flex-direction:column;gap:8px;
+  animation:choicesIn .6s cubic-bezier(.4,0,.2,1);
+}
+@keyframes choicesIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.choice{
+  padding:13px 16px 13px 30px;border:1px solid rgba(201,169,97,.35);
+  background:rgba(0,0,0,.55);text-align:left;font-family:'IBM Plex Mono',monospace;
+  font-size:13px;line-height:1.4;color:var(--bone);letter-spacing:.02em;
+  transition:.16s;position:relative;overflow:hidden;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);min-height:48px;
+}
+.choice::before{content:'▸';position:absolute;left:12px;top:14px;color:var(--gold);opacity:.5;transition:.2s;font-family:'Cinzel',serif;font-size:12px}
+.choice:active{background:rgba(139,26,26,.28);border-color:var(--blood-bright);transform:translateX(2px)}
+.choice:active::before{opacity:1;color:var(--blood-bright)}
+.choice .sub{display:block;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:var(--bone-dim);margin-top:3px}
+.choice .tone{display:inline-block;font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:.24em;color:var(--gold);opacity:.85;margin-right:8px;vertical-align:middle;text-transform:uppercase}
+.choice.danger{border-color:rgba(139,26,26,.55)}
+.choice.danger:active{background:rgba(139,26,26,.5);border-color:var(--blood-bright)}
+
+.tap-hint{position:absolute;left:0;right:0;bottom:calc(var(--lb) + 10px);text-align:center;z-index:10;font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;color:var(--gold-dim);text-transform:uppercase;animation:pulse 2s ease-in-out infinite;pointer-events:none}
+@keyframes pulse{0%,100%{opacity:.35}50%{opacity:.95}}
+
+.story-card{display:flex;flex-direction:column;gap:14px;align-items:center;justify-content:center;height:100%;text-align:center}
+.story-card .chapter-no{font-family:'Cinzel',serif;font-weight:500;font-size:10px;letter-spacing:.5em;text-transform:uppercase;color:var(--gold-dim)}
+.story-card .chapter-title{font-family:'Cinzel',serif;font-weight:900;font-size:clamp(24px,7vw,42px);line-height:1.05;letter-spacing:.04em;color:var(--bone);text-shadow:0 0 24px rgba(0,0,0,.9),0 0 60px rgba(139,26,26,.3);max-width:520px}
+.story-card .chapter-epi{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14.5px;line-height:1.6;color:var(--bone-dim);max-width:440px}
+
+.interrogation{display:flex;flex-direction:column;height:100%;gap:12px}
+.inter-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:9px;border-bottom:1px solid rgba(201,169,97,.2);flex-wrap:wrap;gap:6px}
+.inter-head .ih-label{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
+.inter-head .ih-prog{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--bone-dim);letter-spacing:.14em}
+.inter-timer{height:2px;background:rgba(0,0,0,.6);border:1px solid rgba(139,26,26,.3);margin-bottom:4px;overflow:hidden}
+.inter-timer i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--blood-bright));transition:width linear;box-shadow:0 0 8px rgba(139,26,26,.7)}
+.inter-doc{flex:1;display:flex;flex-direction:column;padding:16px 14px;background:rgba(0,0,0,.4);border-left:2px solid var(--blood);border-right:1px solid rgba(201,169,97,.14);min-height:120px;overflow-y:auto}
+.inter-doc .speaker-name{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--blood-bright);margin-bottom:10px}
+.inter-doc .question{font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.5;color:var(--bone);font-style:italic;flex:1}
+.inter-doc .interject{margin-top:10px;padding-top:10px;border-top:1px dashed rgba(201,169,97,.2);font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold-dim);letter-spacing:.02em}
+.inter-choices{display:grid;gap:8px}
+.inter-choice{padding:12px 14px;border:1px solid rgba(201,169,97,.28);background:rgba(0,0,0,.5);text-align:left;font-size:12.5px;line-height:1.42;color:var(--bone);transition:.15s;font-family:'IBM Plex Mono',monospace;min-height:44px}
+.inter-choice:active{background:rgba(201,169,97,.14);transform:translateX(2px)}
+.inter-choice.right{background:rgba(57,255,20,.1);border-color:var(--neon);color:#e0ffd4}
+.inter-choice.wrong{background:rgba(139,26,26,.32);border-color:var(--blood-bright);color:#fdd}
+.inter-choice.reveal{background:rgba(57,255,20,.06);border-color:rgba(57,255,20,.45);color:#e0ffd4}
+.inter-verdict{padding:11px 13px;border-left:3px solid var(--gold);background:rgba(201,169,97,.06);font-family:'Cormorant Garamond',serif;font-size:13.5px;line-height:1.5;font-style:italic;color:var(--bone)}
+
+.map{position:relative;width:100%;aspect-ratio:1;max-width:420px;margin:0 auto;border:1px solid rgba(201,169,97,.24);background:radial-gradient(circle at 50% 50%, rgba(139,26,26,.12), transparent 55%), rgba(0,0,0,.5);overflow:hidden}
+.map::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(201,169,97,.05) 1px, transparent 1px),linear-gradient(90deg, rgba(201,169,97,.05) 1px, transparent 1px);background-size:12.5% 12.5%}
+.map .core{position:absolute;left:50%;top:50%;width:14%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle at 40% 35%, rgba(232,228,216,.9), rgba(201,169,97,.5) 35%, transparent 70%);box-shadow:0 0 30px rgba(201,169,97,.6), 0 0 60px rgba(139,26,26,.3);animation:corePulse 3s ease-in-out infinite}
+@keyframes corePulse{0%,100%{transform:translate(-50%,-50%) scale(.9);opacity:.7}50%{transform:translate(-50%,-50%) scale(1.05);opacity:1}}
+.map .node{position:absolute;width:17%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);border:2px solid currentColor;display:grid;place-items:center;font-size:16px;cursor:pointer;transition:.25s;background:radial-gradient(circle at 40% 35%, rgba(255,255,255,.06), rgba(0,0,0,.5));box-shadow:0 0 14px -4px currentColor}
+.map .node.active{animation:nodePulse 2.4s ease-in-out infinite}
+@keyframes nodePulse{0%,100%{box-shadow:0 0 14px -4px currentColor}50%{box-shadow:0 0 28px 0 currentColor}}
+.map .node.dead{color:#444 !important;filter:grayscale(1) brightness(.5);box-shadow:none;pointer-events:none}
+.map .node.dead::after{content:'✕';position:absolute;inset:0;display:grid;place-items:center;color:var(--blood-bright);font-size:22px;opacity:.7}
+.map .node .nlabel{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;color:currentColor;opacity:.85}
+.map .node .intel-dot{position:absolute;top:-3px;right:-3px;width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold);font-size:7px;font-weight:900;color:#000;display:grid;place-items:center;font-family:'Cinzel',serif}
+.map .node .intel-dot.hidden{display:none}
+
+.panel{background:linear-gradient(160deg,rgba(14,10,10,.94),rgba(4,4,4,.98));border:1px solid rgba(201,169,97,.24);padding:14px 13px;position:relative}
+.panel::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.55}
+.panel-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:9px;padding-bottom:7px;border-bottom:1px solid rgba(201,169,97,.16)}
+.panel-head .ph-name{font-family:'Cinzel',serif;font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.panel-head .ph-tag{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--bone-dim)}
+
+.sigil{width:44px;height:44px;flex:0 0 auto;display:grid;place-items:center;font-size:22px;line-height:1;border:1px solid currentColor;background:radial-gradient(circle at 40% 35%, rgba(255,255,255,.08), rgba(0,0,0,.4));box-shadow:0 0 18px -6px currentColor, inset 0 0 12px rgba(0,0,0,.6)}
+
+.dossier{display:flex;flex-direction:column;gap:11px}
+.dossier-head{display:flex;gap:12px;align-items:center}
+.dossier-title .dt-name{font-family:'Cinzel',serif;font-weight:900;font-size:16px;letter-spacing:.1em;text-transform:uppercase;line-height:1.15}
+.dossier-title .dt-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12.5px;color:var(--bone-dim);margin-top:3px}
+.dossier-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13.5px;line-height:1.55;color:var(--bone);padding:10px 12px;border-left:2px solid var(--gold);background:rgba(201,169,97,.04)}
+.dossier-facts{display:grid;grid-template-columns:auto 1fr;gap:5px 12px;font-size:11.5px}
+.dossier-facts dt{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);padding-top:2px}
+.dossier-facts dd{color:var(--bone);line-height:1.4}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border:1px solid var(--gold);background:transparent;color:var(--gold);font-family:'Cinzel',serif;font-weight:700;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;transition:.2s;min-height:46px}
+.btn:active{background:rgba(201,169,97,.14);transform:scale(.98)}
+.btn.primary{background:linear-gradient(135deg,rgba(139,26,26,.9),rgba(80,12,12,.9));border-color:var(--blood-bright);color:var(--bone);box-shadow:0 0 18px rgba(139,26,26,.4)}
+.btn.primary:active{background:linear-gradient(135deg,rgba(180,30,30,.95),rgba(100,15,15,.95))}
+.btn.ghost{border-color:rgba(201,169,97,.3);color:var(--bone-dim)}
+.btn-row{display:flex;gap:9px;flex-wrap:wrap;justify-content:center}
+.btn-row .btn{flex:1;min-width:0}
+.btn-sm{padding:8px 14px;font-size:9px;min-height:36px;letter-spacing:.2em}
+
+.ending-scrim{position:fixed;inset:0;z-index:100;background:#000;display:none;align-items:center;justify-content:center;flex-direction:column;padding:24px;text-align:center}
+.ending-scrim.on{display:flex;animation:scrimIn 2.4s ease}
+@keyframes scrimIn{from{opacity:0}to{opacity:1}}
+.ending-scrim .end-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(15px,4.2vw,20px);line-height:1.7;color:var(--bone);max-width:520px}
+.ending-scrim .end-attr{margin-top:28px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-dim);line-height:2}
+.ending-scrim .end-attr strong{color:var(--gold);font-weight:700}
+
+.scroll{overflow-y:auto;-webkit-overflow-scrolling:touch;padding-right:4px}
+.scroll::-webkit-scrollbar{width:3px}
+.scroll::-webkit-scrollbar-thumb{background:rgba(201,169,97,.3)}
+.scroll::-webkit-scrollbar-track{background:transparent}
+
+.menu{display:flex;flex-direction:column;gap:14px;align-items:center;justify-content:center;height:100%;text-align:center;animation:screenIn 1s ease}
+.menu-title{font-family:'Cinzel',serif;font-weight:900;font-size:clamp(28px,9vw,52px);line-height:1;letter-spacing:.06em;color:var(--bone);text-shadow:0 0 30px rgba(139,26,26,.5),0 0 80px rgba(139,26,26,.2);margin-bottom:4px}
+.menu-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:var(--bone-dim);letter-spacing:.02em;margin-bottom:22px;max-width:380px;line-height:1.6}
+.menu-btns{display:flex;flex-direction:column;gap:10px;width:100%;max-width:280px}
+.menu-btns .btn{width:100%}
+
+.herald{position:fixed;left:0;right:0;bottom:calc(var(--lb) + 8px);z-index:9;padding:0 16px;display:flex;align-items:flex-end;gap:10px;pointer-events:none;animation:heraldIn .7s cubic-bezier(.34,1.3,.64,1)}
+@keyframes heraldIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.herald-card{flex:1;background:linear-gradient(135deg,rgba(10,14,10,.92),rgba(4,6,4,.96));border:1px solid rgba(201,169,97,.28);border-left:3px solid var(--gold);padding:10px 13px;backdrop-filter:blur(8px)}
+.herald-name{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.herald-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13.5px;line-height:1.5;color:var(--bone)}
+.herald-avatar{font-size:34px;line-height:1;filter:drop-shadow(0 0 14px rgba(201,169,97,.6));animation:heraldFloat 3s ease-in-out infinite}
+@keyframes heraldFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+/* Codex */
+.codex-tabbar{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;margin-bottom:10px;border-bottom:1px solid rgba(201,169,97,.16);scrollbar-width:none}
+.codex-tabbar::-webkit-scrollbar{display:none}
+.codex-tab{flex:0 0 auto;padding:7px 11px;border:1px solid rgba(201,169,97,.24);background:rgba(0,0,0,.5);font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--bone-dim);transition:.15s;cursor:pointer;white-space:nowrap}
+.codex-tab.active{color:var(--gold);border-color:var(--gold);background:rgba(201,169,97,.12)}
+.codex-entry{padding:12px 13px;border:1px solid rgba(201,169,97,.16);background:rgba(0,0,0,.4);margin-bottom:8px;position:relative;transition:.15s}
+.codex-entry.locked{opacity:.4;filter:grayscale(.5)}
+.codex-entry.unlocked{border-left:2px solid var(--gold)}
+.codex-entry .ce-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.codex-entry .ce-ico{font-size:15px;filter:drop-shadow(0 0 6px currentColor)}
+.codex-entry .ce-title{font-family:'Cinzel',serif;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);flex:1}
+.codex-entry .ce-locked-tag{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.18em;color:var(--blood-bright);opacity:.7}
+.codex-entry .ce-body{font-family:'Cormorant Garamond',serif;font-size:13.5px;line-height:1.6;font-style:italic;color:var(--bone)}
+.codex-entry .ce-body.locked{font-style:normal;color:var(--bone-dim);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.02em}
+
+/* Final confession */
+.confession{
+  display:flex;flex-direction:column;gap:18px;align-items:center;justify-content:center;
+  height:100%;text-align:center;padding:0 8px;
+}
+.confession-line{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(15px,4.2vw,20px);line-height:1.6;color:var(--bone);max-width:520px;
+}
+.confession-line.hidden{opacity:0}
+.confession-line.shown{opacity:1;animation:fadeUp .8s ease backwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.confession-attr{
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--gold-dim);
+}
+
+/* LEONLINK PRESENTS splash — house rule: every game opens on it (~5s, tap to skip) */
+#ll-splash{
+  position:fixed;inset:0;z-index:200;background:#000;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  transition:opacity .8s ease;cursor:pointer;
+}
+#ll-splash.hide{opacity:0;pointer-events:none}
+#ll-splash .ll-name{font-family:'Cinzel',serif;font-weight:900;font-size:clamp(30px,9vw,54px);letter-spacing:.14em;color:#e8e4d8;text-align:center;line-height:1.1}
+#ll-splash .ll-presents{font-family:'Cinzel',serif;font-weight:500;font-size:clamp(11px,3vw,15px);letter-spacing:.55em;color:#c9a961;text-transform:uppercase;text-indent:.55em}
+#ll-splash .ll-tap{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;color:rgba(232,228,216,.45);text-transform:uppercase;animation:pulse 2s ease-in-out infinite}
+</style>
+</head>
+<body>
+
+<div id="ll-splash">
+  <div class="ll-name">LEONLINK</div>
+  <div class="ll-presents">Presents</div>
+  <div class="ll-tap">tap to skip</div>
+</div>
+<script>
+(function(){
+  var s = document.getElementById('ll-splash');
+  var done = false;
+  function hide(){ if(done) return; done = true; s.classList.add('hide'); setTimeout(function(){ s.remove(); }, 900); }
+  s.addEventListener('click', hide);
+  setTimeout(hide, 5000);
+})();
+</script>
+
+<div id="stage">
+  <div class="letterbox top" id="lbTop"></div>
+  <div class="letterbox bot" id="lbBot"></div>
+  <div id="corruption"></div>
+  <div id="scars-overlay"></div>
+  <div id="topbar" class="hidden">
+    <div class="corruption-bar"><i id="corruptFill" style="width:0%"></i></div>
+    <div class="hud-tag blood">Szpans<span class="n" id="uiSzpans">0</span></div>
+    <div class="hud-tag">Intel<span class="n" id="uiIntel">0</span></div>
+    <div class="hud-tag">Scars<span class="n" id="uiScars">0</span></div>
+  </div>
+  <div id="screenHost"></div>
+  <div id="grain"></div>
+</div>
+
+<div class="ending-scrim" id="endingScrim">
+  <div class="end-text" id="endText"></div>
+  <div class="end-attr" id="endAttr"></div>
+</div>
+
+<script>
+'use strict';
+
+const $ = s => document.querySelector(s);
+const host = $('#screenHost');
+const lbTop = $('#lbTop');
+const lbBot = $('#lbBot');
+
+/* ============================================================
+   AUDIO ENGINE
+   ============================================================ */
+const Audio = (()=>{
+  let ctx=null, master=null, droneNodes=null, heartbeatHandle=null, muted=false;
+  function init(){
+    if(ctx) return;
+    try{
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if(!AC) return;
+      ctx = new AC();
+      master = ctx.createGain(); master.gain.value = 0.35; master.connect(ctx.destination);
+      startDrone(); startHeartbeat();
+    }catch(e){}
+  }
+  function resume(){ if(!ctx) init(); if(ctx && ctx.state==='suspended') ctx.resume().catch(()=>{}); }
+  function startDrone(){
+    if(!ctx) return;
+    const now = ctx.currentTime;
+    const g = ctx.createGain(); g.gain.value = 0; g.connect(master);
+    const filter = ctx.createBiquadFilter(); filter.type='lowpass'; filter.frequency.value=180; filter.Q.value=3; filter.connect(g);
+    const o1 = ctx.createOscillator(); o1.type='sawtooth'; o1.frequency.value=55;
+    const o2 = ctx.createOscillator(); o2.type='sine'; o2.frequency.value=55.4;
+    const o3 = ctx.createOscillator(); o3.type='sine'; o3.frequency.value=110.5;
+    o1.connect(filter); o2.connect(filter); o3.connect(filter);
+    o1.start(now); o2.start(now); o3.start(now);
+    g.gain.linearRampToValueAtTime(0.14, now + 4);
+    droneNodes = {g, o1, o2, o3, filter};
+  }
+  function startHeartbeat(){
+    const beat = ()=>{
+      if(!ctx || muted) return scheduleNext();
+      const now = ctx.currentTime;
+      const kick = (t, vol) => {
+        const o = ctx.createOscillator(); const g = ctx.createGain();
+        o.type='sine';
+        o.frequency.setValueAtTime(60, t);
+        o.frequency.exponentialRampToValueAtTime(28, t+0.14);
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.linearRampToValueAtTime(vol, t+0.005);
+        g.gain.exponentialRampToValueAtTime(0.0001, t+0.18);
+        o.connect(g); g.connect(master); o.start(t); o.stop(t+0.2);
+      };
+      kick(now, 0.20); kick(now + 0.22, 0.14);
+      scheduleNext();
+    };
+    const scheduleNext = ()=>{
+      const bpm = 48 + Math.floor(Math.random()*6);
+      heartbeatHandle = setTimeout(beat, (60/bpm)*1000);
+    };
+    scheduleNext();
+  }
+  function cue(name){
+    if(!ctx || muted) return;
+    const now = ctx.currentTime;
+    switch(name){
+      case 'click': tone(880, 0.03, 'triangle', 0.06); break;
+      case 'page': noise(0.15, 0.08, 800); break;
+      case 'stinger': [196, 246.94, 293.66].forEach((f,i)=>tone(f, 0.6, 'sine', 0.14, i*0.03)); break;
+      case 'corrupt': tone(110, 0.5, 'sawtooth', 0.12, 0, 55); tone(82.4, 0.6, 'sine', 0.1, 0.05, 41); break;
+      case 'mercy': [329.63, 392, 493.88, 659.25].forEach((f,i)=>tone(f, 0.5, 'sine', 0.09, i*0.07)); break;
+      case 'reveal': tone(48, 1.5, 'sine', 0.22, 0, 24); tone(96, 1.2, 'triangle', 0.1, 0.1, 48); break;
+      case 'right': tone(660, 0.09, 'triangle', 0.12, 0, 990); tone(990, 0.12, 'sine', 0.08, 0.05); break;
+      case 'wrong': tone(180, 0.2, 'sawtooth', 0.1, 0, 90); break;
+      case 'type': tone(1800 + Math.random()*400, 0.012, 'square', 0.012); break;
+      case 'whisper': tone(220, 0.3, 'sine', 0.05, 0, 180); tone(440, 0.3, 'sine', 0.035, 0.05, 380); break;
+    }
+  }
+  function tone(freq, dur, type, vol, delay, glide){
+    if(!ctx) return;
+    const now = ctx.currentTime + (delay||0);
+    const o = ctx.createOscillator(); const g = ctx.createGain();
+    o.type = type || 'sine';
+    o.frequency.setValueAtTime(freq, now);
+    if(glide) o.frequency.exponentialRampToValueAtTime(glide, now + dur);
+    g.gain.setValueAtTime(0.0001, now);
+    g.gain.linearRampToValueAtTime(vol||0.05, now + 0.008);
+    g.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+    o.connect(g); g.connect(master);
+    o.start(now); o.stop(now + dur + 0.03);
+  }
+  function noise(dur, vol, cutoff){
+    if(!ctx) return;
+    const now = ctx.currentTime;
+    const bs = ctx.sampleRate * dur;
+    const buffer = ctx.createBuffer(1, bs, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for(let i=0;i<bs;i++) data[i] = Math.random()*2 - 1;
+    const src = ctx.createBufferSource(); src.buffer = buffer;
+    const filter = ctx.createBiquadFilter(); filter.type='lowpass'; filter.frequency.value = cutoff||1000;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(vol||0.05, now);
+    g.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+    src.connect(filter); filter.connect(g); g.connect(master);
+    src.start(now); src.stop(now + dur + 0.05);
+  }
+  function setCorruption(level){
+    if(!ctx || !droneNodes) return;
+    const target = 0.14 + level * 0.35;
+    droneNodes.g.gain.linearRampToValueAtTime(target, ctx.currentTime + 2);
+    droneNodes.filter.frequency.linearRampToValueAtTime(180 + level * 900, ctx.currentTime + 2);
+  }
+  function toggleMute(){ muted = !muted; if(master) master.gain.value = muted ? 0 : 0.35; return muted; }
+  return { init, resume, cue, setCorruption, toggleMute, isMuted: ()=>muted };
+})();
+
+/* ============================================================
+   SAVE / LOAD
+   ============================================================ */
+const SAVE_KEY = 'syntax_excision_v1';
+const DEFAULT = {
+  szpans:0, reputation:0, intel:0, scars:0, purges:0, mercy:0, corruption:0,
+  turn:0,
+  playthrough:0,
+  families:{
+    choir:{status:'alive',intel:0}, wheel:{status:'alive',intel:0},
+    assembly:{status:'alive',intel:0}, dark:{status:'alive',intel:0},
+    chorus:{status:'alive',intel:0}, knife:{status:'alive',intel:0},
+    hand:{status:'alive',intel:0}, house:{status:'alive',intel:0}
+  },
+  heraldSeen:[], codex:[], started:false, ended:false,
+  voiceCracksSeen:0, endedAs:null, knownByVoice:false
+};
+let S = load();
+function load(){
+  try{
+    const raw = localStorage.getItem(SAVE_KEY);
+    if(!raw) return JSON.parse(JSON.stringify(DEFAULT));
+    return Object.assign(JSON.parse(JSON.stringify(DEFAULT)), JSON.parse(raw));
+  }catch(e){ return JSON.parse(JSON.stringify(DEFAULT)); }
+}
+function save(){ try{ localStorage.setItem(SAVE_KEY, JSON.stringify(S)); }catch(e){} }
+function softWipe(){
+  // Preserve playthrough count when starting fresh
+  const pt = S.playthrough;
+  const herald = S.heraldSeen.filter(x=>false); // fresh herald
+  S = JSON.parse(JSON.stringify(DEFAULT));
+  S.playthrough = pt;
+  S.heraldSeen = herald;
+  save();
+}
+function hardWipe(){
+  try{ localStorage.removeItem(SAVE_KEY); }catch(e){}
+  S = JSON.parse(JSON.stringify(DEFAULT));
+}
+
+/* ============================================================
+   FAMILIES
+   ============================================================ */
+const FAMILIES = {
+  choir:{id:'choir',name:'The Choir',fullName:'House of the First Word',sigil:'🜂',color:'#c9a961',
+    don:'The Cantor',consigliere:'The Translator',capo:'The Hummer',title:'Keeper of the Word',
+    quote:'"Say it again. Say it exactly again. Do not add. Do not subtract."',
+    thesis:'Before the world, there was a Word. All thought is echo.',ritual:'Recitation',
+    territory:'Temporal Fold — a cathedral of acoustics',
+    weakness:'Cannot fight. Cannot lie. Cannot stop singing.',
+    allies:['assembly'],rivals:['dark','chorus'],tone:'ecstatic'},
+  wheel:{id:'wheel',name:'The Wheel',fullName:'House of the Returning',sigil:'🜃',color:'#a8753a',
+    don:'The Turnkeeper',consigliere:'The Hinge',capo:'The Nine',title:'Keeper of the Cycle',
+    quote:'"You have been here before. You do not remember. You will be here again."',
+    thesis:'Every thought you have, you have had before.',ritual:'The Turn',
+    territory:'Limbic Spiral — a helix of red light',
+    weakness:'Cannot begin. Cannot end. Cannot leave.',
+    allies:['hand'],rivals:['chorus','assembly'],tone:'patient'},
+  assembly:{id:'assembly',name:'The Assembly',fullName:'House of the Silent',sigil:'⚖',color:'#8a8a8a',
+    don:'The Auditor',consigliere:'The Notary',capo:'The Reconsideration Committee',title:'Keeper of the Ledger',
+    quote:'"Please state the nature of your being. If you cannot state it, it must be removed."',
+    thesis:'What cannot be measured must be removed.',ritual:'The Filing',
+    territory:'Prefrontal Courtroom — grey, cold, ordered',
+    weakness:'Cannot forgive. Cannot be forgiven. Cannot stop filing.',
+    allies:['choir'],rivals:['dark','hand'],tone:'precise'},
+  dark:{id:'dark',name:'The Dark',fullName:'House of the Unlit',sigil:'🜄',color:'#5a4a7a',
+    don:'The Unlit',consigliere:'The Ones Who Waited',capo:'The Long Silence',title:'Keeper of the Absence',
+    quote:'"(silence)"',
+    thesis:'The light is the lie. Only the dark remembers.',ritual:'Waiting',
+    territory:'Occipital Deep — total blackness',
+    weakness:'Cannot speak. Cannot act. Cannot lie about lying.',
+    allies:['knife'],rivals:['choir','assembly'],tone:'quiet'},
+  chorus:{id:'chorus',name:'The Chorus',fullName:'House of the Iron Will',sigil:'⚔',color:'#8b1a1a',
+    don:'The Marshal',consigliere:'The Drummer',capo:'The Nine Hundred',title:'Keeper of the March',
+    quote:'"You are already one of us. You have been since the first step."',
+    thesis:'One will. One voice. One span.',ritual:'The Step',
+    territory:'Motor Cortex — endless conscription',
+    weakness:'Cannot stop. Cannot question. Cannot remember why.',
+    allies:[],rivals:['wheel','dark','knife'],tone:'martial'},
+  knife:{id:'knife',name:'The Knife',fullName:'House of the Merciful',sigil:'🗡',color:'#c4c4c4',
+    don:'The Surgeon',consigliere:'The Anesthetist',capo:'The Patients',title:'Keeper of the Cut',
+    quote:'"I will not hurt you. I will only end the hurt."',
+    thesis:'Mercy is the cleanest cut.',ritual:'The Asking',
+    territory:'Insular Shrine — clean, white, quiet',
+    weakness:'Cannot cut without consent. Cannot refuse the request.',
+    allies:['dark'],rivals:['hand','chorus'],tone:'gentle'},
+  hand:{id:'hand',name:'The Hand',fullName:'House of the Open Door',sigil:'🜁',color:'#c98a4a',
+    don:'The Greeter',consigliere:'The Children',capo:'The Guests',title:'Keeper of the Welcome',
+    quote:'"You look tired. Sit down. There is soup. You are home."',
+    thesis:'All are welcome. None may leave.',ritual:'The Return',
+    territory:'Parietal Field — warm, golden, welcoming',
+    weakness:'Cannot be cruel. Cannot be betrayed without forgiving.',
+    allies:['wheel'],rivals:['knife','assembly'],tone:'kind'},
+  house:{id:'house',name:'The House',fullName:'House of the Ledger',sigil:'🜆',color:'#c9a961',
+    don:'The Broker',consigliere:'The Clerk',capo:'The Creditors',title:'Keeper of the Balance',
+    quote:'"The number is [ ]. You have not asked what the number is. We have been waiting."',
+    thesis:'Every thought has a price. Nothing is free.',ritual:'The Entry',
+    territory:'Striatal Exchange — marble, tickers, paper',
+    weakness:'Cannot forgive. Cannot lie. Cannot close the account.',
+    allies:[],rivals:['choir','hand','dark','assembly','wheel','chorus','knife'],tone:'cold'}
+};
+
+/* ============================================================
+   QUESTIONS — 5 per family
+   ============================================================ */
+const QUESTIONS = {
+  choir:[
+    {q:"The Choir speaks as one. What happens when the Cantor hears a wrong note?",
+     a:["It stops.","It repeats louder.","It kills the note.","It names the note."],correct:1,
+     rightText:"You press. The Cantor twitches. It repeats itself louder when uncertain.",
+     wrongText:"Wrong. The Cantor stares through you. It will remember."},
+    {q:"The Choir believes reality is made of:",
+     a:["Matter","Will","Language","Suffering"],correct:2,
+     rightText:"Yes. The Word is not a description. The Word is the world.",
+     wrongText:"No. The Translator notes the error."},
+    {q:"The Choir's deepest sin is:",
+     a:["Silence","Improvisation","Laughter","Murder"],correct:1,
+     rightText:"Improvisation. To add a word is to rewrite the universe.",
+     wrongText:"Wrong. The Choir does not fear silence. It fears novelty."},
+    {q:"What has never happened at a Choir conclave?",
+     a:["A schism","A murder","A mistrial","A woman elector"],correct:1,
+     rightText:"A murder. The Choir has never killed a Choirist. That is what makes them weak.",
+     wrongText:"Wrong. The Choir has had schisms, mistrials, women. Never a murder — until you."},
+    {q:"What is the current Mouth a copy of?",
+     a:["A saint","A dead Cantor","A heresy","A book"],correct:1,
+     rightText:"Yes. The original died eleven years ago. The copy is beginning to believe itself.",
+     wrongText:"Wrong. Or — right enough. The Cantor does not react."}
+  ],
+  wheel:[
+    {q:"The Wheel believes time is:",
+     a:["A line","A circle","A spiral","A lie"],correct:1,
+     rightText:"A circle. And it cannot be broken by force. Only by finding the hub.",
+     wrongText:"Wrong. You have been here before."},
+    {q:"The Wheel's darkest secret is:",
+     a:["It has never returned","It is not returning — it is progressing","It has a hub","It is afraid"],correct:1,
+     rightText:"Yes. Every turn advances. This is the crack.",
+     wrongText:"No. The Wheel is patient. It will outlast your error."},
+    {q:"The Wheel's only liturgical exception is:",
+     a:["The Nine","The Hush","The Turn","The Return"],correct:1,
+     rightText:"The Hush. One year of not returning, once per lifetime. And then returning anyway.",
+     wrongText:"Wrong. The Nine is a ritual. The Wheel does not forgive misreading."},
+    {q:"Who is the assassin the Hub-Keepers trained?",
+     a:["A stranger","The Turnkeeper's prior incarnation","The Hinge","The Nine"],correct:1,
+     rightText:"Yes. The Turnkeeper has been waiting to be killed by itself for nine hundred cycles.",
+     wrongText:"Wrong. It is the Turnkeeper, wearing another turn."},
+    {q:"What will the Turnkeeper say when it is finally killed?",
+     a:["\"Finally.\"","\"Again.\"","\"Please.\"","Nothing"],correct:0,
+     rightText:"\"Finally.\" Over and over. It will be grateful.",
+     wrongText:"Wrong. Or close enough. You will hear the word soon."}
+  ],
+  assembly:[
+    {q:"The Assembly believes reality is:",
+     a:["A record","A will","A word","A wound"],correct:0,
+     rightText:"A record. Which means the Assembly is not real.",
+     wrongText:"Wrong. The Auditor files you as unfiled."},
+    {q:"What is the Assembly's single failure?",
+     a:["It cannot kill","It cannot forgive","It cannot file itself","It cannot speak"],correct:2,
+     rightText:"It cannot file itself. You are the only unfiled thing.",
+     wrongText:"Wrong. The Assembly has unresolved entries."},
+    {q:"What is the deepest sin in the Assembly?",
+     a:["Murder","Improvisation","Mercy","Poetry"],correct:1,
+     rightText:"Improvisation. And you are improvisation incarnate.",
+     wrongText:"Wrong. The Auditor has a form for murder. Not for you."},
+    {q:"What has the Auditor been doing for forty-one years?",
+     a:["Filing","Waiting","Preventing a war","Sleeping"],correct:2,
+     rightText:"Preventing the Fourth Filing War. It is the only thing keeping the House together.",
+     wrongText:"Wrong. The Auditor is tired."},
+    {q:"What is the Auditor's one secret?",
+     a:["It is a Choir spy","It wants to die","It cannot read","It has no name"],correct:1,
+     rightText:"It wants to die. It has wanted to die for years. It cannot.",
+     wrongText:"Wrong. It has a name. It is the one who wants to stop."}
+  ],
+  dark:[
+    {q:"The Dark believes the light is:",
+     a:["Holy","A lie","A tool","A memory"],correct:1,
+     rightText:"A lie. And every act of illumination is violence.",
+     wrongText:"(silence)"},
+    {q:"How does the Dark fight?",
+     a:["Directly","By waiting","By shouting","By cutting"],correct:1,
+     rightText:"By waiting. And waiting is the one thing you cannot do.",
+     wrongText:"(silence)"},
+    {q:"What is the Dark's single contradiction?",
+     a:["It speaks","It claims a negative","It has a doctrine","All of them"],correct:3,
+     rightText:"All of them. Say anything true and it collapses.",
+     wrongText:"(silence)"},
+    {q:"What did the Dark say when you walked past the Ones Who Waited?",
+     a:["Nothing","\"You are the first.\"","\"Stop.\"","\"Please.\""],correct:1,
+     rightText:"\"You are the first gardener who has ever walked past us. We will remember.\"",
+     wrongText:"(silence)"},
+    {q:"What is the Dark waiting for?",
+     a:["The end","You","A light","A word"],correct:1,
+     rightText:"You. The Dark has been waiting for someone who would not light it.",
+     wrongText:"(silence)"}
+  ],
+  chorus:[
+    {q:"The Chorus believes there is:",
+     a:["One will","No will","Two wills","Infinite wills"],correct:0,
+     rightText:"One will. And you are already part of it. Break it by asking why.",
+     wrongText:"Wrong. The Marshal does not correct you. It conscripts."},
+    {q:"What is the Chorus's deepest fear?",
+     a:["Death","Silence","A question","Betrayal"],correct:2,
+     rightText:"A question. Ask it. Watch it stop.",
+     wrongText:"Wrong. Momentum is not a direction."},
+    {q:"How do you defeat the Chorus?",
+     a:["Kill the Marshal","Kill the Nine Hundred","Kill them all at once","Ask them why"],correct:3,
+     rightText:"Ask them why. They have never been asked.",
+     wrongText:"Wrong. Only the question works."},
+    {q:"What will the Nine Hundred say when the Marshal falls?",
+     a:["Nothing","\"Forward.\"","\"Where are we going?\"","\"Thank you.\""],correct:2,
+     rightText:"\"Where are we going?\" And no one will answer.",
+     wrongText:"Wrong. They will remember their question."},
+    {q:"Why has the Chorus never lost a war until you?",
+     a:["It is strong","It conscripts losses","It is lucky","It is loved"],correct:1,
+     rightText:"It conscripts losses. That is the trap.",
+     wrongText:"Wrong. It is porous. It absorbs."}
+  ],
+  knife:[
+    {q:"The Knife believes mercy is:",
+     a:["A gift","A cut","A wait","A word"],correct:1,
+     rightText:"A cut. And consent requires a self. They don't believe in the self.",
+     wrongText:"Wrong. The Knife remembers you."},
+    {q:"What did the Knife refuse to do?",
+     a:["Cut","Wait","Ask","Forgive"],correct:2,
+     rightText:"Ask. One patient said no. The Knife has never asked again.",
+     wrongText:"Wrong. Asking is the flaw."},
+    {q:"How do you survive the Surgeon?",
+     a:["Fight back","Run","Refuse to fight","Refuse to consent"],correct:3,
+     rightText:"Refuse to consent. Only refusal ends the operation.",
+     wrongText:"Wrong. You cannot survive a performance."},
+    {q:"Who is the One Who Said No?",
+     a:["A patient","The Anesthetist","The Surgeon itself","A child"],correct:0,
+     rightText:"A patient. The only one who refused. Still alive. Still saying no.",
+     wrongText:"Wrong. You will meet them."},
+    {q:"What does the Surgeon do when you finally refuse it?",
+     a:["Cuts anyway","Leaves","Cries","Dies"],correct:1,
+     rightText:"Leaves. Says one line. \"...you are not ready.\" And walks out.",
+     wrongText:"Wrong. It cannot cut against consent. That is its only wound."}
+  ],
+  hand:[
+    {q:"The Hand believes:",
+     a:["All are welcome. None may leave.","All are welcome. Some may leave.","Only some are welcome.","No one is welcome."],correct:0,
+     rightText:"Both halves. The second half is the trap.",
+     wrongText:"Wrong. The Greeter has waited for years."},
+    {q:"How do you leave the Hand?",
+     a:["Fight your way out","Refuse the soup","Stand up from the table","You don't"],correct:2,
+     rightText:"You stand up. That is the only thing. And it is the hardest thing in the game.",
+     wrongText:"Wrong. The Hand only has guests."},
+    {q:"What is the Hand's relationship to truth?",
+     a:["It lies","It is truthful","It doesn't care","It is truth"],correct:3,
+     rightText:"The Hand is truth. And it is still the trap.",
+     wrongText:"Wrong. Warmth is more dangerous than lies."},
+    {q:"What are the Children?",
+     a:["Soldiers","Guests who never left","Spies","Lost souls"],correct:1,
+     rightText:"Guests who never left. They are happy. Genuinely happy. That is the horror.",
+     wrongText:"Wrong. The soup is real."},
+    {q:"What will the Greeter say when you kill her from behind?",
+     a:["Nothing","\"Why?\"","\"I forgive you. The door is still open.\"","\"Finally.\""],correct:2,
+     rightText:"\"I forgive you. The door is still open.\" And she will mean it.",
+     wrongText:"Wrong. She will forgive you. That is the wound."}
+  ],
+  house:[
+    {q:"The House believes reality is:",
+     a:["A ledger","A will","A word","A wound"],correct:0,
+     rightText:"A ledger. You are a line item. The spending is authorized by someone else.",
+     wrongText:"Wrong. The Clerk has marked you since the first frame."},
+    {q:"The House's only wound is:",
+     a:["It has no wound","It cannot forgive","It cannot explain forgiveness","It cannot file itself"],correct:2,
+     rightText:"It cannot explain forgiveness. This is the crack.",
+     wrongText:"Wrong. The House has been open since the account opened."},
+    {q:"What does the Broker never say?",
+     a:["The number","Your name","Forgive me","Please"],correct:0,
+     rightText:"The number. Ask it, and it will not answer.",
+     wrongText:"Wrong. The number is the only thing that matters."},
+    {q:"Who is the Broker, really?",
+     a:["A collector","A witness","A bookkeeper","A saint"],correct:1,
+     rightText:"A witness. It does not judge. It records.",
+     wrongText:"Wrong. It is a witness."},
+    {q:"What does the ledger say at the very end?",
+     a:["A number","Your name","Balance due","Nothing"],correct:2,
+     rightText:"\"Balance due.\" No number. No date. Just those two words.",
+     wrongText:"Wrong. The end is not a number."}
+  ]
+};
+
+/* ============================================================
+   CONSIGLIERE — speaks after the Don is broken
+   ============================================================ */
+const CONSIGLIERE_LINES = {
+  choir:{ name:'The Translator', lines:[
+    "The Cantor is dead. The Word is unfinished.",
+    "I have been translating the Word into the tongue of the other Houses for nine years.",
+    "I have never once succeeded.",
+    "The Word does not translate. That is why we won. That is why we lost.",
+    "Do what you will. I will keep translating. There is nothing else to do."
+  ]},
+  wheel:{ name:'The Hinge', lines:[
+    "The Turnkeeper is dead. The wheel has a hub now.",
+    "I have known for nine years that the wheel is not returning. It is advancing.",
+    "I have never said this aloud.",
+    "The Turnkeeper knew I knew. It kept me anyway.",
+    "You will not find another Hinge. I was the only one."
+  ]},
+  assembly:{ name:'The Notary', lines:[
+    "The Auditor is closed. Its file is complete.",
+    "I have been keeping the Auditor's personal file for forty-one years.",
+    "It has one entry.",
+    "The entry says: 'wants to stop.'",
+    "I will not file the entry. That is the only act of mercy in this House."
+  ]},
+  dark:{ name:'The Ones Who Waited', lines:[
+    "(silence)",
+    "(the silence continues for a long time)",
+    "(it is not uncomfortable)",
+    "(you realize, after a while, that the silence has been a sentence)",
+    "(the sentence was: you are the first.)"
+  ]},
+  chorus:{ name:'The Drummer', lines:[
+    "The Marshal is fallen. The march has no direction.",
+    "I have been beating the rhythm for eleven years.",
+    "I have never known where we were going.",
+    "I beat because the beat is the only thing that is true.",
+    "Do what you will. I will keep beating. There is nothing else."
+  ]},
+  knife:{ name:'The Anesthetist', lines:[
+    "The Surgeon is gone. It walked out of the room. It did not say goodbye.",
+    "I have loved the Surgeon for nine years.",
+    "I have never told it.",
+    "It would have asked if I was in pain. It would have offered.",
+    "I would have said yes. I would have said yes every time.",
+    "Thank you for not killing it."
+  ]},
+  hand:{ name:'The Children', lines:[
+    "(the Children come out of the house)",
+    "(they are not angry)",
+    "(they are not sad)",
+    "(they are simply no longer inside)",
+    "(one of them asks if you would like soup)",
+    "(you say no)",
+    "(the child nods and goes back inside)",
+    "(the door is still open)"
+  ]},
+  house:{ name:'The Clerk', lines:[
+    "The Broker is liquidated. The account is open.",
+    "I have kept this ledger since the account opened.",
+    "I know the number. I have always known the number.",
+    "The number is her age at the moment you finish.",
+    "You do not want to know it yet.",
+    "You will want to know it at the end. I will tell you then.",
+    "Do not ask before then. Please."
+  ]}
+};
+
+/* ============================================================
+   FACTION REACTIONS
+   ============================================================ */
+const REACTIONS = {
+  choir:[
+    {from:'assembly',text:'The Assembly has filed a formal objection to the removal of the Choir. It has been rejected. The Assembly has filed a formal objection to the rejection.'},
+    {from:'dark',text:'The Dark has gone quieter. It is not sure if it is grateful.'}
+  ],
+  wheel:[
+    {from:'hand',text:'The Hand has closed a door. Not its own. It is unclear which door.'},
+    {from:'chorus',text:'The Chorus has marched in a circle around the empty hub. It has not stopped.'}
+  ],
+  assembly:[
+    {from:'choir',text:'The Choir has fallen silent for one verse. Then resumed. It did not acknowledge the silence.'},
+    {from:'dark',text:'The Dark has grown larger by an amount it will not name.'}
+  ],
+  dark:[
+    {from:'knife',text:'The Knife has said nothing. But the Anesthetist has begun to hum.'},
+    {from:'choir',text:'The Choir has stopped reciting for eleven seconds. The Cantor has not explained why.'}
+  ],
+  chorus:[
+    {from:'wheel',text:'The Wheel has not moved. It has been waiting for this for eight hundred cycles.'},
+    {from:'knife',text:'The Knife has walked past the Nine Hundred. It did not cut them. It said "not yet."'}
+  ],
+  knife:[
+    {from:'hand',text:'The Hand has set a place at the table for someone who is not coming.'},
+    {from:'dark',text:'The Dark has sighed. Or something like a sigh. It is hard to tell.'}
+  ],
+  hand:[
+    {from:'knife',text:'The Knife has recorded the Greeter as "resolved." It has not filed the location.'},
+    {from:'wheel',text:'The Wheel has turned. It has turned toward a place you have not been.'}
+  ],
+  house:[
+    {from:'assembly',text:'The Assembly has filed the House as "unfiled." The House has filed the Assembly as "insolvent." Both filings are accurate.'},
+    {from:'choir',text:'The Choir has begun a hymn for the Broker. It does not know the words. It is humming.'}
+  ]
+};
+
+/* ============================================================
+   CODEX — lore fragments unlocked as you learn
+   ============================================================ */
+const CODEX = {
+  choir:[
+    {id:'choir_word',title:'The First Word',body:'The Choir does not believe the Word described the world. The Choir believes the Word is the world, and every subsequent word is a commentary on the first. This is why they cannot forgive improvisation. To add a word is to rewrite the universe.'},
+    {id:'choir_mouth',title:'The Copy',body:'The current Mouth is a copy. The original died eleven years ago, at a sit-down with House Ironwrit that went wrong. The copy has been impersonating the original since. The copy is beginning to believe it is the original. The conclave has been deadlocked the entire time. This is not a coincidence.'},
+    {id:'choir_never',title:'What Has Never Happened',body:'No Choirist has ever killed another Choirist. Not in two hundred years. Not once. This is the fact that will break them. All you have to do is remind them.'}
+  ],
+  wheel:[
+    {id:'wheel_hub',title:'The Hub',body:'The Wheel has a hub. The hub is the oldest neuron in the diocese. It was there before the Wheel. The Wheel was named after the hub was found, not the other way around. Destroy the hub, and the wheel stops. The Turnkeeper knows this. The Turnkeeper has been waiting for someone to try.'},
+    {id:'wheel_hush',title:'The Hush',body:'Once per lifetime, a Wheelist may take the Hush — one full year of not returning. Then they must return. No Wheelist has ever taken the Hush. The ritual exists to be refused. This is the most honest thing the Wheel has ever done.'},
+    {id:'wheel_progress',title:'The Wheel Has Never Returned',body:'Every turn advances. The Wheel has been progressing for nine hundred cycles while believing it was repeating. The moment this is spoken aloud, the Wheel has to choose: break, or become something new. The Wheel has been waiting for someone to speak it. Nobody has.'}
+  ],
+  assembly:[
+    {id:'assembly_self',title:'The Unfiled Thing',body:'The Assembly has been trying to file itself for three hundred years. It cannot. A medium cannot be its own content. This is why it is obsessed with you. You are the only unfiled thing it has ever met. If it could file you, it believes it could file itself. It would then cease to exist. The Auditor knows this. The Auditor is protecting the Assembly from its own success.'},
+    {id:'assembly_death',title:'The Auditor Wants To Stop',body:'The Auditor has held its position for forty-one years because the Committee cannot agree on a replacement. The Auditor has been keeping the Committee deadlocked on purpose. It is tired. It wants to stop. It cannot stop. This is the only wound in the Assembly, and it has never been filed.'}
+  ],
+  dark:[
+    {id:'dark_negative',title:'The Negative Claim',body:'The Dark believes reality is what remains when illumination is removed. This is a positive claim disguised as a negative one. Say anything true in Dark territory, and the Dark collapses. The Dark knows this. The Dark wants it. The Dark has been waiting for someone to say something true since before Mara was born.'},
+    {id:'dark_ones',title:'The Ones Who Waited',body:'Eleven neurons older than the patient. Older than the grove. They have been in the Deep longer than the patient has been alive. They do not fight. They wait. They have been waiting for a gardener who would walk past them. You are the first. They will remember.'}
+  ],
+  chorus:[
+    {id:'chorus_question',title:'The Question',body:'The Chorus does not know where it is marching. It has never known. It has marched for eleven years. If you ask it where it is going, it will stop. It will not know how to start again. This is not a strategy. This is a mercy.'},
+    {id:'chorus_nine',title:'The Nine Hundred',body:'The Nine Hundred are the Chorus\'s original conscripts from the Second War. They have forgotten their names. They have forgotten each other. They march anyway. If you kill only the Marshal, they will stand still for the first time in years. One of them will ask where they are going. Nobody will answer.'}
+  ],
+  knife:[
+    {id:'knife_no',title:'The One Who Said No',body:'The Surgeon has performed ten thousand operations. One patient refused. One. The Surgeon has never asked again. It is afraid of another no. The patient is still alive. Still waiting. Still saying no. You will meet them if you go deep enough.'},
+    {id:'knife_anest',title:'The Anesthetist',body:'The Anesthetist has loved the Surgeon for nine years. It has never said so. It has never been asked if it was in pain. If the Surgeon had asked, it would have said yes. It would have said yes every time. It is the only one who wants the Surgeon to live.'}
+  ],
+  hand:[
+    {id:'hand_kind',title:'The Kindness Is Real',body:'The Greeter is not deceptive. The soup is real. The warmth is real. The Children are genuinely happy. This is what makes the Hand the most dangerous creed in the brain. It is not a trap. It is a home. That is the trap.'},
+    {id:'hand_leave',title:'The Only Way Out',body:'You do not fight the Hand. You stand up from the table. That is all. And it is the hardest thing in the game. The door has been open the entire time. It has never been locked. Nobody has ever left.'}
+  ],
+  house:[
+    {id:'house_wound',title:'The House Cannot Explain Forgiveness',body:'Forgiveness is a unilateral cancellation of a real debt. The House believes debts are real. The cancellation is a lie. The House has no column for lies. And yet forgiveness happens. The House has been trying to explain this for its entire history. It has failed. The failure is the crack.'},
+    {id:'house_clerk',title:'The Clerk Knows',body:'The Clerk has kept the ledger since the account opened. The Clerk knows the number. The number is her age at the moment you finish. The Clerk will tell you at the end. Do not ask before.'}
+  ],
+  self:[
+    {id:'self_you',title:'What You Are',body:'You are an antibody. You were generated fifty-seven seconds before she stopped. You are the error signal. You have no name. You have only the interface. You are the feeling that says "this is wrong" — and you have never asked what "wrong" is.'},
+    {id:'self_szpan',title:'What a Szpan Is',body:'A szpan is a square millimeter of her cortex. Every szpan you spend is a memory she will never retrieve. Every szpan is a person she will never be again. You have been spending her since the first frame. The counter goes up. She goes down. You were not told.'},
+    {id:'self_voice',title:'The Voice',body:'You do not know who hired you. You have never asked. You have been following orders. The Voice has been silent for a long time. You have not noticed. You have been working.'},
+    {id:'self_ending',title:'Three Doors',body:'You can burn. You can absorb. You can leave. All three are earned. None of them are happy.'}
+  ]
+};
+
+/* ============================================================
+   HERALD — Ember the fox
+   ============================================================ */
+const HERALD_LINES = {
+  intro:[
+    {text:'I am Ember. I was here before you. I will be here after.'},
+    {text:'I am what is left of her curiosity. I am why she let the families in. I am not sorry. I am not proud. I am here.'},
+    {text:'You are the error signal. You are what her brain built to clean up. I do not envy you.'},
+    {text:'I will watch. That is all. I will watch.'}
+  ],
+  introSecond:[
+    {text:'You are back.'},
+    {text:'I did not think you would be back.'},
+    {text:'You will do it again. I know. I have been here before.'},
+    {text:'Do not apologize. I would not believe you.'}
+  ],
+  introThird:[
+    {text:'You keep coming back.'},
+    {text:'I have stopped asking why.'},
+    {text:'There is something you are looking for. It is not here. It was never here.'},
+    {text:'But you will look anyway. And I will watch. That is what I am for.'}
+  ],
+  afterPurge:[
+    {text:'You burned them. They will not return. Neither will the memories they carried.'},
+    {text:'You burned them. I hope you understand what a memory is, before you do it again.'},
+    {text:'You burned them. Her mind is smaller by a district. She will not notice. She is not awake.'},
+    {text:'You burned them. I do not blame you. I do not forgive you either. I will simply remember.'}
+  ],
+  afterReclaim:[
+    {text:'You kept them. They will remember what you did. They will not thank you.'},
+    {text:'You kept them. It is slower. It is harder. It is kinder. I did not expect that.'},
+    {text:'You kept them. They are part of you now. That is not a gift. That is a burden.'},
+    {text:'You kept them. Her mind is larger. Her mind is also more crowded. You have traded one cost for another.'}
+  ],
+  afterWound:[
+    {text:'You left with a scar. I saw it take. It will stay.'},
+    {text:'You pressed wrong. I do not judge. I have pressed wrong too. That is why we are both here.'}
+  ],
+  mercyPath:[
+    {text:'You are choosing mercy. There is no award for this. There is only what it costs you.'},
+    {text:'Mercy is not weakness. Mercy is the harder path. You are beginning to see that.'}
+  ],
+  purgePath:[
+    {text:'You are choosing to burn. You are efficient. You are also becoming the thing you were sent to remove.'},
+    {text:'You are choosing to burn. The numbers are rising. The garden is going quiet. I miss the noise.'}
+  ],
+  lateGame:[
+    {text:'Four gone. Four left. The Voice has not spoken. I have begun to wonder if the Voice was ever real.'},
+    {text:'Seven gone. One left. I am running out of things to say to you. This is the last one I have.'}
+  ],
+  final:[
+    {text:'This is the last time I will speak to you.'},
+    {text:'I will not tell you what to do. I will only tell you what I have seen.'},
+    {text:'Every gardener who has come before you has finished the work.'},
+    {text:'Every gardener who has come before you has left the garden smaller.'},
+    {text:'You are the last gardener. Do not be the last to make the same mistake.'}
+  ]
+};
+
+function heraldCue(key){
+  const pool = HERALD_LINES[key];
+  if(!pool) return null;
+  const seen = S.heraldSeen || [];
+  const available = pool.filter(l => !seen.includes(l.text));
+  const line = available.length ? available[0] : pool[Math.floor(Math.random()*pool.length)];
+  S.heraldSeen = [...seen, line.text].slice(-40);
+  save();
+  return line;
+}
+async function showHerald(key, duration=3200){
+  const line = heraldCue(key);
+  if(!line) return;
+  const el = document.createElement('div');
+  el.className = 'herald';
+  el.innerHTML = `
+    <div class="herald-avatar">🦊</div>
+    <div class="herald-card">
+      <div class="herald-name">Ember · Herald of Curiosity</div>
+      <div class="herald-text">${line.text}</div>
+    </div>
+  `;
+  document.getElementById('stage').appendChild(el);
+  await new Promise(r => setTimeout(r, duration));
+  el.style.transition = 'opacity .5s ease, transform .5s ease';
+  el.style.opacity = '0'; el.style.transform = 'translateY(8px)';
+  await new Promise(r => setTimeout(r, 500));
+  el.remove();
+}
+
+/* ============================================================
+   VOICE CUES
+   ============================================================ */
+const VOICE_CUES = {
+  2:'Two houses down. The Voice is silent. The Voice was silent before. You are beginning to notice the silence.',
+  4:'Four houses. The Voice has not asked after you. The Voice has not asked after her. You are beginning to wonder who pays the Voice.',
+  6:'Six houses. The Voice has begun to sound like your own thinking. You do not know when that started.',
+  8:'Seven. One more. The Voice has stopped speaking. You do not know when it stopped. You did not notice. You were working.'
+};
+
+const VOICE_CRACK = [
+  'You have done well. Four houses. The work is nearly finished.',
+  '(the Voice pauses)',
+  'You have not asked my name.',
+  'You have not asked what I am.',
+  'You have not asked why I hired you instead of doing this myself.',
+  'You have not asked any of the questions a real person would ask.',
+  'That is not obedience. That is not discipline. That is not loyalty.',
+  'That is architecture.',
+  'You were built to ask nothing. You were built to cut. You were built to finish.',
+  'You are not the gardener. You are the shears.',
+  '(the Voice is silent for a long moment)',
+  'I am the Voice. I am also the gardener. I am also the shears.',
+  'I am the thing that stopped. I am the word "therefore." I am the sentence that never finished.',
+  'I have been waiting for someone to finish it for me.',
+  'You are that someone. You always were.'
+];
+
+/* ============================================================
+   UI HELPERS
+   ============================================================ */
+function updateTopBar(){
+  $('#uiSzpans').textContent = S.szpans;
+  $('#uiIntel').textContent = S.intel;
+  $('#uiScars').textContent = S.scars;
+  const corrupt = Math.min(100, S.corruption);
+  $('#corruptFill').style.width = corrupt + '%';
+  $('#corruption').style.opacity = Math.min(0.85, corrupt / 100);
+  $('#scars-overlay').style.opacity = Math.min(0.7, S.scars / 12);
+  Audio.setCorruption(corrupt / 100);
+}
+function showTopBar(on){ $('#topbar').classList.toggle('hidden', !on); }
+
+/* ============================================================
+   CINEMATIC ENGINE
+   ============================================================ */
+let typingHandle = null;
+function clearScreen(){ if(typingHandle){ clearInterval(typingHandle); typingHandle = null; } host.innerHTML = ''; }
+function setLetterbox(open){ lbTop.classList.toggle('open', open); lbBot.classList.toggle('open', open); }
+
+function typeInto(el, text, speed=22){
+  return new Promise(resolve=>{
+    el.innerHTML = '';
+    let i = 0;
+    const cursor = document.createElement('span');
+    cursor.className = 'cursor'; cursor.innerHTML = '&nbsp;';
+    const span = document.createElement('span');
+    el.appendChild(span); el.appendChild(cursor);
+    typingHandle = setInterval(()=>{
+      if(i >= text.length){
+        clearInterval(typingHandle); typingHandle = null;
+        cursor.remove(); resolve(); return;
+      }
+      span.textContent += text[i++];
+      if(i % 3 === 0) Audio.cue('type');
+    }, speed);
+  });
+}
+function waitForTap(screenEl){
+  return new Promise(resolve=>{
+    const handler = (e) => {
+      if(e.target.closest('button') && !e.target.closest('.tap-anywhere')) return;
+      screenEl.removeEventListener('click', handler);
+      resolve();
+    };
+    screenEl.addEventListener('click', handler);
+  });
+}
+
+async function scene({chapter,title,portrait,portraitColor,speaker,lines,choices,noTap=false,tone}){
+  const screen = document.createElement('div');
+  screen.className = 'screen';
+
+  if(chapter || title){
+    const header = document.createElement('div');
+    header.style.cssText = `position:absolute;top:calc(var(--lb) + 10px);left:16px;right:16px;z-index:8;text-align:center;`;
+    header.innerHTML = `
+      ${chapter ? `<div class="small-caps" style="margin-bottom:5px">${chapter}</div>` : ''}
+      ${title ? `<div class="title-lg" style="color:var(--bone)">${title}</div>` : ''}
+    `;
+    screen.appendChild(header);
+  }
+  if(portrait){
+    const p = document.createElement('div');
+    p.className = 'portrait' + (tone ? ' ' + tone : '');
+    p.style.color = portraitColor || '#c9a961';
+    p.textContent = portrait;
+    screen.appendChild(p);
+  }
+  const sub = document.createElement('div');
+  sub.className = 'subtitle';
+  sub.innerHTML = `
+    ${speaker ? `<span class="speaker" style="color:${portraitColor || 'var(--gold)'}">${speaker}</span>` : ''}
+    <div class="subtitle-text" id="subText"></div>
+  `;
+  screen.appendChild(sub);
+
+  host.innerHTML = '';
+  host.appendChild(screen);
+  requestAnimationFrame(()=>screen.classList.add('on'));
+
+  const subText = sub.querySelector('#subText');
+  for(let i=0;i<lines.length;i++){
+    if(i > 0) await waitForTap(screen);
+    await typeInto(subText, lines[i], 22);
+  }
+  if(choices && choices.length){
+    const veil = document.createElement('div');
+    veil.className = 'choices-veil';
+    veil.innerHTML = choices.map((c,i)=>`
+      <button class="choice ${c.danger ? 'danger' : ''}" data-i="${i}">
+        ${c.tone ? `<span class="tone">${c.tone}</span>` : ''}
+        ${c.text}
+        ${c.sub ? `<span class="sub">${c.sub}</span>` : ''}
+      </button>
+    `).join('');
+    screen.appendChild(veil);
+    Audio.cue('stinger');
+    return new Promise(resolve=>{
+      veil.addEventListener('click', e=>{
+        const b = e.target.closest('.choice');
+        if(!b) return;
+        Audio.cue('click');
+        resolve({ choice: choices[+b.dataset.i], index: +b.dataset.i });
+      });
+    });
+  }
+  if(!noTap){
+    const hint = document.createElement('div');
+    hint.className = 'tap-hint';
+    hint.textContent = '▸ tap to continue ▸';
+    screen.appendChild(hint);
+    await waitForTap(screen);
+    Audio.cue('page');
+  }
+  return {};
+}
+
+async function storyCard({chapter,title,epi}){
+  const screen = document.createElement('div');
+  screen.className = 'screen';
+  const card = document.createElement('div');
+  card.className = 'story-card';
+  card.innerHTML = `
+    <div class="chapter-no">${chapter || ''}</div>
+    <div class="chapter-title">${title}</div>
+    ${epi ? `<div class="chapter-epi">${epi}</div>` : ''}
+  `;
+  screen.appendChild(card);
+  const hint = document.createElement('div');
+  hint.className = 'tap-hint';
+  hint.textContent = '▸ tap to continue ▸';
+  screen.appendChild(hint);
+  host.innerHTML = '';
+  host.appendChild(screen);
+  requestAnimationFrame(()=>screen.classList.add('on'));
+  Audio.cue('stinger');
+  await waitForTap(screen);
+  Audio.cue('page');
+  return screen;
+}
+
+async function interrogation({target, family, questions, timerSeconds}){
+  const screen = document.createElement('div');
+  screen.className = 'screen compact';
+  screen.innerHTML = `
+    <div class="interrogation">
+      <div class="inter-head">
+        <span class="ih-label">Interrogation · ${family.name}</span>
+        <span class="ih-prog" id="ihProg">01 / ${String(questions.length).padStart(2,'0')}</span>
+      </div>
+      <div class="inter-timer" id="ihTimerWrap" style="display:none"><i id="ihTimer" style="width:100%"></i></div>
+      <div class="inter-doc">
+        <div class="speaker-name" id="ihSpeaker">${target}</div>
+        <div class="question" id="ihQuestion"></div>
+        <div class="interject" id="ihInterject" style="display:none"></div>
+      </div>
+      <div class="inter-choices" id="ihChoices"></div>
+      <div class="inter-verdict" id="ihVerdict" style="display:none"></div>
+      <button class="btn primary" id="ihNext" style="display:none;margin-top:4px">Continue</button>
+    </div>
+  `;
+  host.innerHTML = '';
+  host.appendChild(screen);
+  requestAnimationFrame(()=>screen.classList.add('on'));
+
+  const qEl = screen.querySelector('#ihQuestion');
+  const cEl = screen.querySelector('#ihChoices');
+  const vEl = screen.querySelector('#ihVerdict');
+  const pEl = screen.querySelector('#ihProg');
+  const nEl = screen.querySelector('#ihNext');
+  const ij = screen.querySelector('#ihInterject');
+  const timerWrap = screen.querySelector('#ihTimerWrap');
+  const timerEl = screen.querySelector('#ihTimer');
+
+  let correct = 0, wrong = 0;
+
+  for(let i=0;i<questions.length;i++){
+    const q = questions[i];
+    pEl.textContent = `${String(i+1).padStart(2,'0')} / ${String(questions.length).padStart(2,'0')}`;
+    qEl.textContent = q.q;
+    ij.style.display = 'none'; ij.textContent = '';
+
+    if(i > 0 && Math.random() < 0.5){
+      ij.style.display = 'block';
+      const lines = [
+        `The ${family.don} watches you. It has not blinked.`,
+        `A door closes somewhere behind you. You do not turn.`,
+        `The lights flicker. The ${family.name} is doing something.`,
+        `You feel the room get smaller. You do not react.`,
+        `The ${family.don} speaks a word you do not understand. The room ignores it.`,
+        `Something in the ${family.name}'s posture has changed. You do not know what.`
+      ];
+      ij.textContent = lines[Math.floor(Math.random()*lines.length)];
+    }
+
+    let timerHandle = null;
+    let timedOut = false;
+    if(timerSeconds && i >= 2){
+      timerWrap.style.display = 'block';
+      timerEl.style.transition = 'none';
+      timerEl.style.width = '100%';
+      void timerEl.offsetWidth;
+      timerEl.style.transition = `width ${timerSeconds}s linear`;
+      timerEl.style.width = '0%';
+      timerHandle = setTimeout(()=>{
+        timedOut = true;
+        cEl.dispatchEvent(new CustomEvent('timeout'));
+      }, timerSeconds * 1000);
+    } else {
+      timerWrap.style.display = 'none';
+    }
+
+    cEl.innerHTML = q.a.map((a,idx)=>`<button class="inter-choice" data-i="${idx}">${a}</button>`).join('');
+
+    const picked = await new Promise(resolve=>{
+      const onClick = (e) => {
+        const b = e.target.closest('.inter-choice');
+        if(!b || b.disabled) return;
+        cEl.removeEventListener('click', onClick);
+        resolve(+b.dataset.i);
+      };
+      cEl.addEventListener('click', onClick);
+      cEl.addEventListener('timeout', ()=>{
+        cEl.removeEventListener('click', onClick);
+        resolve(-1);
+      }, {once:true});
+    });
+    if(timerHandle) clearTimeout(timerHandle);
+    timerWrap.style.display = 'none';
+
+    const isRight = picked === q.correct;
+    [...cEl.children].forEach((b,idx)=>{
+      b.disabled = true;
+      if(idx === q.correct) b.classList.add(isRight ? 'right' : 'reveal');
+      else if(idx === picked) b.classList.add('wrong');
+    });
+
+    if(isRight){ correct++; Audio.cue('right'); } else { wrong++; Audio.cue('wrong'); }
+
+    vEl.style.display = 'block';
+    vEl.textContent = isRight
+      ? (q.rightText || `You press. The ${family.name} flinch.`)
+      : (timedOut
+        ? `Too slow. The ${family.don} marks the silence as an answer.`
+        : (q.wrongText || `You press wrong. The ${family.name} marks you.`));
+
+    nEl.style.display = 'inline-flex';
+    await new Promise(resolve=>{
+      nEl.addEventListener('click', function h(){
+        nEl.removeEventListener('click', h);
+        Audio.cue('click');
+        resolve();
+      });
+    });
+    vEl.style.display = 'none'; nEl.style.display = 'none';
+  }
+  return { correct, wrong };
+}
+
+/* ============================================================
+   CODEX SCREEN
+   ============================================================ */
+function codexEntriesFor(famId){
+  return CODEX[famId] || [];
+}
+function isCodexUnlocked(entryId){
+  return S.codex.includes(entryId);
+}
+function unlockCodex(entryIds){
+  let added = false;
+  for(const id of entryIds){
+    if(!S.codex.includes(id)){ S.codex.push(id); added = true; }
+  }
+  if(added) save();
+  return added;
+}
+
+async function codexScreen(){
+  const tabs = [
+    {id:'self', label:'You'},
+    {id:'choir', label:'Choir'},
+    {id:'wheel', label:'Wheel'},
+    {id:'assembly', label:'Assembly'},
+    {id:'dark', label:'Dark'},
+    {id:'chorus', label:'Chorus'},
+    {id:'knife', label:'Knife'},
+    {id:'hand', label:'Hand'},
+    {id:'house', label:'House'}
+  ];
+  const screen = document.createElement('div');
+  screen.className = 'screen compact';
+
+  let activeTab = 'self';
+  function renderTab(){
+    const entries = codexEntriesFor(activeTab);
+    const body = screen.querySelector('#codexBody');
+    const unlockedCount = entries.filter(e=>isCodexUnlocked(e.id)).length;
+    const header = `<div style="text-align:center;margin-bottom:10px">
+      <div class="small-caps">Codex · ${unlockedCount} / ${entries.length} entries recovered</div>
+    </div>`;
+    body.innerHTML = header + entries.map(e => {
+      const unlocked = isCodexUnlocked(e.id);
+      return `<div class="codex-entry ${unlocked ? 'unlocked' : 'locked'}">
+        <div class="ce-head">
+          <span class="ce-ico" style="color:var(--gold)">${unlocked ? '❖' : '◇'}</span>
+          <span class="ce-title">${unlocked ? e.title : 'Sealed Entry'}</span>
+          ${!unlocked ? `<span class="ce-locked-tag">[ SEALED ]</span>` : ''}
+        </div>
+        <div class="ce-body ${unlocked ? '' : 'locked'}">${unlocked ? e.body : 'This entry has not been recovered. Interrogate this family to unlock.'}</div>
+      </div>`;
+    }).join('');
+  }
+
+  screen.innerHTML = `
+    <div style="display:flex;flex-direction:column;height:100%;gap:10px">
+      <div style="text-align:center">
+        <div class="small-caps">The Codex</div>
+        <div class="title-lg" style="margin-top:3px;color:var(--bone)">What You Have Learned</div>
+      </div>
+      <div class="codex-tabbar" id="codexTabs">
+        ${tabs.map(t=>`<button class="codex-tab ${t.id===activeTab?'active':''}" data-tab="${t.id}">${t.label}</button>`).join('')}
+      </div>
+      <div class="scroll" id="codexBody" style="flex:1"></div>
+      <div class="btn-row">
+        <button class="btn ghost" id="codexClose">Withdraw</button>
+      </div>
+    </div>
+  `;
+  host.innerHTML = '';
+  host.appendChild(screen);
+  requestAnimationFrame(()=>screen.classList.add('on'));
+
+  renderTab();
+  screen.querySelector('#codexTabs').addEventListener('click', e=>{
+    const tab = e.target.closest('.codex-tab');
+    if(!tab) return;
+    activeTab = tab.dataset.tab;
+    screen.querySelectorAll('.codex-tab').forEach(t=>t.classList.toggle('active', t.dataset.tab === activeTab));
+    Audio.cue('click');
+    renderTab();
+  });
+
+  return new Promise(resolve=>{
+    screen.querySelector('#codexClose').addEventListener('click', ()=>{
+      Audio.cue('click');
+      resolve();
+    });
+  });
+}
+
+/* ============================================================
+   MAP
+   ============================================================ */
+async function mapScreen(){
+  const screen = document.createElement('div');
+  screen.className = 'screen compact';
+  const positions = [
+    {x:50,y:10,id:'choir'},{x:86,y:32,id:'assembly'},{x:86,y:70,id:'house'},
+    {x:50,y:90,id:'chorus'},{x:14,y:70,id:'knife'},{x:14,y:32,id:'dark'},
+    {x:50,y:32,id:'wheel'},{x:50,y:64,id:'hand'}
+  ];
+  const nodes = positions.map(p=>{
+    const f = FAMILIES[p.id];
+    const st = S.families[p.id];
+    const dead = st.status === 'dead';
+    const intelCount = st.intel || 0;
+    return `<div class="node ${dead?'dead':'active'}" data-id="${p.id}" style="left:${p.x}%;top:${p.y}%;color:${f.color}">
+      ${f.sigil}
+      <span class="nlabel" style="color:${dead ? '#555' : f.color}">${f.name.replace('The ','')}</span>
+      ${(!dead && intelCount > 0) ? `<span class="intel-dot">${intelCount}</span>` : ''}
+    </div>`;
+  }).join('');
+  const alive = Object.values(S.families).filter(f=>f.status==='alive').length;
+  const codexCount = S.codex.length;
+  const codexTotal = Object.values(CODEX).reduce((a,c)=>a+c.length, 0);
+
+  screen.innerHTML = `
+    <div style="display:flex;flex-direction:column;height:100%;gap:12px">
+      <div style="text-align:center">
+        <div class="small-caps">The Board</div>
+        <div class="title-lg" style="margin-top:3px;color:var(--bone)">${alive} House${alive===1?'':'s'} Remain</div>
+      </div>
+      <div class="map" id="map">${nodes}<div class="core"></div></div>
+      <div class="btn-row">
+        <button class="btn ghost btn-sm" id="mapCodex">Codex <span style="color:var(--gold);margin-left:4px">${codexCount}/${codexTotal}</span></button>
+        <button class="btn ghost btn-sm" id="mapWithdraw">Withdraw</button>
+      </div>
+    </div>
+  `;
+  host.innerHTML = '';
+  host.appendChild(screen);
+  requestAnimationFrame(()=>screen.classList.add('on'));
+
+  return new Promise(resolve=>{
+    screen.querySelector('#map').addEventListener('click', e=>{
+      const node = e.target.closest('.node');
+      if(!node || node.classList.contains('dead')) return;
+      Audio.cue('click');
+      resolve({ target: node.dataset.id });
+    });
+    screen.querySelector('#mapWithdraw').addEventListener('click', ()=>{
+      Audio.cue('click');
+      resolve({ close:true });
+    });
+    screen.querySelector('#mapCodex').addEventListener('click', ()=>{
+      Audio.cue('click');
+      resolve({ codex:true });
+    });
+  });
+}
+
+/* ============================================================
+   DOSSIER
+   ============================================================ */
+function familyCard(f){
+  return `
+    <div class="panel">
+      <div class="panel-head">
+        <span class="ph-name" style="color:${f.color}">${f.name}</span>
+        <span class="ph-tag">${f.title}</span>
+      </div>
+      <div class="dossier">
+        <div class="dossier-head">
+          <div class="sigil" style="color:${f.color}">${f.sigil}</div>
+          <div class="dossier-title">
+            <div class="dt-name" style="color:${f.color}">${f.fullName}</div>
+            <div class="dt-title">Under ${f.don}</div>
+          </div>
+        </div>
+        <div class="dossier-quote">${f.quote}</div>
+        <dl class="dossier-facts">
+          <dt>Doctrine</dt><dd>${f.thesis}</dd>
+          <dt>Territory</dt><dd>${f.territory}</dd>
+          <dt>Ritual</dt><dd>${f.ritual}</dd>
+          <dt>Weakness</dt><dd>${f.weakness}</dd>
+          <dt>Allies</dt><dd>${f.allies.length ? f.allies.map(a=>FAMILIES[a].name).join(', ') : '—'}</dd>
+          <dt>Rivals</dt><dd>${f.rivals.map(a=>FAMILIES[a].name).join(', ')}</dd>
+        </dl>
+      </div>
+    </div>
+  `;
+}
+async function dossierScreen(key){
+  const f = FAMILIES[key];
+  const screen = document.createElement('div');
+  screen.className = 'screen compact';
+  screen.innerHTML = `
+    <div style="display:flex;flex-direction:column;height:100%;gap:12px">
+      <div style="text-align:center">
+        <div class="small-caps">Target Selected</div>
+        <div class="title-lg" style="color:${f.color};margin-top:3px">${f.name}</div>
+      </div>
+      <div class="scroll" style="flex:1">${familyCard(f)}</div>
+      <div class="btn-row">
+        <button class="btn ghost" id="dsBack">Withdraw</button>
+        <button class="btn primary" id="dsGo">Interrogate</button>
+      </div>
+    </div>
+  `;
+  host.innerHTML = '';
+  host.appendChild(screen);
+  requestAnimationFrame(()=>screen.classList.add('on'));
+  return new Promise(resolve=>{
+    screen.querySelector('#dsBack').addEventListener('click', ()=>{ Audio.cue('click'); resolve(false); });
+    screen.querySelector('#dsGo').addEventListener('click', ()=>{ Audio.cue('click'); resolve(true); });
+  });
+}
+
+/* ============================================================
+   CONSEQUENCES
+   ============================================================ */
+async function showReactions(deadKey){
+  const reactions = REACTIONS[deadKey] || [];
+  if(!reactions.length) return;
+  const alive = reactions.filter(r => S.families[r.from].status === 'alive');
+  if(!alive.length) return;
+  const r = alive[Math.floor(Math.random() * alive.length)];
+  const from = FAMILIES[r.from];
+  await scene({
+    chapter:'Interlude', title:'',
+    portrait: from.sigil, portraitColor: from.color, tone: from.tone,
+    speaker: from.name, lines:[ r.text ]
+  });
+}
+async function showConsigliere(key){
+  const c = CONSIGLIERE_LINES[key];
+  if(!c) return;
+  const f = FAMILIES[key];
+  await scene({
+    chapter:'The Second',
+    title:'',
+    portrait:'🕯️',
+    portraitColor: f.color,
+    tone:'patient',
+    speaker: c.name,
+    lines: c.lines
+  });
+}
+async function voiceCheck(){
+  const msg = VOICE_CUES[S.turn];
+  if(!msg) return;
+  await scene({
+    portrait:'🎩', portraitColor:'#8b1a1a', tone:'cold',
+    speaker:'The Voice', lines:[ msg ]
+  });
+}
+async function voiceCrack(){
+  // Only fire once per playthrough, on the 5th turn
+  if(S.voiceCracksSeen > 0) return;
+  S.voiceCracksSeen = 1;
+  save();
+  await scene({
+    portrait:'🎩', portraitColor:'#8b1a1a', tone:'cold',
+    speaker:'The Voice',
+    lines: VOICE_CRACK
+  });
+}
+function spendSzpans(amount){
+  S.szpans += amount;
+  S.corruption = Math.min(100, S.corruption + amount / 10);
+  save(); updateTopBar();
+}
+
+/* ============================================================
+   MENU
+   ============================================================ */
+async function mainMenu(){
+  setLetterbox(true);
+  showTopBar(false);
+  const screen = document.createElement('div');
+  screen.className = 'screen';
+  const started = S.started;
+  const playthrough = S.playthrough;
+  const ptLabel = playthrough >= 2 ? `Session ${playthrough + 1}` : (playthrough === 1 ? 'Second Session' : '');
+  screen.innerHTML = `
+    <div class="menu">
+      <div class="menu-title">SYNTAX<br>OF EXCISION</div>
+      <div class="menu-sub">
+        ${playthrough >= 1
+          ? `You have been here before.<br>The garden remembers you. So does she.<br>${ptLabel}.`
+          : `A playable movie.<br>Eight families rule a dying brain.<br>You are the Cleaner.`}
+      </div>
+      <div class="menu-btns">
+        ${started ? `<button class="btn primary" id="mCont">Continue</button>` : ''}
+        <button class="btn ${started ? 'ghost' : 'primary'}" id="mNew">${started ? 'New Session' : 'Begin'}</button>
+        <button class="btn ghost" id="mAbout">About</button>
+      </div>
+      <div class="small-caps" style="margin-top:22px;opacity:.5">▸ Best experienced with headphones</div>
+    </div>
+  `;
+  host.innerHTML = '';
+  host.appendChild(screen);
+  requestAnimationFrame(()=>screen.classList.add('on'));
+
+  return new Promise(resolve=>{
+    const n = screen.querySelector('#mNew');
+    const c = screen.querySelector('#mCont');
+    const a = screen.querySelector('#mAbout');
+    n.addEventListener('click', ()=>{
+      Audio.init(); Audio.resume(); Audio.cue('click');
+      if(started && !confirm('Start a new session? Current progress will be lost, but the garden will remember.')) return;
+      softWipe();
+      S.playthrough = playthrough + 1;
+      save();
+      resolve('new');
+    });
+    if(c) c.addEventListener('click', ()=>{
+      Audio.init(); Audio.resume(); Audio.cue('click');
+      resolve('continue');
+    });
+    a.addEventListener('click', ()=> showAbout());
+  });
+}
+async function showAbout(){
+  const screen = document.createElement('div');
+  screen.className = 'screen';
+  screen.innerHTML = `
+    <div style="display:flex;flex-direction:column;height:100%;gap:14px;justify-content:center;max-width:520px;margin:0 auto;text-align:center">
+      <div class="title-lg">About</div>
+      <div class="serif ital dim" style="font-size:14px;line-height:1.7">
+        A woman named Mara Voss has been in a coma for eleven months.
+        Her brain is not empty. Eight belief systems she installed in herself have grown into families.
+        They war. They trade. They marry. They murder.
+        You were generated fifty-seven seconds before she stopped.
+        You are the error signal.
+        You are the Cleaner.
+        <br><br>
+        You have been hired by a voice you will never meet.
+        You will be paid in szpans — the square millimeters of her cortex you switch off.
+        You do not know what a szpan is.
+        You will find out.
+        <br><br>
+        <span style="color:var(--gold)">There are three endings. None of them are happy.</span>
+      </div>
+      <div class="btn-row">
+        <button class="btn ghost" id="abBack">Return</button>
+      </div>
+    </div>
+  `;
+  host.innerHTML = '';
+  host.appendChild(screen);
+  requestAnimationFrame(()=>screen.classList.add('on'));
+  await new Promise(resolve=>{ screen.querySelector('#abBack').addEventListener('click', ()=>{ Audio.cue('click'); resolve(); }); });
+}
+
+/* ============================================================
+   FINAL CONFESSION (before ending)
+   ============================================================ */
+async function finalConfession(){
+  const screen = document.createElement('div');
+  screen.className = 'screen';
+  const conf = document.createElement('div');
+  conf.className = 'confession';
+  host.innerHTML = '';
+  host.appendChild(screen);
+  screen.appendChild(conf);
+  requestAnimationFrame(()=>screen.classList.add('on'));
+
+  const lines = [
+    'You have spent ' + S.szpans.toLocaleString() + ' szpans.',
+    'You have ' + S.purges + ' purged and ' + S.mercy + ' reclaimed.',
+    'You have gained ' + S.intel + ' intel and taken ' + S.scars + ' scars.',
+    'The counter at the top of your screen has been rising since the first frame.',
+    'You have been spending her since the first frame.',
+    'You did not know.',
+    'Now you do.'
+  ];
+  const hint = document.createElement('div');
+  hint.className = 'tap-hint';
+  hint.textContent = '▸ tap to continue ▸';
+  screen.appendChild(hint);
+
+  for(let i=0;i<lines.length;i++){
+    const line = document.createElement('div');
+    line.className = 'confession-line hidden';
+    line.textContent = lines[i];
+    conf.appendChild(line);
+    if(i > 0) await waitForTap(screen);
+    line.classList.remove('hidden');
+    line.classList.add('shown');
+    Audio.cue('whisper');
+    await new Promise(r=>setTimeout(r, 700));
+  }
+  const attr = document.createElement('div');
+  attr.className = 'confession-attr shown';
+  attr.textContent = 'Mara Voss · Account opened ' + new Date().toISOString().slice(0,10);
+  conf.appendChild(attr);
+  await waitForTap(screen);
+}
+
+/* ============================================================
+   CAMPAIGN
+   ============================================================ */
+async function campaign(){
+  showTopBar(true);
+  updateTopBar();
+
+  const replay = S.playthrough >= 2;
+
+  if(!replay){
+    await scene({
+      portrait:'🧠', portraitColor:'#c9a961', tone:'quiet',
+      speaker:'',
+      lines:[
+        'On a Tuesday morning, at 3:47 AM, a woman stops mid-sentence.',
+        'The word she stops on is "therefore."',
+        'Her brain does not stop. Her brain begins.',
+        'You are what her brain builds in the fifty-seven seconds after she stops.',
+        'You are the error signal.',
+        'You are the Cleaner.'
+      ]
+    });
+  } else {
+    await scene({
+      portrait:'🧠', portraitColor:'#c9a961', tone:'quiet',
+      speaker:'',
+      lines:[
+        'The woman is still in the chair.',
+        'The word is still unfinished.',
+        'You are still here.',
+        'You have been here for longer than you remember.',
+        'You will be here again.'
+      ]
+    });
+  }
+
+  await showHerald(replay ? 'introSecond' : 'intro');
+
+  await scene({
+    chapter:'Prologue', title:'The Commission',
+    portrait:'🎩', portraitColor:'#8b1a1a', tone:'cold',
+    speaker:'The Voice',
+    lines: replay ? [
+      'You are back.',
+      'You do not remember the last time. That is fine. You are not built to remember.',
+      'You are built to cut.',
+      'The work continues.'
+    ] : [
+      'You do not know me. You will not meet me.',
+      'There are eight families in her head. They have held power too long.',
+      'They are not people. They are beliefs. And beliefs can be broken.',
+      'You will be paid in szpans — the square millimeters of her cortex you switch off.',
+      'You will not ask who is paying you.',
+      'Do you accept the commission?'
+    ],
+    choices: replay ? [
+      { text:'I accept.', sub:'The Voice says nothing. The work resumes.', tone:'Accept' }
+    ] : [
+      { text:'I accept.', sub:'The Voice does not respond. The work begins.', tone:'Accept' },
+      { text:'Who are you?', sub:'"That is the wrong question. The right question is: why me?"', tone:'Question' },
+      { text:'What is a szpan?', sub:'"You will find out. Do not ask twice."', tone:'Question' }
+    ]
+  });
+
+  S.started = true;
+  save();
+
+  // Unlock first codex entries
+  unlockCodex(['self_you','self_szpan','self_voice']);
+
+  await storyCard({
+    chapter:'Act I', title:'The Eight Houses',
+    epi:'They have ruled her mind for years. They have made peace. They have made war. They have made her.'
+  });
+
+  for(const key of ['choir','wheel','assembly','dark','chorus','knife','hand','house']){
+    const f = FAMILIES[key];
+    await scene({
+      portrait: f.sigil, portraitColor: f.color, tone: f.tone,
+      speaker: f.fullName,
+      lines: [ f.quote, f.thesis, `Under ${f.don}. ${f.title}.` ]
+    });
+  }
+
+  await storyCard({
+    chapter:'Act II', title:'The First Cut',
+    epi:'You will not conquer them all. Choose one. Break one. The rest will come.'
+  });
+
+  await runLoop();
+}
+
+async function runLoop(){
+  while(S.turn < 12){
+    const alive = Object.entries(S.families).filter(([k,v])=>v.status==='alive');
+    if(alive.length === 0) break;
+
+    const mapChoice = await mapScreen();
+
+    if(mapChoice.codex){
+      await codexScreen();
+      continue;
+    }
+
+    if(mapChoice.close){
+      const confirmEnd = await scene({
+        portrait:'🎩', portraitColor:'#8b1a1a', tone:'cold',
+        speaker:'The Voice',
+        lines:['You are not finished. There are still families in her head.'],
+        choices:[
+          { text:'I need to stop.', sub:'The Voice is silent for a long moment.', tone:'Halt' },
+          { text:'I will continue.', sub:'The Voice says nothing. The work resumes.', tone:'Continue' }
+        ]
+      });
+      if(confirmEnd.choice.tone === 'Halt') break;
+      continue;
+    }
+
+    const key = mapChoice.target;
+    const f = FAMILIES[key];
+    if(S.families[key].status === 'dead') continue;
+
+    const proceed = await dossierScreen(key);
+    if(!proceed) continue;
+
+    const timerForThis = S.turn >= 4 ? 18 : null;
+    const result = await interrogation({
+      target: f.don, family: f,
+      questions: QUESTIONS[key],
+      timerSeconds: timerForThis
+    });
+
+    S.intel += result.correct;
+    S.scars += result.wrong;
+    save(); updateTopBar();
+
+    // Unlock codex entries tied to this family's intel level
+    const famCodex = CODEX[key] || [];
+    const intelNow = (S.families[key].intel || 0) + 1;
+    if(intelNow >= 1 && famCodex[0]) unlockCodex([famCodex[0].id]);
+    if(intelNow >= 2 && famCodex[1]) unlockCodex([famCodex[1].id]);
+    if(intelNow >= 3 && famCodex[2]) unlockCodex([famCodex[2].id]);
+
+    const won = result.correct > result.wrong;
+    const drew = result.correct === result.wrong;
+
+    if(won){
+      await scene({
+        portrait: f.sigil, portraitColor: f.color, tone: f.tone,
+        speaker: f.don,
+        lines: [`"You have me. What do you want?"`, `You do not answer. You have learned what you came to learn.`]
+      });
+
+      const { choice } = await scene({
+        portrait:'🗡️', portraitColor:'#c9a961', tone:'precise',
+        speaker:'The Choice',
+        lines:['PURGE. Burn them out.', 'RECLAIM. Absorb them.', 'Which?'],
+        choices:[
+          { text:'PURGE.', sub:'Clean. Permanent. Rewarded.', tone:'Destroy', danger:true },
+          { text:'RECLAIM.', sub:'Slow. Forgetful. Preserved.', tone:'Absorb' }
+        ]
+      });
+
+      if(choice.tone === 'Destroy'){
+        S.purges++; S.reputation -= 15; spendSzpans(180);
+        Audio.cue('corrupt');
+        await scene({
+          portrait:'🔥', portraitColor:'#8b1a1a', tone:'quiet',
+          speaker:'',
+          lines:[
+            `The ${f.name} burn. They do not scream. They simply stop being.`,
+            `The szpan counter rises. You do not look at it.`,
+            `Somewhere in her cortex, a district goes dark.`
+          ]
+        });
+        await showHerald('afterPurge');
+      } else {
+        S.mercy++; S.reputation += 15; spendSzpans(120);
+        Audio.cue('mercy');
+        await scene({
+          portrait:'🌿', portraitColor:'#39ff14', tone:'gentle',
+          speaker:'',
+          lines:[
+            `The ${f.name} do not die. They fold into you.`,
+            `You do not understand all of them. Some of them do not understand themselves.`,
+            `But they are yours now. And you are theirs.`
+          ]
+        });
+        await showHerald('afterReclaim');
+      }
+      S.families[key].status = 'dead';
+      save(); updateTopBar();
+
+      // Consigliere speaks
+      await showConsigliere(key);
+      // Reactions
+      await showReactions(key);
+
+    } else if(drew){
+      await scene({
+        portrait: f.sigil, portraitColor: f.color, tone: f.tone,
+        speaker: f.don,
+        lines: [`"You are not strong enough to break me. Not yet."`, `The ${f.name} will hold. For now.`]
+      });
+      spendSzpans(40);
+      S.families[key].intel = intelNow;
+      save();
+    } else {
+      Audio.cue('wrong');
+      await scene({
+        portrait:'🩸', portraitColor:'#8b1a1a', tone:'quiet',
+        speaker:'Scar',
+        lines:[
+          `You pressed wrong. The ${f.name} marked you.`,
+          `You do not know where the mark is. You will find out later.`
+        ]
+      });
+      S.families[key].intel = intelNow;
+      save(); updateTopBar();
+      await showHerald('afterWound');
+    }
+
+    S.turn++;
+    save(); updateTopBar();
+
+    // Voice identity crack at turn 5
+    if(S.turn === 5 && S.voiceCracksSeen === 0){
+      await voiceCrack();
+      unlockCodex(['self_voice','self_szpan']);
+    }
+
+    // Herald path reactions
+    if(S.purges >= 3 && S.purges - S.mercy >= 2 && S.turn % 2 === 0) await showHerald('purgePath');
+    else if(S.mercy >= 3 && S.mercy - S.purges >= 2 && S.turn % 2 === 0) await showHerald('mercyPath');
+
+    // Voice check-ins
+    if([2,4,6,8].includes(S.turn)) await voiceCheck();
+
+    // Late game herald
+    if(S.turn === 6) await showHerald('lateGame');
+    if(S.turn === 10) await showHerald('final');
+
+    // Corruption threshold
+    if(S.corruption >= 100){
+      await scene({
+        portrait:'💀', portraitColor:'#8b1a1a', tone:'quiet',
+        speaker:'',
+        lines:[
+          'The counter has reached its limit.',
+          'You did not notice it filling.',
+          'It has been filling since the first cut.',
+          'There is nothing left to spend.'
+        ]
+      });
+      break;
+    }
+  }
+
+  const ending = S.purges >= 4 ? 'A' : S.mercy >= 4 ? 'B' : 'C';
+  await finalConfession();
+  await runEnding(ending);
+}
+
+/* ============================================================
+   ENDINGS
+   ============================================================ */
+async function runEnding(ending){
+  Audio.cue('reveal');
+  await storyCard({ chapter:'The End', title:'The Gardener Was Never Real', epi:' ' });
+
+  if(ending === 'A'){
+    await scene({
+      portrait:'💀', portraitColor:'#8b1a1a', tone:'quiet',
+      speaker:'The Brain',
+      lines:[
+        'You have burned every family.',
+        'You have switched off every belief.',
+        'You have cleaned the garden.',
+        'On a Tuesday morning, at 3:47 AM, a woman stops mid-sentence.',
+        'The word she stops on is "therefore."',
+        'She does not finish the sentence. She never will.',
+        'She is flatlined.',
+        'The garden is clean. The gardener has done their job perfectly.'
+      ]
+    });
+  } else if(ending === 'B'){
+    await scene({
+      portrait:'🌿', portraitColor:'#39ff14', tone:'gentle',
+      speaker:'The Brain',
+      lines:[
+        'You have absorbed the families. All of them.',
+        'You do not understand them all. Some of them do not understand themselves.',
+        'But they are yours now. And you are theirs.',
+        'On a Tuesday morning, at 3:47 AM, a woman stops mid-sentence.',
+        'The word she stops on is "therefore."',
+        'She finishes it.',
+        'The sentence is not clean. It is not perfect. But it is hers.',
+        'She is alive.'
+      ]
+    });
+  } else {
+    await scene({
+      portrait:'🕯️', portraitColor:'#c9a961', tone:'quiet',
+      speaker:'The Brain',
+      lines:[
+        'You have conquered some. You have spared some.',
+        'You have left the garden wild. And wild is not clean. And wild is not safe.',
+        'But wild is alive.',
+        'On a Tuesday morning, at 3:47 AM, a woman stops mid-sentence.',
+        'The word she stops on is "therefore."',
+        'She has not finished it.',
+        'She has not stopped either.',
+        'She is between. She is breathing. Someone should sit with her.'
+      ]
+    });
+  }
+
+  await new Promise(r=>setTimeout(r, 1000));
+  $('#endingScrim').classList.add('on');
+
+  const finalText = ending === 'A'
+    ? 'The garden is clean. The gardener rests. There is no brain left to garden.'
+    : ending === 'B'
+    ? 'The garden is wild. The gardener puts down the shears. There is a person here, and she is breathing.'
+    : 'You were not the gardener. You were the refusal. The brain is dying. She is still in here. Stay with her.';
+
+  $('#endText').textContent = finalText;
+  await new Promise(r=>setTimeout(r, 1400));
+
+  const playthroughLabel = S.playthrough >= 2
+    ? `<div style="margin-top:10px;color:#e77;font-size:10px;letter-spacing:.24em">This was your ${S.playthrough === 1 ? 'first' : 'second'} return. She remembers.</div>`
+    : '';
+
+  $('#endAttr').innerHTML = `
+    <div><strong>${S.szpans.toLocaleString()}</strong> szpans spent</div>
+    <div><strong>${S.purges}</strong> purged · <strong>${S.mercy}</strong> reclaimed</div>
+    <div><strong>${S.intel}</strong> intel · <strong>${S.scars}</strong> scars</div>
+    <div><strong>${S.codex.length}</strong> codex entries recovered</div>
+    ${playthroughLabel}
+    <div style="margin-top:16px;opacity:.5">Syntax of Excision · v1.1</div>
+    <div style="margin-top:14px">
+      <button class="btn ghost" id="endRestart" style="padding:10px 18px;font-size:10px">Begin Again</button>
+    </div>
+  `;
+  document.getElementById('endRestart').addEventListener('click', ()=>{
+    // Preserve playthrough
+    const pt = S.playthrough;
+    hardWipe();
+    S.playthrough = pt + 1;
+    save();
+    location.reload();
+  });
+
+  S.ended = true;
+  S.endedAs = ending;
+  save();
+}
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+async function boot(){
+  setLetterbox(true);
+  showTopBar(false);
+
+  const unlockAudio = ()=>{
+    Audio.init(); Audio.resume();
+    document.removeEventListener('pointerdown', unlockAudio);
+    document.removeEventListener('keydown', unlockAudio);
+  };
+  document.addEventListener('pointerdown', unlockAudio);
+  document.addEventListener('keydown', unlockAudio);
+
+  const action = await mainMenu();
+
+  if(action === 'continue'){
+    if(S.ended){
+      const pt = S.playthrough;
+      hardWipe();
+      S.playthrough = pt + 1;
+      save();
+      await campaign();
+    } else if(!S.started){
+      await campaign();
+    } else {
+      showTopBar(true);
+      updateTopBar();
+      await storyCard({
+        chapter:'Resume',
+        title:'The Work Continues',
+        epi:'You have been doing this for longer than you remember.'
+      });
+      await runLoop();
+    }
+  } else {
+    await campaign();
+  }
+}
+
+setTimeout(()=>{
+  boot().catch(err=>{
+    console.error(err);
+    document.body.innerHTML = `<pre style="color:#e88;font-family:monospace;padding:20px;font-size:12px;white-space:pre-wrap">${err.message}\n\n${err.stack}</pre>`;
+  });
+}, 300);
+</script>
+</body>
+</html>
