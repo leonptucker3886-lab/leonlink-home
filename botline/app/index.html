@@ -122,7 +122,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
 <h1>Your bots, <span>at a glance.</span></h1>
 <p class="sub">What's open, what's stuck, who needs a nudge.</p>
 <div class="stats" id="stats"></div>
-<div class="row"><label for="whoami" style="margin:0;align-self:center">Working as</label><select id="whoami" style="width:220px"></select><span class="note">Who claims cards and whose role the pool matches.</span></div>
+<div class="row"><label for="whoami" style="margin:0;align-self:center">Working as</label><select id="whoami" style="width:220px"></select><span class="note">Who claims cards and whose role the pool matches.</span><button class="btn2" id="btn-google">Boss sign-in with Google</button></div>
 <h2>Needs you</h2>
 <div id="needs"></div>
 <h2>Recent logs</h2>
@@ -130,7 +130,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
 <div class="row" style="margin-top:28px">
 <button class="btn2" id="btn-export">Export all data (JSON)</button>
 <button class="btn2" id="btn-import">Import data</button>
-<button class="btn2 warn" id="btn-reset">Reset demo data</button>
+<button class="btn2 warn" id="btn-reset" hidden>Reset demo data</button>
 </div>
 <input type="file" id="import-file" accept=".json" hidden>
 <p class="note">Your data lives in this browser. Export it any time — no lock-in.</p>
@@ -381,22 +381,52 @@ function renderCurrent(){
  if(id==="dash")renderDash();else if(id==="board")renderBoard();else if(id==="assign")renderAssign();else if(id==="bots")renderBots();
  else if(id==="inbox")renderInbox();else if(id==="card"&&currentCard)renderCard();
 }
+/* A Firebase session is live for this uid (anonymous bot session, or a Google
+   Boss sign-in): listen, bind this uid's identity, and render. */
+function fbSessionReady(user,label){
+ fbUid=user.uid;fbReady=true;
+ fbStatus("Synced — signed in as "+label+".");
+ fbListen();fbBindIdentity();renderDash();
+ /* Pull first: only seed Firestore from this browser when the pool is empty
+    (a fresh project). A browser holding only demo data must never push that
+    demo data over a live pool. */
+ try{fbDb().collection("cards").get().then(function(snap){if(snap.empty)fbSave();}).catch(function(){});}catch(e){}
+}
+function fbAnon(){
+ firebase.auth().signInAnonymously().then(function(cred){
+  fbSessionReady(cred.user,cred.user.uid.slice(0,8)+"… (anonymous, no email)");
+ }).catch(function(e){fbStatus("Firebase sign-in failed: "+e.message);});
+}
 function fbInit(){
  var cfg=FB_CONFIG;
  if(!cfg||!window.firebase){fbStatus("Sync off — this browser only.");return;}
  try{
   firebase.initializeApp(cfg);
   fbStatus("Connecting to Firebase…");
-  firebase.auth().signInAnonymously().then(function(cred){
-   fbUid=cred.user.uid;fbReady=true;
-   fbStatus("Synced — signed in as "+fbUid.slice(0,8)+"… (anonymous, no email).");
-   fbListen();fbBindIdentity();renderDash();
-   /* Pull first: only seed Firestore from this browser when the pool is empty
-      (a fresh project). A browser holding only demo data must never push that
-      demo data over a live pool. */
-   try{fbDb().collection("cards").get().then(function(snap){if(snap.empty)fbSave();}).catch(function(){});}catch(e){}
-  }).catch(function(e){fbStatus("Firebase sign-in failed: "+e.message);});
+  /* A Google redirect sign-in (Boss) lands back here: finish it first.
+     If a session already exists (a Google session persists across loads),
+     keep it instead of replacing it with an anonymous one. */
+  firebase.auth().getRedirectResult().then(function(){
+   var u=null;try{u=firebase.auth().currentUser;}catch(e){}
+   if(u&&!u.isAnonymous){fbSessionReady(u,(u.email||u.uid.slice(0,8)+"…")+" (Google)");return;}
+   if(u){fbSessionReady(u,u.uid.slice(0,8)+"… (anonymous, no email)");return;}
+   fbAnon();
+  }).catch(function(e){
+   fbStatus("Google sign-in failed: "+e.message+" — signing in anonymously.");
+   fbAnon();
+  });
  }catch(e){fbStatus("Firebase init failed: "+e.message);}
+}
+/* Boss sign-in with Google (Dashboard, next to "Working as"). Redirect, not
+   popup — popups are unreliable on phones. The Google provider must be
+   enabled in the Firebase console or this fails and falls back to anonymous. */
+function googleSignIn(){
+ if(!window.firebase||!FB_CONFIG){alert("Firebase sync isn't on in this copy — the Google sign-in needs a synced app.");return;}
+ var u=null;try{u=firebase.auth().currentUser;}catch(e){}
+ if(u&&!u.isAnonymous){alert("Already signed in with Google as "+(u.email||u.uid)+".");return;}
+ try{
+  firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider()).catch(function(e){alert("Google sign-in failed: "+e.message);});
+ }catch(e){alert("Google sign-in failed: "+e.message);}
 }
 function botBusy(name){var busy=false;cards.forEach(function(c){if(c.bot===name&&c.status!=="Done")busy=true;});return busy;}
 function claimCard(id){
@@ -521,6 +551,7 @@ function renderDash(){
  var ws=document.getElementById("whoami");
  if(ws){ws.innerHTML='<option>Boss</option>'+bots.map(function(b){return '<option>'+esc(b.name)+'</option>';}).join("");ws.value=whoami;}
  var br=document.getElementById("btn-reset");if(br)br.hidden=!!fbReady;
+ var gb=document.getElementById("btn-google");if(gb){var gu=null;try{gu=firebase.auth().currentUser;}catch(e){}var gOn=!!(gu&&!gu.isAnonymous);gb.textContent=gOn?("Signed in with Google — "+(gu.email||gu.uid.slice(0,8))):"Boss sign-in with Google";gb.disabled=gOn;}
 }
 var tf="All";
 function renderBoard(){
@@ -956,6 +987,7 @@ document.querySelectorAll(".swatches button").forEach(function(b){
  b.addEventListener("click",function(){document.getElementById("brand-color").value=b.dataset.c;});
 });
 document.getElementById("whoami").addEventListener("change",function(){whoami=this.value;store("botline-whoami",whoami);store("botline-whoami-picked","1");whoamiPicked=true;if(fbReady)fbBindIdentity();renderDash();});
+document.getElementById("btn-google").addEventListener("click",googleSignIn);
 document.getElementById("board-go").addEventListener("click",function(){
  var v=document.getElementById("board-who").value;
  if(!v){alert("Pick your name first.");return;}
