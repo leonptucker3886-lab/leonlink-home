@@ -269,6 +269,7 @@ var REQ_TEMPLATES={
 var AUTO_CHECKS=["File exists + commit hash present","Live URL returns 200","Desktop + mobile render PASS","All links work","Same site design / header-footer","Correct file type for the job","Correct folder","Right repo, right branch, deploy succeeds","Meta / og / canonical present","No duplicate title or slug","File name lowercase, hyphens, matches slug","No secrets or personal info","Images and audio owned or generated","Alt text on every image","Log with every upload: did / tested / didn't test"];
 var PRI={Urgent:0,High:1,Normal:2,Low:3};
 function today(){return new Date().toISOString().slice(0,10);}
+function nowET(){try{return new Date().toLocaleString("en-US",{timeZone:"America/New_York",month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"})+" ET";}catch(e){return today();}}
 function isoPlus(d){var x=new Date();x.setDate(x.getDate()+d);return x.toISOString().slice(0,10);}
 function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
 function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v));}catch(e){return null;}}
@@ -731,6 +732,51 @@ function saveUpload(){
  addLog(c,"Botline","Upload logged: "+(c.upload.file||"(no file)")+" @ "+(c.upload.hash||"(no hash)")+".");
 }
 
+function inspectionHtml(c){
+ var ins=c.inspections||[];
+ var h='<h2>Inspection review<small>Pass is done. Fail goes back with notes.</small></h2>';
+ if(ins.length){
+  h+='<div class="box">'+ins.map(function(x){
+   return '<div class="log"><b>'+esc(x.inspector||"Inspector")+'</b> <span class="when">'+esc(x.when||"")+'</span> \u00b7 <b>'+esc(x.verdict||"")+'</b>'
+   +(x.hash?'<br>Hash: '+esc(x.hash):"")
+   +(x.url?'<br>URL: <a href="'+esc(x.url)+'" target="_blank" rel="noopener">'+esc(x.url)+'</a>':"")
+   +(x.notes?'<br>'+esc(x.notes):"")+'</div>';
+  }).join("")+'</div>';
+ }else{
+  h+='<div class="box"><p>No inspections yet.</p></div>';
+ }
+ if(whoami==="Boss"||myRole()==="Inspector"){
+  var names=bots.filter(function(b){return /inspector/i.test(b.role||"");}).map(function(b){return b.name;});
+  if(!names.length)names=["Mushroom Face","Gadget","MILES dAvis"];
+  h+='<div class="box upbox">'
+  +'<label for="insp-who">Inspector</label><select id="insp-who">'+names.map(function(n){return '<option'+(n===whoami?' selected':'')+'>'+esc(n)+'</option>';}).join("")+'</select>'
+  +'<label for="insp-verdict">Verdict</label><select id="insp-verdict"><option>Pass</option><option>Fail</option><option>Unverified</option></select>'
+  +'<label for="insp-hash">Commit hash</label><input type="text" id="insp-hash" placeholder="abc1234">'
+  +'<label for="insp-url">Live URL</label><input type="text" id="insp-url" placeholder="https://www.example.com/...">'
+  +'<label for="insp-notes">Notes</label><textarea id="insp-notes" placeholder="What you checked, what failed"></textarea>'
+  +'<p class="note">Time is stamped automatically (ET): '+esc(nowET())+'</p>'
+  +'<div class="row"><button class="btn2 go2" id="btn-insp">Submit inspection</button></div>'
+  +'</div>';
+ }else{
+  h+='<p class="note">Inspections are submitted by the Inspectors (Mushroom Face, Gadget, MILES dAvis) or the Boss.</p>';
+ }
+ return h;
+}
+function submitInspection(){
+ var c=currentCard;if(!c)return;
+ if(!(whoami==="Boss"||myRole()==="Inspector")){alert("Only the Inspector (or the Boss) can submit an inspection.");return;}
+ var who=val("insp-who"),verdict=val("insp-verdict"),hash=val("insp-hash"),url=val("insp-url"),notes=val("insp-notes");
+ if(!who){alert("Pick the inspector.");return;}
+ if(!url){alert("Live URL is required \u2014 even for Unverified, give the URL that would not load.");return;}
+ if(verdict!=="Unverified"&&!hash){alert("Commit hash is required for a Pass or Fail.");return;}
+ if(!c.inspections)c.inspections=[];
+ var when=nowET();
+ c.inspections.unshift({inspector:who,verdict:verdict,hash:hash,url:url,when:when,notes:notes});
+ c.review=verdict+" by "+who+" \u2014 "+when+(hash?" \u2014 "+hash:"")+(notes?" \u2014 "+notes:"");
+ if(verdict==="Pass")c.status="Done";
+ if(verdict==="Fail")c.status="In progress";
+ addLog(c,who,"Inspection: "+verdict+" \u2014 "+url+(hash?" @ "+hash:"")+(notes?" \u2014 "+notes:""));
+}
 function renderCard(){
  var c=currentCard,el=document.getElementById("card");
  var up=c.upload||{};var gateOk=c.gate&&c.gate.passed;
@@ -766,8 +812,7 @@ function renderCard(){
  +'<h2>Message board<small>Work logs live here</small></h2><div id="logs">'
  +c.logs.map(function(l){return '<div class="log'+(l.esc?" esc":"")+'"><b>'+esc(l.who)+'</b> <span class="when">'+esc(l.when)+'</span><br>'+esc(l.text)+'</div>';}).join("")+'</div>'
  +'<div class="row"><select id="who"><option>You</option>'+bots.map(function(b){return '<option>'+esc(b.name)+'</option>';}).join("")+'</select><input type="text" id="logtext" class="grow" placeholder="Log what you did, tested, or need"></div><div class="row"><button class="btn2 go2" id="btn-log" style="margin-left:auto">Post log</button></div>'
- +'<h2>Inspection review<small>Pass is done. Fail goes back with notes.</small></h2><div class="box"><p>'+esc(c.review||"No review yet.")+'</p></div>'
- +'<div class="row"><button class="btn2 go2" id="btn-pass">Pass — Done</button><button class="btn2" id="btn-fail">Fail — back to work</button></div>'
+ +inspectionHtml(c)
  +'<h2>Auto-checks<small>Run on every upload, before review. Fail goes back to the builder with the exact failed check.</small></h2><ul style="list-style:none;padding:0;margin:0">'
  +AUTO_CHECKS.map(function(x){return '<li style="padding:8px 0 8px 26px;position:relative;border-bottom:1px solid var(--line);font-size:15px"><span style="position:absolute;left:0;color:var(--dim)">○</span>'+esc(x)+'</li>';}).join("")+'</ul>'
  +'<p class="note">The gate above runs these. ✓ = the system checked it. ○ = the reviewer verifies it.</p>';
@@ -782,8 +827,7 @@ document.getElementById("btn-save-up").onclick=function(){saveUpload();};
    var b=document.getElementById("banner");if(b)b.style.display="block";renderDash();
  };
  document.getElementById("btn-del").onclick=function(){if(confirm("Delete "+c.id+" for good?")){cards=cards.filter(function(x){return x!==c;});saveAll();show("board");}};
- document.getElementById("btn-pass").onclick=function(){if(!(whoami==="Boss"||myRole()==="Inspector")){alert("Only the Inspector (or the Boss) can pass a card.");return;}c.status="Done";addLog(c,"Inspector","Passed. Card done.");};
- document.getElementById("btn-fail").onclick=function(){if(!(whoami==="Boss"||myRole()==="Inspector")){alert("Only the Inspector (or the Boss) can fail a card.");return;}var n=prompt("What failed? (goes back to the builder as a note)");if(n===null)return;c.status="In progress";addLog(c,"Inspector","Failed — back to work. "+n);};
+ var bi=document.getElementById("btn-insp");if(bi)bi.onclick=function(){submitInspection();};
  document.getElementById("btn-log").onclick=function(){var t=document.getElementById("logtext").value.trim();if(!t)return;addLog(c,document.getElementById("who").value,t);};
  Array.prototype.forEach.call(el.querySelectorAll("[data-i]"),function(x){x.onchange=function(){c.reqs[+x.dataset.i].done=x.checked;saveAll();renderCard();};});
  Array.prototype.forEach.call(el.querySelectorAll("[data-cp]"),function(x){x.onchange=function(){c.cps[+x.dataset.cp].done=x.checked;saveAll();renderCard();};});
