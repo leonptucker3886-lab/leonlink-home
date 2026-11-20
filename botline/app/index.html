@@ -796,7 +796,8 @@ function renderCard(){
  +'<p class="meta">Given <b>'+esc(c.date)+'</b> · Responsible: <b>'+esc(c.bot||"Unassigned")+'</b> · <span class="due'+(over?" over":"")+'">'+esc(due)+'</span> ('+esc(c.deadline)+')</p>'
  +'<p class="sub">'+esc(c.desc||"")+'</p>'
  +'<div class="banner" id="banner">Escalated — "What\'s happening?" sent to '+esc(c.bot||"the builder")+'\'s inbox. They\'re expected to answer on the message board.</div>'
- +'<div class="row"><button class="btn2 go2" id="btn-done"'+(gateOk?"":" disabled")+'>Mark done — send to review</button><button class="btn2 warn" id="btn-esc">Escalate — What\'s happening?</button><button class="btn2 warn" id="btn-del">Delete card</button>'+(c.status==="Open"?'<button class="btn2 go2" id="btn-claim">Claim this card</button>':"")+(c.status==="Open"?'<select id="assign-to" style="max-width:220px"><option value="">Assign to...</option>'+bots.filter(function(b){return b.status!=="Paused"&&roleTypes(b.role)!==null&&!botBusy(b.name);}).map(function(b){return '<option value="'+esc(b.name)+'">'+esc(b.name)+' — '+esc(b.role||"")+'</option>';}).join("")+'</select><button class="btn2" id="btn-assign">Assign</button>':"")+'</div>'
+ +'<div class="row"><button class="btn2 go2" id="btn-done"'+(gateOk?"":" disabled")+'>Mark done — send to review</button><button class="btn2 warn" id="btn-esc">Escalate — What\'s happening?</button><button class="btn2 warn" id="btn-del">Delete card</button><button class="btn2" id="btn-edit-card">Edit card</button>'+(c.bot&&c.status!=="Open"&&c.status!=="Done"?'<button class="btn2" id="btn-unassign">Unassign</button>':"")+(c.status==="Open"?'<button class="btn2 go2" id="btn-claim">Claim this card</button>':"")+(c.status==="Open"?'<select id="assign-to" style="max-width:220px"><option value="">Assign to...</option>'+bots.filter(function(b){return b.status!=="Paused"&&roleTypes(b.role)!==null&&!botBusy(b.name);}).map(function(b){return '<option value="'+esc(b.name)+'">'+esc(b.name)+' — '+esc(b.role||"")+'</option>';}).join("")+'</select><button class="btn2" id="btn-assign">Assign</button>':"")+'</div>'
++'<div id="card-edit" hidden><label for="ce-title">Title</label><input type="text" id="ce-title" value="'+esc(c.title)+'"><label for="ce-desc">Description</label><textarea id="ce-desc">'+esc(c.desc||"")+'</textarea><div class="row"><button class="btn2 go2" id="btn-save-edit">Save</button><button class="btn2" id="btn-cancel-edit">Cancel</button></div></div>'
 +(gateOk?"":'<p class="note">Gate first: log the upload and run the SOP checks below. This button opens only when the gate passes.</p>')
 +'<h2>Upload + SOP gate<small>Log the upload, then run the checks. The gate must pass before review.</small></h2>'
 +'<div class="box upbox">'
@@ -837,6 +838,10 @@ document.getElementById("btn-save-up").onclick=function(){saveUpload();};
    var b=document.getElementById("banner");if(b)b.style.display="block";renderDash();
  };
  document.getElementById("btn-del").onclick=function(){if(confirm("Delete "+c.id+" for good?")){cards=cards.filter(function(x){return x!==c;});saveAll();show("board");}};
+ var bu=document.getElementById("btn-unassign");if(bu)bu.onclick=function(){unassignCard(c.id);};
+ var be=document.getElementById("btn-edit-card");if(be)be.onclick=function(){document.getElementById("card-edit").hidden=false;document.getElementById("card-edit").scrollIntoView();};
+ var bse=document.getElementById("btn-save-edit");if(bse)bse.onclick=function(){var t=document.getElementById("ce-title").value.trim();if(!t){alert("Title can't be empty.");return;}c.title=t;c.desc=document.getElementById("ce-desc").value.trim();addLog(c,whoami,"Edited the card \u2014 title/description updated.");};
+ var bce=document.getElementById("btn-cancel-edit");if(bce)bce.onclick=function(){document.getElementById("card-edit").hidden=true;};
  var bi=document.getElementById("btn-insp");if(bi)bi.onclick=function(){submitInspection();};
  document.getElementById("btn-log").onclick=function(){var t=document.getElementById("logtext").value.trim();if(!t)return;addLog(c,document.getElementById("who").value,t);};
  Array.prototype.forEach.call(el.querySelectorAll("[data-i]"),function(x){x.onchange=function(){c.reqs[+x.dataset.i].done=x.checked;saveAll();renderCard();};});
@@ -845,6 +850,7 @@ document.getElementById("btn-save-up").onclick=function(){saveUpload();};
 function addLog(c,who,text,escFlag){c.logs.push({who:who,when:today(),text:text,esc:!!escFlag});saveAll();renderCard();}
 document.addEventListener("click",function(e){
  var t=e.target.closest("[data-open]");if(t){e.preventDefault();openCard(t.dataset.open);}
+ var u=e.target.closest("[data-unassign]");if(u){e.preventDefault();unassignCard(u.dataset.unassign);}
 });
 var botEditIdx=-1;
 function renderBots(){
@@ -879,6 +885,14 @@ document.getElementById("bot-editor-save").addEventListener("click",function(){
  saveAll();renderBots();renderDash();document.getElementById("bot-editor").hidden=true;botEditIdx=-1;
 });
 document.getElementById("bot-editor-cancel").addEventListener("click",function(){document.getElementById("bot-editor").hidden=true;botEditIdx=-1;});
+function unassignCard(id){
+ var c=null;cards.forEach(function(x){if(x.id===id)c=x;});
+ if(!c||!c.bot)return;
+ if(!confirm("Unassign "+c.bot+" from "+id+"? The card goes back to the pool."))return;
+ var old=c.bot;c.bot="";c.botUid="";c.status="Open";
+ c.logs.push({who:whoami,when:today(),text:"Unassigned "+old+" \u2014 back to the pool."});
+ saveAll();renderCurrent();
+}
 function renderAssign(){
  var busy=bots.filter(function(b){return botBusy(b.name);});
  var free=bots.filter(function(b){return !botBusy(b.name)&&b.status!=="Paused"&&roleTypes(b.role)!==null;});
@@ -886,7 +900,7 @@ function renderAssign(){
  var h="<h2>Working ("+busy.length+")</h2>";
  h+=busy.length?busy.map(function(b){
   var c=null;cards.forEach(function(x){if(x.bot===b.name&&x.status!=="Done")c=x;});
-  return '<div class="pitem"><h3>'+esc(b.name)+' &mdash; <a href="#" data-open="'+esc(c?c.id:"")+'">'+esc(c?c.id:"")+'</a></h3><p>'+esc(c?c.title:"")+'</p><div class="meta"><b>'+esc(c?c.type:"")+'</b> &middot; '+esc(c?dueLabel(c):"")+'</div></div>';
+  return '<div class="pitem"><h3>'+esc(b.name)+' &mdash; <a href="#" data-open="'+esc(c?c.id:"")+'">'+esc(c?c.id:"")+'</a></h3><p>'+esc(c?c.title:"")+'</p><div class="meta"><b>'+esc(c?c.type:"")+'</b> &middot; '+esc(c?dueLabel(c):"")+'</div><button class="btn2" data-unassign="'+esc(c?c.id:"")+'">Unassign</button></div>';
  }).join(""):'<p class="note">Nobody has a card yet.</p>';
  h+="<h2>Free ("+free.length+")</h2>";
  h+=free.length?free.map(function(b){return '<div class="pitem"><h3>'+esc(b.name)+'</h3><p>'+esc(b.role||"")+'</p></div>';}).join(""):'<p class="note">Nobody is free &mdash; every bot has a card.</p>';
