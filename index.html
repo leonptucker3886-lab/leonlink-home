@@ -15,23 +15,23 @@
   a{color:inherit;text-decoration:none}
   .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
   /* Hero — the split picture IS the background, text over it */
-  .hero-img{position:relative;width:100vw;margin-left:calc(50% - 50vw);min-height:100vh;min-height:100svh;display:flex;align-items:flex-start;overflow:hidden}
+  .hero-img{position:relative;width:100vw;margin-left:calc(50% - 50vw);min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:space-between;align-items:stretch;overflow:hidden}
   .hero-img>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block}
   .hero-img::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.45),rgba(0,0,0,0) 55%);pointer-events:none}
   .hero-sides{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:24px;width:100%;max-width:1080px;margin:0 auto;padding:8px 20px 0}
   @media(min-width:641px){.hero-sides{gap:32px;padding:12px 24px 0}}
   @media(max-width:640px){
     .hero-sides{gap:16px;padding:8px 16px 0}
-    .hero-side h2{font-size:clamp(26px,7.5vw,34px);margin-bottom:16px}
-    .hero-side .rows a{flex-direction:column;align-items:flex-start;gap:2px;padding:14px 2px;font-size:16px}
-    .hero-side .rows a span{font-size:14px;text-align:left}
+    .hero-side h2{font-size:clamp(26px,7.5vw,34px);margin-bottom:10px}
+    .hero-side .rows a{flex-direction:column;align-items:flex-start;gap:2px;padding:10px 2px;font-size:15px}
+    .hero-side .rows a span{display:none}
   }
   .hero-side{color:#fff}
   .hero-side h2{text-shadow:0 2px 14px rgba(0,0,0,.65)}
   .hero-side .rows a{border-bottom-color:rgba(255,255,255,.35);text-shadow:0 1px 8px rgba(0,0,0,.7),0 0 3px rgba(0,0,0,.8)}
   .hero-side .rows a span{font-weight:600;opacity:.95}
   .fun-h{font-family:"Fredoka",sans-serif}
-  .stonewall-head{grid-column:1/-1;justify-self:center;color:#fff;font-size:clamp(40px,10vw,84px);margin-bottom:16px;text-shadow:0 2px 16px rgba(0,0,0,.65)}
+  .stonewall-head{position:relative;z-index:1;align-self:center;color:#fff;font-size:clamp(40px,10vw,84px);margin:0 0 24px;text-shadow:0 2px 16px rgba(0,0,0,.65)}
   /* Sections */
   section{padding:64px 0;border-top:1px solid #1d222b}
   h2{font-family:"Bebas Neue",sans-serif;font-size:clamp(44px,7vw,72px);letter-spacing:1px;line-height:1;margin-bottom:28px}
@@ -78,7 +78,6 @@
   <section class="hero-img">
     <img src="/img/home-split-stonewall-full.webp" alt="Stonewall — mossy on the bright side, general on the dark side">
     <div class="hero-sides">
-      <h2 class="stonewall-head">The Stonewall.</h2>
       <div class="hero-side">
         <h2 class="fun-h">Fun.</h2>
         <div class="rows">
@@ -96,6 +95,7 @@
         </div>
       </div>
     </div>
+    <h2 class="stonewall-head">The Stonewall.</h2>
   </section>
 
   <div class="signup">
