@@ -289,8 +289,11 @@ var inbox=store("botline-inbox")||[{id:"m-demo",who:"Forge",to:"Boss",ts:0,when:
 var brand=store("botline-brand")||{name:"Botline",tag:"Run your bots like a team.",color:"#22e6c8",color2:"#ff5da2",ownerEmail:"leonptucker3886@gmail.com"};
 
 /* ---- Firebase sync (shared store every bot sees) ---- */
-var FB_CONFIG=store("botline-fb-config")||null;
-var fbReady=false,fbUid=null,fbApplying=false,fbLastCards="",fbLastBots="",fbLastInbox="";
+/* Built-in default Firebase project (null in the repo — a hosted copy injects
+   its own). A pasted config in the White-label tab overrides the default. */
+var FB_DEFAULT={"apiKey":"AIzaSyBJCekEZp-o2DyoGKszo9tRW9_v2MquLSk","authDomain":"botline-61f19.firebaseapp.com","projectId":"botline-61f19","storageBucket":"botline-61f19.firebasestorage.app","messagingSenderId":"747938706598","appId":"1:747938706598:web:d879ea8839ff54f8277067"};
+var FB_CONFIG=store("botline-fb-off")?null:(store("botline-fb-config")||FB_DEFAULT);
+var fbReady=false,fbUid=null,fbApplying=false,fbLastCards="",fbLastBots="",fbLastInbox="",fbPulled=false;
 var whoami=store("botline-whoami")||"Boss";
 function fbStatus(t){var e=document.getElementById("fb-status");if(e)e.textContent=t;}
 function myRole(){if(whoami==="Boss")return "Boss";var b=null;bots.forEach(function(x){if(x.name===whoami)b=x;});return b?b.role:"";}
@@ -330,6 +333,7 @@ function fbSave(){
 function fbListen(){
  var db=fbDb();if(!db)return;
  db.collection("cards").onSnapshot(function(snap){
+  fbPulled=true;
   if(fbApplying)return;
   var arr=[];snap.forEach(function(d){arr.push(d.data());});
   if(!arr.length)return;
@@ -376,7 +380,11 @@ function fbInit(){
   firebase.auth().signInAnonymously().then(function(cred){
    fbUid=cred.user.uid;fbReady=true;
    fbStatus("Synced — signed in as "+fbUid.slice(0,8)+"… (anonymous, no email).");
-   fbListen();fbSave();fbBindIdentity();renderDash();
+   fbListen();fbBindIdentity();renderDash();
+   /* Pull first: only seed Firestore from this browser when the pool is empty
+      (a fresh project). A browser holding only demo data must never push that
+      demo data over a live pool. */
+   try{fbDb().collection("cards").get().then(function(snap){if(snap.empty)fbSave();}).catch(function(){});}catch(e){}
   }).catch(function(e){fbStatus("Firebase sign-in failed: "+e.message);});
  }catch(e){fbStatus("Firebase init failed: "+e.message);}
 }
@@ -412,7 +420,7 @@ function autoAssign(){
  if(!fbReady)renderCurrent();
 }
 
-function saveAll(){store("botline-v1",cards);store("botline-bots",bots);store("botline-inbox",inbox);store("botline-brand",brand);if(fbReady){if(!fbApplying)fbSave();else setTimeout(function saveLater(){if(fbApplying)setTimeout(saveLater,600);else fbSave();},600);}}
+function saveAll(){store("botline-v1",cards);store("botline-bots",bots);store("botline-inbox",inbox);store("botline-brand",brand);if(fbReady&&fbPulled){if(!fbApplying)fbSave();else setTimeout(function saveLater(){if(fbApplying)setTimeout(saveLater,600);else fbSave();},600);}}
 function applyBrand(){
  document.documentElement.style.setProperty("--brand",brand.color);
  document.documentElement.style.setProperty("--brand2",brand.color2);
@@ -818,8 +826,8 @@ document.querySelectorAll(".swatches button").forEach(function(b){
  b.addEventListener("click",function(){document.getElementById("brand-color").value=b.dataset.c;});
 });
 document.getElementById("whoami").addEventListener("change",function(){whoami=this.value;store("botline-whoami",whoami);if(fbReady)fbBindIdentity();renderDash();});
-document.getElementById("fb-save").addEventListener("click",function(){var v=document.getElementById("fb-config").value.trim();if(!v){alert("Paste the Firebase web config JSON first.");return;}try{var cfg=JSON.parse(v);if(!cfg.apiKey||!cfg.projectId)throw new Error("needs apiKey and projectId");store("botline-fb-config",cfg);location.reload();}catch(e){alert("That config didn't parse: "+e.message);}});
-document.getElementById("fb-off").addEventListener("click",function(){if(!confirm("Turn off Firebase sync? This browser keeps its local copy."))return;try{localStorage.removeItem("botline-fb-config");}catch(e){}location.reload();});
+document.getElementById("fb-save").addEventListener("click",function(){var v=document.getElementById("fb-config").value.trim();if(!v){alert("Paste the Firebase web config JSON first.");return;}try{var cfg=JSON.parse(v);if(!cfg.apiKey||!cfg.projectId)throw new Error("needs apiKey and projectId");try{localStorage.removeItem("botline-fb-off");}catch(e){}store("botline-fb-config",cfg);location.reload();}catch(e){alert("That config didn't parse: "+e.message);}});
+document.getElementById("fb-off").addEventListener("click",function(){if(!confirm("Turn off Firebase sync? This browser keeps its local copy."))return;try{localStorage.removeItem("botline-fb-config");localStorage.setItem("botline-fb-off","1");}catch(e){}location.reload();});
 var fc=document.getElementById("fb-config");if(fc&&FB_CONFIG)fc.value=JSON.stringify(FB_CONFIG);
 document.getElementById("brand-save").addEventListener("click",function(){
  brand.name=document.getElementById("brand-name").value.trim()||"Botline";
