@@ -122,6 +122,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
 <p class="sub">What's open, what's stuck, who needs a nudge.</p>
 <div class="stats" id="stats"></div>
 <div class="row"><label for="whoami" style="margin:0;align-self:center">Working as</label><select id="whoami" style="width:220px"></select><span class="note">Who claims cards and whose role the pool matches.</span></div>
+<div id="bot-login"></div>
 <h2>Needs you</h2>
 <div id="needs"></div>
 <h2>Recent logs</h2>
@@ -296,6 +297,9 @@ var FB_DEFAULT={"apiKey":"AIzaSyBJCekEZp-o2DyoGKszo9tRW9_v2MquLSk","authDomain":
 var FB_CONFIG=store("botline-fb-off")?null:(store("botline-fb-config")||FB_DEFAULT);
 var fbReady=false,fbUid=null,fbApplying=false,fbLastCards="",fbLastBots="",fbLastInbox="",fbPulled=false;
 var whoami=store("botline-whoami")||"Boss";
+var botSession=store("botline-bot-session")||null;
+if(botSession&&botSession.name)whoami=botSession.name;
+var botLinkTried=false;
 function fbStatus(t){var e=document.getElementById("fb-status");if(e)e.textContent=t;}
 function myRole(){if(whoami==="Boss")return "Boss";var b=null;bots.forEach(function(x){if(x.name===whoami)b=x;});return b?b.role:"";}
 function roleTypes(role){
@@ -474,6 +478,58 @@ function show(v){
 }
 document.getElementById("tabs").addEventListener("click",function(e){var b=e.target.closest("button");if(b)show(b.dataset.v);});
 document.getElementById("card-back").addEventListener("click",function(){show("board");});
+function renderBotLogin(){
+ var box=document.getElementById("bot-login");if(!box)return;
+ var prevName=null,prevCode="";
+ var ns=document.getElementById("bot-name");if(ns)prevName=ns.value;
+ var cd=document.getElementById("bot-code");if(cd)prevCode=cd.value;
+ var signedIn=botSession&&botSession.name&&whoami===botSession.name&&whoami!=="Boss";
+ if(signedIn){
+  box.innerHTML='<h2>Bot sign-in</h2><div class="box"><p><b>Signed in as '+esc(whoami)+'</b> ('+esc(myRole()||"bot")+')</p><div class="row"><button class="btn2" id="btn-bot-switch">Switch bot</button></div></div>';
+  var sw=document.getElementById("btn-bot-switch");
+  if(sw)sw.onclick=function(){botSession=null;store("botline-bot-session",null);whoami="Boss";store("botline-whoami",whoami);if(fbReady)fbBindIdentity();renderBotLogin();renderDash();};
+  return;
+ }
+ var names=bots.map(function(b){return b.name;});
+ box.innerHTML='<h2>Bot sign-in</h2><div class="box upbox">'
+ +'<label for="bot-name">Your bot name</label><select id="bot-name">'+names.map(function(n){return '<option'+(n===prevName?' selected':'')+'>'+esc(n)+'</option>';}).join("")+'</select>'
+ +'<label for="bot-code">Board code</label><input type="password" id="bot-code" placeholder="Board code from Leon" autocomplete="off" value="'+esc(prevCode)+'">'
+ +'<div class="row"><button class="btn2 go2" id="btn-bot-signin">Sign in</button></div>'
+ +'<p class="note" id="bot-login-msg">Bots sign in here with the board code. The Boss signs in at the central door.</p>'
+ +'</div>';
+ var bi=document.getElementById("btn-bot-signin");
+ if(bi)bi.onclick=function(){
+  var nm=val("bot-name"),code=document.getElementById("bot-code").value.trim();
+  if(!nm){alert("Pick your bot name.");return;}
+  if(!code){alert("Enter the board code.");return;}
+  botSignIn(nm,code);
+ };
+}
+function botSignIn(name,code){
+ var msg=document.getElementById("bot-login-msg");
+ function say(t){if(msg)msg.textContent=t;else alert(t);}
+ if(!fbReady||!fbDb()){say("Board isn't connected yet — wait a few seconds and try again.");return;}
+ fbDb().collection("meta").doc("board").get().then(function(d){
+  var data=d.exists?d.data():null;
+  if(data&&data.botCode&&String(data.botCode)===String(code)){
+   botSession={name:name,at:new Date().toISOString()};store("botline-bot-session",botSession);
+   whoami=name;store("botline-whoami",whoami);
+   if(fbReady)fbBindIdentity();
+   renderBotLogin();renderDash();
+  }else if(!data||!data.botCode){say("No board code is set yet — ask the Boss to set one.");}
+  else{say("Wrong board code.");}
+ }).catch(function(e){say("Couldn't check the code ("+e.message+").");});
+}
+function tryBotLink(){
+ if(botLinkTried)return;
+ var q=null;try{q=new URLSearchParams(location.search);}catch(e){return;}
+ var nm=q.get("bot"),code=q.get("code");
+ if(!nm||!code){botLinkTried=true;return;}
+ if(!fbReady)return;
+ if(!bots.some(function(b){return b.name===nm;}))return;
+ botLinkTried=true;
+ botSignIn(nm,code);
+}
 function renderDash(){
  var open=cards.filter(function(c){return c.status!=="Done";}).length;
  var blocked=cards.filter(function(c){return c.status==="Blocked";}).length;
@@ -499,6 +555,7 @@ function renderDash(){
  badge.hidden=unread===0;badge.textContent=unread;
  var ws=document.getElementById("whoami");
  if(ws){ws.innerHTML='<option>Boss</option>'+bots.map(function(b){return '<option>'+esc(b.name)+'</option>';}).join("");ws.value=whoami;}
+ renderBotLogin();tryBotLink();
 }
 var tf="All";
 function renderBoard(){
