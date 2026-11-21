@@ -54,6 +54,16 @@
   .card p{opacity:.6;font-size:15px}
   .card .tag{color:#22e6c8;font-weight:800;font-size:12px;letter-spacing:2px}
   .more-link{display:inline-block;margin-top:24px;font-weight:800;color:#22e6c8;font-size:17px}
+  /* Featured app */
+  .feature{margin:48px 0;border:1px solid #22e6c8;border-radius:20px;overflow:hidden;background:rgba(18,22,29,.72);display:grid;grid-template-columns:1fr 1fr}
+  @media(max-width:640px){.feature{grid-template-columns:1fr}}
+  .feature img{width:100%;height:100%;object-fit:cover;display:block;min-height:260px}
+  .feature .fb{padding:36px 30px}
+  .feature .tag{color:#22e6c8;font-weight:800;font-size:12px;letter-spacing:3px}
+  .feature h2{margin:12px 0 10px}
+  .feature p{opacity:.7;font-size:17px;max-width:420px}
+  .feature .go{display:inline-block;margin-top:20px;font-weight:800;color:#22e6c8}
+  .feature .fine{margin-top:16px;font-size:14px;opacity:.55}
   /* More — plain link rows */
   .rows a{display:flex;justify-content:space-between;gap:16px;align-items:baseline;padding:20px 4px;border-bottom:1px solid #1d222b;font-size:19px;font-weight:700}
   .rows a:hover{color:#22e6c8}
@@ -97,6 +107,17 @@
     </div>
     <h2 class="stonewall-head">The Stonewall.</h2>
   </section>
+
+  <div class="feature">
+    <img src="/img/cards/stich-us.jpg" alt="Stich-Us — a guided path back to trust">
+    <div class="fb">
+      <span class="tag">NEW &middot; FEATURED APP</span>
+      <h2>Stich-Us</h2>
+      <p>A guided path back to trust, carried by the one who broke it. The hurt partner asks every hard question; the partner who broke trust answers them all in writing, then works through nine acts of repair.</p>
+      <a class="go" href="https://stich-us-leonptucker3886-labs-projects.vercel.app" target="_blank" rel="noopener">Open Stich-Us &rarr;</a>
+      <p class="fine">Free &middot; For couples after betrayal &middot; <a href="/software.html">More software &rarr;</a></p>
+    </div>
+  </div>
 
   <div class="signup">
     <h2>New builds, monthly.</h2>
