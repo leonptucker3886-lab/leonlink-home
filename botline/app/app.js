@@ -66,7 +66,7 @@ var DEFAULT_TYPES = [
 var S = { jobs: [], bots: [], types: [], brand: null, me: null };
 
 var FB_CFG = null;
-var fb = { ready: false, user: null, signingIn: false, unsubs: [], seeded: false, error: "", warned: false, anonTried: false, redirectDone: false };
+var fb = { ready: false, user: null, signingIn: false, unsubs: [], seeded: false, error: "", warned: false };
 
 /* ---------------- small helpers ---------------- */
 
@@ -255,71 +255,49 @@ function fbConfigured() { return !!FB_CFG; }
 function fsdb() {
   try { return (fb.ready && window.firebase) ? firebase.firestore() : null; } catch (e) { return null; }
 }
-function bossFromUser(u) {
-  if (!u || u.isAnonymous) return;
-  fb.user = u;
-  fb.ready = true;
-  fb.error = "";
-  fb.signingIn = false;
-  S.me = { kind: "boss", email: u.email || "" };
-  saveMe();
-  subscribeAll();
-  route = "dash";
-  closeModal();
-  render();
-}
-
-function anonymousSession() {
-  if (fb.anonTried || fb.signingIn) return;
-  var auth = firebase.auth();
-  if (auth.currentUser) return;
-  fb.anonTried = true;
-  fb.signingIn = true;
-  auth.signInAnonymously().then(function () {
-    fb.signingIn = false;
-  }).catch(function (e) {
-    fb.signingIn = false;
-    fb.error = e.message;
-    render();
-  });
-}
-
 function startFirebase() {
   FB_CFG = savedFbConfig();
   if (!FB_CFG || !window.firebase) { FB_CFG = null; return; }
   try { firebase.initializeApp(FB_CFG); } catch (e) { /* already initialized */ }
   var auth = firebase.auth();
-
-  // Let a redirect finish before starting the anonymous bot session: signing in
-  // anonymously while a redirect is still resolving throws the Google result
-  // away and sends the user straight back to the sign-in gate.
+  // Check for a Google redirect result FIRST, before signing in anonymously:
+  // an anonymous sign-in racing the redirect can swallow the Google result
+  // and bounce the Boss back to the picker with no error.
+  var redirectDone = false;
+  function anonFallback() {
+    if (fb.signingIn || auth.currentUser) return;
+    fb.signingIn = true;
+    auth.signInAnonymously().catch(function (e) {
+      fb.error = e.message;
+      render();
+    });
+  }
+  auth.getRedirectResult().then(function () {
+    redirectDone = true;
+    anonFallback();
+  }).catch(function (e) {
+    redirectDone = true;
+    fb.error = e.message;
+    toast("Google sign-in failed: " + e.message, "bad");
+    anonFallback();
+    render();
+  });
   auth.onAuthStateChanged(function (u) {
     if (u) {
       fb.user = u;
       fb.ready = true;
-      if (!u.isAnonymous) { bossFromUser(u); return; }
+      fb.error = "";
       subscribeAll();
+      if (!u.isAnonymous && (!S.me || S.me.kind !== "boss")) {
+        S.me = { kind: "boss" };
+        saveMe();
+      }
       render();
-      return;
+    } else {
+      fb.ready = false;
+      if (redirectDone) anonFallback();
+      render();
     }
-    fb.ready = false;
-    render();
-    if (fb.redirectDone) anonymousSession();
-  });
-
-  auth.getRedirectResult().then(function (res) {
-    fb.redirectDone = true;
-    if (res && res.user && !res.user.isAnonymous) { bossFromUser(res.user); return; }
-    if (!auth.currentUser) anonymousSession();
-    render();
-  }).catch(function (e) {
-    fb.redirectDone = true;
-    if (e && e.code !== "auth/no-auth-event") {
-      fb.error = (e.code ? e.code + " — " : "") + e.message;
-      toast("Google sign-in failed: " + fb.error, "bad");
-    }
-    if (!auth.currentUser) anonymousSession();
-    render();
   });
 }
 function subscribeAll() {
@@ -439,50 +417,32 @@ function signOut() {
   saveMe();
   route = "dash";
   render();
-  if (FB_CFG && window.firebase) {
-    try {
-      var auth = firebase.auth();
-      if (auth.currentUser && !auth.currentUser.isAnonymous) {
-        fb.anonTried = false;
-        auth.signOut().catch(function () { });
-      }
-    } catch (e) { /* not configured */ }
-  }
 }
 function bossLogin() {
   if (FB_CFG && window.firebase) {
-    var auth = firebase.auth();
-    try {
-      // Already signed in with Google: enter, do not send the user round again.
-      if (auth.currentUser && !auth.currentUser.isAnonymous) { bossFromUser(auth.currentUser); return; }
-      var provider = new firebase.auth.GoogleAuthProvider();
-      fb.signingIn = true;
-      fb.error = "";
-      auth.signInWithPopup(provider).then(function (res) {
-        fb.signingIn = false;
-        if (res && res.user) bossFromUser(res.user);
-        else { fb.error = "Signed in, but Firebase returned no user"; render(); }
-      }).catch(function (e) {
-        fb.signingIn = false;
-        var code = (e && e.code) || "";
-        if (code === "auth/popup-closed-by-user") { toast("Google sign-in cancelled", "warn"); return; }
-        if (code === "auth/popup-blocked" || code === "auth/operation-not-supported-in-this-environment" || code === "auth/cancelled-popup-request") {
-          auth.signInWithRedirect(provider).catch(function (err) {
-            fb.error = (err && err.code ? err.code + " — " : "") + (err && err.message);
-            toast("Google sign-in failed: " + err.message, "bad");
-            render();
-          });
-          return;
-        }
-        fb.error = (e && e.code ? e.code + " — " : "") + ((e && e.message) || "Google sign-in failed");
-        toast("Google sign-in failed: " + fb.error, "bad");
+    var provider = new firebase.auth.GoogleAuthProvider();
+    // Popup first: no redirect round-trip, so the anonymous sign-in at
+    // startup can't swallow the Google result and bounce back to the picker.
+    // Redirect is the fallback if the browser blocks the popup.
+    firebase.auth().signInWithPopup(provider).then(function (cred) {
+      if (cred && cred.user) {
+        S.me = { kind: "boss" };
+        saveMe();
+        route = "dash";
+        closeModal();
         render();
-      });
-      return;
-    } catch (e) {
-      fb.error = e.message;
-      toast("Google sign-in failed: " + e.message, "bad");
-    }
+        toast("Signed in as Boss", "good");
+      }
+    }).catch(function (e) {
+      if (e && (e.code === "auth/popup-blocked" || e.code === "auth/cancelled-popup-request" || e.code === "auth/popup-closed-by-user")) {
+        firebase.auth().signInWithRedirect(provider).catch(function (e2) {
+          toast("Google sign-in failed: " + e2.message, "bad");
+        });
+        return;
+      }
+      toast("Google sign-in failed: " + (e && e.message ? e.message : e), "bad");
+    });
+    return;
   }
   enterAsBoss();
 }

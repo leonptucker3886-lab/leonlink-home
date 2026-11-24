@@ -116,8 +116,8 @@ function renderLogin() {
   btn.textContent = fbConfigured() ? "Sign in as Boss with Google" : "Continue as Boss";
   var note = document.getElementById("login-sync");
   if (!fbConfigured()) note.textContent = "Local mode — data stays in this browser";
-  else if (fb.ready) note.textContent = "Synced to Firebase" + (fb.user && !fb.user.isAnonymous ? " as " + (fb.user.email || "Boss") : "");
   else if (fb.error) note.textContent = "Firebase: " + fb.error;
+  else if (fb.ready) note.textContent = "Synced to Firebase" + (fb.user && !fb.user.isAnonymous ? " as " + (fb.user.email || "Boss") : "");
   else note.textContent = "Connecting to Firebase…";
 }
 function botTile(b) {
