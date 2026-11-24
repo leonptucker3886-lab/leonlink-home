@@ -1,0 +1,36 @@
+name: sync-botline
+
+# leonlink.net serves a copy of the Botline app from this repo. Keep it byte
+# for byte with botline main instead of hand-copying files.
+on:
+  workflow_dispatch:
+  push:
+    paths: [".github/workflows/sync-botline.yml"]
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Copy app files from botline main
+        run: |
+          set -euo pipefail
+          mkdir -p botline/app
+          for f in index.html app.css app.js ui.js boot.js firebase-config.js; do
+            curl -fsSL "https://raw.githubusercontent.com/leonptucker3886-lab/botline/main/app/$f" -o "botline/app/$f"
+          done
+      - name: Commit if anything changed
+        run: |
+          set -euo pipefail
+          git config user.name "botline-sync"
+          git config user.email "botline-sync@users.noreply.github.com"
+          if [ -n "$(git status --porcelain botline/app)" ]; then
+            git add botline/app
+            git commit -m "Sync Botline app from botline main"
+            git push
+          else
+            echo "already in sync"
+          fi
