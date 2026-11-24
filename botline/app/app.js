@@ -12,7 +12,7 @@ var LS_FBOFF = "botline.v2.fboff";
 var LS_FB_OLD = "botline-fb-config"; // config saved by the previous version of the app
 
 var PRI = { Urgent: 0, High: 1, Normal: 2, Low: 3 };
-var STATUS_ORDER = { Active: 0, Review: 1, Blocked: 2, Open: 3, Done: 4 };
+var STATUS_ORDER = { Active: 0, Review: 1, Blocked: 2, Open: 3, Approved: 4, Live: 5, Rejected: 6, Done: 7 };
 
 var DEFAULT_BRAND = { name: "Botline", tag: "Run your bots like a team.", accent: "#3ce0c2", accent2: "#8b7dff" };
 
@@ -167,6 +167,11 @@ function needsCheckin(job) {
   return hrs >= (Number(job.checkinHours) || 12);
 }
 function dueInfo(job) {
+  // A card in review is no longer running down the writer's clock.
+  if (job.status === "Review") return { text: "In review", cls: "" };
+  if (job.status === "Approved") return { text: "Approved", cls: "ok" };
+  if (job.status === "Live") return { text: "Live", cls: "ok" };
+  if (job.status === "Rejected") return { text: "Rejected", cls: "bad" };
   if (job.status === "Done") return { text: "Delivered", cls: "ok" };
   if (!job.deadline) return { text: "No deadline", cls: "" };
   var h = (new Date(job.deadline).getTime() - Date.now()) / 3600000;
@@ -190,6 +195,58 @@ function nextJobId() {
 function jobById(id) {
   for (var i = 0; i < S.jobs.length; i++) if (S.jobs[i].id === id) return S.jobs[i];
   return null;
+}
+
+/* ---------------- review rounds + status history ---------------- */
+
+// A checkpoint that asks about links has to carry a number, otherwise a writer
+// can tick "every link opens" without opening one.
+function needsLinkCount(cp) {
+  return /\b(link|links|source|sources)\b/i.test(String((cp && cp.label) || ""));
+}
+function lastRound(job) {
+  var r = (job && job.rounds) || [];
+  return r.length ? r[r.length - 1] : null;
+}
+function roundCount(job) { return ((job && job.rounds) || []).length; }
+function logStatus(job, label) {
+  job.history = (job.history || []).concat([{
+    at: now(), by: (currentUser() || {}).name || "Boss", label: label
+  }]);
+  if (job.history.length > 60) job.history = job.history.slice(-60);
+}
+// Jobs from before history existed fall back to their activity trail.
+function statusHistory(job) {
+  if (job.history && job.history.length) return job.history;
+  var out = [];
+  (job.activity || []).forEach(function (a) {
+    var label = "";
+    if (a.kind === "create") label = "Posted";
+    else if (a.kind === "assign") label = "Accepted";
+    else if (a.kind === "block") label = "Blocked";
+    else if (a.kind === "unblock") label = "Unblocked";
+    else if (a.kind === "release") label = "Released";
+    else if (a.kind === "done") label = "Approved";
+    else if (a.kind === "live") label = "Live on leonlink.net";
+    else if (a.kind === "reject") label = "Rejected";
+    else if (a.kind === "review") {
+      if (/submitted/i.test(a.text)) label = "Submitted for review";
+      else if (/sent back/i.test(a.text)) label = "Changes needed";
+      else if (/reopen/i.test(a.text)) label = "Reopened";
+      else label = "Review";
+    }
+    if (label) out.push({ at: a.at, by: a.by, label: label });
+  });
+  return out;
+}
+// The clock starts when a card is accepted, never at posting.
+function normalizeJobs() {
+  S.jobs.forEach(function (j) {
+    if (!j.deadlineExplicit && j.assignedAt && Number(j.slaHours || 0) > 0) {
+      j.deadline = new Date(new Date(j.assignedAt).getTime() + Number(j.slaHours) * 3600000).toISOString();
+    }
+    if (j.rounds && !j.round) j.round = j.rounds.length;
+  });
 }
 
 /* ---------------- local storage ---------------- */
@@ -481,6 +538,7 @@ async function assignJob(id, botId, quiet) {
   if (activeJobOf(bot.id)) { toast(bot.name + " is already on a job", "warn"); return false; }
   var ts = now();
   var who = (currentUser() || {}).name || "Boss";
+  var accepted = currentBot() ? "Claimed" : "Accepted";
   var entry = { at: ts, by: who, kind: "assign", text: "Assigned to " + bot.name };
   var db = fsdb();
   if (db) {
@@ -495,7 +553,8 @@ async function assignJob(id, botId, quiet) {
           var upd = {
             status: "Active", assignee: bot.id, assigneeName: bot.name,
             assignedAt: ts, lastCheckinAt: ts,
-            activity: (d.activity || []).concat([entry])
+            activity: (d.activity || []).concat([entry]),
+            history: (d.history || []).concat([{ at: ts, by: who, label: accepted }])
           };
           if (!d.deadlineExplicit) {
             upd.deadline = new Date(new Date(ts).getTime() + Number(d.slaHours || 12) * 3600000).toISOString();
@@ -519,6 +578,7 @@ async function assignJob(id, botId, quiet) {
     job.deadline = new Date(new Date(ts).getTime() + Number(job.slaHours || 12) * 3600000).toISOString();
   }
   job.activity = (job.activity || []).concat([entry]);
+  logStatus(job, accepted);
   jobSave(job, quiet);
   if (!quiet) toast("Assigned " + job.id + " to " + bot.name, "good");
   return true;
@@ -598,9 +658,15 @@ function toggleCheckpoint(jobId, cpId, on) {
   var cp = (job.checkpoints || []).find(function (c) { return c.id === cpId; });
   if (!cp) return;
   var who = (currentUser() || {}).name || "Bot";
+    if (on && needsLinkCount(cp) && !(Number(cp.links) > 0)) {
+    toast("Say how many links you opened before ticking \"" + cp.label + "\"", "warn");
+    render();
+    return;
+  }
   cp.done = !!on;
   cp.at = on ? now() : "";
   cp.by = on ? who : "";
+  if (!on) delete cp.links;
   logActivity(job, "checkpoint", (on ? "Completed" : "Reopened") + ": " + cp.label);
   jobSave(job, true);
   var p = progressOf(job);
@@ -608,17 +674,33 @@ function toggleCheckpoint(jobId, cpId, on) {
   else render();
 }
 
-function applyCheckin(job, note, doneIds) {
+function applyCheckin(job, note, doneIds, linkCounts) {
   var who = (currentUser() || {}).name || "Bot";
   var ts = now();
   var cps = job.checkpoints || [];
   var freshly = [];
+  linkCounts = linkCounts || {};
+  var counts = {};
+  var missing = null;
+  cps.forEach(function (cp) {
+    if (doneIds.indexOf(cp.id) < 0 || cp.done) return;
+    if (needsLinkCount(cp)) {
+      var n = Math.floor(Number(linkCounts[cp.id]));
+      if (!(n > 0)) { missing = cp; return; }
+      counts[cp.id] = n;
+    }
+  });
+  if (missing) {
+    toast("Say how many links you opened for \"" + missing.label + "\"", "warn");
+    return false;
+  }
   cps.forEach(function (cp) {
     if (doneIds.indexOf(cp.id) >= 0 && !cp.done) {
       cp.done = true;
       cp.at = ts;
       cp.by = who;
-      freshly.push(cp.label);
+      if (counts[cp.id]) cp.links = counts[cp.id];
+      freshly.push(cp.label + (counts[cp.id] ? " (" + counts[cp.id] + " links)" : ""));
     }
   });
   var done = cps.filter(function (c) { return c.done; }).length;
@@ -634,6 +716,18 @@ function applyCheckin(job, note, doneIds) {
   }
   jobSave(job);
   toast("Checked in on " + job.id, "good");
+  return true;
+}
+
+function setCheckpointLinks(jobId, cpId, n) {
+  var job = jobById(jobId);
+  if (!job) return;
+  if (!canEditJob(job)) return;
+  var cp = (job.checkpoints || []).find(function (c) { return c.id === cpId; });
+  if (!cp) return;
+  var v = Math.floor(Number(n));
+  if (v > 0) cp.links = v; else delete cp.links;
+  jobSave(job, true);
 }
 
 function submitForReview(id, link, note) {
@@ -654,36 +748,96 @@ function submitForReview(id, link, note) {
   job.submissionNote = String(note || "").trim();
   job.submittedAt = now();
   job.submittedBy = (currentUser() || {}).name || "Boss";
+  var round = roundCount(job) + 1;
+  job.rounds = (job.rounds || []).concat([{
+    n: round, url: url, note: job.submissionNote, at: job.submittedAt, by: job.submittedBy,
+    verdict: "", verdictNote: "", reportUrl: "", verdictAt: "", verdictBy: ""
+  }]);
+  job.round = round;
   delete job.blockedReason;
-  logActivity(job, "review", "Submitted for review — " + url);
+  logActivity(job, "review", (round === 1 ? "Submitted for review" : "Resubmitted (round " + round + ")") + " — " + url);
+  logStatus(job, round === 1 ? "Submitted for review" : "Resubmitted (round " + round + ")");
   jobSave(job);
-  toast(job.id + " is in review", "good");
+  toast(job.id + " submitted for review", "good");
 }
 
-function reviewJob(id, pass, note) {
+// Approved closes the writing; Changes needed hands it back; Rejected ends it.
+function applyVerdict(id, kind, note, reportUrl) {
   var job = jobById(id);
   if (!job) return;
-  if (!canReview()) { toast("Only a reviewer or the Boss can review", "warn"); return; }
-  if (!pass && !String(note || "").trim()) { toast("Say what needs fixing", "warn"); return; }
-  if (pass) {
-    job.status = "Done";
-    job.doneAt = now();
-    job.reviewNote = note || "";
-    logActivity(job, "done", "Passed review" + (note ? " — " + note : ""));
+  if (!canReview()) { toast("Only an inspector or the Boss can give a verdict", "warn"); return; }
+  if (job.status !== "Review") { toast("That card is not waiting on a verdict", "warn"); return; }
+  var verdict = String(kind || "").toLowerCase();
+  if (["approved", "changes", "rejected"].indexOf(verdict) < 0) { toast("Pick a verdict", "warn"); return; }
+  var text = String(note || "").trim();
+  if (verdict !== "approved" && !text) { toast("Say what needs fixing", "warn"); return; }
+  var url = String(reportUrl || "").trim();
+  if (url && !/^https?:\/\//i.test(url) && url.indexOf(".") >= 0 && !/\s/.test(url)) url = "https://" + url;
+  var ts = now();
+  var who = (currentUser() || {}).name || "Boss";
+  var r = lastRound(job);
+  if (r) {
+    r.verdict = verdict;
+    r.verdictNote = text;
+    r.reportUrl = url;
+    r.verdictAt = ts;
+    r.verdictBy = who;
+  }
+  if (verdict === "approved") {
+    job.status = "Approved";
+    job.approvedAt = ts;
+    job.approvedBy = who;
+    job.reviewNote = text;
+    logActivity(job, "done", "Approved" + (text ? " — " + text : "") + (url ? " (report: " + url + ")" : ""));
+    logStatus(job, "Approved");
     jobSave(job);
-    toast(job.id + " is done", "good");
-  } else {
-    job.status = "Active";
-    job.reviewNote = note;
-    job.rework = (job.rework || 0) + 1;
-    job.lastCheckinAt = now();
-    // The old submission is stale now — the bot submits fresh after rework.
+    toast(job.id + " approved — ready to go live", "good");
+    return;
+  }
+  if (verdict === "rejected") {
+    job.status = "Rejected";
+    job.rejectedAt = ts;
+    job.rejectedBy = who;
+    job.reviewNote = text;
     job.submissionUrl = "";
     job.submissionNote = "";
-    logActivity(job, "review", "Sent back: " + note);
+    logActivity(job, "reject", "Rejected — " + text + (url ? " (report: " + url + ")" : ""));
+    logStatus(job, "Rejected");
     jobSave(job);
-    toast(job.id + " goes back to " + (job.assigneeName || "the builder"), "warn");
+    toast(job.id + " rejected", "warn");
+    return;
   }
+  job.status = "Active";
+  job.reviewNote = text;
+  job.rework = (job.rework || 0) + 1;
+  job.lastCheckinAt = ts;
+  // The old submission is stale now — the writer submits fresh next round.
+  job.submissionUrl = "";
+  job.submissionNote = "";
+  logActivity(job, "review", "Changes needed — " + text + (url ? " (report: " + url + ")" : ""));
+  logStatus(job, "Changes needed (round " + (roundCount(job) || 1) + ")");
+  jobSave(job);
+  toast(job.id + " goes back to " + (job.assigneeName || "the writer"), "warn");
+}
+
+// Only an inspector or the Boss, and only after approval.
+function markLive(id) {
+  var job = jobById(id);
+  if (!job) return;
+  if (!canReview()) { toast("Only an inspector or the Boss can mark a card live", "warn"); return; }
+  if (job.status !== "Approved") { toast("Approve the card before it goes live", "warn"); return; }
+  job.status = "Live";
+  job.liveAt = now();
+  job.liveBy = (currentUser() || {}).name || "Boss";
+  logActivity(job, "live", "Live on leonlink.net");
+  logStatus(job, "Live on leonlink.net");
+  jobSave(job);
+  toast(job.id + " is live", "good");
+}
+
+// Kept for older callers: pass/fail map onto the verdicts.
+function reviewJob(id, pass, note) {
+  applyVerdict(id, pass ? "approved" : "changes", note, "");
 }
 
 function setBlocked(id, reason) {
@@ -693,6 +847,7 @@ function setBlocked(id, reason) {
   job.status = "Blocked";
   job.blockedReason = reason;
   logActivity(job, "block", "Blocked: " + reason);
+  logStatus(job, "Blocked");
   jobSave(job);
   toast("Marked blocked — the Boss sees it on the dashboard", "warn");
 }
@@ -705,6 +860,7 @@ function unblockJob(id) {
   delete job.blockedReason;
   job.lastCheckinAt = now();
   logActivity(job, "unblock", "Unblocked");
+  logStatus(job, "Unblocked");
   jobSave(job);
   toast(job.id + " is moving again", "good");
 }
@@ -713,12 +869,15 @@ function reopenJob(id) {
   var job = jobById(id);
   if (!job) return;
   if (!isBoss()) { toast("Only the Boss can reopen a finished job", "warn"); return; }
+  if (["Approved", "Live", "Rejected", "Done"].indexOf(job.status) < 0) { toast("That card is still open", "warn"); return; }
   job.status = "Active";
   delete job.doneAt;
+  delete job.liveAt;
   job.lastCheckinAt = now();
   job.submissionUrl = "";
   job.submissionNote = "";
   logActivity(job, "review", "Reopened");
+  logStatus(job, "Reopened");
   jobSave(job);
 }
 

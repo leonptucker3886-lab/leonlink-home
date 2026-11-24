@@ -159,8 +159,8 @@ document.addEventListener("click", function (e) {
     case "block": blockModal(id); break;
     case "unblock": unblockJob(id); break;
     case "submit-review": submitModal(id); break;
-    case "review-pass": reviewJob(id, true, ""); break;
-    case "review-fail": failModal(id); break;
+    case "verdict": verdictModal(id, el.dataset.kind); break;
+    case "mark-live": markLive(id); break;
     case "reopen": reopenJob(id); break;
     case "release": releaseJob(id); break;
     case "delete-job": deleteJob(id); break;
@@ -192,6 +192,10 @@ document.addEventListener("change", function (e) {
   if (!t) return;
   if (t.matches("[data-cp]")) {
     toggleCheckpoint(t.dataset.job, t.dataset.cp, t.checked);
+    return;
+  }
+  if (t.matches("[data-links]")) {
+    setCheckpointLinks(t.dataset.job, t.dataset.links, t.value);
     return;
   }
   if (t.name === "cats" && t.closest(".catcheck")) {
@@ -307,7 +311,12 @@ document.addEventListener("submit", async function (e) {
     var note = String(fd.get("note") || "").trim();
     if (!note) { toast("Say what moved", "warn"); return; }
     var doneIds = fd.getAll("cps").map(String);
-    applyCheckin(cj, note, doneIds);
+    var linkCounts = {};
+    doneIds.forEach(function (cpId) {
+      var raw = fd.get("links_" + cpId);
+      if (raw != null && String(raw).trim() !== "") linkCounts[cpId] = Number(raw);
+    });
+    if (applyCheckin(cj, note, doneIds, linkCounts) === false) return;
     closeModal();
     return;
   }
@@ -415,10 +424,13 @@ document.addEventListener("submit", async function (e) {
     return;
   }
 
-  if (kind === "fail") {
-    var fnote = String(fd.get("note") || "").trim();
-    if (!fnote) { toast("Say what needs fixing", "warn"); return; }
-    reviewJob(id, false, fnote);
+  if (kind === "verdict") {
+    var vkind = String(fd.get("verdict") || "");
+    var vnote = String(fd.get("note") || "").trim();
+    var vreport = String(fd.get("report") || "").trim();
+    if (!vkind) { toast("Pick a verdict", "warn"); return; }
+    if (vkind !== "approved" && !vnote) { toast("Say what needs fixing", "warn"); return; }
+    applyVerdict(id, vkind, vnote, vreport);
     closeModal();
     return;
   }
@@ -445,6 +457,7 @@ setInterval(function () {
 
 (function boot() {
   loadLocal();
+  normalizeJobs();
   if (S.me && S.me.kind === "bot" && !currentBot()) { S.me = null; saveMe(); }
   applyBrand();
   render();
