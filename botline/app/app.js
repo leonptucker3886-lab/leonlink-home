@@ -160,6 +160,8 @@ function progressOf(job) {
   return { done: done, total: cps.length, pct: cps.length ? Math.round((done / cps.length) * 100) : 0 };
 }
 function needsCheckin(job) {
+  return false; // check-ins removed
+
   if (job.status !== "Active") return false;
   var last = job.lastCheckinAt || job.assignedAt || job.createdAt;
   if (!last) return true;

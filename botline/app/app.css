@@ -302,4 +302,10 @@ input[type=color]{width:100%;height:40px;padding:3px;background:#0a0e15;border:1
   .main{padding:18px 14px 60px}
   .pagehead{margin-bottom:16px}
   .login-card{padding:22px}
+  /* phone: row buttons drop under the title instead of squeezing it */
+  .trow{flex-wrap:wrap}
+  .trow .tinfo{flex:1 1 calc(100% - 52px)}
+  .tinfo b{overflow-wrap:anywhere}
+  .trow > .row{flex:1 1 100%;justify-content:flex-end;gap:6px}
+  html,body{overflow-x:hidden}
 }

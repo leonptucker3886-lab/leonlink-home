@@ -309,7 +309,7 @@ document.addEventListener("submit", async function (e) {
     var cj = jobById(id);
     if (!cj) return;
     var note = String(fd.get("note") || "").trim();
-    if (!note) { toast("Say what moved", "warn"); return; }
+    if (!note) note = "Checkpoints updated";
     var doneIds = fd.getAll("cps").map(String);
     var linkCounts = {};
     doneIds.forEach(function (cpId) {

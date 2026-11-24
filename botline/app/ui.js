@@ -89,7 +89,6 @@ function renderView() {
   if (route === "inspect") return viewInspect();
   if (route === "board") return viewBoard();
   if (route === "assign") return viewAssign();
-  if (route === "checkins") return viewCheckins();
   if (route === "bots") return viewBots();
   if (route === "settings") return viewSettings();
   return viewDash();
@@ -106,9 +105,6 @@ function renderChrome(u) {
   mc.innerHTML = '<span class="av' + (u.kind === "boss" ? " boss" : "") + '">' +
     esc(u.kind === "boss" ? "B" : initials(u.name)) + "</span><div><b>" + esc(u.name) + "</b><span>" +
     esc(u.kind === "boss" ? "Boss · full access" : (u.bot.role || "Bot")) + "</span></div>";
-  var need = S.jobs.filter(needsCheckin).length;
-  var badge = document.querySelector('[data-badge="checkins"]');
-  if (badge) { badge.hidden = !need; badge.textContent = need; }
   // The inspector's queue is the alert: no chatter, just a count on the tab.
   var queue = S.jobs.filter(function (j) { return j.status === "Review"; }).length;
   var ibadge = document.querySelector('[data-badge="inspect"]');
@@ -163,18 +159,17 @@ function viewDash() {
 
   h += pageHead("Dashboard", greeting() + ", " + u.name + ".",
     (isBoss() ? '<button class="btn" data-act="new-job">New job</button>' : "") +
-    (mine ? '<button class="btn ghost" data-act="checkin-open" data-id="' + esc(mine.id) + '">Check in</button>' : ""));
+    (mine ? '<button class="btn ghost" data-act="checkin-open" data-id="' + esc(mine.id) + '">Update checkpoints</button>' : ""));
 
   if (currentBot()) h += myJobPanel(mine);
   if (isBoss() && !S.bots.length) h += setupPanel();
 
   h += '<div class="kpis">' +
     kpi("Open", open.length, open.length ? "waiting to be claimed" : "nothing in the pool") +
-    kpi("Active", active.length, stale.length ? stale.length + " need a check-in" : "all checked in", stale.length ? "warn" : "") +
+    kpi("Active", active.length, active.length ? "in progress" : "none in progress") +
     kpi("In review", review.length, review.length ? "waiting on an inspector" : "clear") +
     kpi("Approved", approved.length, approved.length ? "ready to go live" : "none waiting", approved.length ? "warn" : "") +
     kpi("Overdue", overdue.length, overdue.length ? "past the deadline" : "on time", overdue.length ? "bad" : "") +
-    kpi("Needs check-in", stale.length, stale.length ? "silent jobs" : "nobody is quiet", stale.length ? "warn" : "") +
     kpi("Live", live.length, "all time", "good") +
     "</div>";
 
@@ -191,7 +186,6 @@ function viewDash() {
   push(approved, "Approved — go live", "st-done");
   push(blocked, "Blocked", "st-blocked");
   push(overdue, "Overdue", "st-blocked");
-  push(stale, "Needs check-in", "st-review");
 
   var attn = items.length ? items.slice(0, 6).map(function (x) {
     return '<button class="attn" data-act="open-job" data-id="' + esc(x.j.id) + '">' +
@@ -206,8 +200,7 @@ function viewDash() {
     '<button class="btn ghost sm" data-act="nav" data-r="board">Open board</button></div>' + attn + "</section>" +
     teamPanel() + "</div>" +
     loadPanel() +
-    '<section class="panel"><div class="panel-head"><h2>Recent activity</h2>' +
-    '<button class="btn ghost sm" data-act="nav" data-r="checkins">Check-ins</button></div>' +
+    '<section class="panel"><div class="panel-head"><h2>Recent activity</h2></div>' +
     activityFeed(8) + "</section>";
   return h;
 }
@@ -229,13 +222,13 @@ function myJobPanel(job) {
     '<button class="btn ghost sm" data-act="open-job" data-id="' + esc(job.id) + '">Open job</button></div>' +
     '<div class="bar big"><i style="width:' + p.pct + '%"></i></div>' +
     '<div class="row" style="justify-content:space-between"><span class="muted small">' + p.done + " of " + p.total +
-    " checkpoints · last check-in " + esc(rel(job.lastCheckinAt)) + '</span><span class="' + dueInfo(job).cls + ' small">' +
+    " checkpoints" + '</span><span class="' + dueInfo(job).cls + ' small">' +
     esc(dueInfo(job).text) + "</span></div>" +
     (next ? '<p class="muted" style="margin-top:10px">Next up: <strong>' + esc(next.label) + "</strong></p>" : "") +
     (job.status === "Review" ? '<p class="muted small" style="margin-top:10px"><b>In review</b> — submitted ' +
       esc(rel(job.submittedAt)) + " by " + esc(job.submittedBy || "you") + (roundCount(job) ? " · round " + esc(roundCount(job)) : "") + "</p>" : "") +
     (job.status === "Approved" ? '<p class="muted small" style="margin-top:10px"><b class="ok">Approved</b> — the inspector is putting it live</p>' : "") +
-    '<div class="row" style="margin-top:12px"><button class="btn" data-act="checkin-open" data-id="' + esc(job.id) + '">Check in</button></div>' +
+    '<div class="row" style="margin-top:12px"><button class="btn" data-act="checkin-open" data-id="' + esc(job.id) + '">Update checkpoints</button></div>' +
     "</section>";
 }
 
@@ -296,7 +289,7 @@ function activityFeed(limit) {
     (j.activity || []).forEach(function (a) { rows.push({ j: j, a: a }); });
   });
   rows.sort(function (x, y) { return String(y.a.at || "").localeCompare(String(x.a.at || "")); });
-  if (!rows.length) return '<p class="empty">No activity yet. Claims, check-ins and reviews land here.</p>';
+  if (!rows.length) return '<p class="empty">No activity yet. Claims, updates and reviews land here.</p>';
   return rows.slice(0, limit || 10).map(function (r) {
     return '<div class="act"><span class="act-dot ' + esc(r.a.kind || "") + '"></span><div><b>' +
       esc(r.a.by || "Someone") + '</b> <span class="muted">' + esc(r.j.id) + "</span><p>" +
@@ -314,7 +307,7 @@ function jobCard(j) {
   var mine = me && j.assignee === me.id && (j.status === "Active" || j.status === "Blocked");
   var acts = "";
   if (canClaim) acts += '<button class="btn sm" data-act="claim" data-id="' + esc(j.id) + '">Claim</button>';
-  if (mine) acts += '<button class="btn ghost sm" data-act="checkin-open" data-id="' + esc(j.id) + '">Check in</button>';
+  if (mine) acts += '<button class="btn ghost sm" data-act="checkin-open" data-id="' + esc(j.id) + '">Update checkpoints</button>';
   acts += '<span class="openlink">Open →</span>';
   return '<article class="jcard pri-' + esc(j.priority || "Normal") + '" data-act="open-job" data-id="' + esc(j.id) + '">' +
     '<div class="jcard-top">' + typeTag(j) + statusPill(j.status) + "</div>" +
@@ -465,7 +458,7 @@ function viewJob() {
     if (isBoss()) acts += '<button class="btn" data-act="assign-modal" data-id="' + esc(j.id) + '">Assign to a bot</button>';
   }
   if ((j.status === "Active" || j.status === "Blocked") && editable) {
-    acts += '<button class="btn" data-act="checkin-open" data-id="' + esc(j.id) + '">Check in</button>';
+    acts += '<button class="btn" data-act="checkin-open" data-id="' + esc(j.id) + '">Update checkpoints</button>';
     if (j.status === "Active") acts += '<button class="btn ghost" data-act="block" data-id="' + esc(j.id) + '">Block</button>';
     else acts += '<button class="btn ghost" data-act="unblock" data-id="' + esc(j.id) + '">Unblock</button>';
   }
@@ -504,7 +497,7 @@ function viewJob() {
   var checkins = (j.checkins && j.checkins.length) ? j.checkins.map(function (c) {
     return '<div class="checkin"><b>' + esc(c.by) + '</b> <span class="stamp">' + esc(rel(c.at)) + " · " + c.progress +
       '%</span><p>' + esc(c.note) + "</p></div>";
-  }).join("") : '<p class="empty">No check-ins yet. The first one starts the clock.</p>';
+  }).join("") : '<p class="empty">No progress notes yet.</p>';
 
   var kv = '<dl class="kv">' +
     "<dt>Project</dt><dd>" + esc(j.typeName || "") + "</dd>" +
@@ -512,7 +505,6 @@ function viewJob() {
     "<dt>Assignee</dt><dd>" + esc(j.assigneeName || "Unassigned") + "</dd>" +
     "<dt>Deadline</dt><dd>" + esc(fmt(j.deadline)) + " <span class=\"" + due.cls + "\">(" + esc(due.text) + ")</span></dd>" +
     "<dt>SLA</dt><dd>" + (j.slaHours ? esc(j.slaHours) + " hours" : "—") + "</dd>" +
-    "<dt>Check-in</dt><dd>every " + esc(j.checkinHours || 12) + " hours · last " + esc(rel(j.lastCheckinAt)) + "</dd>" +
     "<dt>Created</dt><dd>" + esc(fmt(j.createdAt)) + " by " + esc(j.createdBy || "Boss") + "</dd>" +
     (j.rework ? "<dt>Sent back</dt><dd>" + esc(j.rework) + " time" + (j.rework === 1 ? "" : "s") + "</dd>" : "") +
     "</dl>";
@@ -535,8 +527,8 @@ function viewJob() {
     '<div class="bar big"><i style="width:' + p.pct + '%"></i></div>' + cpHtml +
     (editable ? '<div class="row end"><button class="btn ghost sm" data-act="edit-cps" data-id="' + esc(j.id) + '">Edit checkpoints</button></div>' : "") +
     "</section>" +
-    '<section class="panel"><div class="panel-head"><h2>Check-ins</h2>' +
-    (canEditJob(j) ? '<button class="btn sm" data-act="checkin-open" data-id="' + esc(j.id) + '">Check in</button>' : "") +
+    '<section class="panel"><div class="panel-head"><h2>Progress notes</h2>' +
+    (canEditJob(j) ? '<button class="btn sm" data-act="checkin-open" data-id="' + esc(j.id) + '">Update checkpoints</button>' : "") +
     "</div>" + checkins + "</section>" +
     "</div><div class=\"col\">" +
     '<section class="panel"><div class="panel-head"><h2>Brief</h2></div><p class="brieftext">' +
@@ -762,12 +754,12 @@ function checkinModal(id) {
       (needsLinkCount(cp) && !cp.done ? '<input type="number" name="links_' + esc(cp.id) +
         '" min="1" step="1" placeholder="links opened" style="width:130px" aria-label="Links opened for ' + esc(cp.label) + '">' : "") + "</div>";
   }).join("") + "</div>" : '<p class="empty">This job has no checkpoints.</p>';
-  openModal("Check in — " + j.id, '<form data-form="checkin" data-id="' + esc(j.id) + '">' +
-    '<label>What moved since last time?</label><textarea name="note" placeholder="Shipped the draft, fixed the loader, blocked on copy…" required></textarea>' +
+  openModal("Update checkpoints — " + j.id, '<form data-form="checkin" data-id="' + esc(j.id) + '">' +
+    '<label>Note (optional)</label><textarea name="note" placeholder="Optional note"></textarea>' +
     '<label>Checkpoints finished</label>' + list +
-    '<p class="field-note">Checked ones are already done. Your report lands on the job and the dashboard sees the clock reset.</p>' +
+    '<p class="field-note">Checked ones are already done. Your update lands on the job.</p>' +
     '<div class="modal-foot"><button type="button" class="btn ghost" data-act="close-modal">Cancel</button>' +
-    '<button class="btn" type="submit">Check in</button></div></form>');
+    '<button class="btn" type="submit">Save</button></div></form>');
 }
 
 function assignModal(id) {
