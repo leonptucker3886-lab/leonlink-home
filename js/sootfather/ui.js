@@ -73,3 +73,20 @@ function next(){
   else if(b.t==='fn'){b.fn();next()}
 }
 
+/* ---------- Phase 1 (Treeguy): dialogue hook per sootfather-contract.md ---------- */
+/* startDialogue(npcId, beats, opts) - start a conversation from map, events or story.
+   beats: script-beat array (same format as runScript). opts.after: callback when done.
+   opts.who: default speaker name for 'say' beats without one. Returns false on bad input. */
+function startDialogue(npcId,beats,opts){
+  opts=opts||{};
+  if(!Array.isArray(beats)||!beats.length)return false;
+  const who=opts.who||'';
+  const list=beats.map(b=>(b&&(b.t==='say'||b.t==='choice')&&b.who==null)?Object.assign({},b,{who}):b);
+  if(npcId&&typeof P==='object'&&P){
+    if(!P.flags||typeof P.flags!=='object')P.flags={};
+    P.flags['talked_'+npcId]=true;
+  }
+  if(typeof playSound==='function')playSound('tap');
+  runScript(list,opts.after||null);
+  return true;
+}
