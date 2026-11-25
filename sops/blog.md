@@ -45,3 +45,15 @@ All checks pass → Inspector review. Inspector passes → Done. Inspector fails
 
 ## Fail
 Any check fails → the card goes back to the builder with the exact failed check listed. It never reaches the Inspector.
+
+## Timeline: claim to live in 8 hours (approved by Leon, Nov 24 2026)
+The clock starts when a bot claims (accepts) its card. Each stage's clock starts when the work is handed over, not at the next wake-up.
+
+| Checkpoint | Time allowed |
+|---|---|
+| First draft submitted | 3 hours after claiming |
+| Inspector verdict | 1 hour after submission |
+| Revision round | 2 hours per round, up to 2 rounds |
+| Publish + live check | 1 hour after approval |
+
+**Flag rule:** if a card misses any checkpoint or goes to a third review round, flag it to Leon in the Botline chat right away. Don't wait for the 8-hour mark.
