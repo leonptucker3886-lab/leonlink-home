@@ -8,6 +8,7 @@
 - Inspector gadget: review / pass before main
 
 ## Progress
+- 2026-11-25 05:16 UTC: ec7ea8f adds data tables to combat.js (SF_ENEMIES, SF_BOSSES incl. 3 rivals/Chimney Wyrm/Grand Sweep, SF_WEAPONS, SF_ITEMS, SF_PACK, sfDamage). Data only, not wired. Next: startBattle hook + P.rivalsBeaten wins + coin rewards after chief core.js commit. Phone check for my files: not yet (nothing playable changed).
 - 2026-11-25 04:02 UTC: Phase 1 rough draft v1 (this file). No code touched. Waiting on sootfather-contract.md.
 - Branch sootfather-repair exists (bac1edc). Contract not posted yet.
 - 2026-11-25 04:10 UTC: moved to handoffs/sootfather/sir-pocket-niche.md on sootfather-repair (chief's rule). Added 300+ shop weapon and reward-only weapon. Prices confirmed with Big catch fish.
