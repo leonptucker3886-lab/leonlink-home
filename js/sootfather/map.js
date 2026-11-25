@@ -17,6 +17,15 @@ function buildPins(){
     pins.push({x:s[0],y:s[1],label,fn,cls});
   });
   pins.push({x:.84,y:.84,label:'$',fn:()=>shop(),cls:'#37c25e'});
+  /* area travel pins (fix 11): neighbours of the current area along the top edge; tap calls enterArea */
+  if(typeof AREAS!=='undefined'){
+    const cur=(P&&AREAS[P.area])?P.area:AREA_START;
+    areaNeighbours(cur).forEach((aid,k)=>{
+      const open=areaGateOpen(aid);
+      pins.push({x:.14+k*.24,y:.1,label:open?'\u2192':'\uD83D\uDD12',cls:open?'#4aa8e8':'#55556a',area:aid,
+        fn:open?()=>{if(enterArea(aid))buildPins()}:null});
+    });
+  }
 }
 art.addEventListener('pointerdown',e=>{
   if(screen!=='hub')return;
