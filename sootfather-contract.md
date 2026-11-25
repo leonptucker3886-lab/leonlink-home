@@ -69,7 +69,7 @@ Sound IDs: `tap`, `coin`, `hit`, `win`, `lose`, `level`, plus reserved `buy`, `i
 
 ## 7. Hooks: events start a fight or dialogue
 - **Fight:** `startBattle(enemyId, {source:"event"|"map"|"story", scene, onWin, onLose})` in `combat.js` (commit f41cdd0). Returns `false` for an unknown ID. `enemyId` uses sprite IDs (`enemy_*`, `rival_*`, `boss_*`). `boss_chimney_wyrm` is started only through this hook from events.
-- **Dialogue:** `startDialogue(npcId, beats, {who, after})` in `ui.js` (commit ca50d17, wraps `runScript`). `who` = default speaker, `after` = callback when done. Returns `false` if `beats` is empty. Sets `P.flags['talked_'+npcId]=true`. Beats use the existing format: `say`, `choice`, `fight`, `gain`, `fn`.
+- **Dialogue:** `startDialogue(beats, onDone)` in `ui.js` (commit 45a3171, wraps `runScript`). `onDone` = callback when the conversation ends; passing `{npc:'id'}` instead sets `P.flags['talked_'+id]=true`. Returns `false` if `beats` is empty or not an array. Beats use the existing format: `say`, `choice`, `fight`, `gain`, `fn`. The older form `startDialogue(npcId, beats, {who, after})` is still supported.
 - After either finishes, control returns via the callback, or to `hub()` if none.
 
 ## 8. Rules
