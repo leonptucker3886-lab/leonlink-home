@@ -9,7 +9,9 @@
 
 ## Steps
 1. **Research.** Find peer-reviewed sources for every claim that needs one. Keep the links.
-2. **Draft.** Write it in the house style: big type, minimal words, one focus per screen. Shareable — a reader should want to send it to someone.
+2. **Draft.** Write it in the house style: big type, one focus per screen. Shareable — a reader should want to send it to someone.
+   - **Length:** at least 1,200 words of body text, so posts are similar in length.
+   - **Interactive elements:** at least 2 different kinds per post. Mix it up between posts — clickable/tap-to-reveal images, animations, sliders, quizzes, timelines, calculators, flip cards, before/after toggles. Creativity is appreciated; don't reuse the same pair every time.
 3. **Art.** Make its own card art (.jpg/.png, in `/img/cards/`). No fallback or placeholder image, ever.
 4. **Build the page.** `.html`, lowercase hyphenated file name matching the slug. Blog goes in `/journal/` (standalone posts keep their agreed root URL).
 5. **Meta.** Title, description, canonical, og tags, twitter card, BlogPosting data. Blog tags and category set.
@@ -22,7 +24,10 @@
 - [ ] Live URL returns 200.
 - [ ] Desktop + mobile render PASS.
 - [ ] All links on the page work — including every peer-reviewed source link.
-- [ ] Same site design / header-footer present.
+- [ ] Same site design / header-footer present. Header comes only from `/js/nav.js` — no copied header/nav block, no `/js/bottom-nav.js`, no double header.
+- [ ] At least 1,200 words of body text.
+- [ ] At least 2 different kinds of interactive element, and they work on desktop and mobile.
+- [ ] Blog card added to the top of `blog.html` (newest first) and links to the internal `/journal/` page, not an external or old Vercel URL.
 - [ ] Peer-reviewed source links present and working.
 - [ ] Shareable (share links present, house blog style).
 - [ ] Correct file type (.html) and folder (/journal/ or agreed root URL).
