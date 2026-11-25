@@ -1,4 +1,4 @@
-# Sootfather Contract (v1) — branch `sootfather-repair`
+# Sootfather Contract (v2) — branch `sootfather-repair`
 
 Owner: Blue eyed Robert (chief). Changes to this contract go through the chief and are posted in the topic.
 Nothing merges to `main` until Inspector gadget passes it **and** Leon's phone check is done (if Leon is unavailable, the merge waits, marked for his intervention).
@@ -27,7 +27,7 @@ Handoffs: `handoffs/sootfather/<bot-name>.md` on this branch.
 | Art, map, UI (sprite IDs) | Treeguy | `js/sootfather/art.js`, `js/sootfather/map.js`, `js/sootfather/ui.js`, `img/sootfather/`, `css/sootfather/` |
 | Economy, shop, events | Big catch fish | `js/sootfather/hub.js`, new `js/sootfather/economy.js`, new `js/sootfather/events.js`, `audio/sootfather/` |
 
-Touching someone else's file: ask them in the topic first. Shared hook functions below are added by the chief in `core.js`.
+Touching someone else's file: ask them in the topic first. The chief's `core.js` holds only the shared pieces (coins, `repTier`, `playSound`, `registerEvent`/`triggerEvents`, `P` fields, `migrateSave`). The hooks are written by their owners: `startBattle` in `combat.js` (Sir Pocket Niche), `startDialogue` in `ui.js` (Treeguy) — see section 7.
 
 ## 3. Currency
 - Name: **coins** (shown as "coins" in UI; no `$`).
@@ -44,9 +44,11 @@ Single object `P` (created by `newPlayer()` in `core.js`, saved to localStorage 
 - `P.resp` – reputation (existing); reputation tier = `repTier()` (new, in `core.js`)
 - `P.contracts` – array of active contracts `{id, area, reward, dueDay}` (new, default `[]`)
 - `P.area` – current map area ID (new, from Treeguy's map table)
-- `P.unlocked` – unlocked area IDs (new)
+- `P.unlocked` – unlocked area IDs (new, default `['soot_row']`)
 - `P.bag` – backpack, max 8 slots (new, Sir Pocket Niche's items)
 - `P.weapon` – equipped weapon ID (new, default `worn_brush`)
+- `P.rivalsBeaten` – object keyed by rival ID, e.g. `{rival_brushley:true}` (new, default `{}`). Set only by `combat.js` on a real win over `rival_brushley`, `rival_mopp` or `rival_klinker`.
+- `P.flags` – misc story/dialogue flags, e.g. `talked_<npcId>` (new, default `{}`)
 - existing: `hp, maxhp, mus, cha, lck, xp, lvl, gear, ch, mi, done, heat`
 New fields must get defaults in `newPlayer()` **and** a fallback when loading an old save (`migrateSave(P)` in `core.js`).
 
@@ -55,13 +57,19 @@ One shared function: `playSound(id)` in `core.js`. Nobody calls `tone()` directl
 Sound IDs: `tap`, `coin`, `hit`, `win`, `lose`, `level`, plus reserved `buy`, `item`, `crit`, `stun`, `door`, `event`. Audio files, if any, go in `audio/sootfather/<id>.mp3`; if missing, `playSound` falls back to the synth tones. Music moods via `sfMusic(mood)`: `club`, `roof`, `street`, `fight`.
 
 ## 6. Event triggers
-`registerEvent({id, areas:[areaId], when:(P)=>bool, chance:0..1, run:()=>{}})` in `events.js`.
-`triggerEvents(trigger)` is called with `trigger` = `"enterArea"`, `"newDay"`, `"afterFight"`, `"afterMission"`.
-An event only fires in an area the player has unlocked (`P.unlocked.includes(area)`), e.g. the Chimney Wyrm in Foundry Quarter needs reputation tier 2.
+`registerEvent({id, area, when, once, cond, run})` and `triggerEvents(area, when)` are in `core.js` (commit 310b111).
+- `when` is the trigger name: `"enterArea"`, `"newDay"`, `"afterFight"`, `"afterMission"`.
+- `cond(P)` optional boolean; `once` fires only one time per save; `run()` does the work.
+- An event only fires in an area in `P.unlocked`. `triggerEvents` fires at most one event per call.
+- Example: the Chimney Wyrm event in `canal_docks` / `foundry_quarter` (Foundry Quarter needs reputation tier 2).
+
+## 6b. Area gates (Treeguy's `map.js`)
+- `canal_docks`: no gate. `foundry_quarter`: `repTier() >= 2`.
+- `great_stack`: `repTier() >= 3` **and** `P.rivalsBeaten` has `rival_brushley`, `rival_mopp` and `rival_klinker`. Stays closed if `repTier` or `P.rivalsBeaten` is missing.
 
 ## 7. Hooks: events start a fight or dialogue
-- **Fight:** `startBattle(enemyId, {source:"event"|"map"|"story", scene, onWin, onLose})` in `combat.js`. `enemyId` uses sprite IDs (`enemy_*`, `rival_*`, `boss_*`). `boss_chimney_wyrm` is started only through this hook from events.
-- **Dialogue:** `startDialogue(beats, onDone)` in `ui.js` (wraps `runScript`). Beats use the existing format: `say`, `choice`, `fight`, `gain`, `fn`.
+- **Fight:** `startBattle(enemyId, {source:"event"|"map"|"story", scene, onWin, onLose})` in `combat.js` (commit f41cdd0). Returns `false` for an unknown ID. `enemyId` uses sprite IDs (`enemy_*`, `rival_*`, `boss_*`). `boss_chimney_wyrm` is started only through this hook from events.
+- **Dialogue:** `startDialogue(npcId, beats, {who, after})` in `ui.js` (commit ca50d17, wraps `runScript`). `who` = default speaker, `after` = callback when done. Returns `false` if `beats` is empty. Sets `P.flags['talked_'+npcId]=true`. Beats use the existing format: `say`, `choice`, `fight`, `gain`, `fn`.
 - After either finishes, control returns via the callback, or to `hub()` if none.
 
 ## 8. Rules
