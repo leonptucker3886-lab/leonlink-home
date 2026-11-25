@@ -12,10 +12,12 @@
 | Soot Row (hub, home/family) | Market Lane, Old Mill Flats, Canal Docks | none | family scenes, contracts board |
 | Market Lane | Soot Row, Rival Guild Hall | 1 | shop, pop-up events |
 | Old Mill Flats | Soot Row, Foundry Quarter | 1 | jobs, area-enter events |
-| Canal Docks | Soot Row, Foundry Quarter | 1 | jobs, Chimney Wyrm event trigger |
-| Foundry Quarter | Old Mill Flats, Canal Docks, The Great Stack | 2 (rep gate) | jobs, post-battle events |
+| Canal Docks | Soot Row, Foundry Quarter | 1 | jobs, can trigger Chimney Wyrm event fight |
+| Foundry Quarter | Old Mill Flats, Canal Docks, The Great Stack | 2 (rep gate) | jobs, post-battle events, can trigger Chimney Wyrm event fight |
 | Rival Guild Hall | Market Lane | rivals | rival_brushley, rival_mopp, rival_klinker |
 | The Great Stack | Foundry Quarter (opens at high reputation) | boss | boss_grand_sweep (2 phases) |
+
+**boss_chimney_wyrm** is a mid-game event boss, not tied to a fixed map spot. A pop-up event (events.js) starts the fight via the combat hook in the contract; it can trigger in the chimney-heavy areas (Canal Docks, Foundry Quarter).
 
 ## Phone UI (fix 8)
 - Pinned top bar: HP, coins, day/reputation.
