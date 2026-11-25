@@ -161,3 +161,14 @@ winFight=function(talked){
 };
 const _sfKnockedOut=knockedOut;
 knockedOut=function(){sfBattleId=null;sfBattleSrc=null;_sfKnockedOut()};
+/* contract hook: tell events.js a fight ended (win, bribe, talk, run or knockout) */
+let sfInFight=false;
+const _sfStartCombat=startCombat;
+startCombat=function(f,sc){sfInFight=true;return _sfStartCombat(f,sc)};
+const _sfCombatBar=combatBar;
+combatBar=function(v){
+  _sfCombatBar(v);
+  if(!v&&sfInFight){sfInFight=false;
+    if(typeof sfAfterBattle==='function'){const a=(typeof P!=='undefined'&&P)?(P.area||P.loc||null):null;
+      setTimeout(()=>{try{sfAfterBattle(a)}catch(e){console.warn('sfAfterBattle',e)}},0)}}
+};
