@@ -55,3 +55,24 @@ function areaGateOpen(id){
 }
 function areaUnlocked(id){ return !!(typeof P!=="undefined" && P && Array.isArray(P.unlocked) && P.unlocked.includes(id)); }
 function areaNeighbours(id){ return (AREAS[id]&&AREAS[id].links)||[]; }
+
+/* ---------- area travel + event hooks (Treeguy) ----------
+   map.js is the only caller of sfOnEnter(area) and sfOnTimer() (agreed in chat with Big catch fish). */
+function enterArea(id){
+  if(!AREAS[id]||!areaGateOpen(id)) return false;
+  if(typeof P==="undefined"||!P) return false;
+  if(!Array.isArray(P.unlocked)) P.unlocked=[AREA_START];
+  if(!P.unlocked.includes(id)) P.unlocked.push(id);
+  P.area=id;
+  if(typeof sfOnEnter==="function"){ try{ sfOnEnter(id); }catch(e){ console.warn("sfOnEnter",e); } }
+  return true;
+}
+let sfTimerId=null;
+function startAreaTimer(ms){
+  if(sfTimerId) return;
+  sfTimerId=setInterval(()=>{
+    if(typeof screen!=="undefined"&&screen!=="hub") return;
+    if(typeof sfOnTimer==="function"){ try{ sfOnTimer(); }catch(e){ console.warn("sfOnTimer",e); } }
+  }, ms||60000);
+}
+startAreaTimer();
