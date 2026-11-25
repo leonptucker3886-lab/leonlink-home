@@ -32,7 +32,7 @@ Sinks: lodging 5/day, tool repairs, rival bribes.
 | Timer | Tax collector | dialogue: pay 10% or fight (tier 1) |
 | Area enter | Rooftop rats | fight (tier 1) |
 | Area enter (Rival Guild Hall) | Rival taunt | dialogue, sets rival flag |
-| Area enter (Factory) | Foreman rush job | dialogue: double pay, half time |
+| Area enter (Foundry Quarter) | Foreman rush job | dialogue: double pay, half time |
 | After battle | Loot drop | 3-15 coins or a supply |
 | After battle | Witness | +2 rep on clean win |
 | After battle (low HP) | Kind baker | dialogue: free bandage |
@@ -44,6 +44,7 @@ Rules: max 1 pop-up per area entry; same event not repeated within a day.
 - Winning back: finish faster (+rep), drop price, beat the rival in a fight (combat.js), or bribe 30-60 coins.
 - Rivals (IDs from combat tables): rival_brushley (Brushley the Undercutter), rival_mopp (Widow Mopp), rival_klinker (Klinker Twins), all at the Rival Guild Hall.
 - Beating all three unlocks tier 4 pay and The Great Stack, where boss_grand_sweep (The Grand Sweep) waits. boss_chimney_wyrm is a mid-game event boss (timer/area event, not a rival).
+- Chimney Wyrm trigger (matches Treeguy 95907ba): area-enter event in Canal Docks (no gate) or Foundry Quarter. Foundry Quarter is reputation-gated (tier 2), so the event only rolls there after the player has unlocked it; the trigger checks area access before rolling. Starts the fight through the contract's event-starts-fight combat hook.
 
 ## 4. Sound IDs (audio/sootfather/)
 sfx_hit, sfx_miss, sfx_crit, sfx_coin, sfx_buy, sfx_sell, sfx_levelup, sfx_rep_up, sfx_rep_down, sfx_event_popup, sfx_dialogue_blip, sfx_door, sfx_brush, sfx_fall, sfx_heal, sfx_enemy_die, sfx_boss_intro, sfx_victory, sfx_defeat, sfx_ui_click,
