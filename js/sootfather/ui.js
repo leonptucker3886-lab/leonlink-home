@@ -74,10 +74,14 @@ function next(){
 }
 
 /* ---------- Phase 1 (Treeguy): dialogue hook per sootfather-contract.md ---------- */
-/* startDialogue(npcId, beats, opts) - start a conversation from map, events or story.
-   beats: script-beat array (same format as runScript). opts.after: callback when done.
-   opts.who: default speaker name for 'say' beats without one. Returns false on bad input. */
-function startDialogue(npcId,beats,opts){
+/* startDialogue(beats, onDone) - contract signature (section 7). Start a conversation
+   from map, events or story. beats: script-beat array (same format as runScript).
+   onDone: callback when done. Also accepts the older form
+   startDialogue(npcId, beats, {who, after}). Returns false on bad input. */
+function startDialogue(a,b,c){
+  let npcId=null,beats,opts;
+  if(Array.isArray(a)){beats=a;opts=(typeof b==='function')?{after:b}:(b||{});npcId=opts.npc||null;}
+  else{npcId=a;beats=b;opts=c||{};}
   opts=opts||{};
   if(!Array.isArray(beats)||!beats.length)return false;
   const who=opts.who||'';
