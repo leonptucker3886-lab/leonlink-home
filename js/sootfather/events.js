@@ -13,7 +13,7 @@ sfEv('ev_urchin',null,'timer',0.15,p=>canAfford(2),p=>sfTalk([{who:'Urchin',t:'S
 sfEv('ev_soot_storm',null,'timer',0.1,null,p=>{p.flags.stormBonus=true;p.hp=Math.max(1,(p.hp|0)-5);playSound('hit')});
 sfEv('ev_tax',null,'timer',0.08,p=>p.cash>=20,p=>sfTalk([{who:'Tax collector',t:'The ward takes its tenth.'}],()=>{spendCoins(Math.round(p.cash*0.1),'tax')}));
 /* area enter */
-sfEv('ev_rats',null,'enter',0.12,null,()=>sfFight('rooftop_rats'));
+sfEv('ev_rats',null,'enter',0.12,null,()=>sfFight('soot_rat'));
 sfEv('ev_rival_taunt','rival_guild_hall','enter',0.5,null,p=>{p.flags.rivalTaunted=true;sfTalk([{who:'Brushley',t:'Your prices are a joke. Mine are lower.'}])});
 sfEv('ev_rush_job','foundry_quarter','enter',0.25,null,p=>sfTalk([{who:'Foreman',t:'Rush job. Double pay.'}],()=>{if(typeof sfAcceptContract==='function'){const c=sfAcceptContract(3,'foundry_quarter');if(c)c.pay*=2}}));
 sfEv('ev_wyrm_docks','canal_docks','enter',0.08,null,()=>sfFight('boss_chimney_wyrm'));
