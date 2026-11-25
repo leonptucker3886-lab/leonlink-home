@@ -172,3 +172,16 @@ combatBar=function(v){
     if(typeof sfAfterBattle==='function'){const a=(typeof P!=='undefined'&&P)?(P.area||P.loc||null):null;
       setTimeout(()=>{try{sfAfterBattle(a)}catch(e){console.warn('sfAfterBattle',e)}},0)}}
 };
+
+// ---- Chapter-lag fix, combat side (Sir Pocket Niche). Additive.
+// combatHud ran 4 DOM lookups + 4 writes on every hit/turn, so cache the nodes and only write when values change.
+const sfHudEl={},sfHudLast={};
+function sfEl(id){let e=sfHudEl[id];if(!e||!e.isConnected){e=$(id);sfHudEl[id]=e}return e}
+function sfSet(id,prop,val){if(sfHudLast[id+prop]===val)return;const e=sfEl(id);if(!e)return;
+  sfHudLast[id+prop]=val;if(prop==='w')e.style.width=val;else e.textContent=val}
+combatHud=function(){
+  if(!foe)return;
+  sfSet('hpYou','w',(100*P.hp/P.maxhp)+'%');sfSet('hpYouT','t','YOU '+P.hp+'/'+P.maxhp);
+  sfSet('hpFoe','w',Math.max(0,100*foe.hp/foe.maxhp)+'%');
+  sfSet('hpFoeT','t',foe.name.toUpperCase()+' '+Math.max(0,foe.hp));
+};
