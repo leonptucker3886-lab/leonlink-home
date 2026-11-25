@@ -98,3 +98,40 @@ afterLvl=function(){lvlUpShown=false;hud();save();checkLvl();
   if(!lvlUpShown&&(si>=script.length&&!afterScript))hub();else next()};
 const _next=next;
 next=function(){if(lvlUpShown)return;_next()};
+
+// ---- Phase 1 data tables (Sir Pocket Niche, fixes 2/3/7). Data only: nothing
+// below is wired into combat yet, so existing fights behave exactly as before.
+// Coin values are read later via addCoins/spendCoins/canAfford (core.js), never P.cash.
+const SF_ENEMIES={
+  soot_rat:{name:'Soot Rat',tier:1,hp:12,atk:3,def:0,reward:4,sprite:'enemy_soot_rat'},
+  ash_moth:{name:'Ash Moth',tier:1,hp:9,atk:4,def:0,reward:4,sprite:'enemy_ash_moth'},
+  flue_imp:{name:'Flue Imp',tier:1,hp:15,atk:4,def:1,reward:6,sprite:'enemy_flue_imp'},
+  cinder_hound:{name:'Cinder Hound',tier:2,hp:26,atk:7,def:2,reward:12,sprite:'enemy_cinder_hound'},
+  creosote_slime:{name:'Creosote Slime',tier:2,hp:34,atk:5,def:4,reward:14,sprite:'enemy_creosote_slime'},
+  brick_golem:{name:'Brick Golem',tier:2,hp:40,atk:8,def:5,reward:18,sprite:'enemy_brick_golem'}
+};
+const SF_BOSSES={
+  rival_brushley:{name:'Brushley the Undercutter',area:'rival_guild_hall',hp:45,atk:7,def:2,rival:true,gimmick:'steal',sprite:'rival_brushley'},
+  rival_mopp:{name:'Widow Mopp',area:'rival_guild_hall',hp:55,atk:6,def:4,rival:true,gimmick:'heal3',sprite:'rival_mopp'},
+  rival_klinker:{name:'Klinker Twins',area:'rival_guild_hall',hp:30,count:2,atk:6,def:3,rival:true,gimmick:'enrage',sprite:'rival_klinker'},
+  boss_chimney_wyrm:{name:'Chimney Wyrm',eventOnly:true,hp:80,atk:10,def:4,gimmick:'smoke',sprite:'boss_chimney_wyrm'},
+  boss_grand_sweep:{name:'The Grand Sweep',area:'great_stack',hp:120,atk:12,def:6,phases:2,gimmick:'callback',sprite:'boss_grand_sweep'}
+};
+const SF_WEAPONS={
+  wpn_brush:{name:'Worn Brush',atk:0,price:0},
+  wpn_rod:{name:'Iron Rod',atk:3,price:30},
+  wpn_scraper:{name:'Flue Scraper',atk:5,pierce:2,price:75},
+  wpn_hook:{name:'Soot Hook',atk:4,stun:0.2,price:90},
+  wpn_cane:{name:"Master's Cane",atk:8,crit:2,price:200}
+};
+const SF_ITEMS={
+  tonic:{name:'Tonic',heal:15,price:10},
+  strong_tonic:{name:'Strong Tonic',heal:40,price:30},
+  smoke_bomb:{name:'Smoke Bomb',flee:true,price:20},
+  soot_pellet:{name:'Soot Pellet',dmg:12,price:15},
+  lucky_rag:{name:'Lucky Rag',critBonus:0.1,price:25},
+  contract_notes:{name:'Contract Notes',quest:true,noSlot:true,price:0}
+};
+const SF_PACK={slots:8,stack:5};
+function sfEnemiesForTier(t){return Object.keys(SF_ENEMIES).filter(k=>SF_ENEMIES[k].tier===t)}
+function sfDamage(atk,def,pierce){return Math.max(1,atk-Math.max(0,def-(pierce||0))+rndi(-1,1))}
