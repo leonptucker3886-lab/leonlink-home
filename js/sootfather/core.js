@@ -28,8 +28,36 @@ const sLose=()=>tone(300,.4,'sawtooth',.06,0,90);
 const sLvl=()=>{[523,659,784,1046].forEach((f,i)=>tone(f,.14,'triangle',.06,i*.09))};
 
 /* ---------- state ---------- */
-function newPlayer(){return{hp:24,maxhp:24,mus:3,cha:3,lck:3,cash:40,resp:0,xp:0,lvl:1,
-  gear:[],ch:0,mi:0,done:[],heat:0}}
+function newPlayer(){return migrateSave({hp:24,maxhp:24,mus:3,cha:3,lck:3,cash:40,resp:0,xp:0,lvl:1,
+  gear:[],ch:0,mi:0,done:[],heat:0})}
 function save(){try{localStorage.setItem('ll-soot-save',JSON.stringify({P,NG}))}catch(e){}}
-function load(){try{const s=JSON.parse(localStorage.getItem('ll-soot-save'));if(s&&s.P){P=s.P;NG=!!s.NG;return true}}catch(e){}return false}
+function load(){try{const s=JSON.parse(localStorage.getItem('ll-soot-save'));if(s&&s.P){P=migrateSave(s.P);NG=!!s.NG;return true}}catch(e){}return false}
 function wipe(){try{localStorage.removeItem('ll-soot-save')}catch(e){}}
+
+/* ---------- shared API (Phase 1, owned by chief; see sootfather-contract.md) ---------- */
+/* coins: the only allowed way to change P.cash */
+function canAfford(n){return !!P&&P.cash>=n}
+function addCoins(n,why){if(!P||!(n>0))return 0;P.cash+=Math.round(n);try{sCoin()}catch(e){}return P.cash}
+function spendCoins(n,why){if(!P||!(n>=0)||P.cash<n)return false;P.cash-=Math.round(n);return true}
+/* reputation tier from P.resp (0..) */
+function repTier(){const r=P?P.resp|0:0;return r>=60?3:r>=25?2:r>=8?1:0}
+/* sound: one shared play function */
+const SOUNDS={tap:()=>sTap(),coin:()=>sCoin(),hit:()=>sHit(),win:()=>sWin(),lose:()=>sLose(),level:()=>sLvl()};
+function playSound(id){const f=SOUNDS[id];if(f)try{f()}catch(e){}}
+/* events: fire only in unlocked areas */
+const EVENTS=[];
+function registerEvent(ev){if(ev&&ev.id&&!EVENTS.some(e=>e.id===ev.id))EVENTS.push(ev)}
+function triggerEvents(area,when){if(!P)return null;P.unlocked=P.unlocked||['soot_row'];
+  if(P.unlocked.indexOf(area)<0)return null;
+  for(const ev of EVENTS){if(ev.area&&ev.area!==area)continue;if(ev.when&&ev.when!==when)continue;
+    if(ev.once&&P.flags[ev.id])continue;if(ev.cond&&!ev.cond(P))continue;
+    if(ev.once)P.flags[ev.id]=true;try{ev.run&&ev.run(P)}catch(e){}return ev.id}
+  return null}
+/* new P fields + old-save migration */
+function migrateSave(p){if(!p)return p;
+  if(typeof p.day!=='number')p.day=1;
+  if(!Array.isArray(p.contracts))p.contracts=[];
+  if(!Array.isArray(p.unlocked))p.unlocked=['soot_row'];
+  if(!p.rivalsBeaten||typeof p.rivalsBeaten!=='object')p.rivalsBeaten={};
+  if(!p.flags||typeof p.flags!=='object')p.flags={};
+  return p}
