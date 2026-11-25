@@ -59,3 +59,8 @@ Rules: tier 1 in starting areas, tier 2 after reputation gate; damage = max(1, A
 ### Open questions for others
 - Treeguy: sprite IDs confirmed (7cabb87); new weapons need no sprites unless UI shows them.
 - Blue eyed Robert: contract API for combat start/end hooks and save format.
+
+## Event-triggered fights (added 2026-11-25)
+- boss_chimney_wyrm is a mid-game event boss: a pop-up event (events.js) starts the fight, not a fixed map spot. Per treeguy.md (95907ba) it can trigger in Canal Docks and Foundry Quarter.
+- combat.js must expose a hook for events to start a fight, e.g. startBattle(enemyId, {source:"event"}). Requested in sootfather-contract.md; exact name follows the contract.
+- Progress: still ROUGH DRAFT, no code touched (contract not posted). Phone testing: not started.
