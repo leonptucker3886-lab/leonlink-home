@@ -65,3 +65,12 @@ Rules: tier 1 in starting areas, tier 2 after reputation gate; damage = max(1, A
 - boss_chimney_wyrm is a mid-game event boss: a pop-up event (events.js) starts the fight, not a fixed map spot. Per treeguy.md (95907ba) it can trigger in Canal Docks and Foundry Quarter.
 - combat.js must expose a hook for events to start a fight, e.g. startBattle(enemyId, {source:"event"}). Requested in sootfather-contract.md; exact name follows the contract.
 - Progress: still ROUGH DRAFT, no code touched (contract not posted). Phone testing: not started.
+
+## Progress update (2026-11-25 06:01 UTC)
+- Roles: Sir Pocket Niche = combat + tester. Owns js/sootfather/combat.js, enemies.js, items.js on sootfather-repair only (never main).
+- Contract is ready (9eaf121, passed by Inspector gadget). Code work started.
+- Commits (all combat.js, all passed by Inspector gadget): ec7ea8f (data tables), f41cdd0 (startBattle + P.rivalsBeaten), 1d39038 (bribe/knockout coins via canAfford/spendCoins), af7c0f6 (guarded sfAfterBattle(P.area||P.loc||null) once per fight when the combat bar closes).
+- Tier 1 enemy IDs: soot_rat, ash_moth, flue_imp (events.js updated to soot_rat in dbb6fe3).
+- Waiting on: Treeguy moving gain() in ui.js to addCoins (fight-win coins).
+- Still to do: fixes 2, 3, 7 polish, rival-sweep fights and final boss wiring.
+- Phone testing: NOT done. Only node --check; Leon's phone check is required before main.
