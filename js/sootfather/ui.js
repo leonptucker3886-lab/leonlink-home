@@ -1,9 +1,12 @@
 "use strict";
 /* Sootfather - ui.js (split from sootfather.html, Phase 0; behaviour unchanged) */
 /* ---------- UI engine ---------- */
+/* hud(): caches the 5 HUD elements and only rewrites values that changed (chapter-lag fix) */
+let _hudEl=null,_hudLast={};
 function hud(){
-  $('hHP').textContent=P.hp+'/'+P.maxhp;$('hCash').textContent=P.cash;
-  $('hResp').textContent=P.resp;$('hLvl').textContent=P.lvl;$('hHeat').textContent=P.heat;
+  if(!_hudEl||!_hudEl.hHP||!_hudEl.hHP.isConnected){_hudLast={};_hudEl={hHP:$('hHP'),hCash:$('hCash'),hResp:$('hResp'),hLvl:$('hLvl'),hHeat:$('hHeat')}}
+  const v={hHP:P.hp+'/'+P.maxhp,hCash:String(P.cash),hResp:String(P.resp),hLvl:String(P.lvl),hHeat:String(P.heat)};
+  for(const k in v){if(_hudLast[k]!==v[k]&&_hudEl[k]){_hudEl[k].textContent=v[k];_hudLast[k]=v[k]}}
 }
 function setScene(s,foe){scene=s;foePortrait=foe||null}
 function showPanel(v){$('panel').hidden=!v;$('hud').hidden=!v}
