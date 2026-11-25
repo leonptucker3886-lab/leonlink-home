@@ -27,9 +27,13 @@ function buildPins(){
     });
   }
 }
+/* chapter lag (Treeguy): cache the canvas rect so a tap doesn't force a layout; refresh on resize/scroll/orientation */
+let artRectCache=null;
+function artRect(){ if(!artRectCache||!artRectCache.width) artRectCache=art.getBoundingClientRect(); return artRectCache; }
+['resize','scroll','orientationchange'].forEach(ev=>window.addEventListener(ev,()=>{artRectCache=null},{passive:true}));
 art.addEventListener('pointerdown',e=>{
   if(screen!=='hub')return;
-  const r=art.getBoundingClientRect();
+  const r=artRect();
   const x=(e.clientX-r.left)/r.width*art.width, y=(e.clientY-r.top)/r.height*art.height;
   for(const pn of pins){
     const px=pn.x*art.width,py=pn.y*art.height,dx=x-px,dy=y-py;
