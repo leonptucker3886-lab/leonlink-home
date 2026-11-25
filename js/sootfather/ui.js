@@ -26,7 +26,7 @@ function clearChoices(){$('choices').innerHTML='';$('text').onclick=null;$('text
 function float2(txt){const f=$('float');f.textContent=txt;f.style.opacity=1;setTimeout(()=>f.style.opacity=0,1100)}
 function gain(e){
   let s=[];
-  if(e.cash){P.cash+=e.cash;s.push((e.cash>0?'+':'')+'$'+e.cash);if(e.cash>0)sCoin()}
+  if(e.cash){if(e.cash>0&&typeof addCoins==='function')addCoins(e.cash);else if(e.cash<0&&typeof spendCoins==='function'){const c=Math.min(-e.cash,P.cash||0);if(c>0)spendCoins(c)}else P.cash+=e.cash;s.push((e.cash>0?'+':'')+'$'+e.cash);if(e.cash>0)sCoin()}
   if(e.resp){P.resp=Math.max(0,P.resp+e.resp);s.push((e.resp>0?'+':'')+e.resp+' ★')}
   if(e.hp){P.hp=clamp(P.hp+e.hp,0,P.maxhp);s.push((e.hp>0?'+':'')+e.hp+' ❤')}
   if(e.heat){P.heat=clamp(P.heat+e.heat,0,5);s.push('🔥'+(e.heat>0?'+':'')+e.heat)}
