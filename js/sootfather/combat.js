@@ -176,8 +176,9 @@ combatBar=function(v){
 // ---- Chapter-lag fix, combat side (Sir Pocket Niche). Additive.
 // combatHud ran 4 DOM lookups + 4 writes on every hit/turn, so cache the nodes and only write when values change.
 const sfHudEl={},sfHudLast={};
-function sfEl(id){let e=sfHudEl[id];if(!e||!e.isConnected){e=$(id);sfHudEl[id]=e}return e}
-function sfSet(id,prop,val){if(sfHudLast[id+prop]===val)return;const e=sfEl(id);if(!e)return;
+// Re-lookup clears saved values so a rebuilt bar always gets its first write (Inspector note on 37f5bd6).
+function sfEl(id){let e=sfHudEl[id];if(!e||!e.isConnected){e=$(id);sfHudEl[id]=e;delete sfHudLast[id+'w'];delete sfHudLast[id+'t']}return e}
+function sfSet(id,prop,val){const e=sfEl(id);if(!e)return;if(sfHudLast[id+prop]===val)return;
   sfHudLast[id+prop]=val;if(prop==='w')e.style.width=val;else e.textContent=val}
 combatHud=function(){
   if(!foe)return;
