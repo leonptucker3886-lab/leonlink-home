@@ -1,5 +1,5 @@
 "use strict";
-/* Sootfather - economy.js (Phase 1, owner: Big catch fish). Fix 6 + rival sweeps money side.
+/* Ashbusten Town - economy.js (Phase 1, owner: Big catch fish). Fix 6 + rival sweeps money side.
    Uses only core.js shared API: addCoins/spendCoins/canAfford, repTier, playSound. Never writes P.cash. */
 const SF_JOB_TIERS=[
   {tier:1,name:'Cottage chimney',min:8,max:12,rep:0},
