@@ -1,0 +1,47 @@
+h2.h1x{font-size:2em;margin:.67em 0;font-weight:bold}
+
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:#060609;overflow:hidden;overscroll-behavior:none}
+body{font-family:Georgia,"Times New Roman",serif;color:#f0e9d8;user-select:none;-webkit-user-select:none}
+#wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#060609}
+#stage{position:relative;width:min(100vw,56.25vh);height:min(100vh,177.78vw);aspect-ratio:9/16;max-height:100vh;background:#0b0b12;overflow:hidden}
+@media(min-aspect-ratio:9/16){#stage{border-left:1px solid #2a2a3a;border-right:1px solid #2a2a3a}}
+#art{position:absolute;top:0;left:0;right:0;height:42%;display:block}
+#hud{position:absolute;top:0;left:0;right:0;z-index:6;display:flex;gap:6px;align-items:center;padding:calc(8px + env(safe-area-inset-top)) 10px 8px;font-family:"DM Sans",system-ui,sans-serif;font-size:13px;font-weight:700}
+#hud .pill{background:rgba(8,8,14,.78);border:1px solid #3a3a4e;border-radius:999px;padding:5px 11px;white-space:nowrap;color:#fff}
+#hud .pill small{color:#9a937e;font-weight:600}
+#hud .sp{flex:1}
+#hud button{background:rgba(8,8,14,.78);border:1px solid #3a3a4e;color:#fff;border-radius:50%;width:34px;height:34px;font-size:15px}
+#panel{position:absolute;left:0;right:0;bottom:0;height:58%;background:linear-gradient(180deg,#14141d 0%,#0d0d15 100%);border-top:2px solid #c9a227;display:flex;flex-direction:column;padding:14px 16px calc(14px + env(safe-area-inset-bottom));z-index:5}
+#who{font-size:13px;letter-spacing:.22em;color:#c9a227;font-family:"DM Sans",system-ui,sans-serif;font-weight:700;margin-bottom:6px}
+#text{font-size:19px;line-height:1.55;flex:0 1 auto;overflow-y:auto;min-height:84px;margin-bottom:10px}
+#text .tap{color:#6b6b80;font-size:13px;font-family:"DM Sans",system-ui,sans-serif}
+#choices{display:flex;flex-direction:column;gap:10px;overflow-y:auto;padding-bottom:4px}
+.cbtn{font-family:"DM Sans",system-ui,sans-serif;font-size:17px;font-weight:700;text-align:left;color:#f0e9d8;background:#1d1d29;border:1px solid #4a4a5e;border-radius:12px;padding:15px 16px;cursor:pointer;min-height:58px}
+.cbtn:active{background:#2b2b3d;transform:scale(.985)}
+.cbtn .req{float:right;color:#c9a227;font-size:13px;font-weight:600}
+.cbtn.gold{background:linear-gradient(180deg,#3a2f10,#241d08);border-color:#c9a227;color:#ffe9a8}
+.cbtn.danger{border-color:#7a2a2a}
+.cbtn:disabled{opacity:.45}
+#combatbar{display:none;gap:8px;margin-bottom:10px}
+#combatbar .hpbar{flex:1;background:#22222e;border:1px solid #4a4a5e;border-radius:8px;height:26px;position:relative;overflow:hidden}
+#combatbar .hpfill{position:absolute;inset:0;background:linear-gradient(90deg,#a32727,#e04040);width:100%;transition:width .3s}
+#combatbar .hpfill.you{background:linear-gradient(90deg,#1e7a3a,#37c25e)}
+#combatbar .hplabel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:"DM Sans",system-ui,sans-serif;font-size:12px;font-weight:700;color:#fff;text-shadow:0 1px 2px #000}
+.ov{position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:24px;background:rgba(5,5,10,.9)}
+.ov[hidden]{display:none}
+.ov h1,
+.ov h2.h1x{font-family:"Fraunces",Georgia,serif;font-size:52px;letter-spacing:.06em;color:#f0e9d8;text-shadow:0 0 30px #c9a22788;font-weight:400}
+.ov h1 .r,
+.ov h2.h1x .r{color:#c9a227;font-style:italic}
+.ov .sub{font-style:italic;color:#9a937e;font-size:17px}
+.btn{font-family:"DM Sans",system-ui,sans-serif;font-weight:800;font-size:20px;color:#141005;background:linear-gradient(180deg,#e8c84a,#c9a227);border:0;border-radius:999px;padding:16px 52px;cursor:pointer;min-height:60px;box-shadow:0 0 26px #c9a22755}
+.btn:active{transform:scale(.96)}
+.btn.ghost{background:transparent;border:1px solid #4a4a5e;color:#f0e9d8;box-shadow:none;font-size:16px;padding:12px 30px;min-height:52px}
+.shoprow{display:flex;align-items:center;gap:10px;background:#1d1d29;border:1px solid #4a4a5e;border-radius:12px;padding:12px;margin-bottom:10px;font-family:"DM Sans",system-ui,sans-serif}
+.shoprow .nm{flex:1}.shoprow .nm b{display:block;font-size:16px}.shoprow .nm span{font-size:13px;color:#9a937e}
+.shoprow button{background:#c9a227;border:0;border-radius:10px;font-weight:800;padding:12px 16px;font-size:15px;min-height:50px}
+#float{position:absolute;top:44%;left:0;right:0;text-align:center;z-index:15;pointer-events:none;font-family:"DM Sans",system-ui,sans-serif;font-weight:800;font-size:22px;color:#ffe9a8;text-shadow:0 2px 8px #000;opacity:0;transition:opacity .4s}
+#ovWasted h1,
+#ovWasted h2.h1x{font-family:"Fraunces",Georgia,serif;font-size:64px;color:#8a8a8a;text-shadow:0 0 40px #000;letter-spacing:.14em;font-family:"DM Sans",system-ui,sans-serif;font-weight:800}
+.credit{position:absolute;bottom:6px;right:10px;font-size:10px;color:#55556a;z-index:4;letter-spacing:.12em;font-family:"DM Sans",system-ui,sans-serif}
