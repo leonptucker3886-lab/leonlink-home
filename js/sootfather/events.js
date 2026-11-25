@@ -1,5 +1,5 @@
 "use strict";
-/* Sootfather - events.js (Phase 1, owner: Big catch fish). Fix 5: random pop-up events.
+/* Ashbusten Town - events.js (Phase 1, owner: Big catch fish). Fix 5: random pop-up events.
    Uses core.js registerEvent/triggerEvents, Treeguy's startDialogue(beats,onDone), Sir Pocket Niche's startBattle. */
 function sfTalk(lines,done){if(typeof startDialogue==='function'){if(startDialogue(lines,done)!==false)return}
   if(done)done()}
