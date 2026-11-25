@@ -135,3 +135,29 @@ const SF_ITEMS={
 const SF_PACK={slots:8,stack:5};
 function sfEnemiesForTier(t){return Object.keys(SF_ENEMIES).filter(k=>SF_ENEMIES[k].tier===t)}
 function sfDamage(atk,def,pierce){return Math.max(1,atk-Math.max(0,def-(pierce||0))+rndi(-1,1))}
+
+// ---- Phase 1 hooks (Sir Pocket Niche). Additive: existing fights unchanged.
+SF_WEAPONS.wpn_stackbreaker={name:'Stackbreaker Pole',atk:11,pierce:3,price:320};
+SF_WEAPONS.wpn_crook={name:"Sootfather's Crook",atk:14,crit:3,price:0,rewardOnly:true};
+let sfBattleId=null,sfBattleSrc=null;
+/* contract hook: start a fight by enemy/boss ID. opts.source: 'map'|'event'|'story' */
+function startBattle(enemyId,opts){
+  opts=opts||{};const d=SF_ENEMIES[enemyId]||SF_BOSSES[enemyId];
+  if(!d)return false;
+  const boss=!!SF_BOSSES[enemyId];
+  sfBattleId=enemyId;sfBattleSrc=opts.source||'map';
+  startCombat({name:d.name,hp:d.hp*(d.count||1),atk:d.atk,art:d.sprite,boss:boss,
+    line:opts.line||(boss?'This ends here.':'It bares its teeth.'),
+    will:boss?99:4+(d.tier||1)*2,bribe:boss?999:d.reward*3,
+    convinced:'Fine. Go.',cash:d.reward||(boss?60:10)},opts.scene);
+  return true;
+}
+/* record real wins over rivals in P.rivalsBeaten ({rival_brushley:true}) */
+const _sfWinFight=winFight;
+winFight=function(talked){
+  if(sfBattleId&&SF_BOSSES[sfBattleId]&&SF_BOSSES[sfBattleId].rival&&P){
+    P.rivalsBeaten=P.rivalsBeaten||{};P.rivalsBeaten[sfBattleId]=true}
+  sfBattleId=null;sfBattleSrc=null;_sfWinFight(talked);
+};
+const _sfKnockedOut=knockedOut;
+knockedOut=function(){sfBattleId=null;sfBattleSrc=null;_sfKnockedOut()};
