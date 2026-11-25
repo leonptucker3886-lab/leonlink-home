@@ -38,14 +38,20 @@ const AREAS={
   canal_docks:     {name:"Canal Docks",      tier:1,      gate:null,        links:["soot_row","foundry_quarter"], events:["boss_chimney_wyrm"]},
   foundry_quarter: {name:"Foundry Quarter",  tier:2,      gate:{repTier:2}, links:["old_mill_flats","canal_docks","great_stack"], events:["boss_chimney_wyrm"]},
   rival_guild_hall:{name:"Rival Guild Hall", tier:"rival",gate:null,        links:["market_lane"], fights:["rival_brushley","rival_mopp","rival_klinker"]},
-  great_stack:     {name:"The Great Stack",  tier:"boss", gate:{repTier:3}, links:["foundry_quarter"], fights:["boss_grand_sweep"]}
+  great_stack:     {name:"The Great Stack",  tier:"boss", gate:{repTier:3,rivals:["rival_brushley","rival_mopp","rival_klinker"]}, links:["foundry_quarter"], fights:["boss_grand_sweep"]}
 };
 const AREA_START="soot_row";
 function areaGateOpen(id){
   const a=AREAS[id]; if(!a) return false;
   if(!a.gate) return true;
   const t=(typeof repTier==="function")?repTier():0;
-  return t>=(a.gate.repTier||0);
+  if(t<(a.gate.repTier||0)) return false;
+  if(a.gate.rivals){
+    const rb=(typeof P!=="undefined"&&P&&P.rivalsBeaten&&typeof P.rivalsBeaten==="object")?P.rivalsBeaten:null;
+    if(!rb) return false;
+    for(const r of a.gate.rivals){ if(!rb[r]) return false; }
+  }
+  return true;
 }
 function areaUnlocked(id){ return !!(typeof P!=="undefined" && P && Array.isArray(P.unlocked) && P.unlocked.includes(id)); }
 function areaNeighbours(id){ return (AREAS[id]&&AREAS[id].links)||[]; }
