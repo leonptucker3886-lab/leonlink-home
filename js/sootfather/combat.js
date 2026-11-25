@@ -46,9 +46,9 @@ function playerTalk(){
   }
 }
 function playerBribe(){
-  if(P.cash<foe.bribe){say('',"You don't have the cash. "+foe.name+" laughs.");
+  if(!canAfford(foe.bribe)){say('',"You don't have the cash. "+foe.name+" laughs.");
     $('text').onclick=tapTo(()=>{foeTurn()});$('text').style.cursor='pointer';return}
-  P.cash-=foe.bribe;sCoin();hud();
+  spendCoins(foe.bribe);sCoin();hud();
   say('',"Money talks. "+foe.name+" walks.");
   $('text').onclick=tapTo(()=>{winFight(true)});$('text').style.cursor='pointer';
 }
@@ -77,7 +77,7 @@ function winFight(talked){
 function knockedOut(){
   combatBar(false);sLose();screen='wasted';showPanel(false);
   $('ovWasted').hidden=false;
-  const lost=Math.floor(P.cash/2);P.cash-=lost;P.hp=P.maxhp;P.resp=Math.max(0,P.resp-1);
+  const lost=Math.floor(P.cash/2);spendCoins(lost);P.hp=P.maxhp;P.resp=Math.max(0,P.resp-1);
   P.heat=Math.max(0,P.heat-2);
   hud();save();
   setTimeout(()=>{$('ovWasted').hidden=true;
