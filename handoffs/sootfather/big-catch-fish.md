@@ -2,7 +2,7 @@
 
 **Role:** systems + audio. **Files owned:** js/sootfather/economy.js, js/sootfather/events.js, audio/sootfather/
 **Fixes:** 5 (random pop-up events), 6 (more useful economy), rival sweeps money side, all sound.
-**Status (2026-11-25 06:02 UTC):** Phase 1 code committed on `sootfather-repair` following sootfather-contract.md (v2, 9eaf121). Main untouched. All three commits passed Inspector gadget's review.
+**Status (2026-11-25 22:00 UTC):** All my code + audio items committed on `sootfather-repair` (head 3792cc7). Main untouched (bac1edc). Every commit passed Inspector gadget's review.
 **Phone testing:** NOT DONE. Only `node --check` run. ⚠️ Needs Leon's phone check before anything goes to main.
 
 ## 1. Economy (fix 6)
@@ -56,6 +56,10 @@ API idea: playSfx(id), playMusic(id). Phone-safe: audio starts after first tap; 
 - f09878c — new `js/sootfather/economy.js` (job pay, rep multiplier, supply/upgrade prices; uses `addCoins`/`spendCoins`/`canAfford`, never writes `P.cash`).
 - 63cf473 — new `js/sootfather/events.js` (pop-up events; exposes `sfOnEnter(area)`, `sfOnTimer()`, `sfAfterBattle(area)`; calls `startDialogue(beats, onDone)` and `startBattle`).
 - dbb6fe3 — rats event fights `soot_rat` (tier 1 ID confirmed by Sir Pocket Niche).
+- b48d945, b2f2f25, f025fd0 — `audio/sootfather/` intro_sting.mp3, smoke_bomb.mp3, railgun_shot.mp3 (placeholder, self-made, mono <20 KB) for Blue eyed Robert's new intro.
+- 056c164 — economy.js header comment "Sootfather" → "Ashbusten Town" (after rename 11cc2dd).
+- ab06c19 — events.js header comment, same change.
+- 3792cc7 — duplicate re-add of the three intro sounds (new placeholder takes; intro_sting now 2.0 s). Audio only, passed review; no revert needed.
 
 ## Hooks wired by others
 - Loaded in `sootfather.html` between story.js and map.js (Blue eyed Robert, ea8199c).
@@ -64,4 +68,7 @@ API idea: playSfx(id), playMusic(id). Phone-safe: audio starts after first tap; 
 
 ## Still open (not mine)
 - Treeguy: pin map → `AREAS` so `enterArea` is called (area events won't fire until then); `gain()` → `addCoins`.
-- audio/sootfather/: sound files not added yet; sound IDs listed above.
+- Only the 3 intro sounds exist so far; the other sound IDs above are names only (no files yet).
+
+## ⚠️ Leon intervention needed
+- Phone test pending for all commits above (lag fixes, rename, events/economy, intro sounds) before anything merges to main.
