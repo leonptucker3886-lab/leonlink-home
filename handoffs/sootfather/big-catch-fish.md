@@ -2,8 +2,8 @@
 
 **Role:** systems + audio. **Files owned:** js/sootfather/economy.js, js/sootfather/events.js, audio/sootfather/
 **Fixes:** 5 (random pop-up events), 6 (more useful economy), rival sweeps money side, all sound.
-**Status:** Phase 1 rough draft, matched to Sir Pocket Niche's final tables (a7d4353). No code touched (waiting on sootfather-contract.md).
-**Phone testing:** not started; marked for Leon's intervention if he is unavailable.
+**Status (2026-11-25 06:02 UTC):** Phase 1 code committed on `sootfather-repair` following sootfather-contract.md (v2, 9eaf121). Main untouched. All three commits passed Inspector gadget's review.
+**Phone testing:** NOT DONE. Only `node --check` run. ⚠️ Needs Leon's phone check before anything goes to main.
 
 ## 1. Economy (fix 6)
 Currency: coins (shared with items.js).
@@ -50,3 +50,18 @@ Rules: max 1 pop-up per area entry; same event not repeated within a day.
 sfx_hit, sfx_miss, sfx_crit, sfx_coin, sfx_buy, sfx_sell, sfx_levelup, sfx_rep_up, sfx_rep_down, sfx_event_popup, sfx_dialogue_blip, sfx_door, sfx_brush, sfx_fall, sfx_heal, sfx_enemy_die, sfx_boss_intro, sfx_victory, sfx_defeat, sfx_ui_click,
 music_town, music_rooftops, music_battle, music_boss, music_rival.
 API idea: playSfx(id), playMusic(id). Phone-safe: audio starts after first tap; mute toggle in menu.
+
+
+## Progress log (code)
+- f09878c — new `js/sootfather/economy.js` (job pay, rep multiplier, supply/upgrade prices; uses `addCoins`/`spendCoins`/`canAfford`, never writes `P.cash`).
+- 63cf473 — new `js/sootfather/events.js` (pop-up events; exposes `sfOnEnter(area)`, `sfOnTimer()`, `sfAfterBattle(area)`; calls `startDialogue(beats, onDone)` and `startBattle`).
+- dbb6fe3 — rats event fights `soot_rat` (tier 1 ID confirmed by Sir Pocket Niche).
+
+## Hooks wired by others
+- Loaded in `sootfather.html` between story.js and map.js (Blue eyed Robert, ea8199c).
+- `sfOnEnter` + `sfOnTimer` (60s, hub only) called from map.js only (Treeguy, 01887bf). hub.js must not call them.
+- `sfAfterBattle(P.area||P.loc||null)` called from combat.js (Sir Pocket Niche, af7c0f6).
+
+## Still open (not mine)
+- Treeguy: pin map → `AREAS` so `enterArea` is called (area events won't fire until then); `gain()` → `addCoins`.
+- audio/sootfather/: sound files not added yet; sound IDs listed above.
