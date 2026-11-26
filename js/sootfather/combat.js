@@ -133,6 +133,8 @@ const SF_ITEMS={
   contract_notes:{name:'Contract Notes',quest:true,noSlot:true,price:0}
 };
 const SF_PACK={slots:8,stack:5};
+// Agreed backpack rules (Big catch fish / Sir Pocket Niche): tonics from the backpack heal 60% and use your turn; at most 2 backpack items per fight.
+const SF_PACK_HEAL=0.6,SF_PACK_FIGHT_MAX=2;
 function sfEnemiesForTier(t){return Object.keys(SF_ENEMIES).filter(k=>SF_ENEMIES[k].tier===t)}
 function sfDamage(atk,def,pierce){return Math.max(1,atk-Math.max(0,def-(pierce||0))+rndi(-1,1))}
 
@@ -208,7 +210,7 @@ combatMenu=function(){
     const box=$('choices');if(box&&box.firstChild)box.removeChild(box.firstChild);
   }
   const items=sfPackList();
-  if(items.length)addChoice('\ud83c\udf92 Backpack <span class="req">'+items.length+' kind'+(items.length>1?'s':'')+'</span>',()=>sfPackMenu());
+  if(items.length&&(foe.sfPackUsed||0)<SF_PACK_FIGHT_MAX)addChoice('\ud83c\udf92 Backpack <span class="req">'+items.length+' kind'+(items.length>1?'s':'')+'</span>',()=>sfPackMenu());
   if(w&&w.atk){
     const base=3+P.mus*2+w.atk;
     addChoice('\ud83e\uddf9 Swing the '+w.name+' <span class="req">~'+base+' dmg</span>',()=>playerHit(base));
@@ -223,11 +225,13 @@ function sfPackMenu(){
 function sfUseItem(id){
   const it=SF_ITEMS[id];clearChoices();
   if(it.flee&&foe.boss){say('',"The smoke won't faze a boss. You keep the bomb.");$('text').onclick=tapTo(()=>{combatMenu()});$('text').style.cursor='pointer';return}
+  if((foe.sfPackUsed||0)>=SF_PACK_FIGHT_MAX){say('','You can only pull '+SF_PACK_FIGHT_MAX+' things from the backpack in one fight.');$('text').onclick=tapTo(()=>{combatMenu()});$('text').style.cursor='pointer';return}
   if(!sfPackUse(id)){combatMenu();return}
+  foe.sfPackUsed=(foe.sfPackUsed||0)+1;
   if(it.flee&&!foe.boss){say('','Smoke bomb from the pack. Gone.');
     $('text').onclick=tapTo(()=>{combatBar(false);next()});$('text').style.cursor='pointer';save();return}
   let msg='';
-  if(it.heal){const h=Math.min(it.heal,P.maxhp-P.hp);P.hp+=h;msg='You drink the '+it.name+' and heal <b>'+h+'</b>.'}
+  if(it.heal){const h=Math.min(Math.ceil(it.heal*SF_PACK_HEAL),P.maxhp-P.hp);P.hp+=h;msg='You drink the '+it.name+' and heal <b>'+h+'</b>.'}
   else if(it.dmg){foe.hp-=it.dmg;sHit();msg='You throw a '+it.name+' for <b>'+it.dmg+'</b>.'}
   else if(it.critBonus){foe.sfCrit=(foe.sfCrit||0)+it.critBonus;msg='You tie on the '+it.name+'. You feel lucky.'}
   else if(it.flee){msg="The smoke doesn't faze a boss."}
