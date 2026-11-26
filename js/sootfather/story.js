@@ -4,7 +4,7 @@
 const FOES={
   punk:{name:'Punk Kid',art:'punk',hp:16,atk:4,will:3,bribe:20,cash:25,line:'"Toll\'s a dollar, sweep."',convinced:'"Okay okay! Family business, I get it!"'},
   greaser:{name:'Greaser',art:'punk',hp:26,atk:7,will:4,bribe:40,cash:40,line:'"Ash sends his regards."',convinced:'"Tell Ash... actually don\'t tell Ash."'},
-  brick:{name:'Brick',art:'brick',hp:42,atk:8,will:5,bribe:120,cash:90,boss:true,line:'"I\'M the chimney now."',convinced:'"Brick... respects the brush."'},
+  brick:{name:'Brick',art:'brick',hp:42,atk:8,will:5,bribe:120,cash:90,boss:true,line:'"These rooftops answer to Morano now."',convinced:'"Brick... respects the brush."'},
   goon:{name:'Task Force Goon',art:'goon',hp:36,atk:9,will:6,bribe:70,cash:50,line:'"Cease and desist, citizen."',convinced:'"My pension ain\'t worth this."'},
   ash:{name:'Ash Morano',art:'ash',hp:62,atk:11,will:7,bribe:200,cash:150,boss:true,line:'"This town ain\'t big enough for two sweeps."',convinced:'"Fine. The east side is yours. ...For now."'},
   grey:{name:'Councilman Grey',art:'grey',hp:85,atk:12,will:9,bribe:300,cash:300,boss:true,line:'"Sweeps are a relic. The future is electric."',convinced:'"...Perhaps the future has room for tradition."'},
@@ -37,7 +37,7 @@ const CHAPTERS=[
  ],reward:{cash:40,resp:1,xp:40}},
  {name:'Brick',boss:true,beats:[
   {t:'say',who:'VINNIE',scene:'club',text:'Ash Morano\'s crew is sweeping OUR chimneys. Brick is their muscle. Docks. Tonight.'},
-  {t:'say',who:'BRICK',scene:'street',foe:'brick',text:'"You\'re the new broom? I\'M the chimney now."'},
+  {t:'say',who:'BRICK',scene:'street',foe:'brick',text:'"You\'re the new broom? Turn around. These rooftops answer to Morano now."'},
   {t:'fight',foe:FOES.brick,scene:'street'},
   {t:'say',who:'SAL',scene:'club',text:'Brick sweeps no more. Ash knows our name now. <i>Good work, kid.</i>'},
  ],reward:{cash:80,resp:2,xp:60}},
