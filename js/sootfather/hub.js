@@ -51,6 +51,12 @@ const SHOP=[
  {id:'coin',n:"St. Florian's Coin",d:'+2 🍀 Luck',c:50},
  {id:'tonic',n:"Doc's Tonic",d:'+10 max ❤, heal full',c:80,rep:true},
  {id:'heal',n:'Patch Up',d:'Heal to full',c:25,rep:true},
+ /* backpack items (SF_ITEMS in combat.js): Use now / Put in backpack */
+ {id:'pk_tonic',pack:'tonic',n:'Tonic',d:'Heal 15 \u00b7 backpack item',c:10,rep:true},
+ {id:'pk_strong_tonic',pack:'strong_tonic',n:'Strong Tonic',d:'Heal 40 \u00b7 backpack item',c:30,rep:true},
+ {id:'pk_smoke_bomb',pack:'smoke_bomb',n:'Smoke Bomb',d:'Escape a fight (not bosses)',c:20,rep:true},
+ {id:'pk_soot_pellet',pack:'soot_pellet',n:'Soot Pellet',d:'Throw for 12 damage in a fight',c:15,rep:true},
+ {id:'pk_lucky_rag',pack:'lucky_rag',n:'Lucky Rag',d:'+10% crit chance next fight',c:25,rep:true},
 ];
 function shop(){
   setScene('club');
@@ -69,7 +75,24 @@ function shop(){
   });
   addChoice('← Back to the club',()=>hub());
 }
+function buyPack(it){
+  P.cash-=it.c;sCoin();hud();save();
+  say("LUIGI'S PAWN",'You bought a <b>'+it.n+'</b>. Use it now, or put it in your backpack?');
+  $('text').onclick=null;
+  const toPack=(pre)=>{
+    if(typeof sfPackAdd==='function'&&sfPackAdd(it.pack)){save();float2((pre||'')+it.n+' \u2192 backpack');hud();shop();return}
+    P.cash+=it.c;save();hud();
+    say("LUIGI'S PAWN",'<b>Backpack full.</b> Luigi hands your $'+it.c+' back. "No room, no sale."');
+    $('text').onclick=tapTo(()=>shop());$('text').style.cursor='pointer';
+  };
+  addChoice('Use now',()=>{
+    if(typeof sfUseNow==='function'&&sfUseNow(it.pack)){save();float2('Used '+it.n);hud();shop();return}
+    toPack('Fight-only: ');
+  },'','gold');
+  addChoice('Put in backpack',()=>toPack());
+}
 function buy(it){
+  if(it.pack)return buyPack(it);
   P.cash-=it.c;sCoin();
   if(it.id==='tonic'){P.maxhp+=10;P.hp=P.maxhp}
   else if(it.id==='heal'){P.hp=P.maxhp}
