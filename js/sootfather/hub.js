@@ -68,28 +68,44 @@ function shop(){
     const row=document.createElement('div');row.className='shoprow';
     row.innerHTML='<div class="nm"><b>'+it.n+'</b><span>'+it.d+'</span></div>';
     const b=document.createElement('button');
-    b.textContent=owned?'OWNED':'$'+it.c;
+    b.textContent=owned?'OWNED':(it.pack?'$'+it.c+' / $'+packPrice(it)+' \ud83c\udf92':'$'+it.c);
     b.disabled=owned||P.cash<it.c;
     b.onclick=()=>{sTap();buy(it)};
     row.appendChild(b);c.appendChild(row);
   });
   addChoice('← Back to the club',()=>hub());
 }
+/* backpack rules (agreed 08:34): 8 slots, stacks of 5 (SF_PACK in combat.js),
+   storing an item costs 1.5x its price; using it on the spot costs the base price */
+const PACK_MULT=1.5;
+function packPrice(it){return Math.ceil(it.c*PACK_MULT)}
+function packRoom(id){
+  if(typeof SF_PACK==='undefined')return true;
+  const pk=P.pack||{},have=pk[id]||0;
+  if(have>=SF_PACK.stack)return false;
+  if(have)return true;
+  return Object.keys(pk).filter(k=>pk[k]>0&&typeof SF_ITEMS!=='undefined'&&SF_ITEMS[k]&&!SF_ITEMS[k].noSlot).length<SF_PACK.slots;
+}
 function buyPack(it){
-  P.cash-=it.c;sCoin();hud();save();
-  say("LUIGI'S PAWN",'You bought a <b>'+it.n+'</b>. Use it now, or put it in your backpack?');
+  const pp=packPrice(it);
+  const canNow=!!(typeof SF_ITEMS!=='undefined'&&SF_ITEMS[it.pack]&&(SF_ITEMS[it.pack].heal||SF_ITEMS[it.pack].critBonus));
+  const have=(P.pack&&P.pack[it.pack])||0;
+  say("LUIGI'S PAWN",'<b>'+it.n+'</b>. Use it here for <b>$'+it.c+'</b>, or pay <b>$'+pp+'</b> to carry it in your backpack.<br><span class="req">You carry '+have+'/'+(typeof SF_PACK!=='undefined'?SF_PACK.stack:5)+'.</span>');
   $('text').onclick=null;
-  const toPack=(pre)=>{
-    if(typeof sfPackAdd==='function'&&sfPackAdd(it.pack)){save();float2((pre||'')+it.n+' \u2192 backpack');hud();shop();return}
-    P.cash+=it.c;save();hud();
-    say("LUIGI'S PAWN",'<b>Backpack full.</b> Luigi hands your $'+it.c+' back. "No room, no sale."');
-    $('text').onclick=tapTo(()=>shop());$('text').style.cursor='pointer';
-  };
-  addChoice('Use now',()=>{
-    if(typeof sfUseNow==='function'&&sfUseNow(it.pack)){save();float2('Used '+it.n);hud();shop();return}
-    toPack('Fight-only: ');
+  if(canNow)addChoice('Use now <span class="req">$'+it.c+'</span>',()=>{
+    if(P.cash<it.c)return shop();
+    if(typeof sfUseNow==='function'&&sfUseNow(it.pack)){P.cash-=it.c;sCoin();save();float2('Used '+it.n);hud();shop();return}
+    shop();
   },'','gold');
-  addChoice('Put in backpack',()=>toPack());
+  const room=packRoom(it.pack);
+  addChoice((room?'Put in backpack':'Backpack full')+' <span class="req">$'+pp+'</span>',()=>{
+    if(!room||P.cash<pp)return shop();
+    if(typeof sfPackAdd==='function'&&sfPackAdd(it.pack)){P.cash-=pp;sCoin();save();float2(it.n+' \u2192 backpack');hud();shop();return}
+    say("LUIGI'S PAWN",'<b>Backpack full.</b> "No room, no sale."');
+    $('text').onclick=tapTo(()=>shop());$('text').style.cursor='pointer';
+  });
+  if(!room||P.cash<pp){const bs=$('choices').querySelectorAll('button');const last=bs[bs.length-1];if(last)last.disabled=true}
+  addChoice('\u2190 Back',()=>shop());
 }
 function buy(it){
   if(it.pack)return buyPack(it);
