@@ -186,3 +186,73 @@ combatHud=function(){
   sfSet('hpFoe','w',Math.max(0,100*foe.hp/foe.maxhp)+'%');
   sfSet('hpFoeT','t',foe.name.toUpperCase()+' '+Math.max(0,foe.hp));
 };
+
+// ---- Fixes 2, 3, 7 (Sir Pocket Niche). Additive; old story fights without these fields behave as before.
+// Fix 2/3: enemies carry DEF from their tier data, and pick between 2 moves so fights aren't one-button.
+// Fix 7: the equipped weapon (P.weapon, an SF_WEAPONS id) adds ATK/pierce, and the backpack (P.pack {itemId:count}) is usable in a fight for the turn.
+function sfWeapon(){return (typeof P!=='undefined'&&P&&SF_WEAPONS[P.weapon])||null}
+function sfPackList(){if(!P||!P.pack)return [];return Object.keys(P.pack).filter(k=>P.pack[k]>0&&SF_ITEMS[k]&&!SF_ITEMS[k].quest)}
+function sfPackUse(id){if(!P.pack||!(P.pack[id]>0))return false;P.pack[id]--;if(P.pack[id]<=0)delete P.pack[id];return true}
+const _sfStartBattle=startBattle;
+startBattle=function(enemyId,opts){
+  const ok=_sfStartBattle(enemyId,opts);
+  const d=SF_ENEMIES[enemyId]||SF_BOSSES[enemyId];
+  if(ok&&foe&&d){foe.def=d.def||0;foe.tier=d.tier||0}
+  return ok;
+};
+const _sfCombatMenu=combatMenu;
+combatMenu=function(){
+  _sfCombatMenu();
+  const w=sfWeapon();
+  if(w&&w.atk){ // replace the brush swing with the weapon swing
+    const box=$('choices');if(box&&box.firstChild)box.removeChild(box.firstChild);
+  }
+  const items=sfPackList();
+  if(items.length)addChoice('\ud83c\udf92 Backpack <span class="req">'+items.length+' kind'+(items.length>1?'s':'')+'</span>',()=>sfPackMenu());
+  if(w&&w.atk){
+    const base=3+P.mus*2+w.atk;
+    addChoice('\ud83e\uddf9 Swing the '+w.name+' <span class="req">~'+base+' dmg</span>',()=>playerHit(base));
+  }
+};
+function sfPackMenu(){
+  clearChoices();say('','What do you pull out of the backpack?');
+  sfPackList().forEach(id=>{const it=SF_ITEMS[id];
+    addChoice(it.name+' <span class="req">x'+P.pack[id]+'</span>',()=>sfUseItem(id))});
+  addChoice('\u21a9\ufe0f Back',()=>combatMenu());
+}
+function sfUseItem(id){
+  const it=SF_ITEMS[id];clearChoices();
+  if(!sfPackUse(id)){combatMenu();return}
+  if(it.flee&&!foe.boss){say('','Smoke bomb from the pack. Gone.');
+    $('text').onclick=tapTo(()=>{combatBar(false);next()});$('text').style.cursor='pointer';save();return}
+  let msg='';
+  if(it.heal){const h=Math.min(it.heal,P.maxhp-P.hp);P.hp+=h;msg='You drink the '+it.name+' and heal <b>'+h+'</b>.'}
+  else if(it.dmg){foe.hp-=it.dmg;sHit();msg='You throw a '+it.name+' for <b>'+it.dmg+'</b>.'}
+  else if(it.critBonus){foe.sfCrit=(foe.sfCrit||0)+it.critBonus;msg='You tie on the '+it.name+'. You feel lucky.'}
+  else if(it.flee){msg="The smoke doesn't faze a boss."}
+  combatHud();hud();save();say('',msg);
+  $('text').onclick=tapTo(()=>{if(foe.hp<=0)winFight();else foeTurn()});$('text').style.cursor='pointer';
+}
+const _sfPlayerHit=playerHit;
+playerHit=function(dmg){
+  const w=sfWeapon();
+  const def=Math.max(0,(foe.def||0)-((w&&w.pierce)||0));
+  let d=Math.max(1,dmg-def);
+  const crit=(foe.sfCrit||0)+((w&&w.crit)?0.15:0);
+  if(crit&&Math.random()<crit){d*=(w&&w.crit)||2;foe.sfCritHit=true}
+  if(w&&w.stun&&Math.random()<w.stun)foe.sfStunned=true;
+  const wasCrit=foe.sfCritHit;foe.sfCritHit=false;
+  _sfPlayerHit(d);
+  if(wasCrit&&typeof sCoin==='function')sCoin();
+};
+const _sfFoeTurn=foeTurn;
+foeTurn=function(){
+  if(foe.sfStunned){foe.sfStunned=false;clearChoices();
+    say('',foe.name+' is stunned and loses the turn.');
+    $('text').onclick=tapTo(()=>{combatMenu()});$('text').style.cursor='pointer';return}
+  if(typeof foe.tier==='number'&&foe.tier>0&&Math.random()<0.3){ // move 2: heavy swing
+    const base=foe.atk;foe.atk=base+3;_sfFoeTurn();foe.atk=base;
+    return;
+  }
+  _sfFoeTurn();
+};
