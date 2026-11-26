@@ -258,3 +258,46 @@ foeTurn=function(){
   }
   _sfFoeTurn();
 };
+
+// ---- Fight balance + backpack helpers (Sir Pocket Niche)
+/* backpack helper for the shop: add n of SF_ITEMS[id] to P.pack ({id:count}). true/false */
+function sfPackAdd(id,n){
+  n=n||1;const it=SF_ITEMS[id];if(!it||!P)return false;
+  P.pack=P.pack||{};const have=P.pack[id]||0;
+  if(!it.noSlot){
+    if(have+n>SF_PACK.stack)return false;
+    if(!have&&Object.keys(P.pack).filter(k=>P.pack[k]>0&&SF_ITEMS[k]&&!SF_ITEMS[k].noSlot).length>=SF_PACK.slots)return false;
+  }
+  P.pack[id]=have+n;return true;
+}
+/* use an item outside a fight (does not touch the pack). false for fight-only items */
+function sfUseNow(id){
+  const it=SF_ITEMS[id];if(!it||!P)return false;
+  if(it.heal){P.hp=Math.min(P.maxhp,P.hp+it.heal);if(typeof hud==='function')hud();return true}
+  if(it.critBonus){P.sfLuck=(P.sfLuck||0)+it.critBonus;return true}
+  return false;
+}
+/* every fight: smooth difficulty toward the player's level, carry the lucky rag,
+   make sweet-talk and bribes cost more the more they are leaned on */
+const _sfStartCombatB=startCombat;
+startCombat=function(f,sc){
+  _sfStartCombatB(f,sc);
+  if(!foe||!P)return;
+  const lvl=P.lvl||1;
+  if(!foe.boss){
+    const tAtk=2+Math.round(lvl*1.5),tHp=14+lvl*8;
+    foe.atk=Math.max(1,Math.round((foe.atk+tAtk)/2));
+    foe.hp=foe.maxhp=Math.max(6,Math.round((foe.hp+tHp)/2));
+  }
+  if(typeof foe.tier!=='number')foe.tier=1; // story fights can heavy-swing too
+  const streak=P.sfTalkStreak||0;
+  foe.will=(foe.will||5)+Math.min(6,streak)+(foe.boss?4:0)+Math.floor(lvl/3);
+  foe.bribe=Math.round((foe.bribe||10)*(1+0.25*Math.min(8,streak)));
+  if(P.sfLuck){foe.sfCrit=(foe.sfCrit||0)+P.sfLuck;P.sfLuck=0}
+  if(typeof combatHud==='function'&&$('combatbar'))combatHud();
+};
+const _sfWinFight2=winFight;
+winFight=function(talked){
+  if(P){if(talked)P.sfTalkStreak=(P.sfTalkStreak||0)+1;else P.sfTalkStreak=Math.max(0,(P.sfTalkStreak||0)-2)}
+  _sfWinFight2(talked);
+};
