@@ -49,8 +49,12 @@ function drawBust(who,x,y,s){
     ax.fillStyle='#0a0a10';ax.fillRect(-24,-6,48,12);
     ax.fillStyle='#2a2a34';ax.fillRect(-32,24,64,36);
   }else if(who==='grey'){ // councilman: grey suit, fake smile
-    ax.fillStyle='#d8b08d';ax.beginPath();ax.arc(0,0,33,0,7);ax.fill();
-    ax.fillStyle='#888';ax.beginPath();ax.arc(-14,-16,10,0,7);ax.arc(14,-16,10,0,7);ax.fill();
+    ax.fillStyle='#b98a63';ax.beginPath();ax.arc(0,0,33,0,7);ax.fill();
+    ax.strokeStyle='#5a3a24';ax.lineWidth=2;ax.stroke();
+    ax.fillStyle='#4a4a52';ax.beginPath();ax.arc(0,-14,30,Math.PI*1.05,Math.PI*1.95);ax.fill(); // slicked grey hair
+    ax.fillStyle='#f4efe6';ax.beginPath();ax.arc(-12,-6,6,0,7);ax.arc(12,-6,6,0,7);ax.fill();
+    ax.fillStyle='#1a1a22';ax.beginPath();ax.arc(-12,-5,3,0,7);ax.arc(12,-5,3,0,7);ax.fill();
+    ax.strokeStyle='#3a2a20';ax.lineWidth=3;ax.beginPath();ax.moveTo(-19,-15);ax.lineTo(-6,-13);ax.moveTo(19,-15);ax.lineTo(6,-13);ax.stroke();
     ax.fillStyle='#3a3a48';ax.fillRect(-33,22,66,40);
     ax.fillStyle='#c9a227';ax.beginPath();ax.moveTo(0,24);ax.lineTo(-7,48);ax.lineTo(7,48);ax.fill();
     ax.strokeStyle='#1a1a22';ax.lineWidth=3;ax.beginPath();ax.arc(0,6,14,.25,Math.PI-.25);ax.stroke();
