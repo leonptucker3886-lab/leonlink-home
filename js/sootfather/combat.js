@@ -301,3 +301,30 @@ winFight=function(talked){
   if(P){if(talked)P.sfTalkStreak=(P.sfTalkStreak||0)+1;else P.sfTalkStreak=Math.max(0,(P.sfTalkStreak||0)-2)}
   _sfWinFight2(talked);
 };
+
+// ---- Freeze fix + save mid-fight (Sir Pocket Niche). Additive.
+// Freeze: some paths (Councilman Grey's boss fight, stun/heavy-swing wrappers) could leave the fight with no
+// choices and no tap handler, so the action menu never came back. A watchdog restores the menu if that happens.
+function sfFightOpen(){const b=$('combatbar');return !!(foe&&b&&b.style.display!=='none'&&screen!=='wasted')}
+function sfStuck(){const c=$('choices'),t=$('text');return sfFightOpen()&&foe.hp>0&&P.hp>0&&(!c||!c.children.length)&&t&&!t.onclick}
+let sfWatch=null;
+function sfArmWatch(){clearTimeout(sfWatch);sfWatch=setTimeout(()=>{if(sfStuck()){console.warn('sf: menu restored');combatMenu()}},400)}
+document.addEventListener('click',()=>{if(foe)sfArmWatch()},true);
+document.addEventListener('touchend',()=>{if(foe)sfArmWatch()},true);
+// Save mid-fight: snapshot the fight into P.sfFight every time the menu shows; cleared when the fight ends.
+function sfSnap(){if(!P||!foe)return;P.sfFight={foe:Object.assign({},foe),enraged:foeEnraged,id:sfBattleId||null};try{save()}catch(e){}}
+function sfClearSnap(){if(P&&P.sfFight){delete P.sfFight;try{save()}catch(e){}}}
+const _sfMenu2=combatMenu;combatMenu=function(){_sfMenu2();sfSnap()};
+const _sfWin2=winFight;winFight=function(t){if(P)delete P.sfFight;_sfWin2(t)};
+const _sfKO2=knockedOut;knockedOut=function(){if(P)delete P.sfFight;_sfKO2()};
+const _sfBar2=combatBar;combatBar=function(v){if(!v&&P)delete P.sfFight;_sfBar2(v)};
+function sfResumeFight(){
+  const s=P&&P.sfFight;if(!s||!s.foe)return false;
+  foe=Object.assign({},s.foe);foeEnraged=!!s.enraged;sfBattleId=s.id;sfInFight=true;
+  setScene(foe.scene||'street',foe.art);combatBar(true);
+  say('','You pick the fight back up. <b>'+foe.name+'</b> is still here.');
+  $('text').onclick=tapTo(()=>{combatMenu()});$('text').style.cursor='pointer';return true;
+}
+// First hub after a reload: if a fight was saved, go straight back into it.
+if(typeof hub==='function'){const _sfHub=hub;let sfFirstHub=true;
+  hub=function(){if(sfFirstHub){sfFirstHub=false;if(P&&P.sfFight&&sfResumeFight())return}return _sfHub.apply(this,arguments)}}
