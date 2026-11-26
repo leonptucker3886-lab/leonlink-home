@@ -222,6 +222,7 @@ function sfPackMenu(){
 }
 function sfUseItem(id){
   const it=SF_ITEMS[id];clearChoices();
+  if(it.flee&&foe.boss){say('',"The smoke won't faze a boss. You keep the bomb.");$('text').onclick=tapTo(()=>{combatMenu()});$('text').style.cursor='pointer';return}
   if(!sfPackUse(id)){combatMenu();return}
   if(it.flee&&!foe.boss){say('','Smoke bomb from the pack. Gone.');
     $('text').onclick=tapTo(()=>{combatBar(false);next()});$('text').style.cursor='pointer';save();return}
@@ -239,7 +240,7 @@ playerHit=function(dmg){
   const def=Math.max(0,(foe.def||0)-((w&&w.pierce)||0));
   let d=Math.max(1,dmg-def);
   const crit=(foe.sfCrit||0)+((w&&w.crit)?0.15:0);
-  if(crit&&Math.random()<crit){d*=(w&&w.crit)||2;foe.sfCritHit=true}
+  if(crit&&Math.random()<crit){d*=(w&&typeof w.crit==='number')?w.crit:2;foe.sfCritHit=true}
   if(w&&w.stun&&Math.random()<w.stun)foe.sfStunned=true;
   const wasCrit=foe.sfCritHit;foe.sfCritHit=false;
   _sfPlayerHit(d);
@@ -251,7 +252,8 @@ foeTurn=function(){
     say('',foe.name+' is stunned and loses the turn.');
     $('text').onclick=tapTo(()=>{combatMenu()});$('text').style.cursor='pointer';return}
   if(typeof foe.tier==='number'&&foe.tier>0&&Math.random()<0.3){ // move 2: heavy swing
-    const base=foe.atk;foe.atk=base+3;_sfFoeTurn();foe.atk=base;
+    const base=foe.atk;foe.atk=base+3;_sfFoeTurn();foe.atk=base; // foeTurn deals damage synchronously
+    const t=$('text');if(t&&P.hp>0)t.innerHTML=t.innerHTML.replace(foe.name+' hits',foe.name+' winds up a <b>heavy swing</b> and hits');
     return;
   }
   _sfFoeTurn();
