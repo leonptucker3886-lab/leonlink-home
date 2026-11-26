@@ -330,5 +330,7 @@ function sfResumeFight(){
   $('text').onclick=tapTo(()=>{combatMenu()});$('text').style.cursor='pointer';return true;
 }
 // First hub after a reload: if a fight was saved, go straight back into it.
-if(typeof hub==='function'){const _sfHub=hub;let sfFirstHub=true;
-  hub=function(){if(sfFirstHub){sfFirstHub=false;if(P&&P.sfFight&&sfResumeFight())return}return _sfHub.apply(this,arguments)}}
+// hub() is declared in hub.js, which loads AFTER this file, so the hook must be installed once all scripts have run.
+function sfHookHub(){if(typeof hub!=='function'||hub.sfHooked)return;const _sfHub=hub;let sfFirstHub=true;
+  hub=function(){if(sfFirstHub){sfFirstHub=false;if(P&&P.sfFight&&sfResumeFight())return}return _sfHub.apply(this,arguments)};hub.sfHooked=true}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',sfHookHub);else sfHookHub();
