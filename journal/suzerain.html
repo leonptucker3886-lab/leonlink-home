@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Suzerain: The Fifty-Two Crowns | LeonLink Blog</title>
+<meta name="description" content="The Paper Table, Post #2: Suzerain — The Fifty-Two Crowns. A solo world-conquest RPG played with one deck of cards, a pen, and paper. Twenty provinces, fourteen to win, and a clock called the Reckoning.">
+<link rel="canonical" href="https://www.leonlink.net/journal/suzerain.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Suzerain: The Fifty-Two Crowns — The Paper Table, Post #2">
+<meta property="og:description" content="One deck, one pen, a broken continent to take. Twenty provinces, fourteen to win, and a clock called the Reckoning that never stops ticking.">
+<meta property="og:url" content="https://www.leonlink.net/journal/suzerain.html">
+<meta property="og:image" content="https://www.leonlink.net/img/cards/suzerain.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#04060a">
+<link rel="icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+
+:root{--bg:#04060a;--pan:#0b1018d9;--ink:#e6edf5;--mut:#8e9bb0;--g:#39ff88;--c:#22f0ff;--p:#ff3dc8;--y:#ffe14d;--line:#1b2636;--line2:#26364c}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:60px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 Georgia,"Iowan Old Style",serif;padding-bottom:env(safe-area-inset-bottom)}
+#radar{position:fixed;inset:0;width:100%;height:100%;z-index:-1;opacity:.55}
+#rain{position:fixed;inset:0;width:100%;height:100%;z-index:-1;opacity:.5;pointer-events:none}
+a{color:var(--c)}
+header{position:sticky;top:0;z-index:5;background:#04060ae0;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px;padding:10px 16px;font:600 .86rem "DM Sans",system-ui,sans-serif;overflow-x:auto;scrollbar-width:none;white-space:nowrap}
+header::-webkit-scrollbar{display:none}
+header .home{color:var(--g);text-decoration:none;text-shadow:0 0 10px #39ff8899}header a{color:var(--mut);text-decoration:none}header a:hover{color:var(--ink)}
+main{max-width:700px;margin:0 auto;padding:0 18px 70px}
+section{padding:54px 0 6px}
+.kick{font:700 .74rem "DM Sans",system-ui;letter-spacing:.14em;text-transform:uppercase;color:var(--p);text-shadow:0 0 12px #ff3dc888}
+h1{font-family:"Fraunces",Georgia,serif;font-size:clamp(2.4rem,9vw,3.6rem);line-height:1.02;margin:.25em 0 .3em;letter-spacing:-.01em}
+h1 span{color:var(--g);text-shadow:0 0 22px #39ff8877}
+h2{font-family:"Fraunces",Georgia,serif;font-size:1.6rem;line-height:1.2;margin:0 0 .4em;color:var(--g);text-shadow:0 0 16px #39ff8855}
+h3{font-size:1.15rem;margin:1.4em 0 .3em}
+p.n,.n{color:var(--mut);font-style:italic}
+.ui,button{font-family:"DM Sans",system-ui,sans-serif}
+.card{background:var(--pan);border:1px solid var(--line2);border-radius:14px;padding:16px;margin:16px 0;box-shadow:0 0 0 1px #39ff880d,0 10px 30px #0008}
+input[type=range]{width:100%;accent-color:var(--g);height:44px;margin:4px 0}
+.tabs{display:flex;gap:8px;margin:10px 0;overflow-x:auto;scrollbar-width:none;padding:2px 2px 6px;scroll-snap-type:x proximity}
+.tabs::-webkit-scrollbar{display:none}
+button{background:#0b1018;border:1px solid var(--line2);color:var(--ink);border-radius:999px;padding:10px 16px;min-height:44px;font-size:.9rem;cursor:pointer;white-space:nowrap;scroll-snap-align:start;transition:all .2s;-webkit-tap-highlight-color:transparent}
+button:hover{border-color:var(--g)}
+button[aria-pressed=true]{background:var(--g);color:#02170b;border-color:var(--g);font-weight:700;box-shadow:0 0 18px #39ff8888}
+.big{font:700 1.5rem/1.2 "DM Sans",system-ui;color:var(--g);text-shadow:0 0 14px #39ff8866}
+.when{font:700 .8rem "DM Sans",system-ui;letter-spacing:.1em;text-transform:uppercase;color:var(--c)}
+.kv{display:flex;justify-content:space-between;gap:12px;font:.92rem/1.45 "DM Sans",system-ui;padding:7px 0;border-bottom:1px solid var(--line)}
+.kv span:first-child{color:var(--mut);flex-shrink:0}.kv span:last-child{text-align:right}
+.chip{display:inline-block;font:700 .72rem "DM Sans",system-ui;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid currentColor;margin:6px 6px 0 0}
+.c-v{color:var(--g)}.c-c{color:var(--y)}.c-d{color:var(--p)}.c-h{color:var(--c)}.c-s{color:var(--y)}
+.prog{height:6px;background:var(--line);border-radius:4px;margin:12px 0 4px;overflow:hidden}.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--c),var(--g));box-shadow:0 0 10px var(--g);transition:width .35s}
+small,.src{color:var(--mut);font:.82rem/1.5 "DM Sans",system-ui}
+.voice{border-left:3px solid var(--p);padding:2px 0 2px 14px;margin:16px 0}.voice b{font-family:"DM Sans",system-ui;color:var(--p)}
+blockquote{margin:12px 0;padding:10px 14px;border-left:3px solid var(--c);background:#22f0ff0d;border-radius:0 10px 10px 0;font-style:italic}
+blockquote cite{display:block;font:normal .8rem "DM Sans",system-ui;color:var(--mut);margin-top:4px}
+.stamp{display:inline-block;transform:rotate(-4deg);border:2px solid var(--p);color:var(--p);font:800 .8rem "DM Sans",system-ui;letter-spacing:.2em;padding:4px 10px;border-radius:6px;text-shadow:0 0 10px #ff3dc8aa;box-shadow:0 0 14px #ff3dc844 inset}
+.tnav{display:flex;gap:8px;margin-top:12px}.tnav button{flex:1}
+.qbtns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.qbtns button{border-radius:12px;font-weight:700;min-height:52px}
+.qbtns button.ok{background:var(--g);color:#02170b;border-color:var(--g);box-shadow:0 0 18px #39ff8888}
+.qbtns button.no{background:#ff3dc822;border-color:var(--p);color:var(--p)}
+.score{font:700 .9rem "DM Sans",system-ui;color:var(--c)}
+.meter{position:relative;height:14px;border-radius:8px;background:linear-gradient(90deg,#ff3dc8,#ffe14d 50%,#39ff88);margin:28px 4px 6px}
+.meter b{position:absolute;top:-9px;width:6px;height:32px;margin-left:-3px;background:#fff;border-radius:3px;box-shadow:0 0 12px #fff;transition:left .6s cubic-bezier(.3,1.4,.5,1)}
+.mlab{display:flex;justify-content:space-between;font:.72rem "DM Sans",system-ui;color:var(--mut)}
+.steps{list-style:none;padding:0;margin:8px 0;font-family:"DM Sans",system-ui;font-size:.92rem}
+.steps li{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}
+.steps li i{flex:0 0 26px;height:26px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:.8rem}
+.steps .y i{background:var(--g);color:#02170b;box-shadow:0 0 10px var(--g)}.steps .x i{background:var(--p);color:#fff}.steps .w i{border:2px dashed var(--y);color:var(--y)}
+.poll button{display:block;width:100%;text-align:left;border-radius:12px;margin:8px 0;white-space:normal;position:relative;overflow:hidden}
+.poll button span{position:relative;z-index:1}
+.srcs{font:.8rem/1.6 "DM Sans",system-ui;color:var(--mut);padding-left:18px}.srcs li{margin:4px 0;word-break:break-word}
+.back{display:inline-flex;align-items:center;gap:8px;font:700 .9rem "DM Sans",system-ui;color:#02170b;background:var(--g);padding:12px 20px;border-radius:999px;text-decoration:none;box-shadow:0 0 20px #39ff8877;min-height:44px}
+:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media(min-width:720px){body{font-size:18px}section{padding-top:64px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.sharebtn{background:#0b1018;border:1px solid var(--line2);color:var(--ink);border-radius:999px;padding:8px 16px;min-height:36px;font:600 .82rem "DM Sans",system-ui,sans-serif;cursor:pointer;white-space:nowrap;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.sharebtn:hover{border-color:var(--g)}
+header .sharebtn{margin-left:auto}
+.backrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+table{border-collapse:collapse;width:100%;font-size:.92rem;font-family:"DM Sans",system-ui,sans-serif}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--mut);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700}
+tbody tr:last-child td{border-bottom:none}
+.need{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.need span{font:700 .8rem "DM Sans",system-ui;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line2);border-radius:999px;padding:8px 14px;color:var(--ink)}
+.need span b{color:var(--g)}
+.suit-sp{color:#e6edf5}.suit-he{color:#ff6b7a}.suit-di{color:#ffe14d}.suit-cl{color:#39ff88}
+.bar-row{display:grid;grid-template-columns:110px 1fr 52px;gap:10px;align-items:center;font-family:"DM Sans",system-ui;font-size:.88rem;margin:8px 0}
+.bar-row .bar{height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.bar-row .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--c),var(--g))}
+.bar-row b{text-align:right;color:var(--g)}
+
+</style><style id="lnx-hide">header:has(.gnav),.gnav,.snav-wrap,.snav,aside.side,.bnav,.nav-links,nav.topnav,.site-nav{display:none!important}body{padding-bottom:0!important}</style><script src="/js/nav.js" defer></script><meta property="og:site_name" content="LeonLink">
+<meta name="twitter:title" content="Suzerain: The Fifty-Two Crowns — The Paper Table, Post #2">
+<meta name="twitter:description" content="One deck, one pen, a broken continent to take. Twenty provinces, fourteen to win, and a clock called the Reckoning that never stops ticking.">
+<meta name="twitter:image" content="https://www.leonlink.net/img/cards/suzerain.jpg">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Suzerain: The Fifty-Two Crowns", "description": "The Paper Table, Post #2: Suzerain — The Fifty-Two Crowns. A solo world-conquest RPG played with one deck of cards, a pen, and paper. Twenty provinces, fourteen to win, and a clock called the Reckoning.", "url": "https://www.leonlink.net/journal/suzerain.html", "image": "https://www.leonlink.net/img/cards/suzerain.jpg", "datePublished": "2026-11-25", "publisher": {"@type": "Organization", "name": "LeonLink", "url": "https://www.leonlink.net/"}, "author": {"@type": "Person", "name": "Leon Tucker"}, "mainEntityOfPage": "https://www.leonlink.net/journal/suzerain.html"}</script>
+</head><body>
+<style id="llh-css">.llh{all:initial;display:block;background:#06060b;border-bottom:1px solid rgba(255,255,255,.08);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;position:relative;z-index:60}.llh *{box-sizing:border-box}.llh .llin{max-width:1240px;margin:0 auto;padding:0 14px;min-height:58px;display:flex;align-items:center;gap:14px}.llh .lllogo{display:flex;align-items:center;gap:8px;text-decoration:none;color:#fff;font-weight:900;letter-spacing:.06em;font-size:16px;flex:none}.llh .lllogo img{width:30px;height:30px;border-radius:50%;object-fit:cover}.llh .lllogo span{color:#22f0ff}.llh .gnav{display:flex;gap:4px;flex:1;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:8px 2px}.llh .gnav::-webkit-scrollbar{display:none}.llh .gnav a{flex:none;font-size:14.5px;font-weight:500;color:#a7a7b8;padding:7px 14px;border-radius:999px;text-decoration:none;white-space:nowrap;transition:background .2s,color .2s}.llh .gnav a:hover{color:#fff;background:rgba(255,255,255,.08)}.llh .gnav a.on{color:#06060b;background:#f4f4f8}.llh .llbtn{flex:none;text-decoration:none;color:#06060b;background:#22f0ff;font-weight:700;font-size:13.5px;padding:9px 14px;border-radius:999px;white-space:nowrap}@media(max-width:760px){.llh .llin{flex-wrap:wrap;gap:6px;padding:6px 12px}.llh .gnav{order:3;flex-basis:100%;padding:2px 0 8px}.llh .llbtn{margin-left:auto}}.llh .gnav a.fire{position:relative;color:#fff;font-weight:800;padding:6px 14px;border-radius:999px;background:linear-gradient(0deg,#ff3d00,#ff9100,#ffd600);background-size:100% 220%;animation:flm 1.2s ease-in-out infinite alternate,flk .18s steps(2) infinite;text-shadow:0 0 6px #ff6d00,0 -2px 10px #ffab00}.llh .gnav a.fire:before{content:"";position:absolute;inset:-6px -2px 40% -2px;border-radius:50%;background:radial-gradient(ellipse at bottom,rgba(255,145,0,.7),transparent 70%);filter:blur(6px);z-index:-1;animation:flk .25s infinite alternate}@keyframes flm{to{background-position:0 100%;box-shadow:0 0 18px #ff6d00,0 -4px 22px #ffab00}}@keyframes flk{50%{opacity:.85}}@media (prefers-reduced-motion:reduce){.llh .gnav a.fire,.llh .gnav a.fire:before{animation:none}}.llh .gnav a.casino{color:#ff4fd8;font-weight:800;text-shadow:0 0 8px rgba(255,79,216,.8)}</style>
+<div class="llh" role="banner"><div class="llin">
+  <a class="lllogo" href="/" aria-label="LeonLink home"><img src="/img/logo-128.png" alt="">LEON<span>LINK</span></a>
+  <nav class="gnav" aria-label="Main">
+    <a href="/">Home</a>
+    <a href="/games.html">Work</a>
+    <a href="/software.html">Software</a>
+    <a href="/blog.html" class="on" aria-current="page">Blog</a>
+    <a href="/watchline/">Watchline</a>
+    <a href="https://afterglow.leonlink.net" class="casino">&#127920; Casino</a>
+    
+  </nav>
+  <a class="llbtn" href="https://app.leonlink.net">Get Ledgerline</a>
+</div></div>
+
+<canvas id="rain" aria-hidden="true"></canvas>
+<main>
+<section id="top">
+<span class="kick">The Paper Table · Post #2 · November 25, 2026</span>
+<h1>Suzerain: <span>The Fifty-Two Crowns</span></h1>
+<p><span class="stamp">PEN · PAPER · CARDS</span></p>
+<p>You are an upstart warlord in a broken land. Four great powers hold the continent between them, and the deck in your hands is both your army and your enemy.</p>
+<p>That is Suzerain. It is the second game in <b>The Paper Table</b> — games you can build from what's already in your house — and it is the loneliest one: a solo campaign of world conquest, played with one deck of cards and a pen. Twenty provinces drawn from the deck. Four rival suits waiting to take them back. Fourteen provinces to win, and a clock called the Reckoning that starts ticking the moment the deck runs out.</p>
+<p>Every card you draw is a card your enemies cannot draw. Every card you hoard is a weapon withheld from fate. And every card you spend is a card that will never come back to be reshuffled — so the deck gets thinner, the nights get meaner, and the question the game keeps asking is the same one every warlord faces: <i>how fast can you win, and what will it cost you to get there?</i></p>
+<p class="n">The full rules are below, and the playable game page is linked at the bottom. Print it, play it slow, and name your provinces.</p>
+<div class="need" aria-label="What you need">
+<span><b>✎</b> Pen</span><span><b>▭</b> Paper</span><span><b>🂠</b> One deck of cards</span><span><b>◷</b> 60–120 min</span><span><b>♟</b> 1 player</span>
+</div>
+</section>
+
+<section id="sample"><h2>1. A season, played out</h2>
+<p>Before the rules, a season — so you can feel the game before you read it. This is Season One, Threat 1, straight from the game's own sample season. You hold 5 cards, 4 Gold, 6 Troops, and 5 provinces. The Sun Court sits two provinces from your border. Tap through the season.</p>
+<div class="tabs" id="stabs"></div>
+<div class="card" id="sout" aria-live="polite"></div>
+</section>
+
+<section id="setup"><h2>2. Setup</h2>
+<p>Draw a <b>5×4 grid</b> on a sheet of paper — twenty boxes in reading order. Only orthogonal neighbours are adjacent (no diagonals). Each box is a province, with three values: <b>Owner</b>, <b>Defense</b>, and <b>Gold value</b>.</p>
+<h3>Step 1 — Build the world</h3>
+<p>Shuffle the deck. Draw <b>20 cards</b>, one per province in order. Each card creates one province:</p>
+<table>
+<thead><tr><th>Setup card</th><th>Province owner</th><th>Defense</th><th>Gold value</th></tr></thead>
+<tbody>
+<tr><td>Rank 2–6</td><td><strong>Neutral</strong> (independent)</td><td>3</td><td>1</td></tr>
+<tr><td>Rank 7–10</td><td>The card's suit</td><td>4</td><td>2</td></tr>
+<tr><td>Jack · Queen · King</td><td>The card's suit</td><td>5</td><td>2</td></tr>
+<tr><td>Ace</td><td>The card's suit</td><td>6</td><td>3</td></tr>
+</tbody>
+</table>
+<p>On a 2–6, the suit is ignored — the province is independent. Draw an <span class="suit-di">8♦</span> and you have a Merchant League province, Defense 4, worth 2 Gold. Draw a <span class="suit-sp">4♠</span> and you have a Neutral province, Defense 3, worth 1 Gold.</p>
+<p>Name each province as you place it. Names make the map feel real and make your log readable.</p>
+<h3>Step 2 — Choose your home</h3>
+<p>Pick any Neutral province. That is your capital. Record in the ledger: <b>Gold 2, Troops 3, Hand 0, Threat 1</b>.</p>
+<h3>Step 3 — Deal fate</h3>
+<p>Shuffle the remaining <b>32 cards</b>. Set aside <b>12</b> of them face-down — these are the <strong>Sealed Fates</strong>, and they take no part in this campaign. The other <b>20 cards</b> are the <strong>Fate Deck</strong>. It is your resource and your enemy.</p>
+<p>Card values: Ace = <b>1 or 11</b> (choose when played). 2–10 = face value. Jack, Queen, King = <b>10</b>.</p>
+<div class="card"><span class="when">Two sheets of paper</span><p style="margin:.4em 0 0">You need a <b>map sheet</b> (the 5×4 grid, with each province's name, owner initial, Defense, and Gold value) and a <b>ledger sheet</b> (Gold, Troops, hand, Threat, rival province counts, titles). Cards in hand stay face-up in front of you — but write them down too, so the game can be rebuilt exactly if they're disturbed. Use pencil. This map will be redrawn many times.</p></div>
+</section>
+
+<section id="turn"><h2>3. The turn — one Season</h2>
+<p>A campaign is a series of Seasons. Each Season has three phases, resolved in order.</p>
+<h3>I. Dawn</h3>
+<ol>
+<li><b>Collect Gold:</b> gain Gold equal to the total value of provinces you own.</li>
+<li><b>Draw to hand:</b> draw until your hand reaches hand size (start: <b>5</b>). If the Fate Deck runs out mid-draw, see §6, The Reckoning.</li>
+</ol>
+<h3>II. Day — take up to 3 actions</h3>
+<p>Each action costs <b>1 card from hand</b> unless noted. You may take the same action more than once, but no more than <b>3 actions</b> in a Day. Spending Gold (below) is free and does not count toward the 3.</p>
+<div class="card"><span class="when">The spent pile</span><p style="margin:.4em 0 0">Cards you play, spend, or discard go to a spent pile and leave the game — they are never reshuffled. Only cards flipped at Night go to the discard pile, which is what the Reckoning reshuffles. Every card you spend is a card that never reaches the discard pile. That is the whole economy of the game.</p></div>
+<table>
+<thead><tr><th>Action</th><th>Cost</th><th>Effect</th></tr></thead>
+<tbody>
+<tr><td><strong>Conquer</strong></td><td>1+ cards</td><td>Attack an adjacent province. See §4 Combat.</td></tr>
+<tr><td><strong>Conscript</strong></td><td>1 card</td><td>Gain Troops equal to half the card's value, rounded down, min 1 (face cards = 5).</td></tr>
+<tr><td><strong>Fortify</strong></td><td>1 card</td><td>+1 permanent Defense to one province you own (max 8).</td></tr>
+<tr><td><strong>Settle</strong></td><td>1 card</td><td>+1 Gold value to one province you own (max 3).</td></tr>
+<tr><td><strong>Treaty</strong></td><td>1 card</td><td>Name a rival. The next time that rival would activate at Night, it does not — whenever that happens. The card must match the rival's suit.</td></tr>
+<tr><td><strong>Rally</strong></td><td>2 cards</td><td>Discard both, draw 2. Hand filtering.</td></tr>
+</tbody>
+</table>
+<p><strong>Spend Gold at any time during Day:</strong></p>
+<ul>
+<li><strong>1 Gold</strong> → 1 Troop <em>(max 3 per Season)</em></li>
+<li><strong>2 Gold</strong> → draw 1 card</li>
+<li><strong>3 Gold</strong> → +1 permanent Defense to a province you own</li>
+</ul>
+<h3>III. Night — the world moves</h3>
+<p>Flip cards from the Fate Deck equal to your current <strong>Threat</strong> (starts at 1). Resolve each flip separately:</p>
+<ol>
+<li><b>The suit tells you which rival acts.</b> Ignore the rank for choosing.</li>
+<li><b>Find that rival's target:</b> the province nearest to any territory they own that they do <em>not</em> own. Use shortest path across the grid. If two provinces are equally near, the rival targets the one with the lowest Defense; if still tied, you choose.</li>
+<li><b>Resolve the attack</b> using the flipped card's value <strong>plus your current Threat</strong> as their force (A = 11 — so a Queen at Threat 2 attacks with force 12):
+<table style="margin-top:10px">
+<thead><tr><th>Target</th><th>Result</th></tr></thead>
+<tbody>
+<tr><td>Neutral</td><td>They take it if force ≥ its Defense. Otherwise nothing happens.</td></tr>
+<tr><td>Yours</td><td>You may defend by playing cards from hand and/or spending Troops (<strong>1 Troop = +2 Defense</strong>), adding to the province's Defense. If your total ≥ their force, the attack is repelled and you keep the province. If not, the province falls to that rival — remove your marker.</td></tr>
+<tr><td>Another rival's</td><td>They take it if force ≥ Defense + 2.</td></tr>
+</tbody>
+</table>
+</li>
+<li><b>If a rival owns no provinces at all,</b> the flip becomes a <strong>Raid</strong>: you lose 1 Troop and 1 Gold. If you have no Troops and no Gold, the nearest province you own loses 1 Defense permanently.</li>
+</ol>
+<p>Cards flipped at Night go to a discard pile, face up. They are not available to you.</p>
+</section>
+
+<section id="combat"><h2>4. Combat — Conquer</h2>
+<p>Choose an adjacent province you own to launch the attack from, and an adjacent province you don't own as the target. Play cards from hand. Your total must equal or exceed the target's <strong>Defense</strong>. Add <strong>+2 to its Defense if the province belongs to its own suit</strong> — patriots resist. Neutral provinces get no bonus.</p>
+<p>You may also spend Troops during an attack: <strong>1 Troop = +2</strong> to your total, declared before comparing. Troops spent for an attack boost are lost.</p>
+<table>
+<thead><tr><th>Your total vs. Defense</th><th>Outcome</th></tr></thead>
+<tbody>
+<tr><td>Total ≥ Defense + 5</td><td>Province taken. No losses.</td></tr>
+<tr><td>Total ≥ Defense + 1</td><td>Province taken. Lose 1 Troop.</td></tr>
+<tr><td>Total = Defense exactly</td><td>Province taken. Lose 2 Troops <em>(pyrrhic)</em>.</td></tr>
+<tr><td>Total &lt; Defense</td><td>Attack fails. Lose 2 Troops and all cards played.</td></tr>
+</tbody>
+</table>
+<p>Captured provinces keep their Defense and Gold value. Enemy provinces you take are now simply yours — no bonus, no penalty. If an outcome would make you lose more Troops than you have, you lose what you have — Troops never go below 0.</p>
+<p><b>Troops are a single army</b> recorded as one number in your ledger — there are no per-province garrisons. That is why defending a province at Night costs cards and Troops from your one pool, and why every Troop you spend on an attack is a Troop you cannot spend on a defense.</p>
+<h3>Champions</h3>
+<p>When you conquer a province by playing a King as part of your attack total, name a <b>Champion</b> in your ledger. A Champion grants +2 to any Conquer total launched from a province adjacent to the Champion's province. Each province can hold one Champion; if the province falls to a rival, the Champion is lost.</p>
+<div class="card"><span class="when">The cost of a cheap win</span><p style="margin:.4em 0 0">A province taken by exactly its Defense costs you 2 Troops. A province taken by 5 over costs you nothing. The difference between a careful conquest and a desperate one is measured in the army you have left for Night — and Night comes every single Season.</p></div>
+</section>
+
+<section id="rivals"><h2>5. The four rivals</h2>
+<p>Name them yourself and write the names in your ledger. The suits are the engine; the flavor is yours. Mechanically, all four rivals act the same way at Night — the flipped card's suit picks which one moves, and its force is the card's value plus your Threat. What differs is what they mean, and which of them is sitting on your border. Tap a suit.</p>
+<div class="tabs" id="rtabs"></div>
+<div class="card" id="rout" aria-live="polite"></div>
+<p>A <b>Treaty</b> (see §3) is your one way to silence a rival: play a card matching its suit, and the next time that rival would activate at Night, it does not — whenever that happens. The card is banked until the rival's next activation actually occurs.</p>
+</section>
+
+<section id="reckoning"><h2>6. The Reckoning</h2>
+<p>When the Fate Deck is exhausted:</p>
+<ol>
+<li>Shuffle the discard pile into a new Fate Deck.</li>
+<li><b>Threat increases by 1</b> (maximum 4). More cards flip at Night.</li>
+<li>If you reshuffle while Threat is already 4, the campaign ends — score your holdings.</li>
+</ol>
+<p>If the discard pile is empty when the Fate Deck runs out, the campaign ends — score your holdings.</p>
+<p><b>Entrenchment</b> — At each Reckoning, before the new Fate Deck is shuffled, each rival adds +1 Defense to one of its border provinces (the one nearest your territory; maximum 8). The world does not just get meaner as the clock runs. It gets harder to take back.</p>
+<div class="card"><span class="when">This is the clock</span><p style="margin:.4em 0 0">Every card you spend is a card that never reaches the discard pile to be reshuffled. Hoarding cards slows the Reckoning but starves your expansion. That tension is the whole game. The Sealed Fates make it bite sooner: twelve cards never enter the campaign at all, so the twenty-card Fate Deck runs out fast, and the first Reckoning arrives while you are still small.</p></div>
+</section>
+
+<section id="ending"><h2>7. Winning &amp; losing</h2>
+<table>
+<tbody>
+<tr><td><strong>Victory</strong></td><td>Control <strong>14 of 20</strong> provinces, or reduce all four rivals to zero territory.</td></tr>
+<tr><td><strong>Defeat</strong></td><td>Lose your last province, or any single rival controls <strong>10+</strong> provinces.</td></tr>
+<tr><td><strong>Endgame score</strong></td><td>If the Reckoning ends the campaign: 1 point per province, 2 per fortified province, 1 per 5 Gold, 1 per 3 Troops. Record it as your dynasty's legacy.</td></tr>
+</tbody>
+</table>
+<h3>Titles</h3>
+<p>At these milestones, claim a permanent boon and write it in the ledger.</p>
+<table>
+<thead><tr><th>Provinces held</th><th>Title</th><th>Boon</th></tr></thead>
+<tbody>
+<tr><td>6</td><td><strong>Warlord</strong></td><td>Hand size +1</td></tr>
+<tr><td>9</td><td><strong>Sovereign</strong></td><td>All your provinces get +1 Defense permanently — including every province you conquer afterward</td></tr>
+<tr><td>12</td><td><strong>Suzerain</strong></td><td>Draw 1 extra card at Dawn every Season</td></tr>
+</tbody>
+</table>
+<p>The Suzerain title used to be unreachable — twelve provinces was already a win. With the win moved to fourteen, the title is now a real mid-game milestone: two provinces from victory, and an extra card every Dawn to carry you the rest of the way.</p>
+</section>
+
+<section id="variants"><h2>8. Variants</h2>
+<p>Once you have played the game straight, these are the ways to bend it.</p>
+<table>
+<thead><tr><th>Variant</th><th>Rule</th></tr></thead>
+<tbody>
+<tr><td><strong>Hard mode</strong></td><td>Threat starts at 2.</td></tr>
+<tr><td><strong>Slow burn</strong></td><td>Rivals only act on a flip if the card's rank is 6 or higher. Longer, more builder-friendly campaign.</td></tr>
+<tr><td><strong>Rival war</strong></td><td>When two rivals fight, the loser's card is set aside. The rival with the most set-aside cards is the Ascendant and flips twice at Night.</td></tr>
+<tr><td><strong>Dynasty mode</strong></td><td>When a campaign ends, note your final province count. Next campaign, start with Troops equal to half that number (max 6). Your previous empire's ruins enrich the new world.</td></tr>
+</tbody>
+</table>
+</section>
+
+<section id="strategy"><h2>9. How to play well</h2>
+<p>A few principles that separate a dynasty from a footnote:</p>
+<h3>Spend, don't hoard</h3>
+<p>A card in your hand is a card that is not in the discard pile, and only the discard pile comes back at a Reckoning. Hoarding five cards to feel safe makes the clock run faster, not slower. Spend the card. Take the province.</p>
+<h3>Defend what you just took</h3>
+<p>A new province is the rival's nearest target — Night will come for it before it has paid for itself. Keep a card and a Troop in reserve after every conquest, or the province you won in the Day will be gone by the Night.</p>
+<h3>Treaties are cheap insurance</h3>
+<p>One card matching a rival's suit buys you a skipped activation whenever it would have happened. If the Sun Court is two provinces from your border and you are about to expand toward it, a Treaty with ♥ costs less than the province it saves.</p>
+<h3>Fortify the border, not the capital</h3>
+<p>Your capital is rarely the province Night attacks — the nearest province to a rival's territory is. Spend your 3 Gold on the province the rivals can actually reach.</p>
+<h3>Watch the deck, not just the map</h3>
+<p>Count the Fate Deck. When it is nearly empty, a Reckoning is coming: Threat rises, rivals entrench, and Night flips one more card. A Season spent consolidating before the deck runs out is worth more than a province taken the Season after.</p>
+<h3>Fourteen is a long way from twelve</h3>
+<p>The last two provinces are the hardest. By then the rivals are entrenched, the deck is thin, and Threat is at 2 or 3. The Sovereign title's +1 Defense to everything you own — including what you conquer next — is what carries you through the endgame. Get to nine provinces on purpose.</p>
+</section>
+
+<section id="sim"><h2>10. Played 1,000 times by a computer</h2>
+<p>Before this post went up, the game was played a thousand times by a computer — a simple bot that conquers, conscripts, fortifies, and defends when the numbers favour it. Here is what it found, and what changed because of it.</p>
+<p><b>The first version was so easy the clock never ran.</b> On the original rules, the bot won all 1,000 campaigns, in about <b>2.3 seasons</b> — and the Reckoning ended <b>none</b> of them. Day had no action limit, so the bot simply repeated actions freely and took the map before the deck had time to thin. The game's whole premise — a clock that punishes you for spending — never got to speak.</p>
+<p>So the game was rebuilt around the clock. Five changes, each aimed at the same problem:</p>
+<table>
+<thead><tr><th>Change</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><strong>Day capped at 3 actions</strong></td><td>You can no longer chain a whole campaign in one Season. Three actions, then Night comes.</td></tr>
+<tr><td><strong>Every province +1 Defense</strong></td><td>Conquests cost more cards — Neutral 3, suit provinces 4, face cards 5, Aces 6.</td></tr>
+<tr><td><strong>Win moved to 14 provinces</strong></td><td>Two more conquests before the game ends, and the Suzerain title at 12 is now reachable mid-game.</td></tr>
+<tr><td><strong>Sealed Fates</strong></td><td>Twelve cards are set aside at setup and never enter the campaign. The Fate Deck is 20 cards, so it runs out fast.</td></tr>
+<tr><td><strong>Night with teeth</strong></td><td>A rival's force is now its card's value <em>plus your Threat</em> — so the attacks get stronger as the clock runs.</td></tr>
+</tbody>
+</table>
+<p>After all five changes, the bot still won <b>97.9%</b> of 1,000 campaigns — but the game underneath it is different now: campaigns last about <b>5.0 seasons</b> instead of 2.3, the Fate Deck reshuffles about <b>once per campaign</b> instead of never, and the Reckoning ends <b>2.1%</b> of campaigns outright. The clock is real. It just isn't fast enough to catch a player who never wastes a card.</p>
+<table>
+<thead><tr><th></th><th>Before tuning</th><th>After tuning</th></tr></thead>
+<tbody>
+<tr><td>Bot win rate (1,000 campaigns)</td><td>100%</td><td><b>97.9%</b></td></tr>
+<tr><td>Average campaign length</td><td>2.3 seasons</td><td><b>5.0 seasons</b></td></tr>
+<tr><td>Deck reshuffles per campaign</td><td>0.0</td><td><b>~1.0</b></td></tr>
+<tr><td>Campaigns ended by the Reckoning</td><td>0.0%</td><td><b>2.1%</b></td></tr>
+</tbody>
+</table>
+<p class="n">One honest caveat: the bot plays near-perfectly. It never gets attached to a province, never holds a King for sentimental reasons, never spends a Troop on a conquest it could have won without one. A human will bleed cards to Night, waste a Season on a bad draw, and watch the Reckoning arrive while still holding five provinces. For a person, this game is tenser than 97.9% suggests. If you beat it on Hard mode — Threat starts at 2 — tell me.</p>
+</section>
+
+<section id="play"><h2>11. Play it</h2>
+<p>The full game — every rule above, plus the Ledger Sheet to copy onto paper — lives on its own page:</p>
+<p style="margin-top:20px"><a class="back" href="https://www.leonlink.net/games/suzerain.html">Play Suzerain →</a></p>
+<p>It prints cleanly: hit print on that page and you have a table copy, Ledger Sheet and all. Name your provinces. Keep your sheet. And when the fourteenth province falls — or when the Reckoning takes your dynasty first — come back and tell me how it ended.</p>
+</section>
+
+<section id="next"><h2>Next in The Paper Table</h2>
+<p><b>Post #3: The Thread &amp; The Knot.</b> A solo fortune-telling game, played with a deck and a pen. Thirteen stations, six threads, one cut — and a reading that can make or break your reputation as an oracle. The computer cast it ten thousand times, and found that a clear reading is harder to come by than the rules first promised.</p>
+<p style="margin-top:28px" class="backrow"><a class="back" href="/blog.html">← Back to Blog</a><button class="sharebtn" type="button">Share this post</button></p>
+</section>
+
+<section class="ll-amazon">
+<h2>On Amazon</h2>
+<ul>
+<li><a href="https://www.amazon.com/s?k=playing+cards+standard+deck&tag=leonlink-20">A standard deck of cards</a> &mdash; The only equipment this game needs, and the cheapest board game you will ever own.</li>
+<li><a href="https://www.amazon.com/s?k=leather+journal+notebook&tag=leonlink-20">A proper notebook</a> &mdash; Your map and your ledger live on paper. A campaign worth playing is a campaign worth writing down well.</li>
+</ul>
+</section>
+<section class="ll-moneystep" style="max-width:760px;margin:36px auto 24px;padding:22px 20px;border:1px solid rgba(255,255,255,.16);border-radius:16px;text-align:center"><p style="margin:0 0 14px"><a href="/lineup/" style="display:inline-block;padding:12px 24px;border-radius:999px;background:#22f0ff;color:#041018;font-weight:800;text-decoration:none">Start with the Top 5 &rarr;</a></p><p style="margin:0 0 10px;color:#9aa6c2">New builds, monthly. One email when something new drops. No spam, unsubscribe anytime.</p><form class="nlform" action="https://formsubmit.co/leonptucker3886@gmail.com" method="POST" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><input type="email" name="email" placeholder="you@email.com" required aria-label="Email" style="min-width:240px;background:#0a0d14;border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:12px 18px;color:#eef3ff;font-size:15px"><input type="hidden" name="_subject" value="New LeonLink subscriber"><input type="hidden" name="_captcha" value="false"><input type="hidden" name="_next" value="https://www.leonlink.net/#updates"><button type="submit" style="border:0;cursor:pointer;padding:12px 24px;border-radius:999px;background:#22f0ff;color:#041018;font-weight:800;font-size:15px">Sign up</button></form></section>
+</main>
+<script>
+const $=i=>document.getElementById(i),RM=matchMedia("(prefers-reduced-motion:reduce)").matches,el=(t,a={},h="")=>{const e=document.createElement(t);Object.assign(e,a);if(h)e.innerHTML=h;return e};
+/* digital rain background */
+const cv=$("rain"),cx=cv.getContext("2d");let W,H;const CH="01<>{}[]=+*#$%&";
+const rs=()=>{const d=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*d;cv.height=H*d;cx.setTransform(d,0,0,d,0,0)};addEventListener("resize",rs);rs();
+let cols=[],fs=15;
+function seed(){cols=[];const n=Math.ceil(W/fs);for(let i=0;i<n;i++)cols.push({y:Math.random()*-H,sp:2+Math.random()*4,ch:CH[Math.random()*CH.length|0]})}
+seed();addEventListener("resize",seed);
+cx.fillStyle="#04060a";cx.fillRect(0,0,W,H);cx.font=fs+"px monospace";
+function rain(){cx.fillStyle="rgba(4,6,10,.08)";cx.fillRect(0,0,W,H);
+for(const c of cols){const g=c.y/H>.75;c.ch=CH[Math.random()*CH.length|0];
+cx.fillStyle=g?"rgba(57,255,136,.5)":"rgba(57,255,136,.22)";cx.fillText(c.ch,cols.indexOf(c)*fs,c.y);
+c.y+=c.sp*fs/10;if(c.y>H&&Math.random()>.975){c.y=Math.random()*-200;c.sp=2+Math.random()*4}}
+if(!RM)requestAnimationFrame(rain)}
+rain();
+/* sample season */
+const ST=[
+["I · Dawn","<div class=\"when\">Collect · Draw</div><div class=\"big\">Seven gold, a fresh hand</div><p style=\"margin:.4em 0 0\">You hold 5 cards, 4 Gold, 6 Troops, and 5 provinces. The Sun Court sits two provinces from your border. At Dawn you collect Gold equal to the total value of your provinces: <b>7 Gold</b>, taking you from 4 to <b>11</b>. Then you draw to your hand size of 5. The Fate Deck is 20 cards — every draw matters, because every card drawn is a card that will not be there when the deck runs out.</p>"],
+["II · Day","<div class=\"when\">3 actions</div><div class=\"big\">Conquer, conscript, fortify</div><p style=\"margin:.4em 0 0\"><b>Conquer Greyford (1 action).</b> The Neutral province on your flank, Defense 3, value 1. You play a <b>4♣</b> — total 4, beating Defense 3 by 1, so you take it and lose 1 Troop (6 → 5). <b>Conscript (1 action).</b> You play a <b>9♦</b> — half its value, rounded down, is 4 Troops (5 → 9). <b>Fortify (free — a Gold spend).</b> You spend 3 Gold to fortify your capital from Defense 3 to <b>Defense 4</b> (Gold 11 → 8). Two of your three actions are spent. You keep three cards in hand for defense — because Night is coming, and Night always comes.</p>"],
+["III · Night","<div class=\"when\">Threat 1 · Q♥</div><div class=\"big\">The Sun Court answers</div><p style=\"margin:.4em 0 0\">Threat is 1, so flip one card: the <b>Q♥</b>. The Sun Court attacks. Their nearest target is your new province, Greyford (Defense 3). Their force is the Queen's value plus your Threat: <b>10 + 1 = 11</b>. You defend by playing your held <b>6♠</b> and spending 1 Troop (+2) — total <b>3 + 6 + 2 = 11</b>. Repelled, by exactly one. Greyford holds. Your hand is down to two cards, your Troops to 8, and the season is over.</p>"],
+["The lesson","<div class=\"when\">What it cost</div><div class=\"big\">Greyford cost three cards and a Troop</div><p style=\"margin:.4em 0 0\">Greyford cost you three cards and a Troop, and the Q♥ nearly took it anyway. Next Season, consider a Treaty with ♥ before you expand toward the Sun Court. That is the whole game in miniature: a province won cheap in the Day, nearly lost at Night, and a lesson written in the ledger before the next Dawn.</p>"]];
+ST.forEach((t,i)=>{const b=el("button",{textContent:t[0]});b.onclick=()=>step(i);$("stabs").append(b)});
+function step(i){[...$("stabs").children].forEach((b,j)=>b.setAttribute("aria-pressed",i==j));const t=ST[i];
+$("sout").innerHTML=`${t[1]}`}
+step(0);
+/* rivals */
+const RT=[
+["♠ The Iron Legion","<div class=\"when\">♠ Spades · Militarists</div><div class=\"big\">The army that never negotiates</div><p style=\"margin:.4em 0 0\">The Iron Legion is the rival you measure everything against. Its provinces are the hardest to take — a face card in ♠ is Defense 5, an Ace is 6 — and when a ♠ flips at Night, the attack comes for the nearest province you own, with force equal to the card plus your Threat. Fortify your border against it first. A Treaty with ♠ is the most expensive card you will ever play, and the one you will be glad you played.</p>"],
+["♥ The Sun Court","<div class=\"when\">♥ Hearts · Zealots and nobles</div><div class=\"big\">The court that believes the continent is theirs</div><p style=\"margin:.4em 0 0\">The Sun Court sits two provinces from your border in the sample season, and it does not wait. When a ♥ flips at Night, the Court attacks the nearest province it does not own — and if that province is yours, you defend with cards and Troops or you lose it. The Court's zealotry is a mechanic, not a mood: it will keep coming for the same border province until you fortify it or buy it off with a Treaty.</p>"],
+["♦ The Merchant League","<div class=\"when\">♦ Diamonds · Coin and contracts</div><div class=\"big\">The rival that buys what it cannot take</div><p style=\"margin:.4em 0 0\">The Merchant League's provinces are rich — worth 2 Gold, 3 for an Ace — which makes them the most tempting targets on the map and the most expensive to hold. A ♦ flip at Night is the same attack as any other suit, but the League's real weapon is the map: its provinces pay for the armies that defend them. Take a Merchant province early and your income jumps. Take one late, and you will pay for it in Troops.</p>"],
+["♣ The Wild Clans","<div class=\"when\">♣ Clubs · Raiders and hunters</div><div class=\"big\">The rival that strikes from nowhere</div><p style=\"margin:.4em 0 0\">The Wild Clans hold the edges of the map, and their raids are the ones that catch you unprepared. A ♣ flip at Night targets the province nearest to any territory they own — which, early in the campaign, is often a Neutral province you were planning to take next. If a rival owns no provinces at all, its flip becomes a Raid: you lose 1 Troop and 1 Gold, or 1 Defense from your nearest province if you have neither. The Clans punish a player who forgets that the map has four corners.</p>"]];
+RT.forEach((v,i)=>{const b=el("button",{textContent:v[0]});b.onclick=()=>rival(i);$("rtabs").append(b)});
+function rival(i){[...$("rtabs").children].forEach((b,j)=>b.setAttribute("aria-pressed",i==j));const v=RT[i];
+$("rout").innerHTML=`${v[1]}`}
+rival(0);
+</script><script>
+(function(){
+function sharePage(btn){
+  var url=location.href;
+  var title=document.title;
+  var m=document.querySelector('meta[property="og:description"]');
+  var text=m?m.content:'';
+  function done(ok){if(!btn)return;var o=btn.dataset.label||btn.textContent;btn.dataset.label=o;btn.textContent=ok?'Copied!':o;if(ok)setTimeout(function(){btn.textContent=o;},1600);}
+  if(navigator.share){navigator.share({title:title,text:text,url:url}).catch(function(){});}
+  else if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(function(){done(true);},function(){done(false);});}
+  else{window.prompt('Copy this link:',url);}
+}
+document.querySelectorAll('.sharebtn').forEach(function(b){b.addEventListener('click',function(){sharePage(b);});});
+})();
+</script>
+<script>(function(){try{var p=location.pathname;fetch("/api/track?p="+encodeURIComponent(p)+"&r="+encodeURIComponent(document.referrer||""),{mode:"no-cors",keepalive:true}).catch(function(){})}catch(e){}})();</script>
+<footer class="ll-footer" style="border-top:1px solid rgba(128,128,128,.25);padding:22px 16px;text-align:center;font:14px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#0b0b0f;color:#cfcfd6;position:relative;z-index:5;clear:both">
+  <nav style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-bottom:8px"><a href="/" style="color:inherit;text-decoration:none">Home</a><a href="/blog.html" style="color:inherit;text-decoration:none">Blog</a><a href="/software.html" style="color:inherit;text-decoration:none">Software</a><a href="/watchline/" style="color:inherit;text-decoration:none">Watches</a><a href="https://afterglow.leonlink.net" style="color:inherit;text-decoration:none">Casino</a><a href="/games.html" style="color:inherit;text-decoration:none">Games</a><a href="https://arcadeline.leonlink.net" style="color:inherit;text-decoration:none">Arcadeline</a></nav>
+  <div>&copy; 2026 LeonLink</div>
+</footer>
+<script src="/js/bottom-nav.js" defer></script>
+<script id="ll-pt" src="/js/post-tools.js?v=1" defer></script>
+</body>
+</html>

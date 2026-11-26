@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Thread &amp; The Knot — A Fortune-Telling Game for Pen, Paper, and One Deck</title>
+<meta name="description" content="A solo fortune-telling game where the geometry of a drawn web becomes the oracle. Cast threads, read knots, cut one thread to reveal the verdict.">
+<style>
+  :root{
+    --bg:#14110e; --panel:#1d1a16; --panel2:#242019; --line:#3a332b;
+    --ink:#efe7d7; --dim:#9a8f7c; --faint:#6b6154; --accent:#d9a441;
+    --spade:#cfc7b8; --heart:#e2606a; --diamond:#e0a13a; --club:#6fbf8a;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:ui-serif,Georgia,"Iowan Old Style","Palatino Linotype",serif;
+    line-height:1.65; font-size:17px;
+  }
+  .wrap{max-width:780px; margin:0 auto; padding:48px 22px 90px}
+
+  header{text-align:center; padding-bottom:32px; border-bottom:1px solid var(--line); margin-bottom:34px}
+  .kicker{
+    font-family:ui-sans-serif,system-ui,sans-serif; font-size:12px; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--accent); margin-bottom:14px;
+  }
+  h1{font-size:clamp(30px,7vw,46px); line-height:1.1; margin:0 0 10px; letter-spacing:.01em; font-weight:700}
+  h1 small{display:block; font-size:.4em; letter-spacing:.16em; text-transform:uppercase; color:var(--dim); font-weight:400; margin-top:14px}
+  .tagline{color:var(--dim); font-style:italic; margin:0; font-size:16px}
+
+  h2{
+    font-size:13px; letter-spacing:.18em; text-transform:uppercase;
+    font-family:ui-sans-serif,system-ui,sans-serif; color:var(--accent);
+    margin:52px 0 14px; padding-bottom:8px; border-bottom:1px solid var(--line);
+  }
+  h2 .num{color:var(--faint); margin-right:10px}
+  h3{font-size:18px; margin:24px 0 6px; letter-spacing:.01em}
+  h4{font-size:14px; margin:18px 0 4px; font-family:ui-sans-serif,system-ui,sans-serif;
+     color:var(--dim); letter-spacing:.08em; text-transform:uppercase}
+  p{margin:0 0 14px}
+  ul,ol{margin:0 0 16px; padding-left:22px}
+  li{margin-bottom:7px}
+  strong{color:#fff6e4}
+  em{color:var(--dim)}
+  a{color:var(--accent)}
+
+  .meta{
+    display:flex; flex-wrap:wrap; gap:6px 18px; margin:0 0 18px;
+    font-family:ui-sans-serif,system-ui,sans-serif; font-size:12px;
+    letter-spacing:.06em; text-transform:uppercase; color:var(--faint);
+  }
+  .meta b{color:var(--dim); font-weight:600}
+
+  .scroll{overflow-x:auto; margin:0 0 20px; -webkit-overflow-scrolling:touch}
+  table{border-collapse:collapse; width:100%; font-size:15px; font-family:ui-sans-serif,system-ui,sans-serif}
+  th,td{text-align:left; padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+  th{color:var(--dim); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; font-weight:600}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:nth-child(odd){background:rgba(255,255,255,.018)}
+
+  .s{font-weight:700; font-size:1.05em}
+  .s-spade{color:var(--spade)} .s-heart{color:var(--heart)}
+  .s-diamond{color:var(--diamond)} .s-club{color:var(--club)}
+
+  .callout{
+    background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--accent);
+    border-radius:0 10px 10px 0; padding:16px 20px; margin:0 0 22px;
+  }
+  .callout p:last-child{margin-bottom:0}
+  .callout .lbl{
+    display:block; font-family:ui-sans-serif,system-ui,sans-serif; font-size:11px;
+    letter-spacing:.16em; text-transform:uppercase; color:var(--accent); margin-bottom:7px;
+  }
+
+  nav.toc{
+    background:var(--panel); border:1px solid var(--line); border-radius:12px;
+    padding:18px 22px; margin-bottom:10px;
+  }
+  nav.toc .lbl{
+    display:block; font-family:ui-sans-serif,system-ui,sans-serif; font-size:11px;
+    letter-spacing:.16em; text-transform:uppercase; color:var(--dim); margin-bottom:10px;
+  }
+  nav.toc ol{margin:0; padding-left:0; list-style:none; columns:2; column-gap:26px; font-size:14.5px}
+  nav.toc li{margin:0 0 6px; break-inside:avoid}
+  nav.toc a{color:var(--ink); text-decoration:none; border-bottom:1px solid transparent}
+  nav.toc a:hover{color:var(--accent); border-bottom-color:var(--accent)}
+  nav.toc .g{color:var(--faint); font-size:12px; display:block; letter-spacing:.04em}
+
+  .loom{
+    background:var(--panel2); border:1px solid var(--line); border-radius:12px;
+    padding:24px; margin:0 0 22px; text-align:center;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:14px; line-height:1.5; color:var(--dim); white-space:pre; overflow-x:auto;
+  }
+  .loom b{color:var(--accent); font-weight:700}
+
+  .ledger{
+    background:var(--panel2); border:1px solid var(--line); border-radius:12px;
+    padding:20px 22px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:13px; line-height:2.1; color:var(--dim); white-space:pre-wrap;
+    overflow-x:auto;
+  }
+
+  .season{
+    background:var(--panel); border:1px solid var(--line); border-radius:12px;
+    padding:20px 24px; margin-bottom:22px;
+  }
+  .season h4{
+    margin:0 0 12px; font-family:ui-sans-serif,system-ui,sans-serif;
+    font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent);
+  }
+  .season h4 span{color:var(--faint); letter-spacing:.06em; text-transform:none; font-style:italic}
+  .season p:last-child{margin-bottom:0}
+
+  footer{
+    margin-top:60px; padding-top:22px; border-top:1px solid var(--line);
+    text-align:center; color:var(--faint); font-size:13px;
+    font-family:ui-sans-serif,system-ui,sans-serif;
+  }
+
+  @media print{
+    :root{--bg:#fff;--panel:#fff;--panel2:#fff;--line:#ccc;--ink:#111;--dim:#555;--faint:#777;--accent:#8a5a00}
+    body{font-size:11pt; line-height:1.5}
+    .wrap{max-width:none; padding:0}
+    nav.toc{break-inside:avoid}
+    h2{break-after:avoid; margin-top:26px}
+    table,.callout,.ledger,.season,.loom{break-inside:avoid}
+    tbody tr:nth-child(odd){background:none}
+    .s-spade{color:#111}.s-heart{color:#a00}.s-diamond{color:#a60}.s-club{color:#060}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">A Solitary Art</div>
+  <h1>The Thread &amp; The Knot<small>Fortune-Telling for Pen, Paper, and One Deck</small></h1>
+  <p class="tagline">Cast a web. Read its knots. Cut one thread to release the verdict.</p>
+</header>
+
+<nav class="toc">
+  <span class="lbl">Contents</span>
+  <ol>
+    <li><a href="#premise">1. The Premise<span class="g">What this is</span></a></li>
+    <li><a href="#materials">2. Materials<span class="g">What you need</span></a></li>
+    <li><a href="#question">3. The Question<span class="g">Ask</span></a></li>
+    <li><a href="#loom">4. The Loom<span class="g">Draw the circle</span></a></li>
+    <li><a href="#casting">5. Casting the Web<span class="g">Draw six threads</span></a></li>
+    <li><a href="#threads">6. Reading the Threads<span class="g">Six currents</span></a></li>
+    <li><a href="#knots">7. Reading the Knots<span class="g">Where currents meet</span></a></li>
+    <li><a href="#cutting">8. The Cutting<span class="g">Choose the verdict</span></a></li>
+    <li><a href="#clarity">9. Clarity<span class="g">Thin, Clear, Tangled</span></a></li>
+    <li><a href="#followup">10. The Follow-Up<span class="g">Ask again</span></a></li>
+    <li><a href="#sample">11. A Sample Reading<span class="g">Worked example</span></a></li>
+    <li><a href="#variants">12. Variants<span class="g">Change the weave</span></a></li>
+    <li><a href="#ledger">13. The Reading Ledger<span class="g">Keep a record</span></a></li>
+  </ol>
+</nav>
+
+<!-- ============ 1 ============ -->
+<h2 id="premise">1. The Premise</h2>
+<p>You are a weaver-oracle. A querent sits before you with a question. You do not shuffle a tarot deck and lay out archetypes — instead you <strong>cast a web</strong>: six threads drawn across a circle, each one a current in the querent's life. Where threads cross, a <strong>knot</strong> forms, and every knot speaks.</p>
+<p>At the end, you must <strong>cut one thread</strong>. The cut releases the reading and fixes the verdict. What you cut — and what you spare — is the whole art.</p>
+<p>This is a game for one person. You may ask a real question about your own life, or a fictional one about a character in a story you are writing. Both work identically.</p>
+
+<!-- ============ 2 ============ -->
+<h2 id="materials">2. Materials</h2>
+<ul>
+  <li>A pen or pencil.</li>
+  <li>One sheet of paper — plain, unlined, large enough for a circle roughly the size of your open hand.</li>
+  <li>One standard deck of 52 cards, <strong>jokers removed</strong>.</li>
+  <li>A question. Real or invented.</li>
+</ul>
+<p><strong>Card values:</strong> Ace = 1, 2–10 = face value, Jack = 11, Queen = 12, King = 13. (This differs from most games — in the web, the King is the highest rank.)</p>
+
+<!-- ============ 3 ============ -->
+<h2 id="question">3. The Question</h2>
+<p>Write your question at the top of the page. Phrase it as a question you genuinely do not know the answer to. Good questions are specific enough to matter and open enough to be answered by a web:</p>
+<ul>
+  <li><em>Will I find work before winter?</em></li>
+  <li><em>Should I trust the offer from the stranger?</em></li>
+  <li><em>What is my brother hiding from me?</em></li>
+  <li><em>Will the harvest hold?</em></li>
+</ul>
+<p>Write the question in ink. It stays on the page; the reading is for it and it alone.</p>
+
+<p><strong>The Stake</strong> — Before casting, the querent writes down one suit they hope the verdict will be, and keeps it hidden until the cut. Cut the staked suit: <strong>+1 Reputation</strong>. Cut any other suit: <strong>−1 Reputation</strong>. If the staked suit has no thread in the web, the Stake is unmet: <strong>−1 Reputation</strong>.</p>
+
+<!-- ============ 4 ============ -->
+<h2 id="loom">4. The Loom</h2>
+<p>Draw a large circle on the page. Mark <strong>13 dots</strong> around its rim, numbered clockwise from the top:</p>
+
+<div class="loom"><b>13 stations around the rim</b>
+
+             1
+         13      2
+      12            3
+     11              4
+      10            5
+          9      6
+             8
+          7
+
+  1 = top. Numbers run clockwise.
+  13 stations, evenly spaced.</div>
+
+<h4>The thirteen stations</h4>
+<div class="scroll">
+<table>
+  <thead><tr><th>Station</th><th>Name</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td><strong>The Door</strong></td></tr>
+    <tr><td>2</td><td><strong>The Road</strong></td></tr>
+    <tr><td>3</td><td><strong>The Hearth</strong></td></tr>
+    <tr><td>4</td><td><strong>The Market</strong></td></tr>
+    <tr><td>5</td><td><strong>The Field</strong></td></tr>
+    <tr><td>6</td><td><strong>The River</strong></td></tr>
+    <tr><td>7</td><td><strong>The Tower</strong></td></tr>
+    <tr><td>8</td><td><strong>The Wood</strong></td></tr>
+    <tr><td>9</td><td><strong>The Well</strong></td></tr>
+    <tr><td>10</td><td><strong>The Chapel</strong></td></tr>
+    <tr><td>11</td><td><strong>The Grave</strong></td></tr>
+    <tr><td>12</td><td><strong>The Star</strong></td></tr>
+    <tr><td>13</td><td><strong>The Crown</strong></td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>These are the <strong>stations</strong>. Every thread will begin and end at one of them.</p>
+
+<div class="callout">
+  <span class="lbl">Why thirteen?</span>
+  <p>Thirteen is the number of ranks in a suit, so every card can be placed without ambiguity. It is also, traditionally, an uncomfortable number — which suits a fortune-telling game.</p>
+</div>
+
+<!-- ============ 5 ============ -->
+<h2 id="casting">5. Casting the Web</h2>
+<p>Shuffle the deck. Draw <strong>six cards</strong> one at a time. For each card:</p>
+<ol>
+  <li><strong>The rank</strong> gives one station. Ace = station 1, 2–10 = that station, Jack = 11, Queen = 12, King = 13.</li>
+  <li><strong>The suit</strong> gives the other station:
+    <div class="scroll" style="margin-top:10px">
+    <table>
+      <thead><tr><th>Suit</th><th>Station</th></tr></thead>
+      <tbody>
+        <tr><td class="s s-spade">♠</td><td>1</td></tr>
+        <tr><td class="s s-heart">♥</td><td>4</td></tr>
+        <tr><td class="s s-diamond">♦</td><td>7</td></tr>
+        <tr><td class="s s-club">♣</td><td>10</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </li>
+  <li>Draw a straight line — a <strong>thread</strong> — between those two stations. Write the card's suit and rank small beside the thread.</li>
+  <li><strong>If both stations are the same</strong> (for example, the Ace of Spades is rank 1 and suit 1), do not draw a line. Instead draw a small closed loop at that station. A loop is a special omen — see <a href="#knots">Knots</a>.</li>
+</ol>
+
+<p>After all six threads are drawn, mark every point where two threads cross with a small circle. That circle is a <strong>knot</strong>. Do not count crossings at the rim (threads meeting at a shared station) — only interior crossings count.</p>
+
+<p>If two cards draw the exact same thread (for example 4<span class="s s-heart">♥</span> and 4<span class="s s-spade">♠</span> both join stations 1 and 4), they count as a single thread. No knot forms between them.</p>
+
+<div class="callout">
+  <span class="lbl">A note on drawing</span>
+  <p>Threads should be straight. If three threads all cross at the same point, that is one knot involving three threads — read the dominant pair (see <a href="#knots">Knots</a>) and note the third as an intensifier.</p>
+</div>
+
+<!-- ============ 6 ============ -->
+<h2 id="threads">6. Reading the Threads</h2>
+<p>Each thread is a <strong>current</strong> in the querent's life. Read all six, in the order you drew them. The suit is the <em>nature</em> of the current; the rank is its <em>strength</em>.</p>
+
+<h4>The four natures</h4>
+<div class="scroll">
+<table>
+  <thead><tr><th>Suit</th><th>Current</th><th>Domain</th></tr></thead>
+  <tbody>
+    <tr><td class="s s-spade">♠</td><td><strong>Iron</strong></td><td>Conflict, obstacle, strength, endurance</td></tr>
+    <tr><td class="s s-heart">♥</td><td><strong>Blood</strong></td><td>Love, connection, feeling, kinship</td></tr>
+    <tr><td class="s s-diamond">♦</td><td><strong>Gold</strong></td><td>Fortune, work, value, exchange</td></tr>
+    <tr><td class="s s-club">♣</td><td><strong>Root</strong></td><td>Knowledge, growth, hidden things, patience</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h4>The thirteen strengths</h4>
+<div class="scroll">
+<table>
+  <thead><tr><th>Rank</th><th>Strength</th></tr></thead>
+  <tbody>
+    <tr><td>2–4</td><td>A <strong>faint</strong> current — barely felt, easily missed</td></tr>
+    <tr><td>5–7</td><td>A <strong>steady</strong> current — present and reliable</td></tr>
+    <tr><td>8–10</td><td>A <strong>strong</strong> current — impossible to ignore</td></tr>
+    <tr><td>J (11)</td><td>A current that <strong>acts</strong> — a person or event that moves things</td></tr>
+    <tr><td>Q (12)</td><td>A current that <strong>receives</strong> — an influence, a listener, a vessel</td></tr>
+    <tr><td>K (13)</td><td>A current that <strong>rules</strong> — a dominant force, hard to resist</td></tr>
+    <tr><td>A (1)</td><td>A current at a <strong>threshold</strong> — a beginning or an ending</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Write one sentence for each thread. For example: <em>"A steady current of gold — money is present but not abundant."</em> Or: <em>"A ruling current of iron — a conflict dominates the querent's life, and they cannot set it down."</em></p>
+
+<p>Read a thread by its endpoints too — Iron running from The Field to The Door is a different story from Iron running from The Grave to The Crown.</p>
+
+<!-- ============ 7 ============ -->
+<h2 id="knots">7. Reading the Knots</h2>
+<p>Each knot is a moment where two currents meet. The two suits of the crossing threads give the <strong>omen</strong>. Read each knot in turn, and note its <strong>distance from the center of the loom</strong>:</p>
+<ul>
+  <li><strong>Near the center</strong> — the omen is immediate, close at hand.</li>
+  <li><strong>Near the rim</strong> — the omen is distant, approaching from far away.</li>
+</ul>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Pair</th><th>Omen</th></tr></thead>
+  <tbody>
+    <tr><td class="s s-spade">♠</td><td><strong>Iron on iron</strong> — a grinding conflict, strength against strength. Two forces that will not yield.</td></tr>
+    <tr><td class="s s-heart">♥</td><td><strong>Blood on blood</strong> — love that deepens, or love that wounds. Kinship tested.</td></tr>
+    <tr><td class="s s-diamond">♦</td><td><strong>Gold on gold</strong> — fortune compounding, or greed that feeds itself.</td></tr>
+    <tr><td class="s s-club">♣</td><td><strong>Root on root</strong> — knowledge that grows, or a hidden tangle that will not be pulled loose.</td></tr>
+    <tr><td class="s s-spade">♠</td><td class="s s-heart">♥</td><td><strong>Iron and blood</strong> — a love that must fight, or conflict inside the heart.</td></tr>
+    <tr><td class="s s-spade">♠</td><td class="s s-diamond">♦</td><td><strong>Iron and gold</strong> — money at the point of a sword. Gain that comes at a cost.</td></tr>
+    <tr><td class="s s-spade">♠</td><td class="s s-club">♣</td><td><strong>Iron and root</strong> — a lesson that hurts, or knowledge turned into a weapon.</td></tr>
+    <tr><td class="s s-heart">♥</td><td class="s s-diamond">♦</td><td><strong>Blood and gold</strong> — love and money intertwined. A bond with a price.</td></tr>
+    <tr><td class="s s-heart">♥</td><td class="s s-club">♣</td><td><strong>Blood and root</strong> — love that teaches, or the roots of family.</td></tr>
+    <tr><td class="s s-diamond">♦</td><td class="s s-club">♣</td><td><strong>Gold and root</strong> — wealth from knowledge, or knowledge that must be bought.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h4>Loops</h4>
+<p>If a thread is a <strong>loop</strong> — a card whose rank station and suit station coincide — it has no knots of its own, but it colors every knot it touches. Read a loop as a <strong>closed circuit</strong>:</p>
+<div class="scroll">
+<table>
+  <tbody>
+    <tr><td class="s s-spade">♠</td><td>A conflict with no exit — a fight that feeds itself.</td></tr>
+    <tr><td class="s s-heart">♥</td><td>A love turned inward — self-regard, or grief that will not release.</td></tr>
+    <tr><td class="s s-diamond">♦</td><td>A fortune that circles back — money gained and lost to the same cause.</td></tr>
+    <tr><td class="s s-club">♣</td><td>Knowledge that feeds itself — a study with no application, or a secret kept for its own sake.</td></tr>
+  </tbody>
+</table>
+</div>
+<p>A loop is <strong>never cut</strong> (see <a href="#cutting">The Cutting</a>) — it is already closed. If you draw two loops, the reading is <strong>doubly closed</strong>: the querent is caught in a cycle, and no single cut will free them.</p>
+
+<p>In a normal reading with a single loop, the loop simply colors the knots and cannot be cut — cut another thread. The Loop Reading variant below overrides this: if any loop appears, the verdict is read from the loop instead of a cut thread.</p>
+
+<!-- ============ 8 ============ -->
+<h2 id="cutting">8. The Cutting</h2>
+<p>Now — and only now, after all threads and knots have been read — choose <strong>one thread to cut</strong>. Erase it. Every knot that lay on that thread dissolves: those moments are <strong>averted</strong>. The knots that remain are what <strong>comes true</strong>.</p>
+<p>The card of the cut thread becomes the <strong>Verdict</strong> — the final answer to the question. Read it three ways:</p>
+
+<h3>The nature of the outcome — by suit</h3>
+<div class="scroll">
+<table>
+  <thead><tr><th>Suit</th><th>Outcome</th></tr></thead>
+  <tbody>
+    <tr><td class="s s-spade">♠</td><td><strong>A hard truth.</strong> The outcome is difficult but strengthening. You will be glad of it later.</td></tr>
+    <tr><td class="s s-heart">♥</td><td><strong>A favorable outcome</strong> in matters of the heart. Warmth, connection, repair.</td></tr>
+    <tr><td class="s s-diamond">♦</td><td><strong>Material gain or loss.</strong> Coin, work, exchange — the outcome is tangible.</td></tr>
+    <tr><td class="s s-club">♣</td><td><strong>A slow, hidden, enduring outcome.</strong> It will come quietly and last a long time.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>The timing — by rank</h3>
+<div class="scroll">
+<table>
+  <thead><tr><th>Rank</th><th>When</th></tr></thead>
+  <tbody>
+    <tr><td>Ace</td><td><strong>Now.</strong> Immediately, or already underway.</td></tr>
+    <tr><td>2–5</td><td><strong>Within days.</strong></td></tr>
+    <tr><td>6–10</td><td><strong>Within weeks.</strong></td></tr>
+    <tr><td>J, Q, K</td><td><strong>Within months.</strong></td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>The clarity — by knots on the cut thread</h3>
+<p>Count the knots that lay on the thread you cut. That number determines how clearly the verdict lands — see <a href="#clarity">Clarity</a> below.</p>
+
+<div class="callout">
+  <span class="lbl">The decision</span>
+  <p>You read the whole web <em>before</em> you cut. So by the time you choose, you know which threads carry which knots, and which verdicts they would produce. The art is in choosing the thread that gives the querent the reading they <em>need</em> — not necessarily the one they want.</p>
+</div>
+
+<!-- ============ 9 ============ -->
+<h2 id="clarity">9. Clarity</h2>
+<p>The number of knots on the cut thread determines how clearly the verdict lands. This is the game's only scoring — and it is not a win or a loss, but a <strong>quality of reading</strong>.</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Knots on the cut thread</th><th>Clarity</th><th>What it means</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>0–1</strong></td>
+      <td><strong>Thin</strong></td>
+      <td>The reading is faint. The querent doubts you, or forgets the verdict by morning. The verdict is <em>half-true</em> — it comes to pass, but not in the way you said.</td>
+    </tr>
+    <tr>
+      <td><strong>2–3</strong></td>
+      <td><strong>Clear</strong></td>
+      <td>The reading lands. The querent believes it, remembers it, and it comes true as spoken. This is the reading a fortune teller hopes for.</td>
+    </tr>
+    <tr>
+      <td><strong>4+</strong></td>
+      <td><strong>Tangled</strong></td>
+      <td>The reading overwhelms. Too many currents meet on one thread; the querent is frightened or confused. The verdict is <em>true but costly</em> — it comes to pass, and something is lost in the passing.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Reputation</h3>
+<p>Track <strong>Reputation</strong> in every reading, starting at 3. After each reading:</p>
+<div class="scroll">
+<table>
+  <tbody>
+    <tr><td>Clear reading, favorable verdict (<span class="s s-heart">♥</span> or <span class="s s-diamond">♦</span>)</td><td><strong>+2</strong></td></tr>
+    <tr><td>Clear reading, hard verdict (<span class="s s-spade">♠</span> or <span class="s s-club">♣</span>)</td><td><strong>+1</strong></td></tr>
+    <tr><td>Thin reading</td><td><strong>−1</strong></td></tr>
+    <tr><td>Tangled reading</td><td><strong>−1</strong> (but <strong>+1</strong> if the verdict is favorable — the querent is impressed and shaken)</td></tr>
+    <tr><td>Cutting the staked suit</td><td><strong>+1</strong></td></tr>
+    <tr><td>Cutting any other suit</td><td><strong>−1</strong></td></tr>
+  </tbody>
+</table>
+</div>
+<p>At Reputation 0, your fortune teller is <strong>discredited</strong> — no one comes to the loom, and the campaign ends. At Reputation 10, they are <strong>renowned</strong> — the reading is sought by the powerful, and the final reading is a royal question: not "what will happen," but "what will you do about it." After that reading, the campaign ends.</p>
+
+<!-- ============ 10 ============ -->
+<h2 id="followup">10. The Follow-Up</h2>
+<p>After the reading, you may ask <strong>one follow-up question</strong> — a clarification, a consequence, a "but what about—"</p>
+<p>Do not cast a new web. Read the <strong>remaining threads</strong> — the five you did not cut — as the answer. The follow-up is answered by what was <em>spared</em>, not by what was <em>released</em>. This is the oldest rule of the art: the answer to the second question is always in the first reading, and you simply did not see it.</p>
+
+<!-- ============ 11 ============ -->
+<h2 id="sample">11. A Sample Reading</h2>
+<div class="season">
+  <h4>The Question <span>— a worked example</span></h4>
+  <p><em>"Will I find work before winter?"</em> — asked by a querent named Maren, a cartwright whose workshop burned in the spring.</p>
+
+  <p><strong>The cast.</strong> Six cards are drawn: <span class="s s-heart">7♥</span>, <span class="s s-spade">K♠</span>, <span class="s s-diamond">3♦</span>, <span class="s s-club">Q♣</span>, <span class="s s-spade">9♠</span>, <span class="s s-club">5♣</span>. Six threads are drawn between their stations. Three knots form — all three on the <span class="s s-club">5♣</span> thread:</p>
+  <ul>
+    <li>The <span class="s s-club">5♣</span> thread crosses the <span class="s s-heart">7♥</span> thread.</li>
+    <li>The <span class="s s-club">5♣</span> thread crosses the <span class="s s-diamond">3♦</span> thread.</li>
+    <li>The <span class="s s-club">5♣</span> thread crosses the <span class="s s-spade">9♠</span> thread.</li>
+  </ul>
+
+  <p><strong>Reading the threads.</strong></p>
+  <ul>
+    <li><span class="s s-heart">7♥</span> — a steady current of blood: <em>Maren's family is present and reliable.</em></li>
+    <li><span class="s s-spade">K♠</span> — a ruling current of iron: <em>a dominant conflict — the loss of the workshop — governs her days.</em></li>
+    <li><span class="s s-diamond">3♦</span> — a faint current of gold: <em>money is scarce, barely felt.</em></li>
+    <li><span class="s s-club">Q♣</span> — a receiving current of root: <em>knowledge is being offered to her — someone is teaching her something.</em></li>
+    <li><span class="s s-spade">9♠</span> — a strong current of iron: <em>a second conflict, nearly as strong as the first.</em></li>
+    <li><span class="s s-club">5♣</span> — a steady current of root: <em>knowledge is growing in her, quietly, the way a seed grows before it breaks the soil.</em></li>
+  </ul>
+
+  <p><strong>Reading the knots.</strong></p>
+  <ul>
+    <li><span class="s s-heart">♥</span>+<span class="s s-club">♣</span> (blood and root) — <em>love that teaches, or the roots of family.</em> Near the rim: distant.</li>
+    <li><span class="s s-diamond">♦</span>+<span class="s s-club">♣</span> (gold and root) — <em>wealth from knowledge, or knowledge that must be bought.</em> Mid-radius.</li>
+    <li><span class="s s-spade">♠</span>+<span class="s s-club">♣</span> (iron and root) — <em>a lesson that hurts, or knowledge turned into a weapon.</em> Mid-radius.</li>
+  </ul>
+
+  <p><strong>The cutting.</strong> Maren needs work, so the reading must land on gold. Look at the threads:</p>
+  <ul>
+    <li>Cut <span class="s s-heart">7♥</span>: 1 knot → <strong>Thin</strong>. Verdict: <span class="s s-heart">♥</span>, rank 7 → <em>favorable, within weeks</em>. But blood, not gold — the answer is about family, not work.</li>
+    <li>Cut <span class="s s-spade">K♠</span>: 0 knots → <strong>Thin</strong>. Verdict: <span class="s s-spade">♠</span>, King → <em>a hard truth, within months</em>. Too slow, too faint.</li>
+    <li>Cut <span class="s s-diamond">3♦</span>: 1 knot → <strong>Thin</strong>. Verdict: <span class="s s-diamond">♦</span>, rank 3 → <em>material gain, within days</em>. This is the reading Maren needs — but it lands Thin.</li>
+    <li>Cut <span class="s s-club">Q♣</span>: 0 knots → <strong>Thin</strong>. Verdict: <span class="s s-club">♣</span>, Queen → <em>hidden outcome, within months</em>. Too vague.</li>
+    <li>Cut <span class="s s-spade">9♠</span>: 1 knot → <strong>Thin</strong>. Verdict: <span class="s s-spade">♠</span>, rank 9 → <em>a hard truth, within weeks</em>. Work comes, but it costs.</li>
+    <li>Cut <span class="s s-club">5♣</span>: 3 knots → <strong>Clear</strong>. Verdict: <span class="s s-club">♣</span>, rank 5 → <em>a slow, hidden, enduring outcome, within days</em>. The clearest thread in the web — but it speaks of hidden knowledge, not work.</li>
+  </ul>
+
+  <p><strong>The reading given.</strong> The fortune teller cuts the <span class="s s-diamond">3♦</span> thread. The verdict is <span class="s s-diamond">♦</span> at rank 3, <strong>Thin</strong>: <em>"Work will come within days, and it will be paid work — but it will be small, and it will not be the workshop. Take it anyway. The gold is faint now, but it is real."</em> The clearest thread in the web was the <span class="s s-club">5♣</span> — a Clear reading, but of hidden knowledge, not of work. A good oracle gives the reading the querent needs, not the clearest one on the loom.</p>
+  <p>The knot on the <span class="s s-diamond">3♦</span> thread — the gold-and-root knot — dissolves. It is averted. What remains is the blood-and-root knot and the iron-and-root knot: the family that teaches, and the hard lesson. Those come true. Maren will find work, and her family will still be at the center of it, and she will still have to learn what the fire taught her.</p>
+</div>
+
+<!-- ============ 12 ============ -->
+<h2 id="variants">12. Variants</h2>
+<div class="scroll">
+<table>
+  <thead><tr><th>Variant</th><th>Rule</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Oracle and Querent — two players</strong></td>
+      <td>One player is the <strong>Oracle</strong>: they cast, read, and cut. The other is the <strong>Querent</strong>: they ask the question, secretly write a Stake (the suit they hope the verdict will be) before the cast, and judge the reading at the end — they say whether it landed Thin, Clear, or Tangled, by how true it feels. The Querent's judgment is the score, and the Oracle's Reputation moves by it. Swap roles for the next question.</td>
+    </tr>
+    <tr>
+      <td><strong>Face-Down Cast</strong></td>
+      <td>Draw all six cards face-down and draw the threads <em>before</em> revealing any suits. The geometry is fixed first; the meanings arrive afterward. This produces stranger, less legible webs — good for questions you are afraid of.</td>
+    </tr>
+    <tr>
+      <td><strong>Double Cast</strong></td>
+      <td>Cast two webs for the same question. The thread whose suit appears in <em>both</em> webs is the <strong>true thread</strong> — cut that one, and the verdict is certain. If no suit repeats, the question is unanswerable tonight.</td>
+    </tr>
+    <tr>
+      <td><strong>The Querent's Choice</strong></td>
+      <td>Instead of choosing the cut yourself, draw one card after the reading. The suit of that card determines which thread is cut (if two threads share that suit, cut the one with more knots). The querent, not the oracle, decides.</td>
+    </tr>
+    <tr>
+      <td><strong>The Loop Reading</strong></td>
+      <td>If any card is a loop (rank station = suit station), the reading is <strong>closed</strong>. You may not cut a loop, and the verdict must be read from the loop's suit and rank instead of a cut thread. Closed readings are rare and always significant.</td>
+    </tr>
+    <tr>
+      <td><strong>Three Questions</strong></td>
+      <td>Ask three questions before casting. Cast one web. Read the same web three times, once for each question — but you may cut only one thread in total, and the cut answers only one of the three. The other two are answered by the remaining threads, and are always <strong>Thin</strong>.</td>
+    </tr>
+    <tr>
+      <td><strong>The Skeptic</strong></td>
+      <td>A hard mode. After the reading, draw one more card. If it is black, the querent does not believe you; the verdict is true but will not be acted upon. If red, they believe. Face cards are ambiguous — the querent believes, but tells no one.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ============ 13 ============ -->
+<h2 id="ledger">13. The Reading Ledger</h2>
+<p>Keep a page for readings. Over time, the ledger becomes a record not of predictions but of <em>questions</em> — and that is the more interesting document.</p>
+
+<div class="ledger">DATE: ______________   QUERENT: ______________
+
+QUESTION: ______________________________________
+______________________________________________
+
+CARDS DRAWN: ___  ___  ___  ___  ___  ___
+
+THREADS READ:
+1. ____________________________________________
+2. ____________________________________________
+3. ____________________________________________
+4. ____________________________________________
+5. ____________________________________________
+6. ____________________________________________
+
+KNOTS READ:
+1. ____________________________________________
+2. ____________________________________________
+3. ____________________________________________
+4. ____________________________________________
+5. ____________________________________________
+6. ____________________________________________
+
+THREAD CUT: ________   VERDICT: ________
+
+CLARITY: [ ] Thin   [ ] Clear   [ ] Tangled
+
+FOLLOW-UP: _____________________________________
+______________________________________________
+
+CAME TRUE? [ ] Yes   [ ] No   [ ] Partly
+NOTES: _________________________________________
+______________________________________________</div>
+
+<div class="callout">
+  <span class="lbl">A closing note</span>
+  <p>This game is not a test of prediction. It is a way of thinking sideways about a question — of letting a drawn shape suggest what you already half-knew. The verdict is not fate; it is a sentence you wrote, and then agreed to hear. Play it as an art, not an oracle, and it will reward you for years.</p>
+</div>
+
+<footer>
+  <p><strong>The Thread &amp; The Knot</strong> — a solitary art for pen, paper, and one deck.</p>
+  <p>Print this page for a table copy. Keep the ledger. Cut carefully.</p>
+</footer>
+
+</div>
+</body>
+</html>

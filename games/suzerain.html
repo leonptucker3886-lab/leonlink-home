@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Suzerain: The Fifty-Two Crowns — A Solo World-Conquest RPG</title>
+<meta name="description" content="A solo world-conquest roleplaying game played with one deck of cards, a pen, and paper.">
+<style>
+  :root{
+    --bg:#14110e; --panel:#1d1a16; --panel2:#242019; --line:#3a332b;
+    --ink:#efe7d7; --dim:#9a8f7c; --faint:#6b6154; --accent:#d9a441;
+    --spade:#cfc7b8; --heart:#e2606a; --diamond:#e0a13a; --club:#6fbf8a;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:ui-serif,Georgia,"Iowan Old Style","Palatino Linotype",serif;
+    line-height:1.65; font-size:17px;
+  }
+  .wrap{max-width:760px; margin:0 auto; padding:48px 22px 90px}
+
+  /* ---------- header ---------- */
+  header{text-align:center; padding-bottom:32px; border-bottom:1px solid var(--line); margin-bottom:34px}
+  .kicker{
+    font-family:ui-sans-serif,system-ui,sans-serif; font-size:12px; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--accent); margin-bottom:14px;
+  }
+  h1{
+    font-size:clamp(30px,7vw,46px); line-height:1.1; margin:0 0 10px;
+    letter-spacing:.01em; font-weight:700;
+  }
+  h1 small{display:block; font-size:.42em; letter-spacing:.16em; text-transform:uppercase; color:var(--dim); font-weight:400; margin-top:14px}
+  .tagline{color:var(--dim); font-style:italic; margin:0; font-size:16px}
+
+  /* ---------- type ---------- */
+  h2{
+    font-size:13px; letter-spacing:.18em; text-transform:uppercase;
+    font-family:ui-sans-serif,system-ui,sans-serif; color:var(--accent);
+    margin:52px 0 14px; padding-bottom:8px; border-bottom:1px solid var(--line);
+  }
+  h3{font-size:18px; margin:26px 0 6px; letter-spacing:.01em}
+  p{margin:0 0 14px}
+  ul,ol{margin:0 0 16px; padding-left:22px}
+  li{margin-bottom:7px}
+  strong{color:#fff6e4}
+  em{color:var(--dim)}
+  a{color:var(--accent)}
+
+  /* ---------- tables ---------- */
+  .scroll{overflow-x:auto; margin:0 0 20px; -webkit-overflow-scrolling:touch}
+  table{border-collapse:collapse; width:100%; font-size:15px; font-family:ui-sans-serif,system-ui,sans-serif}
+  th,td{text-align:left; padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+  th{color:var(--dim); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; font-weight:600}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:nth-child(odd){background:rgba(255,255,255,.018)}
+
+  /* ---------- suits ---------- */
+  .s{font-weight:700; font-size:1.05em}
+  .s-spade{color:var(--spade)} .s-heart{color:var(--heart)}
+  .s-diamond{color:var(--diamond)} .s-club{color:var(--club)}
+
+  /* ---------- components ---------- */
+  .callout{
+    background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--accent);
+    border-radius:0 10px 10px 0; padding:16px 20px; margin:0 0 22px;
+  }
+  .callout p:last-child{margin-bottom:0}
+  .callout .lbl{
+    display:block; font-family:ui-sans-serif,system-ui,sans-serif; font-size:11px;
+    letter-spacing:.16em; text-transform:uppercase; color:var(--accent); margin-bottom:7px;
+  }
+
+  /* ---------- toc ---------- */
+  nav.toc{
+    background:var(--panel); border:1px solid var(--line); border-radius:12px;
+    padding:18px 22px; margin-bottom:10px;
+  }
+  nav.toc .lbl{
+    display:block; font-family:ui-sans-serif,system-ui,sans-serif; font-size:11px;
+    letter-spacing:.16em; text-transform:uppercase; color:var(--dim); margin-bottom:10px;
+  }
+  nav.toc ol{margin:0; padding-left:0; list-style:none; columns:2; column-gap:26px; font-size:14.5px}
+  nav.toc li{margin:0 0 6px; break-inside:avoid}
+  nav.toc a{color:var(--ink); text-decoration:none; border-bottom:1px solid transparent}
+  nav.toc a:hover{color:var(--accent); border-bottom-color:var(--accent)}
+
+  /* ---------- ledger ---------- */
+  .ledger{
+    background:var(--panel2); border:1px solid var(--line); border-radius:12px;
+    padding:20px 22px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:13px; line-height:2.1; color:var(--dim); white-space:pre-wrap;
+    overflow-x:auto;
+  }
+  .ledger b{color:var(--ink); font-weight:600}
+
+  /* ---------- sample season ---------- */
+  .season{
+    background:var(--panel); border:1px solid var(--line); border-radius:12px;
+    padding:20px 24px; margin-bottom:22px;
+  }
+  .season h4{
+    margin:0 0 12px; font-family:ui-sans-serif,system-ui,sans-serif;
+    font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent);
+  }
+  .season h4 span{color:var(--faint); letter-spacing:.06em; text-transform:none; font-style:italic}
+  .season p:last-child{margin-bottom:0}
+
+  /* ---------- footer ---------- */
+  footer{
+    margin-top:60px; padding-top:22px; border-top:1px solid var(--line);
+    text-align:center; color:var(--faint); font-size:13px;
+    font-family:ui-sans-serif,system-ui,sans-serif;
+  }
+
+  /* ---------- print ---------- */
+  @media print{
+    :root{--bg:#fff;--panel:#fff;--panel2:#fff;--line:#ccc;--ink:#111;--dim:#555;--faint:#777;--accent:#8a5a00}
+    body{font-size:11pt; line-height:1.5}
+    .wrap{max-width:none; padding:0}
+    nav.toc{break-inside:avoid}
+    h2{break-after:avoid; margin-top:26px}
+    table,.callout,.season,.ledger{break-inside:avoid}
+    tbody tr:nth-child(odd){background:none}
+    .s-spade{color:#111}.s-heart{color:#a00}.s-diamond{color:#a60}.s-club{color:#060}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">A Solo World-Conquest RPG</div>
+  <h1>Suzerain<small>The Fifty-Two Crowns</small></h1>
+  <p class="tagline">One deck. One pen. A broken continent to take.</p>
+</header>
+
+<nav class="toc">
+  <span class="lbl">Contents</span>
+  <ol>
+    <li><a href="#premise">1. The Premise</a></li>
+    <li><a href="#components">2. Components</a></li>
+    <li><a href="#setup">3. Setup</a></li>
+    <li><a href="#map">4. The Map Sheet</a></li>
+    <li><a href="#turn">5. The Turn</a></li>
+    <li><a href="#combat">6. Combat</a></li>
+    <li><a href="#reckoning">7. The Reckoning</a></li>
+    <li><a href="#ending">8. Winning &amp; Losing</a></li>
+    <li><a href="#titles">9. Titles</a></li>
+    <li><a href="#sample">10. Sample Season</a></li>
+    <li><a href="#variants">11. Variants</a></li>
+    <li><a href="#ledger">12. Ledger Sheet</a></li>
+  </ol>
+</nav>
+
+<!-- ============ 1 ============ -->
+<h2 id="premise">1. The Premise</h2>
+<p>You are an upstart warlord in a broken land. Four great powers hold the continent between them. Every card you draw is a card your enemies cannot draw. Every card you hoard is a weapon withheld from fate.</p>
+<p>You play alone, against the deck. A campaign runs 60–120 minutes and can be paused at any point — just note which phase you stopped in.</p>
+
+<!-- ============ 2 ============ -->
+<h2 id="components">2. Components</h2>
+<ul>
+  <li>One standard deck of 52 cards, <strong>jokers removed</strong>.</li>
+  <li>Two sheets of paper: a <strong>map sheet</strong> and a <strong>ledger sheet</strong>.</li>
+  <li>A pen or pencil.</li>
+</ul>
+
+<h3>Card values</h3>
+<p>Ace = <strong>1 or 11</strong> (choose when played). 2–10 = face value. Jack, Queen, King = <strong>10</strong>.</p>
+<p><strong>Troops are a single army</strong> recorded as one number in your ledger — there are no per-province garrisons.</p>
+
+<h3>The four rivals</h3>
+<p>Name them yourself and write the names in your ledger. The suits are the engine; the flavor is yours.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Suit</th><th>Default flavor</th></tr></thead>
+  <tbody>
+    <tr><td class="s s-spade">♠</td><td>The Iron Legion — militarists</td></tr>
+    <tr><td class="s s-heart">♥</td><td>The Sun Court — zealots and nobles</td></tr>
+    <tr><td class="s s-diamond">♦</td><td>The Merchant League — coin and contracts</td></tr>
+    <tr><td class="s s-club">♣</td><td>The Wild Clans — raiders and hunters</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ============ 3 ============ -->
+<h2 id="setup">3. Setup</h2>
+
+<h3>Step 1 — Build the world</h3>
+<p>Draw <strong>20 cards</strong> one at a time. Each card creates one province. Record it in the ledger and draw it on your map as one box of a 5×4 grid. Only orthogonal neighbours are adjacent.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Setup card</th><th>Province owner</th><th>Defense</th><th>Gold value</th></tr></thead>
+  <tbody>
+    <tr><td>Rank 2–6</td><td><strong>Neutral</strong> (independent)</td><td>3</td><td>1</td></tr>
+    <tr><td>Rank 7–10</td><td>The card's suit</td><td>4</td><td>2</td></tr>
+    <tr><td>J · Q · K</td><td>The card's suit</td><td>5</td><td>2</td></tr>
+    <tr><td>Ace</td><td>The card's suit</td><td>6</td><td>3</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="callout"><span class="lbl">Example</span>You draw <span class="s s-diamond">8♦</span> — a Merchant League province, Defense 4, worth 2 Gold. You draw <span class="s s-spade">4♠</span> — a Neutral province, Defense 3, worth 1 Gold. On a 2–6, the suit is ignored; the ♠ only means “independent.”</p>
+<p>Name each province as you place it. Names make the map feel real and make your log readable.</p>
+
+<h3>Step 2 — Choose your home</h3>
+<p>Pick any Neutral province. That is your capital. Record in the ledger:</p>
+<div class="scroll">
+<table>
+  <tbody>
+    <tr><td>Gold</td><td><strong>2</strong></td></tr>
+    <tr><td>Troops</td><td><strong>3</strong></td></tr>
+    <tr><td>Hand</td><td><strong>0</strong></td></tr>
+    <tr><td>Threat</td><td><strong>1</strong></td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Step 3 — Deal fate</h3>
+<p>Shuffle the remaining <strong>32 cards</strong>. Set aside <strong>12</strong> of them face-down — these are the <strong>Sealed Fates</strong>, and they take no part in this campaign. The other <strong>20 cards</strong> are the <strong>Fate Deck</strong>. It is your resource and your enemy.</p>
+
+<h3>Step 4 — Record everything</h3>
+<p>Your hand, gold, troops, and province states live on paper. Cards in hand stay face-up in front of you — but write them down too, so the game can be rebuilt exactly if they're disturbed.</p>
+
+<!-- ============ 4 ============ -->
+<h2 id="map">4. The Map Sheet</h2>
+<p>Draw a 5×4 grid. In each box write:</p>
+<ul>
+  <li>Province name <em>(small, in a corner)</em></li>
+  <li>Owner initial: <strong>N</strong>eutral, <span class="s s-spade">♠</span><span class="s s-heart">♥</span><span class="s s-diamond">♦</span><span class="s s-club">♣</span>, or <strong>Y</strong>ou</li>
+  <li>Defense number <em>(circle it if fortified)</em></li>
+  <li>Gold value</li>
+</ul>
+<p>Use pencil. This map will be redrawn many times.</p>
+
+<!-- ============ 5 ============ -->
+<h2 id="turn">5. The Turn — one Season</h2>
+
+<h3>I. Dawn</h3>
+<ol>
+  <li><strong>Collect Gold:</strong> gain Gold equal to the total value of provinces you own.</li>
+  <li><strong>Draw to hand:</strong> draw until your hand reaches hand size (start: <strong>5</strong>). If the Fate Deck runs out mid-draw, see <a href="#reckoning">The Reckoning</a>.</li>
+</ol>
+
+<h3>II. Day — take up to 3 actions</h3>
+<p>Each action costs <strong>1 card from hand</strong> unless noted. You may take the same action more than once, but no more than <strong>3 actions</strong> in a Day. Spending Gold (below) is free and does not count toward the 3.</p>
+<div class="callout">
+  <span class="lbl">The spent pile</span>
+  <p>Cards you play, spend, or discard go to a spent pile and leave the game — they are never reshuffled. Only cards flipped at Night go to the discard pile, which is what the Reckoning reshuffles.</p>
+</div>
+<div class="scroll">
+<table>
+  <thead><tr><th>Action</th><th>Cost</th><th>Effect</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Conquer</strong></td><td>1+ cards</td><td>Attack an adjacent province. See <a href="#combat">Combat</a>.</td></tr>
+    <tr><td><strong>Conscript</strong></td><td>1 card</td><td>Gain Troops equal to half the card's value, rounded down, min 1 (face cards = 5).</td></tr>
+    <tr><td><strong>Fortify</strong></td><td>1 card</td><td>+1 permanent Defense to one province you own (max 8).</td></tr>
+    <tr><td><strong>Settle</strong></td><td>1 card</td><td>+1 Gold value to one province you own (max 3).</td></tr>
+    <tr><td><strong>Treaty</strong></td><td>1 card</td><td>Name a rival. The next time that rival would activate at Night, it does not — whenever that happens. The card must match the rival's suit.</td></tr>
+    <tr><td><strong>Rally</strong></td><td>2 cards</td><td>Discard both, draw 2. Hand filtering.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>Spend Gold at any time during Day:</strong></p>
+<ul>
+  <li><strong>1 Gold</strong> → 1 Troop <em>(max 3 per Season)</em></li>
+  <li><strong>2 Gold</strong> → draw 1 card</li>
+  <li><strong>3 Gold</strong> → +1 permanent Defense to a province you own</li>
+</ul>
+
+<h3>III. Night — the world moves</h3>
+<p>Flip cards from the Fate Deck equal to your current <strong>Threat</strong> (starts at 1). Resolve each flip separately:</p>
+<ol>
+  <li><strong>The suit tells you which rival acts.</strong> Ignore the rank for choosing.</li>
+  <li><strong>Find that rival's target:</strong> the province nearest to any territory they own that they do <em>not</em> own. Use shortest path across the grid. If two provinces are equally near, the rival targets the one with the lowest Defense; if still tied, you choose.</li>
+  <li><strong>Resolve the attack</strong> using the flipped card's value <strong>plus your current Threat</strong> as their force (A = 11 — so a Queen at Threat 2 attacks with force 12):
+    <div class="scroll" style="margin-top:12px">
+    <table>
+      <thead><tr><th>Target</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr><td>Neutral</td><td>They take it if force ≥ its Defense. Otherwise nothing happens.</td></tr>
+        <tr><td>Yours</td><td>You may defend by playing cards from hand and/or spending Troops (<strong>1 Troop = +2 Defense</strong>), adding to the province's Defense. If your total ≥ their force, the attack is repelled and you keep the province. If not, the province falls to that rival — remove your marker.</td></tr>
+        <tr><td>Another rival's</td><td>They take it if force ≥ Defense + 2.</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </li>
+  <li><strong>If a rival owns no provinces at all,</strong> the flip becomes a <strong>Raid</strong>: you lose 1 Troop and 1 Gold. If you have no Troops and no Gold, the nearest province you own loses 1 Defense permanently.</li>
+</ol>
+<p>Cards flipped at Night go to a discard pile, face up. They are not available to you.</p>
+
+<!-- ============ 6 ============ -->
+<h2 id="combat">6. Combat — Conquer</h2>
+<p>Choose an adjacent province you own to launch the attack from, and an adjacent province you don't own as the target. Play cards from hand. Your total must equal or exceed the target's <strong>Defense</strong>. Add <strong>+2 to its Defense if the province belongs to its own suit</strong> — patriots resist. Neutral provinces get no bonus.</p>
+<p>You may also spend Troops during an attack: <strong>1 Troop = +2</strong> to your total, declared before comparing. Troops spent for an attack boost are lost.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Your total vs. Defense</th><th>Outcome</th></tr></thead>
+  <tbody>
+    <tr><td>Total ≥ Defense + 5</td><td>Province taken. No losses.</td></tr>
+    <tr><td>Total ≥ Defense + 1</td><td>Province taken. Lose 1 Troop.</td></tr>
+    <tr><td>Total = Defense exactly</td><td>Province taken. Lose 2 Troops <em>(pyrrhic)</em>.</td></tr>
+    <tr><td>Total &lt; Defense</td><td>Attack fails. Lose 2 Troops and all cards played.</td></tr>
+  </tbody>
+</table>
+</div>
+<p>Captured provinces keep their Defense and Gold value. Enemy provinces you take are now simply yours — no bonus, no penalty. If an outcome would make you lose more Troops than you have, you lose what you have — Troops never go below 0.</p>
+<p><strong>Champions</strong> — When you conquer a province by playing a King as part of your attack total, name a Champion in your ledger. A Champion grants +2 to any Conquer total launched from a province adjacent to the Champion's province. Each province can hold one Champion; if the province falls to a rival, the Champion is lost.</p>
+
+<!-- ============ 7 ============ -->
+<h2 id="reckoning">7. The Reckoning</h2>
+<p>When the Fate Deck is exhausted:</p>
+<ol>
+  <li>Shuffle the discard pile into a new Fate Deck.</li>
+  <li><strong>Threat increases by 1</strong> (maximum 4). More cards flip at Night.</li>
+  <li>If you reshuffle while Threat is already 4, the campaign ends — score your holdings.</li>
+</ol>
+<p>If the discard pile is empty when the Fate Deck runs out, the campaign ends — score your holdings.</p>
+<p><strong>Entrenchment</strong> — At each Reckoning, before the new Fate Deck is shuffled, each rival adds +1 Defense to one of its border provinces (the one nearest your territory; maximum 8).</p>
+<div class="callout">
+  <span class="lbl">This is the clock</span>
+  <p>Every card you spend is a card that never reaches the discard pile to be reshuffled. Hoarding cards slows the Reckoning but starves your expansion. That tension is the whole game.</p>
+</div>
+
+<!-- ============ 8 ============ -->
+<h2 id="ending">8. Winning &amp; Losing</h2>
+<div class="scroll">
+<table>
+  <tbody>
+    <tr><td><strong>Victory</strong></td><td>Control <strong>14 of 20</strong> provinces, or reduce all four rivals to zero territory.</td></tr>
+    <tr><td><strong>Defeat</strong></td><td>Lose your last province, or any single rival controls <strong>10+</strong> provinces.</td></tr>
+    <tr><td><strong>Endgame score</strong></td><td>If the Reckoning ends the campaign: 1 point per province, 2 per fortified province, 1 per 5 Gold, 1 per 3 Troops. Record it as your dynasty's legacy.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ============ 9 ============ -->
+<h2 id="titles">9. Titles</h2>
+<p>At these milestones, claim a permanent boon and write it in the ledger.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Provinces held</th><th>Title</th><th>Boon</th></tr></thead>
+  <tbody>
+    <tr><td>6</td><td><strong>Warlord</strong></td><td>Hand size +1</td></tr>
+    <tr><td>9</td><td><strong>Sovereign</strong></td><td>All your provinces get +1 Defense permanently — including every province you conquer afterward</td></tr>
+    <tr><td>12</td><td><strong>Suzerain</strong></td><td>Draw 1 extra card at Dawn every Season</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ============ 10 ============ -->
+<h2 id="sample">10. Sample Season</h2>
+<div class="season">
+  <h4>Season One <span>— Threat 1</span></h4>
+  <p><em>You hold 5 cards, 4 Gold, 6 Troops, and 5 provinces. The <span class="s s-heart">♥</span> Sun Court sits two provinces from your border.</em></p>
+  <p><strong>Dawn:</strong> Collect 7 Gold (total 11). Draw to 5 cards.</p>
+  <p><strong>Day:</strong> You have 3 actions. You want the Neutral province of Greyford (Defense 3, value 1) on your flank. You play a <span class="s s-club">4♣</span> — total 4, beating Defense 3 by 1, so you take it and lose 1 Troop. You play a <span class="s s-diamond">9♦</span> on Conscript: gain 4 Troops. You spend 3 Gold to Fortify your capital to Defense 4. You keep three cards in hand for defense.</p>
+  <p><strong>Night:</strong> Threat is 1, so flip one card: <span class="s s-heart">Q♥</span>. The Sun Court attacks. Their nearest target is your new province, Greyford (Defense 3). Force 11 (Queen 10 + Threat 1). You play your held <span class="s s-spade">6♠</span> and spend 1 Troop (+2) — total 3 + 6 + 2 = 11. Repelled. You keep Greyford, but your hand is down to two cards.</p>
+  <p><strong>Lesson:</strong> Greyford cost you three cards and a Troop, and the <span class="s s-heart">Q♥</span> nearly took it anyway. Next Season, consider a Treaty with <span class="s s-heart">♥</span> before you expand toward the Sun Court.</p>
+</div>
+
+<!-- ============ 11 ============ -->
+<h2 id="variants">11. Variants</h2>
+<div class="scroll">
+<table>
+  <thead><tr><th>Variant</th><th>Rule</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Hard mode</strong></td><td>Threat starts at 2.</td></tr>
+    <tr><td><strong>Slow burn</strong></td><td>Rivals only act on a flip if the card's rank is 6 or higher. Longer, more builder-friendly campaign.</td></tr>
+    <tr><td><strong>Rival war</strong></td><td>When two rivals fight, the loser's card is set aside. The rival with the most set-aside cards is the Ascendant and flips twice at Night.</td></tr>
+    <tr><td><strong>Dynasty mode</strong></td><td>When a campaign ends, note your final province count. Next campaign, start with Troops equal to half that number (max 6). Your previous empire's ruins enrich the new world.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ============ 12 ============ -->
+<h2 id="ledger">12. Ledger Sheet</h2>
+<p>Copy this layout onto your ledger page. One sheet per campaign.</p>
+<div class="ledger">SEASON ___   THREAT ___   DECK: ___ cards left
+
+GOLD: ___    TROOPS: ___
+
+HAND:  ___  ___  ___  ___  ___  (___) (___)
+
+PROVINCES OWNED (name / def / gold)
+1. ____________ / __ / __
+2. ____________ / __ / __
+3. ____________ / __ / __
+4. ____________ / __ / __
+5. ____________ / __ / __
+6. ____________ / __ / __
+
+RIVALS            PROVINCES   TREATY USED?
+♠ ______________      __        ___
+♥ ______________      __        ___
+♦ ______________      __        ___
+♣ ______________      __        ___
+
+TITLES: ______________________</div>
+
+<footer>
+  <p><strong>Suzerain: The Fifty-Two Crowns</strong> — a solo world-conquest RPG for one deck, a pen, and paper.</p>
+  <p>Print this page for a table copy. Play it slow. Name your provinces.</p>
+</footer>
+
+</div>
+</body>
+</html>

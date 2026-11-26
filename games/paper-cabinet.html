@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Paper Cabinet — Seven Solitaire Games for One Deck and a Pen</title>
+<meta name="description" content="Seven deep, replayable solo pen-and-paper games played with one deck of cards.">
+<style>
+  :root{
+    --bg:#14110e; --panel:#1d1a16; --panel2:#242019; --line:#3a332b;
+    --ink:#efe7d7; --dim:#9a8f7c; --faint:#6b6154; --accent:#d9a441;
+    --spade:#cfc7b8; --heart:#e2606a; --diamond:#e0a13a; --club:#6fbf8a;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:ui-serif,Georgia,"Iowan Old Style","Palatino Linotype",serif;
+    line-height:1.65; font-size:17px;
+  }
+  .wrap{max-width:780px; margin:0 auto; padding:48px 22px 90px}
+
+  header{text-align:center; padding-bottom:32px; border-bottom:1px solid var(--line); margin-bottom:34px}
+  .kicker{
+    font-family:ui-sans-serif,system-ui,sans-serif; font-size:12px; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--accent); margin-bottom:14px;
+  }
+  h1{font-size:clamp(30px,7vw,46px); line-height:1.1; margin:0 0 10px; letter-spacing:.01em; font-weight:700}
+  h1 small{display:block; font-size:.4em; letter-spacing:.16em; text-transform:uppercase; color:var(--dim); font-weight:400; margin-top:14px}
+  .tagline{color:var(--dim); font-style:italic; margin:0; font-size:16px}
+
+  h2{
+    font-size:13px; letter-spacing:.18em; text-transform:uppercase;
+    font-family:ui-sans-serif,system-ui,sans-serif; color:var(--accent);
+    margin:56px 0 14px; padding-bottom:8px; border-bottom:1px solid var(--line);
+  }
+  h2 .num{color:var(--faint); margin-right:10px}
+  h3{font-size:18px; margin:24px 0 6px; letter-spacing:.01em}
+  h4{font-size:15px; margin:18px 0 4px; font-family:ui-sans-serif,system-ui,sans-serif; color:var(--dim); letter-spacing:.04em}
+  p{margin:0 0 14px}
+  ul,ol{margin:0 0 16px; padding-left:22px}
+  li{margin-bottom:7px}
+  strong{color:#fff6e4}
+  em{color:var(--dim)}
+  a{color:var(--accent)}
+
+  .meta{
+    display:flex; flex-wrap:wrap; gap:6px 18px; margin:0 0 18px;
+    font-family:ui-sans-serif,system-ui,sans-serif; font-size:12px;
+    letter-spacing:.06em; text-transform:uppercase; color:var(--faint);
+  }
+  .meta b{color:var(--dim); font-weight:600}
+
+  .scroll{overflow-x:auto; margin:0 0 20px; -webkit-overflow-scrolling:touch}
+  table{border-collapse:collapse; width:100%; font-size:15px; font-family:ui-sans-serif,system-ui,sans-serif}
+  th,td{text-align:left; padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+  th{color:var(--dim); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; font-weight:600}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:nth-child(odd){background:rgba(255,255,255,.018)}
+
+  .s{font-weight:700; font-size:1.05em}
+  .s-spade{color:var(--spade)} .s-heart{color:var(--heart)}
+  .s-diamond{color:var(--diamond)} .s-club{color:var(--club)}
+
+  .callout{
+    background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--accent);
+    border-radius:0 10px 10px 0; padding:16px 20px; margin:0 0 22px;
+  }
+  .callout p:last-child{margin-bottom:0}
+  .callout .lbl{
+    display:block; font-family:ui-sans-serif,system-ui,sans-serif; font-size:11px;
+    letter-spacing:.16em; text-transform:uppercase; color:var(--accent); margin-bottom:7px;
+  }
+
+  nav.toc{
+    background:var(--panel); border:1px solid var(--line); border-radius:12px;
+    padding:18px 22px; margin-bottom:10px;
+  }
+  nav.toc .lbl{
+    display:block; font-family:ui-sans-serif,system-ui,sans-serif; font-size:11px;
+    letter-spacing:.16em; text-transform:uppercase; color:var(--dim); margin-bottom:10px;
+  }
+  nav.toc ol{margin:0; padding-left:0; list-style:none; columns:2; column-gap:26px; font-size:14.5px}
+  nav.toc li{margin:0 0 6px; break-inside:avoid}
+  nav.toc a{color:var(--ink); text-decoration:none; border-bottom:1px solid transparent}
+  nav.toc a:hover{color:var(--accent); border-bottom-color:var(--accent)}
+  nav.toc .g{color:var(--faint); font-size:12px; display:block; letter-spacing:.04em}
+
+  .gamehead{
+    display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;
+    border-bottom:1px solid var(--line); padding-bottom:8px; margin:56px 0 4px;
+  }
+  .gamehead h2{margin:0; border:none; padding:0}
+  .gamehead .genre{
+    font-family:ui-sans-serif,system-ui,sans-serif; font-size:11px;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--faint);
+  }
+
+  .ledger{
+    background:var(--panel2); border:1px solid var(--line); border-radius:12px;
+    padding:20px 22px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:13px; line-height:2.1; color:var(--dim); white-space:pre-wrap;
+    overflow-x:auto;
+  }
+
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:0 22px}
+  @media(max-width:560px){.grid2{grid-template-columns:1fr} nav.toc ol{columns:1}}
+
+  footer{
+    margin-top:60px; padding-top:22px; border-top:1px solid var(--line);
+    text-align:center; color:var(--faint); font-size:13px;
+    font-family:ui-sans-serif,system-ui,sans-serif;
+  }
+
+  @media print{
+    :root{--bg:#fff;--panel:#fff;--panel2:#fff;--line:#ccc;--ink:#111;--dim:#555;--faint:#777;--accent:#8a5a00}
+    body{font-size:11pt; line-height:1.5}
+    .wrap{max-width:none; padding:0}
+    nav.toc{break-inside:avoid}
+    h2{break-after:avoid; margin-top:26px}
+    table,.callout,.ledger{break-inside:avoid}
+    tbody tr:nth-child(odd){background:none}
+    .s-spade{color:#111}.s-heart{color:#a00}.s-diamond{color:#a60}.s-club{color:#060}
+    .gamehead{break-before:page}
+    .gamehead:first-of-type{break-before:auto}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">Seven Solitaire Games</div>
+  <h1>The Paper Cabinet<small>One deck · one pen · one long hour</small></h1>
+  <p class="tagline">Seven different worlds, each playable alone with a deck of cards and a sheet of paper.</p>
+</header>
+
+<nav class="toc">
+  <span class="lbl">Contents</span>
+  <ol>
+    <li><a href="#lantern">1. The Lantern Keepers<span class="g">Survival horror</span></a></li>
+    <li><a href="#auction">2. The Auction of Small Gods<span class="g">Bidding &amp; economics</span></a></li>
+    <li><a href="#machine">3. The Machine<span class="g">Optimization puzzle</span></a></li>
+    <li><a href="#regent">4. The Regent's Ledger<span class="g">Political management</span></a></li>
+    <li><a href="#cartographer">5. The Cartographer's Lie<span class="g">Exploration &amp; risk</span></a></li>
+    <li><a href="#debt">6. The Debt<span class="g">Push-your-luck</span></a></li>
+    <li><a href="#gravekeeper">7. The Gravekeeper<span class="g">Quiet horror</span></a></li>
+    <li><a href="#quickref">Quick Reference<span class="g">All seven at a glance</span></a></li>
+    <li><a href="#tuning">Tuning &amp; Variants<span class="g">Make them harder or kinder</span></a></li>
+  </ol>
+</nav>
+
+<!-- ================= INTRO ================= -->
+<h2>Before You Begin</h2>
+<p>Every game here is <strong>solitaire</strong>: no second player, no game master. Each uses one standard 52-card deck (jokers removed) and a sheet of paper for tracking. A few ask for a pencil-drop or a deliberate "look away" moment to generate hidden information — that is the only unusual thing you will ever be asked to do.</p>
+<p>Unless a game says otherwise, <strong>rank values</strong> are: Ace = 11, Jack/Queen/King = 10, number cards at face value. Each game states its own exceptions.</p>
+<div class="callout">
+  <span class="lbl">How to use this page</span>
+  <p>Pick one game and play it to completion before reading the next. Each is a self-contained system; the fun is in learning its pressure points. Print the page (Ctrl/Cmd+P) for a clean paper copy — the dark theme strips out automatically.</p>
+</div>
+
+<!-- ================= 1. LANTERN ================= -->
+<div class="gamehead" id="lantern">
+  <h2><span class="num">01</span>The Lantern Keepers</h2>
+  <span class="genre">Survival horror</span>
+</div>
+<p class="meta"><span><b>Time:</b> 45–75 min</span><span><b>Track:</b> Oil · Wick · Nerve · Night</span><span><b>Difficulty:</b> Medium</span></p>
+
+<p>You are the keeper of a lighthouse on a bare rock. Relief comes in <strong>thirteen nights</strong>. Until then, the lamp must burn — or the ships will break on the reef, and their crews will come for you.</p>
+
+<h3>Setup</h3>
+<p>Shuffle the deck. On your ledger write:</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Track</th><th>Start</th><th>Meaning</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Oil</strong></td><td>16</td><td>Fuel for the lamp. Spent every night.</td></tr>
+    <tr><td><strong>Wick</strong></td><td>4</td><td>The lamp's integrity. At 0, the light dies.</td></tr>
+    <tr><td><strong>Nerve</strong></td><td>10</td><td>Your mind. At 0, you abandon the light.</td></tr>
+    <tr><td><strong>Night</strong></td><td>1</td><td>Thirteen nights to survive.</td></tr>
+  </tbody>
+</table>
+</div>
+<p>Draw <strong>5 cards</strong> into your hand. These are your <strong>Stores</strong> — preparations, spare parts, and courage. Maximum hand size is 5.</p>
+<p>If the deck runs out, shuffle the discard pile into a new deck.</p>
+
+<h3>Each Night</h3>
+<ol>
+  <li><strong>The Sky.</strong> Draw 3 cards face-up, left to right. These are tonight's events.</li>
+  <li><strong>The Watch.</strong> Resolve each card in order (see table below).</li>
+  <li><strong>The Light.</strong> Spend Oil equal to <strong>1 + floor((Night − 1) ÷ 4)</strong>. If you cannot, the light fails — you lose.</li>
+  <li><strong>The Wick.</strong> On nights 3, 6, 9, and 12, Wick −1. If Wick reaches 0, you lose.</li>
+  <li><strong>The Stores.</strong> Draw back up to 5 cards.</li>
+</ol>
+
+<h4>Event resolution</h4>
+<div class="scroll">
+<table>
+  <thead><tr><th>Suit</th><th>Event</th><th>Effect</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="s s-spade">♠</td><td><strong>Storm</strong></td>
+      <td>Lose Oil equal to ceil(rank ÷ 3). <em>Cancel</em> by discarding a Store card whose rank is ≥ this card.</td>
+    </tr>
+    <tr>
+      <td class="s s-heart">♥</td><td><strong>Visitor</strong></td>
+      <td>Choose <strong>Shelter</strong> or <strong>Bar</strong>. Shelter: draw 1 card — red means they are trustworthy (<strong>+2 Nerve</strong>); black means they are a threat (<strong>−2 Nerve, −1 Oil</strong>). Bar: <strong>−1 Nerve</strong>.</td>
+    </tr>
+    <tr>
+      <td class="s s-diamond">♦</td><td><strong>Supply</strong></td>
+      <td>Gain <strong>3 Oil</strong>, <em>or</em> draw 1 card.</td>
+    </tr>
+    <tr>
+      <td class="s s-club">♣</td><td><strong>Omen</strong></td>
+      <td>Lose <strong>1 Nerve</strong> (2 if the card is a face card).</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h4>Crisis</h4>
+<p>If <em>any</em> of the three event cards is a face card (J, Q, K), draw a fourth card immediately and resolve it after the others. A night with a face card is always a long night.</p>
+
+<h4>Between nights</h4>
+<p>You may take any of these actions during the day, as often as you can afford:</p>
+<ul>
+  <li><strong>Repair Wick:</strong> spend <strong>3 Oil</strong> → Wick +1 (max 6).</li>
+  <li><strong>Steady yourself:</strong> spend <strong>1 card</strong> from Stores → Nerve +1 (max 10).</li>
+  <li><strong>Scavenge:</strong> discard 2 cards → draw 2.</li>
+</ul>
+
+<h3>Winning &amp; Losing</h3>
+<div class="scroll">
+<table>
+  <tbody>
+    <tr><td><strong>Victory</strong></td><td>Survive all 13 nights with the lamp still burning.</td></tr>
+    <tr><td><strong>Defeat</strong></td><td>Oil insufficient at The Light, Wick reaches 0, or Nerve reaches 0.</td></tr>
+    <tr><td><strong>Score</strong></td><td>Oil + Wick + Nerve remaining.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout">
+  <span class="lbl">The pressure</span>
+  <p>Oil is the obvious resource, but Nerve is the hidden one. Sheltering visitors is the only reliable way to <em>gain</em> Nerve — and it is a coin flip. A keeper who turns everyone away dies sane and alone.</p>
+</div>
+
+<!-- ================= 2. AUCTION ================= -->
+<div class="gamehead" id="auction">
+  <h2><span class="num">02</span>The Auction of Small Gods</h2>
+  <span class="genre">Bidding &amp; economics</span>
+</div>
+<p class="meta"><span><b>Time:</b> 30–45 min</span><span><b>Track:</b> Coins · Lots won · Rival purses</span><span><b>Difficulty:</b> Medium</span></p>
+
+<p>Five rounds. Twenty lots. Three rivals with deeper pockets and stranger tastes than yours. You are a collector of minor deities, and tonight the auction house will decide who among you is a connoisseur and who is merely rich.</p>
+
+<h3>Setup</h3>
+<p>Shuffle the deck. On your ledger write:</p>
+<ul>
+  <li><strong>Your Coins:</strong> 40</li>
+  <li><strong>The Widow's Purse:</strong> 55 — she bids high on <span class="s s-heart">♥</span> and <span class="s s-diamond">♦</span> (red suits).</li>
+  <li><strong>The Colonel's Purse:</strong> 55 — he bids high on <span class="s s-spade">♠</span> and <span class="s s-club">♣</span> (black suits).</li>
+  <li><strong>The Child's Purse:</strong> 45 — she bids high on face cards and aces.</li>
+</ul>
+<p>Draw a <strong>5×4 grid</strong> on your paper. That is the auction floor. You will record each lot you win in it.</p>
+
+<h3>The Rounds</h3>
+<p>Play <strong>5 rounds</strong>. Each round, reveal <strong>4 lots</strong> (draw 4 cards face-up). Resolve them one at a time, in the order drawn.</p>
+<p><strong>The Catalog.</strong> Once per round, before bidding on the current lot, you may peek at the next lot in the deck.</p>
+<p>If the deck runs out, shuffle the discard pile into a new deck.</p>
+
+<h4>Bidding on a lot</h4>
+<ol>
+  <li>Each rival flips one card from the deck. Their bid is that card's rank value plus a modifier:</li>
+</ol>
+<div class="scroll">
+<table>
+  <thead><tr><th>Rival</th><th>Modifier</th></tr></thead>
+  <tbody>
+    <tr><td><strong>The Widow</strong></td><td>+3 if the lot is <span class="s s-heart">♥</span> or <span class="s s-diamond">♦</span>; −2 if <span class="s s-spade">♠</span> or <span class="s s-club">♣</span>.</td></tr>
+    <tr><td><strong>The Colonel</strong></td><td>+3 if the lot is <span class="s s-spade">♠</span> or <span class="s s-club">♣</span>; −2 if <span class="s s-heart">♥</span> or <span class="s s-diamond">♦</span>.</td></tr>
+    <tr><td><strong>The Child</strong></td><td>+4 if the lot is a face card or ace; −2 otherwise.</td></tr>
+  </tbody>
+</table>
+</div>
+<ol start="2">
+  <li>A rival bids <strong>0</strong> (passes) if the result is below 1, or if their Purse cannot cover the bid.</li>
+  <li>You bid any number of Coins, <strong>minimum 1</strong>. You may pass.</li>
+  <li>Highest bid wins. <strong>Ties go to you.</strong> The winner pays their bid — you to the bank, the rival from their Purse.</li>
+  <li>Record the lot in your grid, or note it under the rival's tally.</li>
+</ol>
+
+<h3>Scoring</h3>
+<p>After Round 5, score your collection:</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Holding</th><th>Points</th></tr></thead>
+  <tbody>
+    <tr><td>Each lot won</td><td>Its rank value (A = 14, K = 13, Q = 12, J = 11)</td></tr>
+    <tr><td>Set of 3+ of the same suit</td><td>+10</td></tr>
+    <tr><td>Pair of the same rank</td><td>+5 per pair</td></tr>
+    <tr><td>Exactly one 9</td><td>+5 <em>(the Nine of Cups is the collector's lucky card)</em></td></tr>
+  </tbody>
+</table>
+</div>
+<p>Each rival scores the same way, but counts only lots they won. Compare your total to the highest-scoring rival.</p>
+
+<div class="scroll">
+<table>
+  <tbody>
+    <tr><td><strong>Victory</strong></td><td>Your score exceeds the highest rival's score.</td></tr>
+    <tr><td><strong>Defeat</strong></td><td>Any rival outscores you, or you end with 0 Coins and fewer than 3 lots.</td></tr>
+    <tr><td><strong>Score</strong></td><td>Your total minus the highest rival's total. Positive is a win; record the margin.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout">
+  <span class="lbl">The pressure</span>
+  <p>You cannot win every lot. The Widow will outbid you on hearts, the Colonel on spades, and the Child will steal any ace you truly want. Your job is to find the <em>cheap</em> lots they ignore — the off-suit cards that still complete your sets — and to know when a lot is a trap.</p>
+</div>
+
+<!-- ================= 3. MACHINE ================= -->
+<div class="gamehead" id="machine">
+  <h2><span class="num">03</span>The Machine</h2>
+  <span class="genre">Optimization puzzle</span>
+</div>
+<p class="meta"><span><b>Time:</b> 20–40 min</span><span><b>Track:</b> Flow · Target · Slots · Turns</span><span><b>Difficulty:</b> Hard (mathy)</span></p>
+
+<p>You are an inventor with a workbench, a blueprint, and a deadline. Assemble four components into a working machine that produces exactly the output the patron demands. Miss the target and the patron walks — and takes the funding with him.</p>
+
+<h3>Setup</h3>
+<p><strong>Rank values in The Machine:</strong> Jack = 11, Queen = 12, King = 13, Ace = 11. (This is the one game in the Cabinet that uses these values — everywhere else, face cards are 10.)</p>
+<ol>
+  <li><strong>Draw the Target:</strong> flip one card. Target = its rank value × 6. <em>(A 7 → 42. A King → 78. An Ace → 66.)</em> Write it down.</li>
+  <li><strong>Start Flow:</strong> 12. This is the output of your boiler before any components.</li>
+  <li><strong>Workbench:</strong> deal <strong>8 cards face-up</strong>. These are your available components.</li>
+  <li><strong>Slots:</strong> draw 4 empty boxes in a row on your paper. Components are installed left to right.</li>
+  <li><strong>Turns:</strong> you have <strong>8 turns</strong>.</li>
+</ol>
+
+<h3>The Components</h3>
+<p>Each card is a component. Its suit is its <strong>operation</strong>; its rank is its <strong>value</strong>.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Suit</th><th>Component</th><th>Operation on Flow</th></tr></thead>
+  <tbody>
+    <tr><td class="s s-spade">♠</td><td><strong>Gear</strong></td><td>Flow <strong>+ rank</strong></td></tr>
+    <tr><td class="s s-heart">♥</td><td><strong>Spring</strong></td><td>Flow <strong>× (rank ÷ 4, rounded down, min 1)</strong> — so 4–7 = ×1, 8–11 = ×2, 12–13 = ×3</td></tr>
+    <tr><td class="s s-diamond">♦</td><td><strong>Conduit</strong></td><td>Flow <strong>− rank</strong></td></tr>
+    <tr><td class="s s-club">♣</td><td><strong>Valve</strong></td><td>Flow <strong>÷ (rank ÷ 4, rounded up, min 1)</strong> — so 2–4 = ÷1, 5–8 = ÷2, 9–12 = ÷3, 13 = ÷4</td></tr>
+  </tbody>
+</table>
+</div>
+<p>Operations apply in slot order, left to right. Round <em>down</em> after every division, and treat any negative flow as 0.</p>
+
+<h3>Each Turn</h3>
+<p>Choose <strong>one</strong>:</p>
+<ul>
+  <li><strong>Install:</strong> take a card from the Workbench and place it in the next empty slot. <strong>Once installed, it is locked</strong> — it cannot be moved or swapped.</li>
+  <li><strong>Scrap:</strong> discard up to 2 cards from the Workbench and redraw to 8.</li>
+</ul>
+<p>You may also spend a turn doing nothing, if you prefer to keep the Workbench intact.</p>
+<p><strong>The Spare Part.</strong> Once per campaign, hold one component in reserve: a fifth card kept aside. Before resolution, you may swap it into any one slot, discarding the component it replaces.</p>
+
+<h3>Resolution</h3>
+<p>After all four slots are filled, calculate the final Flow through the machine. Compare it to the Target:</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Result</th><th>Outcome</th></tr></thead>
+  <tbody>
+    <tr><td>Final Flow <strong>exactly equals</strong> Target</td><td><strong>Masterwork.</strong> Score 3.</td></tr>
+    <tr><td>Within <strong>±3</strong> of Target</td><td><strong>Success.</strong> Score 2.</td></tr>
+    <tr><td>Within <strong>±8</strong> of Target</td><td><strong>Partial.</strong> Score 1.</td></tr>
+    <tr><td>Further than 8 away</td><td><strong>Failure.</strong> Score 0.</td></tr>
+  </tbody>
+</table>
+</div>
+<p>If you fill all four slots before using all 8 turns, you may not undo. The machine is built; you live with it.</p>
+<p>If 8 turns end with unfilled slots, the machine is incomplete: score 0 for that machine.</p>
+
+<h3>Winning &amp; Losing</h3>
+<p>There is no opponent — only the target and your own arithmetic. A campaign is <strong>three machines in a row</strong>. Add your scores:</p>
+<div class="scroll">
+<table>
+  <tbody>
+    <tr><td><strong>7–9</strong></td><td>Master inventor. Your name enters the guild ledger.</td></tr>
+    <tr><td><strong>4–6</strong></td><td>Respectable. The patron pays, but grumbles.</td></tr>
+    <tr><td><strong>1–3</strong></td><td>You keep the workshop, barely.</td></tr>
+    <tr><td><strong>0</strong></td><td>Ruined. The patron takes the building.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout">
+  <span class="lbl">The pressure</span>
+  <p>Because components lock once installed, the game is about <em>sequencing</em>, not just arithmetic. A ×3 Spring placed early multiplies everything after it; the same Spring placed late multiplies almost nothing. Scrapping is your only undo — and it costs a turn you may not have.</p>
+</div>
+
+<!-- ================= 4. REGENT ================= -->
+<div class="gamehead" id="regent">
+  <h2><span class="num">04</span>The Regent's Ledger</h2>
+  <span class="genre">Political management</span>
+</div>
+<p class="meta"><span><b>Time:</b> 40–60 min</span><span><b>Track:</b> 4 Loyalties · Treasury · Month · Hand</span><span><b>Difficulty:</b> Medium–Hard</span></p>
+
+<p>You govern in the name of a child king. For twelve months you must hold four factions together, spend a treasury that is never quite enough, and survive until the boy comes of age. The kingdom does not care that you mean well.</p>
+
+<h3>Setup</h3>
+<p>Shuffle the deck. On your ledger write:</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Faction</th><th>Suit</th><th>Loyalty</th></tr></thead>
+  <tbody>
+    <tr><td><strong>The Crown</strong> <em>(the boy king's court)</em></td><td class="s s-spade">♠</td><td>7</td></tr>
+    <tr><td><strong>The Church</strong></td><td class="s s-heart">♥</td><td>7</td></tr>
+    <tr><td><strong>The Guilds</strong></td><td class="s s-diamond">♦</td><td>7</td></tr>
+    <tr><td><strong>The People</strong></td><td class="s s-club">♣</td><td>7</td></tr>
+  </tbody>
+</table>
+</div>
+<p><strong>Treasury:</strong> 20 Gold. <strong>Month:</strong> 1. <strong>Hand:</strong> 0 cards (max 3).</p>
+
+<h3>Each Month</h3>
+<ol>
+  <li><strong>Income.</strong> Gain 5 Gold, minus 1 for each faction below Loyalty 3.</li>
+  <li><strong>The Council.</strong> Draw 2 cards face-up. Each card is an issue from the faction of its suit — two issues may hit the same faction in one month.</li>
+  <li><strong>Resolve each issue</strong> — choose one:</li>
+</ol>
+<div class="scroll">
+<table>
+  <thead><tr><th>Choice</th><th>Cost / Effect</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Pay it off</strong></td><td>Spend Gold equal to ceil(rank ÷ 2). Loyalty unchanged.</td></tr>
+    <tr><td><strong>Appease</strong></td><td>Discard a hand card of the <em>same suit</em>. Loyalty unchanged, no Gold spent.</td></tr>
+    <tr><td><strong>Ignore it</strong></td><td>Loyalty −1 (−2 if the card is a face card).</td></tr>
+  </tbody>
+</table>
+</div>
+<ol start="4">
+  <li><strong>The Petition.</strong> Draw 1 card into your hand (max 3). Then choose: <strong>Grant</strong> it — gain 1 Loyalty with that suit's faction, spend 2 Gold — or <strong>Refuse</strong> — that faction loses 1 Loyalty.</li>
+  <li><strong>Advance the month.</strong></li>
+</ol>
+
+<h3>Special Months</h3>
+<div class="scroll">
+<table>
+  <thead><tr><th>When</th><th>Event</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Months 4, 8, 12</strong></td><td><strong>Crisis.</strong> Draw 1 extra card. All four factions lose 1 Loyalty unless you spend 5 Gold.</td></tr>
+    <tr><td><strong>Month 6</strong></td><td><strong>The King's Demand.</strong> Draw a card. Grant it (spend 3 Gold, Crown +1) or refuse (Crown −2).</td></tr>
+    <tr><td><strong>Month 12</strong></td><td><strong>Coming of Age.</strong> If the Crown's Loyalty is below 6, the king purges you — you lose, regardless of anything else.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>A Marriage.</strong> Once per game, spend 8 Gold to marry the Crown to another faction: Crown +2 Loyalty and that faction +1 Loyalty.</p>
+
+<h3>Winning &amp; Losing</h3>
+<div class="scroll">
+<table>
+  <tbody>
+    <tr><td><strong>Victory</strong></td><td>Survive 12 months with all four factions above 0 <em>and</em> Crown Loyalty at least 6.</td></tr>
+    <tr><td><strong>Defeat</strong></td><td>Any faction reaches 0 (you are deposed), or the Month 12 check fails.</td></tr>
+    <tr><td><strong>Score</strong></td><td>Total final Loyalty + (Treasury ÷ 2, rounded down).</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout">
+  <span class="lbl">The pressure</span>
+  <p>You cannot pay every issue. The treasury is deliberately too small. The skill is in choosing which faction to <em>let</em> grumble — and remembering that the Crown is the one that can end you at Month 12, no matter how beloved you are elsewhere.</p>
+</div>
+
+<!-- ================= 5. CARTOGRAPHER ================= -->
+<div class="gamehead" id="cartographer">
+  <h2><span class="num">05</span>The Cartographer's Lie</h2>
+  <span class="genre">Exploration &amp; risk</span>
+</div>
+<p class="meta"><span><b>Time:</b> 30–50 min</span><span><b>Track:</b> Provisions · Position · Map grid</span><span><b>Difficulty:</b> Medium</span></p>
+
+<p>You bought a map of an island from a man who smiled too much. The treasure is real — you have seen the coin he was paid with. But some of the landmarks on his map are lies, and every false landmark costs you time you cannot spare.</p>
+
+<h3>Setup</h3>
+<ol>
+  <li><strong>Build the island.</strong> Deal <strong>36 cards face-down</strong> in a <strong>6×6 grid</strong>. Do not look at them. This is the island.</li>
+  <li>Set aside the remaining 16 cards, face-down, out of play.</li>
+  <li>Mark your <strong>Start</strong> at the bottom-left cell and the <strong>Treasure</strong> at the top-right cell.</li>
+  <li>Write <strong>Provisions: 20</strong> on your ledger.</li>
+</ol>
+
+<h3>The Rule of the Map</h3>
+<p>A cell is a <strong>false landmark</strong> if its card is a <span class="s s-spade">♠</span> of rank 2–7. There are exactly six such cards in the deck. Everything else is real terrain.</p>
+
+<h3>Each Turn</h3>
+<p>Choose one:</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Action</th><th>Cost</th><th>Effect</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Move</strong></td>
+      <td>1 Provision</td>
+      <td>Step to an orthogonally adjacent cell and <strong>flip its card</strong>. If it is a false landmark (<span class="s s-spade">♠</span> 2–7), lose an additional <strong>3 Provisions</strong> — you have wasted time at a place that does not exist.</td>
+    </tr>
+    <tr>
+      <td><strong>Probe</strong></td>
+      <td>1 Provision</td>
+      <td>Flip an adjacent cell's card <em>without moving into it</em>. You learn whether it is safe, but you do not travel there. The card stays face-up.</td>
+    </tr>
+    <tr>
+      <td><strong>Retrace</strong></td>
+      <td>2 Provisions</td>
+      <td>Step onto a cell you have already visited. (Without this, a wrong turn can strand you with no legal move.)</td>
+    </tr>
+    <tr>
+      <td><strong>Study the Map</strong></td>
+      <td>1 Provision</td>
+      <td>Look at any one face-down card anywhere on the island, then turn it face-down again.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<p>You may never move diagonally. You may not move onto a cell you have already visited. A false landmark you have already flipped costs nothing more to step on (the danger is spent).</p>
+
+<h3>Winning &amp; Losing</h3>
+<div class="scroll">
+<table>
+  <tbody>
+    <tr><td><strong>Victory</strong></td><td>Reach the Treasure cell with Provisions above 0.</td></tr>
+    <tr><td><strong>Defeat</strong></td><td>Provisions reach 0 before you reach the Treasure. You are stranded.</td></tr>
+    <tr><td><strong>Score</strong></td><td>Provisions remaining × 10, plus <strong>+5</strong> for each false landmark you correctly probed <em>before</em> stepping on it.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Optional Deduction Layer</h3>
+<p>If you want a puzzle rather than a gamble, add this rule: <strong>false landmarks never sit orthogonally adjacent to one another.</strong> (This is not guaranteed by the deal, so it only works if you enforce it during setup: after dealing the 36 cards, secretly move any adjacent ♠ 2–7 cards apart — it is fine to look only at the spades to do this.)</p>
+<p>With this rule, every false landmark you find tells you something: its four orthogonal neighbors are <em>known safe</em>. Mark them. The map becomes a logic puzzle as well as a race.</p>
+
+<div class="callout">
+  <span class="lbl">The pressure</span>
+  <p>The shortest path from corner to corner is 10 moves. You have 20 Provisions. That is 10 spare — enough for three false landmarks <em>or</em> ten probes, but not both. The game is the negotiation between knowing and going.</p>
+</div>
+
+<!-- ================= 6. DEBT ================= -->
+<div class="gamehead" id="debt">
+  <h2><span class="num">06</span>The Debt</h2>
+  <span class="genre">Push-your-luck</span>
+</div>
+<p class="meta"><span><b>Time:</b> 30–45 min</span><span><b>Track:</b> Gold · Health · Day</span><span><b>Difficulty:</b> Medium</span></p>
+
+<p>You owe a man named Corvo eighty gold, and Corvo does not extend credit. You have ten days. Every day you can work honestly, gamble stupidly, hustle dangerously, or hide. Corvo's collectors are always somewhere in the city.</p>
+
+<h3>Setup</h3>
+<p>Shuffle the deck. On your ledger write:</p>
+<ul>
+  <li><strong>Gold:</strong> 0</li>
+  <li><strong>Health:</strong> 10</li>
+  <li><strong>Day:</strong> 1</li>
+  <li><strong>Debt:</strong> 80 Gold, due at the end of Day 10.</li>
+</ul>
+
+<h3>Each Day</h3>
+<ol>
+  <li><strong>Choose one action</strong> (see table).</li>
+  <li><strong>The Collector.</strong> Unless you <em>Hid</em>, draw 1 card. If it is <span class="s s-spade">♠</span> or <span class="s s-club">♣</span>, a collector finds you: lose Health equal to ceil(rank ÷ 3). <em>Rank values: Ace = 11, face cards = 10.</em></li>
+  <li><strong>Advance the day.</strong></li>
+</ol>
+<p>If the deck runs out, shuffle the discard pile into a new deck.</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Action</th><th>Effect</th><th>Risk</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Work</strong></td>
+      <td>Gain <strong>7 Gold</strong>.</td>
+      <td>None beyond the normal collector draw.</td>
+    </tr>
+    <tr>
+      <td><strong>Gamble</strong></td>
+      <td>Draw 3 cards. If the sum of <span class="s s-heart">♥</span><span class="s s-diamond">♦</span> ranks exceeds the sum of <span class="s s-spade">♠</span><span class="s s-club">♣</span> ranks, gain <strong>20 Gold</strong>. If black is higher, lose <strong>12 Gold</strong> (minimum 0). On a tie, gain <strong>5 Gold</strong>.</td>
+      <td>Normal collector draw.</td>
+    </tr>
+    <tr>
+      <td><strong>Hustle</strong></td>
+      <td>Draw 2 cards. Gain Gold equal to their <strong>combined rank values</strong>. If <em>either</em> card is <span class="s s-spade">♠</span> or <span class="s s-club">♣</span>, a collector notices — <strong>draw a second collector card</strong> this evening.</td>
+      <td>High risk of violence.</td>
+    </tr>
+    <tr>
+      <td><strong>Hide</strong></td>
+      <td>Gain nothing. <strong>Skip the collector draw entirely.</strong></td>
+      <td>None — but the clock still moves.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>A Friend in Low Places.</strong> Once per game, ignore one collector hit entirely.</p>
+
+<h3>The End</h3>
+<div class="scroll">
+<table>
+  <tbody>
+    <tr><td><strong>Victory</strong></td><td>At the end of Day 10, you hold at least 80 Gold. You pay Corvo and walk away.</td></tr>
+    <tr><td><strong>Defeat</strong></td><td>Health reaches 0 — the collectors find you first. Or Day 10 ends with less than 80 Gold.</td></tr>
+    <tr><td><strong>Skip Town</strong></td><td>At any time, you may abandon the debt and flee. The game ends immediately. Score = your current Gold. You are a fugitive, and you did not win — but you survived.</td></tr>
+    <tr><td><strong>Score (win)</strong></td><td>Gold remaining after paying the debt, plus Health remaining × 2.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout">
+  <span class="lbl">The pressure</span>
+  <p>Working every day for ten days yields 70 gold — not nearly enough. You <em>must</em> gamble or hustle, and both cost you Health. The real question each morning is not "how do I make money" but "how much of myself am I willing to spend to make it faster."</p>
+</div>
+
+<!-- ================= 7. GRAVEKEEPER ================= -->
+<div class="gamehead" id="gravekeeper">
+  <h2><span class="num">07</span>The Gravekeeper</h2>
+  <span class="genre">Quiet horror</span>
+</div>
+<p class="meta"><span><b>Time:</b> 20–30 min</span><span><b>Track:</b> Rest · Dread · Day</span><span><b>Difficulty:</b> Medium</span></p>
+
+<p>You are the keeper of a small churchyard. The dead arrive, one by one, and each must be buried where they belong. Bury them right and they sleep. Bury them wrong and they linger — and a yard full of the restless does not stay quiet for long.</p>
+
+<h3>Setup</h3>
+<p>Shuffle the deck. On your ledger write:</p>
+<ul>
+  <li><strong>Rest:</strong> 6</li>
+  <li><strong>Dread:</strong> 0</li>
+  <li><strong>Day:</strong> 1</li>
+</ul>
+<p>Draw a <strong>3×3 grid</strong> of empty plots on your paper. That is the churchyard.</p>
+<p><strong>Set the patron suits.</strong> Draw 3 cards, one per row from top to bottom — the suit of each card is that row's patron suit, fixed for the whole game. Write each suit at its row's edge, then shuffle the three cards back into the deck.</p>
+
+<h3>Each Day</h3>
+<p>Play <strong>9 days</strong>, one card per day, until all nine plots are filled.</p>
+<ol>
+  <li><strong>One of the dead arrives.</strong> Draw 1 card.</li>
+  <li><strong>Bury them.</strong> Place the card in any empty plot and write its rank and suit in the plot.</li>
+  <li><strong>Judge the burial.</strong> A card placed in a row whose patron suit matches its own suit is <strong>at rest</strong>. A card placed in a row of a different suit is <strong>restless</strong>: <strong>+1 Dread</strong> immediately.</li>
+  <li><strong>Face cards.</strong> A face card (J, Q, K) placed in a matching row gives <strong>+1 Rest</strong> — the village is grateful. A face card in a mismatched row gives <strong>+2 Dread</strong> instead of +1.</li>
+  <li><strong>Advance the day.</strong></li>
+</ol>
+
+<h4>The Rites</h4>
+<p>Once per day, after placing, you may use <strong>one</strong> rite:</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Rite</th><th>Effect</th></tr></thead>
+  <tbody>
+    <tr><td><strong>The Stone</strong></td><td>Move one placed card to a different empty plot. Judge it again against its new row: if it now rests, remove 1 Dread gained from that card; if it is now restless, gain Dread as normal (2 for a face card).</td></tr>
+    <tr><td><strong>The Song</strong></td><td>Look at the next card in the deck before tomorrow. You may not change it, only see it.</td></tr>
+    <tr><td><strong>The Coin</strong></td><td>Spend 1 Rest (you must have at least 1): remove today's card from its plot, discard it, and draw a replacement to place in the same plot instead. Any Dread gained from the removed card is forgiven; the replacement is judged fresh.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Winning &amp; Losing</h3>
+<div class="scroll">
+<table>
+  <tbody>
+    <tr><td><strong>After Day 9</strong></td><td>All nine plots are filled. Read the Dread:</td></tr>
+    <tr><td><strong>Dread 0–2</strong></td><td>&ldquo;The yard sleeps soundly.&rdquo; You win.</td></tr>
+    <tr><td><strong>Dread 3–5</strong></td><td>&ldquo;They stir, but they stay down.&rdquo; You win, uneasily.</td></tr>
+    <tr><td><strong>Dread 6 or more</strong></td><td>The dead rise. You lose.</td></tr>
+    <tr><td><strong>Score</strong></td><td>Rest − Dread.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout">
+  <span class="lbl">The pressure</span>
+  <p>Nine cards, four suits, three rows — one suit will always be wrong somewhere. The game is deciding which row to sacrifice before the deck decides for you.</p>
+</div>
+
+<!-- ================= QUICK REF ================= -->
+<h2 id="quickref">Quick Reference</h2>
+<div class="scroll">
+<table>
+  <thead>
+    <tr><th>Game</th><th>You track</th><th>You win by</th><th>The hook</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Lantern Keepers</strong></td>
+      <td>Oil · Wick · Nerve · Night</td>
+      <td>Surviving 13 nights</td>
+      <td>Fuel vs. sanity — you can't save both</td>
+    </tr>
+    <tr>
+      <td><strong>Auction of Small Gods</strong></td>
+      <td>Coins · Lots · Rival purses</td>
+      <td>Outscoring all three rivals</td>
+      <td>Every rival wants what you want, for different reasons</td>
+    </tr>
+    <tr>
+      <td><strong>The Machine</strong></td>
+      <td>Flow · Target · Slots · Turns</td>
+      <td>Hitting the target within ±3</td>
+      <td>Locked components — no undo, only regret</td>
+    </tr>
+    <tr>
+      <td><strong>Regent's Ledger</strong></td>
+      <td>4 Loyalties · Treasury · Month</td>
+      <td>Surviving 12 months with the Crown intact</td>
+      <td>You cannot afford to be loved by everyone</td>
+    </tr>
+    <tr>
+      <td><strong>Cartographer's Lie</strong></td>
+      <td>Provisions · Position · 6×6 map</td>
+      <td>Reaching the treasure alive</td>
+      <td>Probe or move — knowing costs the same as going</td>
+    </tr>
+    <tr>
+      <td><strong>The Debt</strong></td>
+      <td>Gold · Health · Day</td>
+      <td>Holding 80 gold on Day 10</td>
+      <td>Honest work doesn't pay enough, and crime costs blood</td>
+    </tr>
+    <tr>
+      <td><strong>The Gravekeeper</strong></td>
+      <td>Rest · Dread · Day</td>
+      <td>Finishing nine days with Dread below 6</td>
+      <td>Nine cards, four suits, three rows — one suit is always wrong</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ================= TUNING ================= -->
+<h2 id="tuning">Tuning &amp; Variants</h2>
+<p>Every game here is deliberately tuned to be <em>winnable but not easy</em> on a first play. If a game feels too harsh or too soft, adjust one number — never more than one at a time.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Game</th><th>Make it harder</th><th>Make it kinder</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Lantern Keepers</strong></td><td>Start Oil 12; Wick 3</td><td>Start Oil 18; sheltering a red visitor gives +3 Nerve</td></tr>
+    <tr><td><strong>Auction</strong></td><td>Rival purses 65 / 65 / 55</td><td>Your Coins 50</td></tr>
+    <tr><td><strong>The Machine</strong></td><td>Target = rank × 7; only ±1 counts</td><td>Target = rank × 5; ±5 counts</td></tr>
+    <tr><td><strong>Regent's Ledger</strong></td><td>Start Loyalty 6; income 4</td><td>Start Loyalty 8; income 6</td></tr>
+    <tr><td><strong>Cartographer</strong></td><td>Provisions 14</td><td>Provisions 26; add the deduction rule</td></tr>
+    <tr><td><strong>The Debt</strong></td><td>Debt 100; Work pays 5</td><td>Debt 70; Work pays 8</td></tr>
+    <tr><td><strong>Gravekeeper</strong></td><td>Dread limit 5</td><td>Start Rest 8</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Campaign Mode</h3>
+<p>For a longer session, link three games of the <em>same</em> type into a campaign:</p>
+<ul>
+  <li><strong>Lantern ×3:</strong> each survival grants +2 starting Oil and +1 starting Wick for the next.</li>
+  <li><strong>Auction ×3:</strong> carry your Coins forward; rivals reset their purses each night.</li>
+  <li><strong>Machine ×3:</strong> your score total is your campaign score; a Masterwork grants an extra turn next machine.</li>
+  <li><strong>Regent ×3:</strong> each successful year grants +2 starting Treasury for the next.</li>
+  <li><strong>Cartographer ×3:</strong> each treasure recovered adds +3 Provisions to the next expedition.</li>
+  <li><strong>Debt ×3:</strong> each paid debt reduces the next by 20 Gold, but Corvo remembers — collectors deal +1 damage next time.</li>
+  <li><strong>Gravekeeper ×3:</strong> each quiet yard grants +1 starting Rest for the next.</li>
+</ul>
+
+<footer>
+  <p><strong>The Paper Cabinet</strong> — seven solitaire games for one deck, one pen, and one long hour.</p>
+  <p>Print this page for a table copy. Play them slow. Keep a score log in the back of the notebook.</p>
+</footer>
+
+</div>
+</body>
+</html>

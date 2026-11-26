@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Paper Cabinet | LeonLink Blog</title>
+<meta name="description" content="The Paper Table, Post #4: The Paper Cabinet — seven solitaire games in one box, built from one deck of cards, pen and paper. Seven different ways to lose an evening.">
+<link rel="canonical" href="https://www.leonlink.net/journal/paper-cabinet.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Paper Cabinet — The Paper Table, Post #4">
+<meta property="og:description" content="Seven solitaire games in one box. One deck, one pen, seven different ways to lose an evening.">
+<meta property="og:url" content="https://www.leonlink.net/journal/paper-cabinet.html">
+<meta property="og:image" content="https://www.leonlink.net/img/cards/paper-cabinet.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#04060a">
+<link rel="icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+
+:root{--bg:#04060a;--pan:#0b1018d9;--ink:#e6edf5;--mut:#8e9bb0;--g:#39ff88;--c:#22f0ff;--p:#ff3dc8;--y:#ffe14d;--line:#1b2636;--line2:#26364c}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:60px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 Georgia,"Iowan Old Style",serif;padding-bottom:env(safe-area-inset-bottom)}
+#radar{position:fixed;inset:0;width:100%;height:100%;z-index:-1;opacity:.55}
+#rain{position:fixed;inset:0;width:100%;height:100%;z-index:-1;opacity:.5;pointer-events:none}
+a{color:var(--c)}
+header{position:sticky;top:0;z-index:5;background:#04060ae0;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px;padding:10px 16px;font:600 .86rem "DM Sans",system-ui,sans-serif;overflow-x:auto;scrollbar-width:none;white-space:nowrap}
+header::-webkit-scrollbar{display:none}
+header .home{color:var(--g);text-decoration:none;text-shadow:0 0 10px #39ff8899}header a{color:var(--mut);text-decoration:none}header a:hover{color:var(--ink)}
+main{max-width:700px;margin:0 auto;padding:0 18px 70px}
+section{padding:54px 0 6px}
+.kick{font:700 .74rem "DM Sans",system-ui;letter-spacing:.14em;text-transform:uppercase;color:var(--p);text-shadow:0 0 12px #ff3dc888}
+h1{font-family:"Fraunces",Georgia,serif;font-size:clamp(2.4rem,9vw,3.6rem);line-height:1.02;margin:.25em 0 .3em;letter-spacing:-.01em}
+h1 span{color:var(--g);text-shadow:0 0 22px #39ff8877}
+h2{font-family:"Fraunces",Georgia,serif;font-size:1.6rem;line-height:1.2;margin:0 0 .4em;color:var(--g);text-shadow:0 0 16px #39ff8855}
+h3{font-size:1.15rem;margin:1.4em 0 .3em}
+p.n,.n{color:var(--mut);font-style:italic}
+.ui,button{font-family:"DM Sans",system-ui,sans-serif}
+.card{background:var(--pan);border:1px solid var(--line2);border-radius:14px;padding:16px;margin:16px 0;box-shadow:0 0 0 1px #39ff880d,0 10px 30px #0008}
+input[type=range]{width:100%;accent-color:var(--g);height:44px;margin:4px 0}
+.tabs{display:flex;gap:8px;margin:10px 0;overflow-x:auto;scrollbar-width:none;padding:2px 2px 6px;scroll-snap-type:x proximity}
+.tabs::-webkit-scrollbar{display:none}
+.tabs a{display:inline-block;background:#0b1018;border:1px solid var(--line2);color:var(--ink);border-radius:999px;padding:10px 16px;min-height:44px;font-size:.9rem;text-decoration:none;white-space:nowrap;scroll-snap-align:start;font-family:"DM Sans",system-ui,sans-serif}
+.tabs a:hover{border-color:var(--g)}
+button{background:#0b1018;border:1px solid var(--line2);color:var(--ink);border-radius:999px;padding:10px 16px;min-height:44px;font-size:.9rem;cursor:pointer;white-space:nowrap;scroll-snap-align:start;transition:all .2s;-webkit-tap-highlight-color:transparent}
+button:hover{border-color:var(--g)}
+button[aria-pressed=true]{background:var(--g);color:#02170b;border-color:var(--g);font-weight:700;box-shadow:0 0 18px #39ff8888}
+.big{font:700 1.5rem/1.2 "DM Sans",system-ui;color:var(--g);text-shadow:0 0 14px #39ff8866}
+.when{font:700 .8rem "DM Sans",system-ui;letter-spacing:.1em;text-transform:uppercase;color:var(--c)}
+.kv{display:flex;justify-content:space-between;gap:12px;font:.92rem/1.45 "DM Sans",system-ui;padding:7px 0;border-bottom:1px solid var(--line)}
+.kv span:first-child{color:var(--mut);flex-shrink:0}.kv span:last-child{text-align:right}
+.chip{display:inline-block;font:700 .72rem "DM Sans",system-ui;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid currentColor;margin:6px 6px 0 0}
+.c-v{color:var(--g)}.c-c{color:var(--y)}.c-d{color:var(--p)}.c-h{color:var(--c)}.c-s{color:var(--y)}
+.prog{height:6px;background:var(--line);border-radius:4px;margin:12px 0 4px;overflow:hidden}.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--c),var(--g));box-shadow:0 0 10px var(--g);transition:width .35s}
+small,.src{color:var(--mut);font:.82rem/1.5 "DM Sans",system-ui}
+.voice{border-left:3px solid var(--p);padding:2px 0 2px 14px;margin:16px 0}.voice b{font-family:"DM Sans",system-ui;color:var(--p)}
+blockquote{margin:12px 0;padding:10px 14px;border-left:3px solid var(--c);background:#22f0ff0d;border-radius:0 10px 10px 0;font-style:italic}
+blockquote cite{display:block;font:normal .8rem "DM Sans",system-ui;color:var(--mut);margin-top:4px}
+.stamp{display:inline-block;transform:rotate(-4deg);border:2px solid var(--p);color:var(--p);font:800 .8rem "DM Sans",system-ui;letter-spacing:.2em;padding:4px 10px;border-radius:6px;text-shadow:0 0 10px #ff3dc8aa;box-shadow:0 0 14px #ff3dc844 inset}
+.tnav{display:flex;gap:8px;margin-top:12px}.tnav button{flex:1}
+.qbtns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.qbtns button{border-radius:12px;font-weight:700;min-height:52px}
+.qbtns button.ok{background:var(--g);color:#02170b;border-color:var(--g);box-shadow:0 0 18px #39ff8888}
+.qbtns button.no{background:#ff3dc822;border-color:var(--p);color:var(--p)}
+.score{font:700 .9rem "DM Sans",system-ui;color:var(--c)}
+.meter{position:relative;height:14px;border-radius:8px;background:linear-gradient(90deg,#ff3dc8,#ffe14d 50%,#39ff88);margin:28px 4px 6px}
+.meter b{position:absolute;top:-9px;width:6px;height:32px;margin-left:-3px;background:#fff;border-radius:3px;box-shadow:0 0 12px #fff;transition:left .6s cubic-bezier(.3,1.4,.5,1)}
+.mlab{display:flex;justify-content:space-between;font:.72rem "DM Sans",system-ui;color:var(--mut)}
+.steps{list-style:none;padding:0;margin:8px 0;font-family:"DM Sans",system-ui;font-size:.92rem}
+.steps li{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}
+.steps li i{flex:0 0 26px;height:26px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:.8rem}
+.steps .y i{background:var(--g);color:#02170b;box-shadow:0 0 10px var(--g)}.steps .x i{background:var(--p);color:#fff}.steps .w i{border:2px dashed var(--y);color:var(--y)}
+.poll button{display:block;width:100%;text-align:left;border-radius:12px;margin:8px 0;white-space:normal;position:relative;overflow:hidden}
+.poll button span{position:relative;z-index:1}
+.srcs{font:.8rem/1.6 "DM Sans",system-ui;color:var(--mut);padding-left:18px}.srcs li{margin:4px 0;word-break:break-word}
+.back{display:inline-flex;align-items:center;gap:8px;font:700 .9rem "DM Sans",system-ui;color:#02170b;background:var(--g);padding:12px 20px;border-radius:999px;text-decoration:none;box-shadow:0 0 20px #39ff8877;min-height:44px}
+:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media(min-width:720px){body{font-size:18px}section{padding-top:64px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.sharebtn{background:#0b1018;border:1px solid var(--line2);color:var(--ink);border-radius:999px;padding:8px 16px;min-height:36px;font:600 .82rem "DM Sans",system-ui,sans-serif;cursor:pointer;white-space:nowrap;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.sharebtn:hover{border-color:var(--g)}
+header .sharebtn{margin-left:auto}
+.backrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+table{border-collapse:collapse;width:100%;font-size:.92rem;font-family:"DM Sans",system-ui,sans-serif}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--mut);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700}
+tbody tr:last-child td{border-bottom:none}
+.need{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.need span{font:700 .8rem "DM Sans",system-ui;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line2);border-radius:999px;padding:8px 14px;color:var(--ink)}
+.need span b{color:var(--g)}
+.suit-sp{color:#e6edf5}.suit-he{color:#ff6b7a}.suit-di{color:#ffe14d}.suit-cl{color:#39ff88}
+.bar-row{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;font-family:"DM Sans",system-ui;font-size:.88rem;margin:8px 0}
+.bar-row .bar{height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.bar-row .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--c),var(--g))}
+.bar-row b{text-align:right;color:var(--g)}
+.gnum{font:700 .8rem "DM Sans",system-ui;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
+
+</style><style id="lnx-hide">header:has(.gnav),.gnav,.snav-wrap,.snav,aside.side,.bnav,.nav-links,nav.topnav,.site-nav{display:none!important}body{padding-bottom:0!important}</style><script src="/js/nav.js" defer></script><meta property="og:site_name" content="LeonLink">
+<meta name="twitter:title" content="The Paper Cabinet — The Paper Table, Post #4">
+<meta name="twitter:description" content="Seven solitaire games in one box. One deck, one pen, seven different ways to lose an evening.">
+<meta name="twitter:image" content="https://www.leonlink.net/img/cards/paper-cabinet.jpg">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "The Paper Cabinet", "description": "The Paper Table, Post #4: The Paper Cabinet — seven solitaire games in one box, built from one deck of cards, pen and paper. Seven different ways to lose an evening.", "url": "https://www.leonlink.net/journal/paper-cabinet.html", "image": "https://www.leonlink.net/img/cards/paper-cabinet.jpg", "datePublished": "2026-11-25", "publisher": {"@type": "Organization", "name": "LeonLink", "url": "https://www.leonlink.net/"}, "author": {"@type": "Person", "name": "Leon Tucker"}, "mainEntityOfPage": "https://www.leonlink.net/journal/paper-cabinet.html"}</script>
+</head><body>
+<style id="llh-css">.llh{all:initial;display:block;background:#06060b;border-bottom:1px solid rgba(255,255,255,.08);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;position:relative;z-index:60}.llh *{box-sizing:border-box}.llh .llin{max-width:1240px;margin:0 auto;padding:0 14px;min-height:58px;display:flex;align-items:center;gap:14px}.llh .lllogo{display:flex;align-items:center;gap:8px;text-decoration:none;color:#fff;font-weight:900;letter-spacing:.06em;font-size:16px;flex:none}.llh .lllogo img{width:30px;height:30px;border-radius:50%;object-fit:cover}.llh .lllogo span{color:#22f0ff}.llh .gnav{display:flex;gap:4px;flex:1;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:8px 2px}.llh .gnav::-webkit-scrollbar{display:none}.llh .gnav a{flex:none;font-size:14.5px;font-weight:500;color:#a7a7b8;padding:7px 14px;border-radius:999px;text-decoration:none;white-space:nowrap;transition:background .2s,color .2s}.llh .gnav a:hover{color:#fff;background:rgba(255,255,255,.08)}.llh .gnav a.on{color:#06060b;background:#f4f4f8}.llh .llbtn{flex:none;text-decoration:none;color:#06060b;background:#22f0ff;font-weight:700;font-size:13.5px;padding:9px 14px;border-radius:999px;white-space:nowrap}@media(max-width:760px){.llh .llin{flex-wrap:wrap;gap:6px;padding:6px 12px}.llh .gnav{order:3;flex-basis:100%;padding:2px 0 8px}.llh .llbtn{margin-left:auto}}.llh .gnav a.fire{position:relative;color:#fff;font-weight:800;padding:6px 14px;border-radius:999px;background:linear-gradient(0deg,#ff3d00,#ff9100,#ffd600);background-size:100% 220%;animation:flm 1.2s ease-in-out infinite alternate,flk .18s steps(2) infinite;text-shadow:0 0 6px #ff6d00,0 -2px 10px #ffab00}.llh .gnav a.fire:before{content:"";position:absolute;inset:-6px -2px 40% -2px;border-radius:50%;background:radial-gradient(ellipse at bottom,rgba(255,145,0,.7),transparent 70%);filter:blur(6px);z-index:-1;animation:flk .25s infinite alternate}@keyframes flm{to{background-position:0 100%;box-shadow:0 0 18px #ff6d00,0 -4px 22px #ffab00}}@keyframes flk{50%{opacity:.85}}@media (prefers-reduced-motion:reduce){.llh .gnav a.fire,.llh .gnav a.fire:before{animation:none}}.llh .gnav a.casino{color:#ff4fd8;font-weight:800;text-shadow:0 0 8px rgba(255,79,216,.8)}</style>
+<div class="llh" role="banner"><div class="llin">
+  <a class="lllogo" href="/" aria-label="LeonLink home"><img src="/img/logo-128.png" alt="">LEON<span>LINK</span></a>
+  <nav class="gnav" aria-label="Main">
+    <a href="/">Home</a>
+    <a href="/games.html">Work</a>
+    <a href="/software.html">Software</a>
+    <a href="/blog.html" class="on" aria-current="page">Blog</a>
+    <a href="/watchline/">Watchline</a>
+    <a href="https://afterglow.leonlink.net" class="casino">&#127920; Casino</a>
+    
+  </nav>
+  <a class="llbtn" href="https://app.leonlink.net">Get Ledgerline</a>
+</div></div>
+
+<canvas id="rain" aria-hidden="true"></canvas>
+<main>
+<section id="top">
+<span class="kick">The Paper Table · Post #4 · November 25, 2026</span>
+<h1>The Paper <span>Cabinet</span></h1>
+<p><span class="stamp">PEN · PAPER · CARDS</span></p>
+<p>Seven solitaire games in one box — one deck, one pen, seven different ways to lose an evening.</p>
+<p>The first three posts in this series were single games, each with its own world: a kingdom to conquer, a crown to win, a fortune to read. The Cabinet is different. It is the drawer you open when you are alone, it is late, and you want a game that fits in the space between the lamp and the coffee cup. Seven of them, actually — a lighthouse, an auction house, a workshop, a throne room, a lying map, a debt collector, and a churchyard. Every one of them is played alone, with the same deck and the same pen. Pick one, play it to the end, and only then open the next drawer.</p>
+<p>That is the other thing about the Cabinet: it is a box, not a book. The games do not build on each other. They are seven separate answers to the same question — how much game can you get out of fifty-two cards and a sheet of paper? The answers range from twenty minutes to over an hour, from a quiet puzzle about burying the dead to a thirteen-night siege against your own nerves. One of them was unwinnable when it was written. One of them could not be lost. Both of those are fixed now, and the story of how is at the bottom of this post.</p>
+<p class="n">The full rules for all seven live on one page, linked below. This post is the tour — one tight section per game, the hook, the one rule that makes it sing, and what the computer thought of it.</p>
+<div class="need" aria-label="What you need">
+<span><b>✎</b> Pen</span><span><b>▭</b> Paper</span><span><b>🂠</b> One deck of cards</span><span><b>◷</b> 20–45 min each</span><span><b>♟</b> 1 player</span>
+</div>
+<div class="tabs" role="navigation" aria-label="Jump to a game">
+<a href="#g-lantern">🕯️ Lantern Keepers</a><a href="#g-auction">⚖️ Auction</a><a href="#g-machine">⚙️ The Machine</a><a href="#g-regent">👑 Regent's Ledger</a><a href="#g-cartographer">🗺️ Cartographer's Lie</a><a href="#g-debt">💰 The Debt</a><a href="#g-gravekeeper">🪦 The Gravekeeper</a>
+</div>
+</section>
+
+<section id="g-lantern"><h2>1. The Lantern Keepers</h2>
+<p class="gnum">Survival horror · 45–75 min · Track Oil, Wick, Nerve, Night</p>
+<p><b>The hook:</b> you are the keeper of a lighthouse on a bare rock, and relief is thirteen nights away.</p>
+<p><b>What you're doing:</b> every night you draw three event cards — storms that drink your Oil, visitors you must choose to shelter or turn away, supply boats, omens that chew at your Nerve — and then you pay the lamp. Oil 16, Wick 4, Nerve 10, Night 1: that is everything you own, written in four numbers at the top of the page. Survive all thirteen nights with the lamp still burning and you win.</p>
+<div class="card"><span class="when">The rule that makes it sing</span><p style="margin:.4em 0 0">Wick starts at <b>4</b> and drops on nights 3, 6, 9, and 12 — so if you never repair it, the light dies on night 12, one night short. Repairing costs 3 Oil, and Oil is also what the lamp burns every single night, and a Supply card only brings 3. Every repair is a choice between the lamp's body and its fuel, and the game never lets you have both.</p></div>
+<p class="n">Sim note: a good player survives <b>35.0%</b> of the time — ordinary play, 21.3%. The keeper who never repairs the wick loses every time, by construction.</p>
+</section>
+
+<section id="g-auction"><h2>2. The Auction of Small Gods</h2>
+<p class="gnum">Bidding &amp; economics · 30–45 min · Track Coins, lots won, rival purses</p>
+<p><b>The hook:</b> five rounds, twenty lots, three rivals with deeper pockets and stranger tastes than yours.</p>
+<p><b>What you're doing:</b> you have 40 Coins and a 5×4 grid to fill. Each lot is a card flipped face-up, and each rival bids by flipping a card of their own: the Widow bids high on red suits, the Colonel on black, the Child on face cards and aces. You are building sets of three or more of a suit, pairs of a rank, and — if you are lucky — exactly one 9, the collector's lucky card.</p>
+<div class="card"><span class="when">The rule that makes it sing</span><p style="margin:.4em 0 0"><b>Ties go to you.</b> And once per round, the Catalog lets you peek at the next lot before you bid. The whole game is the patient collector's game: you cannot win the lots the rivals want — the Widow will outbid you on hearts and the Colonel on spades — so you win the cheap lots they ignore, the off-suit cards that still complete your sets, and you let them burn their purses on each other. Their purses are 55, 55, and 45, and they are not bottomless.</p></div>
+<p class="n">Sim note: a patient player wins <b>34.6%</b> of auctions — and wins by about 15 points when they win, loses by about 19 when they don't. The margin is the story.</p>
+</section>
+
+<section id="g-machine"><h2>3. The Machine</h2>
+<p class="gnum">Optimization puzzle · 20–40 min · Track Flow, Target, slots, turns</p>
+<p><b>The hook:</b> you are an inventor with a workbench, a blueprint, and a deadline — build a machine that produces exactly what the patron ordered.</p>
+<p><b>What you're doing:</b> flip a card, multiply its rank by 6, and that is your Target. Your boiler starts at Flow 12. You have eight cards on the bench and eight turns to install four of them, left to right, into the machine. Gears add their rank. Springs multiply. Conduits subtract. Valves divide. Hit the Target exactly and it is a Masterwork, worth 3; within 3, a Success; within 8, a Partial. A campaign is three machines, scored out of 9.</p>
+<div class="card"><span class="when">The rule that makes it sing</span><p style="margin:.4em 0 0">Two of them. First, <b>face cards are worth 11, 12, and 13</b> here — Jack 11, Queen 12, King 13, Ace 11 — the only game in the Cabinet that counts them that way, because the whole puzzle is arithmetic and the numbers have to be exact. Second, <b>the Spare Part</b>: once per campaign you may hold a fifth component in reserve and swap it into any one slot before resolution. It is the only undo in a game where installed components are locked forever, and knowing when to spend it is the whole skill.</p></div>
+<p class="n">Sim note: a campaign averages <b>5.79 out of 9</b> — respectable, the patron pays but grumbles — and with the Spare Part in play, nobody scores 0 or 1 anymore.</p>
+</section>
+
+<section id="g-regent"><h2>4. The Regent's Ledger</h2>
+<p class="gnum">Political management · 40–60 min · Track four Loyalties, Treasury, Month, hand</p>
+<p><b>The hook:</b> you govern in the name of a child king, and the treasury is never quite enough.</p>
+<p><b>What you're doing:</b> twelve months, four factions — the Crown, the Church, the Guilds, the People — each starting at Loyalty 7. Every month brings two council issues, one per card drawn, and each one you must pay off, appease with a matching card, or ignore at the cost of Loyalty. Income is 5 Gold a month. Crises strike in months 4, 8, and 12. In month 6 the king makes a demand. In month 12 he comes of age.</p>
+<div class="card"><span class="when">The rule that makes it sing</span><p style="margin:.4em 0 0">The Crown is the one that can end you. Surviving twelve months is not enough — at Month 12 the Crown's Loyalty must stand at <b>6 or higher</b>, or the king purges you regardless of how beloved you are elsewhere. You can spend the whole year keeping the Guilds happy and still lose on the last day, to the boy you were protecting. A Marriage — 8 Gold, once per game, Crown +2 and another faction +1 — is the closest thing to a safety net you get.</p></div>
+<p class="n">Sim note: <b>38.3%</b> of regents survive the year. Two in three do not — and the Crown is usually the reason.</p>
+</section>
+
+<section id="g-cartographer"><h2>5. The Cartographer's Lie</h2>
+<p class="gnum">Exploration &amp; risk · 30–50 min · Track Provisions, position, a 6×6 map</p>
+<p><b>The hook:</b> you bought a map of an island from a man who smiled too much.</p>
+<p><b>What you're doing:</b> thirty-six cards face-down in a 6×6 grid, start at the bottom-left, treasure at the top-right, 20 Provisions in your pack. Six of the cards are false landmarks — spades, ranks 2 through 7 — and stepping on one costs 3 extra Provisions, because you have wasted time at a place that does not exist. The shortest path is 10 moves. You have 10 spare.</p>
+<div class="card"><span class="when">The rule that makes it sing</span><p style="margin:.4em 0 0">Probing costs the same as moving — 1 Provision either way. Knowing and going are the same price, and that is the entire negotiation of the game: every probe is a move you did not make. And when a wrong turn strands you, <b>Retrace</b> (2 Provisions) lets you step back onto a cell you have already visited — the rule that saves wandering players, because without it a bad turn can leave you with no legal move at all.</p></div>
+<p class="n">Sim note: <b>64.9%</b> win rate — the friendliest game in the Cabinet, and the only one that needed no tuning at all.</p>
+</section>
+
+<section id="g-debt"><h2>6. The Debt</h2>
+<p class="gnum">Push-your-luck · 30–45 min · Track Gold, Health, Day</p>
+<p><b>The hook:</b> you owe a man named Corvo eighty gold, and Corvo does not extend credit.</p>
+<p><b>What you're doing:</b> ten days. Every day you choose one thing: Work for a safe 7 Gold. Gamble — draw three cards, red beats black and you gain 20, black wins and you lose 12. Hustle — draw two cards and take their combined ranks in Gold, but any black card draws a second collector that evening. Or Hide, gain nothing, and skip the collector entirely. And every evening that you did not hide, a card is drawn: black suit means a collector found you, and you lose Health.</p>
+<div class="card"><span class="when">The rule that makes it sing</span><p style="margin:.4em 0 0">Honest work for ten days is 70 gold. Ten short. The arithmetic is the trap: you <em>must</em> gamble or hustle, and both cost you Health, and Health is the only thing standing between you and the collectors. The real question each morning is not how to make money — it is how much of yourself you are willing to spend to make it faster. There is also a Friend in Low Places, once per game, who makes one collector hit disappear.</p></div>
+<p class="n">Sim note: <b>14.2%</b> win rate. The hardest game in the Cabinet that can still be won — and the computer's winners finished with less than 2 Health left on average.</p>
+</section>
+
+<section id="g-gravekeeper"><h2>7. The Gravekeeper</h2>
+<p class="gnum">Quiet horror · 20–30 min · Track Rest, Dread, Day</p>
+<p><b>The hook:</b> the dead arrive one by one, and each must be buried where they belong.</p>
+<p><b>What you're doing:</b> nine days, one card a day, placed in a 3×3 churchyard. A card buried in a row whose patron suit matches its own is at rest. A card buried in the wrong row is restless: +1 Dread, immediately — +2 if it is a face card. A face card buried right gives +1 Rest instead, and the village is grateful. Three rites, once a day: the Stone moves a card, the Song lets you see tomorrow's card, the Coin spends 1 Rest to discard today's card and draw a replacement. Finish nine days with Dread below 6 and the yard sleeps.</p>
+<div class="card"><span class="when">The rule that makes it sing</span><p style="margin:.4em 0 0">The patron suits are <b>fixed at setup</b> — draw three cards, one per row from top to bottom, write each suit at its row's edge, and shuffle the cards back into the deck. Nine cards, four suits, three rows: one suit will always be wrong somewhere. The game is deciding which row to sacrifice before the deck decides for you, and then living with the Dread that follows.</p></div>
+<p class="n">Sim note: a thinking player wins <b>74.3%</b> of the time. A player placing cards at random wins 6.5% — the gap between those two numbers is the game.</p>
+</section>
+
+<section id="sim"><h2>Played thousands of times by a computer</h2>
+<p>Before this post went up, the Cabinet was played more than fifteen thousand times by a computer — a simple bot for each game, playing the obvious strategy and nothing cleverer. Here is what it found, and what changed because of it.</p>
+<p><b>Regent's Ledger could not be won.</b> The original rules gave the computer a 0% survival rate — not a hard game, an impossible one. The total cost of paying every issue was about 150 Gold against 68 of income, and the total Loyalty damage from ignoring them was more than the four factions had between them. The first fixes — two issues a month instead of three, gentler ignores, 5 Gold of income — only got to 5%. What actually fixed it was starting Loyalty: 7 instead of 5 for every faction. That one number took survival from 5% to <b>38.3%</b>. The treasury was never the problem. The factions' patience was.</p>
+<p><b>The Auction could not be lost.</b> The original rival purses were so small that they were empty by lot 10 of 20, and the computer swept the back half of the auction for a coin a lot — a 100% win rate with a margin of nearly a hundred points. The purses are now 55, 55, and 45, ties go to the player, and the win rate is <b>34.6%</b>. The rivals can afford to want things now, which is the whole point of an auction.</p>
+<p><b>The rest, in short:</b> Lantern Keepers went from 5.6% survival to 35.0% with good play, once Wick became a real threat — it starts at 4 now, and without at least one repair it dies on night 12. The Debt went from 3.9% to 14.2% when the debt dropped to 80 and honest work started paying 7. The Gravekeeper went from 99.96% for a thinking player to 74.3% when the patron suits were fixed at setup instead of chosen by the first card placed. The Machine's campaign average rose from 5.0 to 5.79 out of 9 once the Spare Part was actually used. And the Cartographer's Lie needed nothing at all — 64.9%, first try.</p>
+<p>How the seven compare, after tuning:</p>
+<div class="bar-row"><span>🪦 Gravekeeper</span><span class="bar"><i style="width:74%"></i></span><b>74.3%</b></div>
+<div class="bar-row"><span>🗺️ Cartographer</span><span class="bar"><i style="width:65%"></i></span><b>64.9%</b></div>
+<div class="bar-row"><span>⚙️ The Machine</span><span class="bar"><i style="width:64%"></i></span><b>5.8 / 9</b></div>
+<div class="bar-row"><span>👑 Regent's Ledger</span><span class="bar"><i style="width:38%"></i></span><b>38.3%</b></div>
+<div class="bar-row"><span>🕯️ Lantern Keepers</span><span class="bar"><i style="width:35%"></i></span><b>35.0%</b></div>
+<div class="bar-row"><span>⚖️ Auction</span><span class="bar"><i style="width:35%"></i></span><b>34.6%</b></div>
+<div class="bar-row"><span>💰 The Debt</span><span class="bar"><i style="width:14%"></i></span><b>14.2%</b></div>
+<p class="n">The percentages are win or survival rates; the Machine's bar is its campaign score out of 9, and Lantern Keepers is the good-play rate — ordinary play survives 21.3%. One honest caveat, same as the other posts: the bot plays the obvious strategy and never gets tired, never gets attached to a card, never hides from a collector out of spite. A human will find these games harder than the numbers suggest — and easier in the ways that matter, because a human can see a trap coming and simply not walk into it.</p>
+</section>
+
+<section id="play"><h2>Play it</h2>
+<p>All seven games — every rule, every ledger, the quick reference, and the tuning table — live on one page:</p>
+<p style="margin-top:20px"><a class="back" href="https://www.leonlink.net/games/paper-cabinet.html">Play The Paper Cabinet →</a></p>
+<p>It prints cleanly: hit print on that page and you have a table copy, all seven games, dark theme stripped out automatically. Keep a score log in the back of the notebook — the Cabinet rewards the player who remembers which game beat them last time.</p>
+<div class="card poll" id="poll"><b class="ui">Your turn. Which game are you playing first?</b><small style="display:block">Your answer stays on this device. I don't collect it.</small>
+<button data-v="0"><span>🕯️ The Lantern Keepers — thirteen nights, one lamp</span></button>
+<button data-v="1"><span>⚖️ The Auction — outbid the Widow, the Colonel, and the Child</span></button>
+<button data-v="2"><span>⚙️ The Machine — hit the target or lose the workshop</span></button>
+<button data-v="3"><span>👑 Regent's Ledger — hold four factions together for a year</span></button>
+<button data-v="4"><span>🗺️ Cartographer's Lie — cross an island that lies to you</span></button>
+<button data-v="5"><span>💰 The Debt — eighty gold, ten days, one Corvo</span></button>
+<button data-v="6"><span>🪦 The Gravekeeper — bury the dead right</span></button>
+<div id="pout" class="ui" aria-live="polite"></div></div>
+</section>
+
+<section id="next"><h2>Next in The Paper Table</h2>
+<p>The Cabinet closes the first four posts — Hollow Crown, Suzerain, Thread &amp; Knot, and now the Cabinet. What comes next is new: five games being written from scratch, one for each shape this series covers.</p>
+<p><b>The Alibi</b> and <b>The Exile's Map</b> need nothing but pen and paper — a crime-night timeline the table has to break, and a solo flight across a kingdom you draw as you run. <b>The Apothecary</b> adds the deck: patients arrive as cards, cures are combinations, and the wrong cure spreads the sickness. <b>The Siege of Vareth</b> and <b>The Plague Doctor</b> bring the dice too — a castle held for twelve rounds, and a doctor whose cures only work when the dice say so. They are being written now. The Cabinet is what you play while you wait.</p>
+<p style="margin-top:28px" class="backrow"><a class="back" href="/blog.html">← Back to Blog</a><button class="sharebtn" type="button">Share this post</button></p>
+</section>
+
+<section class="ll-amazon">
+<h2>On Amazon</h2>
+<ul>
+<li><a href="https://www.amazon.com/s?k=playing+cards+standard+deck&tag=leonlink-20">A standard deck of cards</a> &mdash; The only equipment seven games need, and the cheapest board game collection you will ever own.</li>
+<li><a href="https://www.amazon.com/s?k=notebook+and+pen+set&tag=leonlink-20">A notebook and a pen</a> &mdash; Every ledger, map, and churchyard in the Cabinet starts here.</li>
+</ul>
+</section>
+<section class="ll-moneystep" style="max-width:760px;margin:36px auto 24px;padding:22px 20px;border:1px solid rgba(255,255,255,.16);border-radius:16px;text-align:center"><p style="margin:0 0 14px"><a href="/lineup/" style="display:inline-block;padding:12px 24px;border-radius:999px;background:#22f0ff;color:#041018;font-weight:800;text-decoration:none">Start with the Top 5 &rarr;</a></p><p style="margin:0 0 10px;color:#9aa6c2">New builds, monthly. One email when something new drops. No spam, unsubscribe anytime.</p><form class="nlform" action="https://formsubmit.co/leonptucker3886@gmail.com" method="POST" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><input type="email" name="email" placeholder="you@email.com" required aria-label="Email" style="min-width:240px;background:#0a0d14;border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:12px 18px;color:#eef3ff;font-size:15px"><input type="hidden" name="_subject" value="New LeonLink subscriber"><input type="hidden" name="_captcha" value="false"><input type="hidden" name="_next" value="https://www.leonlink.net/#updates"><button type="submit" style="border:0;cursor:pointer;padding:12px 24px;border-radius:999px;background:#22f0ff;color:#041018;font-weight:800;font-size:15px">Sign up</button></form></section>
+</main>
+<script>
+const $=i=>document.getElementById(i),RM=matchMedia("(prefers-reduced-motion:reduce)").matches,el=(t,a={},h="")=>{const e=document.createElement(t);Object.assign(e,a);if(h)e.innerHTML=h;return e};
+/* digital rain background */
+const cv=$("rain"),cx=cv.getContext("2d");let W,H;const CH="01<>{}[]=+*#$%&";
+const rs=()=>{const d=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*d;cv.height=H*d;cx.setTransform(d,0,0,d,0,0)};addEventListener("resize",rs);rs();
+let cols=[],fs=15;
+function seed(){cols=[];const n=Math.ceil(W/fs);for(let i=0;i<n;i++)cols.push({y:Math.random()*-H,sp:2+Math.random()*4,ch:CH[Math.random()*CH.length|0]})}
+seed();addEventListener("resize",seed);
+cx.fillStyle="#04060a";cx.fillRect(0,0,W,H);cx.font=fs+"px monospace";
+function rain(){cx.fillStyle="rgba(4,6,10,.08)";cx.fillRect(0,0,W,H);
+for(const c of cols){const g=c.y/H>.75;c.ch=CH[Math.random()*CH.length|0];
+cx.fillStyle=g?"rgba(57,255,136,.5)":"rgba(57,255,136,.22)";cx.fillText(c.ch,cols.indexOf(c)*fs,c.y);
+c.y+=c.sp*fs/10;if(c.y>H&&Math.random()>.975){c.y=Math.random()*-200;c.sp=2+Math.random()*4}}
+if(!RM)requestAnimationFrame(rain)}
+rain();
+/* poll */
+const PL=["The Lantern Keepers","The Auction of Small Gods","The Machine","Regent's Ledger","The Cartographer's Lie","The Debt","The Gravekeeper"];
+const PM=["Thirteen nights, one lamp. Keep it burning.",
+"Outbid the Widow, the Colonel, and the Child — and mind the Child's taste in aces.",
+"Hit the target or lose the workshop. Mind the Spare Part.",
+"Hold four factions together for a year. Mind the Crown.",
+"Cross an island that lies to you. Probe before you move.",
+"Eighty gold, ten days, one Corvo. Honest work won't cover it.",
+"Bury the dead right. One suit is always wrong somewhere."];
+function vote(v){try{localStorage.setItem("ll-pc-vote",v)}catch(e){}document.querySelectorAll("#poll button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v==v));$("pout").innerHTML=`<p style="margin:.6em 0 0"><b>You picked: ${PL[v]}.</b> ${PM[v]}</p>`}
+document.querySelectorAll("#poll button").forEach(b=>b.onclick=()=>vote(+b.dataset.v));
+try{const v=localStorage.getItem("ll-pc-vote");if(v!==null)vote(+v)}catch(e){}
+</script><script>
+(function(){
+function sharePage(btn){
+  var url=location.href;
+  var title=document.title;
+  var m=document.querySelector('meta[property="og:description"]');
+  var text=m?m.content:'';
+  function done(ok){if(!btn)return;var o=btn.dataset.label||btn.textContent;btn.dataset.label=o;btn.textContent=ok?'Copied!':o;if(ok)setTimeout(function(){btn.textContent=o;},1600);}
+  if(navigator.share){navigator.share({title:title,text:text,url:url}).catch(function(){});}
+  else if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(function(){done(true);},function(){done(false);});}
+  else{window.prompt('Copy this link:',url);}
+}
+document.querySelectorAll('.sharebtn').forEach(function(b){b.addEventListener('click',function(){sharePage(b);});});
+})();
+</script>
+<script>(function(){try{var p=location.pathname;fetch("/api/track?p="+encodeURIComponent(p)+"&r="+encodeURIComponent(document.referrer||""),{mode:"no-cors",keepalive:true}).catch(function(){})}catch(e){}})();</script>
+<footer class="ll-footer" style="border-top:1px solid rgba(128,128,128,.25);padding:22px 16px;text-align:center;font:14px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#0b0b0f;color:#cfcfd6;position:relative;z-index:5;clear:both">
+  <nav style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-bottom:8px"><a href="/" style="color:inherit;text-decoration:none">Home</a><a href="/blog.html" style="color:inherit;text-decoration:none">Blog</a><a href="/software.html" style="color:inherit;text-decoration:none">Software</a><a href="/watchline/" style="color:inherit;text-decoration:none">Watches</a><a href="https://afterglow.leonlink.net" style="color:inherit;text-decoration:none">Casino</a><a href="/games.html" style="color:inherit;text-decoration:none">Games</a><a href="https://arcadeline.leonlink.net" style="color:inherit;text-decoration:none">Arcadeline</a></nav>
+  <div>&copy; 2026 LeonLink</div>
+</footer>
+<script src="/js/bottom-nav.js" defer></script>
+<script id="ll-pt" src="/js/post-tools.js?v=1" defer></script>
+</body>
+</html>

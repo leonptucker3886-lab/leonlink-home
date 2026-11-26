@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Hollow Crown — A Game of Power for 1–4 Players</title>
+<meta name="description" content="A long-form strategic pen-and-paper game for 1–4 players using one deck of cards and two dice. Build a house, claim the throne.">
+<style>
+  :root{
+    --bg:#14110e; --panel:#1d1a16; --panel2:#242019; --line:#3a332b;
+    --ink:#efe7d7; --dim:#9a8f7c; --faint:#6b6154; --accent:#d9a441;
+    --spade:#cfc7b8; --heart:#e2606a; --diamond:#e0a13a; --club:#6fbf8a;
+    --blood:#a8323c;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:ui-serif,Georgia,"Iowan Old Style","Palatino Linotype",serif;
+    line-height:1.65; font-size:17px;
+  }
+  .wrap{max-width:800px; margin:0 auto; padding:48px 22px 90px}
+
+  header{text-align:center; padding-bottom:32px; border-bottom:1px solid var(--line); margin-bottom:34px}
+  .kicker{
+    font-family:ui-sans-serif,system-ui,sans-serif; font-size:12px; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--accent); margin-bottom:14px;
+  }
+  h1{font-size:clamp(30px,7vw,48px); line-height:1.08; margin:0 0 10px; letter-spacing:.01em; font-weight:700}
+  h1 small{display:block; font-size:.38em; letter-spacing:.16em; text-transform:uppercase; color:var(--dim); font-weight:400; margin-top:14px}
+  .tagline{color:var(--dim); font-style:italic; margin:0; font-size:16px}
+
+  h2{
+    font-size:13px; letter-spacing:.18em; text-transform:uppercase;
+    font-family:ui-sans-serif,system-ui,sans-serif; color:var(--accent);
+    margin:52px 0 14px; padding-bottom:8px; border-bottom:1px solid var(--line);
+  }
+  h2 .num{color:var(--faint); margin-right:10px}
+  h3{font-size:19px; margin:26px 0 6px; letter-spacing:.01em}
+  h4{font-size:13px; margin:20px 0 4px; font-family:ui-sans-serif,system-ui,sans-serif;
+     color:var(--dim); letter-spacing:.1em; text-transform:uppercase}
+  p{margin:0 0 14px}
+  ul,ol{margin:0 0 16px; padding-left:22px}
+  li{margin-bottom:7px}
+  strong{color:#fff6e4}
+  em{color:var(--dim)}
+  a{color:var(--accent)}
+
+  .meta{
+    display:flex; flex-wrap:wrap; gap:6px 20px; margin:0 0 20px;
+    font-family:ui-sans-serif,system-ui,sans-serif; font-size:12px;
+    letter-spacing:.06em; text-transform:uppercase; color:var(--faint);
+  }
+  .meta b{color:var(--dim); font-weight:600}
+
+  .scroll{overflow-x:auto; margin:0 0 20px; -webkit-overflow-scrolling:touch}
+  table{border-collapse:collapse; width:100%; font-size:15px; font-family:ui-sans-serif,system-ui,sans-serif}
+  th,td{text-align:left; padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+  th{color:var(--dim); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; font-weight:600}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:nth-child(odd){background:rgba(255,255,255,.018)}
+
+  .s{font-weight:700; font-size:1.05em}
+  .s-spade{color:var(--spade)} .s-heart{color:var(--heart)}
+  .s-diamond{color:var(--diamond)} .s-club{color:var(--club)}
+
+  .callout{
+    background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--accent);
+    border-radius:0 10px 10px 0; padding:16px 20px; margin:0 0 22px;
+  }
+  .callout p:last-child{margin-bottom:0}
+  .callout .lbl{
+    display:block; font-family:ui-sans-serif,system-ui,sans-serif; font-size:11px;
+    letter-spacing:.16em; text-transform:uppercase; color:var(--accent); margin-bottom:7px;
+  }
+
+  nav.toc{
+    background:var(--panel); border:1px solid var(--line); border-radius:12px;
+    padding:18px 22px; margin-bottom:10px;
+  }
+  nav.toc .lbl{
+    display:block; font-family:ui-sans-serif,system-ui,sans-serif; font-size:11px;
+    letter-spacing:.16em; text-transform:uppercase; color:var(--dim); margin-bottom:10px;
+  }
+  nav.toc ol{margin:0; padding-left:0; list-style:none; columns:2; column-gap:26px; font-size:14.5px}
+  nav.toc li{margin:0 0 6px; break-inside:avoid}
+  nav.toc a{color:var(--ink); text-decoration:none; border-bottom:1px solid transparent}
+  nav.toc a:hover{color:var(--accent); border-bottom-color:var(--accent)}
+  nav.toc .g{color:var(--faint); font-size:12px; display:block; letter-spacing:.04em}
+
+  .map{
+    background:var(--panel2); border:1px solid var(--line); border-radius:12px;
+    padding:24px; margin:0 0 22px; text-align:center;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:14px; line-height:1.9; color:var(--dim); white-space:pre; overflow-x:auto;
+  }
+  .map b{color:var(--accent); font-weight:700}
+
+  .ledger{
+    background:var(--panel2); border:1px solid var(--line); border-radius:12px;
+    padding:20px 22px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:13px; line-height:2.1; color:var(--dim); white-space:pre-wrap;
+    overflow-x:auto;
+  }
+
+  .season{
+    background:var(--panel); border:1px solid var(--line); border-radius:12px;
+    padding:20px 24px; margin-bottom:22px;
+  }
+  .season h4{
+    margin:0 0 12px; font-family:ui-sans-serif,system-ui,sans-serif;
+    font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent);
+  }
+  .season h4 span{color:var(--faint); letter-spacing:.06em; text-transform:none; font-style:italic}
+  .season p:last-child{margin-bottom:0}
+
+  .phase{
+    border-left:2px solid var(--line); padding-left:18px; margin:0 0 22px;
+  }
+  .phase h4{margin-top:0; color:var(--accent)}
+
+  footer{
+    margin-top:60px; padding-top:22px; border-top:1px solid var(--line);
+    text-align:center; color:var(--faint); font-size:13px;
+    font-family:ui-sans-serif,system-ui,sans-serif;
+  }
+
+  @media print{
+    :root{--bg:#fff;--panel:#fff;--panel2:#fff;--line:#ccc;--ink:#111;--dim:#555;--faint:#777;--accent:#8a5a00}
+    body{font-size:11pt; line-height:1.5}
+    .wrap{max-width:none; padding:0}
+    nav.toc{break-inside:avoid}
+    h2{break-after:avoid; margin-top:26px}
+    table,.callout,.ledger,.season,.map,.phase{break-inside:avoid}
+    tbody tr:nth-child(odd){background:none}
+    .s-spade{color:#111}.s-heart{color:#a00}.s-diamond{color:#a60}.s-club{color:#060}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">A Game of Power · 1–4 Players</div>
+  <h1>The Hollow Crown<small>Build a House · Claim a Realm · Take the Throne</small></h1>
+  <p class="tagline">The king is dead without heir. Four houses rise. Only one will wear what remains.</p>
+</header>
+
+<nav class="toc">
+  <span class="lbl">Contents</span>
+  <ol>
+    <li><a href="#premise">1. The Premise<span class="g">Overview &amp; tone</span></a></li>
+    <li><a href="#components">2. Components<span class="g">What you need</span></a></li>
+    <li><a href="#map">3. The Map<span class="g">Twelve provinces</span></a></li>
+    <li><a href="#setup">4. Setup<span class="g">Begin the game</span></a></li>
+    <li><a href="#round">5. The Round<span class="g">Four phases</span></a></li>
+    <li><a href="#actions">6. Actions<span class="g">Command points</span></a></li>
+    <li><a href="#combat">7. Combat<span class="g">Dice and cards</span></a></li>
+    <li><a href="#cards">8. Cards<span class="g">Dual use</span></a></li>
+    <li><a href="#events">9. Events<span class="g">The Realm Stirrs</span></a></li>
+    <li><a href="#buildings">10. Buildings<span class="g">Permanent investments</span></a></li>
+    <li><a href="#houses">11. Houses<span class="g">Asymmetric powers</span></a></li>
+    <li><a href="#victory">12. Victory &amp; Scoring<span class="g">How to win</span></a></li>
+    <li><a href="#solo">13. Solo Mode<span class="g">Face the Realm</span></a></li>
+    <li><a href="#strategy">14. Strategy<span class="g">How to play well</span></a></li>
+    <li><a href="#sheet">15. House Sheet<span class="g">Your ledger</span></a></li>
+    <li><a href="#variants">16. Variants<span class="g">Tune the game</span></a></li>
+  </ol>
+</nav>
+
+<!-- ============ 1 ============ -->
+<h2 id="premise">1. The Premise</h2>
+<p>You are the head of a noble house in the broken kingdom of Vareth. The old king died without naming an heir, and the great houses have begun to circle. Over <strong>20 rounds</strong> — five years of four seasons each — you will build armies, raise markets, forge alliances, and press your claim. The realm has twelve provinces. Control seven, and the crown is yours. Fail, and your house will be remembered only as a footnote in another's triumph.</p>
+<p>This is a game of <strong>long-term strategy</strong>. Early rounds reward expansion. Mid-game rewards timing. Late game rewards the player who invested in infrastructure while others were fighting. There is no single path to victory — military conquest, economic dominance, and political influence are all viable, and the best players blend all three.</p>
+
+<!-- ============ 2 ============ -->
+<h2 id="components">2. Components</h2>
+<ul>
+  <li>One standard deck of <strong>52 cards</strong> (jokers removed).</li>
+  <li><strong>Two six-sided dice</strong> (2d6).</li>
+  <li>A pen or pencil.</li>
+  <li>One <strong>House Sheet</strong> per player (see <a href="#sheet">§15</a>).</li>
+  <li>One shared <strong>map sheet</strong> — plain paper, roughly A4 or larger.</li>
+</ul>
+
+<h3>Card values</h3>
+<p>Ace = 1, 2–10 = face value, Jack = 11, Queen = 12, King = 13. <em>(In this game the King is the highest rank, not the Ace. Kings are valuable and dangerous.)</em></p>
+
+<!-- ============ 3 ============ -->
+<h2 id="map">3. The Map</h2>
+<p>Draw a <strong>3×4 grid</strong> on the map sheet — twelve boxes. Only orthogonal neighbours are adjacent (no diagonals). Each box is a <strong>province</strong>. Label them P1 through P12 in reading order:</p>
+
+<div class="map"><b>P1</b> ── <b>P2</b> ── <b>P3</b> ── <b>P4</b>
+ │      │      │      │
+<b>P5</b> ── <b>P6</b> ── <b>P7</b> ── <b>P8</b>
+ │      │      │      │
+<b>P9</b> ── <b>P10</b> ── <b>P11</b> ── <b>P12</b></div>
+
+<p>Each province has three values, filled in during setup:</p>
+<ul>
+  <li><strong>Value</strong> (1–5) — how much gold it produces.</li>
+  <li><strong>Defense</strong> (1–4) — how hard it is to take.</li>
+  <li><strong>Owner</strong> — Neutral, or a player's House.</li>
+</ul>
+
+<!-- ============ 4 ============ -->
+<h2 id="setup">4. Setup</h2>
+
+<h3>Step 1 — Draw the provinces</h3>
+<p>Shuffle the deck. Draw <strong>12 cards</strong> one at a time and place them face-up on the map, one per province in order P1→P12. Each card sets that province's Value and Defense:</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Card drawn</th><th>Province Value</th><th>Province Defense</th><th>Flavor</th></tr></thead>
+  <tbody>
+    <tr><td>Rank 2–5</td><td>1</td><td>1</td><td>Poor farmland</td></tr>
+    <tr><td>Rank 6–8</td><td>2</td><td>1</td><td>Common province</td></tr>
+    <tr><td>Rank 9–10</td><td>3</td><td>1</td><td>Wealthy province</td></tr>
+    <tr><td>Jack or Queen</td><td>3</td><td>2</td><td>Fortified town</td></tr>
+    <tr><td>King</td><td>4</td><td>3</td><td>Great city</td></tr>
+    <tr><td>Ace</td><td>5</td><td>4</td><td>The old capital</td></tr>
+  </tbody>
+</table>
+</div>
+<p>Write each province's Value and Defense on the map. Leave the Owner blank for now.</p>
+
+<h3>Step 2 — Draw your House</h3>
+<p>Each player draws one card from the deck and looks at it privately. Its <strong>suit</strong> determines that player's House ability for the whole campaign (see <a href="#houses">§11</a>). Return the cards to the deck and shuffle thoroughly.</p>
+
+<h3>Step 3 — Choose starting provinces</h3>
+<p>Roll 2d6 to determine turn order (highest first). In turn order, each player claims one unclaimed province of their choice by writing their House name in it. Then repeat in <strong>reverse</strong> turn order for a second province, so the last player to pick first also picks first the second time. This gives every player two starting provinces.</p>
+
+<h3>Step 4 — Starting resources</h3>
+<p>Each player writes on their House Sheet:</p>
+<div class="scroll">
+<table>
+  <tbody>
+    <tr><td><strong>Gold</strong></td><td>8</td></tr>
+    <tr><td><strong>Army</strong></td><td>3 (split between your two provinces; write the garrison in each)</td></tr>
+    <tr><td><strong>Influence</strong></td><td>0</td></tr>
+    <tr><td><strong>Cards in hand</strong></td><td>2</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Step 5 — The Realm Deck</h3>
+<p>Shuffle the remaining cards. This is the <strong>Realm Deck</strong> — it drives events and replenishes hands. Place it face-down within reach of all players. Discarded cards form a face-up discard pile beside the deck. When the Realm Deck runs out, shuffle the discard pile to form a new Realm Deck.</p>
+
+<div class="callout">
+  <span class="lbl">A note on the map</span>
+  <p>Because province values are drawn randomly, no two campaigns are the same. A game where the Ace lands in the centre is a very different game from one where it lands on the edge. Read the map before you pick your starting provinces — that is your first strategic decision.</p>
+</div>
+
+<!-- ============ 5 ============ -->
+<h2 id="round">5. The Round</h2>
+<p>The game runs for <strong>20 rounds</strong>. Each round has four phases, resolved in order:</p>
+
+<div class="phase">
+  <h4>I. The Realm Stirs</h4>
+  <p>Draw the top card of the Realm Deck and resolve it as an <strong>Event</strong> (see <a href="#events">§9</a>). Events affect all players. The card is then discarded.</p>
+</div>
+
+<div class="phase">
+  <h4>II. Dawn</h4>
+  <p>Each player, simultaneously:</p>
+  <ul>
+    <li><strong>Draws 1 card</strong> from the Realm Deck (2 if your House is the Raven).</li>
+    <li><strong>Gains Gold</strong> equal to the total Value of provinces they own, plus 2 per Market they control.</li>
+    <li><strong>Gains Influence</strong> equal to the number of Temples they control.</li>
+  </ul>
+</div>
+
+<div class="phase">
+  <h4>III. Command</h4>
+  <p>Each player, in turn order, has <strong>4 Action Points (AP)</strong> to spend on actions (see <a href="#actions">§6</a>). You may take the same action more than once unless stated otherwise. You may also pass at any time; unspent AP is lost.</p>
+</div>
+
+<div class="phase">
+  <h4>IV. Winter</h4>
+  <p>Each player, simultaneously:</p>
+  <ul>
+    <li><strong>Pays upkeep:</strong> 1 Gold per 3 Army (rounded up). If you cannot pay, lose 2 Army per unpaid Gold.</li>
+    <li><strong>Discards down to 5 cards</strong> if holding more.</li>
+  </ul>
+  <p>Then check for victory (see <a href="#victory">§12</a>). If no one has won, begin the next round.</p>
+</div>
+
+<!-- ============ 6 ============ -->
+<h2 id="actions">6. Actions</h2>
+<p>On your Command phase, spend AP on any of the following. Actions may be taken in any order and repeated unless noted.</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Action</th><th>Cost</th><th>Effect</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Levy</strong></td>
+      <td>1 AP + 1 Gold</td>
+      <td>Gain <strong>2 Army</strong>. Place them in any province you own.</td>
+    </tr>
+    <tr>
+      <td><strong>Diplomacy</strong></td>
+      <td>1 AP</td>
+      <td>Gain <strong>1 Influence</strong>.</td>
+    </tr>
+    <tr>
+      <td><strong>Play a Card</strong></td>
+      <td>1 AP</td>
+      <td>Play a card from your hand for its <strong>suit action</strong> (see <a href="#cards">§8</a>). The card is discarded.</td>
+    </tr>
+    <tr>
+      <td><strong>Claim</strong></td>
+      <td>2 AP</td>
+      <td>Take control of an adjacent <strong>neutral</strong> province. You must move at least 1 Army into it from an adjacent province you own. The province becomes yours; write your name in it.</td>
+    </tr>
+    <tr>
+      <td><strong>Attack</strong></td>
+      <td>2 AP + 1 Card</td>
+      <td>Attack an adjacent province owned by another player. See <a href="#combat">§7 Combat</a>. The card is spent whether the attack succeeds or not.</td>
+    </tr>
+    <tr>
+      <td><strong>Build</strong></td>
+      <td>2 AP + 3 Gold</td>
+      <td>Build one improvement in a province you own (see <a href="#buildings">§10</a>). One of each type per province.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h4>Free actions</h4>
+<p>Once per round, during your Command phase, you may <strong>redistribute armies</strong> between any adjacent provinces you own. This costs no AP. Armies may move through a chain of your provinces in a single turn, but each province may only send or receive once per round.</p>
+
+<div class="callout">
+  <span class="lbl">The 4 AP budget</span>
+  <p>Four AP is deliberately tight. You can make two attacks, or claim one province and levy twice, or build one improvement and still act once more. Every round forces you to choose between expanding, fighting, and investing — and you will never have enough AP to do all three. That tension is the game.</p>
+</div>
+
+<!-- ============ 7 ============ -->
+<h2 id="combat">7. Combat</h2>
+<p>When you take the <strong>Attack</strong> action, choose a province you own with at least 1 Army, and an adjacent province owned by another player. Commit any number of armies from your province (they must all come from that one province). Then resolve:</p>
+
+<h4>The rolls</h4>
+<ul>
+  <li><strong>Attacker rolls 2d6</strong> and adds the number of armies committed, plus the rank of any <em>one</em> card discarded for a combat bonus.</li>
+  <li><strong>Defender rolls 2d6</strong> and adds the province's garrison plus <strong>twice</strong> its Defense value.</li>
+</ul>
+
+<h4>The result</h4>
+<div class="scroll">
+<table>
+  <thead><tr><th>Outcome</th><th>Effect</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Attacker wins</strong> (higher total)</td>
+      <td>
+        <strong>Defender loses armies equal to the difference</strong> (capped at their garrison — if the difference exceeds the garrison, all defenders die and the province falls).<br>
+        <strong>Attacker loses armies equal to half the difference</strong>, rounded up.<br>
+        The attacker captures the province and places any surviving committed armies in it as the new garrison. If the defender has surviving armies, they retreat to an adjacent friendly province (or are destroyed if none exists).
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Defender wins</strong> (higher or tied total)</td>
+      <td>
+        <strong>Attacker loses armies equal to the difference</strong> (capped at committed armies).<br>
+        <strong>Defender loses armies equal to half the difference</strong>, rounded up.<br>
+        Any surviving attacking armies return to their origin province. The province is unchanged.
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>Losses are capped:</strong> attacker losses are capped at the number of armies committed — you cannot lose more armies than you sent.</p>
+
+<h4>Card bonus</h4>
+<p>Before rolling, you may discard <strong>one card</strong> from your hand to add its <strong>rank</strong> to your attack roll. This is separate from the card spent to take the Attack action — you may spend one card for the action and another for the bonus, or use a single card for both. The card used for the Attack action is always spent; the card used for the bonus is also spent.</p>
+
+<div class="callout">
+  <span class="lbl">A worked example</span>
+  <p><strong>Attacker</strong> has 6 Army in P4 and attacks P3, held by an enemy with 3 garrison and Defense 2. The attacker discards a <span class="s s-club">7♣</span> for +7 and rolls 8. Total: <strong>8 + 6 + 7 = 21</strong>.</p>
+  <p><strong>Defender</strong> rolls 7. Total: <strong>7 + 3 + (2 × 2) = 14</strong>.</p>
+  <p>Attacker wins by 7. Defender loses 3 garrison (all dead — the difference exceeds the garrison). Attacker loses 4 Army (half of 7, rounded up), leaving 2. The attacker captures P3 with a garrison of 2. The defender's province is lost.</p>
+</div>
+
+<!-- ============ 8 ============ -->
+<h2 id="cards">8. Cards</h2>
+<p>Cards in hand serve three purposes. Every card is useful — the question is always <em>which</em> use is best right now.</p>
+
+<h4>1. Suit actions (1 AP)</h4>
+<div class="scroll">
+<table>
+  <thead><tr><th>Suit</th><th>Action</th><th>Effect</th></tr></thead>
+  <tbody>
+    <tr><td class="s s-spade">♠</td><td><strong>Muster</strong></td><td>Gain <strong>3 Army</strong> in any province you own.</td></tr>
+    <tr><td class="s s-heart">♥</td><td><strong>Rally</strong></td><td>Gain <strong>3 Gold</strong>.</td></tr>
+    <tr><td class="s s-diamond">♦</td><td><strong>Trade</strong></td><td>Gain <strong>2 Influence</strong>.</td></tr>
+    <tr><td class="s s-club">♣</td><td><strong>Whisper</strong></td><td>Draw <strong>2 cards</strong>.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h4>2. Combat bonus (free, during Attack)</h4>
+<p>Discard a card to add its <strong>rank</strong> to your attack roll. A King adds +13 — enough to swing almost any battle — but you lose the card and its suit action forever.</p>
+
+<h4>3. Held in reserve</h4>
+<p>Cards in hand are not vulnerable to events and can be spent at the perfect moment. Holding the right card for the right round is often stronger than spending it early.</p>
+
+<div class="callout">
+  <span class="lbl">The tension of a high card</span>
+  <p>A King of Spades can be a Muster for +3 Army <em>or</em> a +13 combat bonus. Using it for the Muster is safe but small; saving it for combat is explosive but situational. Every high card in your hand is a decision you have not yet made.</p>
+</div>
+
+<!-- ============ 9 ============ -->
+<h2 id="events">9. Events — The Realm Stirs</h2>
+<p>At the start of every round, draw one card and read the event matching its suit and rank. Events affect <strong>all players</strong> unless stated otherwise.</p>
+
+<h4 class="s s-spade">♠ Conflict</h4>
+<div class="scroll">
+<table>
+  <thead><tr><th>Rank</th><th>Event</th><th>Effect</th></tr></thead>
+  <tbody>
+    <tr><td>2–5</td><td><strong>Border Skirmish</strong></td><td>Each player loses 1 Army from their largest garrison.</td></tr>
+    <tr><td>6–9</td><td><strong>Raiders</strong></td><td>Each player loses 2 Gold.</td></tr>
+    <tr><td>10–J</td><td><strong>Siege</strong></td><td>The player with the most provinces loses 2 Army. If tied, all tied players lose 2.</td></tr>
+    <tr><td>Q–K</td><td><strong>War</strong></td><td>Each player with 5 or more Army loses 3 Army.</td></tr>
+    <tr><td>A</td><td><strong>Invasion</strong></td><td>Each player loses 3 Army.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h4 class="s s-heart">♥ Fortune</h4>
+<div class="scroll">
+<table>
+  <thead><tr><th>Rank</th><th>Event</th><th>Effect</th></tr></thead>
+  <tbody>
+    <tr><td>2–5</td><td><strong>Good Harvest</strong></td><td>Each player gains 2 Gold.</td></tr>
+    <tr><td>6–9</td><td><strong>Prosperity</strong></td><td>Each player gains 3 Gold.</td></tr>
+    <tr><td>10–J</td><td><strong>Windfall</strong></td><td>Each player draws 1 card.</td></tr>
+    <tr><td>Q–K</td><td><strong>Royal Favor</strong></td><td>Each player gains 1 Influence.</td></tr>
+    <tr><td>A</td><td><strong>Golden Age</strong></td><td>Each player gains 5 Gold and 1 Influence.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h4 class="s s-diamond">♦ Commerce</h4>
+<div class="scroll">
+<table>
+  <thead><tr><th>Rank</th><th>Event</th><th>Effect</th></tr></thead>
+  <tbody>
+    <tr><td>2–5</td><td><strong>Trade Route</strong></td><td>Each player gains 1 Gold per province they own.</td></tr>
+    <tr><td>6–9</td><td><strong>Market Day</strong></td><td>Each player gains 2 Gold.</td></tr>
+    <tr><td>10–J</td><td><strong>Merchant Caravan</strong></td><td>The player with the most Gold gains 5 Gold.</td></tr>
+    <tr><td>Q–K</td><td><strong>Wealthy Patron</strong></td><td>Each player gains 4 Gold.</td></tr>
+    <tr><td>A</td><td><strong>Monopoly</strong></td><td>The player with the most provinces gains 5 Gold; every other player gains 2 Gold.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h4 class="s s-club">♣ Whisper</h4>
+<div class="scroll">
+<table>
+  <thead><tr><th>Rank</th><th>Event</th><th>Effect</th></tr></thead>
+  <tbody>
+    <tr><td>2–5</td><td><strong>Rumor</strong></td><td>Each player draws 1 card.</td></tr>
+    <tr><td>6–9</td><td><strong>Alliance</strong></td><td>Each player gains 1 Influence.</td></tr>
+    <tr><td>10–J</td><td><strong>Betrayal</strong></td><td>Each player loses 1 Influence (minimum 0).</td></tr>
+    <tr><td>Q–K</td><td><strong>Political Marriage</strong></td><td>Each player gains 2 Influence.</td></tr>
+    <tr><td>A</td><td><strong>Coronation</strong></td><td>The player with the most Influence gains 3 Influence; every other player gains 1 Influence.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ============ 10 ============ -->
+<h2 id="buildings">10. Buildings</h2>
+<p>Buildings are permanent investments. Each costs <strong>3 Gold and 2 AP</strong> to build, and each province may hold one of each type.</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Building</th><th>Effect</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Market</strong></td>
+      <td>+2 Gold income each Dawn from this province.</td>
+    </tr>
+    <tr>
+      <td><strong>Temple</strong></td>
+      <td>+1 Influence income each Dawn from this province.</td>
+    </tr>
+    <tr>
+      <td><strong>Walls</strong></td>
+      <td>+1 Defense to this province (making it harder to attack).</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Write buildings in the province box on your map, abbreviated: <strong>M</strong>, <strong>T</strong>, <strong>W</strong>. A province with all three is marked <strong>M T W</strong> and is a serious stronghold.</p>
+
+<div class="callout">
+  <span class="lbl">The investment decision</span>
+  <p>3 Gold and 2 AP is a significant cost. A Market pays for itself in two rounds and is pure profit thereafter — but only if you hold the province that long. A Temple builds Influence slowly, which matters only in the final scoring and in the Coronation event. Walls pay for themselves the first time someone attacks and fails.</p>
+</div>
+
+<!-- ============ 11 ============ -->
+<h2 id="houses">11. Houses</h2>
+<p>Your House ability is set at setup and lasts the whole campaign. It is your permanent edge — play to it.</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Suit</th><th>House</th><th>Ability</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="s s-spade">♠</td><td><strong>The Wolf</strong></td>
+      <td>Add <strong>+1</strong> to all your attack rolls.</td>
+    </tr>
+    <tr>
+      <td class="s s-heart">♥</td><td><strong>The Hart</strong></td>
+      <td>Gain an extra <strong>2 Gold</strong> each Dawn.</td>
+    </tr>
+    <tr>
+      <td class="s s-diamond">♦</td><td><strong>The Serpent</strong></td>
+      <td>Gain an extra <strong>1 Influence</strong> each Dawn.</td>
+    </tr>
+    <tr>
+      <td class="s s-club">♣</td><td><strong>The Raven</strong></td>
+      <td>Draw an extra <strong>1 card</strong> each Dawn.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>In a 4-player game, each House will likely appear once. In a 2- or 3-player game, some Houses will be absent and others may repeat — that is fine. If two players draw the same suit at setup, they share the ability; no redraw is needed.</p>
+
+<!-- ============ 12 ============ -->
+<h2 id="victory">12. Victory &amp; Scoring</h2>
+
+<h3>Immediate victory</h3>
+<p>If at any point — including mid-round — a player controls <strong>7 or more of the 12 provinces</strong>, they win immediately. The game ends at once.</p>
+
+<h3>Legacy victory</h3>
+<p>If no one has won by the end of <strong>Round 20</strong>, calculate each player's <strong>Legacy Score</strong>:</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Component</th><th>Points</th></tr></thead>
+  <tbody>
+    <tr><td>Each province controlled</td><td><strong>× 5</strong></td></tr>
+    <tr><td>Each point of Influence</td><td><strong>× 2</strong></td></tr>
+    <tr><td>Each building (Market, Temple, or Walls)</td><td><strong>× 3</strong></td></tr>
+    <tr><td>Gold on hand</td><td><strong>÷ 3</strong> (rounded down)</td></tr>
+    <tr><td>Army on the map</td><td><strong>÷ 2</strong> (rounded down)</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>The highest Legacy Score wins. Ties are broken by: most provinces → most Influence → most Gold → most Army → roll 2d6.</p>
+
+<h3>The Exile</h3>
+<p>If you control no provinces at Dawn, you may place 2 Army in any unclaimed neutral province as a new capital. If no neutral province remains, you are eliminated: remove your pieces from the map and score nothing.</p>
+
+<div class="callout">
+  <span class="lbl">What the scoring rewards</span>
+  <p>Provinces are worth the most, but Influence and buildings are close behind. A player who spends the whole game fighting may hold six provinces and still lose to a player who holds four, built three Markets, and accumulated ten Influence. The scoring is deliberately designed to make pure aggression a losing strategy.</p>
+</div>
+
+<!-- ============ 13 ============ -->
+<h2 id="solo">13. Solo Mode — Face the Realm</h2>
+<p>In solo play, you face <strong>The Realm</strong> — an automated opponent driven by the deck. The Realm does not track gold or cards; it simply acts.</p>
+
+<h3>Solo setup</h3>
+<ul>
+  <li>Draw the map as normal.</li>
+  <li>You choose <strong>3 starting provinces</strong> (in any connected group).</li>
+  <li>The Realm controls <strong>3 provinces</strong> on the opposite side of the map, each with a garrison of 2.</li>
+  <li>You start with 8 Gold, 3 Army, 0 Influence, 2 cards.</li>
+  <li>The Realm has no gold, no hand, and no buildings.</li>
+</ul>
+
+<h3>The solo round</h3>
+<ol>
+  <li><strong>The Realm Stirs</strong> — draw and resolve an event as normal.</li>
+  <li><strong>Dawn</strong> — you gain income and draw as normal.</li>
+  <li><strong>Command</strong> — you take your 4 AP of actions.</li>
+  <li><strong>The Realm Acts</strong> — draw Realm cards and resolve the Realm's actions (see below): one card on Easy, <strong>two cards on Normal and Hard</strong>, resolved one after the other.</li>
+  <li><strong>Winter</strong> — pay upkeep and check victory as normal.</li>
+</ol>
+
+<h3>The Realm's action</h3>
+<div class="scroll">
+<table>
+  <thead><tr><th>Card drawn</th><th>Realm action</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="s s-spade">♠</td>
+      <td><strong>Attack.</strong> The Realm attacks your weakest border province (the one with the lowest garrison). It rolls <strong>2d6 + 4</strong>. Your defense rolls 2d6 + garrison + (Defense × 2). Resolve combat normally. If the Realm wins, it captures the province and places 2 garrison in it.</td>
+    </tr>
+    <tr>
+      <td class="s s-heart">♥</td>
+      <td><strong>Reinforce.</strong> The Realm adds <strong>2 Army</strong> to its most-fortified province.</td>
+    </tr>
+    <tr>
+      <td class="s s-diamond">♦</td>
+      <td><strong>Expand.</strong> The Realm claims an adjacent neutral province (if any), placing 1 garrison in it.</td>
+    </tr>
+    <tr>
+      <td class="s s-club">♣</td>
+      <td><strong>Conspire.</strong> The Realm draws a card and sets it aside face-down. The next time the Realm attacks, it adds <strong>+3</strong> to its roll. (Only one such bonus can be active at a time.)</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Solo victory</h3>
+<p>You win by controlling <strong>8 or more provinces</strong> at any point, or by having the higher Legacy Score at the end of Round 20. The Realm wins by controlling 8 or more provinces, or by having the higher Legacy Score. The Realm's Legacy Score is its provinces × 5 plus its Army ÷ 2 (rounded down). It has no Gold, Influence, or buildings.</p>
+
+<h3>Difficulty</h3>
+<div class="scroll">
+<table>
+  <thead><tr><th>Mode</th><th>Realm setup</th><th>Realm behaviour</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Easy</strong></td><td>3 provinces, 1 garrison each</td><td>Attacks roll 2d6 + 3; acts once per round</td></tr>
+    <tr><td><strong>Normal</strong></td><td>3 provinces, 2 garrison each</td><td>Attacks roll 2d6 + 4; draws <strong>two</strong> Realm cards per round and acts twice</td></tr>
+    <tr><td><strong>Hard</strong></td><td>4 provinces, 3 garrison each</td><td>Attacks roll 2d6 + 5; draws <strong>two</strong> Realm cards per round and acts twice</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout">
+  <span class="lbl">Playing solo well</span>
+  <p>The Realm is relentless but predictable — it always attacks your <em>weakest</em> border. That means a single strong garrison on the threatened side can hold off several attacks while you expand elsewhere. Solo play rewards defensive positioning and patience far more than multiplayer does.</p>
+</div>
+
+<!-- ============ 14 ============ -->
+<h2 id="strategy">14. Strategy</h2>
+<p>A few principles that separate winning play from losing play:</p>
+
+<h4>Expand early, fight late</h4>
+<p>Neutral provinces are free provinces. In the first four rounds, every AP spent claiming is worth more than an AP spent attacking. The player who grabs the neutral map first enters the mid-game with an income advantage that compounds.</p>
+
+<h4>Build on your safest province</h4>
+<p>A Market on a border province is a gift to whoever attacks you next. A Market on a province surrounded by your own territory is a permanent engine. Place buildings behind your lines.</p>
+
+<h4>Cards are ammunition, not treasure</h4>
+<p>A hand of five cards is five potential combat bonuses or five Muster actions. Holding them "for later" is usually a mistake unless you are specifically waiting to defend a province. Spend aggressively in the mid-game; conserve only when a critical battle is coming.</p>
+
+<h4>Watch the event deck</h4>
+<p>If the last three events have been ♥ Fortune, the deck is due for ♠ Conflict. A player who anticipates a bad event round — by not overextending — will survive what kills their rivals.</p>
+
+<h4>Influence is quiet but heavy</h4>
+<p>Influence is worth 2 points each at the end. A player who takes Diplomacy every round accumulates 20+ Influence by game's end — 40 Legacy points, more than most players' province scores. Do not neglect it.</p>
+
+<h4>Know when to stop</h4>
+<p>The 7-province victory is the fastest path to a win, but it also paints a target on your back. Sometimes the winning move is to sit at 5 provinces, build Markets, and let your rivals exhaust each other before you strike.</p>
+
+<!-- ============ 15 ============ -->
+<h2 id="sheet">15. House Sheet</h2>
+<p>Copy this onto a sheet of paper for each player. Update it at the end of every round.</p>
+
+<div class="ledger">HOUSE: ____________________   ABILITY: ____________________
+
+ROUND: ___ / 20
+
+GOLD: ___   INFLUENCE: ___   ARMY (total): ___
+
+PROVINCES (name / value / defense / garrison / buildings)
+1. ______________ / _ / _ / _ / ________
+2. ______________ / _ / _ / _ / ________
+3. ______________ / _ / _ / _ / ________
+4. ______________ / _ / _ / _ / ________
+5. ______________ / _ / _ / _ / ________
+6. ______________ / _ / _ / _ / ________
+7. ______________ / _ / _ / _ / ________
+
+CARD HAND:
+[ ]  [ ]  [ ]  [ ]  [ ]
+
+BUILDINGS TOTAL: Markets ___  Temples ___  Walls ___
+
+LEGACY SCORE (end of game): ___
+  Provinces ___ × 5 = ___
+  Influence ___ × 2 = ___
+  Buildings ___ × 3 = ___
+  Gold ___ ÷ 3 = ___
+  Army ___ ÷ 2 = ___
+  TOTAL: ___</div>
+
+<!-- ============ 16 ============ -->
+<h2 id="variants">16. Variants</h2>
+<div class="scroll">
+<table>
+  <thead><tr><th>Variant</th><th>Rule</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>The Long Reign</strong></td>
+      <td>Play 30 rounds instead of 20. All players will reach their 7-province victory threshold eventually — the game becomes a race to 7, not a consolidation. Recommended for experienced players who want a longer, more brutal game.</td>
+    </tr>
+    <tr>
+      <td><strong>The Short War</strong></td>
+      <td>Play 12 rounds instead of 20. Victory threshold drops to 6 provinces. Faster, sharper, more aggressive. Good for a single evening's play.</td>
+    </tr>
+    <tr>
+      <td><strong>Fog of War</strong></td>
+      <td>Players do not reveal their gold, influence, or card hands to one another until final scoring. Provinces and armies remain public. This creates uncertainty and rewards bluffing.</td>
+    </tr>
+    <tr>
+      <td><strong>Diplomacy</strong></td>
+      <td>Players may make binding agreements — "I will not attack you for 3 rounds if you give me 2 Gold now." Broken agreements carry no in-game penalty, but the table remembers. Best with 3–4 players.</td>
+    </tr>
+    <tr>
+      <td><strong>Written Treaties</strong></td>
+      <td>During your Command phase, you and another player may write and sign a treaty on paper ('no attacks between us for 3 rounds', '2 Gold now for safe passage'). A treaty is binding. Breaking it costs the breaker 3 Influence immediately, paid the moment the breaking action is taken. A treaty may not force a player to attack a third party. It ends when its term expires or when it is broken.</td>
+    </tr>
+    <tr>
+      <td><strong>Asymmetric Map</strong></td>
+      <td>Instead of the standard 3×4 grid, draw a map of 12 provinces in any shape — a long line, a ring, two islands connected by a single bridge. The shape of the map becomes a strategic constraint. Agree on the shape before setup.</td>
+    </tr>
+    <tr>
+      <td><strong>The Usurper</strong></td>
+      <td>One player is secretly the Usurper. They win by holding the Ace province (the old capital) at the end of Round 20, regardless of Legacy Score. Roles are drawn secretly at setup and revealed only at the end of Round 20. Best with 4 players.</td>
+    </tr>
+    <tr>
+      <td><strong>Ironman Solo</strong></td>
+      <td>In solo mode, if the Realm ever controls 8+ provinces, you lose immediately — no comeback. Play Hard mode. This is the "true" solo challenge.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout">
+  <span class="lbl">A closing note</span>
+  <p>The Hollow Crown is designed to be played slowly. It is a game of long investments and delayed gratification — the player who builds a Market in round 3 and still holds it in round 18 has done something genuinely difficult. Play it over a long evening, with a pot of something hot, and let the map tell the story of the campaign. The provinces you lose and retake will matter more than the ones you never fought for.</p>
+</div>
+
+<footer>
+  <p><strong>The Hollow Crown</strong> — a game of power for 1–4 players.</p>
+  <p>Print this page for a table copy. Keep your House Sheet. Name your provinces.</p>
+</footer>
+
+</div>
+</body>
+</html>
