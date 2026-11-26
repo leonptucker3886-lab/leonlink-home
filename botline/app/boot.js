@@ -163,6 +163,7 @@ document.addEventListener("click", function (e) {
     case "mark-live": markLive(id); break;
     case "reopen": reopenJob(id); break;
     case "release": releaseJob(id); break;
+    case "unassign-bot": unassignBot(id, el.dataset.bot); break;
     case "delete-job": deleteJob(id); break;
     case "edit-job": editJobModal(id); break;
     case "edit-cps": cpModal(id); break;
@@ -267,19 +268,20 @@ document.addEventListener("submit", async function (e) {
       checkins: [], activity: [{ at: ts, by: who, kind: "create", text: "Posted in " + t.name }],
       blockedReason: "", reviewNote: "", rework: 0
     };
-    var assignee = String(fd.get("assignee") || "");
-    if (assignee) {
-      var ab = botById(assignee);
-      if (ab) {
-        job.status = "Active";
-        job.assignee = ab.id;
-        job.assigneeName = ab.name;
-        job.assignedAt = ts;
-        job.lastCheckinAt = ts;
-        // Assigned at posting, so the clock starts now.
-        if (!job.deadlineExplicit) job.deadline = new Date(new Date(ts).getTime() + Number(job.slaHours || 12) * 3600000).toISOString();
-        job.activity.push({ at: ts, by: who, kind: "assign", text: "Assigned to " + ab.name });
-      }
+    var picked = [];
+    fd.getAll("assignee").forEach(function (v) {
+      var ab = botById(String(v));
+      if (ab && !picked.some(function (x) { return x.id === ab.id; })) picked.push({ id: ab.id, name: ab.name });
+    });
+    if (picked.length > MAX_ASSIGNEES) { toast("Max 5 bots per card", "warn"); return; }
+    if (picked.length) {
+      setAssignees(job, picked);
+      job.status = "Active";
+      job.assignedAt = ts;
+      job.lastCheckinAt = ts;
+      // Assigned at posting, so the clock starts now.
+      if (!job.deadlineExplicit) job.deadline = new Date(new Date(ts).getTime() + Number(job.slaHours || 12) * 3600000).toISOString();
+      job.activity.push({ at: ts, by: who, kind: "assign", text: "Assigned to " + picked.map(function (x) { return x.name; }).join(", ") });
     }
     jobSave(job, true);
     closeModal();
@@ -322,9 +324,12 @@ document.addEventListener("submit", async function (e) {
   }
 
   if (kind === "assign") {
-    var to = String(fd.get("bot") || "");
-    if (!to) { toast("Pick a bot", "warn"); return; }
-    await assignJob(id, to);
+    var picks = fd.getAll("bot").map(String).filter(Boolean);
+    if (!picks.length) { toast("Pick a bot", "warn"); return; }
+    var room = MAX_ASSIGNEES - jobAssignees(jobById(id)).length;
+    if (picks.length > room) { toast("Max 5 bots per card \u2014 pick " + room + " or fewer", "warn"); return; }
+    for (var pi = 0; pi < picks.length; pi++) await assignJob(id, picks[pi], picks.length > 1);
+    if (picks.length > 1) toast("Assigned " + picks.length + " bots to " + id, "good");
     closeModal();
     return;
   }

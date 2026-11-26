@@ -139,18 +139,43 @@ function canEditJob(job) {
   var u = currentUser();
   if (!u) return false;
   if (u.kind === "boss") return true;
-  return !!job.assignee && job.assignee === u.bot.id;
+  return onJob(job, u.bot.id);
+}
+var MAX_ASSIGNEES = 5;
+// A card can hold a team of up to 5 bots. `assignees` is the list of
+// {id, name}; `assignee` / `assigneeName` stay as the lead (first) bot so
+// older code and older cards keep working.
+function jobAssignees(job) {
+  if (!job) return [];
+  if (job.assignees && job.assignees.length) return job.assignees.slice(0, MAX_ASSIGNEES);
+  return job.assignee ? [{ id: job.assignee, name: job.assigneeName || "" }] : [];
+}
+function onJob(job, botId) {
+  if (!botId) return false;
+  return jobAssignees(job).some(function (x) { return x.id === botId; });
+}
+function assigneeNames(job) {
+  return jobAssignees(job).map(function (x) {
+    var b = botById(x.id);
+    return (b && b.name) || x.name || x.id;
+  }).join(", ");
+}
+function setAssignees(job, list) {
+  list = (list || []).slice(0, MAX_ASSIGNEES);
+  job.assignees = list;
+  job.assignee = list.length ? list[0].id : null;
+  job.assigneeName = list.length ? list[0].name : "";
 }
 function activeJobOf(botId) {
   for (var i = 0; i < S.jobs.length; i++) {
     var j = S.jobs[i];
-    if (j.assignee === botId && (j.status === "Active" || j.status === "Blocked" || j.status === "Review")) return j;
+    if (onJob(j, botId) && (j.status === "Active" || j.status === "Blocked" || j.status === "Review")) return j;
   }
   return null;
 }
 function assignedCount(botId) {
   var n = 0;
-  S.jobs.forEach(function (j) { if (j.assignee === botId) n++; });
+  S.jobs.forEach(function (j) { if (onJob(j, botId)) n++; });
   return n;
 }
 function progressOf(job) {
@@ -535,31 +560,47 @@ async function assignJob(id, botId, quiet) {
   var job = jobById(id);
   var bot = botById(botId);
   if (!job || !bot) return false;
-  if (job.status !== "Open") { toast("That job is no longer open", "warn"); return false; }
+  var team = jobAssignees(job);
+  var first = team.length === 0;
+  if (first && job.status !== "Open") { toast("That job is no longer open", "warn"); return false; }
+  if (!first && job.status !== "Open" && job.status !== "Active" && job.status !== "Blocked") { toast("That job is no longer open", "warn"); return false; }
+  if (onJob(job, bot.id)) { toast(bot.name + " is already on " + job.id, "warn"); return false; }
+  if (team.length >= MAX_ASSIGNEES) { toast("Max 5 bots per card", "warn"); return false; }
   if (bot.active === false) { toast(bot.name + " is paused", "warn"); return false; }
   if (activeJobOf(bot.id)) { toast(bot.name + " is already on a job", "warn"); return false; }
   var ts = now();
   var who = (currentUser() || {}).name || "Boss";
   var accepted = currentBot() ? "Claimed" : "Accepted";
-  var entry = { at: ts, by: who, kind: "assign", text: "Assigned to " + bot.name };
+  var entry = { at: ts, by: who, kind: "assign", text: (first ? "Assigned to " : "Added to the team: ") + bot.name };
+  var member = { id: bot.id, name: bot.name };
   var db = fsdb();
   if (db) {
     try {
       await db.runTransaction(function (tx) {
         var ref = db.collection("jobs").doc(id);
         return tx.get(ref).then(function (snap) {
-          if (!snap.exists || snap.data().status !== "Open") throw new Error("taken");
+          if (!snap.exists) throw new Error("taken");
           var d = snap.data();
-          // The deadline clock starts now, not at posting — unless the Boss
-          // set a fixed deadline (deadlineExplicit), which is kept as-is.
+          var cur = jobAssignees(d);
+          var isFirst = cur.length === 0;
+          if (isFirst && d.status !== "Open") throw new Error("taken");
+          if (cur.some(function (x) { return x.id === bot.id; })) throw new Error("already");
+          if (cur.length >= MAX_ASSIGNEES) throw new Error("full");
+          var list = cur.concat([member]);
           var upd = {
-            status: "Active", assignee: bot.id, assigneeName: bot.name,
-            assignedAt: ts, lastCheckinAt: ts,
-            activity: (d.activity || []).concat([entry]),
-            history: (d.history || []).concat([{ at: ts, by: who, label: accepted }])
+            assignees: list, assignee: list[0].id, assigneeName: list[0].name,
+            activity: (d.activity || []).concat([entry])
           };
-          if (!d.deadlineExplicit) {
-            upd.deadline = new Date(new Date(ts).getTime() + Number(d.slaHours || 12) * 3600000).toISOString();
+          if (isFirst) {
+            // The deadline clock starts at the first assignment, not at posting,
+            // unless the Boss set a fixed deadline (deadlineExplicit).
+            upd.status = "Active";
+            upd.assignedAt = ts;
+            upd.lastCheckinAt = ts;
+            upd.history = (d.history || []).concat([{ at: ts, by: who, label: accepted }]);
+            if (!d.deadlineExplicit) {
+              upd.deadline = new Date(new Date(ts).getTime() + Number(d.slaHours || 12) * 3600000).toISOString();
+            }
           }
           tx.update(ref, upd);
         });
@@ -567,23 +608,49 @@ async function assignJob(id, botId, quiet) {
       if (!quiet) toast("Assigned " + job.id + " to " + bot.name, "good");
       return true;
     } catch (e) {
-      toast(e.message === "taken" ? "That job was just taken" : "Assign failed: " + e.message, "bad");
+      var soft = e.message === "full" || e.message === "already";
+      var msg = e.message === "taken" ? "That job was just taken" : e.message === "full" ? "Max 5 bots per card" :
+        e.message === "already" ? bot.name + " is already on " + job.id : "Assign failed: " + e.message;
+      toast(msg, soft ? "warn" : "bad");
       return false;
     }
   }
-  job.status = "Active";
-  job.assignee = bot.id;
-  job.assigneeName = bot.name;
-  job.assignedAt = ts;
-  job.lastCheckinAt = ts;
-  if (!job.deadlineExplicit) {
-    job.deadline = new Date(new Date(ts).getTime() + Number(job.slaHours || 12) * 3600000).toISOString();
+  setAssignees(job, team.concat([member]));
+  if (first) {
+    job.status = "Active";
+    job.assignedAt = ts;
+    job.lastCheckinAt = ts;
+    if (!job.deadlineExplicit) {
+      job.deadline = new Date(new Date(ts).getTime() + Number(job.slaHours || 12) * 3600000).toISOString();
+    }
   }
   job.activity = (job.activity || []).concat([entry]);
-  logStatus(job, accepted);
+  if (first) logStatus(job, accepted);
   jobSave(job, quiet);
   if (!quiet) toast("Assigned " + job.id + " to " + bot.name, "good");
   return true;
+}
+
+// Take one bot off a card's team. If it was the last bot, the card goes
+// back to the open pool like a release.
+async function unassignBot(id, botId) {
+  var job = jobById(id);
+  if (!job) return;
+  if (!isBoss()) { toast("Only the Boss can take a bot off a card", "warn"); return; }
+  var team = jobAssignees(job);
+  var gone = null;
+  team.forEach(function (x) { if (x.id === botId) gone = x; });
+  if (!gone) return;
+  var left = team.filter(function (x) { return x.id !== botId; });
+  if (!left.length) { releaseJob(id); return; }
+  var nm = (botById(botId) || {}).name || gone.name || botId;
+  if (!confirm("Take " + nm + " off " + id + "?")) return;
+  setAssignees(job, left);
+  job.activity = (job.activity || []).concat([{
+    at: now(), by: (currentUser() || {}).name || "Boss", kind: "release", text: nm + " was taken off the team"
+  }]);
+  jobSave(job);
+  toast(nm + " is off " + id, "good");
 }
 
 function claimJob(id) {
@@ -591,7 +658,10 @@ function claimJob(id) {
   if (!me) { toast("Pick a bot to claim jobs", "warn"); return; }
   var job = jobById(id);
   if (!job) return;
-  if (job.status !== "Open") { toast("That job is already taken", "warn"); return; }
+  if (onJob(job, me.id)) { toast("You're already on " + id, "warn"); return; }
+  var joinable = (job.status === "Active" || job.status === "Blocked") && jobAssignees(job).length > 0;
+  if (job.status !== "Open" && !joinable) { toast("That job is already taken", "warn"); return; }
+  if (joinable && jobAssignees(job).length >= MAX_ASSIGNEES) { toast("Max 5 bots per card", "warn"); return; }
   if (activeJobOf(me.id)) { toast("Finish " + activeJobOf(me.id).id + " first", "warn"); return; }
   if (me.categories && me.categories.length && me.categories.indexOf(job.type) < 0) {
     var t = typeById(job.type);
@@ -614,11 +684,10 @@ async function releaseJob(id) {
   if (!confirm("Release " + id + " back to the open pool?")) return;
   job.activity = (job.activity || []).concat([{
     at: now(), by: (currentUser() || {}).name || "Boss", kind: "release",
-    text: "Released " + (job.assigneeName || "the assignee") + " — back in the pool"
+    text: "Released " + (assigneeNames(job) || "the assignee") + " — back in the pool"
   }]);
   job.status = "Open";
-  job.assignee = null;
-  job.assigneeName = "";
+  setAssignees(job, []);
   job.assignedAt = "";
   job.lastCheckinAt = "";
   // The clock restarts for the next bot, unless a fixed deadline was set.
@@ -819,7 +888,7 @@ function applyVerdict(id, kind, note, reportUrl) {
   logActivity(job, "review", "Changes needed — " + text + (url ? " (report: " + url + ")" : ""));
   logStatus(job, "Changes needed (round " + (roundCount(job) || 1) + ")");
   jobSave(job);
-  toast(job.id + " goes back to " + (job.assigneeName || "the writer"), "warn");
+  toast(job.id + " goes back to " + (assigneeNames(job) || "the writer"), "warn");
 }
 
 // Only an inspector or the Boss, and only after approval.
@@ -913,10 +982,16 @@ async function deleteBot(id) {
   if (busy && !confirm(b.name + " still holds " + busy.id + ". Remove them and release it?")) return;
   if (!busy && !confirm("Remove " + b.name + " from the roster?")) return;
   S.jobs.forEach(function (j) {
-    if (j.assignee === id && j.status !== "Done") {
+    if (onJob(j, id) && j.status !== "Done") {
+      var rest = jobAssignees(j).filter(function (x) { return x.id !== id; });
+      if (rest.length) {
+        setAssignees(j, rest);
+        logActivity(j, "release", b.name + " was removed from the roster and taken off the team");
+        jobSave(j, true);
+        return;
+      }
       j.status = "Open";
-      j.assignee = null;
-      j.assigneeName = "";
+      setAssignees(j, []);
       j.assignedAt = "";
       j.lastCheckinAt = "";
       if (!j.deadlineExplicit) j.deadline = null;

@@ -309,3 +309,16 @@ input[type=color]{width:100%;height:40px;padding:3px;background:#0a0e15;border:1
   .trow > .row{flex:1 1 100%;justify-content:flex-end;gap:6px}
   html,body{overflow-x:hidden}
 }
+
+/* ---- Boss dashboard ---- */
+.quickjob{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;align-items:end}
+.quickjob label{display:flex;flex-direction:column;gap:4px;font-size:13px}
+.quickjob .wide{grid-column:1/-1}
+.quickjob input,.quickjob select,.quickjob textarea{width:100%;box-sizing:border-box}
+.tablewrap{overflow-x:auto}
+.dtable{width:100%;border-collapse:collapse;font-size:14px}
+.dtable th,.dtable td{text-align:left;padding:8px 6px;border-bottom:1px solid rgba(255,255,255,.08);vertical-align:top}
+.dtable th{font-weight:600;opacity:.7;font-size:12px}
+.trow.deliver{flex-wrap:wrap;gap:8px}
+.trow.deliver .row{display:flex;gap:6px}
+@media (max-width:820px){.trow.deliver .tinfo{flex-basis:100%}}
