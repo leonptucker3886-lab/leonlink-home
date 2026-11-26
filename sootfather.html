@@ -70,6 +70,20 @@
 <script src="/js/sootfather/main.js"></script>
 <script>/* Full-screen tap (Blue eyed Robert): while a "tap to continue" line is showing, a tap anywhere on the stage advances it, not just on the text box. Buttons, HUD and title/end screens are ignored. */
 (function(){var st=document.getElementById('stage');if(!st)return;st.addEventListener('click',function(e){var t=document.getElementById('text'),p=document.getElementById('panel');if(!t||!p||p.hidden||typeof t.onclick!=='function')return;if(t.contains(e.target))return;if(e.target.closest('button,a,input,#hud,.ov,#choices'))return;t.click();});})();</script>
+<script>/* New intro (Blue eyed Robert): first tap on "New game" plays a short skippable intro with Big catch fish's sounds (intro_sting, smoke_bomb, railgun_shot), then starts the game as before. Silent if muted. Tap to skip. */
+(function(){var b=document.getElementById('bNew'),st=document.getElementById('stage');if(!b||!st)return;var done=false,A='/audio/sootfather/';
+function muted(){var m=document.getElementById('bMute');return m&&m.textContent.indexOf('\uD83D\uDD07')>-1;}
+function snd(n){if(muted())return;try{var a=new Audio(A+n+'.mp3');a.volume=.8;var p=a.play();if(p&&p.catch)p.catch(function(){});}catch(e){}}
+b.addEventListener('click',function(e){if(done)return;e.stopImmediatePropagation();e.preventDefault();done=true;
+var o=document.createElement('div');o.className='ov';o.style.cssText='z-index:50;background:#0b0b12;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;transition:background .2s';
+o.innerHTML='<div id="sfI1" class="sub" style="opacity:0;transition:opacity .6s;font-size:15px;letter-spacing:.2em">SOOTCREST STUDIOS PRESENTS</div><h1 id="sfI2" style="opacity:0;transform:scale(1.3);filter:blur(8px);transition:all .7s"><span class="r">ASHBUSTEN</span> TOWN</h1><div id="sfI3" class="sub" style="opacity:0;transition:opacity .5s">The family needs a sweep.</div><div class="sub" style="position:absolute;bottom:18px;font-size:12px;opacity:.6">tap to skip</div>';
+st.appendChild(o);var T=[],g=function(id){return document.getElementById(id);};
+function end(){T.forEach(clearTimeout);if(o.parentNode)o.parentNode.removeChild(o);b.click();}
+o.addEventListener('click',end);
+snd('intro_sting');T.push(setTimeout(function(){g('sfI1').style.opacity=1;},100));
+T.push(setTimeout(function(){snd('smoke_bomb');g('sfI1').style.opacity=0;var h=g('sfI2');h.style.opacity=1;h.style.transform='scale(1)';h.style.filter='blur(0)';},1400));
+T.push(setTimeout(function(){snd('railgun_shot');o.style.background='#fff';setTimeout(function(){o.style.background='#0b0b12';g('sfI3').style.opacity=1;},90);},2600));
+T.push(setTimeout(end,4200));},true);})();</script>
 <script>(function(){try{var p=location.pathname;fetch("/api/track?p="+encodeURIComponent(p)+"&r="+encodeURIComponent(document.referrer||""),{mode:"no-cors",keepalive:true}).catch(function(){})}catch(e){}})();</script>
 </body>
 </html>
