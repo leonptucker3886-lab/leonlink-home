@@ -80,6 +80,12 @@
   @media(max-width:640px){.hero-img{min-height:0!important;padding:0!important;display:block}.hero-img>picture{position:relative;inset:auto}.hero-img>picture>img{width:100%;height:auto;object-fit:contain}.hero-img .hero-cards{position:absolute!important;top:10px;left:10px;right:10px;width:auto}}
   .hero-cards .feature p.fine{min-height:0!important;display:block!important}
   @media(max-width:640px){.hero-cards.features{align-items:stretch}.hero-cards .feature{height:100%;display:flex!important;flex-direction:column}.hero-cards .feature .fb{flex:1;display:flex;flex-direction:column}.hero-cards .feature h2{min-height:2.2em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.hero-cards .feature p{min-height:3.9em}.hero-cards .feature .fb>:last-child{margin-top:auto}}
+  /* Both cards: identical fonts and details */
+  .hero-cards .feature h2{font-family:"Bebas Neue",sans-serif;letter-spacing:1px;font-weight:400}
+  .hero-cards .feature .go{font-family:Archivo,system-ui,sans-serif;font-weight:800;color:#22e6c8;font-size:16px;margin-top:12px}
+  .hero-cards .feature p.fine{font-family:Archivo,system-ui,sans-serif;font-size:14px;opacity:.75;margin-top:8px}
+  .hero-cards .feature p.fine a{font-size:inherit!important;font-weight:700;color:#22e6c8}
+  @media(max-width:640px){.hero-cards .feature .go{font-size:11px!important;margin-top:4px}.hero-cards .feature p.fine,.hero-cards .feature p.fine a{font-size:10px!important;min-height:0!important;margin-top:4px}}
 </style>
 <script src="/js/nav.js" defer></script>
 </head>
@@ -107,7 +113,7 @@
     <div class="fb">
       <h2>Sun N Fun: Escape the Trailer Park</h2>
       <a class="go" href="/games/sun-n-fun.html">Play it &rarr;</a>
-      <p class="fine">A LeonLink game &middot; Horror escape &middot; <a href="/games.html">More games &rarr;</a></p>
+      <p class="fine">Horror escape &middot; <a href="/games.html">More games &rarr;</a></p>
     </div>
   </div>
   </div>
