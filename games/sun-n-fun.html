@@ -232,6 +232,17 @@ button{font-family:inherit;color:inherit}
 .cine-foot button{background:none;border:1px solid rgba(236,228,210,.25);color:#a99e8b;padding:.45rem .8rem;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer}
 .cine-foot button:hover{color:#fff;border-color:#fff}
 
+/* factions / standings */
+.faction{border:1px solid rgba(236,228,210,.14);border-left:3px solid var(--blood2);background:rgba(12,9,7,.7);padding:.7rem .8rem;margin-bottom:.5rem}
+.faction .fname{font-weight:800;color:#ece4d2;font-size:.9rem;display:flex;justify-content:space-between;gap:.6rem;letter-spacing:.04em}
+.faction .ftier{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--sodium);white-space:nowrap}
+.faction .fbar{height:4px;background:rgba(236,228,210,.12);margin:.45rem 0 .5rem;overflow:hidden}
+.faction .fbar i{display:block;height:100%}
+.faction .fmem{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:#8d8168}
+.faction p{font-size:.78rem;line-height:1.5;color:#a99e8b;margin:.3rem 0}
+.faction .fnote{font-size:.72rem;line-height:1.45;color:#c9a24a}
+.chapter-line{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:#6f6657;text-align:center;margin:-.3rem 0 .9rem}
+
 /* toast + fx */
 #toast{position:fixed;left:50%;bottom:5.2rem;transform:translate(-50%,14px);z-index:300;background:rgba(8,6,5,.96);border:1px solid var(--sodium);border-left:3px solid var(--blood2);padding:.7rem 1rem;max-width:88vw;font-size:.82rem;line-height:1.45;color:#e3d8c3;opacity:0;pointer-events:none;transition:.35s;text-align:center}
 #toast.show{opacity:1;transform:translate(-50%,0)}
@@ -283,7 +294,7 @@ button{font-family:inherit;color:inherit}
   <div class="in">
     <div class="over">LeonLink presents</div>
     <h1 class="display">Sun <em>N</em> Fun</h1>
-    <div class="sub">Escape the Trailer Park</div>
+    <div class="sub">Chapter Zero &middot; Escape the Trailer Park</div>
   </div>
   <div class="tap">Tap to begin</div>
 </section>
@@ -293,8 +304,8 @@ button{font-family:inherit;color:inherit}
   <div class="veil"></div>
   <div class="in">
     <h2 class="display">Sun N Fun</h2>
-    <div class="tag">Escape the trailer park</div>
-    <p class="lede" id="menu-lede">You wake on the floor of a garage at <b>180 Tomahawk Trl</b> with duct tape burns on your wrists and somebody else's blood under your nails. Mikey is gone. Your girlfriend signed a <b>$400 marker</b> with your name printed over hers. And the only way out is a name the park will believe before dawn.</p>
+    <div class="tag">Chapter Zero &middot; Escape the trailer park</div>
+    <p class="lede" id="menu-lede">You wake on the floor of a garage at <b>180 Tomahawk Trl</b> with duct tape burns on your wrists and somebody else's blood under your nails. Mikey is gone. Your girlfriend signed a <b>$400 marker</b> with your name printed over hers. The park is run by five groups who barely tolerate each other, and everybody has already decided what happens to people who look too close.</p>
     <p class="save hidden" id="menu-save"></p>
     <div class="actions">
       <button class="btn blood" id="btn-start" onclick="startNewCase()">Start the night</button>
@@ -309,14 +320,14 @@ button{font-family:inherit;color:inherit}
   <div id="hud">
     <div class="brand">Sun N Fun<span>Est. 1974</span></div>
     <div class="meter">
-      <div class="lab"><span>Suspicion</span><span id="susp-num">30 / 100</span></div>
+      <div class="lab"><span>Heat</span><span id="susp-num">30 / 100</span></div>
       <div class="track"><div id="susp"></div></div>
     </div>
     <div class="hud-cash" title="Cash on hand">$<b id="cash-n">60</b></div>
     <div class="hud-btns">
       <button onclick="openMap()" title="Map (M)">Map</button>
       <button onclick="openFile()" title="Case file (C)">File <span id="clue-n">0</span></button>
-      <button class="danger" onclick="openAccuse()" title="Accuse (A)">Accuse</button>
+      <button onclick="openStanding()" title="Standing (A)">Standing</button>
       <button id="snd-btn" onclick="toggleSound()" title="Sound">♪</button>
     </div>
   </div>
@@ -392,12 +403,12 @@ var CAST = {
     stages: [
       { say: "<em>SINNY:</em> You slept through a raid, friend. Cops came for Mikey at three. Three cruisers. He went out the back and into the dark, and the dark kept him.<br><br>He has a coil of chain in each hand and keeps turning one loop over the other while he talks. The mask has a crack through the left eye. Something dark has dried inside the crack, and it isn't paint.",
         choices: [
-          { t: "I didn't talk to anybody.", r: "<em>SINNY:</em> That's what they all say. Every time. Say it again and I'll believe you less.", s: 5, next: 1 },
+          { t: "I didn't talk to anybody.", r: "<em>SINNY:</em> That's what they all say. Every time. Say it again and I'll believe you less.", s: 5, next: 1, st: { court: 4 } },
           { t: "Who did they come for?", r: "<em>SINNY:</em> Mikey. The kid who cut grass for the whole park. Nineteen years old. He was out the back window before the second car stopped. Somebody knew his schedule, and somebody pointed.", s: 0, next: 1, note: "Sinny: Mikey, 19, ran when the cops came at 3 AM. Somebody knew his schedule." },
           { t: "I owe nothing. Prove it.", r: "<em>SINNY:</em> Bold. Wrong, but bold. Razor likes bold.", s: 10, next: 1 },
           { t: "There's blood in the mask's crack.", r: "<em>SINNY:</em> There's blood on your hands. Ask yourself which of us is wearing it.", s: 5, next: 1 }
         ] },
-      { say: "<em>SINNY:</em> Two things. The debt. And the snitch. Sort both and you walk out that gate. Get one wrong and Razor gets to work.<br><br>Behind him, the garage door is a black rectangle. Somewhere past it, water is dripping.",
+      { say: "<em>SINNY:</em> Two things. The debt, and what this park did to Mikey. Settle both and you walk out that gate. And don't let me hear you've been through my people's drawers.<br><br>Behind him, the garage door is a black rectangle. Somewhere past it, water is dripping.",
         choices: [
           { t: "Who says I owe?", r: "<em>SINNY:</em> Derrick says. Derrick collects. Ask Derrick. Ask him with your hands where he can see them.", s: 0, next: "end" },
           { t: "The blade man ever talk?", r: "<em>SINNY:</em> Razor talks with the stone. Listen close.", s: 0, next: "end" },
@@ -466,7 +477,7 @@ var CAST = {
         ] },
       { say: "<em>MARLENE:</em> Well? I'm waiting. The park doesn't run itself.<br><br>Behind her, a filing cabinet drawer is open two inches. Something in it is breathing, or the room is.",
         choices: [
-          { t: "Please. Somebody's trying to bury me.", r: "<em>MARLENE:</em> ...Fine. One look at the desk. Then out. And if I hear a drawer, I hear everything.", s: 0, flag: "marleneAllowed", next: "end", note: "Marlene will let you look at her desk — once." },
+          { t: "Please. Somebody's trying to bury me.", r: "<em>MARLENE:</em> ...Fine. One look at the desk. Then out. And if I hear a drawer, I hear everything.", s: 0, flag: "marleneAllowed", next: "end", note: "Marlene will let you look at her desk — once.", st: { office: 8 } },
           { t: "You got a phone log?", r: "<em>MARLENE:</em> Office phone's mine. I don't call the law on my own people.", s: 0, next: "end" },
           { t: "I'm going.", r: "<em>MARLENE:</em> Go on.", s: 0, next: "end" }
         ] }
@@ -503,7 +514,7 @@ var CAST = {
       { say: "<em>DERRICK:</em> Four hundred. Don't make me come find you twice.<br><br>Behind him, the back door is propped open with a brick. The mud outside is tracked in, and some of the tracks are the wrong colour.",
         choices: [
           { t: "Pay the four hundred. Cash. Now.", r: "<em>DERRICK:</em> ...You actually got it. Huh.<br><br>He counts it twice and doesn't look at you once. Then he reaches into his jacket and hands you a folded paper.<br><br><em>DERRICK:</em> The woman who brought this to me signed the bottom. Look at it. That is not your handwriting, friend. I knew it when she handed it over. I took it anyway, because I needed the money.<br><br>He looks at the floor. <em>DERRICK:</em> I always need the money.", s: -10, need: { cash: 400 }, pay: 400, clue: "iou", flag: "paidDebt", next: "end", note: "You paid Derrick the four hundred. The marker he handed back is signed in Kessa's handwriting." },
-          { t: "Show him the ledger page — your name isn't in it.", r: "<em>DERRICK:</em> ...Fine. Fine! You owed twenty bucks for beer. Somebody wanted you scared, so I made the rest up. Happy?<br><br>He looks at the floor. <em>DERRICK:</em> I needed the money. That's all. I needed the money.", s: 0, clue: "confession", need: { clue: "ledger" }, next: "end" },
+          { t: "Show him the ledger page — your name isn't in it.", st: { residents: 6, office: -8 }, r: "<em>DERRICK:</em> ...Fine. Fine! You owed twenty bucks for beer. Somebody wanted you scared, so I made the rest up. Happy?<br><br>He looks at the floor. <em>DERRICK:</em> I needed the money. That's all. I needed the money.", s: 0, clue: "confession", need: { clue: "ledger" }, next: "end" },
           { t: "Call his bluff.", r: "<em>DERRICK:</em> Bluff? Son, I got a blade man on retainer.", s: 10, next: "end" },
           { t: "Walk away.", r: "<em>DERRICK:</em> Tonight, friend. Four hundred.", s: 0, next: "end" }
         ] }
@@ -539,7 +550,7 @@ var CAST = {
       { say: "<em>SALLY:</em> I already said too much. What else?<br><br>Blood is sprayed across the front of her hoodie, and she hasn't put her phone down since you walked up. She keeps looking past you at the water.",
         choices: [
           { t: "The phone light — where exactly?", r: "<em>SALLY:</em> In the pond. I saw it go in. If you want it, wade for it. And don't blame me for what comes up.", s: 0, next: "end", note: "Sally: the phone is in the pond. Wade in for it." },
-          { t: "Who sees everything around here?", r: "<em>SALLY:</em> Hyde. Hyde sees everything and says nothing — till you ask right.", s: 0, next: "end" },
+          { t: "Who sees everything around here?", r: "<em>SALLY:</em> Hyde. Hyde sees everything and says nothing — till you ask right.", s: 0, next: "end", st: { residents: 6 } },
           { t: "I'm going.", r: "<em>SALLY:</em> Careful out there.", s: 0, next: "end" }
         ] }
     ]
@@ -605,8 +616,8 @@ var CAST = {
       { say: "<em>TELLMO:</em> You want to play, or you want to pray?<br><br>Under the table his boot taps a rhythm that doesn't match the record player.",
         choices: [
           { t: "Show me the marker with my name on it.", r: "<em>TELLMO:</em> ...Forty years I've kept this box shut. Fine. Look at it. Then look at the signature and tell me whose hand that is.", s: 0, clue: "iou", need: { clue: "slip" }, next: "end", note: "The marker: four hundred dollars, your printed name, and Kessa's signature in blue ink underneath." },
-          { t: "Watch his hands while he rolls.", r: "<em>TELLMO:</em> ...Sharp eyes. All right. The house dice are shaved, and they've been shaved since '03. Here's a hundred dollars to forget you noticed, and some advice: don't sit at this table twice.", s: 0, clue: "loadeddice", flag: "sharpDice", next: "end", note: "The house dice are shaved. Tellmo paid you a hundred to keep quiet." },
-          { t: "Sit down and roll.", r: "<em>TELLMO:</em> Now you're talking. Lay it down.", s: 0, next: "end" }
+          { t: "Watch his hands while he rolls.", r: "<em>TELLMO:</em> ...Sharp eyes. All right. The house dice are shaved, and they've been shaved since '03. Here's a hundred dollars to forget you noticed, and some advice: don't sit at this table twice.", s: 0, clue: "loadeddice", flag: "sharpDice", st: { table: -8 }, next: "end", note: "The house dice are shaved. Tellmo paid you a hundred to keep quiet." },
+          { t: "Sit down and roll.", r: "<em>TELLMO:</em> Now you're talking. Lay it down.", s: 0, next: "end", st: { table: 4 } }
         ] }
     ]
   },
@@ -786,10 +797,55 @@ var CLUES = {
     text: "The dog's collar, worn smooth. A name scratched out. MUSHROOM cut in under it. And under that, in a kid's handwriting: 'MIKEY + MUSHROOM 4 EVER'." }
 };
 var CLUE_ORDER = ["slip", "whetstone", "ledger", "phonelog", "pondphone", "confession", "matchbook", "bootprint", "tape", "tooth", "iou", "photos", "abelhand", "hatch", "kessanote", "loadeddice", "mikeydog"];
+/* ------------------------------------------------------------- FACTIONS --- */
+var CH = 0, CH_TITLE = "Chapter Zero — The Night of the Bones";
+var FACTIONS = {
+  court:     { name: "The Court",        color: "#c1121f", members: ["bunny", "razor"],
+               blurb: "Sinny's law. The garage, the gate, the chain on it." },
+  office:    { name: "The Office",       color: "#8a6d2c", members: ["marlene", "dwayne"],
+               blurb: "Marlene's books, her keys, and every signature the county has." },
+  table:     { name: "The Table",        color: "#a8501e", members: ["preacher", "lacy"],
+               blurb: "Tellmo's dice and everybody's markers. Money is the only vote." },
+  residents: { name: "The Porch Lights", color: "#6f7d5a", members: ["tanya", "earl", "mushroom"],
+               blurb: "Sally, Hyde and the people who just live here. They talk to each other." },
+  treeline:  { name: "The Tree Line",    color: "#4a5a63", members: ["abel"],
+               blurb: "Nobody's. Abel's. The part of the park that isn't a park." }
+};
+var STAND_TIERS = [
+  { min: 45, name: "Kin" }, { min: 20, name: "Trusted" }, { min: 5, name: "Tolerated" },
+  { min: -5, name: "Unproven" }, { min: -25, name: "Distrusted" }, { min: -101, name: "Marked" }
+];
+var HOSTILE_LINES = [
+  "Word travels in a park this size. I've got nothing for you.",
+  "You've been through too many of the wrong doors tonight. Go on.",
+  "Ask somebody who still likes you."
+];
+function standTier(v) { for (var i = 0; i < STAND_TIERS.length; i++) if (v >= STAND_TIERS[i].min) return STAND_TIERS[i].name; return "Marked"; }
+function factionOf(cid) { return (CAST[cid] && CAST[cid].faction) || "residents"; }
+function stand(f, n) {
+  if (!f || !n || !S.stand) return;
+  if (typeof S.stand[f] !== "number") S.stand[f] = 0;
+  var before = S.stand[f];
+  S.stand[f] = Math.max(-100, Math.min(100, before + n));
+  if (Math.abs(n) >= 6 && S.stand[f] !== before) {
+    toast("<b>" + FACTIONS[f].name.toUpperCase() + "</b> " + (n > 0 ? "will remember that." : "will not forget that."));
+    sfx(n > 0 ? "tick" : "bad");
+  }
+  updateHUD();
+}
+function hostiles(cid) { return (S.stand[factionOf(cid)] || 0) <= -40; }
+function factionLine(f, v) {
+  if (f === "court") return v >= 20 ? "Sinny lets you stand in the garage. Razor hasn't stood up yet." : v <= -25 ? "Somebody in the court has decided you're a problem to be handled." : "The court is watching. It hasn't decided about you.";
+  if (f === "office") return v >= 20 ? "Marlene leaves the drawer unlocked when you're in the room." : v <= -25 ? "Marlene has started writing your name in pencil." : "Marlene will take your money and your questions, in that order.";
+  if (f === "table") return v >= 20 ? "Tellmo deals you in without asking, and Lacy stops counting your hands." : v <= -25 ? "The table has gone cold for you. The dice still roll." : "The table will take anybody's money. That includes yours.";
+  if (f === "residents") return v >= 20 ? "Sally leaves her porch light on when you're out. Hyde saves you a chair." : v <= -25 ? "Doors are locking as you come up the road." : "The porch lights go out when you knock, and come back on when you leave.";
+  return v <= -25 ? "Something in the trees has started following you back." : "The tree line does not care about you yet.";
+}
+
 var NEED_CLUES = 9;
 
 /* ------------------------------------------------------------------ STATE --- */
-var SAVE_KEY = "snf:case:v3";
+var SAVE_KEY = "snf:case:v4";
 
 function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
 function el(id) { return document.getElementById(id); }
@@ -802,7 +858,9 @@ function fresh() {
     seenMap: false, snitch: pick(SUSPECTS), sound: true, bodyFound: false,
     cash: 60, mats: { wood: 6, scrap: 4 },
     dog: { friend: 0, following: false, alive: true, fed: 0 },
-    paidDebt: false, deadWake: false, sawAbel: false
+    paidDebt: false, deadWake: false, sawAbel: false,
+    seen: 0, chapter: 0,
+    stand: { court: 0, office: 0, table: 0, residents: 0, treeline: 0 }
   };
 }
 var S = fresh();
@@ -874,19 +932,68 @@ function thump(t, vol) {
   g.gain.exponentialRampToValueAtTime(.001, t + .28);
   o.connect(g); g.connect(master); o.start(t); o.stop(t + .3);
 }
-function sting(big) {
-  if (!AC || muted) return;
-  var t = AC.currentTime;
-  var len = big ? 1.4 : .5;
-  var buf = AC.createBuffer(1, AC.sampleRate * len, AC.sampleRate);
-  var d = buf.getChannelData(0);
-  for (var i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 3);
-  var src = AC.createBufferSource(); src.buffer = buf;
-  var f = AC.createBiquadFilter(); f.type = "bandpass"; f.frequency.value = big ? 700 : 1800; f.Q.value = .8;
-  var g = AC.createGain(); g.gain.setValueAtTime(big ? .5 : .22, t); g.gain.exponentialRampToValueAtTime(.001, t + len);
-  src.connect(f); f.connect(g); g.connect(master); src.start(t);
-  if (big) { thump(t, .5); thump(t + .32, .3); }
+/* a small kit so every event has its own voice instead of one noise slap */
+function sTone(freq, dur, when, opts) {
+  if (!AC || !master) return;
+  opts = opts || {};
+  var o = AC.createOscillator(), g = AC.createGain();
+  o.type = opts.type || "sine";
+  o.frequency.setValueAtTime(freq, when);
+  if (opts.to) o.frequency.exponentialRampToValueAtTime(Math.max(20, opts.to), when + dur);
+  var v = opts.vol == null ? .16 : opts.vol;
+  g.gain.setValueAtTime(.0001, when);
+  g.gain.exponentialRampToValueAtTime(v, when + (opts.attack || .012));
+  g.gain.exponentialRampToValueAtTime(.0001, when + dur);
+  o.connect(g); g.connect(master); o.start(when); o.stop(when + dur + .03);
 }
+function sNoise(dur, when, freq, q, vol, type) {
+  if (!AC || !master) return;
+  var n = Math.max(8, Math.floor(AC.sampleRate * dur));
+  var buf = AC.createBuffer(1, n, AC.sampleRate), d = buf.getChannelData(0);
+  for (var i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 2);
+  var src = AC.createBufferSource(); src.buffer = buf;
+  var f = AC.createBiquadFilter(); f.type = type || "bandpass";
+  f.frequency.value = freq; f.Q.value = q == null ? 1 : q;
+  var g = AC.createGain(); g.gain.value = vol == null ? .16 : vol;
+  src.connect(f); f.connect(g); g.connect(master); src.start(when);
+}
+var SFX = {
+  tick: function (t) { sTone(1180, .06, t, { type: "triangle", vol: .05, attack: .004, to: 900 }); },
+  page: function (t) { sNoise(.16, t, 2600, .7, .06, "highpass"); sTone(300, .1, t, { vol: .04, to: 180 }); },
+  evidence: function (t) {
+    sTone(523.25, .32, t, { type: "triangle", vol: .13 });
+    sTone(783.99, .44, t + .11, { type: "triangle", vol: .12 });
+    sTone(1046.5, .62, t + .22, { vol: .08 });
+    sNoise(.1, t + .22, 5200, 2, .04);
+  },
+  gore: function (t) {
+    sNoise(.9, t, 520, .7, .2, "lowpass");
+    sTone(70, .4, t, { vol: .28, to: 38 });
+    sTone(46, .8, t + .12, { vol: .2, to: 30 });
+  },
+  bad: function (t) {
+    sTone(146.8, 1.1, t, { type: "sawtooth", vol: .09, to: 138 });
+    sTone(155.6, 1.1, t, { type: "sawtooth", vol: .09, to: 147 });
+  },
+  dice: function (t) { for (var i = 0; i < 4; i++) sNoise(.05, t + i * .055 + Math.random() * .03, 2400 + Math.random() * 1800, 3, .09); },
+  rattle: function (t) { for (var i = 0; i < 7; i++) sNoise(.045, t + i * .06, 3200 + Math.random() * 2000, 5, .07); },
+  heart: function (t) { thump(t, .22); },
+  kill: function (t) {
+    sTone(58, 1.6, t, { vol: .32, to: 26 });
+    sNoise(1.8, t, 300, .5, .22, "lowpass");
+    sTone(88, 1.2, t + .05, { type: "sawtooth", vol: .06, to: 40 });
+  },
+  chapter: function (t) {
+    sTone(392, 1.2, t, { vol: .08 });
+    sTone(587.33, 1.4, t + .18, { vol: .06 });
+  }
+};
+function sfx(id, delay) {
+  if (!AC || muted) return;
+  var f = SFX[id]; if (!f) return;
+  try { f(AC.currentTime + (delay || 0)); } catch (e) {}
+}
+function sting(big) { sfx(big ? "gore" : "tick"); }
 function toggleSound(force) {
   audioInit();
   if (typeof force === "boolean") muted = !force; else muted = !muted;
@@ -1003,6 +1110,7 @@ function renderLoc(loc) {
   var searched = S.searched[loc];
   var extra = "";
   if (loc === "game") extra += '<button class="btn ghost" onclick="openTable()">Bones</button>';
+  if (loc === "gate") extra += '<button class="btn ghost" onclick="attemptEscape()">Make for the gate</button>';
   if (loc === "pond" && S.flags.deadWake) extra += '<button class="btn ghost" onclick="openBase()">Hold the pond</button>';
   el("body").innerHTML =
     '<div class="loc-card">' +
@@ -1033,6 +1141,13 @@ function renderTalk(cid, stage) {
   if (S.over) return;
   var c = CAST[cid], st = c.stages[stage];
   setFig(cid);
+  if (hostiles(cid)) {
+    el("body").innerHTML = '<div class="dlg"><div class="spk">' + c.name + '</div>' +
+      '<div class="say"><em>' + c.name.toUpperCase() + ':</em> ' + pick(HOSTILE_LINES) + '</div>' +
+      '<button class="btn ghost wide" onclick="renderLoc(\'' + S.loc + '\')">Step back</button></div>';
+    el("head").innerHTML = headHTML(LOCS[S.loc]);
+    return;
+  }
   if (!st) {
     var html = '<div class="dlg"><div class="spk">' + c.name + '</div>' +
       '<div class="say">' + c.idle + '</div>';
@@ -1074,6 +1189,7 @@ function askLore(cid, i) {
   if (S.over) return;
   var stage = S.talkStage[cid] || 0;
   S.lore[cid + ":" + i] = true;
+  stand(factionOf(cid), 3);
   note(CAST[cid].name + " — " + CAST[cid].lore[i].q.replace(/\?$/, "."));
   var html = '<div class="dlg"><div class="spk">' + CAST[cid].name + '</div>' +
     '<div class="say">' + CAST[cid].lore[i].a + '</div>' +
@@ -1087,6 +1203,8 @@ function choose(cid, stage, i) {
   if (!ch) return;
   if (ch.s) susp(ch.s);
   if (S.over) return;
+  if (ch.st) { for (var f in ch.st) stand(f, ch.st[f]); }
+  sfx("tick");
   spend(4);
   if (S.over) return;
   if (ch.pay) { S.cash -= ch.pay; updateHUD(); }
@@ -1129,6 +1247,9 @@ function confront(cid) {
   if (S.over) return;
   S.flags["confronted_" + cid] = true;
   fx("blood");
+  susp(12);
+  stand(factionOf(cid), -10);
+  S.seen = (S.seen || 0) + 1;
   el("body").innerHTML = '<div class="dlg"><div class="spk">' + CAST[cid].name + '</div>' +
     '<div class="say">' + CONFRONT[cid] + '</div>' +
     '<button class="btn blood wide" onclick="renderLoc(\'' + S.loc + '\')">Let them go</button></div>';
@@ -1144,7 +1265,7 @@ function addClue(id) {
   if (id === "pondphone") note("The pond phone's case: " + PHONE_MARKS[S.snitch]);
   updateHUD();
   toast("<b>EVIDENCE.</b> " + CLUES[id].name);
-  if (CLUES[id].gore) fx("blood"); else sting(false);
+  if (CLUES[id].gore) fx("blood"); else sfx("evidence");
   return true;
 }
 function clueText(id) { return id === "pondphone" ? phoneText() : CLUES[id].text; }
@@ -1168,8 +1289,17 @@ function searchLoc(loc) {
     caught = true;
     msg += " Marlene catches you in her drawer. She doesn't scream. She just watches you leave, and you feel her watching all the way to the gate.";
     note("Marlene caught you in her desk. She didn't stop you.");
+    S.seen = (S.seen || 0) + 1;
+    stand("office", -10);
+    sfx("bad");
   }
   var names = [];
+  if (loc === "pond" && L.search.clue === "pondphone" && !S.flags.abelWatched) {
+    S.flags.abelWatched = true;
+    susp(8);
+    stand("treeline", -6);
+    toast("<b>SOMETHING IN THE TREES.</b> You were seen at the water.");
+  }
   if (L.search.clue) {
     var arr = Array.isArray(L.search.clue) ? L.search.clue : [L.search.clue];
     arr.forEach(function (cid) { if (addClue(cid)) names.push(CLUES[cid].name); });
@@ -1347,51 +1477,53 @@ function openFile() {
   setFig(null);
 }
 
-/* ------------------------------------------------------------- ACCUSE ----- */
-function openAccuse() {
+/* ---------------------------------------------------------- STANDING ----- */
+function openStanding() {
   if (S.over) return;
   var html = '<div class="sheet dark"><div class="wrap">' +
-    '<div class="sheet-head"><h3>Name the snitch</h3><button class="x" onclick="closeSheet()">×</button></div>' +
-    '<p class="empty">Sinny and Razor aren\'t on the list. They\'re the court. Pick one. If you\'re wrong, the blade comes out. If you\'re right but empty-handed, Sinny sends you back out into the dark.</p>';
-  SUSPECTS.forEach(function (id) {
-    var c = CAST[id];
-    html += '<button class="accuse-btn" onclick="confirmAccuse(\'' + id + '\')"><div class="nm">' + c.name + '</div><div class="ds">' + c.accuseLine + '</div></button>';
+    '<div class="sheet-head"><h3>The Park\'s Politics</h3><button class="x" onclick="closeSheet()">&times;</button></div>' +
+    '<p class="empty">Nobody here is a suspect. Five groups run this park, they do not agree about anything, and every one of them is watching who you talk to.</p>';
+  Object.keys(FACTIONS).forEach(function (f) {
+    var F = FACTIONS[f], v = (S.stand && S.stand[f]) || 0, lit = (v + 100) / 2;
+    var names = F.members.map(function (cid) { return CAST[cid] ? CAST[cid].name : cid; }).join(" &middot; ");
+    html += '<div class="faction" style="border-left-color:' + F.color + '">' +
+      '<div class="fname">' + F.name + '<span class="ftier">' + standTier(v) + '</span></div>' +
+      '<div class="fbar"><i style="width:' + lit.toFixed(0) + '%;background:' + F.color + '"></i></div>' +
+      '<div class="fmem">' + names + '</div>' +
+      '<p>' + F.blurb + '</p>' +
+      '<div class="fnote">' + factionLine(f, v) + '</div></div>';
   });
-  html += '<div class="center"><button class="btn ghost" onclick="closeSheet()">Not yet — keep looking</button></div></div></div>';
+  html += '<div class="verdict"><b>Heat</b> ' + S.susp + ' / 100 &middot; ' +
+    (S.susp >= 80 ? "They are already deciding where to put you." : S.susp >= 55 ? "People have started standing in doorways when you pass." : S.susp >= 30 ? "Somebody has said your name tonight." : "Mostly nobody has noticed you.") +
+    '<br><b>Caught in the act</b> ' + (S.seen || 0) + ' &middot; three is more than this park forgives.<br>' +
+    '<b>Leverage</b> ' + S.clues.length + ' of ' + CLUE_ORDER.length + ' pieces &middot; debt ' + debtLabel().toLowerCase() + '.</div>' +
+    '<div class="center"><button class="btn ghost" onclick="closeSheet()">Back into the park</button></div></div></div>';
   el("body").innerHTML = html;
+  el("head").innerHTML = headHTML(LOCS[S.loc]);
   setFig(null);
+  sfx("page");
 }
-function confirmAccuse(id) {
+
+/* ------------------------------------------------------------ THE GATE ---- */
+function attemptEscape() {
   if (S.over) return;
-  var c = CAST[id], proof = hasDebtProof(), enough = S.clues.length >= NEED_CLUES;
-  var html = '<div class="sheet dark"><div class="wrap">' +
-    '<div class="sheet-head"><h3>You\'re naming ' + c.name + '</h3><button class="x" onclick="openAccuse()">×</button></div>' +
-    '<div class="verdict"><b>Your evidence</b><br>' +
-      'Clues: <b>' + S.clues.length + ' of ' + CLUE_ORDER.length + '</b> (Sinny wants ' + NEED_CLUES + ')<br>' +
-      'Debt proof: <b>' + (proof ? (S.flags.paidDebt && !hasClue("ledger") && !hasClue("confession") ? "YES — paid in full, marker in hand" : "YES — the $400 was invented") : "NO — you haven't proved the debt") + '</b><br>' +
-      (hasClue("pondphone") ? "The pond phone is in your pocket.<br>" : "You never found the phone in the pond.<br>") +
-    (enough && proof ? "Sinny will listen. Probably." : "Sinny will not listen. Probably.") + '</div>' +
-    '<div class="center"><button class="btn blood" onclick="resolveAccuse(\'' + id + '\')">Say the name out loud</button>' +
-    '<button class="btn ghost" onclick="openAccuse()">Keep looking</button></div></div></div>';
-  el("body").innerHTML = html;
-}
-function resolveAccuse(id) {
-  if (S.over) return;
-  var right = (id === S.snitch), proof = hasDebtProof(), enough = S.clues.length >= NEED_CLUES;
-  if (right && proof && enough) {
-    S.flags.named1 = id;
-    playCine(WIN_SHOTS, function () { openSecondAccusation(); });
+  sfx("rattle");
+  if (S.susp >= 85) { playCine(SEEN_SHOTS, function () { endGame("seen"); }); return; }
+  var phone = hasClue("pondphone"), proof = hasDebtProof(), n = S.clues.length;
+  if (phone && proof && n >= 8) {
+    if (ABEL_CLUES.filter(hasClue).length >= 2) playCine(TRUTH_SHOTS, function () { endGame("truth"); });
+    else playCine(WIN_SHOTS, function () { endGame("win"); });
     return;
   }
-  if (right && (!proof || !enough)) {
-    var html = '<div class="dlg"><div class="spk">Sinny</div>' +
-      '<div class="say"><em>SINNY:</em> Right name. Wrong weight. Come back with the marker and ' + NEED_CLUES + ' pieces of this park in your hands — or don\'t come back at all.</div>' +
-      '<button class="btn blood wide" onclick="renderLoc(\'' + S.loc + '\')">Back into the park</button></div>';
-    el("body").innerHTML = html;
-    susp(10);
-    return;
-  }
-  playCine(WRONG_SHOTS, function () { endGame("wrong"); });
+  var why = !proof
+    ? "The debt is still open. Sinny does not open a gate for a man who owes him money."
+    : (!phone ? "You don't have the phone. Without it you are just another drunk with a story."
+              : "You are carrying " + n + " pieces of this park and Sinny wants eight before he touches that chain.");
+  el("body").innerHTML = '<div class="dlg"><div class="spk">Boone Gate</div>' +
+    '<div class="say">The chain is still on. The padlock is cold to the touch.<br><br>' + why + '</div>' +
+    '<button class="btn blood wide" onclick="renderLoc(\'gate\')">Step back into the park</button></div>';
+  susp(8);
+  save();
 }
 
 /* ----------------------------------------------------- MONEY, PHASE, DOG --- */
@@ -1531,38 +1663,6 @@ function viewPhotos() {
     '</div></div>';
   el("body").innerHTML = html;
   save();
-}
-
-/* ------------------------------------------------------ SECOND ACCUSATION -- */
-function openSecondAccusation() {
-  if (S.over) return;
-  var ev = ABEL_CLUES.filter(hasClue).length;
-  var html = '<div class="sheet dark"><div class="wrap">' +
-    '<div class="sheet-head"><h3>One more name</h3><button class="x" onclick="closeSheet()">&times;</button></div>' +
-    '<p class="empty">Sinny is holding the phone. He isn&rsquo;t looking at it.<br><br><em>&ldquo;The call was one thing,&rdquo;</em> he says. <em>&ldquo;Who put the boy in the water?&rdquo;</em></p>' +
-    '<div class="verdict"><b>Proof against the man in the trees</b><br>' + ev + ' of 4 pieces (Sinny wants two)<br>' +
-    (S.flags.sawPhotos ? "You have seen the photos.<br>" : "You never opened the gallery.<br>") +
-    (ev >= 2 ? "This will hold." : "This is a hunch, and hunches bleed.") + '</div>';
-  SUSPECTS.concat(["abel"]).forEach(function (id) {
-    var c = CAST[id];
-    html += '<button class="accuse-btn" onclick="resolveAbel(\'' + id + '\')"><div class="nm">' + c.name + '</div><div class="ds">' + c.note + '</div></button>';
-  });
-  html += '<div class="center"><button class="btn ghost" onclick="closeSheet()">Not yet</button></div></div></div>';
-  el("body").innerHTML = html;
-  setFig(null);
-}
-function resolveAbel(id) {
-  if (S.over) return;
-  var ev = ABEL_CLUES.filter(hasClue).length;
-  if (id === "abel" && ev >= 2) { playCine(TRUTH_SHOTS, function () { endGame("truth"); }); return; }
-  if (id === "abel") {
-    el("body").innerHTML = '<div class="dlg"><div class="spk">Sinny</div>' +
-      '<div class="say"><em>SINNY:</em> Right man. Wrong weight. A name with no paper behind it is just a rumor, and I don&rsquo;t kill men on rumors.<br><br>Bring me two pieces. The phone. The handprint. The note. Something I can hold.</div>' +
-      '<button class="btn blood wide" onclick="renderLoc(\'' + S.loc + '\')">Back into the park</button></div>';
-    susp(10);
-    return;
-  }
-  playCine(HALF_SHOTS, function () { endGame("half"); });
 }
 
 /* ---------------------------------------------------------- POND BASE ----- */
@@ -1791,9 +1891,9 @@ function endGame(kind) {
   } else if (kind === "zombies") {
     title = "THE POND KEEPS YOU";
     body = "The barricade goes. Then the light. Then the bank.<br><br>They come up out of the water slow and patient, the way the pond has always been patient, and they take the base apart with their hands. Mikey is somewhere in the front of them. You would know that walk anywhere.<br><br>" + truth + "<br><br>By dawn the pond is flat and black again, and there is one more set of heel marks going in.";
-  } else if (kind === "suspicion") {
-    title = "THE WHISPERS WON";
-    body = "Too many eyes. Too many words. By the time you reach the gate, the whole park is standing in the dark behind you, and none of them are blinking.<br><br>" + truth + "<br><br>Razor is almost gentle about it. Almost.";
+  } else if (kind === "suspicion" || kind === "seen") {
+    title = "SOMEBODY SAW YOU";
+    body = "You got too close. Not to a name, not to a theory — to a drawer, a door, a stretch of bank that wasn't yours to walk. Somebody watched you do it, and in a park this size watching is the same as deciding.<br><br>" + truth + "<br><br>Nobody accuses you of anything. Nobody has to. Razor is almost gentle about it. Almost.";
   } else {
     title = "DAWN";
     body = "The sky goes grey over Boone Road. Sinny looks at the light, then at you, then at Razor.<br><br><span class='who'>SINNY:</span> “Court\'s closed.”<br><br>" + truth + "<br><br>The garage door comes down. The park goes back to sleep.";
@@ -1805,15 +1905,16 @@ function endGame(kind) {
     '</div>';
   el("body").innerHTML = '<div class="sheet dark"><div class="wrap">' +
     '<div class="big-title ' + cls + '">' + title + '</div>' +
+    '<div class="chapter-line">' + CH_TITLE + ' &middot; end of chapter</div>' +
     '<div class="end-body">' + body + '</div>' + stats +
-    '<div class="center"><button class="btn blood" onclick="restartGame()">Play again — new snitch</button>' +
+    '<div class="center"><button class="btn blood" onclick="restartGame()">Play Chapter Zero again</button>' +
     '<a class="btn ghost" href="/games.html">Games hub</a></div>' +
-    '<p class="mini-note" style="margin-top:1rem">Sun N Fun Estates · 111 Tomahawk Trl · Rineyville, KY · everything here is fiction except the roads.</p>' +
+    '<p class="mini-note" style="margin-top:1rem">Chapter One — <b>The County Road</b> — is not written yet. What you learned and who still likes you carry forward.<br><br>Sun N Fun Estates · 111 Tomahawk Trl · Rineyville, KY · everything here is fiction except the roads.</p>' +
     '</div></div>';
   el("head").innerHTML = '';
   el("bg").classList.add("dim");
   el("vig").className = "vig";
-  sting(true);
+  sfx("kill");
   fx("blood");
 }
 function restartGame() {
@@ -1924,7 +2025,7 @@ var INTRO_SHOTS = [
   { img: IMG.garage, fig: "bunny", lines: [
     { who: "SINNY", text: "You slept through a raid, friend. Cops came for Mikey at three. Three cruisers. He ran out the back and the dark kept him." },
     { text: "The mask has a crack through the left eye. Something dark has dried in the crack." },
-    { who: "SINNY", text: "Two things. The debt. And the name. Sort both and you walk out that gate." }
+    { who: "SINNY", text: "Two things. The debt. And what this park did to Mikey. Settle both and you walk out that gate." }
   ] },
   { img: IMG.garage, fig: "razor", fx: "flash", lines: [
     { text: "Behind him, a man sits on a bucket with a skinner's knife across his knee. The whetstone goes shhk. Shhk. He does not look up." },
@@ -2008,6 +2109,17 @@ var DRAIN_SHOTS = [
   ] }
 ];
 
+var SEEN_SHOTS = [
+  { img: IMG.garage, fig: "razor", fx: "flash", lines: [
+    { text: "Somebody was standing in the dark behind you. They had been there the whole time." },
+    { who: "RAZOR", text: "You keep putting your hands in other people's drawers." },
+    { text: "He doesn't ask what you found. He doesn't ask anything at all. The stone is already dry.", cls: "gore" }
+  ] },
+  { img: IMG.garage, fx: "blood", lines: [
+    { text: "The garage door comes down. Nobody in this park says your name again, and by morning there is a new padlock on the gate.", cls: "gore" }
+  ] }
+];
+
 var WRONG_SHOTS = [
   { img: IMG.garage, fig: "razor", fx: "flash", lines: [
     { text: "Sinny shakes his head. Razor stands. The stone stops." },
@@ -2071,7 +2183,7 @@ document.addEventListener("keydown", function (e) {
   var k = e.key.toLowerCase();
   if (k === "m") openMap();
   else if (k === "c") openFile();
-  else if (k === "a") openAccuse();
+  else if (k === "a") openStanding();
   else if (e.key === "Escape") closeSheet();
 });
 
