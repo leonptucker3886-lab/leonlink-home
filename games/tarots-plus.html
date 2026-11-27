@@ -71,6 +71,7 @@ padding:13px 22px;min-height:48px;border-radius:2px;font:600 .82rem/1 var(--sans
 .fan .fcard:nth-child(2){transform:translateY(-10px);z-index:3;box-shadow:0 30px 60px -20px #000}
 .fan .fcard:nth-child(3){transform:translateX(56%) rotate(10deg) translateY(10px);z-index:2}
 @media(max-width:600px){.fan{height:290px}.fan .fcard{width:132px;height:198px}}
+.fan .fcard .foot small{display:none}
 .deckline{position:absolute;inset:auto 0 -14px;text-align:center}
 
 /* ---------- section shell ---------- */
@@ -232,6 +233,58 @@ footer.site nav a:hover{color:var(--gold2)}
 .disclaimer{font-size:.76rem;line-height:1.65;color:var(--ash);border-top:1px solid var(--line);padding-top:18px;margin-top:26px}
 .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* ---------- the personal reading ---------- */
+.reading{margin-top:clamp(30px,5vw,54px);animation:fade .8s ease both}
+.rhead{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:6px}
+.rhead h2{font-size:clamp(2.1rem,5.4vw,3.2rem);font-weight:300}
+.rsub{color:var(--dim);margin:10px 0 0;font-size:.96rem;max-width:52em}
+.rsub b{color:var(--bone);font-weight:600}
+.rdate{font:.66rem/1.6 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--ash);margin:9px 0 0}
+.chapter{display:grid;grid-template-columns:1fr;gap:8px;padding:clamp(22px,3.4vw,38px) 0;border-bottom:1px solid var(--line)}
+@media(min-width:820px){.chapter{grid-template-columns:62px 1fr;gap:clamp(16px,3vw,32px)}}
+.chn{font:300 1.4rem/1 var(--display);color:var(--gold);letter-spacing:.12em;opacity:.85;padding-top:2px}
+.chapter h3{font-size:clamp(1.4rem,2.7vw,2rem);font-weight:300;margin:0 0 16px;max-width:24em}
+.chapter h3 span{display:block;font:600 .6rem/1.7 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-top:9px}
+.chapter p{color:var(--dim);margin:0 0 1em;max-width:62ch}
+.chapter p b{color:var(--bone)}
+.chapter .small{max-width:60ch}
+.dropcap::first-letter{float:left;font:300 3.3rem/.8 var(--display);color:var(--gold2);padding:8px 10px 0 0}
+.pull{border-left:1px solid var(--goldline);padding:2px 0 2px 16px;margin:20px 0;font:italic 300 1.06rem/1.6 var(--display);color:var(--bone);max-width:52ch}
+.matches{display:grid;gap:10px;grid-template-columns:1fr;margin:4px 0 16px}
+@media(min-width:640px){.matches{grid-template-columns:1fr 1fr}}
+.match{border:1px solid var(--line);border-radius:3px;padding:12px 14px;background:rgba(242,235,223,.02)}
+.match header{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.match header b{font:600 1.02rem var(--display);color:var(--bone)}
+.match header span{font:600 .76rem var(--mono);color:var(--gold2)}
+.match .track{height:2px;background:rgba(242,235,223,.1);margin:9px 0 7px;overflow:hidden;border-radius:2px}
+.match .track i{display:block;height:100%;background:linear-gradient(90deg,#7d6534,var(--gold),var(--gold2));width:0;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.match small{font-size:.75rem;line-height:1.5;color:var(--ash);display:block}
+.compatgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:6px 0 10px}
+@media(min-width:560px){.compatgrid{grid-template-columns:repeat(4,1fr)}}
+.cc{display:flex;justify-content:space-between;gap:6px;border:1px solid var(--line);padding:7px 8px;border-radius:2px;font-size:.71rem;color:var(--dim);letter-spacing:.02em}
+.cc b{color:var(--bone);font-weight:600}
+.cc.easy{border-color:rgba(200,165,88,.5);background:rgba(200,165,88,.06)}
+.cc.hard{border-color:rgba(156,74,50,.45);background:rgba(156,74,50,.08)}
+.spread3{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(8px,1.6vw,14px);max-width:560px;margin:6px 0 20px}
+.spread3 figure{margin:0}
+.spread3 .poslabel{display:block;text-align:center;font:600 .56rem/1.4 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--ash);margin-bottom:6px}
+.spread3 figcaption{font-size:.7rem;color:var(--ash);margin-top:7px;text-align:center;line-height:1.45}
+.lpblock{display:grid;grid-template-columns:1fr;gap:14px;align-items:center;border:1px solid var(--goldline);background:linear-gradient(150deg,rgba(200,165,88,.07),transparent);padding:clamp(16px,2.6vw,26px);border-radius:3px;margin:4px 0 20px}
+@media(min-width:560px){.lpblock{grid-template-columns:112px 1fr}}
+.lpnum{font:300 clamp(3.6rem,7vw,4.8rem)/.9 var(--display);color:var(--gold2)}
+.lpblock h4{font:600 1.02rem var(--display);color:var(--bone);margin:0 0 6px}
+.lpblock p{margin:0}
+.mininums{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0 18px}
+@media(min-width:700px){.mininums{grid-template-columns:repeat(4,1fr)}}
+.mininums div{border:1px solid var(--line);padding:10px 12px;border-radius:2px}
+.mininums b{display:block;font:300 1.6rem/1.1 var(--display);color:var(--gold2)}
+.mininums small{display:block;font:600 .54rem/1.5 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ash);margin-bottom:3px}
+.closing{font:italic 300 1.14rem/1.65 var(--display);color:var(--bone);border-top:1px solid var(--line);padding:22px 0 0;margin:6px 0 0;max-width:46em}
+.chapters{list-style:none;counter-reset:c;padding:0;margin:0;display:grid;gap:14px}
+.chapters li{counter-increment:c;display:grid;grid-template-columns:30px 1fr;gap:9px;font-size:.88rem;line-height:1.5;color:var(--dim)}
+.chapters li::before{content:counter(c,upper-roman);font:400 .78rem/1.7 var(--display);letter-spacing:.08em;color:var(--gold)}
+.chapters li b{color:var(--bone);font-weight:600}
 </style></head><body>
 <div class="grain" aria-hidden="true"></div>
 <main>
@@ -241,21 +294,21 @@ footer.site nav a:hover{color:var(--gold2)}
   <div class="wrap">
     <div class="grid">
       <div>
-        <p class="eyebrow">LeonLink presents · Mystic Center</p>
-        <h1>Tarots<em>+</em></h1>
-        <p class="lede">A drawn deck of twenty-two. A birth chart with every classical planet. Your numbers in the Pythagorean system. <b>Not a horoscope column</b> — one long, careful reading built from your own details, with the card art to match.</p>
+        <p class="eyebrow">LeonLink presents · Tarots+</p>
+        <h1>One reading,<br><em>all of it.</em></h1>
+        <p class="lede">Give it your birth details and it reads the whole thing at once: the sign and element you arrived under, who you are compatible with and who you are not, the moon and rising behind your face, one tarot spread drawn for you, and the Life Path number that runs underneath all of it. <b>One sitting, one reading.</b></p>
         <div class="hero-tags">
-          <span class="tagpill">22 Major Arcana</span>
-          <span class="tagpill">Ephemeris chart</span>
-          <span class="tagpill">Life Path · 7 numbers</span>
-          <span class="tagpill">Reversals</span>
+          <span class="tagpill">Sign &amp; element</span>
+          <span class="tagpill">Compatibility</span>
+          <span class="tagpill">One tarot spread</span>
+          <span class="tagpill">Life Path</span>
         </div>
         <div class="gate">
-          <a class="btn" href="#deck">Open the deck</a>
-          <a class="btn ghost" href="#reading">Read my chart</a>
+          <a class="btn" href="#reading">Read me</a>
+          <a class="btn ghost" href="#deck">The cards</a>
         </div>
-        <p class="small" style="margin-top:16px">First reading each day is free. Nothing leaves your browser except the birthplace you type, which is only used to look up coordinates.</p>
-      </div>
+        <p class="small" style="margin-top:16px">First reading each day is free. Nothing leaves your browser except the birthplace you type, used once to look up coordinates.</p>
+    </div>
       <div class="fan" id="fan" aria-hidden="true"></div>
     </div>
   </div>
@@ -263,62 +316,18 @@ footer.site nav a:hover{color:var(--gold2)}
 
 <div class="seam" role="presentation"></div>
 
-<!-- ================= DECK ================= -->
-<section class="band" id="deck">
-  <div class="wrap">
-    <div class="bhead">
-      <div>
-        <p class="eyebrow">01 — The Deck</p>
-        <h2>Twenty-two cards, each with its own plate.</h2>
-      </div>
-      <p>Every Major Arcana card is drawn here as line art on ink: its numeral, its ruling planet or sign, its number, and both readings — upright and reversed. Tap a card to open it.</p>
-    </div>
-    <div class="deck" id="deckGrid"></div>
-    <p class="small" style="margin-top:20px">Reversed does not mean bad. A reversed card is the same energy turned inward, held back or arriving late. Read it as <em>where the work is</em>, not as a punishment.</p>
-  </div>
-</section>
-
-<!-- ================= CARD OF THE DAY ================= -->
-<section class="band" id="today" style="padding-top:0">
-  <div class="wrap">
-    <div class="bhead">
-      <div>
-        <p class="eyebrow">02 — The Draw</p>
-        <h2>Card of the day.</h2>
-      </div>
-      <p>One card for today, drawn from the date itself. The same card turns for everyone at midnight, and it changes with the day, not with a refresh.</p>
-    </div>
-    <div class="grid2" style="align-items:start;gap:clamp(18px,3vw,34px)">
-      <div id="cotdCard" style="max-width:320px;width:100%"></div>
-      <div class="panel gold">
-        <p class="eyebrow" id="cotdKick">Today's card</p>
-        <h3 id="cotdName" style="font-size:clamp(1.7rem,3vw,2.2rem);font-weight:300"></h3>
-        <p class="mono" id="cotdCorr" style="margin:6px 0 16px"></p>
-        <p id="cotdUp" style="color:var(--dim)"></p>
-        <div class="keyval" style="margin-top:18px">
-          <div class="fact"><small>Keyword</small><b id="cotdKw">—</b></div>
-          <div class="fact"><small>Number</small><b id="cotdNum">—</b></div>
-          <div class="fact"><small>Yes / no</small><b id="cotdYes">—</b></div>
-          <div class="fact"><small>Timing</small><b id="cotdTime">—</b></div>
-        </div>
-        <p class="small" style="margin:16px 0 0">Carry it as a question, not a forecast: <em id="cotdQ" style="color:var(--gold2)"></em></p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ================= READING ================= -->
 <section class="band" id="reading" style="padding-top:0">
   <div class="wrap">
     <div class="bhead">
       <div>
-        <p class="eyebrow">03 — Your Reading</p>
-        <h2>The chart, the numbers, the sky you were born under.</h2>
+        <p class="eyebrow">The reading</p>
+        <h2>Tell me when you arrived.</h2>
       </div>
-      <p>Sun, Moon, Rising, Mercury through Saturn, your seven core numbers, the moon phase at your birth, your Chinese year and the planetary hour you arrived in.</p>
+      <p>One form, one long reading. Your sign and element, the signs you are compatible with, the moon and rising you came in under, one tarot spread drawn for you, and your Life Path — read together, in plain English, in one sitting.</p>
     </div>
 
-    <div class="grid2" style="align-items:start">
+    <div class="grid2" style="align-items:start;gap:clamp(16px,2.4vw,26px)">
       <div class="panel form">
         <div class="wallet">
           <span class="coin"><i></i><span id="glow">0</span> Glow</span>
@@ -334,9 +343,9 @@ footer.site nav a:hover{color:var(--gold2)}
           </div>
           <label for="pl">Place of birth</label>
           <input id="pl" required placeholder="City, State or Country — e.g. Dayton, Ohio">
-          <label for="tm">Time of birth <span style="text-transform:none;letter-spacing:0;color:var(--ash)">(optional — unlocks Rising, houses of the day and the planetary hour)</span></label>
+          <label for="tm">Time of birth <span style="text-transform:none;letter-spacing:0;color:var(--ash)">(optional — adds Rising and the planetary hour)</span></label>
           <input id="tm" type="time">
-          <button class="btn wide" type="submit" id="go" style="margin-top:22px">Read my chart</button>
+          <button class="btn wide" type="submit" id="go" style="margin-top:22px">Read me</button>
           <div style="display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:10px">
             <span class="hint" style="margin:0" id="cost"></span>
             <button class="linkbtn" type="button" id="bonus">Claim daily moon bonus (+15 Glow)</button>
@@ -346,16 +355,16 @@ footer.site nav a:hover{color:var(--gold2)}
       </div>
 
       <div class="panel">
-        <p class="eyebrow dim">What's inside</p>
-        <ul class="list">
-          <li><span class="d"></span><span><b>The big three.</b> Sun, Moon and Rising, with or without a birth time.</span></li>
-          <li><span class="d"></span><span><b>Seven planets.</b> Mercury, Venus, Mars, Jupiter and Saturn computed from their orbital elements, not guessed.</span></li>
-          <li><span class="d"></span><span><b>Aspects.</b> The angles between your planets — conjunctions, trines, squares, oppositions.</span></li>
-          <li><span class="d"></span><span><b>Seven numbers.</b> Life Path, Expression, Soul Urge, Personality, Birthday, Maturity and Personal Year.</span></li>
-          <li><span class="d"></span><span><b>The sky at birth.</b> Moon phase and illumination, Chinese year and element, planetary day and hour.</span></li>
-          <li><span class="d"></span><span><b>A spread.</b> Past, Present and Future, drawn on the day you ask.</span></li>
-        </ul>
-        <p class="small" style="margin:18px 0 0">This is a reflection tool. It is not a diagnosis, an omen, or a reason to make a decision you already know the answer to.</p>
+        <p class="eyebrow dim">What you get, in order</p>
+        <ol class="chapters">
+          <li><span><b>The sign and the element.</b> What Aries-in-Fire actually means for the way you move, love and burn out.</span></li>
+          <li><span><b>Compatibility.</b> The signs that feed you, the magnetic opposite, and the ones that will cost you — ranked, not guessed.</span></li>
+          <li><span><b>The inner weather.</b> Moon, Rising, chart ruler and the planetary hour you arrived in.</span></li>
+          <li><span><b>One tarot reading.</b> A three-card spread drawn for you and read as a single story.</span></li>
+          <li><span><b>Your Life Path.</b> The number, what it asks of you, and the numbers underneath it.</span></li>
+          <li><span><b>The sky at birth.</b> Moon phase, Chinese year, lucky stone, and one thing to do tonight.</span></li>
+        </ol>
+        <p class="small" style="margin:18px 0 0">First reading each day is free. After that a full reading is 25 Glow. Nothing is stored on a server.</p>
       </div>
     </div>
 
@@ -363,87 +372,24 @@ footer.site nav a:hover{color:var(--gold2)}
   </div>
 </section>
 
-<!-- ================= SPREAD ================= -->
-<section class="band" id="spread" style="padding-top:0">
+<!-- ================= DECK (reference) ================= -->
+<section class="band" id="deck" style="padding-top:0">
   <div class="wrap">
-    <div class="bhead">
-      <div>
-        <p class="eyebrow">04 — The Spread</p>
-        <h2>Three cards. One story.</h2>
-      </div>
-      <p>Past is what shaped you. Present is where you stand. Future is where it is headed. Tap each card to turn it. A card that lands upside down is reversed — blocked or delayed, not cursed.</p>
-    </div>
-    <div class="spread" id="spreadGrid"></div>
-    <p class="spreadmean" id="spreadmean"></p>
-    <div class="gate" style="justify-content:center;margin-top:20px">
-      <button class="btn ghost" id="redraw" type="button">Redraw the spread — 10 Glow</button>
-      <span class="small" id="redrawHint"></span>
-    </div>
-  </div>
-</section>
-
-<!-- ================= MINOR ARCANA ================= -->
-<section class="band" id="minor" style="padding-top:0">
-  <div class="wrap">
-    <div class="bhead">
-      <div>
-        <p class="eyebrow">05 — The Rest of the Deck</p>
-        <h2>The fifty-six, at a glance.</h2>
-      </div>
-      <p>The Major Arcana carry the big chapters. The Minor Arcana carry the week — the argument, the invoice, the good news on a Tuesday. Here is the whole suit system in one place.</p>
-    </div>
-    <div class="grid3" style="align-items:start">
-      <div class="minor" id="suits"></div>
-      <div class="panel" style="grid-column:span 1">
-        <p class="eyebrow dim">The numbers</p>
-        <div id="numberMean"></div>
-      </div>
-      <div class="panel">
-        <p class="eyebrow dim">The court</p>
-        <div id="courtMean"></div>
-      </div>
-    </div>
-    <details class="acc">
-      <summary>How to read a spread without scaring yourself</summary>
-      <div class="body">
-        <p>Ask one question with an actual answer in it. "Should I leave?" is a decision you make; "What am I not seeing about this job?" is a question a spread can answer.</p>
-        <p>Read the three cards as one sentence, not three separate verdicts. If the Past is heavy and the Future is light, the sentence is about release, not doom. If two cards share an element or a number, that is the loudest thing on the table.</p>
-        <p>Write down what you understood before you redraw. Redrawing until you like the answer is not divination, it is shopping.</p>
-      </div>
-    </details>
-    <details class="acc">
-      <summary>Where these meanings come from</summary>
-      <div class="body">
-        <p>The Major Arcana attributions follow the Golden Dawn tradition: planets and signs assigned card by card, which is why The Emperor is Aries and The Empress is Venus. Numbers follow the Pythagorean system, with the master numbers 11, 22 and 33 kept rather than reduced.</p>
-        <p>Planet positions come from simplified orbital elements and can be off by a fraction of a degree — enough to matter only if you were born on the cusp of a sign. The Moon uses a truncated series and is generally within about half a degree.</p>
-      </div>
+    <details class="acc" style="border-top:1px solid var(--line)">
+      <summary>The twenty-two cards, if you want to look</summary>
+      <p class="small" style="max-width:46em;margin:4px 0 16px">Reference only — your reading draws from this deck. Tap a card to read it upright and reversed, with its planet or sign and its number.</p>
+      <div class="deck" id="deckGrid"></div>
     </details>
   </div>
 </section>
 
-<!-- ================= SKY ================= -->
-<section class="band" id="sky" style="padding-top:0">
-  <div class="wrap">
-    <div class="bhead">
-      <div>
-        <p class="eyebrow">06 — Tonight</p>
-        <h2>The sky right now.</h2>
-      </div>
-      <p>Live from the clock on your device. Useful whether or not you ever fill in the form.</p>
-    </div>
-    <div class="panel">
-      <div class="sky" id="skyCells"></div>
-      <p class="small" id="skyNote" style="margin:16px 0 0"></p>
-    </div>
-  </div>
-</section>
 
 <!-- ================= SHOP ================= -->
 <section class="band" id="shop" style="padding-top:0">
   <div class="wrap">
     <div class="bhead">
       <div>
-        <p class="eyebrow">07 — The Table</p>
+        <p class="eyebrow">04 — The Table</p>
         <h2>Decks, books and stones.</h2>
       </div>
       <p>Hand-picked on Amazon. LeonLink earns a small commission at no extra cost to you.</p>
@@ -679,26 +625,6 @@ var DECK=[
  art:"<ellipse cx='100' cy='158' rx='46' ry='66' stroke-dasharray='7 5'/><path d='M84 88q16 9 32 0'/><path d='M88 228q12-7 24 0'/><circle cx='100' cy='122' r='7'/><path d='M100 129v34'/><path d='M100 136l-18 13M100 136l18 13'/><path d='M100 163l-14 17M100 163l14 17'/><g opacity='.8'><circle cx='56' cy='104' r='4'/><path d='M56 100v-4M56 112v-4M52 104h-4M64 104h-4'/><rect x='140' y='100' width='8' height='8'/><path d='M56 208l5 9h-10z'/><path d='M142 206l4 7-8 1z'/></g>"}
 ];
 
-var SUITS=[
- {nm:"Wands",el:"Fire",k:"Will \u00b7 Work \u00b7 Drive",txt:"The suit of the thing you are building. Wands show up when the question is about ambition, momentum or the nerve to start."},
- {nm:"Cups",el:"Water",k:"Feeling \u00b7 Love \u00b7 Bond",txt:"The suit of what you feel and what you refuse to feel. Cups answer questions about love, friendship and the interior life."},
- {nm:"Swords",el:"Air",k:"Thought \u00b7 Truth \u00b7 Conflict",txt:"The suit of the mind and its blade. Swords are honest, often sharp, and usually about a decision or a sentence that needs saying."},
- {nm:"Pentacles",el:"Earth",k:"Body \u00b7 Money \u00b7 Craft",txt:"The suit of the table: wages, health, the slow work of making something last. Pentacles are the least dramatic and the most useful."}
-];
-var NUMBERS=[
- ["Ace","A single seed. The offer, before it has a shape."],
- ["Two","A pair, a choice, a mirror. Two things that must be balanced."],
- ["Three","The first result. Something has grown enough to be seen."],
- ["Four","A structure. Rest, walls, or a rut, depending on the suit."],
- ["Five","Friction. The loss, the argument, the thing that will not sit still."],
- ["Six","Repair and exchange. Giving, receiving, and the road home."],
- ["Seven","The test. Patience, assessment, or the thing you keep avoiding."],
- ["Eight","Repetition and mastery. The work, done again, faster."],
- ["Nine","Near the end. The last push, and the private cost of it."],
- ["Ten","Completion and its weight. What it all adds up to."]
-];
-var COURT=[["Page","The student. A message, a beginning, a question asked badly but honestly."],["Knight","The mover. Momentum, a journey, and the risk of charging without looking."],["Queen","The keeper. Mastery held inward — care, judgment, the long view."],["King","The authority. Mastery expressed outward — the decision, the signature, the rule."]];
-
 /* ============================================================
    ART PLATES
    ============================================================ */
@@ -738,7 +664,7 @@ function rng(seed){var h=2166136261,i;for(i=0;i<seed.length;i++){h^=seed.charCod
  return function(){h^=h<<13;h^=h>>>17;h^=h<<5;return((h>>>0)%100000)/100000}}
 function bar(lbl,v,max){var p=Math.max(0,Math.min(100,Math.round(v/max*100)));
  return "<div class='bar'><label><span>"+lbl+"</span><span>"+v+"</span></label><div class='track'><i data-w='"+p+"'></i></div></div>"}
-function grow(){setTimeout(function(){document.querySelectorAll(".bar .track i").forEach(function(i){i.style.width=(i.dataset.w||0)+"%"})},80)}
+function grow(){setTimeout(function(){document.querySelectorAll(".track i[data-w]").forEach(function(i){i.style.width=(i.dataset.w||0)+"%"})},80)}
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 
 /* ---- deck ---- */
@@ -784,77 +710,6 @@ function wireSheet(){
  $("sheetX").onclick=closeSheet;
  $("sheet").addEventListener("click",function(e){if(e.target===$("sheet"))closeSheet()});
  document.addEventListener("keydown",function(e){if(e.key==="Escape"&&$("sheet").classList.contains("open"))closeSheet()});
-}
-
-/* ---- card of the day ---- */
-function cardOfTheDay(){
- var r=rng("tarots-plus-"+today), i=Math.floor(r()*DECK.length), rev=r()<0.2, c=DECK[i];
- $("cotdCard").innerHTML=cardEl(c,rev,"");
- $("cotdCard").querySelector(".tcard").addEventListener("click",function(){openCard(i,rev)});
- $("cotdKick").textContent=today+" \u00b7 "+(rev?"reversed":"upright");
- $("cotdName").textContent=c.name;
- $("cotdCorr").textContent=c.astro;
- $("cotdUp").textContent=rev?c.rev:c.up;
- $("cotdKw").textContent=c.kw.split(" \u00b7 ")[0];
- $("cotdNum").textContent=c.num;
- $("cotdYes").textContent=c.yes;
- $("cotdTime").textContent=c.time;
- $("cotdQ").textContent="where in today is "+c.name.toLowerCase()+" asking to be noticed?";
-}
-
-/* ---- three-card spread ---- */
-var spreadCards=[];
-function deal(seed){
- var r=rng(seed),pool=DECK.slice(),picks=[],i,idx;
- for(i=0;i<3;i++){idx=Math.floor(r()*pool.length);picks.push({c:pool.splice(idx,1)[0],rev:r()<0.26})}
- spreadCards=picks;
- var pos=["Past","Present","Future"];
- $("spreadGrid").innerHTML=picks.map(function(p,k){
-   return "<div class='slot' data-i='"+k+"'><span class='pos'>"+pos[k]+"</span>"
-   +"<button type='button' class='flip' aria-label='Turn the "+pos[k]+" card' aria-expanded='false'>"
-   +"<div class='in'><div class='front'>"+SIGIL+"</div>"
-   +"<div class='back'><div class='tcard"+(p.rev?" rev":"")+"' style='border:0;box-shadow:none;cursor:default'>"+face(p.c,p.rev)+"</div></div></div></button>"
-   +"<div class='cap'><b>"+p.c.name+(p.rev?" \u2014 reversed":"")+"</b>"+p.c.kw+"</div></div>";
- }).join("");
- Array.prototype.forEach.call($("spreadGrid").querySelectorAll(".flip"),function(btn,k){
-   btn.onclick=function(){
-     var slot=btn.closest(".slot");
-     btn.classList.add("f");btn.setAttribute("aria-expanded","true");
-     slot.classList.add("done");
-     btn.setAttribute("aria-label",pos[k]+": "+picks[k].c.name+(picks[k].rev?", reversed":""));
-   };
- });
- var revN=picks.filter(function(p){return p.rev}).length;
- $("spreadmean").innerHTML="<b>"+picks[0].c.name+"</b> behind you, <b>"+picks[1].c.name+"</b> where you stand, <b>"+picks[2].c.name+"</b> ahead. "
-  +(revN?revN+" card"+(revN>1?"s are":" is")+" reversed \u2014 that part is blocked or delayed, not lost. Work on it; do not force it."
-   :"All three landed upright: the story is moving with you rather than against you.");
- $("redrawHint").textContent="Today's spread is drawn. A redraw costs 10 Glow.";
-}
-
-/* ---- sky ---- */
-var PHG={"New Moon":"\u25CF","Waxing Crescent":"\u25D4","First Quarter":"\u25D1","Waxing Gibbous":"\u25D5","Full Moon":"\u25CB","Waning Gibbous":"\u25D5","Last Quarter":"\u25D0","Waning Crescent":"\u25D4"};
-function buildSky(){
- var d=dayNum(Date.now()),s=signOf(sunLon(d)),m=signOf(moonLon(d)),p=phaseOf(d),node=signOf(nodeLon(d));
- $("skyCells").innerHTML=
-   "<div class='cell'><b>"+PHG[p.n]+"</b><span>"+p.n+"</span><small>"+p.ill+"% lit</small></div>"
-  +"<div class='cell'><b>"+gl(s[1])+"</b><span>Sun in "+s[0]+"</span><small>"+s[2]+" season</small></div>"
-  +"<div class='cell'><b>"+gl(m[1])+"</b><span>Moon in "+m[0]+"</span><small>"+m[2]+" mood</small></div>";
- $("skyNote").innerHTML="The Moon in <b>"+m[0]+"</b> gives the day a "+m[4].split(",")[0]+" mood. "
-  +(p.waxing?"The Moon is growing: start, build, ask.":"The Moon is shrinking: finish, clear out, rest.")
-  +" The lunar node sits in "+node[0]+" \u2014 the direction the story is heading. Computed from your device clock; positions are approximate.";
-}
-
-/* ---- minor arcana ---- */
-function buildMinor(){
- $("suits").innerHTML=SUITS.map(function(s){
-  return "<div class='suit'><b>"+s.nm+"</b><span class='k'>"+s.el+" \u00b7 "+s.k+"</span><p>"+s.txt+"</p></div>";
- }).join("");
- $("numberMean").innerHTML=NUMBERS.map(function(n){
-  return "<div class='bar' style='margin:0 0 10px'><label><span><b style='color:var(--bone)'>"+n[0]+"</b></span></label><p class='small' style='margin:0'>"+n[1]+"</p></div>";
- }).join("");
- $("courtMean").innerHTML=COURT.map(function(c){
-  return "<div style='margin-bottom:12px'><b style='display:block;font:600 .95rem var(--display);color:var(--bone)'>"+c[0]+"</b><p class='small' style='margin:2px 0 0'>"+c[1]+"</p></div>";
- }).join("");
 }
 
 /* ============================================================
@@ -933,101 +788,308 @@ function chartData(name,dob,tm,geo){
   el:el,mo:mo,total:total,asp:asp.slice(0,8),signature:sig,ruler:ruler,elMax:elMax,moMax:moMax,sun:sun,moon:moon};
 }
 
-var AREAS=["Love","Career","Money","Health","Luck"];
-var FC={
- Love:["An honest talk clears the air.","Someone notices more than they say.","Make the first move; it lands well.","Give space today and it comes back to you."],
- Career:["Finish one thing before starting three.","A small win is bigger than it looks.","Speak up; your idea fits the room.","Slow down and double-check the details."],
- Money:["Skip the impulse buy and thank yourself later.","An old lead pays off.","Review a subscription you forgot about.","A good day to plan, not to spend."],
- Health:["Drink water and get outside.","Sleep is the secret weapon tonight.","Stretch; your body is asking.","Cut the screens an hour early."],
- Luck:["Pay attention to the number 7 today.","Say yes to an unexpected invite.","Wear your lucky colour.","A coincidence is a message."]
-};
 
 /* ============================================================
-   READ
+   READINGS — signs, elements, compatibility, life paths
    ============================================================ */
-function gl(g){return g+"\uFE0E"}
-function sgCard(s,lab,deg){
- return "<div class='sg'><div class='gl'>"+gl(s[1])+"</div><b>"+s[0]+"</b><span>"+lab+"</span><small>"+deg+"</small></div>";
+var SIGN={
+Aries:{el:"Fire",mode:"Cardinal",ruler:"Mars",
+ self:"You arrive first. Aries is the sign of the unconsidered start: the door pushed before the plan is finished, the sentence said before it is polished. That is not recklessness so much as a nervous system that learns by moving, and it is why you are usually the one who actually begins.",
+ love:"You love out loud and fast, and you lose interest in anything that has to be guessed at.",
+ shadow:"The shadow is impatience with anyone who needs a runway, including yourself."},
+Taurus:{el:"Earth",mode:"Fixed",ruler:"Venus",
+ self:"You build slowly and keep what you build. Taurus is the sign of the body, the table and the long possession: the friend who still has the same jacket, the same house and the same people twenty years on, and who is right about all of it.",
+ love:"You love in food, in repairs, in showing up on time. Words are the least of it.",
+ shadow:"The shadow is calling a rut a standard."},
+Gemini:{el:"Air",mode:"Mutable",ruler:"Mercury",
+ self:"You think in pairs. Gemini is the sign of the double take: the quick read, the second idea arriving while the first is still in the air, the conversation that is really a rehearsal for the one you want to have.",
+ love:"You love with curiosity first. Boredom is the only real betrayal.",
+ shadow:"The shadow is knowing everything and finishing nothing."},
+Cancer:{el:"Water",mode:"Cardinal",ruler:"Moon",
+ self:"You remember. Cancer is the sign of the tide and the kitchen table: the one who keeps the photographs, the birthdays, and the exact tone of a voice from a decade ago. Your care is practical, and it has a long memory.",
+ love:"You love by making a place safe, then quietly testing whether it is.",
+ shadow:"The shadow is a shell that keeps out the people you wanted in."},
+Leo:{el:"Fire",mode:"Fixed",ruler:"Sun",
+ self:"You are not asking to be looked at; you are built to be seen. Leo is the sign of the heart at full volume — generous, warm, loyal, and completely unable to be small about any of it.",
+ love:"You love in gestures, and you need to be chosen out loud.",
+ shadow:"The shadow is mistaking applause for being known."},
+Virgo:{el:"Earth",mode:"Mutable",ruler:"Mercury",
+ self:"You notice the thing nobody else caught. Virgo is the sign of the useful hand: the correction, the label, the small repair that keeps the whole thing working, done without being asked and often without being thanked.",
+ love:"You love by improving things on someone's behalf, which is not always what they asked for.",
+ shadow:"The shadow is a standard so high it becomes a way of staying hidden."},
+Libra:{el:"Air",mode:"Cardinal",ruler:"Venus",
+ self:"You can see every side, which is a gift right up until it is a paralysis. Libra is the sign of the room's temperature: the one who fixes the mood before anyone admits it was off, and who can argue either case beautifully.",
+ love:"You love in partnership, and you will trade a truth for a peace more often than you should.",
+ shadow:"The shadow is a smile that keeps you from being found."},
+Scorpio:{el:"Water",mode:"Fixed",ruler:"Mars",
+ self:"You go all the way in. Scorpio is the sign of the locked room and the long memory: the one who reads the subtext, keeps the secret, and does not do casual, whatever the arrangement says on paper.",
+ love:"You love completely or not at all, and you never quite believe it is safe.",
+ shadow:"The shadow is testing people until they fail."},
+Sagittarius:{el:"Fire",mode:"Mutable",ruler:"Jupiter",
+ self:"You are pointed at the horizon. Sagittarius is the sign of the open road and the honest answer: the one who says the true thing at the wrong volume, then laughs, then means it. You are here for the wide version of life.",
+ love:"You love as an adventure, and you need a partner who is not a fence.",
+ shadow:"The shadow is leaving before the good part, in case the good part is a trap."},
+Capricorn:{el:"Earth",mode:"Cardinal",ruler:"Saturn",
+ self:"You are playing a longer game than the room. Capricorn is the sign of the ladder and the ledger: patient, dry, and quietly more ambitious than anyone around you has worked out yet.",
+ love:"You love by committing, not by announcing. The promises are real; the words are rare.",
+ shadow:"The shadow is making yourself useful so you never have to be vulnerable."},
+Aquarius:{el:"Air",mode:"Fixed",ruler:"Saturn",
+ self:"You stand slightly to the side of your own life, watching how it works. Aquarius is the sign of the future tense: the system, the cause, the friend who is unlike all the others and knows it.",
+ love:"You love with space in it. The fastest way to lose you is to hold too tightly.",
+ shadow:"The shadow is principle used as a wall."},
+Pisces:{el:"Water",mode:"Mutable",ruler:"Jupiter",
+ self:"You feel the room before you see it. Pisces is the sign of the tide coming in under the door: dream, music, mercy, and a real talent for absorbing what was never yours to carry.",
+ love:"You love by merging, and you have to keep one small room of your own.",
+ shadow:"The shadow is disappearing instead of saying no."}
+};
+
+var ELEM={
+Fire:{run:"Fire runs on ignition. You do not need a reason to start, you need a direction; the reason turns up while you are already moving. The cost is the finish line and the quiet hours after the blaze.",
+ match:"Fire matches Fire and Air. Air feeds it and gives it reach; Fire meets it at speed and nobody has to be talked into anything. Earth asks for a plan, and Water wants to slow it down.",
+ moon:"A fire moon needs movement, honesty and something to play. Sitting still with a feeling is the hardest yoga there is; you process by doing, and you need people who can take a direct sentence.",
+ mask:"A fire mask is warm, quick and slightly louder than the room. People decide you are confident within about a minute.",
+ gap:"When fire is thin in a chart, life can feel like it is waiting for permission.",
+ advice:"Move first and explain on the way. The explanation will catch up."},
+Earth:{run:"Earth runs on proof. You trust what has weight: a wage, a body, a wall that holds. It makes you reliable and slow to move, and it means you would rather be right in a year than interesting tonight.",
+ match:"Earth matches Earth and Water. Water softens it and gives it a bed; Earth keeps it and never flinches. Air wants the window open, and Fire is already through the door.",
+ moon:"An earth moon needs the body to be all right: sleep, food, money in the account. You calm down through your hands, and you need reassurance that can be touched.",
+ mask:"An earth mask is calm and contained. People assume you have your life together, which is useful and occasionally lonely.",
+ gap:"When earth is thin, the plan has no floor under it.",
+ advice:"Build the small, boring thing first. It will hold more than you think.",
+ } ,
+Air:{run:"Air runs on language. You think by talking, decide by comparing, and feel most alive where there is something new to understand. The risk is a life described beautifully and not quite lived.",
+ match:"Air matches Air and Fire. Fire gives it heat; Air gives fire reach. Earth wants a receipt, and Water wants you to stop explaining and feel it.",
+ moon:"An air moon needs to name it. A feeling becomes manageable once it has a sentence, so you need conversation, and you need it before the feeling has finished.",
+ mask:"An air mask is friendly, verbal and a little hard to pin down. People remember the conversation and not quite the person.",
+ gap:"When air is thin, things happen to you without a story to hold them.",
+ advice:"Say the sentence out loud before you have decided what you think of it.",
+ } ,
+Water:{run:"Water runs on feeling. You know things before you can justify them, and your memory keeps them in the body. The risk is drowning in someone else's weather and calling it intuition.",
+ match:"Water matches Water and Earth. Earth gives it a bed and does not flinch; Water goes as deep as it goes. Air explains the feeling, and Fire boils it off.",
+ moon:"A water moon needs to be met, not fixed. You feel in weather systems, and you need one person who can sit in the rain without reaching for an umbrella.",
+ mask:"A water mask is soft and receptive. People tell you things they did not plan to tell you.",
+ gap:"When water is thin, the feeling is there but the words for it are not.",
+ advice:"Feel it fully, then do one small practical thing. In that order.",
+ } 
+};
+
+var PAIRSCORE={"Air-Air":84,"Air-Earth":46,"Air-Fire":93,"Air-Water":58,"Earth-Earth":86,"Earth-Fire":55,"Earth-Water":93,"Fire-Fire":88,"Fire-Water":48,"Water-Water":88};
+var PAIR={
+"Air-Air":"Endless conversation and very little furniture. Superb company, poor logistics.",
+"Air-Earth":"One wants the window open, the other wants the heating on. Respectable, practical, not electric.",
+"Air-Fire":"Air feeds fire. They bring the plan, you bring the nerve, and the night gets away from both of you.",
+"Air-Water":"Air explains the feeling; water feels it. Tender, and tiring if nobody stops explaining.",
+"Earth-Earth":"Two people who keep their word. Slow to begin and almost impossible to break.",
+"Earth-Fire":"Earth asks for a plan while fire is already through the door. Love is possible; patience is mandatory.",
+"Earth-Water":"Water softens earth and earth gives water a bed. The most quietly durable pairing in the deck.",
+"Fire-Fire":"Two fires. Fast, loud, generous, and nobody does the dishes. Glorious until someone burns out.",
+"Fire-Water":"Steam. Deep attraction and completely different speeds. Someone has to slow down and someone has to speak up.",
+"Water-Water":"Deep and wordless, which is the problem. Eventually someone has to say the thing out loud."
+};
+
+var SIGNNOTE={
+Aries:"Aries starts before the plan is finished and is usually right to.",
+Taurus:"Taurus wants to know what this is and whether it will keep.",
+Gemini:"Gemini keeps the conversation moving and the exits open.",
+Cancer:"Cancer remembers the exact tone of a voice from a decade ago.",
+Leo:"Leo needs to be chosen out loud, and says so.",
+Virgo:"Virgo notices the detail that decides whether it works.",
+Libra:"Libra wants the room to be comfortable before anything true is said.",
+Scorpio:"Scorpio will not do the shallow version of anything.",
+Sagittarius:"Sagittarius says the true thing and worries about the volume later.",
+Capricorn:"Capricorn is already thinking about next year.",
+Aquarius:"Aquarius holds the principle and the distance at the same time.",
+Pisces:"Pisces absorbs the room before anyone has spoken."
+};
+
+var INDEX={}; SG.forEach(function(s,i){INDEX[s[0]]=i});
+
+var LIFE={
+1:{title:"The first draft",who:"You are here to go first. Life Path 1 is a first draft of a person: independent, impatient with consensus, and genuinely better when nobody is standing in front of the door. You are not built to follow a map someone else drew, and you are at your worst when you are waiting to be told.",
+ work:"You need ownership of something — a shop, a project, your own name on the door — because borrowed authority makes you small.",
+ love:"You have to let someone see the unfinished parts, or you will keep choosing people who only admire the finished ones.",
+ lesson:"Asking for help is not the same as being replaced."},
+2:{title:"The hinge",who:"You are the hinge the door turns on. Life Path 2 reads the room before anyone speaks, holds two sides together, and notices the person at the edge of the party. Your sensitivity is not a flaw in the design; it is the design.",
+ work:"Partnership, mediation and the quiet role everything depends on. You are the reason the thing did not fall apart.",
+ love:"You are devoted and you keep score in silence, which is the one habit that can undo you.",
+ lesson:"Say the need before the resentment writes the sentence for you."},
+3:{title:"The voice",who:"You make meaning out of expression. Life Path 3 is the talker, the maker, the one who turns a bad week into a story worth hearing. Your gift is not just creativity; it is the ability to make other people feel less alone in the room.",
+ work:"Anything with an audience, a page or a stage. You wilt in a job where nothing you make is ever seen.",
+ love:"You need play, and someone who laughs at the right time rather than the polite time.",
+ lesson:"Finish the thing before the next shiny thing."},
+4:{title:"The wall",who:"You are the load-bearing wall. Life Path 4 builds, repairs, keeps the receipts and turns up on the day nobody else does. You are not the most exciting person in the story and you are the reason the story has a floor.",
+ work:"Craft, systems, trades, the unglamorous middle of any project. You are the one who makes it real.",
+ love:"You show love in logistics — the lift home, the fixed sink, the plan for the thing that worried them.",
+ lesson:"Let the plan bend without feeling like the world did."},
+5:{title:"The window",who:"You need air. Life Path 5 is the traveller, the salesperson, the one who can talk to anyone and cannot stay in a room with no windows. Change is not your weakness; sameness is.",
+ work:"Variety, travel, selling, launching — anything where the scenery moves. A desk job with no exit is a slow poison.",
+ love:"You need freedom with a home base, and a partner who is a harbour rather than a fence.",
+ lesson:"Stay long enough to get good at something."},
+6:{title:"The hearth",who:"You carry people. Life Path 6 is the one who remembers the birthdays, books the table, and takes on the problem before anyone asks. Care is your native language, and it is also the thing that can quietly empty you.",
+ work:"Teaching, care, hospitality, design, anything where the result is a person feeling looked after.",
+ love:"You over-give, then feel unseen, then give a little more to prove the point.",
+ lesson:"Your worth is not the sum of what you fix."},
+7:{title:"The lamp",who:"You go inward. Life Path 7 is the researcher, the sceptic, the one who needs the quiet room and the real answer. You are not cold; you are thorough, and you would rather understand a thing than be comforted about it.",
+ work:"Analysis, research, writing, the technical problem everyone else gave up on. You need silence and a door that closes.",
+ love:"Slow to trust and deep once in. You test people by disappearing; it is not fair and it is what you do.",
+ lesson:"Come out of the study and let people find you."},
+8:{title:"The ledger",who:"You are built for scale. Life Path 8 understands money, power and consequence, and is usually the person who ends up responsible for all three. Your lesson is not to be less ambitious; it is to be honest about what the ambition is for.",
+ work:"Business, management, ownership, the deal. You are wasted in a role with no authority to match the responsibility.",
+ love:"You show love by providing, and you can forget that being present is also a form of provision.",
+ lesson:"Power that cannot be questioned is not power. It is fear with a title."},
+9:{title:"The open hand",who:"You finish things and give them away. Life Path 9 is the last of the single digits: the humanitarian, the artist, the one who can hold the whole world's sadness and still make dinner. Your generosity is real, and it needs a boundary.",
+ work:"Service, art, teaching, anything with a horizon wider than your own street.",
+ love:"You love the whole world and forget one person, and that person is usually the one closest.",
+ lesson:"Let yourself be cared for, not just cared about."},
+11:{title:"The wire",who:"Master 11 is a Life Path 2 with the voltage turned up. You are porous, intuitive and often right before there is evidence. You transmit — people feel something in a room when you walk into it, for better and for worse.",
+ work:"Teaching, art, healing, anything that puts your sensitivity in front of people on purpose.",
+ love:"You need someone steady enough to hold the current without trying to earth it.",
+ lesson:"Ground the vision in a Tuesday. The vision is not the work."},
+22:{title:"The master builder",who:"Master 22 takes the dream and puts a foundation under it. You can see the finished institution while everyone else is arguing about the first brick, and you can actually draw the plans.",
+ work:"Institutions, cities, systems, companies — things larger than one lifetime of maintenance.",
+ love:"You need a partner who understands the project, and who does not experience your ambition as absence.",
+ lesson:"Build something you could live in, not just something you could show."},
+33:{title:"The master teacher",who:"Master 33 is care at scale: the one people bring their hardest thing to, because you neither flinch nor perform. It is a heavy mantle and it is the one you keep picking up.",
+ work:"Teaching, ministry, medicine, the long care of other people's children or other people's hope.",
+ love:"You give the sermon and forget the supper. Intimacy is the discipline here.",
+ lesson:"Put the mantle down sometimes. The world will still be there."}
+};
+
+var MOONPH={"New Moon":"New Moon","Waxing Crescent":"Waxing Crescent","First Quarter":"First Quarter","Waxing Gibbous":"Waxing Gibbous","Full Moon":"Full Moon","Waning Gibbous":"Waning Gibbous","Last Quarter":"Last Quarter","Waning Crescent":"Waning Crescent"};
+var TONIGHT={
+"New Moon":"Light one candle and write the sentence you have been avoiding. New moons are for starting, not finishing.",
+"Waxing Crescent":"Write down the one small thing you will do tomorrow before noon. Hope needs a calendar.",
+"First Quarter":"Decide the thing you have been circling. The action costs less than another week of weighing it.",
+"Waxing Gibbous":"Fix the detail you keep skipping. This is the phase for the last ten per cent.",
+"Full Moon":"Say the thing out loud to the person it concerns. Full moons do not reward keeping it in.",
+"Waning Gibbous":"Tell someone what you learned the hard way. Teaching is how this phase pays.",
+"Last Quarter":"Throw out one thing that has finished. Not a metaphor — an actual object.",
+"Waning Crescent":"Sleep. Rest is the ritual. The next beginning is close and it needs you empty."
+};
+
+function pairKey(a,b){return [a,b].sort().join("-")}
+function compatFor(signName){
+ var S=SIGN[signName], me=INDEX[signName], list=[];
+ SG.forEach(function(s,i){
+   var O=SIGN[s[0]], key=pairKey(S.el,O.el), base=PAIRSCORE[key]||55;
+   var score=base+(S.mode===O.mode?3:0)+(Math.abs(i-me)===6?6:0);
+   score=Math.max(38,Math.min(97,score));
+   var reason=PAIR[key]||"Different operating speeds, same good intentions.";
+   if(Math.abs(i-me)===6)reason+=" This one is your opposite sign, which is the magnetic version of hard work.";
+   list.push({name:s[0],el:O.el,mode:O.mode,score:score,reason:reason,note:SIGNNOTE[s[0]]});
+ });
+ list.sort(function(a,b){return b.score-a.score});
+ return {all:list,best:list.slice(0,4),hard:list.slice(-3).reverse()};
 }
+function drawReadingSpread(seed){
+ var r=rng(seed),pool=DECK.slice(),picks=[],pos=["Past","Present","Future"],i,idx;
+ for(i=0;i<3;i++){idx=Math.floor(r()*pool.length);picks.push({c:pool.splice(idx,1)[0],rev:r()<0.26,pos:pos[i]})}
+ return picks;
+}
+function chapter(roman,kick,head,body){
+ return "<section class='chapter'><div class='chn'>"+roman+"</div><div class='chb'>"
+  +"<p class='eyebrow'>"+kick+"</p><h3>"+head+"</h3>"+body+"</div></section>";
+}
+
+var MODE={Cardinal:"Cardinal signs start things. The engine is a beginning, not a habit, and you are usually the one holding the match.",Fixed:"Fixed signs keep things. You are the wall the rest leans on, and occasionally the wall that will not move.",Mutable:"Mutable signs adapt. You change shape, survive the change, and are quietly the most resilient person in the room."};
+
 function renderReading(name,dob,tm,place,geo){
  var ch=chartData(name,dob,tm,geo);
  var N=numerology(name,ch.y,ch.m,ch.d);
- var first=name.trim().split(/\s+/)[0];
  var S=signOf(ch.sun.lon),M=signOf(ch.moon.lon),A=ch.asc?signOf(ch.asc):null;
+ var SD=SIGN[S[0]],MD=SIGN[M[0]],AD=A?SIGN[A[0]]:null;
+ var cp=compatFor(S[0]);
  var ph=phaseOf(ch.dd),czd=chinese(ch.y,ch.m,ch.d);
  var luck=LUCK[N.life]||LUCK[red(N.life)];
  var hour=ch.known?planetaryHour(ch.y,ch.m,ch.d,ch.hh,ch.mi):null;
- var cardIdx=N.life<=21?N.life:red(N.life);
- var lpCard=DECK[cardIdx]||DECK[0];
- var h="";
+ var picks=drawReadingSpread(name+"|"+dob+"|"+today);
+ var lp=N.life,LPD=LIFE[lp]||LIFE[red(lp)];
+ var lpCard=DECK[lp<=21?lp:red(lp)]||DECK[0];
+ var nowPh=phaseOf(dayNum(Date.now()));
+ var first=name.trim().split(/\s+/)[0];
+ var elMin=Object.keys(ch.el).sort(function(a,b){return ch.el[a]-ch.el[b]})[0];
+ var revN=picks.filter(function(p){return p.rev}).length;
+ var heavy=picks.filter(function(p){return ["The Tower","Death","The Devil","The Moon","Judgement","The Hanged Man"].indexOf(p.c.name)>-1}).length;
+ var syn= revN===3?"All three are reversed. The whole story is happening inside you before it happens outside, which is why it feels stuck and is not. Nothing is lost here; it is just not spoken yet."
+  : revN===0?"All three landed upright, which is rarer than it sounds. The story is moving in the same direction you are. Use it instead of waiting for it to be taken away."
+  : revN===1?"One card is reversed: one part of this is stalled while the rest moves. The reversed card is the part to work on, not the part to fear."
+  : "Two cards are reversed, so the outward story and the inward one have not agreed on a date. Expect the decision to arrive before the feeling does.";
+ if(heavy)syn+=" "+heavy+" of these three is a heavy card — the reading is asking you to look at something, not to fix it tonight.";
+ var hourLine=hour?("You arrived in the hour of "+hour.hour+" on a "+hour.day+" day, hour "+hour.index+" of the "+(hour.daytime?"day":"night")+", which is said to be the flavour of your first instinct."):"";
+ var h="<article class='reading'>";
 
- h+="<div class='seam' style='margin:40px 0 32px'></div>"
-  +"<div class='bhead'><div><p class='eyebrow'>Your chart</p><h2 style='font-size:clamp(1.9rem,4.4vw,2.8rem)'>"+esc(name)+"</h2></div>"
-  +"<p>"+esc(place)+(geo?", "+esc(geo.nm):"")+" \u00b7 "+dob+(ch.known?" at "+tm:" \u00b7 no birth time")+"</p></div>";
+ h+="<header class='rhead'><p class='eyebrow'>Reading for</p><h2>"+esc(name)+"</h2>"
+  +"<p class='rsub'><b>"+S[0]+"</b> Sun \u00b7 <b>"+M[0]+"</b> Moon"+(A?" \u00b7 <b>"+A[0]+"</b> Rising":"")+" \u00b7 born "+dob+(ch.known?" at "+tm:"")+" in "+esc(place)+"</p>"
+  +"<p class='rdate'>Drawn "+today+" \u00b7 Tarots+</p></header>";
 
- h+="<div class='panel gold'><div class='big3'>"
-  +sgCard(S,"Sun",degFmt(ch.sun.lon))
-  +sgCard(M,"Moon",degFmt(ch.moon.lon))
-  +(A?sgCard(A,"Rising",degFmt(ch.asc)):"<div class='sg'><div class='gl' style='color:var(--ash)'>&middot;</div><b style='color:var(--ash)'>Unknown</b><span>Rising</span><small>add a birth time</small></div>")
-  +"</div><p class='heroline'><b>"+esc(first)+"</b>, your <b>Sun in "+S[0]+"</b> makes you "+S[4]+". Your <b>Moon in "+M[0]+"</b> is how you feel inside: "+M[4]+". "
-  +(A?"With <b>"+A[0]+" Rising</b>, people first meet someone "+A[4]+". Your chart is "+ch.elMax+"-heavy and "+ch.moMax.toLowerCase()+" in mode, which is the weather all of it happens in.":"Add your birth time and the Rising sign, the chart ruler and the planetary hour unlock.")+"</p></div>";
+ h+=chapter("I","The sign you were born under",
+  S[0]+"<span>"+SD.el+" \u00b7 "+SD.mode+" \u00b7 ruled by "+SD.ruler+"</span>",
+  "<p class='dropcap'>"+SD.self+"</p>"
+  +"<p>"+ELEM[SD.el].run+"</p>"
+  +"<p>"+SD.love+" "+SD.shadow+"</p>"
+  +"<p><b>How you are built.</b> "+MODE[SD.mode]+"</p>"
+  +"<p class='pull'>Sun at "+degFmt(ch.sun.lon)+" in "+S[0]+". The Sun is the part of you that has to be expressed, not the whole of you. The rest is in the chapters below.</p>");
 
- h+="<div class='grid3' style='margin-top:16px'>"
-  +"<div class='panel'><p class='eyebrow dim'>Element balance</p><div class='bars'>"
-  +Object.keys(ch.el).map(function(k){return bar(k,ch.el[k],ch.total)}).join("")
-  +"</div><p class='eyebrow dim' style='margin-top:22px'>Modality</p><div class='bars'>"
-  +Object.keys(ch.mo).map(function(k){return bar(k,ch.mo[k],ch.total)}).join("")
-  +"</div></div>"
-  +"<div class='panel'><p class='eyebrow dim'>Chart ruler</p>"
-  +(ch.ruler?"<p style='font:300 1.5rem/1.2 var(--display);margin:0 0 6px'>"+ch.ruler+"</p><p class='small'>The planet that rules "+A[0]+" Rising. It colours the whole chart, and its own sign and house are worth reading twice.</p>":"<p class='small' style='margin:0'>Add a birth time to find the planet that rules your chart.</p>")
-  +"<p class='eyebrow dim' style='margin-top:20px'>Signature</p><div class='keyval'><div class='fact'><small>Element</small><b>"+ch.elMax+"</b></div><div class='fact'><small>Mode</small><b>"+ch.moMax+"</b></div><div class='fact'><small>Sun / Moon"+ (A?" / Rising":"") +"</small><b>"+ch.signature+"</b></div><div class='fact'><small>Strongest aspect</small><b>"+(ch.asp.length?ch.asp[0].nm:"&mdash;")+"</b></div></div></div>"
-  +"<div class='panel'><p class='eyebrow dim'>Planetary hour</p>"
-  +(hour?"<p style='font:300 1.6rem/1.2 var(--display);margin:0 0 6px'>"+hour.hour+"</p><p class='small'>Hour "+(hour.index)+" of the "+(hour.daytime?"day":"night")+", on a "+hour.day+" day. The hour you arrived in is said to be the flavour of your first instinct. Sunrise is assumed at 06:00 local, so treat it as approximate.</p>":"<p class='small' style='margin:0'>The planetary hour needs a birth time. Add one and it appears here.</p>")
-  +"<p class='eyebrow dim' style='margin-top:20px'>Your card</p><div style='display:flex;gap:12px;align-items:center'><div style='width:74px;flex-shrink:0'>"+cardEl(lpCard,false,"")+"</div><div class='small' style='margin:0'>Life Path <b style='color:var(--bone)'>"+N.life+"</b> answers to <b style='color:var(--bone)'>"+lpCard.name+"</b>. "+lpCard.up+"</div></div></div>"
-  +"</div>";
+ h+=chapter("II",S[0]+" in "+SD.el.toLowerCase()+" \u2014 who can hold it",
+  "Compatibility, ranked",
+  "<p class='dropcap'>"+ELEM[SD.el].match+"</p>"
+  +"<p>Scored for a <b>"+S[0]+"</b> Sun, easiest first:</p>"
+  +"<div class='matches'>"+cp.best.map(function(m){
+     return "<div class='match'><header><b>"+m.name+"</b><span>"+m.score+"</span></header><div class='track'><i data-w='"+m.score+"'></i></div><small>"+m.reason+" "+m.note+"</small></div>";
+   }).join("")+"</div>"
+  +"<p><b>The friction list.</b> "+cp.hard.map(function(x){return "<b>"+x.name+"</b> ("+x.el.toLowerCase()+", "+x.score+")"}).join(", ")+". These are not villains, they are different speeds. The work with them is translation, not conversion — and the ones you are most drawn to are usually on this list.</p>"
+  +"<p class='small' style='margin-bottom:6px'>All twelve, scored against your Sun:</p>"
+  +"<div class='compatgrid'>"+cp.all.map(function(m){return "<div class='cc"+(m.score>=88?" easy":(m.score<=58?" hard":""))+"'><b>"+m.name+"</b><span>"+m.score+"</span></div>"}).join("")+"</div>"
+  +"<p class='small'>The scores are traditional element and modality combinations, not a measurement of any actual person. A difficult pairing with effort beats an easy one without.</p>");
 
- h+="<div class='panel' style='margin-top:16px'><p class='eyebrow dim'>Chart data</p><div class='tw'><table><tr><th>Point</th><th>Sign</th><th>Degree</th><th>Element</th><th>Mode</th><th>Ruler</th></tr>"
-  +ch.pts.map(function(p){var s=signOf(p.lon);return "<tr><td><span class='g'>"+gl(p.g)+"</span>"+p.nm+"</td><td>"+s[1]+" "+s[0]+"</td><td>"+degFmt(p.lon)+"</td><td>"+s[2]+"</td><td>"+s[3]+"</td><td>"+s[5]+"</td></tr>"}).join("")
-  +"<tr><td><span class='g'>"+gl("\u260A")+"</span>Lunar node</td><td>"+signOf(ch.node)[1]+" "+signOf(ch.node)[0]+"</td><td>"+degFmt(ch.node)+"</td><td>"+signOf(ch.node)[2]+"</td><td>"+signOf(ch.node)[3]+"</td><td>"+signOf(ch.node)[5]+"</td></tr>"
-  +"</table></div><p class='small' style='margin:12px 0 0'>"
-  +(geo?"Coordinates "+geo.lat.toFixed(2)+", "+geo.lon.toFixed(2)+" \u00b7 UTC offset "+(ch.off/60)+"h at birth. ":"We could not find that birthplace, so the chart is treated as UTC. ")
-  +"Planets are computed from simplified orbital elements; expect the Moon to be within about half a degree and the rest within a degree or so.</p></div>";
+ h+=chapter("III","The weather inside",
+  "Moon, Rising, and the balance of elements",
+  "<p class='dropcap'>"+ELEM[MD.el].moon+" Your Moon is in <b>"+M[0]+"</b> at "+degFmt(ch.moon.lon)+", which is "+M[4]+".</p>"
+  +(A?"<p><b>Rising.</b> "+ELEM[AD.el].mask+" <b>"+A[0]+"</b> rising means people meet someone "+A[4]+".</p>"
+     :"<p><b>Rising.</b> Without a birth time the mask stays off the record. Add one and the Rising sign, the chart ruler and the planetary hour all unlock.</p>")
+  +"<p><b>Element balance.</b> The chart leans <b>"+ch.elMax+"</b> and <b>"+ch.moMax.toLowerCase()+"</b> in mode. <b>"+elMin+"</b> is the thinnest thread"+(ch.el[elMin]===0?" and it is absent entirely":"")+". "+ELEM[elMin].gap+"</p>"
+  +(ch.ruler?"<p><b>Chart ruler.</b> "+ch.ruler+" rules your "+A[0]+" Rising, so the whole chart carries its colour. "+hourLine+"</p>"
+     :(hourLine?"<p><b>The hour.</b> "+hourLine+"</p>":"")));
 
- h+="<div class='grid2' style='margin-top:16px'><div class='panel'><p class='eyebrow dim'>Aspects</p>"
-  +(ch.asp.length?"<ul class='list'>"+ch.asp.map(function(a){return "<li><span class='d'></span><span><b>"+a.a+" "+a.nm.toLowerCase()+" "+a.b+"</b> \u2014 "+a.orb.toFixed(1)+"\u00b0 orb. "+(a.ang===0?"Fused: these two work as one.":a.ang===180?"Pulled opposite: balance, not victory.":a.ang===120?"Easy flow; use it deliberately.":a.ang===90?"Friction that builds something.":"An easy opening, if you take it.")+"</span></li>"}).join("")+"</ul>":"<p class='small' style='margin:0'>No major aspects within orb. That is its own signature: the planets are acting independently.</p>")
-  +"</div><div class='panel'><p class='eyebrow dim'>The moon you were born under</p>"
-  +"<p style='font:300 1.5rem/1.2 var(--display);margin:0 0 8px'>"+ph.n+"</p>"
-  +bar("Moon lit at birth",ph.ill,100)
-  +"<p class='small' style='margin:12px 0 0'>"+PHTXT[ph.n]+" Your birth moon sits in <b style='color:var(--bone)'>"+M[0]+"</b>, the same sign that answers what you need to feel safe.</p></div></div>";
+ var p0=picks[0],p1=picks[1],p2=picks[2];
+ h+=chapter("IV","One tarot reading",
+  "The spread you drew",
+  "<p class='small' style='margin-top:-6px'>Past, present and future, drawn for "+esc(first)+" on "+today+". Tap a card to read it in full.</p>"
+  +"<div class='spread3'>"+picks.map(function(p){
+     return "<figure><span class='poslabel'>"+p.pos+"</span>"+cardEl(p.c,p.rev,"")+"<figcaption>"+p.c.name+(p.rev?" \u00b7 reversed":"")+"</figcaption></figure>";
+   }).join("")+"</div>"
+  +"<p class='dropcap'><b>"+p0.c.name+(p0.rev?" reversed":"")+" in the past.</b> "+(p0.rev?p0.c.rev:p0.c.up)+" That is the weather you were formed in.</p>"
+  +"<p><b>"+p1.c.name+(p1.rev?" reversed":"")+" in the present.</b> "+(p1.rev?p1.c.rev:p1.c.up)+" That is the room you are standing in right now.</p>"
+  +"<p><b>"+p2.c.name+(p2.rev?" reversed":"")+" ahead.</b> "+(p2.rev?p2.c.rev:p2.c.up)+" That is where this is pointed, not where it has to land.</p>"
+  +"<p><b>What the three say together.</b> "+syn+"</p>"
+  +"<p class='pull'>"+ELEM[SD.el].advice+"</p>");
 
- h+="<div class='bhead' style='margin-top:40px'><div><p class='eyebrow'>Numbers</p><h2>Your numerology.</h2></div><p>Pythagorean, with the master numbers 11, 22 and 33 kept rather than reduced. The full name matters: the vowels give the heart, the consonants give the face.</p></div>";
- h+="<div class='numgrid'>"+N.rows.map(function(r){return "<div class='nm'><b>"+r[1]+"</b><small>"+r[0]+"</small><em>"+r[2]+"</em></div>"}).join("")+"</div>";
- h+="<div class='panel' style='margin-top:14px'><p><b>Life Path "+N.life+":</b> "+(NUM[N.life]||NUM[red(N.life)])+"</p>"
-  +"<p><b>Expression "+N.expr+":</b> "+(NUM[N.expr]||NUM[red(N.expr)])+"</p>"
-  +"<p><b>Soul Urge "+N.soul+":</b> "+(NUM[N.soul]||NUM[red(N.soul)])+"</p>"
-  +"<p><b>Personal Year "+N.py+":</b> "+(NUM[N.py]||NUM[red(N.py)])+" This is the theme under everything else until January.</p>"
-  +"<p style='margin-bottom:0'><b>Karmic lessons.</b> "+(N.missing.length?"The numbers missing from your name are "+N.missing.join(", ")+". "+N.missing.map(function(x){return KARMIC[x]}).join(" "):"Every number appears in your name, so the lessons are not in what is missing but in keeping all of it balanced.")+" Your hidden passion is <b>"+N.hidden+"</b>, the number you keep returning to.</p></div>";
+ h+=chapter("V","Your numbers",
+  "Life Path "+lp+"<span>"+LPD.title+"</span>",
+  "<div class='lpblock'><div class='lpnum'>"+lp+"</div><div><h4>"+LPD.title+"</h4><p>"+LPD.who+"</p></div></div>"
+  +"<p><b>Work.</b> "+LPD.work+"</p>"
+  +"<p><b>Love.</b> "+LPD.love+"</p>"
+  +"<p><b>The lesson.</b> "+LPD.lesson+"</p>"
+  +"<div class='mininums'>"
+  +"<div><small>Expression</small><b>"+N.expr+"</b></div>"
+  +"<div><small>Soul Urge</small><b>"+N.soul+"</b></div>"
+  +"<div><small>Birthday</small><b>"+N.birth+"</b></div>"
+  +"<div><small>Personal Year</small><b>"+N.py+"</b></div>"
+  +"</div>"
+  +"<p><b>This year.</b> "+(NUM[N.py]||NUM[red(N.py)])+" Underneath it, the month carries "+(NUM[N.pm]||NUM[red(N.pm)])+"</p>"
+  +"<p><b>Karmic lesson.</b> "+(N.missing.length?"The numbers missing from your name are "+N.missing.join(", ")+", and each one carries a lesson. "+N.missing.map(function(x){return KARMIC[x]}).join(" "):"Every number appears in your name, so the lesson is not in what is missing but in keeping all of it in balance.")+" Your hidden passion is <b>"+N.hidden+"</b>, the number you keep returning to.</p>"
+  +"<p><b>Lucky.</b> "+luck[0]+" for the colour, "+luck[1]+" for the stone, "+luck[2]+" for the day, and the numbers "+[N.life,N.expr,N.birth].join(", ")+".</p>"
+  +"<div style='display:flex;gap:14px;align-items:center;margin-top:16px;flex-wrap:wrap'><div style='width:82px;flex-shrink:0'>"+cardEl(lpCard,false,"")+"</div><p style='margin:0;flex:1;min-width:200px'><b>Your number's card is "+lpCard.name+".</b> "+lpCard.up+"</p></div>");
 
- h+="<div class='grid2' style='margin-top:16px'><div class='panel'>"
-  +"<p class='eyebrow dim'>Lucky according to your Life Path</p>"
-  +"<div class='keyval'><div class='fact'><small>Colour</small><b>"+luck[0]+"</b></div><div class='fact'><small>Stone</small><b>"+luck[1]+"</b></div><div class='fact'><small>Day</small><b>"+luck[2]+"</b></div><div class='fact'><small>Numbers</small><b>"+[N.life,N.expr,N.birth].join(", ")+"</b></div></div>"
-  +"<p class='small' style='margin:14px 0 0'>Harmonic card stone for this chart: <b style='color:var(--bone)'>"+lpCard.stone+"</b>. Keep it where you work, not where you sleep.</p>"
-  +"</div><div class='panel'>"
-  +"<p class='eyebrow dim'>Chinese zodiac</p>"
-  +"<p style='font:300 1.5rem/1.2 var(--display);margin:0 0 8px'>"+czd.el+" "+czd.animal+"</p>"
-  +"<p class='small' style='margin:0'>You are "+czd.txt+" by animal and "+czd.el.toLowerCase()+" by element, which colours how the animal behaves."+czd.note+" The year is counted from the lunar new year, approximated as 4 February.</p>"
-  +"<div class='fact' style='margin-top:14px'><small>Birth moon</small><b>"+ph.n+" \u00b7 "+ph.ill+"% lit</b></div>"
-  +"</div></div>";
+ h+=chapter("VI","The sky you arrived on",
+  "Moon phase, Chinese year, and tonight",
+  "<p class='dropcap'>"+PHTXT[ph.n]+" You were born with the moon "+ph.ill+"% lit, in "+M[0]+".</p>"
+  +"<p><b>Chinese year.</b> "+czd.el+" "+czd.animal+" \u2014 "+czd.txt+" by animal, and the element colours how that animal behaves."+czd.note+"</p>"
+  +"<p><b>The sky tonight.</b> The moon is "+nowPh.n.toLowerCase()+" and "+nowPh.ill+"% lit. "+TONIGHT[nowPh.n]+"</p>"
+  +"<p class='small'>Positions come from simplified orbital elements and are approximate to about a degree; the Rising sign and planetary hour need a birth time.</p>");
 
- var fr=rng(name+dob+today);
- h+="<div class='panel' style='margin-top:16px'><p class='eyebrow dim'>Today, "+today+"</p><div class='grid2' style='gap:18px'>";
- h+="<div class='bars'>"+AREAS.map(function(a){
-   var v=1+Math.floor(fr()*5),note=FC[a][Math.floor(fr()*4)];
-   return bar(a+"  "+"\u2605".repeat(v)+"\u2606".repeat(5-v),v,5)+"<p class='small' style='margin:-6px 0 10px'>"+note+"</p>";
- }).join("")+"</div>";
- h+="<div><p class='small' style='margin-top:0'>Read against your chart, not in place of it. A low Luck bar on a "+S[0]+" Sun usually means the day rewards the unglamorous thing: the email, the walk, the early night.</p>"
-  +"<p class='small'>Your numbers for the day: <b style='color:var(--bone)'>"+N.py+"</b> and <b style='color:var(--bone)'>"+N.pm+"</b>. Say the thing you would normally rehearse twice.</p>"
-  +"<p style='margin-bottom:0'><a href='#spread' style='font:600 .8rem var(--sans);letter-spacing:.08em;text-transform:uppercase'>Draw a three-card spread \u2193</a></p></div></div></div>";
+ h+="<p class='closing'>"+esc(first)+", read together: "+S[0]+" "+SD.el.toLowerCase()+" is how you move, Life Path "+lp+" is what you are here to do, and "+p1.c.name+" is the room you are standing in. "+p2.c.up+" Start with the smallest true thing.</p>";
+ h+="</article>";
 
  $("readingOut").innerHTML=h;
  $("readingOut").classList.add("on");
@@ -1080,12 +1142,6 @@ $("bonus").onclick=function(){
  ui();
  this.textContent="Moon bonus claimed today";
 };
-$("redraw").onclick=function(){
- if(bal()<10){$("redrawHint").textContent="A redraw costs 10 Glow and the purse is light. Play Afterglow for more, or come back tomorrow.";return}
- setBal(bal()-10);
- deal("redraw-"+today+"-"+Math.random());
- $("redrawHint").textContent="A fresh spread. Tap each card to turn it.";
-};
 $("f").onsubmit=function(e){
  e.preventDefault();
  var name=$("nm").value.trim(),dob=$("dob").value,pl=$("pl").value.trim(),tm=$("tm").value;
@@ -1111,10 +1167,6 @@ $("f").onsubmit=function(e){
 buildDeck();
 buildFan();
 wireSheet();
-cardOfTheDay();
-deal("tarots-plus-"+today);
-buildSky();
-buildMinor();
 ui();
 
 $("readingOut").addEventListener("click",function(e){
