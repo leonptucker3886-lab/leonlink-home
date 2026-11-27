@@ -19,8 +19,12 @@
   .hero-img>picture{position:absolute;inset:0;display:block}
   .hero-img>picture>img{width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block}
   .hero-img::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.45),rgba(0,0,0,0) 55%);pointer-events:none}
+  .hero-img{justify-content:flex-start;padding:24px 24px 48px}
+  .hero-cards{position:relative;z-index:1;width:100%;max-width:1032px;margin:0 auto!important}
+  .hero-cards .feature{background:rgba(7,10,18,.78);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+  @media(max-width:640px){.hero-img{padding:12px 12px 32px}}
   /* Sections */
-  section{padding:64px 0;border-top:1px solid #1d222b}
+  section:not(.hero-img){padding:64px 0;border-top:1px solid #1d222b}
   h2{font-family:"Bebas Neue",sans-serif;font-size:clamp(44px,7vw,72px);letter-spacing:1px;line-height:1;margin-bottom:28px}
   h2 span{color:#22e6c8}
   /* Two doors */
@@ -77,7 +81,12 @@
 
 <main class="wrap">
 
-  <div class="features">
+  <section class="hero-img">
+    <picture>
+      <source media="(max-width: 640px), (max-aspect-ratio: 1/1)" srcset="/img/home-sunnfun-m.webp">
+      <img src="/img/home-sunnfun.webp" alt="Sun N Fun — Escape the Trailer Park">
+    </picture>
+  <div class="features hero-cards">
   <div class="feature">
     <img src="/img/cards/ledgerline.jpg" alt="Ledgerline — field-service software for trades crews">
     <div class="fb">
@@ -101,11 +110,6 @@
   </div>
   </div>
 
-  <section class="hero-img">
-    <picture>
-      <source media="(max-width: 640px), (max-aspect-ratio: 1/1)" srcset="/img/home-sunnfun-m.webp">
-      <img src="/img/home-sunnfun.webp" alt="Sun N Fun — Escape the Trailer Park">
-    </picture>
   </section>
 
   <div class="signup">
