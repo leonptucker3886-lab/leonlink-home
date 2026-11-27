@@ -52,6 +52,7 @@
   .feature .go{display:inline-block;margin-top:20px;font-weight:800;color:#22e6c8}
   .feature .fine{margin-top:16px;font-size:14px;opacity:.55}
   .features{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0 48px}
+  main>.features:first-child{margin-top:24px}
   .features .feature{margin:0;grid-template-columns:1fr}
   .features .feature img{min-height:0;height:200px;object-fit:cover}
   @media(max-width:640px){.hero-img{min-height:45vh;min-height:45svh}.features{grid-template-columns:1fr;gap:12px}.features .feature img{height:140px}.features .feature .fb{padding:16px}.features .feature h2{font-size:22px}.features .tag{font-size:10px;letter-spacing:1px;white-space:nowrap}.features .feature p{font-size:14px;line-height:1.5}.feature img{height:auto;min-height:0}}
@@ -76,13 +77,6 @@
 
 <main class="wrap">
 
-  <section class="hero-img">
-    <picture>
-      <source media="(max-width: 640px), (max-aspect-ratio: 1/1)" srcset="/img/home-sunnfun-m.webp">
-      <img src="/img/home-sunnfun.webp" alt="Sun N Fun — Escape the Trailer Park">
-    </picture>
-  </section>
-
   <div class="features">
   <div class="feature">
     <img src="/img/cards/ledgerline.jpg" alt="Ledgerline — field-service software for trades crews">
@@ -106,6 +100,13 @@
     </div>
   </div>
   </div>
+
+  <section class="hero-img">
+    <picture>
+      <source media="(max-width: 640px), (max-aspect-ratio: 1/1)" srcset="/img/home-sunnfun-m.webp">
+      <img src="/img/home-sunnfun.webp" alt="Sun N Fun — Escape the Trailer Park">
+    </picture>
+  </section>
 
   <div class="signup">
     <h2>New builds, monthly.</h2>
