@@ -957,35 +957,53 @@ function sNoise(dur, when, freq, q, vol, type) {
   var g = AC.createGain(); g.gain.value = vol == null ? .16 : vol;
   src.connect(f); f.connect(g); g.connect(master); src.start(when);
 }
+/* Mix rules, so no cue ever fights a line of dialogue for attention:
+   - nothing that fires while you are reading goes over ~0.3 peak before the
+     master trim, and the negative cue stays almost entirely out of the
+     300-3400 Hz speech band
+   - the drone and the heat thumps are the floor; effects sit on them, not above
+   - the kill sting is the only cue allowed real weight, and it ends the run */
 var SFX = {
-  tick: function (t) { sTone(1180, .06, t, { type: "triangle", vol: .05, attack: .004, to: 900 }); },
-  page: function (t) { sNoise(.16, t, 2600, .7, .06, "highpass"); sTone(300, .1, t, { vol: .04, to: 180 }); },
+  tick: function (t) { sTone(1180, .055, t, { type: "triangle", vol: .045, attack: .004, to: 900 }); },
+  page: function (t) { sNoise(.16, t, 2600, .7, .05, "highpass"); sTone(300, .1, t, { vol: .035, to: 180 }); },
+  /* evidence = reward: a rising G-major arpeggio (G4-D5-G5-D6) with a soft bell
+     tail and a quiet low G underneath, so it lands warm instead of stinging */
   evidence: function (t) {
-    sTone(523.25, .32, t, { type: "triangle", vol: .13 });
-    sTone(783.99, .44, t + .11, { type: "triangle", vol: .12 });
-    sTone(1046.5, .62, t + .22, { vol: .08 });
-    sNoise(.1, t + .22, 5200, 2, .04);
+    sTone(196, .55, t, { vol: .05, attack: .02 });
+    sTone(392, .75, t, { type: "triangle", vol: .09, attack: .018 });
+    sTone(587.33, .85, t + .085, { type: "triangle", vol: .09, attack: .016 });
+    sTone(783.99, 1.05, t + .175, { type: "triangle", vol: .1, attack: .014 });
+    sTone(1174.66, .75, t + .19, { vol: .042, attack: .01 });
+    sNoise(.55, t + .175, 6200, .8, .016, "highpass");
   },
   gore: function (t) {
-    sNoise(.9, t, 520, .7, .2, "lowpass");
-    sTone(70, .4, t, { vol: .28, to: 38 });
-    sTone(46, .8, t + .12, { vol: .2, to: 30 });
+    sNoise(.9, t, 520, .7, .17, "lowpass");
+    sTone(70, .4, t, { vol: .24, to: 38 });
+    sTone(46, .8, t + .12, { vol: .17, to: 30 });
   },
+  /* bad = the floor dropping out: two soft low sines a minor second apart, with
+     no sawtooth, so it colours the moment without a buzz over the midrange.
+     One brief 320 Hz onset keeps it audible on laptop speakers, then it is gone */
   bad: function (t) {
-    sTone(146.8, 1.1, t, { type: "sawtooth", vol: .09, to: 138 });
-    sTone(155.6, 1.1, t, { type: "sawtooth", vol: .09, to: 147 });
+    sTone(90, .9, t, { vol: .115, attack: .06, to: 83 });
+    sTone(95.5, .9, t + .012, { vol: .105, attack: .07, to: 88 });
+    sTone(190, .6, t + .02, { type: "triangle", vol: .032, attack: .05, to: 176 });
+    sTone(320, .07, t, { vol: .022, attack: .006, to: 300 });
+    sTone(45, .95, t, { vol: .07, attack: .08, to: 40 });
+    sNoise(.7, t, 190, .6, .03, "lowpass");
   },
-  dice: function (t) { for (var i = 0; i < 4; i++) sNoise(.05, t + i * .055 + Math.random() * .03, 2400 + Math.random() * 1800, 3, .09); },
-  rattle: function (t) { for (var i = 0; i < 7; i++) sNoise(.045, t + i * .06, 3200 + Math.random() * 2000, 5, .07); },
+  dice: function (t) { for (var i = 0; i < 4; i++) sNoise(.05, t + i * .055 + Math.random() * .03, 2400 + Math.random() * 1800, 3, .08); },
+  rattle: function (t) { for (var i = 0; i < 7; i++) sNoise(.045, t + i * .06, 3200 + Math.random() * 2000, 5, .065); },
   heart: function (t) { thump(t, .22); },
   kill: function (t) {
-    sTone(58, 1.6, t, { vol: .32, to: 26 });
-    sNoise(1.8, t, 300, .5, .22, "lowpass");
-    sTone(88, 1.2, t + .05, { type: "sawtooth", vol: .06, to: 40 });
+    sTone(58, 1.6, t, { vol: .3, to: 26 });
+    sNoise(1.8, t, 300, .5, .2, "lowpass");
+    sTone(88, 1.2, t + .05, { type: "sawtooth", vol: .05, to: 40 });
   },
   chapter: function (t) {
-    sTone(392, 1.2, t, { vol: .08 });
-    sTone(587.33, 1.4, t + .18, { vol: .06 });
+    sTone(392, 1.2, t, { vol: .085 });
+    sTone(587.33, 1.4, t + .18, { vol: .07 });
+    sTone(196, 1.6, t, { vol: .04, attack: .05 });
   }
 };
 function sfx(id, delay) {
