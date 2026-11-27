@@ -16,22 +16,12 @@
   .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
   /* Hero — the split picture IS the background, text over it */
   .hero-img{position:relative;width:100vw;margin-left:calc(50% - 50vw);min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:space-between;align-items:stretch;overflow:hidden}
-  .hero-img>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block}
+  .hero-img>picture{position:absolute;inset:0;display:block}
+  .hero-img>picture>img{width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block}
   .hero-img::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.45),rgba(0,0,0,0) 55%);pointer-events:none}
-  .hero-sides{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:24px;width:100%;max-width:1080px;margin:0 auto;padding:8px 20px 0}
-  @media(min-width:641px){.hero-sides{gap:32px;padding:12px 24px 0}}
-  @media(max-width:640px){
-    .hero-sides{gap:16px;padding:8px 16px 0}
-    .hero-side h2{font-size:clamp(26px,7.5vw,34px);margin-bottom:10px}
-    .hero-side .rows a{flex-direction:column;align-items:flex-start;gap:2px;padding:10px 2px;font-size:15px}
-    .hero-side .rows a span{display:none}
-  }
-  .hero-side{color:#fff}
-  .hero-side h2{text-shadow:0 2px 14px rgba(0,0,0,.65)}
-  .hero-side .rows a{border-bottom-color:rgba(255,255,255,.35);text-shadow:0 1px 8px rgba(0,0,0,.7),0 0 3px rgba(0,0,0,.8)}
-  .hero-side .rows a span{font-weight:600;opacity:.95}
-  .fun-h{font-family:"Fredoka",sans-serif}
-  .hero-head{position:relative;z-index:1;align-self:center;color:#fff;font-size:clamp(40px,10vw,84px);margin:0 0 24px;text-shadow:0 2px 16px rgba(0,0,0,.65)}
+  /* Spotlight: no site nav on the homepage — just the art */
+  body>header#ll-hdr.lnx,body>nav.lnd{display:none!important}
+  .hero-head{position:relative;z-index:1;align-self:center;color:#fff;font-size:clamp(40px,10vw,84px);margin:auto 0 24px;text-shadow:0 2px 16px rgba(0,0,0,.65)}
   /* Sections */
   section{padding:64px 0;border-top:1px solid #1d222b}
   h2{font-family:"Bebas Neue",sans-serif;font-size:clamp(44px,7vw,72px);letter-spacing:1px;line-height:1;margin-bottom:28px}
@@ -90,25 +80,10 @@
 <main class="wrap">
 
   <section class="hero-img">
-    <img src="/img/home-sunnfun.webp" alt="Sun N Fun — Escape the Trailer Park">
-    <div class="hero-sides">
-      <div class="hero-side">
-        <h2 class="fun-h">Fun.</h2>
-        <div class="rows">
-          <a href="/games/moons.html">Moons <span>Moons &amp; Cauldrons &rarr;</span></a>
-          <a href="/games.html">Games <span>All games &rarr;</span></a>
-          <a href="/blog.html">Blogs <span>All blogs &rarr;</span></a>
-        </div>
-      </div>
-      <div class="hero-side">
-        <h2>Work.</h2>
-        <div class="rows">
-          <a href="/software.html">Apps <span>White-labeled, your name on it &rarr;</span></a>
-          <a href="/build.html">Website design <span>Built for your shop &rarr;</span></a>
-          <a href="/lineup/">Starting Five <span>See all 43 lists &rarr;</span></a>
-        </div>
-      </div>
-    </div>
+    <picture>
+      <source media="(max-width: 640px)" srcset="/img/home-sunnfun-m.webp">
+      <img src="/img/home-sunnfun.webp" alt="Sun N Fun — Escape the Trailer Park">
+    </picture>
     <h2 class="hero-head">Sun N Fun.</h2>
   </section>
 
