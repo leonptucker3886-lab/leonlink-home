@@ -366,6 +366,7 @@ var IMG = {
   earl: "../img/sun-n-fun/earl.jpg",
   preacher: "../img/sun-n-fun/preacher.jpg",
   mushroom: "../img/sun-n-fun/mushroom.jpg",
+  lacy: "../img/sun-n-fun/lacy.jpg",
   abel: "../img/sun-n-fun/abel.jpg",
   pondNight: "../img/sun-n-fun/pond-night.jpg"
 };
@@ -373,33 +374,35 @@ var IMG = {
 /* ---------------------------------------------------------------- CAST --- */
 var CAST = {
   bunny: {
-    name: "The Bunny Man", real: "Daryl Vance", age: "44",
+    name: "Sinny", real: "Daryl Rook", age: "44",
     img: IMG.bunny, where: "garage",
-    note: "Park handyman. Wears the mask. Runs the court.",
+    note: "Park handyman. Razor's cousin. Wears the mask. Runs the court.",
     facts: "Lot 3 · handyman · two tours, no record",
-    idle: "<em>BUNNY:</em> That's all the court has to say. The rest is yours.",
+    idle: "<em>SINNY:</em> That's all the court has to say. The rest is yours.",
     lore: [
       { q: "Why the rabbit mask?",
-        a: "<em>BUNNY:</em> My brother wore it the night the office burned. Halloween, 2003. He was eleven. They pulled the mask out of the ashes and nothing else. I put it on so somebody in this park has to look at him." },
+        a: "<em>SINNY:</em> My brother wore it the night the office burned. Halloween, 2003. He was eleven. They pulled the mask out of the ashes and nothing else. I put it on so somebody in this park has to look at him." },
       { q: "What really happened in 2003?",
-        a: "<em>BUNNY:</em> The county called it wiring. It wasn't wiring. Somebody wanted that lot and my mother wouldn't sell. I was in Fallujah. I came home to two urns and a gravel parking space." },
+        a: "<em>SINNY:</em> The county called it wiring. It wasn't wiring. Somebody wanted that lot and my mother wouldn't sell. I was in Fallujah. I came home to two urns and a gravel parking space." },
       { q: "Why run a court in a trailer park?",
-        a: "<em>BUNNY:</em> Because the law drove past that fire twice. So I built a smaller law. It's ugly. It's mine." }
+        a: "<em>SINNY:</em> Because the law drove past that fire twice. So I built a smaller law. It's ugly. It's mine." },
+      { q: "You and Razor?",
+        a: "<em>SINNY:</em> Cousins. Our mothers were sisters and both of them are in the ground on the same hill. He sharpens things, I decide things, and neither of us ever says the other's name to the county." }
     ],
     stages: [
-      { say: "<em>BUNNY:</em> You slept through a raid, friend. Cops took Mikey at three. Three cruisers. Somebody pointed.<br><br>The mask has a crack through the left eye. Something dark has dried inside the crack, and it isn't paint.",
+      { say: "<em>SINNY:</em> You slept through a raid, friend. Cops took Mikey at three. Three cruisers. Somebody pointed.<br><br>The mask has a crack through the left eye. Something dark has dried inside the crack, and it isn't paint.",
         choices: [
-          { t: "I didn't talk to anybody.", r: "<em>BUNNY:</em> That's what they all say. Every time. Say it again and I'll believe you less.", s: 5, next: 1 },
-          { t: "Who got busted?", r: "<em>BUNNY:</em> Mikey. The kid who cut grass for the whole park. Nineteen years old. Somebody knew his schedule. Somebody always knows.", s: 0, next: 1, note: "Bunny: Mikey, 19, was taken at 3 AM. Somebody knew his schedule." },
-          { t: "I owe nothing. Prove it.", r: "<em>BUNNY:</em> Bold. Wrong, but bold. Razor likes bold.", s: 10, next: 1 },
-          { t: "There's blood in the mask's crack.", r: "<em>BUNNY:</em> There's blood on your hands. Ask yourself which of us is wearing it.", s: 5, next: 1 }
+          { t: "I didn't talk to anybody.", r: "<em>SINNY:</em> That's what they all say. Every time. Say it again and I'll believe you less.", s: 5, next: 1 },
+          { t: "Who got busted?", r: "<em>SINNY:</em> Mikey. The kid who cut grass for the whole park. Nineteen years old. Somebody knew his schedule. Somebody always knows.", s: 0, next: 1, note: "Sinny: Mikey, 19, was taken at 3 AM. Somebody knew his schedule." },
+          { t: "I owe nothing. Prove it.", r: "<em>SINNY:</em> Bold. Wrong, but bold. Razor likes bold.", s: 10, next: 1 },
+          { t: "There's blood in the mask's crack.", r: "<em>SINNY:</em> There's blood on your hands. Ask yourself which of us is wearing it.", s: 5, next: 1 }
         ] },
-      { say: "<em>BUNNY:</em> Two things. The debt. And the snitch. Sort both and you walk out that gate. Get one wrong and Razor gets to work.<br><br>Behind him, the garage door is a black rectangle. Somewhere past it, water is dripping.",
+      { say: "<em>SINNY:</em> Two things. The debt. And the snitch. Sort both and you walk out that gate. Get one wrong and Razor gets to work.<br><br>Behind him, the garage door is a black rectangle. Somewhere past it, water is dripping.",
         choices: [
-          { t: "Who says I owe?", r: "<em>BUNNY:</em> Dwayne says. Dwayne collects. Ask Dwayne. Ask him with your hands where he can see them.", s: 0, next: "end" },
-          { t: "The axe man ever talk?", r: "<em>BUNNY:</em> Razor talks with the stone. Listen close.", s: 0, next: "end" },
-          { t: "Mikey's blood is on the garage floor.", r: "<em>BUNNY:</em> Then it's on somebody's shoes. Go find the shoes.", s: 0, next: "end", note: "The blood trail on the garage floor leads out the side door." },
-          { t: "I'm going.", r: "<em>BUNNY:</em> Go on, then. The park is small. The night is long.", s: 0, next: "end" }
+          { t: "Who says I owe?", r: "<em>SINNY:</em> Derrick says. Derrick collects. Ask Derrick. Ask him with your hands where he can see them.", s: 0, next: "end" },
+          { t: "The axe man ever talk?", r: "<em>SINNY:</em> Razor talks with the stone. Listen close.", s: 0, next: "end" },
+          { t: "Mikey's blood is on the garage floor.", r: "<em>SINNY:</em> Then it's on somebody's shoes. Go find the shoes.", s: 0, next: "end", note: "The blood trail on the garage floor leads out the side door." },
+          { t: "I'm going.", r: "<em>SINNY:</em> Go on, then. The park is small. The night is long.", s: 0, next: "end" }
         ] }
     ]
   },
@@ -435,145 +438,145 @@ var CAST = {
   },
 
   marlene: {
-    name: "Marlene", real: "Marlene Purvis", age: "58",
+    name: "Tellmo", real: "Tellmo Purvis", age: "58",
     img: IMG.marlene, where: "office", suspect: true,
     note: "Park manager. Twenty-two years of books, keys and phone calls.",
     facts: "Office trailer · manager since 2004 · signs every lot transfer",
     accuseLine: "Park manager. Keeps the books, the keys and the office phone.",
-    idle: "<em>MARLENE:</em> Office hours are over. I told you once.",
+    idle: "<em>TELLMO:</em> Office hours are over. I told you once.",
     lore: [
       { q: "How long have you run this park?",
-        a: "<em>MARLENE:</em> Twenty-two years. My husband left me the books, the debt and a double-wide with a bad floor. I stayed." },
+        a: "<em>TELLMO:</em> Twenty-two years. My husband left me the books, the debt and a double-wide with a bad floor. I stayed." },
       { q: "Whose names are in the ledger?",
-        a: "<em>MARLENE:</em> Everybody who's late. Everybody who's scared. I write them in pencil because I know they'll come beg." },
+        a: "<em>TELLMO:</em> Everybody who's late. Everybody who's scared. I write them in pencil because I know they'll come beg." },
       { q: "Why do you carry that phone everywhere?",
-        a: "<em>MARLENE:</em> Because the owner calls at three in the morning. Some outfit out of Louisville. They've been buying lots one widow at a time. I'm the one who signs." },
+        a: "<em>TELLMO:</em> Because the owner calls at three in the morning. Some outfit out of Louisville. They've been buying lots one widow at a time. I'm the one who signs." },
       { q: "Who signs for the lots besides you?",
-        a: "<em>MARLENE:</em> Nobody. Except one name that keeps turning up on the county copies and never on mine. <em>A. Rennick.</em> Your people. I assumed it was you and I assumed wrong." },
+        a: "<em>TELLMO:</em> Nobody. Except one name that keeps turning up on the county copies and never on mine. <em>A. Rennick.</em> Your people. I assumed it was you and I assumed wrong." },
       { q: "Do you know Kessa?",
-        a: "<em>MARLENE:</em> She's been in my office three times this month asking about transfer paper. Sweet girl. Pretty hand. I never once saw her sign anything." }
+        a: "<em>TELLMO:</em> She's been in my office three times this month asking about transfer paper. Sweet girl. Pretty hand. I never once saw her sign anything." }
     ],
     stages: [
-      { say: "<em>MARLENE:</em> Office hours are over. And you're not supposed to be in here.<br><br>The office smells like burnt coffee and bleach. Her glasses catch the fluorescent light. There's a fleck of something dark on the left lens.",
+      { say: "<em>TELLMO:</em> Office hours are over. And you're not supposed to be in here.<br><br>The office smells like burnt coffee and bleach. Her glasses catch the fluorescent light. There's a fleck of something dark on the left lens.",
         choices: [
-          { t: "I need to see the debt book.", r: "<em>MARLENE:</em> You need a warrant. Or manners.", s: 5, next: 1 },
-          { t: "Who called the cops last night?", r: "<em>MARLENE:</em> Somebody who knew Mikey's schedule. I keep the books, not the secrets.", s: 0, next: 1 },
-          { t: "There's blood on your phone.", r: "<em>MARLENE:</em> I cut my hand on a drawer. People bleed, hon. You of all people should know.", s: 5, next: 1 },
-          { t: "Nice office.", r: "<em>MARLENE:</em> Flattery. Cute. Leave.", s: 0, next: "end" }
+          { t: "I need to see the debt book.", r: "<em>TELLMO:</em> You need a warrant. Or manners.", s: 5, next: 1 },
+          { t: "Who called the cops last night?", r: "<em>TELLMO:</em> Somebody who knew Mikey's schedule. I keep the books, not the secrets.", s: 0, next: 1 },
+          { t: "There's blood on your phone.", r: "<em>TELLMO:</em> I cut my hand on a drawer. People bleed, hon. You of all people should know.", s: 5, next: 1 },
+          { t: "Nice office.", r: "<em>TELLMO:</em> Flattery. Cute. Leave.", s: 0, next: "end" }
         ] },
-      { say: "<em>MARLENE:</em> Well? I'm waiting. The park doesn't run itself.<br><br>Behind her, a filing cabinet drawer is open two inches. Something in it is breathing, or the room is.",
+      { say: "<em>TELLMO:</em> Well? I'm waiting. The park doesn't run itself.<br><br>Behind her, a filing cabinet drawer is open two inches. Something in it is breathing, or the room is.",
         choices: [
-          { t: "Please. Somebody's trying to bury me.", r: "<em>MARLENE:</em> ...Fine. One look at the desk. Then out. And if I hear a drawer, I hear everything.", s: 0, flag: "marleneAllowed", next: "end", note: "Marlene will let you look at her desk — once." },
-          { t: "You got a phone log?", r: "<em>MARLENE:</em> Office phone's mine. I don't call the law on my own people.", s: 0, next: "end" },
-          { t: "I'm going.", r: "<em>MARLENE:</em> Go on.", s: 0, next: "end" }
+          { t: "Please. Somebody's trying to bury me.", r: "<em>TELLMO:</em> ...Fine. One look at the desk. Then out. And if I hear a drawer, I hear everything.", s: 0, flag: "marleneAllowed", next: "end", note: "Tellmo will let you look at her desk — once." },
+          { t: "You got a phone log?", r: "<em>TELLMO:</em> Office phone's mine. I don't call the law on my own people.", s: 0, next: "end" },
+          { t: "I'm going.", r: "<em>TELLMO:</em> Go on.", s: 0, next: "end" }
         ] }
     ]
   },
 
   dwayne: {
-    name: "Dwayne", real: "Dwayne Kessinger", age: "36",
+    name: "Derrick", real: "Derrick Kessinger", age: "36",
     img: IMG.dwayne, where: "laundry", suspect: true,
     note: "The collector. Pushes the $400 debt. Sleeps in the laundry shed.",
-    facts: "No lot · Marlene's nephew · three worthless-check warrants",
+    facts: "No lot · Tellmo's nephew · three worthless-check warrants",
     accuseLine: "The collector. Pushes the $400 debt and sleeps in the laundry shed.",
-    idle: "<em>DWAYNE:</em> Four hundred. We're done here.",
+    idle: "<em>DERRICK:</em> Four hundred. We're done here.",
     lore: [
       { q: "Why do you collect?",
-        a: "<em>DWAYNE:</em> Somebody has to. Marlene asked. She's my aunt. She paid for my mom's funeral and never once said the number out loud." },
+        a: "<em>DERRICK:</em> Somebody has to. Tellmo asked. She's my aunt. She paid for my mom's funeral and never once said the number out loud." },
       { q: "Where's your family?",
-        a: "<em>DWAYNE:</em> Son's in juvey in Lexington. Baby mama took the truck. I sleep in the laundry shed most nights. You want to laugh, do it now." },
+        a: "<em>DERRICK:</em> Son's in juvey in Lexington. Baby mama took the truck. I sleep in the laundry shed most nights. You want to laugh, do it now." },
       { q: "Did you hurt Mikey?",
-        a: "<em>DWAYNE:</em> No. I shook him down for forty dollars and he cried. I felt like a dog for a week." },
+        a: "<em>DERRICK:</em> No. I shook him down for forty dollars and he cried. I felt like a dog for a week." },
       { q: "Who told you I owed four hundred?",
-        a: "<em>DWAYNE:</em> A woman came to me with a marker and a hundred cash. Said make it four hundred and make him sweat. I never asked why. I never ask why." },
+        a: "<em>DERRICK:</em> A woman came to me with a marker and a hundred cash. Said make it four hundred and make him sweat. I never asked why. I never ask why." },
       { q: "You ever meet a cousin of mine?",
-        a: "<em>DWAYNE:</em> Burned hand? Won't come past the tree line? Yeah. He pays his markers on time. Only man in this park who does." }
+        a: "<em>DERRICK:</em> Burned hand? Won't come past the tree line? Yeah. He pays his markers on time. Only man in this park who does." }
     ],
     stages: [
-      { say: "<em>DWAYNE:</em> Well well. The drunk with the debt.<br><br>The laundry shed hums. One washer is running with nothing in it. His knuckles are split and scabbed, and the gold chain has a dark smear on the clasp.",
+      { say: "<em>DERRICK:</em> Well well. The drunk with the debt.<br><br>The laundry shed hums. One washer is running with nothing in it. His knuckles are split and scabbed, and the gold chain has a dark smear on the clasp.",
         choices: [
-          { t: "What debt? Name the number.", r: "<em>DWAYNE:</em> Four hundred. Cash. Tonight.", s: 0, next: 1 },
-          { t: "I was passed out. I don't remember any bet.", r: "<em>DWAYNE:</em> Convenient memory. Everybody in this park remembers but you.", s: 5, next: 1 },
-          { t: "Who'd you hear it from?", r: "<em>DWAYNE:</em> A little bird with a ledger. Pay up.", s: 0, next: 1 },
-          { t: "There's blood on your chain.", r: "<em>DWAYNE:</em> It's ketchup, detective. You want to see the bottle?", s: 5, next: 1 }
+          { t: "What debt? Name the number.", r: "<em>DERRICK:</em> Four hundred. Cash. Tonight.", s: 0, next: 1 },
+          { t: "I was passed out. I don't remember any bet.", r: "<em>DERRICK:</em> Convenient memory. Everybody in this park remembers but you.", s: 5, next: 1 },
+          { t: "Who'd you hear it from?", r: "<em>DERRICK:</em> A little bird with a ledger. Pay up.", s: 0, next: 1 },
+          { t: "There's blood on your chain.", r: "<em>DERRICK:</em> It's ketchup, detective. You want to see the bottle?", s: 5, next: 1 }
         ] },
-      { say: "<em>DWAYNE:</em> Four hundred. Don't make me come find you twice.<br><br>Behind him, the back door is propped open with a brick. The mud outside is tracked in, and some of the tracks are the wrong colour.",
+      { say: "<em>DERRICK:</em> Four hundred. Don't make me come find you twice.<br><br>Behind him, the back door is propped open with a brick. The mud outside is tracked in, and some of the tracks are the wrong colour.",
         choices: [
-          { t: "Pay the four hundred. Cash. Now.", r: "<em>DWAYNE:</em> ...You actually got it. Huh.<br><br>He counts it twice and doesn't look at you once. Then he reaches into his jacket and hands you a folded paper.<br><br><em>DWAYNE:</em> The woman who brought this to me signed the bottom. Look at it. That is not your handwriting, friend. I knew it when she handed it over. I took it anyway, because I needed the money.<br><br>He looks at the floor. <em>DWAYNE:</em> I always need the money.", s: -10, need: { cash: 400 }, pay: 400, clue: "iou", flag: "paidDebt", next: "end", note: "You paid Dwayne the four hundred. The marker he handed back is signed in Kessa's handwriting." },
-          { t: "Show him the ledger page — your name isn't in it.", r: "<em>DWAYNE:</em> ...Fine. Fine! You owed twenty bucks for beer. Somebody wanted you scared, so I made the rest up. Happy?<br><br>He looks at the floor. <em>DWAYNE:</em> I needed the money. That's all. I needed the money.", s: 0, clue: "confession", need: { clue: "ledger" }, next: "end" },
-          { t: "Call his bluff.", r: "<em>DWAYNE:</em> Bluff? Son, I got an axe man on retainer.", s: 10, next: "end" },
-          { t: "Walk away.", r: "<em>DWAYNE:</em> Tonight, friend. Four hundred.", s: 0, next: "end" }
+          { t: "Pay the four hundred. Cash. Now.", r: "<em>DERRICK:</em> ...You actually got it. Huh.<br><br>He counts it twice and doesn't look at you once. Then he reaches into his jacket and hands you a folded paper.<br><br><em>DERRICK:</em> The woman who brought this to me signed the bottom. Look at it. That is not your handwriting, friend. I knew it when she handed it over. I took it anyway, because I needed the money.<br><br>He looks at the floor. <em>DERRICK:</em> I always need the money.", s: -10, need: { cash: 400 }, pay: 400, clue: "iou", flag: "paidDebt", next: "end", note: "You paid Derrick the four hundred. The marker he handed back is signed in Kessa's handwriting." },
+          { t: "Show him the ledger page — your name isn't in it.", r: "<em>DERRICK:</em> ...Fine. Fine! You owed twenty bucks for beer. Somebody wanted you scared, so I made the rest up. Happy?<br><br>He looks at the floor. <em>DERRICK:</em> I needed the money. That's all. I needed the money.", s: 0, clue: "confession", need: { clue: "ledger" }, next: "end" },
+          { t: "Call his bluff.", r: "<em>DERRICK:</em> Bluff? Son, I got an axe man on retainer.", s: 10, next: "end" },
+          { t: "Walk away.", r: "<em>DERRICK:</em> Tonight, friend. Four hundred.", s: 0, next: "end" }
         ] }
     ]
   },
 
   tanya: {
-    name: "Tanya", real: "Tanya Bledsoe", age: "34",
+    name: "Sally", real: "Sally Bledsoe", age: "34",
     img: IMG.tanya, where: "pond", suspect: true,
     note: "Neighbor on Tomahawk. Night nurse. Watches the road.",
     facts: "111 Tomahawk Trl · hospice nurse · sister missing since 2019",
     accuseLine: "Neighbor on Tomahawk. Night nurse. Watches every car that comes in.",
-    idle: "<em>TANYA:</em> I've said all I can. Please.",
+    idle: "<em>SALLY:</em> I've said all I can. Please.",
     lore: [
       { q: "Why do you watch the road?",
-        a: "<em>TANYA:</em> My sister lived at 111. 2019, she left for a shift and the park said she never came home. I moved into her trailer to keep the porch light on." },
+        a: "<em>SALLY:</em> My sister lived at 111. 2019, she left for a shift and the park said she never came home. I moved into her trailer to keep the porch light on." },
       { q: "That blood on your sleeve.",
-        a: "<em>TANYA:</em> Hospice. Old man, cancer, his wife screaming in the kitchen. It's not the worst thing I've washed out this month." },
+        a: "<em>SALLY:</em> Hospice. Old man, cancer, his wife screaming in the kitchen. It's not the worst thing I've washed out this month." },
       { q: "What do you think happened to Mikey?",
-        a: "<em>TANYA:</em> I think he saw something he shouldn't have. This park has one rule, hon: don't look." },
+        a: "<em>SALLY:</em> I think he saw something he shouldn't have. This park has one rule, hon: don't look." },
       { q: "You know Kessa? My girlfriend?",
-        a: "<em>TANYA:</em> I know she parks her car on Tomahawk after midnight and walks toward the trees, not the trailer. I've been a night nurse eleven years, hon. I know what a woman looks like when she's lying about where she's been." },
+        a: "<em>SALLY:</em> I know she parks her car on Tomahawk after midnight and walks toward the trees, not the trailer. I've been a night nurse eleven years, hon. I know what a woman looks like when she's lying about where she's been." },
       { q: "Who walks past the tree line?",
-        a: "<em>TANYA:</em> Nobody. That's the point of a tree line. But there's a man back there who doesn't come out, and my sister used to leave food for him like you'd leave it for a cat." }
+        a: "<em>SALLY:</em> Nobody. That's the point of a tree line. But there's a man back there who doesn't come out, and my sister used to leave food for him like you'd leave it for a cat." }
     ],
     stages: [
-      { say: "<em>TANYA:</em> You shouldn't be here. The cops were here. They're coming back.<br><br>The pond behind her is flat and black. Something pale turns over under the surface, slow, like a hand waving.",
+      { say: "<em>SALLY:</em> You shouldn't be here. The cops were here. They're coming back.<br><br>The pond behind her is flat and black. Something pale turns over under the surface, slow, like a hand waving.",
         choices: [
-          { t: "What did you see last night?", r: "<em>TANYA:</em> Three cruisers, 3 AM. Somebody pointed at Mikey's place. Then a phone light, down by the pond. It went out. It didn't come back up.", s: 0, flag: "phoneHint", next: 1, note: "Tanya: at 3 AM a phone light went down to the pond and never came back up." },
-          { t: "Was it me? Did you see me?", r: "<em>TANYA:</em> You were face down in that garage all night. Everybody knows that. That's why this stinks.", s: -5, next: 1 },
-          { t: "Who points a finger in this park?", r: "<em>TANYA:</em> Somebody who wants Mikey's lot. Or somebody the cops already own.", s: 0, next: 1 }
+          { t: "What did you see last night?", r: "<em>SALLY:</em> Three cruisers, 3 AM. Somebody pointed at Mikey's place. Then a phone light, down by the pond. It went out. It didn't come back up.", s: 0, flag: "phoneHint", next: 1, note: "Sally: at 3 AM a phone light went down to the pond and never came back up." },
+          { t: "Was it me? Did you see me?", r: "<em>SALLY:</em> You were face down in that garage all night. Everybody knows that. That's why this stinks.", s: -5, next: 1 },
+          { t: "Who points a finger in this park?", r: "<em>SALLY:</em> Somebody who wants Mikey's lot. Or somebody the cops already own.", s: 0, next: 1 }
         ] },
-      { say: "<em>TANYA:</em> I already said too much. What else?<br><br>Her sleeve is stiff with dried blood. She keeps looking past you at the water.",
+      { say: "<em>SALLY:</em> I already said too much. What else?<br><br>Her sleeve is stiff with dried blood. She keeps looking past you at the water.",
         choices: [
-          { t: "The phone light — where exactly?", r: "<em>TANYA:</em> In the pond. I saw it go in. If you want it, wade for it. And don't blame me for what comes up.", s: 0, next: "end", note: "Tanya: the phone is in the pond. Wade in for it." },
-          { t: "Who sees everything around here?", r: "<em>TANYA:</em> Earl. Earl sees everything and says nothing — till you ask right.", s: 0, next: "end" },
-          { t: "I'm going.", r: "<em>TANYA:</em> Careful out there.", s: 0, next: "end" }
+          { t: "The phone light — where exactly?", r: "<em>SALLY:</em> In the pond. I saw it go in. If you want it, wade for it. And don't blame me for what comes up.", s: 0, next: "end", note: "Sally: the phone is in the pond. Wade in for it." },
+          { t: "Who sees everything around here?", r: "<em>SALLY:</em> Hyde. Hyde sees everything and says nothing — till you ask right.", s: 0, next: "end" },
+          { t: "I'm going.", r: "<em>SALLY:</em> Careful out there.", s: 0, next: "end" }
         ] }
     ]
   },
 
   earl: {
-    name: "Earl", real: "Earl Sizemore", age: "71",
+    name: "Hyde", real: "Hyde Sizemore", age: "71",
     img: IMG.earl, where: "bonfire", suspect: true,
     note: "Old-timer. Forty years in the park. Sits by the fire and sees everything.",
     facts: "Lot 1 · forty years · called in the 2003 fire",
     accuseLine: "Old-timer. Forty years by the bonfire. Sees everything and says nothing.",
-    idle: "<em>EARL:</em> Fire's low. Nothing more from me.",
+    idle: "<em>HYDE:</em> Fire's low. Nothing more from me.",
     lore: [
       { q: "Forty years?",
-        a: "<em>EARL:</em> Bought the lot in '81 for six thousand. Buried a wife and a dog here. The park keeps you if you let it." },
+        a: "<em>HYDE:</em> Bought the lot in '81 for six thousand. Buried a wife and a dog here. The park keeps you if you let it." },
       { q: "The fire in 2003.",
-        a: "<em>EARL:</em> I called it in. Stood right here. The hydrant on Boone was dry and the dispatcher asked me twice for the address. I still hear her asking." },
+        a: "<em>HYDE:</em> I called it in. Stood right here. The hydrant on Boone was dry and the dispatcher asked me twice for the address. I still hear her asking." },
       { q: "You ever lie?",
-        a: "<em>EARL:</em> Once. 2003. I told a boy his brother didn't feel anything. He looked at me like he knew." },
+        a: "<em>HYDE:</em> Once. 2003. I told a boy his brother didn't feel anything. He looked at me like he knew." },
       { q: "Who's the man with the burned hand?",
-        a: "<em>EARL:</em> Abel Rennick. Your cousin. They put an empty box in the ground for him in '03 and his mother cried at a box of air. He watches the pond now. He never did like the sun." },
+        a: "<em>HYDE:</em> Abel Rennick. Your cousin. They put an empty box in the ground for him in '03 and his mother cried at a box of air. He watches the pond now. He never did like the sun." },
       { q: "What was in the pond before the pond?",
-        a: "<em>EARL:</em> A cellar. The park put water on top of it in '74 because it was cheaper than filling it. Some things you don't fill, son. You just cover." }
+        a: "<em>HYDE:</em> A cellar. The park put water on top of it in '74 because it was cheaper than filling it. Some things you don't fill, son. You just cover." }
     ],
     stages: [
-      { say: "<em>EARL:</em> Sit. Fire's warm. Night's cold. Same as always.<br><br>The fire is low. There's a smell under the woodsmoke — wet ash, and something sweeter.",
+      { say: "<em>HYDE:</em> Sit. Fire's warm. Night's cold. Same as always.<br><br>The fire is low. There's a smell under the woodsmoke — wet ash, and something sweeter.",
         choices: [
-          { t: "What happened last night?", r: "<em>EARL:</em> Cops. Mikey. Somebody talked, sure as the fire burns.", s: 0, next: 1 },
-          { t: "You been here long?", r: "<em>EARL:</em> Forty years. Seen every kind of trouble this park can grow.", s: 0, next: 1 },
-          { t: "You believe I owe four hundred?", r: "<em>EARL:</em> Son, you couldn't owe four hundred. You ain't got four hundred. Somebody's running a game on you.", s: -5, next: 1 },
-          { t: "You're sitting in something.", r: "<em>EARL:</em> Mud. Blood. At my age it's all mud.", s: 0, next: 1 }
+          { t: "What happened last night?", r: "<em>HYDE:</em> Cops. Mikey. Somebody talked, sure as the fire burns.", s: 0, next: 1 },
+          { t: "You been here long?", r: "<em>HYDE:</em> Forty years. Seen every kind of trouble this park can grow.", s: 0, next: 1 },
+          { t: "You believe I owe four hundred?", r: "<em>HYDE:</em> Son, you couldn't owe four hundred. You ain't got four hundred. Somebody's running a game on you.", s: -5, next: 1 },
+          { t: "You're sitting in something.", r: "<em>HYDE:</em> Mud. Blood. At my age it's all mud.", s: 0, next: 1 }
         ] },
-      { say: "<em>EARL:</em> The fire's dying. Ask what you came to ask.<br><br>He turns his hands over in the firelight, and the blood under his nails is black and dry.",
+      { say: "<em>HYDE:</em> The fire's dying. Ask what you came to ask.<br><br>He turns his hands over in the firelight, and the blood under his nails is black and dry.",
         choices: [
           { t: "Did you see anybody by the pond?", r: "EARL_SAW", s: 0, next: "end" },
-          { t: "Who else was up at 3 AM?", r: "<em>EARL:</em> Dogs. Cops. And one shape by the water. That's all I got.", s: 0, next: "end" },
-          { t: "I'm going.", r: "<em>EARL:</em> Watch your back, son. It's a small park.", s: 0, next: "end" }
+          { t: "Who else was up at 3 AM?", r: "<em>HYDE:</em> Dogs. Cops. And one shape by the water. That's all I got.", s: 0, next: "end" },
+          { t: "I'm going.", r: "<em>HYDE:</em> Watch your back, son. It's a small park.", s: 0, next: "end" }
         ] }
     ]
   },
@@ -635,6 +638,37 @@ var CAST = {
     ]
   },
 
+  lacy: {
+    name: "Lacy Low", real: "Lacy Lowery", age: "27",
+    img: IMG.lacy, where: "game",
+    note: "Sinny's girl. Sits at the table all night and never plays a hand.",
+    facts: "No lot · rides with Sinny · at the bones table every night this week",
+    idle: "<em>LACY:</em> Don't look at me. Look at the dice. I'm not the one costing you money.",
+    lore: [
+      { q: "What's a girl like you doing at a table like this?",
+        a: "<em>LACY:</em> Keeping my boy out of a cooler. Sinny's got a temper, Razor's got an axe, and the two of them in one room is a whole night's work for me." },
+      { q: "Sinny's your man?",
+        a: "<em>LACY:</em> Two years. He's the only man in this park who never once raised his voice at me. He saves all of it for that mask." },
+      { q: "Do you know Kessa?",
+        a: "<em>LACY:</em> Pretty thing, drives the grey car? She came to the table once, put down a hundred, and wouldn't say whose name she wanted on the paper. I remember hands. Hers were shaking." }
+    ],
+    stages: [
+      { say: "<em>LACY:</em> You're the one with the marker. Sinny said you'd come by.<br><br>She's sitting sideways on a cooler with her boots hooked on the table leg. She hasn't touched the dice all night. Her nails are bitten down to nothing and there's a mark on her wrist the shape of a hand.",
+        choices: [
+          { t: "Sinny's your boyfriend?", r: "<em>LACY:</em> Two years. He's good to me. He's just not good at much else since the fire took his brother.", s: 5, next: 1 },
+          { t: "He's Razor's cousin?", r: "<em>LACY:</em> Cousins. Their mothers were sisters. Razor taught Sinny to sharpen things and Sinny taught Razor to keep his mouth shut. Family's family out here, even the ugly parts.", s: 0, next: 1, note: "Lacy: Sinny and Razor are cousins. Their mothers were sisters." },
+          { t: "You play?", r: "<em>LACY:</em> I watch. Watching's free, and I'm saving up.", s: 0, next: 1 },
+          { t: "Leave her alone.", r: "<em>LACY:</em> Smart. Go on, then.", s: 0, next: "end" }
+        ] },
+      { say: "<em>LACY:</em> Look, you seem decent, so I'll say it plain. My man is not the one you want. He's got a dead brother, a bad mask, and he's been crying in that truck about it since 2003.<br><br>She turns her wrist over so you can see the mark, then pulls the sleeve down over it.",
+        choices: [
+          { t: "Who signed my marker?", r: "<em>LACY:</em> Not me. But I've seen the writing. A woman's hand, blue ink, loops like a schoolteacher. She gave the Preacher a hundred cash to make your name into four hundred, and she smiled the whole time she did it.", s: 0, next: "end", note: "Lacy: a woman in blue ink paid the Preacher a hundred to turn your marker into four hundred." },
+          { t: "That mark on your wrist.", r: "<em>LACY:</em> ...Wrong man's hand. And he's not in this park anymore. Don't make me say it twice.", s: -5, next: "end" },
+          { t: "I'm going.", r: "<em>LACY:</em> Watch the tree line, hon.", s: 0, next: "end" }
+        ] }
+    ]
+  },
+
   abel: {
     name: "Cousin Abel", real: "Abel Rennick", age: "49",
     img: IMG.abel, where: "pond", hidden: true,
@@ -649,16 +683,16 @@ var SUSPECTS = ["marlene", "dwayne", "tanya", "earl"];
 var ABEL_CLUES = ["photos", "abelhand", "kessanote", "iou"];
 
 var EARL_SAW = {
-  marlene: "<em>EARL:</em> Around 3. A shape down by the water. Clipboard under the arm. Office folk walk like that, even in the dark.",
-  dwayne: "<em>EARL:</em> Around 3. A shape by the water. Gold chain caught the porch light. I know that glint.",
-  tanya: "<em>EARL:</em> Around 3. A shape by the water. Pink case in the hand, glowing like a firefly.",
-  earl: "<em>EARL:</em> Didn't see a thing. Fire was low. I was asleep.<br><br>He says it without blinking. His hands don't move."
+  marlene: "<em>HYDE:</em> Around 3. A shape down by the water. Clipboard under the arm. Office folk walk like that, even in the dark.",
+  dwayne: "<em>HYDE:</em> Around 3. A shape by the water. Gold chain caught the porch light. I know that glint.",
+  tanya: "<em>HYDE:</em> Around 3. A shape by the water. Pink case in the hand, glowing like a firefly.",
+  earl: "<em>HYDE:</em> Didn't see a thing. Fire was low. I was asleep.<br><br>He says it without blinking. His hands don't move."
 };
 var EARL_NOTE = {
-  marlene: "Earl saw a shape at the pond at 3 AM. A clipboard under the arm.",
-  dwayne: "Earl saw a shape at the pond at 3 AM. A gold chain caught the light.",
-  tanya: "Earl saw a shape at the pond at 3 AM. A pink phone case glowing.",
-  earl: "Earl swears he saw nothing. He was asleep by a fire that never went out."
+  marlene: "Hyde saw a shape at the pond at 3 AM. A clipboard under the arm.",
+  dwayne: "Hyde saw a shape at the pond at 3 AM. A gold chain caught the light.",
+  tanya: "Hyde saw a shape at the pond at 3 AM. A pink phone case glowing.",
+  earl: "Hyde swears he saw nothing. He was asleep by a fire that never went out."
 };
 var PHONE_MARKS = {
   marlene: "an office key tag on a lanyard, still clipped on. The tag says OFFICE.",
@@ -667,10 +701,10 @@ var PHONE_MARKS = {
   earl: "a faded flag sticker, peeling at the corner, and a thumbnail of dried blood in the charging port."
 };
 var CONFRONT = {
-  marlene: "<em>MARLENE:</em> ...So it surfaced. I did what I had to. Mikey found the transfer papers. He was going to take them to the county and burn twenty-two years of my name. I only made a phone call. I didn't make the water.",
-  dwayne: "<em>DWAYNE:</em> That phone... Look. Mikey owed ME. The cops were the only collection I had left. I didn't know they'd bring three cars. I didn't know he'd run.",
-  tanya: "<em>TANYA:</em> Please. They said if I didn't call, they'd take my sister's lot. They said he'd only be held overnight. Please don't tell them I was the one.",
-  earl: "<em>EARL:</em> ...Forty years in this park. I called the law on a boy for standing where I stood in 2003. I thought I was saving him from the fire. I only moved it."
+  marlene: "<em>TELLMO:</em> ...So it surfaced. I did what I had to. Mikey found the transfer papers. He was going to take them to the county and burn twenty-two years of my name. I only made a phone call. I didn't make the water.",
+  dwayne: "<em>DERRICK:</em> That phone... Look. Mikey owed ME. The cops were the only collection I had left. I didn't know they'd bring three cars. I didn't know he'd run.",
+  tanya: "<em>SALLY:</em> Please. They said if I didn't call, they'd take my sister's lot. They said he'd only be held overnight. Please don't tell them I was the one.",
+  earl: "<em>HYDE:</em> ...Forty years in this park. I called the law on a boy for standing where I stood in 2003. I thought I was saving him from the fire. I only moved it."
 };
 
 /* ------------------------------------------------------------- LOCATIONS --- */
@@ -682,43 +716,43 @@ var LOCS = {
     search: { clue: ["tape", "tooth"], text: "You dig through the trash by the cot. A strip of duct tape with hair still stuck to it. In the floor drain, something white and small: a tooth, split at the root." } },
   pond: { name: "The Pond", addr: "Tomahawk Trl · by the Cochise loop", img: IMG.pond,
     desc: "Still water. Dead trees. The park's one pretty thing, if you don't look at the bank. The bank has been looked at. There are heel marks in the mud, and a smear going in.",
-    hint: "Tanya watches the water. Whatever went in is still in there — and at night, so is everything else.",
+    hint: "Sally watches the water. Whatever went in is still in there — and at night, so is everything else.",
     chars: ["tanya"],
     search: { clue: "pondphone", need: "phoneHint",
       needText: "The water is black and cold. You don't know what you're looking for — not yet. Somebody saw a light go in. Ask around first.",
       text: "You wade in, cold to the knees. The bottom is soft and gives under you. Your hand closes on something that is not a phone first." } },
   office: { name: "Manager's Office", addr: "Cochise Ct · the office trailer", img: IMG.office,
-    desc: "Marlene's trailer. A desk, a ledger, filing cabinets, and a phone that never stops ringing until it does. The fluorescent tube stutters like it's deciding something.",
+    desc: "Tellmo's trailer. A desk, a ledger, filing cabinets, and a phone that never stops ringing until it does. The fluorescent tube stutters like it's deciding something.",
     hint: "The debt book is in there. So is every call this park has made.",
     chars: ["marlene"],
     search: { clue: ["ledger", "phonelog"], text: "You go through the desk drawers. The ledger is under a phone book. The call log is taped inside the top drawer, like a confession nobody was supposed to read.", risk: true } },
   bonfire: { name: "Bonfire Pit", addr: "The middle of the park", img: IMG.bonfire,
     desc: "A ring of stones and a fire that never quite goes out. Folding chairs, one knocked over. The tree line starts ten feet past the light and does not end.",
-    hint: "Earl has sat here for forty years. The fire remembers what he won't say.",
+    hint: "Hyde has sat here for forty years. The fire remembers what he won't say.",
     chars: ["earl"],
     search: { clue: "matchbook", text: "You poke through the ashes around the fire ring. A matchbook from the Dew Drop Inn, one match left, and a bent bottle cap with somebody's tooth marks in it." } },
   laundry: { name: "Laundry Shed", addr: "Wampum Rd · the gravel side", img: IMG.laundry,
     desc: "Washers that eat quarters and a door that never locks. One machine is running with nothing inside it. The back door is propped open with a brick, and the mud coming in is the wrong colour.",
-    hint: "Dwayne sleeps here. So does whatever he drags in.",
+    hint: "Derrick sleeps here. So does whatever he drags in.",
         chars: ["dwayne"],
     search: { clue: ["bootprint", "kessanote"], text: "You check the mud by the back door. A size-12 work boot, headed out toward Tomahawk. The print is deep. Whatever made it was carrying something.<br><br>In the drum of the dead washer, folded twice and gone soft: a note in handwriting you know better than your own." } },
   game: { name: "The Game", addr: "Wampum Rd · behind the laundry", img: IMG.laundry,
     desc: "A card table under a tarp, two coolers, a battery lamp and a bowl of bone dice. The dryer vent pumps warm air across the felt so nobody's hands get cold. Nobody's hands get cold anyway.",
     hint: "The Preacher runs bones here. He also holds every marker in the park.",
-    chars: ["preacher"],
+    chars: ["preacher", "lacy"],
     search: { clue: null, text: "Under the table: cigarette burns, a boot heel, and a hundred torn corners of betting slips. Nothing with a name on it. The Preacher watches you look and says nothing at all." } },
   gate: {
     name: "Boone Gate", addr: "Boone Rd at Wampum · the park entrance", img: IMG.gate,
     desc: "Chain-link, a padlock, and Boone Road going somewhere that isn't here. The gate is chained from the outside. There's blood on the latch, and a scrap of fabric in the wire. A dog is lying against it like the wire is a wall he can lean on.",
     hint: "The only way out. Chained from the outside, which means somebody on the inside did it.",
     chars: ["mushroom"],
-    search: { clue: null, text: "Padlocked from the outside. You're not walking out till Bunny says so. Through the wire, the road is empty in both directions." } }
+    search: { clue: null, text: "Padlocked from the outside. You're not walking out till Sinny says so. Through the wire, the road is empty in both directions." } }
 };
 
 /* ----------------------------------------------------------------- CLUES --- */
 var CLUES = {
   slip: { name: "Torn betting slip", s: -5, gore: false,
-    text: "A betting slip torn in half. The numbers don't match the $400 Dwayne claims. Somebody wanted you scared enough to run." },
+    text: "A betting slip torn in half. The numbers don't match the $400 Derrick claims. Somebody wanted you scared enough to run." },
   whetstone: { name: "Dry whetstone", s: -5,
     text: "The stone is dry. No fresh filings. The axe hasn't cut anything in weeks. The threat is real. The blade is dull." },
   ledger: { name: "The debt ledger", s: -10, debt: true,
@@ -726,8 +760,8 @@ var CLUES = {
   phonelog: { name: "Office phone log", s: 0,
     text: "The office call log. 3:12 AM, outgoing, forty-one seconds. The number is the sheriff's non-emergency line. Somebody called it from this phone and then wrote it down and then didn't throw it away." },
   pondphone: { name: "Phone from the pond", s: 0, dyn: true, gore: true },
-  confession: { name: "Dwayne's confession", s: -10, debt: true,
-    text: "Dwayne folded. You owed twenty dollars for beer. The rest was invented. Somebody wanted you scared." },
+  confession: { name: "Derrick's confession", s: -10, debt: true,
+    text: "Derrick folded. You owed twenty dollars for beer. The rest was invented. Somebody wanted you scared." },
   matchbook: { name: "Dew Drop matchbook", s: 0,
     text: "A matchbook from the Dew Drop Inn, one match left. Somebody sat by this fire late, waiting on something, and didn't want to be seen lighting it." },
   bootprint: { name: "Boot print in blood", s: 0, gore: true,
@@ -887,7 +921,7 @@ function spend(min) {
   if (S.minutes >= 360) { endGame("dawn"); return; }
   if (S.minutes >= 300 && !S.flags.warnedDawn) {
     S.flags.warnedDawn = true;
-    toast("<b>5:00 AM.</b> One hour to dawn. Bunny is losing patience.");
+    toast("<b>5:00 AM.</b> One hour to dawn. Sinny is losing patience.");
   }
   updateHUD();
 }
@@ -1132,8 +1166,8 @@ function searchLoc(loc) {
   var msg = L.search.text, caught = false;
   if (L.search.risk && !S.flags.marleneAllowed) {
     caught = true;
-    msg += " Marlene catches you in her drawer. She doesn't scream. She just watches you leave, and you feel her watching all the way to the gate.";
-    note("Marlene caught you in her desk. She didn't stop you.");
+    msg += " Tellmo catches you in her drawer. She doesn't scream. She just watches you leave, and you feel her watching all the way to the gate.";
+    note("Tellmo caught you in her desk. She didn't stop you.");
   }
   var names = [];
   if (L.search.clue) {
@@ -1318,7 +1352,7 @@ function openAccuse() {
   if (S.over) return;
   var html = '<div class="sheet dark"><div class="wrap">' +
     '<div class="sheet-head"><h3>Name the snitch</h3><button class="x" onclick="closeSheet()">×</button></div>' +
-    '<p class="empty">Bunny and Razor aren\'t on the list. They\'re the court. Pick one. If you\'re wrong, the axe comes out. If you\'re right but empty-handed, Bunny sends you back out into the dark.</p>';
+    '<p class="empty">Sinny and Razor aren\'t on the list. They\'re the court. Pick one. If you\'re wrong, the axe comes out. If you\'re right but empty-handed, Sinny sends you back out into the dark.</p>';
   SUSPECTS.forEach(function (id) {
     var c = CAST[id];
     html += '<button class="accuse-btn" onclick="confirmAccuse(\'' + id + '\')"><div class="nm">' + c.name + '</div><div class="ds">' + c.accuseLine + '</div></button>';
@@ -1333,10 +1367,10 @@ function confirmAccuse(id) {
   var html = '<div class="sheet dark"><div class="wrap">' +
     '<div class="sheet-head"><h3>You\'re naming ' + c.name + '</h3><button class="x" onclick="openAccuse()">×</button></div>' +
     '<div class="verdict"><b>Your evidence</b><br>' +
-      'Clues: <b>' + S.clues.length + ' of ' + CLUE_ORDER.length + '</b> (Bunny wants ' + NEED_CLUES + ')<br>' +
+      'Clues: <b>' + S.clues.length + ' of ' + CLUE_ORDER.length + '</b> (Sinny wants ' + NEED_CLUES + ')<br>' +
       'Debt proof: <b>' + (proof ? (S.flags.paidDebt && !hasClue("ledger") && !hasClue("confession") ? "YES — paid in full, marker in hand" : "YES — the $400 was invented") : "NO — you haven't proved the debt") + '</b><br>' +
       (hasClue("pondphone") ? "The pond phone is in your pocket.<br>" : "You never found the phone in the pond.<br>") +
-    (enough && proof ? "Bunny will listen. Probably." : "Bunny will not listen. Probably.") + '</div>' +
+    (enough && proof ? "Sinny will listen. Probably." : "Sinny will not listen. Probably.") + '</div>' +
     '<div class="center"><button class="btn blood" onclick="resolveAccuse(\'' + id + '\')">Say the name out loud</button>' +
     '<button class="btn ghost" onclick="openAccuse()">Keep looking</button></div></div></div>';
   el("body").innerHTML = html;
@@ -1350,8 +1384,8 @@ function resolveAccuse(id) {
     return;
   }
   if (right && (!proof || !enough)) {
-    var html = '<div class="dlg"><div class="spk">The Bunny Man</div>' +
-      '<div class="say"><em>BUNNY:</em> Right name. Wrong weight. Come back with the marker and ' + NEED_CLUES + ' pieces of this park in your hands — or don\'t come back at all.</div>' +
+    var html = '<div class="dlg"><div class="spk">Sinny</div>' +
+      '<div class="say"><em>SINNY:</em> Right name. Wrong weight. Come back with the marker and ' + NEED_CLUES + ' pieces of this park in your hands — or don\'t come back at all.</div>' +
       '<button class="btn blood wide" onclick="renderLoc(\'' + S.loc + '\')">Back into the park</button></div>';
     el("body").innerHTML = html;
     susp(10);
@@ -1505,8 +1539,8 @@ function openSecondAccusation() {
   var ev = ABEL_CLUES.filter(hasClue).length;
   var html = '<div class="sheet dark"><div class="wrap">' +
     '<div class="sheet-head"><h3>One more name</h3><button class="x" onclick="closeSheet()">&times;</button></div>' +
-    '<p class="empty">Bunny is holding the phone. He isn&rsquo;t looking at it.<br><br><em>&ldquo;The call was one thing,&rdquo;</em> he says. <em>&ldquo;Who put the boy in the water?&rdquo;</em></p>' +
-    '<div class="verdict"><b>Proof against the man in the trees</b><br>' + ev + ' of 4 pieces (Bunny wants two)<br>' +
+    '<p class="empty">Sinny is holding the phone. He isn&rsquo;t looking at it.<br><br><em>&ldquo;The call was one thing,&rdquo;</em> he says. <em>&ldquo;Who put the boy in the water?&rdquo;</em></p>' +
+    '<div class="verdict"><b>Proof against the man in the trees</b><br>' + ev + ' of 4 pieces (Sinny wants two)<br>' +
     (S.flags.sawPhotos ? "You have seen the photos.<br>" : "You never opened the gallery.<br>") +
     (ev >= 2 ? "This will hold." : "This is a hunch, and hunches bleed.") + '</div>';
   SUSPECTS.concat(["abel"]).forEach(function (id) {
@@ -1522,8 +1556,8 @@ function resolveAbel(id) {
   var ev = ABEL_CLUES.filter(hasClue).length;
   if (id === "abel" && ev >= 2) { playCine(TRUTH_SHOTS, function () { endGame("truth"); }); return; }
   if (id === "abel") {
-    el("body").innerHTML = '<div class="dlg"><div class="spk">The Bunny Man</div>' +
-      '<div class="say"><em>BUNNY:</em> Right man. Wrong weight. A name with no paper behind it is just a rumor, and I don&rsquo;t kill men on rumors.<br><br>Bring me two pieces. The phone. The handprint. The note. Something I can hold.</div>' +
+    el("body").innerHTML = '<div class="dlg"><div class="spk">Sinny</div>' +
+      '<div class="say"><em>SINNY:</em> Right man. Wrong weight. A name with no paper behind it is just a rumor, and I don&rsquo;t kill men on rumors.<br><br>Bring me two pieces. The phone. The handprint. The note. Something I can hold.</div>' +
       '<button class="btn blood wide" onclick="renderLoc(\'' + S.loc + '\')">Back into the park</button></div>';
     susp(10);
     return;
@@ -1740,20 +1774,20 @@ function endGame(kind) {
     cls = "win";
     title = "THE WHOLE TRUTH";
     body = "You put it all on the garage floor: the razored ledger page, the office call log, the marker with two names on it, the phone with <span class='who'>" + CAST[S.snitch].name + "</span>'s mark in the case.<br><br>" +
-      "The buyer out of Louisville wanted this park. Marlene signed the lots one widow at a time. Mikey found the papers and made the mistake of being nineteen and honest. " + CAST[S.snitch].name + " made one phone call and the rest of the park did the rest.<br><br>" +
+      "The buyer out of Louisville wanted this park. Tellmo signed the lots one widow at a time. Mikey found the papers and made the mistake of being nineteen and honest. " + CAST[S.snitch].name + " made one phone call and the rest of the park did the rest.<br><br>" +
       "And the boy in the water? That was <span class='who'>Abel</span>. Your cousin, who burned in 2003 and didn't die, who came out of the trees for the papers and for Kessa and for a park that would sell its own dead. She signed the marker. She told him Mikey had seen the folder. You were the alibi and the fool and the man who woke up in a garage with somebody else's blood under his nails.<br><br>" +
-      "Bunny listens with the mask off. Under it he is just a tired man with a dead brother and a hand that shakes.<br><br><span class='who'>BUNNY:</span> “Go home. Pack. Be gone by sunup.”<br><br>Mushroom walks out beside you. Behind you, somebody is already pouring gasoline on the office trailer. You do not turn around.";
+      "Sinny listens with the mask off. Under it he is just a tired man with a dead brother and a hand that shakes.<br><br><span class='who'>SINNY:</span> “Go home. Pack. Be gone by sunup.”<br><br>Mushroom walks out beside you. Behind you, somebody is already pouring gasoline on the office trailer. You do not turn around.";
   } else if (kind === "win") {
     cls = "win";
     title = "YOU WALK OUT";
-    body = "Bunny stands.<br><br><span class='who'>BUNNY:</span> “Walk.”<br><br>" + truth + "<br><br>You go out the Boone Gate at dawn with the phone in your pocket and the park behind you. Sun N Fun lets you go — this time.<br><br>You never find out who was in the water with Mikey. You try not to think about it. You fail, most nights.";
+    body = "Sinny stands.<br><br><span class='who'>SINNY:</span> “Walk.”<br><br>" + truth + "<br><br>You go out the Boone Gate at dawn with the phone in your pocket and the park behind you. Sun N Fun lets you go — this time.<br><br>You never find out who was in the water with Mikey. You try not to think about it. You fail, most nights.";
   } else if (kind === "wrong") {
     title = "WRONG NAME";
-    body = "Bunny shakes his head. <span class='who'>“That\'s not the one.”</span><br><br>Razor stands. The stone stops.<br><br>" + truth + "<br><br>The axe doesn\'t.<br><br>The park keeps its secrets, and your body, and the sound of the garage door coming down.";
+    body = "Sinny shakes his head. <span class='who'>“That\'s not the one.”</span><br><br>Razor stands. The stone stops.<br><br>" + truth + "<br><br>The axe doesn\'t.<br><br>The park keeps its secrets, and your body, and the sound of the garage door coming down.";
   } else if (kind === "half") {
     cls = "lose";
     title = "HALF THE TRUTH";
-    body = "You named the caller and Bunny believed you. The gate came open.<br><br>" + truth + "<br><br>But you never said the other name. <span class='who'>Abel</span>. Your own blood, buried in an empty box in 2003, standing in the tree line with a burned hand and your girlfriend's lipstick on his collar.<br><br>You walk out at dawn with a dog at your heel, alive and hollow. The park lets you go. It does not let you forget.<br><br>Somewhere behind you, the water closes over something new.";
+    body = "You named the caller and Sinny believed you. The gate came open.<br><br>" + truth + "<br><br>But you never said the other name. <span class='who'>Abel</span>. Your own blood, buried in an empty box in 2003, standing in the tree line with a burned hand and your girlfriend's lipstick on his collar.<br><br>You walk out at dawn with a dog at your heel, alive and hollow. The park lets you go. It does not let you forget.<br><br>Somewhere behind you, the water closes over something new.";
   } else if (kind === "zombies") {
     title = "THE POND KEEPS YOU";
     body = "The barricade goes. Then the light. Then the bank.<br><br>They come up out of the water slow and patient, the way the pond has always been patient, and they take the base apart with their hands. Mikey is somewhere in the front of them. You would know that walk anywhere.<br><br>" + truth + "<br><br>By dawn the pond is flat and black again, and there is one more set of heel marks going in.";
@@ -1762,7 +1796,7 @@ function endGame(kind) {
     body = "Too many eyes. Too many words. By the time you reach the gate, the whole park is standing in the dark behind you, and none of them are blinking.<br><br>" + truth + "<br><br>Razor is almost gentle about it. Almost.";
   } else {
     title = "DAWN";
-    body = "The sky goes grey over Boone Road. Bunny looks at the light, then at you, then at Razor.<br><br><span class='who'>BUNNY:</span> “Court\'s closed.”<br><br>" + truth + "<br><br>The garage door comes down. The park goes back to sleep.";
+    body = "The sky goes grey over Boone Road. Sinny looks at the light, then at you, then at Razor.<br><br><span class='who'>SINNY:</span> “Court\'s closed.”<br><br>" + truth + "<br><br>The garage door comes down. The park goes back to sleep.";
   }
   var stats = '<div class="status-grid">' +
     '<div class="stat"><span>Evidence</span><b>' + S.clues.length + ' / ' + CLUE_ORDER.length + '</b></div>' +
@@ -1886,14 +1920,14 @@ var INTRO_SHOTS = [
     { text: "The blood on the floor has been dragged toward the side door. Something was carried out of here. Something that bled.", cls: "gore" }
   ] },
   { img: IMG.garage, fig: "bunny", lines: [
-    { who: "BUNNY", text: "You slept through a raid, friend. Cops took Mikey at three. Three cruisers. Somebody pointed." },
+    { who: "SINNY", text: "You slept through a raid, friend. Cops took Mikey at three. Three cruisers. Somebody pointed." },
     { text: "The mask has a crack through the left eye. Something dark has dried in the crack." },
-    { who: "BUNNY", text: "Two things. The debt. And the name. Sort both and you walk out that gate." }
+    { who: "SINNY", text: "Two things. The debt. And the name. Sort both and you walk out that gate." }
   ] },
   { img: IMG.garage, fig: "razor", fx: "flash", lines: [
     { text: "Behind him, a man sits on a stool with a hatchet across his knees. The whetstone goes shhk. Shhk. He does not look up." },
     { who: "RAZOR", text: "Shhk. Shhk." },
-    { who: "BUNNY", text: "Get one wrong, and Razor gets to work. Dawn's at six. Don't make me come find you." }
+    { who: "SINNY", text: "Get one wrong, and Razor gets to work. Dawn's at six. Don't make me come find you." }
   ] },
   { img: IMG.garage, lines: [
     { text: "The last thing you remember is Kessa's hand flat on your chest in the dark of the trailer. <em>It's covered,</em> she said. <em>Somebody covered the bet.</em>" },
@@ -1916,8 +1950,8 @@ var POND_SHOTS = [
 
 var WIN_SHOTS = [
   { img: IMG.garage, fig: "bunny", lines: [
-    { text: "You lay it out on the concrete: the ledger, the call log, the phone. Bunny looks at it for a long time." },
-    { who: "BUNNY", text: "That's a name. That's a weight. All right, friend. All right." }
+    { text: "You lay it out on the concrete: the ledger, the call log, the phone. Sinny looks at it for a long time." },
+    { who: "SINNY", text: "That's a name. That's a weight. All right, friend. All right." }
   ] },
   { img: IMG.gate, lines: [
     { text: "The chain comes off the Boone Gate. The road beyond is grey and empty and it does not care about you at all." },
@@ -1932,15 +1966,15 @@ var TRUTH_SHOTS = [
   ] },
   { img: IMG.office, lines: [
     { who: "YOU", text: "Kessa signed the marker. Four hundred dollars with my name printed on it and hers underneath." },
-    { text: "Bunny turns the phone over. The photos come up one at a time, and in the last one a burned hand is flat on her hip." },
-    { who: "BUNNY", text: "...How long since you saw your cousin?" }
+    { text: "Sinny turns the phone over. The photos come up one at a time, and in the last one a burned hand is flat on her hip." },
+    { who: "SINNY", text: "...How long since you saw your cousin?" }
   ] },
   { img: IMG.pondNight, fig: "abel", fx: "flash", lines: [
     { text: "The hatch under the pond is open. Eleven years of mail. A child's shoe. A wristband gone grey." },
     { who: "ABEL", text: "You always did look at me like I was a photograph." },
     { text: "He comes out of the tree line with one hand in his coat and the other held up flat, scarred, patient. The scar is the same shape as the print in the silt.", cls: "gore" },
     { who: "ABEL", text: "Mikey saw the papers. She told me he saw them. I only meant to take them off him. He ran at the water and the water was deeper than he thought." },
-    { text: "Nobody in the park moves. Razor's stone has stopped. Bunny takes the mask off, and his face is wet.", cls: "gore" }
+    { text: "Nobody in the park moves. Razor's stone has stopped. Sinny takes the mask off, and his face is wet.", cls: "gore" }
   ] },
   { img: IMG.gate, fx: "blood", lines: [
     { text: "You walk out the Boone Gate at dawn with a dog at your heel and nothing left in your pockets." },
@@ -1950,8 +1984,8 @@ var TRUTH_SHOTS = [
 
 var HALF_SHOTS = [
   { img: IMG.garage, fig: "bunny", lines: [
-    { text: "Bunny looks at the name you gave him for a long time. Then he nods, because this park runs on names the same way it runs on blood." },
-    { who: "BUNNY", text: "That's close enough to true. Get out of my park." }
+    { text: "Sinny looks at the name you gave him for a long time. Then he nods, because this park runs on names the same way it runs on blood." },
+    { who: "SINNY", text: "That's close enough to true. Get out of my park." }
   ] },
   { img: IMG.gate, lines: [
     { text: "The chain comes off the gate. You walk out at dawn with the phone in your pocket and a dog behind you." },
@@ -1974,8 +2008,8 @@ var DRAIN_SHOTS = [
 
 var WRONG_SHOTS = [
   { img: IMG.garage, fig: "razor", fx: "flash", lines: [
-    { text: "Bunny shakes his head. Razor stands. The stone stops." },
-    { who: "BUNNY", text: "That's not the one." },
+    { text: "Sinny shakes his head. Razor stands. The stone stops." },
+    { who: "SINNY", text: "That's not the one." },
     { text: "The axe comes up. You have time to see the edge, and the edge is very clean, and you understand, finally, what the whetstone was for.", cls: "gore" }
   ] },
   { img: IMG.garage, fx: "blood", lines: [
