@@ -438,37 +438,37 @@ var CAST = {
   },
 
   marlene: {
-    name: "Tellmo", real: "Tellmo Purvis", age: "58",
+    name: "Marlene", real: "Marlene Mapple", age: "58",
     img: IMG.marlene, where: "office", suspect: true,
     note: "Park manager. Twenty-two years of books, keys and phone calls.",
     facts: "Office trailer · manager since 2004 · signs every lot transfer",
     accuseLine: "Park manager. Keeps the books, the keys and the office phone.",
-    idle: "<em>TELLMO:</em> Office hours are over. I told you once.",
+    idle: "<em>MARLENE:</em> Office hours are over. I told you once.",
     lore: [
       { q: "How long have you run this park?",
-        a: "<em>TELLMO:</em> Twenty-two years. My husband left me the books, the debt and a double-wide with a bad floor. I stayed." },
+        a: "<em>MARLENE:</em> Twenty-two years. My husband left me the books, the debt and a double-wide with a bad floor. I stayed." },
       { q: "Whose names are in the ledger?",
-        a: "<em>TELLMO:</em> Everybody who's late. Everybody who's scared. I write them in pencil because I know they'll come beg." },
+        a: "<em>MARLENE:</em> Everybody who's late. Everybody who's scared. I write them in pencil because I know they'll come beg." },
       { q: "Why do you carry that phone everywhere?",
-        a: "<em>TELLMO:</em> Because the owner calls at three in the morning. Some outfit out of Louisville. They've been buying lots one widow at a time. I'm the one who signs." },
+        a: "<em>MARLENE:</em> Because the owner calls at three in the morning. Some outfit out of Louisville. They've been buying lots one widow at a time. I'm the one who signs." },
       { q: "Who signs for the lots besides you?",
-        a: "<em>TELLMO:</em> Nobody. Except one name that keeps turning up on the county copies and never on mine. <em>A. Rennick.</em> Your people. I assumed it was you and I assumed wrong." },
+        a: "<em>MARLENE:</em> Nobody. Except one name that keeps turning up on the county copies and never on mine. <em>A. Rennick.</em> Your people. I assumed it was you and I assumed wrong." },
       { q: "Do you know Kessa?",
-        a: "<em>TELLMO:</em> She's been in my office three times this month asking about transfer paper. Sweet girl. Pretty hand. I never once saw her sign anything." }
+        a: "<em>MARLENE:</em> She's been in my office three times this month asking about transfer paper. Sweet girl. Pretty hand. I never once saw her sign anything." }
     ],
     stages: [
-      { say: "<em>TELLMO:</em> Office hours are over. And you're not supposed to be in here.<br><br>The office smells like burnt coffee and bleach. Her glasses catch the fluorescent light. There's a fleck of something dark on the left lens.",
+      { say: "<em>MARLENE:</em> Office hours are over. And you're not supposed to be in here.<br><br>The office smells like burnt coffee and bleach. Her glasses catch the fluorescent light. There's a fleck of something dark on the left lens.",
         choices: [
-          { t: "I need to see the debt book.", r: "<em>TELLMO:</em> You need a warrant. Or manners.", s: 5, next: 1 },
-          { t: "Who called the cops last night?", r: "<em>TELLMO:</em> Somebody who knew Mikey's schedule. I keep the books, not the secrets.", s: 0, next: 1 },
-          { t: "There's blood on your phone.", r: "<em>TELLMO:</em> I cut my hand on a drawer. People bleed, hon. You of all people should know.", s: 5, next: 1 },
-          { t: "Nice office.", r: "<em>TELLMO:</em> Flattery. Cute. Leave.", s: 0, next: "end" }
+          { t: "I need to see the debt book.", r: "<em>MARLENE:</em> You need a warrant. Or manners.", s: 5, next: 1 },
+          { t: "Who called the cops last night?", r: "<em>MARLENE:</em> Somebody who knew Mikey's schedule. I keep the books, not the secrets.", s: 0, next: 1 },
+          { t: "There's blood on your phone.", r: "<em>MARLENE:</em> I cut my hand on a drawer. People bleed, hon. You of all people should know.", s: 5, next: 1 },
+          { t: "Nice office.", r: "<em>MARLENE:</em> Flattery. Cute. Leave.", s: 0, next: "end" }
         ] },
-      { say: "<em>TELLMO:</em> Well? I'm waiting. The park doesn't run itself.<br><br>Behind her, a filing cabinet drawer is open two inches. Something in it is breathing, or the room is.",
+      { say: "<em>MARLENE:</em> Well? I'm waiting. The park doesn't run itself.<br><br>Behind her, a filing cabinet drawer is open two inches. Something in it is breathing, or the room is.",
         choices: [
-          { t: "Please. Somebody's trying to bury me.", r: "<em>TELLMO:</em> ...Fine. One look at the desk. Then out. And if I hear a drawer, I hear everything.", s: 0, flag: "marleneAllowed", next: "end", note: "Tellmo will let you look at her desk — once." },
-          { t: "You got a phone log?", r: "<em>TELLMO:</em> Office phone's mine. I don't call the law on my own people.", s: 0, next: "end" },
-          { t: "I'm going.", r: "<em>TELLMO:</em> Go on.", s: 0, next: "end" }
+          { t: "Please. Somebody's trying to bury me.", r: "<em>MARLENE:</em> ...Fine. One look at the desk. Then out. And if I hear a drawer, I hear everything.", s: 0, flag: "marleneAllowed", next: "end", note: "Marlene will let you look at her desk — once." },
+          { t: "You got a phone log?", r: "<em>MARLENE:</em> Office phone's mine. I don't call the law on my own people.", s: 0, next: "end" },
+          { t: "I'm going.", r: "<em>MARLENE:</em> Go on.", s: 0, next: "end" }
         ] }
     ]
   },
@@ -477,12 +477,12 @@ var CAST = {
     name: "Derrick", real: "Derrick Kessinger", age: "36",
     img: IMG.dwayne, where: "laundry", suspect: true,
     note: "The collector. Pushes the $400 debt. Sleeps in the laundry shed.",
-    facts: "No lot · Tellmo's nephew · three worthless-check warrants",
+    facts: "No lot · Marlene's nephew · three worthless-check warrants",
     accuseLine: "The collector. Pushes the $400 debt and sleeps in the laundry shed.",
     idle: "<em>DERRICK:</em> Four hundred. We're done here.",
     lore: [
       { q: "Why do you collect?",
-        a: "<em>DERRICK:</em> Somebody has to. Tellmo asked. She's my aunt. She paid for my mom's funeral and never once said the number out loud." },
+        a: "<em>DERRICK:</em> Somebody has to. Marlene asked. She's my aunt. She paid for my mom's funeral and never once said the number out loud." },
       { q: "Where's your family?",
         a: "<em>DERRICK:</em> Son's in juvey in Lexington. Baby mama took the truck. I sleep in the laundry shed most nights. You want to laugh, do it now." },
       { q: "Did you hurt Mikey?",
@@ -582,31 +582,31 @@ var CAST = {
   },
 
   preacher: {
-    name: "The Preacher", real: "Lamar Voss", age: "60",
+    name: "Tellmo", real: "Tellmo Voss", age: "60",
     img: IMG.preacher, where: "game",
     note: "Runs the bones game behind the laundry. Holds every marker in the park.",
     facts: "No lot · the bones table · holds every marker in Sun N Fun",
-    idle: "<em>PREACHER:</em> Table's open. Money talks, and mine talks loudest.",
+    idle: "<em>TELLMO:</em> Table's open. Money talks, and mine talks loudest.",
     lore: [
       { q: "Why do they call you Preacher?",
-        a: "<em>PREACHER:</em> I used to bury people for free. Then I learned you can charge for the same kindness twice. Once at the grave, once at the table." },
+        a: "<em>TELLMO:</em> I used to bury people for free. Then I learned you can charge for the same kindness twice. Once at the grave, once at the table." },
       { q: "How long has the game been running?",
-        a: "<em>PREACHER:</em> Since the office burned in '03. Somebody had to keep this park liquid, and it wasn't going to be the widow." },
+        a: "<em>TELLMO:</em> Since the office burned in '03. Somebody had to keep this park liquid, and it wasn't going to be the widow." },
       { q: "Who signed my marker?",
-        a: "<em>PREACHER:</em> A woman. Pretty handwriting. Wrote your name, then hers under it, then put a hundred on the felt so I'd make it four. I don't forget a hand." }
+        a: "<em>TELLMO:</em> A woman. Pretty handwriting. Wrote your name, then hers under it, then put a hundred on the felt so I'd make it four. I don't forget a hand." }
     ],
     stages: [
-      { say: "<em>PREACHER:</em> Sit. Two dice, twelve ways to lose, and a chair still warm from somebody with worse luck than you.<br><br>He sets a bowl of bone dice on the table. There is a torn slip of paper under the bowl, and he does not move to hide it.",
+      { say: "<em>TELLMO:</em> Sit. Two dice, twelve ways to lose, and a chair still warm from somebody with worse luck than you.<br><br>He sets a bowl of bone dice on the table. There is a torn slip of paper under the bowl, and he does not move to hide it.",
         choices: [
-          { t: "What's the game?", r: "<em>PREACHER:</em> Bones. Under seven, over seven, seven, or snake eyes. Snake eyes pays thirty. Nobody's hit it in eleven years. Lay your money down.", s: 0, flag: "metPreacher", clue: "slip", next: "end", note: "The Preacher runs bones behind the laundry. There's a torn betting slip under the dice bowl." },
-          { t: "Somebody bet in my name.", r: "<em>PREACHER:</em> Somebody sure did. Four hundred on a marker I'd never have taken from you. The handwriting wasn't yours, friend. It was prettier.", s: 0, clue: "slip", next: 1, note: "The Preacher: the four-hundred marker was not in your handwriting." },
-          { t: "Whose idea was the game?", r: "<em>PREACHER:</em> A man with a burned hand used to bring the cards. He stopped coming in '03. The dice stayed.", s: 0, next: 1, note: "Preacher: a man with a burned hand brought the cards, until 2003." }
+          { t: "What's the game?", r: "<em>TELLMO:</em> Bones. Under seven, over seven, seven, or snake eyes. Snake eyes pays thirty. Nobody's hit it in eleven years. Lay your money down.", s: 0, flag: "metPreacher", clue: "slip", next: "end", note: "Tellmo runs bones behind the laundry. There's a torn betting slip under the dice bowl." },
+          { t: "Somebody bet in my name.", r: "<em>TELLMO:</em> Somebody sure did. Four hundred on a marker I'd never have taken from you. The handwriting wasn't yours, friend. It was prettier.", s: 0, clue: "slip", next: 1, note: "Tellmo: the four-hundred marker was not in your handwriting." },
+          { t: "Whose idea was the game?", r: "<em>TELLMO:</em> A man with a burned hand used to bring the cards. He stopped coming in '03. The dice stayed.", s: 0, next: 1, note: "Tellmo: a man with a burned hand brought the cards, until 2003." }
         ] },
-      { say: "<em>PREACHER:</em> You want to play, or you want to pray?<br><br>Under the table his boot taps a rhythm that doesn't match the record player.",
+      { say: "<em>TELLMO:</em> You want to play, or you want to pray?<br><br>Under the table his boot taps a rhythm that doesn't match the record player.",
         choices: [
-          { t: "Show me the marker with my name on it.", r: "<em>PREACHER:</em> ...Forty years I've kept this box shut. Fine. Look at it. Then look at the signature and tell me whose hand that is.", s: 0, clue: "iou", need: { clue: "slip" }, next: "end", note: "The marker: four hundred dollars, your printed name, and Kessa's signature in blue ink underneath." },
-          { t: "Watch his hands while he rolls.", r: "<em>PREACHER:</em> ...Sharp eyes. All right. The house dice are shaved, and they've been shaved since '03. Here's a hundred dollars to forget you noticed, and some advice: don't sit at this table twice.", s: 0, clue: "loadeddice", flag: "sharpDice", next: "end", note: "The house dice are shaved. The Preacher paid you a hundred to keep quiet." },
-          { t: "Sit down and roll.", r: "<em>PREACHER:</em> Now you're talking. Lay it down.", s: 0, next: "end" }
+          { t: "Show me the marker with my name on it.", r: "<em>TELLMO:</em> ...Forty years I've kept this box shut. Fine. Look at it. Then look at the signature and tell me whose hand that is.", s: 0, clue: "iou", need: { clue: "slip" }, next: "end", note: "The marker: four hundred dollars, your printed name, and Kessa's signature in blue ink underneath." },
+          { t: "Watch his hands while he rolls.", r: "<em>TELLMO:</em> ...Sharp eyes. All right. The house dice are shaved, and they've been shaved since '03. Here's a hundred dollars to forget you noticed, and some advice: don't sit at this table twice.", s: 0, clue: "loadeddice", flag: "sharpDice", next: "end", note: "The house dice are shaved. Tellmo paid you a hundred to keep quiet." },
+          { t: "Sit down and roll.", r: "<em>TELLMO:</em> Now you're talking. Lay it down.", s: 0, next: "end" }
         ] }
     ]
   },
@@ -662,7 +662,7 @@ var CAST = {
         ] },
       { say: "<em>LACY:</em> Look, you seem decent, so I'll say it plain. My man is not the one you want. He's got a dead brother, a bad mask, and he's been crying in that truck about it since 2003.<br><br>She turns her wrist over so you can see the mark, then pulls the sleeve down over it.",
         choices: [
-          { t: "Who signed my marker?", r: "<em>LACY:</em> Not me. But I've seen the writing. A woman's hand, blue ink, loops like a schoolteacher. She gave the Preacher a hundred cash to make your name into four hundred, and she smiled the whole time she did it.", s: 0, next: "end", note: "Lacy: a woman in blue ink paid the Preacher a hundred to turn your marker into four hundred." },
+          { t: "Who signed my marker?", r: "<em>LACY:</em> Not me. But I've seen the writing. A woman's hand, blue ink, loops like a schoolteacher. She gave Tellmo a hundred cash to make your name into four hundred, and she smiled the whole time she did it.", s: 0, next: "end", note: "Lacy: a woman in blue ink paid Tellmo a hundred to turn your marker into four hundred." },
           { t: "That mark on your wrist.", r: "<em>LACY:</em> ...Wrong man's hand. And he's not in this park anymore. Don't make me say it twice.", s: -5, next: "end" },
           { t: "I'm going.", r: "<em>LACY:</em> Watch the tree line, hon.", s: 0, next: "end" }
         ] }
@@ -701,7 +701,7 @@ var PHONE_MARKS = {
   earl: "a faded flag sticker, peeling at the corner, and a thumbnail of dried blood in the charging port."
 };
 var CONFRONT = {
-  marlene: "<em>TELLMO:</em> ...So it surfaced. I did what I had to. Mikey found the transfer papers. He was going to take them to the county and burn twenty-two years of my name. I only made a phone call. I didn't make the water.",
+  marlene: "<em>MARLENE:</em> ...So it surfaced. I did what I had to. Mikey found the transfer papers. He was going to take them to the county and burn twenty-two years of my name. I only made a phone call. I didn't make the water.",
   dwayne: "<em>DERRICK:</em> That phone... Look. Mikey owed ME. The cops were the only collection I had left. I didn't know they'd bring three cars. I didn't know he'd run.",
   tanya: "<em>SALLY:</em> Please. They said if I didn't call, they'd take my sister's lot. They said he'd only be held overnight. Please don't tell them I was the one.",
   earl: "<em>HYDE:</em> ...Forty years in this park. I called the law on a boy for standing where I stood in 2003. I thought I was saving him from the fire. I only moved it."
@@ -722,7 +722,7 @@ var LOCS = {
       needText: "The water is black and cold. You don't know what you're looking for — not yet. Somebody saw a light go in. Ask around first.",
       text: "You wade in, cold to the knees. The bottom is soft and gives under you. Your hand closes on something that is not a phone first." } },
   office: { name: "Manager's Office", addr: "Cochise Ct · the office trailer", img: IMG.office,
-    desc: "Tellmo's trailer. A desk, a ledger, filing cabinets, and a phone that never stops ringing until it does. The fluorescent tube stutters like it's deciding something.",
+    desc: "Marlene's trailer. A desk, a ledger, filing cabinets, and a phone that never stops ringing until it does. The fluorescent tube stutters like it's deciding something.",
     hint: "The debt book is in there. So is every call this park has made.",
     chars: ["marlene"],
     search: { clue: ["ledger", "phonelog"], text: "You go through the desk drawers. The ledger is under a phone book. The call log is taped inside the top drawer, like a confession nobody was supposed to read.", risk: true } },
@@ -738,9 +738,9 @@ var LOCS = {
     search: { clue: ["bootprint", "kessanote"], text: "You check the mud by the back door. A size-12 work boot, headed out toward Tomahawk. The print is deep. Whatever made it was carrying something.<br><br>In the drum of the dead washer, folded twice and gone soft: a note in handwriting you know better than your own." } },
   game: { name: "The Game", addr: "Wampum Rd · behind the laundry", img: IMG.laundry,
     desc: "A card table under a tarp, two coolers, a battery lamp and a bowl of bone dice. The dryer vent pumps warm air across the felt so nobody's hands get cold. Nobody's hands get cold anyway.",
-    hint: "The Preacher runs bones here. He also holds every marker in the park.",
+    hint: "Tellmo runs bones here. He also holds every marker in the park.",
     chars: ["preacher", "lacy"],
-    search: { clue: null, text: "Under the table: cigarette burns, a boot heel, and a hundred torn corners of betting slips. Nothing with a name on it. The Preacher watches you look and says nothing at all." } },
+    search: { clue: null, text: "Under the table: cigarette burns, a boot heel, and a hundred torn corners of betting slips. Nothing with a name on it. Tellmo watches you look and says nothing at all." } },
   gate: {
     name: "Boone Gate", addr: "Boone Rd at Wampum · the park entrance", img: IMG.gate,
     desc: "Chain-link, a padlock, and Boone Road going somewhere that isn't here. The gate is chained from the outside. There's blood on the latch, and a scrap of fabric in the wire. A dog is lying against it like the wire is a wall he can lean on.",
@@ -1166,8 +1166,8 @@ function searchLoc(loc) {
   var msg = L.search.text, caught = false;
   if (L.search.risk && !S.flags.marleneAllowed) {
     caught = true;
-    msg += " Tellmo catches you in her drawer. She doesn't scream. She just watches you leave, and you feel her watching all the way to the gate.";
-    note("Tellmo caught you in her desk. She didn't stop you.");
+    msg += " Marlene catches you in her drawer. She doesn't scream. She just watches you leave, and you feel her watching all the way to the gate.";
+    note("Marlene caught you in her desk. She didn't stop you.");
   }
   var names = [];
   if (L.search.clue) {
@@ -1419,7 +1419,7 @@ function setBet(b) { if (TBL.busy) return; TBL.bet = b; tableHTML(); }
 function setPick(k) { if (TBL.busy) return; TBL.pick = k; tableHTML(); }
 function openTable() {
   if (S.over) return;
-  if (!TBL.log) TBL.log = "The Preacher sets the bowl down and does not bother hiding the torn paper under it.<br><br><em>&ldquo;Bones,&rdquo;</em> he says. <em>&ldquo;Under seven, over seven, seven, or snake eyes. Whatever you're carrying, put it on the felt.&rdquo;</em>";
+  if (!TBL.log) TBL.log = "Tellmo sets the bowl down and does not bother hiding the torn paper under it.<br><br><em>&ldquo;Bones,&rdquo;</em> he says. <em>&ldquo;Under seven, over seven, seven, or snake eyes. Whatever you're carrying, put it on the felt.&rdquo;</em>";
   tableHTML();
 }
 function tableHTML() {
@@ -1441,7 +1441,7 @@ function tableHTML() {
       '<button class="btn blood" ' + (TBL.busy ? "disabled" : 'onclick="rollBones()"') + '>Roll the bones</button>' +
       '<button class="btn ghost" onclick="renderLoc(\'game\')">Leave the table</button>' +
     '</div>' +
-    '<p class="mini-note">Lose enough and the Preacher starts talking. Win enough and he stops.</p>' +
+    '<p class="mini-note">Lose enough and Tellmo starts talking. Win enough and he stops.</p>' +
     '</div></div>';
   el("body").innerHTML = html;
   el("head").innerHTML = headHTML(LOCS.game);
@@ -1450,7 +1450,7 @@ function tableHTML() {
 }
 function rollBones() {
   if (S.over || TBL.busy) return;
-  if (S.cash < TBL.bet) { toast("<b>NO MONEY.</b> The Preacher doesn't take promises. Not from you."); return; }
+  if (S.cash < TBL.bet) { toast("<b>NO MONEY.</b> Tellmo doesn't take promises. Not from you."); return; }
   TBL.busy = true;
   S.cash -= TBL.bet;
   TBL.rolls++;
@@ -1474,14 +1474,14 @@ function settleRoll() {
   else if (pick === "snakes" && t === 2) win = TBL.bet * 31;
   if (!win && S.flags.sharpDice && Math.random() < .4) {
     S.cash += TBL.bet;
-    TBL.log = "You watch his wrist and pull your money back a half-second before the bowl lifts. The Preacher's mouth goes tight. <em>&ldquo;House rules,&rdquo;</em> he says, and he does not mean yours.";
+    TBL.log = "You watch his wrist and pull your money back a half-second before the bowl lifts. Tellmo's mouth goes tight. <em>&ldquo;House rules,&rdquo;</em> he says, and he does not mean yours.";
     TBL.busy = false; updateHUD(); tableHTML(); return;
   }
   if (win) {
     S.cash += win;
     TBL.wins += win - TBL.bet;
     TBL.log = t === 2
-      ? "Snake eyes. The Preacher does not smile. He counts out " + win + " dollars like it's coming out of his own chest."
+      ? "Snake eyes. Tellmo does not smile. He counts out " + win + " dollars like it's coming out of his own chest."
       : "The dice come up <b>" + t + "</b>. He counts it out slow. <em>&ldquo;Beginner,&rdquo;</em> he says, like it's an insult.";
     if (TBL.wins >= 300 && !hasClue("iou")) {
       addClue("iou");
@@ -1774,7 +1774,7 @@ function endGame(kind) {
     cls = "win";
     title = "THE WHOLE TRUTH";
     body = "You put it all on the garage floor: the razored ledger page, the office call log, the marker with two names on it, the phone with <span class='who'>" + CAST[S.snitch].name + "</span>'s mark in the case.<br><br>" +
-      "The buyer out of Louisville wanted this park. Tellmo signed the lots one widow at a time. Mikey found the papers and made the mistake of being nineteen and honest. " + CAST[S.snitch].name + " made one phone call and the rest of the park did the rest.<br><br>" +
+      "The buyer out of Louisville wanted this park. Marlene signed the lots one widow at a time. Mikey found the papers and made the mistake of being nineteen and honest. " + CAST[S.snitch].name + " made one phone call and the rest of the park did the rest.<br><br>" +
       "And the boy in the water? That was <span class='who'>Abel</span>. Your cousin, who burned in 2003 and didn't die, who came out of the trees for the papers and for Kessa and for a park that would sell its own dead. She signed the marker. She told him Mikey had seen the folder. You were the alibi and the fool and the man who woke up in a garage with somebody else's blood under his nails.<br><br>" +
       "Sinny listens with the mask off. Under it he is just a tired man with a dead brother and a hand that shakes.<br><br><span class='who'>SINNY:</span> “Go home. Pack. Be gone by sunup.”<br><br>Mushroom walks out beside you. Behind you, somebody is already pouring gasoline on the office trailer. You do not turn around.";
   } else if (kind === "win") {
