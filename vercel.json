@@ -324,7 +324,12 @@
     },
     {
       "source": "/moons.html",
-      "destination": "/games/moons.html",
+      "destination": "/games/tarots-plus.html",
+      "permanent": true
+    },
+    {
+      "source": "/games/moons.html",
+      "destination": "/games/tarots-plus.html",
       "permanent": true
     }
   ],

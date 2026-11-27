@@ -1,5 +1,5 @@
 (function(){
-var D=[["Home","/"],["Top 5","/lineup/"],["Kids Corner","/kids/"],["Blogs","/blog.html"],["Watches","/watchline/"],["Casino","https://afterglow.leonlink.net/"],["Arcade","/arcadeline/"],["SNES","/games/snes/"],["Software","/software.html"],["Botline","/botline/"],["Moons","/games/moons.html"],["How-To","/how-to/"],["Games","/games.html"],["Series","/series.html"],["Ebooks","/ebooks.html"]];
+var D=[["Home","/"],["Top 5","/lineup/"],["Kids Corner","/kids/"],["Blogs","/blog.html"],["Watches","/watchline/"],["Casino","https://afterglow.leonlink.net/"],["Arcade","/arcadeline/"],["SNES","/games/snes/"],["Software","/software.html"],["Botline","/botline/"],["Tarots+","/games/tarots-plus.html"],["How-To","/how-to/"],["Games","/games.html"],["Series","/series.html"],["Ebooks","/ebooks.html"]];
 var G=[["Top 5","/lineup/"],["Kids Corner","/kids/"],["Blog","/blog.html"],["Watchline","/watchline/"],["Software","/software.html"],["Botline","/botline/"],["Games","/games.html"],["How-To","/how-to/"]];
 var p=location.pathname;
 function on(h){return h=="/"?(p=="/"||p=="/index.html"):p.indexOf(h.replace(/\/$/,""))==0;}
