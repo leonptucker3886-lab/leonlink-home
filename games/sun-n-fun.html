@@ -2,846 +2,2057 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sun N Fun — Escape the Trailer Park</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#050403">
+<title>Sun N Fun — Escape the Trailer Park | LeonLink</title>
+<meta name="description" content="A first-person horror escape game set in Sun N Fun Estates, Rineyville, Kentucky. Find the snitch, prove the debt, and walk out of 180 Tomahawk Trl before dawn.">
+<link rel="canonical" href="https://www.leonlink.net/games/sun-n-fun.html">
+<meta property="og:title" content="Sun N Fun — Escape the Trailer Park">
+<meta property="og:description" content="You wake in a garage at 180 Tomahawk Trl with blood on your hands. The park wants a name before dawn.">
+<meta property="og:image" content="https://www.leonlink.net/img/sun-n-fun/garage.jpg">
+<meta property="og:type" content="website">
 <style>
-/* ============ PALETTE (from the uploaded intro) ============ */
-:root{--night:#0a0c10;--gold:#e8b84a;--gold-dim:#c4922e;--neon:#ff6b35;--text:#f0e6d0;--muted:#9a8b72;--panel:#141210;--border:#3a3020}
+:root{
+  --blood:#7d0a0e; --blood2:#b5121b; --bone:#ece4d2; --ash:#0a0806;
+  --sodium:#ffb257; --moss:#7d8767; --paper:#d9cba6; --ink:#241d14;
+  --panel:rgba(8,7,6,.86); --line:rgba(236,228,210,.18);
+}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:var(--night);color:var(--text);font-family:"Segoe UI",system-ui,sans-serif;overflow-x:hidden}
-.screen{display:none;min-height:100vh;width:100%}
-.screen.active{display:flex;flex-direction:column;align-items:center}
+html,body{height:100%}
+body{background:#050403;color:var(--bone);font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow:hidden;-webkit-font-smoothing:antialiased;overscroll-behavior:none}
+button{font-family:inherit;color:inherit}
 .hidden{display:none!important}
-.btn{appearance:none;border:none;cursor:pointer;font-family:inherit;font-size:.95rem;font-weight:700;letter-spacing:.06em;padding:.9rem 1.7rem;border-radius:8px;transition:.15s}
-.btn:hover{transform:translateY(-2px)}
-.btn-spin{background:linear-gradient(180deg,#f0c060,var(--gold-dim));color:#1a1008;box-shadow:0 6px 24px rgba(232,184,74,.4)}
-.btn-ghost{background:0;color:var(--muted);border:1px solid #3a3020}
-.btn-ghost:hover{border-color:var(--gold);color:var(--text)}
-.btn-danger{border:1px solid #a33;color:#f88;background:0}
-.btn-danger:hover{border-color:#f88;background:rgba(160,40,40,.25)}
-.btn-wide{width:100%;text-align:center}
+.display{font-family:"Times New Roman",Georgia,serif;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
+.screen{position:fixed;inset:0;display:none;flex-direction:column;overflow:hidden}
+.screen.on{display:flex}
 
-/* ============ SPLASH ============ */
-#splash-screen{justify-content:center;background:#000;cursor:pointer}
-.splash-title{font-size:clamp(1.8rem,7vw,3rem);font-weight:900;letter-spacing:.35em;color:var(--gold);text-align:center;text-shadow:0 0 40px rgba(232,184,74,.5)}
-.splash-sub{margin-top:1rem;font-size:.8rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
-.splash-skip{position:absolute;bottom:2rem;font-size:.75rem;color:#5a4a38;letter-spacing:.2em;text-transform:uppercase}
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:46px;padding:.8rem 1.25rem;border:1px solid rgba(236,228,210,.32);background:rgba(10,8,6,.6);color:var(--bone);font-size:.78rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:.18s;text-decoration:none}
+.btn:hover{border-color:var(--bone);background:rgba(236,228,210,.08);transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.blood{background:linear-gradient(180deg,#96121a,#5d070b);border-color:#c3393f;box-shadow:0 8px 30px rgba(150,18,26,.35)}
+.btn.blood:hover{background:linear-gradient(180deg,#b01520,#74090e);box-shadow:0 10px 40px rgba(180,21,32,.5)}
+.btn.ghost{background:transparent;border-color:rgba(236,228,210,.2);color:rgba(236,228,210,.8)}
+.btn.wide{width:100%}
+.btn:focus-visible,.chip:focus-visible,.person:focus-visible,.choice:focus-visible,.node-hit:focus-visible{outline:2px solid var(--sodium);outline-offset:3px}
+.btn[disabled]{opacity:.4;cursor:not-allowed;transform:none}
 
-/* ============ PROMO (from the uploaded intro, fixed) ============ */
-#promo-screen{justify-content:center;background:radial-gradient(ellipse 100% 60% at 50% -10%,rgba(232,184,74,.12),transparent 55%),var(--night);padding:2rem 1rem 3rem}
-.promo-inner{max-width:720px;width:100%;text-align:center}
-.promo-badge{display:inline-block;font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(232,184,74,.4);padding:.35rem .9rem;border-radius:999px;margin-bottom:1.2rem}
-.promo-title{font-size:clamp(2.4rem,9vw,4.2rem);font-weight:900;letter-spacing:.06em;background:linear-gradient(180deg,#fff3c4,var(--gold) 40%,var(--gold-dim));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 40px rgba(232,184,74,.35));margin-bottom:.35rem}
-.promo-tag{font-size:clamp(1rem,3vw,1.35rem);letter-spacing:.18em;text-transform:uppercase;color:var(--neon);margin-bottom:1.6rem}
-.promo-desc{font-size:1rem;line-height:1.65;color:#c8b898;max-width:520px;margin:0 auto 1.8rem}
-.promo-desc strong{color:var(--gold)}
-.slot-strip{display:flex;justify-content:center;gap:.5rem;margin-bottom:1.8rem}
-.slot-reel{width:64px;height:72px;background:#1a1610;border:2px solid #4a3a20;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;box-shadow:inset 0 0 12px rgba(0,0,0,.5)}
-.slot-reel span{animation:reelSpin 2.5s ease-in-out infinite}
-@keyframes reelSpin{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-.promo-cta{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center}
-.promo-note{margin-top:1.8rem;font-size:.78rem;color:#6a5a48}
+/* ---------- warning gate ---------- */
+#gate{position:fixed;inset:0;z-index:400;background:radial-gradient(ellipse at 50% 30%,#1b0a08,#040302 65%);display:flex;align-items:center;justify-content:center;padding:1.2rem}
+#gate .card{max-width:560px;border:1px solid rgba(181,18,27,.5);background:rgba(8,6,5,.94);padding:2rem 1.6rem;text-align:center;box-shadow:0 30px 90px #000}
+#gate h1{font-size:clamp(1.6rem,6vw,2.4rem);margin:.6rem 0 1rem;color:#e3d6bd}
+#gate p{font-size:.92rem;line-height:1.65;color:#a99e8b;margin-bottom:1.1rem}
+#gate .kicker{font-size:.65rem;letter-spacing:.34em;text-transform:uppercase;color:var(--blood2)}
+#gate .fine{font-size:.72rem;color:#6f6657;margin-top:1rem;margin-bottom:0}
 
-/* ============ CUTSCENE ============ */
-.cutscene-layer{position:fixed;inset:0;z-index:300;background:#000;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity 1.1s,visibility 1.1s}
-.cutscene-layer.fade-out{opacity:0;visibility:hidden;pointer-events:none}
-.cut-line{font-size:clamp(1.05rem,2.8vw,1.55rem);letter-spacing:.06em;text-align:center;opacity:0;transform:translateY(14px);transition:.85s;max-width:90%;line-height:1.55;color:#e0d4b8;margin:.2rem 0}
-.cut-line.show{opacity:1;transform:translateY(0)}
-.cut-line.dim{color:#8a7a68;font-size:.92em}
-.cut-line.who{color:var(--gold);font-weight:700}
-/* garage scene: concrete wall, bunny man, axe man */
-.garage-scene{width:min(420px,88vw);height:170px;margin-bottom:1.6rem;border-radius:8px;position:relative;overflow:hidden;opacity:0;transition:opacity 1s;border:1px solid #2a2218;
-  background:repeating-linear-gradient(0deg,#232323 0 22px,#1a1a1a 22px 24px),repeating-linear-gradient(90deg,transparent 0 58px,rgba(0,0,0,.35) 58px 60px),#1e1e1e}
-.garage-scene.show{opacity:1}
-.garage-floor{position:absolute;left:0;right:0;bottom:0;height:34px;background:#141414;border-top:2px solid #2e2e2e}
-.garage-fig{position:absolute;bottom:34px;width:34px;height:64px;border-radius:8px 8px 0 0}
-.garage-bunny{left:50%;margin-left:-17px;background:#3a3a3a}
-.garage-bunny::before{content:"";position:absolute;top:-26px;left:50%;margin-left:-13px;width:26px;height:26px;border-radius:50%;background:#e8e2d2}
-.garage-bunny::after{content:"";position:absolute;top:-44px;left:50%;margin-left:-11px;width:6px;height:20px;background:#e8e2d2;border-radius:4px;box-shadow:16px 0 0 #e8e2d2}
-.garage-axe{right:18%;background:#2a2a30}
-.garage-axe::before{content:"";position:absolute;top:-20px;left:50%;margin-left:-10px;width:20px;height:20px;border-radius:50%;background:#3a3a48}
-.garage-axe::after{content:"";position:absolute;top:6px;right:-16px;width:26px;height:5px;background:#777;border-radius:2px;transform:rotate(-35deg)}
-.garage-lamp{position:absolute;top:10px;left:50%;margin-left:-30px;width:60px;height:8px;background:#3a2f14;border-radius:4px;box-shadow:0 0 34px 12px rgba(232,184,74,.22)}
+/* ---------- splash ---------- */
+#splash{background:#000;cursor:pointer;justify-content:center;align-items:center;text-align:center}
+#splash .bg{position:absolute;inset:0;background:url("../img/sun-n-fun/garage.jpg") center/cover;opacity:.32;filter:grayscale(.35) contrast(1.15) brightness(.7);animation:drift 40s ease-in-out infinite alternate}
+#splash .veil{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,transparent 20%,rgba(0,0,0,.9) 75%)}
+#splash .in{position:relative;z-index:2;padding:1rem}
+#splash .over{font-size:.62rem;letter-spacing:.5em;text-transform:uppercase;color:#8b7f68;margin-bottom:1.2rem}
+#splash h1{font-size:clamp(2.6rem,13vw,6.5rem);line-height:.92;color:#e7ddc7;text-shadow:0 0 60px rgba(181,18,27,.45),0 2px 0 #000}
+#splash h1 em{display:block;font-style:normal;color:var(--blood2)}
+#splash .sub{margin-top:1rem;font-size:.72rem;letter-spacing:.36em;text-transform:uppercase;color:#a3947a}
+#splash .tap{position:absolute;bottom:2.2rem;left:0;right:0;font-size:.66rem;letter-spacing:.32em;text-transform:uppercase;color:#6b5f4d;animation:pulse 2.6s ease-in-out infinite}
+#splash .addr{position:absolute;top:1.4rem;left:0;right:0;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:#5c5344}
 
-/* ============ HUD ============ */
-#game-screen{align-items:stretch;padding:0}
-#hud{position:sticky;top:0;z-index:150;background:linear-gradient(180deg,rgba(10,12,16,.97),rgba(10,12,16,.88));border-bottom:2px solid #3a3020;padding:.55rem .8rem}
-.hud-row{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
-.hud-brand{font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-size:.85rem;white-space:nowrap}
-.hud-meter{flex:1;min-width:120px}
-.hud-meter-label{display:flex;justify-content:space-between;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem}
-.hud-meter-bar{height:10px;background:#1a1610;border:1px solid #3a3020;border-radius:999px;overflow:hidden}
-#suspicion-fill{height:100%;width:30%;background:var(--gold);transition:width .5s}
-.hud-btns{display:flex;gap:.35rem}
-.hud-btn{appearance:none;border:1px solid #4a3a28;background:#1a1610;color:#c8b898;padding:.4rem .65rem;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer}
-.hud-btn:hover,.hud-btn.active{border-color:var(--gold);color:var(--gold)}
-.hud-btn.danger{border-color:#7a2a2a;color:#f88}
-#game-body{flex:1;width:100%;max-width:720px;margin:0 auto;padding:1rem 1rem 3rem}
-.view-title{font-size:1.5rem;font-weight:900;letter-spacing:.04em;color:var(--gold);margin-bottom:.3rem}
-.view-sub{color:var(--muted);font-size:.92rem;line-height:1.5;margin-bottom:1.1rem}
-.hint{border:1px solid rgba(232,184,74,.4);background:rgba(232,184,74,.07);border-radius:8px;padding:.7rem .9rem;font-size:.88rem;line-height:1.5;color:#e8d9b0;margin-bottom:1rem}
-.hint strong{color:var(--gold)}
+/* ---------- menu ---------- */
+#menu{background:#050403;justify-content:center;align-items:center;padding:1.2rem}
+#menu .bg{position:absolute;inset:0;background:url("../img/sun-n-fun/gate.jpg") center/cover;opacity:.22;filter:grayscale(.5) contrast(1.2)}
+#menu .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,4,3,.5),rgba(5,4,3,.96))}
+#menu .in{position:relative;z-index:2;width:100%;max-width:640px;text-align:center}
+#menu h2{font-size:clamp(1.8rem,7vw,3rem);color:#e7ddc7;margin-bottom:.35rem}
+#menu .tag{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--blood2);margin-bottom:1.4rem}
+#menu p.lede{font-size:.94rem;line-height:1.7;color:#a99e8b;max-width:46ch;margin:0 auto 1.4rem}
+#menu .actions{display:grid;gap:.6rem;max-width:380px;margin:0 auto}
+#menu .meta{margin-top:1.4rem;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:#5f5749;line-height:2}
+#menu .meta a{color:#8d8168;text-decoration:none;border-bottom:1px solid rgba(141,129,104,.4)}
+#menu .save{font-size:.76rem;line-height:1.6;color:var(--sodium);margin-bottom:1rem}
 
-/* ============ MAP ============ */
-.map-wrap{background:#d8ecd2;border:2px solid #3a3020;border-radius:10px;overflow:hidden;margin-bottom:1rem}
-.map-wrap svg{display:block;width:100%;height:auto}
-.map-node{cursor:pointer}
-.map-node circle{fill:var(--gold);stroke:#1a1008;stroke-width:2}
-.map-node text{fill:#1f2a33;font-size:10.5px;font-weight:800;paint-order:stroke;stroke:#fff;stroke-width:3px}
-.map-street{fill:#33414f;font-size:12px;font-weight:700;font-style:italic;paint-order:stroke;stroke:#fff;stroke-width:3px}
-#player-marker circle.core{fill:#ff6b35;stroke:#fff;stroke-width:2}
-#player-marker circle.ring{fill:none;stroke:#ff6b35;stroke-width:2;opacity:.7;animation:ping 1.6s ease-out infinite}
-@keyframes ping{0%{r:8;opacity:.8}100%{r:20;opacity:0}}
-.map-loc-list{display:grid;gap:.5rem}
-.map-loc-btn{display:flex;justify-content:space-between;align-items:center;background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:.8rem 1rem;cursor:pointer;font-size:.95rem;font-weight:700;color:var(--text);text-align:left;width:100%}
-.map-loc-btn:hover{border-color:var(--gold)}
-.map-loc-btn span{color:var(--muted);font-weight:400;font-size:.8rem}
+/* ---------- game shell ---------- */
+#game{background:#000}
+#hud{position:relative;z-index:30;display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;padding:.5rem .7rem;background:linear-gradient(180deg,#0b0907,#070605);border-bottom:1px solid rgba(236,228,210,.14)}
+.brand{font-family:"Times New Roman",Georgia,serif;font-weight:900;letter-spacing:.14em;text-transform:uppercase;font-size:.82rem;color:#ded2b9;white-space:nowrap}
+.brand span{display:block;font-family:inherit;font-size:.5rem;letter-spacing:.28em;color:#7b7059;font-weight:400}
+.meter{flex:1;min-width:110px}
+.meter .lab{display:flex;justify-content:space-between;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:#8d8168;margin-bottom:.22rem}
+.meter .track{height:7px;background:#1a1511;border:1px solid #352c22;overflow:hidden}
+#susp{height:100%;width:30%;background:linear-gradient(90deg,#8a6d2c,#c1121f);transition:width .5s}
+.hud-btns{display:flex;gap:.3rem}
+.hud-btns button{min-height:36px;padding:.4rem .6rem;font-size:.58rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;background:#14100c;border:1px solid #3b3125;color:#c9bda4;cursor:pointer;border-radius:2px}
+.hud-btns button:hover{border-color:var(--sodium);color:#f0e4c8}
+.hud-btns button.danger{border-color:#6d1a1c;color:#e0787c}
+.hud-btns button.danger:hover{background:#4a0d10;color:#ff9a9e}
+#stage{position:relative;flex:1;overflow:hidden;isolation:isolate}
+#bg{position:absolute;inset:-4%;background-size:cover;background-position:center;filter:saturate(.75) contrast(1.12) brightness(.62) sepia(.12);animation:drift 45s ease-in-out infinite alternate;transition:opacity .5s}
+#bg.dim{filter:brightness(.35) blur(2px) saturate(.5)}
+.grade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,8,6,.5),transparent 30%,rgba(5,3,2,.85) 88%),radial-gradient(ellipse at 70% 40%,rgba(255,178,87,.12),transparent 55%);pointer-events:none;z-index:2}
+.vig{position:absolute;inset:0;z-index:3;pointer-events:none;box-shadow:inset 0 0 22vmin rgba(0,0,0,.92);background:radial-gradient(ellipse at 50% 50%,transparent 45%,rgba(0,0,0,.55))}
+.vig.hot{animation:heart 1.5s ease-in-out infinite}
+.grain{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:.16;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");animation:grain 1.2s steps(3) infinite}
+@keyframes grain{0%{transform:translate(0,0)}33%{transform:translate(-2%,1%)}66%{transform:translate(1%,-2%)}100%{transform:translate(0,0)}}
+#fig{position:absolute;top:3%;right:-2%;height:58%;width:auto;max-width:88%;z-index:3;opacity:0;transition:opacity .7s,filter .5s;mix-blend-mode:screen;filter:contrast(1.08) saturate(.85) brightness(.95);pointer-events:none;animation:breathe 7s ease-in-out infinite;object-fit:contain;object-position:top center}
+#fig.show{opacity:.97}
+#fig.angry{filter:contrast(1.2) saturate(1.1) brightness(1.05) drop-shadow(0 0 24px rgba(181,18,27,.5))}
+#fig.dead{filter:grayscale(1) brightness(.65) blur(.4px)}
+@keyframes breathe{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-.5%) scale(1.006)}}
+@keyframes drift{0%{transform:scale(1.02) translate(0,0)}100%{transform:scale(1.09) translate(-1.5%,-1%)}}
+@keyframes heart{0%,100%{box-shadow:inset 0 0 22vmin rgba(0,0,0,.92)}45%{box-shadow:inset 0 0 18vmin rgba(120,6,10,.75),inset 0 0 40vmin rgba(0,0,0,.9)}}
+@keyframes pulse{0%,100%{opacity:.35}50%{opacity:.9}}
 
-/* ============ LOCATION / DIALOGUE ============ */
-.card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:1rem;margin-bottom:1rem}
-.char-row{display:flex;align-items:center;gap:.8rem;padding:.7rem .2rem;border-bottom:1px solid #241f18}
-.char-row:last-child{border-bottom:0}
-.char-face{width:44px;height:44px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:900;border:2px solid #4a3a28;background:#1a1610;color:var(--gold)}
-.char-name{font-weight:800;font-size:1rem}
-.char-note{font-size:.82rem;color:var(--muted)}
-.char-talk{margin-left:auto}
-.say{font-size:1.1rem;line-height:1.6;color:#e0d4b8;margin-bottom:1rem}
-.say .who{color:var(--gold);font-weight:800}
-.choice{display:block;width:100%;text-align:left;background:#0e0c0a;border:1px solid #3a3020;border-radius:8px;padding:.85rem 1rem;margin-bottom:.55rem;cursor:pointer;font-size:1rem;color:var(--text);line-height:1.45}
-.choice:hover{border-color:var(--gold);background:#1a1610}
-.choice.locked{opacity:.45}
-.reply{font-size:1rem;line-height:1.6;color:#c8b898;margin-bottom:1rem}
-.reply .who{color:var(--gold);font-weight:800}
+/* scene labels */
+.scene-head{position:absolute;left:0;right:0;top:0;z-index:8;padding:.85rem .9rem;display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;pointer-events:none;background:linear-gradient(180deg,rgba(4,3,2,.85),transparent)}
+.scene-head .nm{font-family:"Times New Roman",Georgia,serif;font-weight:900;letter-spacing:.1em;text-transform:uppercase;font-size:clamp(.95rem,3.4vw,1.3rem);color:#e7ddc7;text-shadow:0 2px 10px #000}
+.scene-head .ad{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:#a3947a;margin-top:.15rem}
+.scene-head .clock{text-align:right;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:#c1121f;white-space:nowrap}
+.scene-head .clock b{display:block;font-family:"Times New Roman",Georgia,serif;font-size:1.1rem;color:#e7ddc7;letter-spacing:.06em}
 
-/* ============ CLUES ============ */
-.clue-item{border:1px solid var(--border);border-radius:8px;padding:.8rem .9rem;margin-bottom:.6rem;background:#0e0c0a}
-.clue-item.fresh{border-color:var(--gold)}
-.clue-name{font-weight:800;color:var(--gold);margin-bottom:.2rem}
-.clue-text{font-size:.92rem;line-height:1.5;color:#c8b898}
-.clue-empty{color:var(--muted);font-size:.92rem;line-height:1.6}
+/* scene body / sheets */
+#body{position:absolute;inset:0;z-index:9;display:flex;flex-direction:column;justify-content:flex-end;pointer-events:none}
+#body>*{pointer-events:auto}
+.loc-card{margin:0 .7rem .7rem;padding:.9rem 1rem 1rem;background:linear-gradient(180deg,rgba(8,6,5,.72),rgba(8,6,5,.95));border:1px solid rgba(236,228,210,.16);border-left:2px solid var(--blood2);backdrop-filter:blur(4px);max-width:620px;width:calc(100% - 1.4rem);align-self:center;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.loc-card .eyebrow{font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--blood2);margin-bottom:.35rem}
+.loc-card p{font-size:.92rem;line-height:1.6;color:#c3b8a2;margin-bottom:.85rem}
+.loc-card .rows{display:grid;gap:.4rem}
+.person{display:flex;align-items:center;gap:.7rem;width:100%;text-align:left;padding:.55rem .7rem;background:rgba(20,15,11,.8);border:1px solid rgba(236,228,210,.16);cursor:pointer;border-radius:2px;transition:.15s}
+.person:hover{border-color:var(--sodium);background:rgba(40,28,18,.9);transform:translateX(2px)}
+.person img{width:38px;height:46px;object-fit:cover;object-position:top center;filter:grayscale(.3) contrast(1.1);border:1px solid #3b3125}
+.person .who{font-weight:800;font-size:.9rem;color:#ece4d2;line-height:1.2}
+.person .note{font-size:.72rem;color:#94886f;line-height:1.35;margin-top:.1rem}
+.person .arrow{margin-left:auto;color:#6d6250;font-size:1.1rem}
+.loc-actions{display:flex;gap:.4rem;margin-top:.7rem;flex-wrap:wrap}
+.loc-actions .btn{flex:1;font-size:.64rem;padding:.6rem .5rem;min-height:42px}
+.mini-note{font-size:.7rem;line-height:1.5;color:#8d8168;margin-top:.6rem;text-align:center}
 
-/* ============ ACCUSE / END ============ */
-.accuse-suspect{display:block;width:100%;text-align:left;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:1rem;margin-bottom:.6rem;cursor:pointer;color:var(--text)}
-.accuse-suspect:hover{border-color:var(--neon)}
-.accuse-suspect .nm{font-weight:800;font-size:1.05rem}
-.accuse-suspect .ds{font-size:.88rem;color:var(--muted);line-height:1.5;margin-top:.2rem}
-.evidence{border:1px solid var(--border);border-radius:8px;padding:.8rem .9rem;margin-bottom:1rem;font-size:.92rem;line-height:1.6;color:#c8b898;background:#0e0c0a}
-.evidence strong{color:var(--gold)}
-.end-title{font-size:clamp(2rem,8vw,3rem);font-weight:900;letter-spacing:.05em;text-align:center;margin:1.5rem 0 .8rem}
-.end-title.win{color:var(--gold)}
-.end-title.lose{color:var(--neon)}
-.end-body{font-size:1.05rem;line-height:1.7;color:#e0d4b8;text-align:center;max-width:520px;margin:0 auto 1.6rem}
-.end-body .who{color:var(--gold);font-weight:800}
+/* dialogue */
+.dlg{margin:0 .6rem .6rem;background:linear-gradient(180deg,rgba(6,5,4,.72),rgba(6,5,4,.98) 26%);border:1px solid rgba(236,228,210,.14);border-top:1px solid rgba(181,18,27,.55);padding:1rem;max-width:700px;width:calc(100% - 1.2rem);align-self:center;backdrop-filter:blur(6px);box-shadow:0 24px 70px rgba(0,0,0,.8);max-height:56%;overflow-y:auto;scrollbar-width:thin}
+.dlg .spk{font-family:"Times New Roman",Georgia,serif;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--sodium);font-size:1.05rem;margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem}
+.dlg .spk:before{content:"";width:22px;height:1px;background:var(--blood2);display:inline-block}
+.dlg .say{font-size:.98rem;line-height:1.66;color:#ddd2bc;margin-bottom:.9rem;min-height:3.2em}
+.dlg .say em{color:#f0e4c8;font-style:normal;font-weight:700}
+.dlg .say .gore{color:#d4494f}
+.choice{display:block;width:100%;text-align:left;padding:.7rem .85rem;margin-bottom:.4rem;background:rgba(16,12,9,.9);border:1px solid rgba(236,228,210,.16);border-left:2px solid rgba(181,18,27,.5);cursor:pointer;font-size:.86rem;line-height:1.45;color:#d8cdb6;transition:.15s}
+.choice:hover{border-color:var(--sodium);border-left-color:var(--sodium);background:rgba(36,24,14,.95);color:#fff3d8}
+.choice.locked{opacity:.35;cursor:not-allowed}
+.choice.needs{font-style:italic;color:#8d8168}
+.dlg .foot{display:flex;gap:.4rem;margin-top:.5rem}
+.dlg .foot .btn{flex:1;font-size:.62rem;min-height:40px}
+.tag{display:inline-block;font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;padding:.15rem .4rem;border:1px solid rgba(236,228,210,.25);color:#a99e8b;margin-left:.4rem;vertical-align:middle}
+
+/* sheets: map, file, accuse, ending */
+.sheet{position:absolute;inset:0;z-index:12;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:.7rem;background:rgba(5,4,3,.93);backdrop-filter:blur(3px)}
+.sheet.dark{background:rgba(3,2,2,.97)}
+.sheet .wrap{max-width:760px;margin:0 auto}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;gap:.8rem;margin:.2rem 0 .8rem}
+.sheet-head h3{font-family:"Times New Roman",Georgia,serif;font-weight:900;letter-spacing:.12em;text-transform:uppercase;font-size:1.05rem;color:#e7ddc7}
+.sheet-head .x{background:none;border:1px solid rgba(236,228,210,.25);color:#c9bda4;width:36px;height:36px;cursor:pointer;border-radius:2px}
+.map-paper{background:radial-gradient(ellipse at 50% 20%,#2a241b,#14110c);border:1px solid #4a3f2c;padding:.6rem;position:relative;box-shadow:inset 0 0 60px rgba(0,0,0,.8)}
+.map-paper svg{display:block;width:100%;height:auto}
+.map-key{display:flex;gap:.8rem;flex-wrap:wrap;font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;color:#a3947a;margin-top:.5rem;justify-content:center}
+.map-key i{display:inline-block;width:14px;height:3px;margin-right:.3rem;vertical-align:middle}
+.status-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.35rem;margin-bottom:.7rem}
+.stat{background:rgba(20,15,11,.85);border:1px solid rgba(236,228,210,.14);padding:.5rem .4rem;text-align:center}
+.stat span{display:block;font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:#8d8168;margin-bottom:.2rem}
+.stat b{font-size:.8rem;color:#d8cdb6;font-weight:800}
+.stat.good b{color:#9fbf8a}.stat.bad b{color:#d4494f}
+.loc-list{display:grid;gap:.35rem;margin-top:.6rem}
+.loc-btn{display:flex;justify-content:space-between;align-items:center;gap:.6rem;text-align:left;padding:.7rem .8rem;background:rgba(16,12,9,.9);border:1px solid rgba(236,228,210,.14);cursor:pointer;color:#d8cdb6;font-size:.86rem}
+.loc-btn:hover{border-color:var(--sodium)}
+.loc-btn small{color:#8d8168;font-size:.68rem}
+.loc-btn.here{border-left:3px solid var(--blood2)}
+.clue{border-left:2px solid var(--blood2);background:rgba(18,13,10,.8);padding:.6rem .7rem;margin-bottom:.4rem}
+.clue b{display:block;color:var(--sodium);font-size:.82rem;letter-spacing:.04em;margin-bottom:.2rem}
+.clue p{font-size:.8rem;line-height:1.55;color:#b3a892}
+.note{font-size:.8rem;line-height:1.55;color:#b3a892;border-left:1px solid #4a3f2c;padding-left:.6rem;margin-bottom:.45rem}
+.empty{font-size:.85rem;line-height:1.6;color:#8d8168;font-style:italic;margin-bottom:.6rem}
+.dossier{border:1px solid rgba(236,228,210,.14);background:rgba(16,12,9,.85);padding:.7rem;margin-bottom:.5rem;display:flex;gap:.7rem}
+.dossier img{width:56px;height:70px;object-fit:cover;object-position:top center;filter:grayscale(1) contrast(1.15);border:1px solid #3b3125}
+.dossier h4{font-family:"Times New Roman",Georgia,serif;font-size:1rem;letter-spacing:.06em;color:#e7ddc7;margin-bottom:.1rem}
+.dossier .sub{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blood2);margin-bottom:.35rem}
+.dossier p{font-size:.78rem;line-height:1.55;color:#b3a892}
+.dossier .facts{font-size:.66rem;color:#8d8168;margin-top:.3rem;letter-spacing:.06em}
+.accuse-btn{display:block;width:100%;text-align:left;padding:.8rem;margin-bottom:.45rem;background:rgba(18,13,10,.9);border:1px solid rgba(236,228,210,.16);cursor:pointer;color:#d8cdb6}
+.accuse-btn:hover{border-color:var(--blood2);background:rgba(40,10,10,.6)}
+.accuse-btn .nm{font-family:"Times New Roman",Georgia,serif;font-size:1.05rem;color:#e7ddc7}
+.accuse-btn .ds{font-size:.76rem;color:#94886f;margin-top:.15rem}
+.big-title{font-family:"Times New Roman",Georgia,serif;font-weight:900;letter-spacing:.12em;text-transform:uppercase;text-align:center;font-size:clamp(1.8rem,8vw,3.2rem);line-height:1;margin:1.2rem 0 .6rem}
+.big-title.win{color:#d8cfa9;text-shadow:0 0 40px rgba(255,178,87,.3)}
+.big-title.lose{color:#b5121b;text-shadow:0 0 50px rgba(181,18,27,.7)}
+.end-body{text-align:center;max-width:56ch;margin:0 auto 1.2rem;font-size:.95rem;line-height:1.75;color:#cfc3ab}
+.end-body .who{color:var(--sodium);font-weight:700}
+.verdict{border:1px solid rgba(181,18,27,.45);background:rgba(60,8,10,.25);padding:.8rem;margin:0 auto 1.1rem;max-width:520px;font-size:.82rem;line-height:1.6;color:#d8cdb6;text-align:center}
 .center{text-align:center}
+.center .btn{margin:.25rem}
 
-/* ============ TOAST ============ */
-#toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1610;border:2px solid var(--gold);border-radius:10px;padding:.85rem 1.4rem;z-index:400;opacity:0;pointer-events:none;transition:.4s;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.5);max-width:92vw;font-size:.92rem;line-height:1.45}
-#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-#toast strong{color:var(--gold)}
+/* money, dog, table */
+.hud-cash{display:inline-flex;align-items:center;min-height:36px;padding:.4rem .55rem;border:1px solid #4a3f2c;background:#14100c;color:#c9a24a;font-size:.75rem;font-weight:800;letter-spacing:.06em;border-radius:2px;white-space:nowrap}
+.hud-cash b{color:#f0d68a}
+.dice{display:flex;gap:.6rem;justify-content:center;margin:.7rem 0}
+.die{width:58px;height:58px;background:linear-gradient(150deg,#efe6ce,#cdc2a6);border-radius:9px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);padding:7px;box-shadow:0 8px 20px rgba(0,0,0,.65),inset 0 0 0 1px rgba(0,0,0,.2)}
+.pip{width:9px;height:9px;margin:auto;border-radius:50%;background:#1a1512;box-shadow:inset 0 1px 1px rgba(255,255,255,.25)}
+.pip.off{background:transparent;box-shadow:none}
+.bet-row{display:flex;gap:.35rem;flex-wrap:wrap;justify-content:center;margin-bottom:.45rem}
+.chipbet{padding:.55rem .7rem;border:1px solid #4a3f2c;background:#1b1510;color:#d8cdb6;font-weight:800;font-size:.68rem;letter-spacing:.06em;cursor:pointer;border-radius:2px;line-height:1.3}
+.chipbet.on{border-color:var(--sodium);background:#2a1e10;color:#ffe9b8}
+.chipbet[disabled]{opacity:.35;cursor:not-allowed}
+.tbl-log{font-family:"Times New Roman",Georgia,serif;font-size:.95rem;line-height:1.55;color:#c3b8a2;min-height:4.6em;border-left:2px solid var(--blood2);padding-left:.7rem;margin:.6rem 0}
+.photos{display:grid;gap:.5rem;margin-bottom:.7rem}
+.photo{border:1px solid #4a3f2c;background:#100d0a;padding:.5rem;display:flex;gap:.6rem;align-items:flex-start}
+.photo .frame{width:58px;height:58px;flex:none;border:2px solid #cfc3a6;background:linear-gradient(150deg,#2a2f26,#0f110c);display:grid;place-items:center;font-size:22px;filter:saturate(.5)}
+.photo p{font-size:.79rem;line-height:1.55;color:#b3a892}
+/* pond base */
+.base-field{position:relative;width:100%;aspect-ratio:16/9;background:radial-gradient(ellipse at 80% 50%,#123033,#050807 72%);border:1px solid #2f4a44;overflow:hidden;cursor:crosshair;touch-action:manipulation}
+.base-lane{position:absolute;left:0;right:0;height:20%;border-top:1px dashed rgba(120,170,160,.13);pointer-events:none}
+.base-pond{position:absolute;right:1%;top:20%;width:18%;height:60%;border-radius:50%;background:radial-gradient(#2f6b6e,#0b1c1e);border:1px solid #4b7f7c;box-shadow:0 0 30px rgba(60,180,170,.28);pointer-events:none}
+.zomb{position:absolute;width:24px;height:24px;margin:-12px 0 0 -12px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#9aa78a,#333d2a);border:1px solid #1b2216;cursor:crosshair;display:flex;align-items:center;justify-content:center;font-size:10px;color:#d7e0bd;box-shadow:0 0 10px rgba(0,0,0,.85)}
+.zomb.run{background:radial-gradient(circle at 40% 35%,#c7b48a,#5a3f2a);border-color:#2a1b10}
+.struct{position:absolute;margin:-11px 0 0 -11px;width:22px;height:22px;border:1px solid #6d5f42;background:#241d14;font-size:11px;display:flex;align-items:center;justify-content:center;color:#c9bda4;pointer-events:none}
+.dog-dot{position:absolute;width:20px;height:20px;margin:-10px 0 0 -10px;font-size:14px;text-align:center;pointer-events:none;filter:drop-shadow(0 0 4px #000)}
+.phase-bar{display:flex;justify-content:space-between;align-items:center;gap:.6rem;padding:.5rem .7rem;border:1px solid #3b3125;background:#12100c;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:#a3947a;margin-bottom:.5rem}
+.phase-bar b{color:#e7ddc7;font-size:.78rem;letter-spacing:.1em;white-space:nowrap}
+.phase-bar.night{border-color:#7d0a0e;background:#1c0a08;color:#e0787c}
+.base-hud{display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem;margin-bottom:.5rem}
+
+/* cinematic */
+.cine{position:fixed;inset:0;z-index:250;background:#000;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}
+.cine-bg{position:absolute;inset:-3%;background-size:cover;background-position:center;filter:grayscale(.25) contrast(1.2) brightness(.5);animation:drift 30s ease-in-out infinite alternate;transition:opacity .6s}
+.cine-fig{position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:88%;opacity:0;transition:opacity 1s;mix-blend-mode:screen;filter:contrast(1.1) brightness(.9)}
+.cine-fig.show{opacity:.9}
+.cine-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.7),transparent 30%,rgba(0,0,0,.95) 85%)}
+.cine-lines{position:relative;z-index:3;padding:1.2rem 1.1rem 3.4rem;max-width:820px;margin:0 auto;width:100%;max-height:62%;overflow-y:auto}
+.cline{font-family:"Times New Roman",Georgia,serif;font-size:clamp(1rem,3.6vw,1.4rem);line-height:1.55;color:#e3d8c3;margin-bottom:.55rem;opacity:.45;transition:.4s}
+.cline.on{opacity:1;text-shadow:0 2px 20px #000}
+.cline.dim{color:#9b8f78;font-size:.92em}
+.cline.who{color:var(--sodium)}
+.cline .who{color:var(--blood2);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:.86em}
+.cline.gore{color:#d4494f}
+.cine-foot{position:absolute;left:0;right:0;bottom:0;z-index:4;display:flex;justify-content:space-between;align-items:center;padding:.7rem 1rem calc(.8rem + env(safe-area-inset-bottom));background:linear-gradient(0deg,#000,transparent)}
+.cine-foot span{font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:#6b5f4d;animation:pulse 2s infinite}
+.cine-foot button{background:none;border:1px solid rgba(236,228,210,.25);color:#a99e8b;padding:.45rem .8rem;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer}
+.cine-foot button:hover{color:#fff;border-color:#fff}
+
+/* toast + fx */
+#toast{position:fixed;left:50%;bottom:5.2rem;transform:translate(-50%,14px);z-index:300;background:rgba(8,6,5,.96);border:1px solid var(--sodium);border-left:3px solid var(--blood2);padding:.7rem 1rem;max-width:88vw;font-size:.82rem;line-height:1.45;color:#e3d8c3;opacity:0;pointer-events:none;transition:.35s;text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+#toast b{color:var(--sodium)}
+#fx{position:fixed;inset:0;z-index:220;pointer-events:none;opacity:0;transition:opacity .18s}
+#fx.flash{background:#fff;opacity:.9;transition:opacity .04s}
+#fx.blood{background:
+  radial-gradient(circle at 18% 22%,rgba(140,8,12,.95) 0 4%,transparent 9%),
+  radial-gradient(circle at 82% 16%,rgba(110,6,10,.9) 0 5%,transparent 12%),
+  radial-gradient(circle at 72% 74%,rgba(150,10,14,.9) 0 7%,transparent 14%),
+  radial-gradient(circle at 30% 80%,rgba(120,6,10,.9) 0 5%,transparent 11%),
+  radial-gradient(circle at 50% 45%,rgba(90,4,8,.75),rgba(0,0,0,0) 55%);
+  opacity:.85;transition:opacity .5s;mix-blend-mode:multiply}
+.shake{animation:shake .45s}
+@keyframes shake{0%,100%{transform:translate(0)}20%{transform:translate(-6px,3px)}40%{transform:translate(5px,-4px)}60%{transform:translate(-4px,-2px)}80%{transform:translate(3px,4px)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* mobile */
+@media (max-width:520px){
+  #fig{height:52%;top:2%;right:-4%;max-width:96%}
+  .loc-card{margin-bottom:.4rem;padding:.8rem}
+  .dlg{margin-bottom:.4rem;padding:.8rem}
+  .scene-head{padding:.7rem .7rem}
+  .hud-btns button{padding:.4rem .5rem;font-size:.55rem}
+  .brand{font-size:.72rem}
+}
+@media (min-width:900px){
+  #fig{right:8%;height:72%;top:2%}
+  .dlg,.loc-card{width:min(700px,calc(100% - 1.4rem))}
+}
 </style>
 </head>
 <body>
 
-<!-- SPLASH -->
-<div id="splash-screen" class="screen active" onclick="skipSplash()">
-  <div class="splash-title">LEONLINK<br>PRESENTS</div>
-  <div class="splash-sub">Sun N Fun &mdash; Escape the Trailer Park</div>
-  <div class="splash-skip">Tap to skip</div>
-</div>
-
-<!-- PROMO -->
-<div id="promo-screen" class="screen">
-  <div class="promo-inner">
-    <div class="promo-badge">Now Playing</div>
-    <h1 class="promo-title">Sun N Fun</h1>
-    <p class="promo-tag">Escape the Trailer Park</p>
-    <p class="promo-desc">Run run all you want<br>Sun n Fun will eat you up<br><br><strong>LEONLINK PRESENTS<br></strong>Kentucky's finest mobile home community<br></p>
-    <div class="slot-strip"><div class="slot-reel"><span>7</span></div><div class="slot-reel"><span>BAR</span></div><div class="slot-reel"><span>7</span></div></div>
-    <div class="promo-cta"><button class="btn btn-spin" onclick="startIntro()">You know what time it is</button></div>
-    <p class="promo-note">.."i just love people on my pizza"</p>
+<div id="gate">
+  <div class="card">
+    <p class="kicker">Sun N Fun Estates · 111 Tomahawk Trl · Rineyville, KY</p>
+    <h1 class="display">This is a horror story</h1>
+    <p>Graphic violence. Blood. Corpses. A park that eats its own. Everything here is fiction except the roads — and the roads are real.</p>
+    <button class="btn blood wide" onclick="enterSite()">I understand — let me in</button>
+    <p class="fine">Best with sound. Your progress is saved in this browser only.</p>
   </div>
 </div>
 
-<!-- CUTSCENE -->
-<div id="cutscene" class="cutscene-layer hidden">
-  <div class="garage-scene" id="garage-scene">
-    <div class="garage-lamp"></div>
-    <div class="garage-fig garage-bunny"></div>
-    <div class="garage-fig garage-axe"></div>
-    <div class="garage-floor"></div>
+<section id="splash" class="screen on" onclick="goMenu()">
+  <div class="bg"></div>
+  <div class="veil"></div>
+  <div class="addr">Rineyville, Kentucky · Est. 1974</div>
+  <div class="in">
+    <div class="over">LeonLink presents</div>
+    <h1 class="display">Sun <em>N</em> Fun</h1>
+    <div class="sub">Escape the Trailer Park</div>
   </div>
-  <div id="cut-lines"></div>
-  <div style="height:1.4rem"></div>
-  <button class="btn btn-ghost hidden" id="cut-continue" onclick="startGame()">Tap to continue</button>
-</div>
+  <div class="tap">Tap to begin</div>
+</section>
 
-<!-- GAME -->
-<div id="game-screen" class="screen">
+<section id="menu" class="screen">
+  <div class="bg"></div>
+  <div class="veil"></div>
+  <div class="in">
+    <h2 class="display">Sun N Fun</h2>
+    <div class="tag">Escape the trailer park</div>
+    <p class="lede" id="menu-lede">You wake on the floor of a garage at <b>180 Tomahawk Trl</b> with duct tape burns on your wrists and somebody else's blood under your nails. Mikey is gone. Your girlfriend signed a <b>$400 marker</b> with your name printed over hers. And the only way out is a name the park will believe before dawn.</p>
+    <p class="save hidden" id="menu-save"></p>
+    <div class="actions">
+      <button class="btn blood" id="btn-start" onclick="startNewCase()">Start the night</button>
+      <button class="btn ghost hidden" id="btn-continue" onclick="resumeCase()">Continue the case</button>
+      <button class="btn ghost" onclick="toggleSound()"><span id="snd-label">Sound: on</span></button>
+    </div>
+    <p class="meta">A LeonLink game · <a href="/games.html">Games hub</a><br>Content warning: gore, violence, death</p>
+  </div>
+</section>
+
+<section id="game" class="screen">
   <div id="hud">
-    <div class="hud-row">
-      <div class="hud-brand">Sun N Fun</div>
-      <div class="hud-meter">
-        <div class="hud-meter-label"><span>Suspicion</span><span id="suspicion-num">30 / 100</span></div>
-        <div class="hud-meter-bar"><div id="suspicion-fill"></div></div>
-      </div>
-      <div class="hud-btns">
-        <button class="hud-btn" id="hud-map" onclick="renderMap()">Map</button>
-        <button class="hud-btn" id="hud-clues" onclick="renderClues()">Clues <span id="clue-count">0/8</span></button>
-        <button class="hud-btn danger" id="hud-accuse" onclick="openAccuse()">Accuse</button>
-      </div>
+    <div class="brand">Sun N Fun<span>Est. 1974</span></div>
+    <div class="meter">
+      <div class="lab"><span>Suspicion</span><span id="susp-num">30 / 100</span></div>
+      <div class="track"><div id="susp"></div></div>
+    </div>
+    <div class="hud-cash" title="Cash on hand">$<b id="cash-n">60</b></div>
+    <div class="hud-btns">
+      <button onclick="openMap()" title="Map (M)">Map</button>
+      <button onclick="openFile()" title="Case file (C)">File <span id="clue-n">0</span></button>
+      <button class="danger" onclick="openAccuse()" title="Accuse (A)">Accuse</button>
+      <button id="snd-btn" onclick="toggleSound()" title="Sound">♪</button>
     </div>
   </div>
-  <div id="game-body"></div>
+  <div id="stage" class="stage">
+    <div id="bg" class="bg"></div>
+    <img id="fig" class="fig" alt="">
+    <div class="grade"></div>
+    <div class="vig" id="vig"></div>
+    <div class="grain"></div>
+    <div class="scene-head" id="head"></div>
+    <div id="body"></div>
+  </div>
+</section>
+
+<div id="cine" class="cine hidden">
+  <div id="cine-bg" class="cine-bg"></div>
+  <img id="cine-fig" class="cine-fig" alt="">
+  <div class="cine-shade"></div>
+  <div id="cine-lines" class="cine-lines"></div>
+  <div class="cine-foot">
+    <span id="cine-hint">Tap / space to continue</span>
+    <button onclick="skipCine()">Skip scene</button>
+  </div>
 </div>
 
-<div id="toast"></div>
+<div id="fx"></div>
+<div id="toast" role="status" aria-live="polite"></div>
 
 <script>
-/* ============================================================================
+/* ==========================================================================
    SUN N FUN — ESCAPE THE TRAILER PARK
-   A talk-to-people, find-clues escape game. No slots. No money. No runner.
-   ----------------------------------------------------------------------------
-   CAST — THE WHOLE CAST LIVES HERE. Leon renames / replaces people here.
-   Each character: id, name, face (emoji shown in the circle), note (one line),
-   where they stand, and their dialogue stages.
-   The snitch is picked at random from SUSPECTS every new game. Earl is the
-   witness: he always tells the truth — unless HE is the snitch, and then he
-   says nothing at all.
-   ============================================================================ */
+   First-person horror at Sun & Fun Estates, Rineyville, KY.
+   You are at 180 Tomahawk Trl. Dawn is at 6:00. Somebody talked to the cops.
+   ========================================================================== */
+var IMG = {
+  garage: "../img/sun-n-fun/garage.jpg",
+  pond: "../img/sun-n-fun/pond.jpg",
+  office: "../img/sun-n-fun/office.jpg",
+  bonfire: "../img/sun-n-fun/bonfire.jpg",
+  laundry: "../img/sun-n-fun/laundry.jpg",
+  gate: "../img/sun-n-fun/gate.jpg",
+  bunny: "../img/sun-n-fun/bunny.jpg",
+  razor: "../img/sun-n-fun/razor.jpg",
+  marlene: "../img/sun-n-fun/marlene.jpg",
+  dwayne: "../img/sun-n-fun/dwayne.jpg",
+  tanya: "../img/sun-n-fun/tanya.jpg",
+  earl: "../img/sun-n-fun/earl.jpg",
+  preacher: "../img/sun-n-fun/preacher.jpg",
+  mushroom: "../img/sun-n-fun/mushroom.jpg",
+  abel: "../img/sun-n-fun/abel.jpg",
+  pondNight: "../img/sun-n-fun/pond-night.jpg"
+};
+
+/* ---------------------------------------------------------------- CAST --- */
 var CAST = {
   bunny: {
-    name: "The Bunny Man", face: "🐰", where: "garage",
-    note: "Sits across from you. Never gives his name. He is the court.",
+    name: "The Bunny Man", real: "Daryl Vance", age: "44",
+    img: IMG.bunny, where: "garage",
+    note: "Park handyman. Wears the mask. Runs the court.",
+    facts: "Lot 3 · handyman · two tours, no record",
+    idle: "<em>BUNNY:</em> That's all the court has to say. The rest is yours.",
+    lore: [
+      { q: "Why the rabbit mask?",
+        a: "<em>BUNNY:</em> My brother wore it the night the office burned. Halloween, 2003. He was eleven. They pulled the mask out of the ashes and nothing else. I put it on so somebody in this park has to look at him." },
+      { q: "What really happened in 2003?",
+        a: "<em>BUNNY:</em> The county called it wiring. It wasn't wiring. Somebody wanted that lot and my mother wouldn't sell. I was in Fallujah. I came home to two urns and a gravel parking space." },
+      { q: "Why run a court in a trailer park?",
+        a: "<em>BUNNY:</em> Because the law drove past that fire twice. So I built a smaller law. It's ugly. It's mine." }
+    ],
     stages: [
-      { say: "<span class='who'>BUNNY:</span> You slept through a raid, friend. Cops took Mikey last night. Three cruisers. Somebody pointed.",
+      { say: "<em>BUNNY:</em> You slept through a raid, friend. Cops took Mikey at three. Three cruisers. Somebody pointed.<br><br>The mask has a crack through the left eye. Something dark has dried inside the crack, and it isn't paint.",
         choices: [
-          { t: "I didn't talk to anybody.", r: "<span class='who'>BUNNY:</span> That's what they all say. Every time.", s: 5, next: 1 },
-          { t: "Who got busted?", r: "<span class='who'>BUNNY:</span> Mikey. Somebody knew his schedule. Somebody always knows.", s: 0, next: 1 },
-          { t: "I owe nothing. Prove it.", r: "<span class='who'>BUNNY:</span> Bold. Wrong, but bold. Razor likes bold.", s: 10, next: 1 }
-        ]},
-      { say: "<span class='who'>BUNNY:</span> Two things, friend. The debt. And the snitch. Sort both, and you walk out that gate. Get one wrong, and Razor gets to work.",
+          { t: "I didn't talk to anybody.", r: "<em>BUNNY:</em> That's what they all say. Every time. Say it again and I'll believe you less.", s: 5, next: 1 },
+          { t: "Who got busted?", r: "<em>BUNNY:</em> Mikey. The kid who cut grass for the whole park. Nineteen years old. Somebody knew his schedule. Somebody always knows.", s: 0, next: 1, note: "Bunny: Mikey, 19, was taken at 3 AM. Somebody knew his schedule." },
+          { t: "I owe nothing. Prove it.", r: "<em>BUNNY:</em> Bold. Wrong, but bold. Razor likes bold.", s: 10, next: 1 },
+          { t: "There's blood in the mask's crack.", r: "<em>BUNNY:</em> There's blood on your hands. Ask yourself which of us is wearing it.", s: 5, next: 1 }
+        ] },
+      { say: "<em>BUNNY:</em> Two things. The debt. And the snitch. Sort both and you walk out that gate. Get one wrong and Razor gets to work.<br><br>Behind him, the garage door is a black rectangle. Somewhere past it, water is dripping.",
         choices: [
-          { t: "Who says I owe?", r: "<span class='who'>BUNNY:</span> Dwayne says. Dwayne collects. Ask Dwayne.", s: 0, next: "end" },
-          { t: "The axe man ever talk?", r: "<span class='who'>BUNNY:</span> Razor talks with the stone. Listen close.", s: 0, next: "end" },
-          { t: "I'm going.", r: "<span class='who'>BUNNY:</span> Go on, then. The park is small. The night is long.", s: 0, next: "end" }
-        ]}
+          { t: "Who says I owe?", r: "<em>BUNNY:</em> Dwayne says. Dwayne collects. Ask Dwayne. Ask him with your hands where he can see them.", s: 0, next: "end" },
+          { t: "The axe man ever talk?", r: "<em>BUNNY:</em> Razor talks with the stone. Listen close.", s: 0, next: "end" },
+          { t: "Mikey's blood is on the garage floor.", r: "<em>BUNNY:</em> Then it's on somebody's shoes. Go find the shoes.", s: 0, next: "end", note: "The blood trail on the garage floor leads out the side door." },
+          { t: "I'm going.", r: "<em>BUNNY:</em> Go on, then. The park is small. The night is long.", s: 0, next: "end" }
+        ] }
     ]
   },
+
   razor: {
-    name: "Razor", face: "🪓", where: "garage",
+    name: "Razor", real: "Ellis Rook", age: "51",
+    img: IMG.razor, where: "garage",
     note: "The axe sharpener. He does not hurry. That is the whole threat.",
+    facts: "Lot 9 · ex-slaughterhouse · nine years, voluntary manslaughter",
+    idle: "<em>RAZOR:</em> Shhk. Shhk. That's all you get.",
+    lore: [
+      { q: "Why the axe?",
+        a: "<em>RAZOR:</em> Slaughterhouse, nineteen years. You stun them first. Nobody ever stunned me." },
+      { q: "Who did you kill?",
+        a: "<em>RAZOR:</em> My sister's husband. He put her in the ground slow, over nine years. I did it fast. That's the only difference between us." },
+      { q: "Do you like this?",
+        a: "<em>RAZOR:</em> No. But a man with a blade stops arguments. I'd rather be the reason a room goes quiet than the reason it burns." }
+    ],
     stages: [
-      { say: "<span class='who'>RAZOR:</span> Shhk. Shhk. He doesn't look up from the stone.",
+      { say: "<em>RAZOR:</em> Shhk. Shhk.<br><br>He doesn't look up from the stone. There is blood dried in the creases of his knuckles, old and black, and fresher blood under the nails.",
         choices: [
-          { t: "Nice axe.", r: "<span class='who'>RAZOR:</span> It was nicer before the last guy.", s: 5, next: 1 },
-          { t: "What did the last guy do?", r: "<span class='who'>RAZOR:</span> He guessed wrong.", s: 0, next: 1 },
+          { t: "Nice axe.", r: "<em>RAZOR:</em> It was nicer before the last guy.", s: 5, next: 1 },
+          { t: "What did the last guy do?", r: "<em>RAZOR:</em> He guessed wrong.", s: 0, next: 1 },
           { t: "Leave him alone.", r: "You leave.", s: 0, next: "end" }
-        ]},
-      { say: "<span class='who'>RAZOR:</span> Shhk. Shhk. The stone is dry. The axe hasn't been swung in weeks.",
+        ] },
+      { say: "<em>RAZOR:</em> Shhk. Shhk. The stone is dry. The axe hasn't been swung in weeks. He turns the blade so the light runs down it.",
         choices: [
-          { t: "Look closer at the whetstone.", r: "<span class='who'>RAZOR:</span> No filings. No fresh edge. The blade is for show — but the man holding it isn't.", s: 0, clue: "whetstone", next: "end" },
-          { t: "You ever cut anybody?", r: "<span class='who'>RAZOR:</span> Not yet. Don't be the first.", s: 5, next: "end" }
-        ]}
+          { t: "Look closer at the whetstone.", r: "<em>RAZOR:</em> No filings. No fresh edge. The blade is for show.<br><br>But the man holding it isn't. Whatever opened Mikey's throat, it wasn't this axe.", s: 0, clue: "whetstone", next: "end" },
+          { t: "You ever cut anybody?", r: "<em>RAZOR:</em> Not yet. Don't be the first.", s: 5, next: "end" },
+          { t: "There's blood on your boot.", r: "<em>RAZOR:</em> There's blood on your hands. We're both dressed for it.", s: 5, next: "end" }
+        ] }
     ]
   },
+
   marlene: {
-    name: "Marlene", face: "📋", where: "office",
-    note: "Park manager. Keeps the books, the office, and the office phone.",
-    suspect: true,
-    accuseLine: "Park manager. Keeps the books and the office phone.",
+    name: "Marlene", real: "Marlene Purvis", age: "58",
+    img: IMG.marlene, where: "office", suspect: true,
+    note: "Park manager. Twenty-two years of books, keys and phone calls.",
+    facts: "Office trailer · manager since 2004 · signs every lot transfer",
+    accuseLine: "Park manager. Keeps the books, the keys and the office phone.",
+    idle: "<em>MARLENE:</em> Office hours are over. I told you once.",
+    lore: [
+      { q: "How long have you run this park?",
+        a: "<em>MARLENE:</em> Twenty-two years. My husband left me the books, the debt and a double-wide with a bad floor. I stayed." },
+      { q: "Whose names are in the ledger?",
+        a: "<em>MARLENE:</em> Everybody who's late. Everybody who's scared. I write them in pencil because I know they'll come beg." },
+      { q: "Why do you carry that phone everywhere?",
+        a: "<em>MARLENE:</em> Because the owner calls at three in the morning. Some outfit out of Louisville. They've been buying lots one widow at a time. I'm the one who signs." },
+      { q: "Who signs for the lots besides you?",
+        a: "<em>MARLENE:</em> Nobody. Except one name that keeps turning up on the county copies and never on mine. <em>A. Rennick.</em> Your people. I assumed it was you and I assumed wrong." },
+      { q: "Do you know Kessa?",
+        a: "<em>MARLENE:</em> She's been in my office three times this month asking about transfer paper. Sweet girl. Pretty hand. I never once saw her sign anything." }
+    ],
     stages: [
-      { say: "<span class='who'>MARLENE:</span> Office hours are over. And you're not supposed to be in here.",
+      { say: "<em>MARLENE:</em> Office hours are over. And you're not supposed to be in here.<br><br>The office smells like burnt coffee and bleach. Her glasses catch the fluorescent light. There's a fleck of something dark on the left lens.",
         choices: [
-          { t: "I need to see the debt book.", r: "<span class='who'>MARLENE:</span> You need a warrant. Or manners.", s: 5, next: 1 },
-          { t: "Who called the cops last night?", r: "<span class='who'>MARLENE:</span> Somebody who knew Mikey's schedule. I keep the books, not the secrets.", s: 0, next: 1 },
-          { t: "Nice office.", r: "<span class='who'>MARLENE:</span> Flattery. Cute. Leave.", s: 0, next: "end" }
-        ]},
-      { say: "<span class='who'>MARLENE:</span> Well? I'm waiting. The park doesn't run itself.",
+          { t: "I need to see the debt book.", r: "<em>MARLENE:</em> You need a warrant. Or manners.", s: 5, next: 1 },
+          { t: "Who called the cops last night?", r: "<em>MARLENE:</em> Somebody who knew Mikey's schedule. I keep the books, not the secrets.", s: 0, next: 1 },
+          { t: "There's blood on your phone.", r: "<em>MARLENE:</em> I cut my hand on a drawer. People bleed, hon. You of all people should know.", s: 5, next: 1 },
+          { t: "Nice office.", r: "<em>MARLENE:</em> Flattery. Cute. Leave.", s: 0, next: "end" }
+        ] },
+      { say: "<em>MARLENE:</em> Well? I'm waiting. The park doesn't run itself.<br><br>Behind her, a filing cabinet drawer is open two inches. Something in it is breathing, or the room is.",
         choices: [
-          { t: "Please. Somebody's trying to bury me.", r: "<span class='who'>MARLENE:</span> ...Fine. One look at the desk. Then out. And if I hear a drawer, I hear everything.", s: 0, flag: "marleneAllowed", next: "end" },
-          { t: "You got a phone log?", r: "<span class='who'>MARLENE:</span> Office phone's mine. I don't call the law on my own people.", s: 0, next: "end" },
-          { t: "I'm going.", r: "<span class='who'>MARLENE:</span> Go on.", s: 0, next: "end" }
-        ]}
+          { t: "Please. Somebody's trying to bury me.", r: "<em>MARLENE:</em> ...Fine. One look at the desk. Then out. And if I hear a drawer, I hear everything.", s: 0, flag: "marleneAllowed", next: "end", note: "Marlene will let you look at her desk — once." },
+          { t: "You got a phone log?", r: "<em>MARLENE:</em> Office phone's mine. I don't call the law on my own people.", s: 0, next: "end" },
+          { t: "I'm going.", r: "<em>MARLENE:</em> Go on.", s: 0, next: "end" }
+        ] }
     ]
   },
+
   dwayne: {
-    name: "Dwayne", face: "💰", where: "laundry",
-    note: "The collector. Pushes the $400 debt. Collects for somebody.",
-    suspect: true,
-    accuseLine: "The collector. Pushes the $400 debt.",
+    name: "Dwayne", real: "Dwayne Kessinger", age: "36",
+    img: IMG.dwayne, where: "laundry", suspect: true,
+    note: "The collector. Pushes the $400 debt. Sleeps in the laundry shed.",
+    facts: "No lot · Marlene's nephew · three worthless-check warrants",
+    accuseLine: "The collector. Pushes the $400 debt and sleeps in the laundry shed.",
+    idle: "<em>DWAYNE:</em> Four hundred. We're done here.",
+    lore: [
+      { q: "Why do you collect?",
+        a: "<em>DWAYNE:</em> Somebody has to. Marlene asked. She's my aunt. She paid for my mom's funeral and never once said the number out loud." },
+      { q: "Where's your family?",
+        a: "<em>DWAYNE:</em> Son's in juvey in Lexington. Baby mama took the truck. I sleep in the laundry shed most nights. You want to laugh, do it now." },
+      { q: "Did you hurt Mikey?",
+        a: "<em>DWAYNE:</em> No. I shook him down for forty dollars and he cried. I felt like a dog for a week." },
+      { q: "Who told you I owed four hundred?",
+        a: "<em>DWAYNE:</em> A woman came to me with a marker and a hundred cash. Said make it four hundred and make him sweat. I never asked why. I never ask why." },
+      { q: "You ever meet a cousin of mine?",
+        a: "<em>DWAYNE:</em> Burned hand? Won't come past the tree line? Yeah. He pays his markers on time. Only man in this park who does." }
+    ],
     stages: [
-      { say: "<span class='who'>DWAYNE:</span> Well well. The drunk with the debt.",
+      { say: "<em>DWAYNE:</em> Well well. The drunk with the debt.<br><br>The laundry shed hums. One washer is running with nothing in it. His knuckles are split and scabbed, and the gold chain has a dark smear on the clasp.",
         choices: [
-          { t: "What debt? Name the number.", r: "<span class='who'>DWAYNE:</span> Four hundred. Cash. Tonight.", s: 0, next: 1 },
-          { t: "I was passed out. I don't remember any bet.", r: "<span class='who'>DWAYNE:</span> Convenient memory. Everybody in this park remembers but you.", s: 5, next: 1 },
-          { t: "Who'd you hear it from?", r: "<span class='who'>DWAYNE:</span> A little bird with a ledger. Pay up.", s: 0, next: 1 }
-        ]},
-      { say: "<span class='who'>DWAYNE:</span> Four hundred. Don't make me come find you twice.",
+          { t: "What debt? Name the number.", r: "<em>DWAYNE:</em> Four hundred. Cash. Tonight.", s: 0, next: 1 },
+          { t: "I was passed out. I don't remember any bet.", r: "<em>DWAYNE:</em> Convenient memory. Everybody in this park remembers but you.", s: 5, next: 1 },
+          { t: "Who'd you hear it from?", r: "<em>DWAYNE:</em> A little bird with a ledger. Pay up.", s: 0, next: 1 },
+          { t: "There's blood on your chain.", r: "<em>DWAYNE:</em> It's ketchup, detective. You want to see the bottle?", s: 5, next: 1 }
+        ] },
+      { say: "<em>DWAYNE:</em> Four hundred. Don't make me come find you twice.<br><br>Behind him, the back door is propped open with a brick. The mud outside is tracked in, and some of the tracks are the wrong colour.",
         choices: [
-          { t: "Show him the ledger page — your name isn't in it.", r: "<span class='who'>DWAYNE:</span> ...Fine. Fine! You owed twenty bucks for beer. Somebody wanted you scared, so I made the rest up. Happy?", s: 0, clue: "confession", next: "end", need: { clue: "ledger" } },
-          { t: "Call his bluff.", r: "<span class='who'>DWAYNE:</span> Bluff? Son, I got an axe man on retainer.", s: 10, next: "end" },
-          { t: "Walk away.", r: "<span class='who'>DWAYNE:</span> Tonight, friend. Four hundred.", s: 0, next: "end" }
-        ]}
+          { t: "Pay the four hundred. Cash. Now.", r: "<em>DWAYNE:</em> ...You actually got it. Huh.<br><br>He counts it twice and doesn't look at you once. Then he reaches into his jacket and hands you a folded paper.<br><br><em>DWAYNE:</em> The woman who brought this to me signed the bottom. Look at it. That is not your handwriting, friend. I knew it when she handed it over. I took it anyway, because I needed the money.<br><br>He looks at the floor. <em>DWAYNE:</em> I always need the money.", s: -10, need: { cash: 400 }, pay: 400, clue: "iou", flag: "paidDebt", next: "end", note: "You paid Dwayne the four hundred. The marker he handed back is signed in Kessa's handwriting." },
+          { t: "Show him the ledger page — your name isn't in it.", r: "<em>DWAYNE:</em> ...Fine. Fine! You owed twenty bucks for beer. Somebody wanted you scared, so I made the rest up. Happy?<br><br>He looks at the floor. <em>DWAYNE:</em> I needed the money. That's all. I needed the money.", s: 0, clue: "confession", need: { clue: "ledger" }, next: "end" },
+          { t: "Call his bluff.", r: "<em>DWAYNE:</em> Bluff? Son, I got an axe man on retainer.", s: 10, next: "end" },
+          { t: "Walk away.", r: "<em>DWAYNE:</em> Tonight, friend. Four hundred.", s: 0, next: "end" }
+        ] }
     ]
   },
+
   tanya: {
-    name: "Tanya", face: "👁️", where: "pond",
-    note: "Neighbor on Tomahawk. Saw the cops come. Lives by the pond.",
-    suspect: true,
-    accuseLine: "Neighbor on Tomahawk. Saw the cops come.",
+    name: "Tanya", real: "Tanya Bledsoe", age: "34",
+    img: IMG.tanya, where: "pond", suspect: true,
+    note: "Neighbor on Tomahawk. Night nurse. Watches the road.",
+    facts: "111 Tomahawk Trl · hospice nurse · sister missing since 2019",
+    accuseLine: "Neighbor on Tomahawk. Night nurse. Watches every car that comes in.",
+    idle: "<em>TANYA:</em> I've said all I can. Please.",
+    lore: [
+      { q: "Why do you watch the road?",
+        a: "<em>TANYA:</em> My sister lived at 111. 2019, she left for a shift and the park said she never came home. I moved into her trailer to keep the porch light on." },
+      { q: "That blood on your sleeve.",
+        a: "<em>TANYA:</em> Hospice. Old man, cancer, his wife screaming in the kitchen. It's not the worst thing I've washed out this month." },
+      { q: "What do you think happened to Mikey?",
+        a: "<em>TANYA:</em> I think he saw something he shouldn't have. This park has one rule, hon: don't look." },
+      { q: "You know Kessa? My girlfriend?",
+        a: "<em>TANYA:</em> I know she parks her car on Tomahawk after midnight and walks toward the trees, not the trailer. I've been a night nurse eleven years, hon. I know what a woman looks like when she's lying about where she's been." },
+      { q: "Who walks past the tree line?",
+        a: "<em>TANYA:</em> Nobody. That's the point of a tree line. But there's a man back there who doesn't come out, and my sister used to leave food for him like you'd leave it for a cat." }
+    ],
     stages: [
-      { say: "<span class='who'>TANYA:</span> You shouldn't be here. The cops were here. They're coming back.",
+      { say: "<em>TANYA:</em> You shouldn't be here. The cops were here. They're coming back.<br><br>The pond behind her is flat and black. Something pale turns over under the surface, slow, like a hand waving.",
         choices: [
-          { t: "What did you see last night?", r: "<span class='who'>TANYA:</span> Three cruisers, 3 AM. Somebody pointed at Mikey's place. Then a phone light, down by the pond.", s: 0, next: 1, flag: "phoneHint" },
-          { t: "Was it me? Did you see me?", r: "<span class='who'>TANYA:</span> You were facedown in the garage all night. Everybody knows that. That's why this stinks.", s: -5, next: 1 },
-          { t: "Who points a finger in this park?", r: "<span class='who'>TANYA:</span> Somebody who wants Mikey's lot. Or somebody the cops already own.", s: 0, next: 1 }
-        ]},
-      { say: "<span class='who'>TANYA:</span> I already said too much. What else?",
+          { t: "What did you see last night?", r: "<em>TANYA:</em> Three cruisers, 3 AM. Somebody pointed at Mikey's place. Then a phone light, down by the pond. It went out. It didn't come back up.", s: 0, flag: "phoneHint", next: 1, note: "Tanya: at 3 AM a phone light went down to the pond and never came back up." },
+          { t: "Was it me? Did you see me?", r: "<em>TANYA:</em> You were face down in that garage all night. Everybody knows that. That's why this stinks.", s: -5, next: 1 },
+          { t: "Who points a finger in this park?", r: "<em>TANYA:</em> Somebody who wants Mikey's lot. Or somebody the cops already own.", s: 0, next: 1 }
+        ] },
+      { say: "<em>TANYA:</em> I already said too much. What else?<br><br>Her sleeve is stiff with dried blood. She keeps looking past you at the water.",
         choices: [
-          { t: "The phone light — where exactly?", r: "<span class='who'>TANYA:</span> In the pond. I saw it go in. If you want it, wade for it.", s: 0, next: "end" },
-          { t: "Who sees everything around here?", r: "<span class='who'>TANYA:</span> Earl. Earl sees everything and says nothing — till you ask right.", s: 0, next: "end" },
-          { t: "I'm going.", r: "<span class='who'>TANYA:</span> Careful out there.", s: 0, next: "end" }
-        ]}
+          { t: "The phone light — where exactly?", r: "<em>TANYA:</em> In the pond. I saw it go in. If you want it, wade for it. And don't blame me for what comes up.", s: 0, next: "end", note: "Tanya: the phone is in the pond. Wade in for it." },
+          { t: "Who sees everything around here?", r: "<em>TANYA:</em> Earl. Earl sees everything and says nothing — till you ask right.", s: 0, next: "end" },
+          { t: "I'm going.", r: "<em>TANYA:</em> Careful out there.", s: 0, next: "end" }
+        ] }
     ]
   },
+
   earl: {
-    name: "Earl", face: "🔥", where: "bonfire",
-    note: "Old-timer. Forty years in the park. Sits by the bonfire and sees everything.",
-    suspect: true,
-    accuseLine: "Old-timer. Forty years by the bonfire. Sees everything.",
+    name: "Earl", real: "Earl Sizemore", age: "71",
+    img: IMG.earl, where: "bonfire", suspect: true,
+    note: "Old-timer. Forty years in the park. Sits by the fire and sees everything.",
+    facts: "Lot 1 · forty years · called in the 2003 fire",
+    accuseLine: "Old-timer. Forty years by the bonfire. Sees everything and says nothing.",
+    idle: "<em>EARL:</em> Fire's low. Nothing more from me.",
+    lore: [
+      { q: "Forty years?",
+        a: "<em>EARL:</em> Bought the lot in '81 for six thousand. Buried a wife and a dog here. The park keeps you if you let it." },
+      { q: "The fire in 2003.",
+        a: "<em>EARL:</em> I called it in. Stood right here. The hydrant on Boone was dry and the dispatcher asked me twice for the address. I still hear her asking." },
+      { q: "You ever lie?",
+        a: "<em>EARL:</em> Once. 2003. I told a boy his brother didn't feel anything. He looked at me like he knew." },
+      { q: "Who's the man with the burned hand?",
+        a: "<em>EARL:</em> Abel Rennick. Your cousin. They put an empty box in the ground for him in '03 and his mother cried at a box of air. He watches the pond now. He never did like the sun." },
+      { q: "What was in the pond before the pond?",
+        a: "<em>EARL:</em> A cellar. The park put water on top of it in '74 because it was cheaper than filling it. Some things you don't fill, son. You just cover." }
+    ],
     stages: [
-      { say: "<span class='who'>EARL:</span> Sit. Fire's warm. Night's cold. Same as always.",
+      { say: "<em>EARL:</em> Sit. Fire's warm. Night's cold. Same as always.<br><br>The fire is low. There's a smell under the woodsmoke — wet ash, and something sweeter.",
         choices: [
-          { t: "What happened last night?", r: "<span class='who'>EARL:</span> Cops. Mikey. Somebody talked, sure as the fire burns.", s: 0, next: 1 },
-          { t: "You been here long?", r: "<span class='who'>EARL:</span> Forty years. Seen every kind of trouble this park can grow.", s: 0, next: 1 },
-          { t: "You believe I owe four hundred?", r: "<span class='who'>EARL:</span> Son, you couldn't owe four hundred. You ain't got four hundred. Somebody's running a game on you.", s: -5, next: 1 }
-        ]},
-      { say: "<span class='who'>EARL:</span> The fire's dying. Ask what you came to ask.",
+          { t: "What happened last night?", r: "<em>EARL:</em> Cops. Mikey. Somebody talked, sure as the fire burns.", s: 0, next: 1 },
+          { t: "You been here long?", r: "<em>EARL:</em> Forty years. Seen every kind of trouble this park can grow.", s: 0, next: 1 },
+          { t: "You believe I owe four hundred?", r: "<em>EARL:</em> Son, you couldn't owe four hundred. You ain't got four hundred. Somebody's running a game on you.", s: -5, next: 1 },
+          { t: "You're sitting in something.", r: "<em>EARL:</em> Mud. Blood. At my age it's all mud.", s: 0, next: 1 }
+        ] },
+      { say: "<em>EARL:</em> The fire's dying. Ask what you came to ask.<br><br>He turns his hands over in the firelight, and the blood under his nails is black and dry.",
         choices: [
           { t: "Did you see anybody by the pond?", r: "EARL_SAW", s: 0, next: "end" },
-          { t: "Who else was up at 3 AM?", r: "<span class='who'>EARL:</span> Dogs. Cops. And one shape by the water. That's all I got.", s: 0, next: "end" },
-          { t: "I'm going.", r: "<span class='who'>EARL:</span> Watch your back, son. It's a small park.", s: 0, next: "end" }
-        ]}
+          { t: "Who else was up at 3 AM?", r: "<em>EARL:</em> Dogs. Cops. And one shape by the water. That's all I got.", s: 0, next: "end" },
+          { t: "I'm going.", r: "<em>EARL:</em> Watch your back, son. It's a small park.", s: 0, next: "end" }
+        ] }
     ]
+  },
+
+  preacher: {
+    name: "The Preacher", real: "Lamar Voss", age: "60",
+    img: IMG.preacher, where: "game",
+    note: "Runs the bones game behind the laundry. Holds every marker in the park.",
+    facts: "No lot · the bones table · holds every marker in Sun N Fun",
+    idle: "<em>PREACHER:</em> Table's open. Money talks, and mine talks loudest.",
+    lore: [
+      { q: "Why do they call you Preacher?",
+        a: "<em>PREACHER:</em> I used to bury people for free. Then I learned you can charge for the same kindness twice. Once at the grave, once at the table." },
+      { q: "How long has the game been running?",
+        a: "<em>PREACHER:</em> Since the office burned in '03. Somebody had to keep this park liquid, and it wasn't going to be the widow." },
+      { q: "Who signed my marker?",
+        a: "<em>PREACHER:</em> A woman. Pretty handwriting. Wrote your name, then hers under it, then put a hundred on the felt so I'd make it four. I don't forget a hand." }
+    ],
+    stages: [
+      { say: "<em>PREACHER:</em> Sit. Two dice, twelve ways to lose, and a chair still warm from somebody with worse luck than you.<br><br>He sets a bowl of bone dice on the table. There is a torn slip of paper under the bowl, and he does not move to hide it.",
+        choices: [
+          { t: "What's the game?", r: "<em>PREACHER:</em> Bones. Under seven, over seven, seven, or snake eyes. Snake eyes pays thirty. Nobody's hit it in eleven years. Lay your money down.", s: 0, flag: "metPreacher", clue: "slip", next: "end", note: "The Preacher runs bones behind the laundry. There's a torn betting slip under the dice bowl." },
+          { t: "Somebody bet in my name.", r: "<em>PREACHER:</em> Somebody sure did. Four hundred on a marker I'd never have taken from you. The handwriting wasn't yours, friend. It was prettier.", s: 0, clue: "slip", next: 1, note: "The Preacher: the four-hundred marker was not in your handwriting." },
+          { t: "Whose idea was the game?", r: "<em>PREACHER:</em> A man with a burned hand used to bring the cards. He stopped coming in '03. The dice stayed.", s: 0, next: 1, note: "Preacher: a man with a burned hand brought the cards, until 2003." }
+        ] },
+      { say: "<em>PREACHER:</em> You want to play, or you want to pray?<br><br>Under the table his boot taps a rhythm that doesn't match the record player.",
+        choices: [
+          { t: "Show me the marker with my name on it.", r: "<em>PREACHER:</em> ...Forty years I've kept this box shut. Fine. Look at it. Then look at the signature and tell me whose hand that is.", s: 0, clue: "iou", need: { clue: "slip" }, next: "end", note: "The marker: four hundred dollars, your printed name, and Kessa's signature in blue ink underneath." },
+          { t: "Watch his hands while he rolls.", r: "<em>PREACHER:</em> ...Sharp eyes. All right. The house dice are shaved, and they've been shaved since '03. Here's a hundred dollars to forget you noticed, and some advice: don't sit at this table twice.", s: 0, clue: "loadeddice", flag: "sharpDice", next: "end", note: "The house dice are shaved. The Preacher paid you a hundred to keep quiet." },
+          { t: "Sit down and roll.", r: "<em>PREACHER:</em> Now you're talking. Lay it down.", s: 0, next: "end" }
+        ] }
+    ]
+  },
+
+  mushroom: {
+    name: "Mushroom", real: "Mikey's dog", age: "6",
+    img: IMG.mushroom, where: "gate",
+    note: "A brown-and-white stray with one torn ear. He sleeps against the gate.",
+    facts: "No lot · will not leave the Boone Gate · belonged to Mikey",
+    idle: "<em>MUSHROOM:</em> He thumps his tail once, hard, and puts his chin back on his paws.",
+    lore: [
+      { q: "Who did you belong to?",
+        a: "<em>MUSHROOM:</em> He smells your hands and doesn't find what he's looking for. Then he licks them anyway. Under the fur there's a collar worn smooth, a name scratched out, and MUSHROOM cut in underneath." },
+      { q: "Why won't you leave the gate?",
+        a: "<em>MUSHROOM:</em> Because this is where the boy always came back from. Eleven years of coming back. He is not going to be the one who stops waiting." }
+    ],
+    stages: [
+      { say: "The dog is pressed flat against the chain-link, shivering. When you crouch he doesn't growl. He just watches your hands.<br><br>He is very thin. Somebody stopped feeding him about a week ago.",
+        choices: [
+          { t: "Buy him a hot dog from the machine ($10).", r: "<em>MUSHROOM:</em> He takes it so gently it's almost polite, then swallows it whole and leans his entire weight against your leg. Something in your chest gives way.", s: 0, need: { cash: 10 }, pay: 10, dog: 1, next: 1 },
+          { t: "Offer him your hand.", r: "<em>MUSHROOM:</em> He sniffs it, sneezes on it, and lets you scratch the good ear. It's a start.", s: 0, dog: 1, next: 1 },
+          { t: "Leave him alone.", r: "<em>MUSHROOM:</em> He watches you go. He does not follow.", s: 0, next: "end" }
+        ] },
+      { say: "He's up on all fours now, tail going, waiting to see which way you walk.<br><br>Whatever he was before this week, he was somebody's.",
+        choices: [
+          { t: "Come on, then. Mushroom.", r: "<em>MUSHROOM:</em> He falls in at your heel like he's been waiting eleven years for somebody to say his name right.", s: 0, dog: 2, next: "end", note: "Mushroom is following you. He belonged to Mikey. He still waits at the gate." },
+          { t: "Stay. Guard the gate.", r: "<em>MUSHROOM:</em> He sits. He'll be here.", s: 0, next: "end" }
+        ] }
+    ]
+  },
+
+  abel: {
+    name: "Cousin Abel", real: "Abel Rennick", age: "49",
+    img: IMG.abel, where: "pond", hidden: true,
+    note: "Your cousin. Buried in 2003. Still walking.",
+    facts: "Presumed dead 2003 · burn scars, left hand and face · lives past the tree line",
+    idle: "<em>ABEL:</em> You always did look at me like I was a photograph.",
+    lore: [], stages: []
   }
 };
 
-/* Suspects: the snitch is one of these, picked at random every new game. */
 var SUSPECTS = ["marlene", "dwayne", "tanya", "earl"];
+var ABEL_CLUES = ["photos", "abelhand", "kessanote", "iou"];
 
-/* What Earl saw — depends on who the snitch is. If Earl IS the snitch,
-   he says nothing at all. The pond phone is the ground truth. */
 var EARL_SAW = {
-  marlene: "<span class='who'>EARL:</span> Around 3. A shape, down by the water. Clipboard under the arm. Office folk walk like that.",
-  dwayne: "<span class='who'>EARL:</span> Around 3. A shape by the water. Gold chain caught the porch light. I know that glint.",
-  tanya: "<span class='who'>EARL:</span> Around 3. A shape by the water. Pink case in the hand, glowing like a firefly.",
-  earl: "<span class='who'>EARL:</span> Didn't see a thing. Fire was low. I was asleep."
+  marlene: "<em>EARL:</em> Around 3. A shape down by the water. Clipboard under the arm. Office folk walk like that, even in the dark.",
+  dwayne: "<em>EARL:</em> Around 3. A shape by the water. Gold chain caught the porch light. I know that glint.",
+  tanya: "<em>EARL:</em> Around 3. A shape by the water. Pink case in the hand, glowing like a firefly.",
+  earl: "<em>EARL:</em> Didn't see a thing. Fire was low. I was asleep.<br><br>He says it without blinking. His hands don't move."
 };
-/* The mark on the pond phone — the physical evidence. Matches Earl's story. */
+var EARL_NOTE = {
+  marlene: "Earl saw a shape at the pond at 3 AM. A clipboard under the arm.",
+  dwayne: "Earl saw a shape at the pond at 3 AM. A gold chain caught the light.",
+  tanya: "Earl saw a shape at the pond at 3 AM. A pink phone case glowing.",
+  earl: "Earl swears he saw nothing. He was asleep by a fire that never went out."
+};
 var PHONE_MARKS = {
-  marlene: "an office key tag on a lanyard, still clipped on.",
-  dwayne: "a scratched \u201CDW\u201D on the back.",
-  tanya: "a chipped pink case with a daisy sticker.",
-  earl: "a faded flag sticker, peeling at the corner."
+  marlene: "an office key tag on a lanyard, still clipped on. The tag says OFFICE.",
+  dwayne: "a scratched \"DW\" cut into the back with a knife.",
+  tanya: "a chipped pink case with a daisy sticker, worn at the corner.",
+  earl: "a faded flag sticker, peeling at the corner, and a thumbnail of dried blood in the charging port."
 };
-/* What the snitch says when you show them the phone. */
 var CONFRONT = {
-  marlene: "<span class='who'>MARLENE:</span> ...So it surfaced. I did what I had to. Mikey was going to burn us all.",
-  dwayne: "<span class='who'>DWAYNE:</span> That phone... Look. Mikey owed ME. The cops were the only collection I had left.",
-  tanya: "<span class='who'>TANYA:</span> Please. They said if I didn't, they'd take my boy too. Please don't tell them.",
-  earl: "<span class='who'>EARL:</span> ...Forty years in this park. And it ends like this."
+  marlene: "<em>MARLENE:</em> ...So it surfaced. I did what I had to. Mikey found the transfer papers. He was going to take them to the county and burn twenty-two years of my name. I only made a phone call. I didn't make the water.",
+  dwayne: "<em>DWAYNE:</em> That phone... Look. Mikey owed ME. The cops were the only collection I had left. I didn't know they'd bring three cars. I didn't know he'd run.",
+  tanya: "<em>TANYA:</em> Please. They said if I didn't call, they'd take my sister's lot. They said he'd only be held overnight. Please don't tell them I was the one.",
+  earl: "<em>EARL:</em> ...Forty years in this park. I called the law on a boy for standing where I stood in 2003. I thought I was saving him from the fire. I only moved it."
 };
-/* ============================================================================
-   LOCATIONS — six places on the map. The map is the real street layout:
-   Boone Rd (paved, vertical, left), Wampum Rd (horizontal), Mustang Ln
-   (diagonal), Tomahawk Trail, the Cochise Ct loop, and the pond on Tomahawk.
-   HARD RULE: no house numbers anywhere, nothing marked as a home address.
-   The start is a fictional lot: "Lot 7 — the garage".
-   ============================================================================ */
+
+/* ------------------------------------------------------------- LOCATIONS --- */
 var LOCS = {
-  garage: { name: "Lot 7 — the Garage", desc: "Concrete walls. A cot. The smell of last night.",
+  garage: { name: "180 Tomahawk Trl", addr: "The garage · your lot", img: IMG.garage,
+    desc: "Concrete walls, a cot, a metal chair, and the smell of last night. The blood on the floor has been dragged toward the side door in one long streak, like somebody was carried.",
+    hint: "This is your lot. Whatever happened, it started here.",
     chars: ["bunny", "razor"],
-    search: { clue: "slip", text: "You dig through the trash by the cot. A betting slip, torn in half." } },
-  pond: { name: "The Pond", desc: "Still water on Tomahawk Trail. Something glints under the surface.",
+    search: { clue: ["tape", "tooth"], text: "You dig through the trash by the cot. A strip of duct tape with hair still stuck to it. In the floor drain, something white and small: a tooth, split at the root." } },
+  pond: { name: "The Pond", addr: "Tomahawk Trl · by the Cochise loop", img: IMG.pond,
+    desc: "Still water. Dead trees. The park's one pretty thing, if you don't look at the bank. The bank has been looked at. There are heel marks in the mud, and a smear going in.",
+    hint: "Tanya watches the water. Whatever went in is still in there — and at night, so is everything else.",
     chars: ["tanya"],
-    search: { clue: "pondphone", text: "You wade in, cold to the knees, and pull something out of the mud." } },
-  office: { name: "Manager's Office", desc: "Marlene's trailer. A desk, a ledger, a phone that never stops.",
+    search: { clue: "pondphone", need: "phoneHint",
+      needText: "The water is black and cold. You don't know what you're looking for — not yet. Somebody saw a light go in. Ask around first.",
+      text: "You wade in, cold to the knees. The bottom is soft and gives under you. Your hand closes on something that is not a phone first." } },
+  office: { name: "Manager's Office", addr: "Cochise Ct · the office trailer", img: IMG.office,
+    desc: "Marlene's trailer. A desk, a ledger, filing cabinets, and a phone that never stops ringing until it does. The fluorescent tube stutters like it's deciding something.",
+    hint: "The debt book is in there. So is every call this park has made.",
     chars: ["marlene"],
-    search: { clue: ["ledger", "phonelog"], text: "You go through the desk drawers.", risk: true } },
-  bonfire: { name: "Bonfire Pit", desc: "A ring of stones and a fire that never quite goes out.",
+    search: { clue: ["ledger", "phonelog"], text: "You go through the desk drawers. The ledger is under a phone book. The call log is taped inside the top drawer, like a confession nobody was supposed to read.", risk: true } },
+  bonfire: { name: "Bonfire Pit", addr: "The middle of the park", img: IMG.bonfire,
+    desc: "A ring of stones and a fire that never quite goes out. Folding chairs, one knocked over. The tree line starts ten feet past the light and does not end.",
+    hint: "Earl has sat here for forty years. The fire remembers what he won't say.",
     chars: ["earl"],
-    search: { clue: "matchbook", text: "You poke through the ashes around the fire ring." } },
-  laundry: { name: "Laundry Shed", desc: "Washers that eat quarters and a door that never locks.",
-    chars: ["dwayne"],
-    search: { clue: "bootprint", text: "You check the mud by the shed door." } },
-  gate: { name: "Boone Gate", desc: "The gate out to Boone Rd. The world, one chain-link away.",
-    chars: [],
-    search: { clue: null, text: "Padlocked from the outside. You're not walking out till Bunny says so." } }
+    search: { clue: "matchbook", text: "You poke through the ashes around the fire ring. A matchbook from the Dew Drop Inn, one match left, and a bent bottle cap with somebody's tooth marks in it." } },
+  laundry: { name: "Laundry Shed", addr: "Wampum Rd · the gravel side", img: IMG.laundry,
+    desc: "Washers that eat quarters and a door that never locks. One machine is running with nothing inside it. The back door is propped open with a brick, and the mud coming in is the wrong colour.",
+    hint: "Dwayne sleeps here. So does whatever he drags in.",
+        chars: ["dwayne"],
+    search: { clue: ["bootprint", "kessanote"], text: "You check the mud by the back door. A size-12 work boot, headed out toward Tomahawk. The print is deep. Whatever made it was carrying something.<br><br>In the drum of the dead washer, folded twice and gone soft: a note in handwriting you know better than your own." } },
+  game: { name: "The Game", addr: "Wampum Rd · behind the laundry", img: IMG.laundry,
+    desc: "A card table under a tarp, two coolers, a battery lamp and a bowl of bone dice. The dryer vent pumps warm air across the felt so nobody's hands get cold. Nobody's hands get cold anyway.",
+    hint: "The Preacher runs bones here. He also holds every marker in the park.",
+    chars: ["preacher"],
+    search: { clue: null, text: "Under the table: cigarette burns, a boot heel, and a hundred torn corners of betting slips. Nothing with a name on it. The Preacher watches you look and says nothing at all." } },
+  gate: {
+    name: "Boone Gate", addr: "Boone Rd at Wampum · the park entrance", img: IMG.gate,
+    desc: "Chain-link, a padlock, and Boone Road going somewhere that isn't here. The gate is chained from the outside. There's blood on the latch, and a scrap of fabric in the wire. A dog is lying against it like the wire is a wall he can lean on.",
+    hint: "The only way out. Chained from the outside, which means somebody on the inside did it.",
+    chars: ["mushroom"],
+    search: { clue: null, text: "Padlocked from the outside. You're not walking out till Bunny says so. Through the wire, the road is empty in both directions." } }
 };
-/* Map coordinates for each location (viewBox 0 0 400 560). */
-var MAP_POS = { garage: [265, 175], pond: [320, 398], office: [255, 455], bonfire: [165, 455], laundry: [120, 415], gate: [30, 420] };
 
-/* ============================================================================
-   CLUES — eight of them. Two tracks:
-   DEBT track (proves the $400 was fake): ledger, confession, slip.
-   SNITCH track (names the snitch): pond phone (ground truth) + Earl's sighting.
-   To win you need: the right name + debt proof + at least 4 clues.
-   ============================================================================ */
+/* ----------------------------------------------------------------- CLUES --- */
 var CLUES = {
-  slip: { name: "Torn betting slip", s: -5,
-    text: "A betting slip, torn in half. The numbers on it don't match the $400 Dwayne claims." },
+  slip: { name: "Torn betting slip", s: -5, gore: false,
+    text: "A betting slip torn in half. The numbers don't match the $400 Dwayne claims. Somebody wanted you scared enough to run." },
   whetstone: { name: "Dry whetstone", s: -5,
-    text: "The stone is dry. No fresh filings. The axe hasn't cut anything in weeks. The threat is real, but the blade is dull." },
+    text: "The stone is dry. No fresh filings. The axe hasn't cut anything in weeks. The threat is real. The blade is dull." },
   ledger: { name: "The debt ledger", s: -10, debt: true,
-    text: "The park's debt ledger. Your name isn't in it. No entry, no debt. The $400 was never written down." },
+    text: "The park's debt ledger. Your name isn't in it. No entry, no debt. The $400 was never written down. Neither was Mikey's lot transfer — and the page has been razored out." },
   phonelog: { name: "Office phone log", s: 0,
-    text: "Office phone log: last call 9:40 PM, the parts store. Nothing at 3 AM. Marlene didn't call from this phone." },
-  pondphone: { name: "Phone from the pond", s: 0, dyn: true },
+    text: "The office call log. 3:12 AM, outgoing, forty-one seconds. The number is the sheriff's non-emergency line. Somebody called it from this phone and then wrote it down and then didn't throw it away." },
+  pondphone: { name: "Phone from the pond", s: 0, dyn: true, gore: true },
   confession: { name: "Dwayne's confession", s: -10, debt: true,
-    text: "Dwayne folded: you owed twenty bucks for beer. The rest was made up. Somebody wanted you scared." },
+    text: "Dwayne folded. You owed twenty dollars for beer. The rest was invented. Somebody wanted you scared." },
   matchbook: { name: "Dew Drop matchbook", s: 0,
-    text: "A matchbook from the Dew Drop Inn, one match left. Somebody sat by the fire late, waiting on something." },
-  bootprint: { name: "Muddy boot print", s: 0,
-    text: "A size-12 boot print by the shed door, heading toward the pond. Somebody went down to the water that night." }
+    text: "A matchbook from the Dew Drop Inn, one match left. Somebody sat by this fire late, waiting on something, and didn't want to be seen lighting it." },
+  bootprint: { name: "Boot print in blood", s: 0, gore: true,
+    text: "A size-12 work boot by the laundry door, heading toward the pond. The print is deep. Whoever made it was carrying something that bled." },
+  tape: { name: "Taped hair", s: 0, gore: true,
+    text: "A strip of duct tape with long dark hair stuck in the adhesive and a little dried blood at the edge. Somebody was restrained here. Somebody fought." },
+  tooth: { name: "Split tooth", s: 0, gore: true,
+    text: "A molar, split at the root, in the floor drain. There is more of it further down the pipe. You don't look." },
+  iou: { name: "The marker", s: 0,
+    text: "A four-hundred-dollar marker from the bones table. Your name is printed across the top in block letters. Under it, in looping blue ink, Kessa signed it." },
+  photos: { name: "Photos from the phone", s: 0, gore: false,
+    text: "Three photos survived the water. Kessa at the bonfire, laughing at somebody off-frame. Kessa with a burned hand on her hip, the tree line behind her. And Mikey, alive, holding up a folder with a county seal on it." },
+  abelhand: { name: "The burned hand", s: 0, gore: true,
+    text: "In the drained pond bed: a work glove and a handprint pressed into the silt. Not a glove print. Scar tissue, printed like a signature. Four fingers and a thumb." },
+  hatch: { name: "The drain hatch", s: 0, gore: true,
+    text: "A hatch under the pond, welded shut from underneath. Inside: a 2003 county fair wristband, a child's shoe, and eleven years of somebody's mail. All of it addressed to A. Rennick." },
+  kessanote: { name: "Kessa's note", s: 0,
+    text: "A folded note gone through twice in a washer drum. 'Abel says the papers are in the truck. Do not come home till Sunday. I love you. I'm sorry. K.'" },
+  loadeddice: { name: "Shaved dice", s: 0,
+    text: "The house dice are shaved on the four side. Every roll at that table has been decided since 2003. This park has been cheating longer than you've been awake." },
+  mikeydog: { name: "Mushroom's collar", s: 0,
+    text: "The dog's collar, worn smooth. A name scratched out. MUSHROOM cut in under it. And under that, in a kid's handwriting: 'MIKEY + MUSHROOM 4 EVER'." }
 };
-var CLUE_ORDER = ["slip", "whetstone", "ledger", "phonelog", "pondphone", "confession", "matchbook", "bootprint"];
+var CLUE_ORDER = ["slip", "whetstone", "ledger", "phonelog", "pondphone", "confession", "matchbook", "bootprint", "tape", "tooth", "iou", "photos", "abelhand", "hatch", "kessanote", "loadeddice", "mikeydog"];
+var NEED_CLUES = 9;
 
-/* ============================================================================
-   STATE
-   ============================================================================ */
-var S = {
-  loc: "garage",
-  suspicion: 30,
-  clues: [],
-  flags: {},
-  snitch: SUSPECTS[Math.floor(Math.random() * SUSPECTS.length)],
-  talkStage: {},
-  searched: {},
-  seenMapHint: false,
-  over: false
-};
+/* ------------------------------------------------------------------ STATE --- */
+var SAVE_KEY = "snf:case:v3";
 
+function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
 function el(id) { return document.getElementById(id); }
-function esc(s) { return s; }
+function pad(n) { return (n < 10 ? "0" : "") + n; }
 
+function fresh() {
+  return {
+    started: false, over: false, loc: "garage", susp: 30, minutes: 195,
+    clues: [], flags: {}, notes: [], lore: {}, talkStage: {}, searched: {},
+    seenMap: false, snitch: pick(SUSPECTS), sound: true, bodyFound: false,
+    cash: 60, mats: { wood: 6, scrap: 4 },
+    dog: { friend: 0, following: false, alive: true, fed: 0 },
+    paidDebt: false, deadWake: false, sawAbel: false
+  };
+}
+var S = fresh();
+
+function save() {
+  if (!S.started || S.over) return;
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(S)); } catch (e) {}
+}
+function clearSave() { try { localStorage.removeItem(SAVE_KEY); } catch (e) {} }
+function loadSave() {
+  try {
+    var raw = localStorage.getItem(SAVE_KEY);
+    if (!raw) return null;
+    var d = JSON.parse(raw);
+    if (!d || typeof d !== "object") return null;
+    if (!Array.isArray(d.clues) || SUSPECTS.indexOf(d.snitch) === -1) return null;
+    if (typeof d.susp !== "number" || !isFinite(d.susp)) return null;
+    return d;
+  } catch (e) { return null; }
+}
+
+function note(t) {
+  if (!t) return;
+  for (var i = 0; i < S.notes.length; i++) if (S.notes[i] === t) return;
+  S.notes.push(t);
+  if (S.notes.length > 24) S.notes.shift();
+}
+function hasClue(id) { return S.clues.indexOf(id) !== -1; }
+function hasDebtProof() { return hasClue("ledger") || hasClue("confession") || !!(S.flags && S.flags.paidDebt); }
+function debtLabel() {
+  if (hasClue("ledger") || hasClue("confession")) return "Proven fake";
+  if (S.flags && S.flags.paidDebt) return "Paid in full";
+  return "Unproven";
+}
+
+/* ------------------------------------------------------------------ AUDIO --- */
+var AC = null, master = null, muted = false, thumpTimer = null;
+function audioInit() {
+  if (AC) return;
+  try {
+    var C = window.AudioContext || window.webkitAudioContext;
+    if (!C) return;
+    AC = new C();
+    master = AC.createGain();
+    master.gain.value = muted ? 0 : .5;
+    master.connect(AC.destination);
+    var o1 = AC.createOscillator(), o2 = AC.createOscillator(), f = AC.createBiquadFilter(), g = AC.createGain();
+    o1.type = "sawtooth"; o2.type = "sawtooth";
+    o1.frequency.value = 43; o2.frequency.value = 43.7;
+    f.type = "lowpass"; f.frequency.value = 150;
+    g.gain.value = .05;
+    o1.connect(f); o2.connect(f); f.connect(g); g.connect(master);
+    o1.start(); o2.start();
+    thumpTimer = setInterval(function () {
+      if (!AC || muted || !S.started || S.over) return;
+      if (S.susp < 55) return;
+      thump(AC.currentTime, S.susp > 80 ? .35 : .2);
+    }, 1100);
+  } catch (e) { AC = null; }
+}
+function thump(t, vol) {
+  if (!AC || !master) return;
+  var o = AC.createOscillator(), g = AC.createGain();
+  o.type = "sine";
+  o.frequency.setValueAtTime(62, t);
+  o.frequency.exponentialRampToValueAtTime(34, t + .18);
+  g.gain.setValueAtTime(0, t);
+  g.gain.linearRampToValueAtTime(vol, t + .02);
+  g.gain.exponentialRampToValueAtTime(.001, t + .28);
+  o.connect(g); g.connect(master); o.start(t); o.stop(t + .3);
+}
+function sting(big) {
+  if (!AC || muted) return;
+  var t = AC.currentTime;
+  var len = big ? 1.4 : .5;
+  var buf = AC.createBuffer(1, AC.sampleRate * len, AC.sampleRate);
+  var d = buf.getChannelData(0);
+  for (var i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 3);
+  var src = AC.createBufferSource(); src.buffer = buf;
+  var f = AC.createBiquadFilter(); f.type = "bandpass"; f.frequency.value = big ? 700 : 1800; f.Q.value = .8;
+  var g = AC.createGain(); g.gain.setValueAtTime(big ? .5 : .22, t); g.gain.exponentialRampToValueAtTime(.001, t + len);
+  src.connect(f); f.connect(g); g.connect(master); src.start(t);
+  if (big) { thump(t, .5); thump(t + .32, .3); }
+}
+function toggleSound(force) {
+  audioInit();
+  if (typeof force === "boolean") muted = !force; else muted = !muted;
+  if (AC && master) master.gain.value = muted ? 0 : .5;
+  S.sound = !muted;
+  var l = el("snd-label"); if (l) l.textContent = "Sound: " + (muted ? "off" : "on");
+  var b = el("snd-btn"); if (b) { b.textContent = muted ? "×" : "♪"; }
+  if (AC && AC.state === "suspended") AC.resume();
+  save();
+}
+
+/* ------------------------------------------------------------------ HUD ---- */
+function clockText() {
+  var h = Math.floor(S.minutes / 60), m = S.minutes % 60;
+  var ap = h >= 12 ? "PM" : "AM";
+  var hh = h % 12; if (hh === 0) hh = 12;
+  return hh + ":" + pad(m) + " " + ap;
+}
+function updateHUD() {
+  el("susp-num").textContent = S.susp + " / 100";
+  var bar = el("susp");
+  bar.style.width = S.susp + "%";
+  bar.style.background = S.susp >= 80 ? "#c1121f" : (S.susp >= 55 ? "#a8501e" : "#8a6d2c");
+  el("clue-n").textContent = S.clues.length;
+  var cn = el("cash-n"); if (cn) cn.textContent = S.cash;
+  el("vig").className = "vig" + (S.susp >= 60 ? " hot" : "");
+  save();
+}
+function spend(min) {
+  if (S.over) return;
+  S.minutes = Math.min(360, S.minutes + min);
+  if (S.minutes >= 360) { endGame("dawn"); return; }
+  if (S.minutes >= 300 && !S.flags.warnedDawn) {
+    S.flags.warnedDawn = true;
+    toast("<b>5:00 AM.</b> One hour to dawn. Bunny is losing patience.");
+  }
+  updateHUD();
+}
+function susp(d) {
+  if (S.over || !d) return;
+  S.susp = Math.max(0, Math.min(100, S.susp + d));
+  updateHUD();
+  if (S.susp >= 100) endGame("suspicion");
+}
+
+/* ----------------------------------------------------------------- FX ----- */
 var toastTimer = null;
 function toast(html) {
+  if (typeof CINE !== "undefined" && CINE && CINE.active) return;
   var t = el("toast");
   t.innerHTML = html;
   t.classList.add("show");
   if (toastTimer) clearTimeout(toastTimer);
-  toastTimer = setTimeout(function () { t.classList.remove("show"); }, 3400);
+  toastTimer = setTimeout(function () { t.classList.remove("show"); }, 3600);
+}
+function fx(kind) {
+  var f = el("fx");
+  f.className = kind;
+  setTimeout(function () { f.className = ""; }, kind === "flash" ? 110 : 650);
+  if (kind === "blood") { sting(true); document.body.classList.add("shake"); setTimeout(function () { document.body.classList.remove("shake"); }, 460); }
 }
 
-function updateHUD() {
-  el("suspicion-num").textContent = S.suspicion + " / 100";
-  var f = el("suspicion-fill");
-  f.style.width = S.suspicion + "%";
-  f.style.background = S.suspicion >= 80 ? "#ff4444" : (S.suspicion >= 50 ? "#ff6b35" : "#e8b84a");
-  el("clue-count").textContent = S.clues.length + "/8";
+/* ------------------------------------------------------------- SCREEN ----- */
+function showScreen(id) {
+  var s = document.querySelectorAll(".screen");
+  for (var i = 0; i < s.length; i++) s[i].classList.remove("on");
+  el(id).classList.add("on");
+}
+function enterSite() {
+  el("gate").classList.add("hidden");
+  audioInit();
+  setTimeout(function () { window.scrollTo(0, 0); }, 10);
+}
+function goMenu() {
+  showScreen("menu");
+  audioInit();
+  var saved = loadSave();
+  if (saved) {
+    el("btn-continue").classList.remove("hidden");
+    el("btn-start").textContent = "Start a new case";
+    el("menu-save").classList.remove("hidden");
+    el("menu-save").innerHTML = "A case is open: " + saved.clues.length + " of " + CLUE_ORDER.length + " clues, suspicion " + saved.susp + ", " + (saved.minutes >= 300 ? "near dawn" : "still dark") + ".";
+  }
 }
 
-function susp(d) {
+/* ------------------------------------------------------------- SCENE ------ */
+function setBg(img) { el("bg").style.backgroundImage = "url('" + img + "')"; }
+function setFig(id, cls) {
+  var f = el("fig");
+  if (!id) { f.classList.remove("show"); f.removeAttribute("src"); return; }
+  f.src = CAST[id].img;
+  f.className = "fig show" + (cls ? " " + cls : "");
+}
+function headHTML(L) {
+  return '<div><div class="nm">' + L.name + '</div><div class="ad">' + L.addr + '</div></div>' +
+    '<div class="clock">' + phaseName() + '<b>' + clockText() + '</b></div>';
+}
+function renderLoc(loc) {
   if (S.over) return;
-  S.suspicion = Math.max(0, Math.min(100, S.suspicion + d));
+  S.loc = loc;
+  var L = LOCS[loc];
+  setBg(L.img);
   updateHUD();
-  if (S.suspicion >= 100) endGame("suspicion");
+  el("head").innerHTML = headHTML(L);
+  setFig(null);
+  var rows = "";
+  L.chars.forEach(function (cid) {
+    var c = CAST[cid];
+    rows += '<button class="person" onclick="talk(\'' + cid + '\')">' +
+      '<img src="' + c.img + '" alt="">' +
+      '<span><span class="who">' + c.name + '</span><span class="note">' + c.note + '</span></span>' +
+      '<span class="arrow">›</span></button>';
+  });
+  var searched = S.searched[loc];
+  var extra = "";
+  if (loc === "game") extra += '<button class="btn ghost" onclick="openTable()">Bones</button>';
+  if (loc === "pond" && S.flags.deadWake) extra += '<button class="btn ghost" onclick="openBase()">Hold the pond</button>';
+  el("body").innerHTML =
+    '<div class="loc-card">' +
+      '<div class="eyebrow">' + L.addr + '</div>' +
+      '<p>' + L.desc + '</p>' +
+      '<div class="rows">' + rows + '</div>' +
+      '<div class="loc-actions">' +
+        '<button class="btn blood" ' + (searched ? 'disabled' : 'onclick="searchLoc(\'' + loc + '\')"') + '>' + (searched ? "Searched" : "Search the place") + '</button>' +
+        extra +
+        '<button class="btn ghost" onclick="openMap()">Map</button>' +
+      '</div>' +
+      '<div class="mini-note">' + L.hint + '</div>' +
+    '</div>';
+  save();
 }
 
-function hasClue(id) { return S.clues.indexOf(id) !== -1; }
-function hasDebtProof() {
-  return hasClue("ledger") || hasClue("confession");
+/* ------------------------------------------------------------- DIALOGUE --- */
+function talk(cid) {
+  if (S.over) return;
+  renderTalk(cid, S.talkStage[cid] || 0);
 }
-function pondPhoneText() {
-  return "A phone, fished out of the pond. The call log was wiped — but the last number dialed was the sheriff, 3:12 AM. The case: " + PHONE_MARKS[S.snitch];
+function loreAvailable(cid) {
+  var c = CAST[cid], out = [];
+  (c.lore || []).forEach(function (l, i) { if (!S.lore[cid + ":" + i]) out.push(i); });
+  return out;
 }
-function clueText(id) {
-  if (id === "pondphone") return pondPhoneText();
-  return CLUES[id].text;
+function renderTalk(cid, stage) {
+  if (S.over) return;
+  var c = CAST[cid], st = c.stages[stage];
+  setFig(cid);
+  if (!st) {
+    var html = '<div class="dlg"><div class="spk">' + c.name + '</div>' +
+      '<div class="say">' + c.idle + '</div>';
+    if (c.suspect && hasClue("pondphone") && !S.flags["confronted_" + cid]) {
+      html += '<button class="choice" onclick="confront(\'' + cid + '\')">Show them the phone from the pond.</button>';
+    }
+    loreAvailable(cid).forEach(function (i) {
+      html += '<button class="choice" onclick="askLore(\'' + cid + '\',' + i + ')">Ask: “' + c.lore[i].q + '”</button>';
+    });
+    html += '<div class="foot"><button class="btn ghost" onclick="renderLoc(\'' + S.loc + '\')">Step back</button></div></div>';
+    el("body").innerHTML = html;
+    el("head").innerHTML = headHTML(LOCS[S.loc]);
+    return;
+  }
+  var html2 = '<div class="dlg"><div class="spk">' + c.name + '<span class="tag">' + (c.real || "") + '</span></div>' +
+    '<div class="say">' + st.say + '</div>';
+  st.choices.forEach(function (ch, i) {
+    if (ch.need) {
+      var ok = true;
+      if (ch.need.clue && !hasClue(ch.need.clue)) ok = false;
+      if (ch.need.flag && !S.flags[ch.need.flag]) ok = false;
+      if (ch.need.cash && S.cash < ch.need.cash) ok = false;
+      if (!ok) return;
+    }
+    html2 += '<button class="choice" onclick="choose(\'' + cid + '\',' + stage + ',' + i + ')">' + ch.t + '</button>';
+  });
+  if (c.suspect && hasClue("pondphone") && !S.flags["confronted_" + cid]) {
+    html2 += '<button class="choice" onclick="confront(\'' + cid + '\')">Show them the phone from the pond.</button>';
+  }
+  loreAvailable(cid).forEach(function (i) {
+    html2 += '<button class="choice needs" onclick="askLore(\'' + cid + '\',' + i + ')">Ask about them: “' + c.lore[i].q + '”</button>';
+  });
+  html2 += '<div class="foot"><button class="btn ghost" onclick="renderLoc(\'' + S.loc + '\')">Step back</button></div></div>';
+  el("body").innerHTML = html2;
+  el("head").innerHTML = headHTML(LOCS[S.loc]);
+  save();
 }
+function askLore(cid, i) {
+  if (S.over) return;
+  var stage = S.talkStage[cid] || 0;
+  S.lore[cid + ":" + i] = true;
+  note(CAST[cid].name + " — " + CAST[cid].lore[i].q.replace(/\?$/, "."));
+  var html = '<div class="dlg"><div class="spk">' + CAST[cid].name + '</div>' +
+    '<div class="say">' + CAST[cid].lore[i].a + '</div>' +
+    '<button class="btn blood wide" onclick="renderTalk(\'' + cid + '\',' + stage + ')">Let them keep talking</button></div>';
+  el("body").innerHTML = html;
+  save();
+}
+function choose(cid, stage, i) {
+  if (S.over) return;
+  var c = CAST[cid], ch = c.stages[stage].choices[i];
+  if (!ch) return;
+  if (ch.s) susp(ch.s);
+  if (S.over) return;
+  spend(4);
+  if (S.over) return;
+  if (ch.pay) { S.cash -= ch.pay; updateHUD(); }
+  if (ch.dog) {
+    S.dog.friend += ch.dog;
+    S.dog.fed += 1;
+    if (S.dog.friend >= 3 && !S.dog.following) {
+      S.dog.following = true;
+      toast("<b>MUSHROOM.</b> He's coming with you.");
+      sting(false);
+    }
+  }
+  if (ch.flag) S.flags[ch.flag] = true;
+  if (ch.note) note(ch.note);
+  if (ch.clue) addClue(ch.clue);
+  if (S.over) return;
+  var reply = ch.r;
+  if (reply === "EARL_SAW") {
+    reply = EARL_SAW[S.snitch];
+    note(EARL_NOTE[S.snitch]);
+  }
+  var next = (ch.next === "end") ? "end" : ch.next;
+  var label = (next === "end") ? "Step back" : "Keep going";
+  el("body").innerHTML = '<div class="dlg"><div class="spk">' + c.name + '</div>' +
+    '<div class="say">' + reply + '</div>' +
+    '<button class="btn blood wide" onclick="talkNext(\'' + cid + '\',' + (next === "end" ? "'end'" : next) + ')">' + label + '</button></div>';
+  save();
+}
+function talkNext(cid, next) {
+  if (S.over) return;
+  if (next === "end") {
+    S.talkStage[cid] = CAST[cid].stages.length;
+    renderLoc(S.loc);
+  } else {
+    S.talkStage[cid] = next;
+    renderTalk(cid, next);
+  }
+}
+function confront(cid) {
+  if (S.over) return;
+  S.flags["confronted_" + cid] = true;
+  fx("blood");
+  el("body").innerHTML = '<div class="dlg"><div class="spk">' + CAST[cid].name + '</div>' +
+    '<div class="say">' + CONFRONT[cid] + '</div>' +
+    '<button class="btn blood wide" onclick="renderLoc(\'' + S.loc + '\')">Let them go</button></div>';
+  note(CAST[cid].name + " admitted calling the sheriff.");
+  save();
+}
+
+/* --------------------------------------------------------------- CLUES ---- */
 function addClue(id) {
   if (hasClue(id)) return false;
   S.clues.push(id);
   if (CLUES[id].s) susp(CLUES[id].s);
+  if (id === "pondphone") note("The pond phone's case: " + PHONE_MARKS[S.snitch]);
   updateHUD();
-  toast("<strong>CLUE FOUND</strong><br>" + CLUES[id].name);
+  toast("<b>EVIDENCE.</b> " + CLUES[id].name);
+  if (CLUES[id].gore) fx("blood"); else sting(false);
   return true;
 }
-
-/* ============================================================================
-   SCREENS: splash -> promo -> cutscene -> game
-   ============================================================================ */
-function showScreen(id) {
-  var screens = document.querySelectorAll(".screen");
-  for (var i = 0; i < screens.length; i++) screens[i].classList.remove("active");
-  el(id).classList.add("active");
-  window.scrollTo(0, 0);
+function clueText(id) { return id === "pondphone" ? phoneText() : CLUES[id].text; }
+function phoneText() {
+  return "A phone fished out of the pond. The call log is wiped — but the last number dialed was the sheriff, 3:12 AM. The case: " + PHONE_MARKS[S.snitch];
 }
-
-var splashTimer = setTimeout(function () { showScreen("promo-screen"); }, 5000);
-function skipSplash() {
-  clearTimeout(splashTimer);
-  showScreen("promo-screen");
-}
-
-var CUT_LINES = [
-  "Your head pounds. Concrete. Cold floor.",
-  "You wake up in a garage that isn't yours.",
-  "Across from you: a man in a bunny mask. He does not move.",
-  "To his right: a man sharpening an axe. Slow. Patient.",
-  "<span class='who'>BUNNY:</span> \u201CYou owe. And somebody talked. Which is it, friend?\u201D"
-];
-var cutTimers = [];
-function startIntro() {
-  showScreen("promo-screen"); /* keep promo under the layer */
-  var layer = el("cutscene");
-  layer.classList.remove("hidden");
-  el("cut-continue").classList.add("hidden");
-  el("cut-lines").innerHTML = "";
-  setTimeout(function () { el("garage-scene").classList.add("show"); }, 150);
-  CUT_LINES.forEach(function (line, i) {
-    cutTimers.push(setTimeout(function () {
-      var d = document.createElement("div");
-      d.className = "cut-line" + (i === 4 ? " who" : (i < 2 ? " dim" : ""));
-      d.innerHTML = line;
-      el("cut-lines").appendChild(d);
-      setTimeout(function () { d.classList.add("show"); }, 60);
-    }, 900 + i * 1700));
-  });
-  cutTimers.push(setTimeout(function () {
-    el("cut-continue").classList.remove("hidden");
-  }, 900 + CUT_LINES.length * 1700 + 400));
-}
-function startGame() {
-  cutTimers.forEach(function (t) { clearTimeout(t); });
-  var layer = el("cutscene");
-  layer.classList.add("fade-out");
-  setTimeout(function () { layer.classList.add("hidden"); layer.classList.remove("fade-out"); }, 1100);
-  showScreen("game-screen");
-  updateHUD();
-  renderMap();
-}
-
-/* ============================================================================
-   MAP — SVG of the real street layout from the screenshot.
-   Boone Rd (paved) vertical left. Wampum Rd horizontal. Mustang Ln diagonal.
-   Tomahawk Trail up to the right. Cochise Ct loop at the top. Pond on Tomahawk.
-   ============================================================================ */
-function mapSVG() {
-  var roads = [
-    "M 34 -10 L 26 570",
-    "M 26 420 L 395 405",
-    "M 60 570 L 300 330",
-    "M 235 480 C 280 440, 330 400, 375 355",
-    "M 210 305 L 195 210 C 190 165, 220 130, 265 125 C 310 120, 340 150, 335 195 C 330 235, 300 255, 265 250 C 235 245, 220 270, 215 305",
-    "M 265 125 L 330 95 L 355 140 L 335 195"
-  ];
-  var svg = '<svg viewBox="0 0 400 560" xmlns="http://www.w3.org/2000/svg">';
-  svg += '<rect x="0" y="0" width="400" height="560" fill="#d8ecd2"/>';
-  svg += '<ellipse cx="90" cy="120" rx="70" ry="40" fill="#cbe4bf"/>';
-  svg += '<ellipse cx="320" cy="505" rx="80" ry="40" fill="#cbe4bf"/>';
-  roads.forEach(function (d) {
-    svg += '<path d="' + d + '" fill="none" stroke="#9aa7ad" stroke-width="12" stroke-linecap="round"/>';
-    svg += '<path d="' + d + '" fill="none" stroke="#c3ccd2" stroke-width="9" stroke-linecap="round"/>';
-  });
-  /* trailers for flavor */
-  var trailers = [[150, 175], [250, 205], [330, 275], [120, 355], [205, 445], [330, 470]];
-  trailers.forEach(function (t) {
-    svg += '<rect x="' + t[0] + '" y="' + t[1] + '" width="26" height="12" rx="2" fill="#e8e0c8" stroke="#a89a70" stroke-width="1.5"/>';
-  });
-  /* ponds */
-  svg += '<ellipse cx="320" cy="398" rx="16" ry="9" fill="#7ec8e3" stroke="#5aa8c8" stroke-width="1.5"/>';
-  svg += '<ellipse cx="275" cy="55" rx="12" ry="6" fill="#7ec8e3" stroke="#5aa8c8" stroke-width="1.5"/>';
-  /* street labels */
-  svg += '<text class="map-street" x="16" y="300" transform="rotate(-92 16 300)">Boone Rd</text>';
-  svg += '<text class="map-street" x="210" y="406">Wampum Rd</text>';
-  svg += '<text class="map-street" x="105" y="525" transform="rotate(-45 105 525)">Mustang Ln</text>';
-  svg += '<text class="map-street" x="300" y="445" transform="rotate(-38 300 445)">Tomahawk Trail</text>';
-  svg += '<text class="map-street" x="158" y="240" transform="rotate(-78 158 240)">Cochise Ct</text>';
-  svg += '<text class="map-street" x="250" y="290" transform="rotate(8 250 290)">Cochise Ct</text>';
-  /* location nodes */
-  var nodes = [
-    ["garage", "Lot 7 — Garage", 265, 152],
-    ["pond", "The Pond", 320, 378],
-    ["office", "Manager's Office", 255, 478],
-    ["bonfire", "Bonfire Pit", 165, 478],
-    ["laundry", "Laundry Shed", 120, 397],
-    ["gate", "Boone Gate", 62, 424]
-  ];
-  nodes.forEach(function (n) {
-    var p = MAP_POS[n[0]];
-    var anchor = n[0] === "gate" ? "start" : "middle";
-    svg += '<g class="map-node" onclick="goTo(\'' + n[0] + '\')">';
-    svg += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="11"/>';
-    svg += '<text x="' + n[2] + '" y="' + n[3] + '" text-anchor="' + anchor + '">' + n[1] + '</text>';
-    svg += '</g>';
-  });
-  /* player marker */
-  var pp = MAP_POS[S.loc];
-  svg += '<g id="player-marker" transform="translate(' + pp[0] + ',' + pp[1] + ')">';
-  svg += '<circle class="ring" r="8"/><circle class="core" r="6"/></g>';
-  svg += '</svg>';
-  return svg;
-}
-
-function renderMap() {
-  if (S.over) return;
-  var hint = "";
-  if (!S.seenMapHint) {
-    hint = '<div class="hint"><strong>How this works.</strong> Tap a place to go there. Talk to people. Search for clues. Prove the debt is fake, name the snitch — and don\'t let suspicion hit 100, or Razor gets to work.</div>';
-    S.seenMapHint = true;
-  }
-  var list = "";
-  Object.keys(LOCS).forEach(function (id) {
-    var here = (id === S.loc) ? " — you are here" : "";
-    list += '<button class="map-loc-btn" onclick="goTo(\'' + id + '\')">' + LOCS[id].name + '<span>' + LOCS[id].chars.length + ' here' + here + '</span></button>';
-  });
-  el("game-body").innerHTML =
-    '<div class="view-title">Sun N Fun Trailer Park</div>' +
-    '<div class="view-sub">Boone Rd runs the west side. Wampum and Mustang cut through the park. The pond sits on Tomahawk. You are at <strong>' + LOCS[S.loc].name + '</strong>.</div>' +
-    hint +
-    '<div class="map-wrap">' + mapSVG() + '</div>' +
-    '<div class="map-loc-list">' + list + '</div>';
-  setActiveHud("hud-map");
-}
-
-function setActiveHud(id) {
-  ["hud-map", "hud-clues", "hud-accuse"].forEach(function (b) { el(b).classList.remove("active"); });
-  if (id) el(id).classList.add("active");
-}
-
-function goTo(loc) {
-  if (S.over) return;
-  S.loc = loc;
-  renderLocation(loc);
-}
-
-/* ============================================================================
-   LOCATIONS — talk, search, leave
-   ============================================================================ */
-function renderLocation(loc) {
-  if (S.over) return;
-  var L = LOCS[loc];
-  var html = '<div class="view-title">' + L.name + '</div>' +
-    '<div class="view-sub">' + L.desc + '</div>';
-  if (L.chars.length) {
-    html += '<div class="card">';
-    L.chars.forEach(function (cid) {
-      var c = CAST[cid];
-      html += '<div class="char-row"><div class="char-face">' + c.face + '</div>' +
-        '<div><div class="char-name">' + c.name + '</div><div class="char-note">' + c.note + '</div></div>' +
-        '<button class="btn btn-ghost char-talk" onclick="talk(\'' + cid + '\')">Talk</button></div>';
-    });
-    html += '</div>';
-  }
-  var searched = S.searched[loc];
-  html += '<button class="btn btn-spin btn-wide" style="margin-bottom:.6rem" ' +
-    (searched ? 'disabled style="opacity:.45;margin-bottom:.6rem"' : '') +
-    ' onclick="searchLoc(\'' + loc + '\')">' + (searched ? 'Searched — nothing left' : 'Search this place') + '</button>';
-  html += '<button class="btn btn-ghost btn-wide" onclick="renderMap()">Back to the map</button>';
-  el("game-body").innerHTML = html;
-  setActiveHud(null);
-}
-
 function searchLoc(loc) {
   if (S.over || S.searched[loc]) return;
-  S.searched[loc] = true;
   var L = LOCS[loc];
-  var msg = L.search.text;
-  var caught = false;
-  if (L.search.risk && !S.flags.marleneAllowed) {
-    caught = true;
-    msg += " Marlene catches you in her drawer. She throws you out — but not before you see the desk.";
-  }
-  var got = L.search.clue;
-  var names = [];
-  if (got) {
-    var arr = Array.isArray(got) ? got : [got];
-    arr.forEach(function (cid) { if (addClue(cid)) names.push(CLUES[cid].name); });
-  }
-  if (caught) susp(15);
-  var html = '<div class="view-title">' + L.name + '</div><div class="card"><p class="reply">' + msg + '</p>';
-  if (names.length) {
-    html += '<p class="reply"><strong style="color:#e8b84a">Found:</strong> ' + names.join(", ") + '.</p>';
-  } else if (!got) {
-    html += '<p class="reply">Nothing here but the truth you already knew.</p>';
-  }
-  html += '</div><button class="btn btn-spin btn-wide" onclick="renderLocation(\'' + loc + '\')">Back</button>';
-  el("game-body").innerHTML = html;
-}
-/* ============================================================================
-   TALK — dialogue stages with choices. Choices can move suspicion, hand out
-   clues, set flags, or open the next stage. `need` gates a choice:
-   {clue:"ledger"} needs a clue, {flag:"x"} needs a flag, {notflag:"x"} hides
-   a choice once a flag is set.
-   ============================================================================ */
-function canShow(choice) {
-  if (!choice.need) return true;
-  var n = choice.need;
-  if (n.clue && !hasClue(n.clue)) return false;
-  if (n.flag && !S.flags[n.flag]) return false;
-  if (n.notflag && S.flags[n.notflag]) return false;
-  if (n.snitch && S.snitch !== n.snitch) return false;
-  return true;
-}
-
-function talk(cid) {
-  if (S.over) return;
-  var stage = S.talkStage[cid] || 0;
-  renderTalk(cid, stage);
-}
-
-function renderTalk(cid, stage) {
-  var c = CAST[cid];
-  var st = c.stages[stage];
-  if (!st) { renderLocation(S.loc); return; }
-  var html = '<div class="view-title">' + c.name + '</div>' +
-    '<div class="card"><p class="say">' + st.say + '</p>';
-  var anyChoice = false;
-  st.choices.forEach(function (ch, i) {
-    if (!canShow(ch)) return;
-    anyChoice = true;
-    html += '<button class="choice" onclick="choose(\'' + cid + '\',' + stage + ',' + i + ')">' + ch.t + '</button>';
-  });
-  /* Confront: if you hold the pond phone, you can show any suspect their mark. */
-  if (c.suspect && hasClue("pondphone") && !S.flags["confronted_" + cid]) {
-    anyChoice = true;
-    html += '<button class="choice" onclick="confront(\'' + cid + '\')">Show them the phone from the pond.</button>';
-  }
-  if (!anyChoice) {
-    html += '<button class="btn btn-ghost btn-wide" onclick="renderLocation(\'' + S.loc + '\')">Back</button>';
-  }
-  html += '</div>';
-  el("game-body").innerHTML = html;
-  setActiveHud(null);
-}
-
-function choose(cid, stage, i) {
-  if (S.over) return;
-  var ch = CAST[cid].stages[stage].choices[i];
-  if (ch.s) susp(ch.s);
-  if (ch.flag) S.flags[ch.flag] = true;
-  if (ch.clue) addClue(ch.clue);
-  var reply = ch.r;
-  if (reply === "EARL_SAW") reply = EARL_SAW[S.snitch];
-  var html = '<div class="view-title">' + CAST[cid].name + '</div>' +
-    '<div class="card"><p class="reply">' + reply + '</p></div>';
-  if (ch.next === "end") {
-    html += '<button class="btn btn-spin btn-wide" onclick="renderLocation(\'' + S.loc + '\')">Back</button>';
-  } else {
-    S.talkStage[cid] = ch.next;
-    html += '<button class="btn btn-spin btn-wide" onclick="talk(\'' + cid + '\')">Continue</button>';
-  }
-  el("game-body").innerHTML = html;
-}
-
-function confront(cid) {
-  if (S.over) return;
-  S.flags["confronted_" + cid] = true;
-  var html = '<div class="view-title">' + CAST[cid].name + '</div>' +
-    '<div class="card"><p class="reply">' + CONFRONT[cid] + '</p></div>' +
-    '<button class="btn btn-spin btn-wide" onclick="renderLocation(\'' + S.loc + '\')">Back</button>';
-  el("game-body").innerHTML = html;
-}
-
-/* ============================================================================
-   CLUES PANEL
-   ============================================================================ */
-function renderClues() {
-  if (S.over) return;
-  var html = '<div class="view-title">Clues — ' + S.clues.length + ' of 8</div>' +
-    '<div class="view-sub">What you\'ve found so far. The debt and the snitch are two different puzzles.</div>';
-  if (!S.clues.length) {
-    html += '<p class="clue-empty">Nothing yet. Search places. Talk to people. The pond is a good place to start — Tanya saw something go in.</p>';
-  }
-  CLUE_ORDER.forEach(function (id) {
-    if (!hasClue(id)) return;
-    html += '<div class="clue-item"><div class="clue-name">' + CLUES[id].name + '</div>' +
-      '<div class="clue-text">' + clueText(id) + '</div></div>';
-  });
-  html += '<button class="btn btn-spin btn-wide" onclick="renderMap()">Back to the map</button>';
-  el("game-body").innerHTML = html;
-  setActiveHud("hud-clues");
-}
-
-/* ============================================================================
-   ACCUSE — name the snitch in front of the park. Wrong name, or not enough
-   proof, and Razor gets to work.
-   ============================================================================ */
-function openAccuse() {
-  if (S.over) return;
-  var html = '<div class="view-title">Name the snitch</div>' +
-    '<div class="view-sub">Bunny and Razor aren\'t on the list. They\'re the court, not the suspects. Pick one. If you\'re wrong, the axe comes out.</div>';
-  SUSPECTS.forEach(function (id) {
-    var c = CAST[id];
-    html += '<button class="accuse-suspect" onclick="confirmAccuse(\'' + id + '\')">' +
-      '<div class="nm">' + c.name + '</div><div class="ds">' + c.accuseLine + '</div></button>';
-  });
-  html += '<button class="btn btn-ghost btn-wide" onclick="renderMap()">Not yet — keep looking</button>';
-  el("game-body").innerHTML = html;
-  setActiveHud("hud-accuse");
-}
-
-function confirmAccuse(id) {
-  if (S.over) return;
-  var c = CAST[id];
-  var proof = hasDebtProof();
-  var html = '<div class="view-title">You\'re naming ' + c.name + '</div>' +
-    '<div class="evidence"><strong>Your evidence:</strong><br>' +
-    'Clues found: <strong>' + S.clues.length + ' of 8</strong> (Bunny wants at least 4)<br>' +
-    'Debt proof: <strong>' + (proof ? 'YES — the $400 was fake' : 'NO — you haven\'t proved the debt yet') + '</strong><br>' +
-    'If you\'re wrong, Razor works. If you\'re right but short on proof, Bunny sends you back.</div>' +
-    '<button class="btn btn-danger btn-wide" style="margin-bottom:.6rem" onclick="resolveAccuse(\'' + id + '\')">Name them</button>' +
-    '<button class="btn btn-ghost btn-wide" onclick="openAccuse()">Keep looking</button>';
-  el("game-body").innerHTML = html;
-}
-
-function resolveAccuse(id) {
-  if (S.over) return;
-  if (id === S.snitch && hasDebtProof() && S.clues.length >= 4) {
-    endGame("win");
+  if (L.search.need && !S.flags[L.search.need]) {
+    el("body").innerHTML = '<div class="dlg"><div class="spk">' + L.name + '</div>' +
+      '<div class="say">' + L.search.needText + '</div>' +
+      '<button class="btn ghost wide" onclick="renderLoc(\'' + loc + '\')">Step back</button></div>';
     return;
   }
-  if (id === S.snitch) {
-    var html = '<div class="view-title">Not enough</div>' +
-      '<div class="card"><p class="reply"><span class="who">BUNNY:</span> Right name. Wrong weight. Come back with the ledger and more than a hunch — or don\'t come back at all.</p></div>' +
-      '<button class="btn btn-spin btn-wide" onclick="renderMap()">Back to the park</button>';
-    el("game-body").innerHTML = html;
+  spend(10);
+  if (S.over) return;
+  S.searched[loc] = true;
+  var msg = L.search.text, caught = false;
+  if (L.search.risk && !S.flags.marleneAllowed) {
+    caught = true;
+    msg += " Marlene catches you in her drawer. She doesn't scream. She just watches you leave, and you feel her watching all the way to the gate.";
+    note("Marlene caught you in her desk. She didn't stop you.");
+  }
+  var names = [];
+  if (L.search.clue) {
+    var arr = Array.isArray(L.search.clue) ? L.search.clue : [L.search.clue];
+    arr.forEach(function (cid) { if (addClue(cid)) names.push(CLUES[cid].name); });
+  }
+  if (S.over) return;
+  if (caught) susp(15);
+  if (S.over) return;
+  var body = '<div class="dlg"><div class="spk">' + L.name + '</div><div class="say">' + msg + '</div>';
+  if (names.length) body += '<p class="mini-note" style="text-align:left;color:#c9a24a">Found: <b>' + names.join(", ") + '</b></p>';
+  body += '<button class="btn blood wide" onclick="renderLoc(\'' + loc + '\')">Step back</button></div>';
+  el("body").innerHTML = body;
+  S.mats.wood += 2; S.mats.scrap += 2;
+  if (dogFollowing()) {
+    S.mats.wood += 2; S.mats.scrap += 1;
+    if (!hasClue("mikeydog")) addClue("mikeydog");
+    if (S.over) return;
+  }
+  if (loc === "pond" && !S.bodyFound && hasClue("pondphone")) {
+    S.bodyFound = true;
+    playCine(POND_SHOTS, function () {
+      S.flags.deadWake = true;
+      note("Something in the pond woke up when you pulled Mikey out of it.");
+      renderLoc("pond");
+      toast("<b>THE POND WOKE UP.</b> At night the drowned come up the bank. Hold the pond.");
+    });
+  }
+  save();
+}
+
+/* ---------------------------------------------------------------- MAP ----- */
+function mapSVG() {
+  var lots = [
+    [92, 452, 24, 10, "104"], [92, 470, 24, 10, "106"], [92, 488, 24, 10, "108"],
+    [128, 458, 22, 10, "116"], [158, 455, 22, 10, "120"], [188, 451, 22, 10, "124"],
+    [222, 466, 22, 10, "132"], [250, 480, 20, 10, "138"], [286, 500, 22, 10, "144"],
+    [120, 540, 22, 10, "158"], [156, 522, 22, 10, "162"], [196, 502, 22, 10, "166"],
+    [238, 486, 22, 10, "172"], [300, 468, 22, 10, "176"], [344, 452, 22, 10, "182"],
+    [360, 424, 22, 10, "184"], [206, 372, 20, 10, "204"], [206, 342, 20, 10, "206"],
+    [258, 250, 22, 10, "214"], [292, 238, 22, 10, "216"], [318, 292, 20, 10, "220"]
+  ];
+  var s = '<svg viewBox="0 0 420 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Map of Sun N Fun Estates">';
+  s += '<defs><pattern id="grave" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".8" fill="#6b5a3c" opacity=".5"/><circle cx="4" cy="4" r=".6" fill="#3b3124" opacity=".5"/></pattern>' +
+       '<radialGradient id="water" cx="50%" cy="40%"><stop offset="0" stop-color="#2f6b6e"/><stop offset="1" stop-color="#123033"/></radialGradient></defs>';
+  s += '<rect width="420" height="640" fill="#1a2417"/>';
+  s += '<rect x="12" y="12" width="396" height="616" fill="#1f2a1b" stroke="#3c4a33" stroke-width="1"/>';
+  s += '<path d="M 60 470 L 60 452 L 396 404 L 404 366 L 352 214 L 300 196 L 250 202 L 226 300 L 214 400 L 60 436 Z" fill="#22301d" stroke="#4a5c3c" stroke-width="1" stroke-dasharray="4 4"/>';
+  /* Boone Rd - paved */
+  s += '<path d="M 46 -10 L 38 650" stroke="#151310" stroke-width="24" fill="none"/>';
+  s += '<path d="M 46 -10 L 38 650" stroke="#8b918d" stroke-width="19" fill="none"/>';
+  s += '<path d="M 46 -10 L 38 650" stroke="#d4b24a" stroke-width="2" stroke-dasharray="11 10" fill="none" opacity=".85"/>';
+  s += '<text x="16" y="330" fill="#d8cdb6" font-size="10" font-weight="700" transform="rotate(-92 16 330)" letter-spacing="1">BOONE RD</text>';
+  s += '<text x="52" y="596" fill="#94886f" font-size="6.5">paved</text>';
+  /* gravel roads */
+  var gravel = [
+    "M 40 470 C 120 462 200 458 270 448",
+    "M 42 620 C 120 560 190 500 266 448",
+    "M 268 448 C 310 434 350 420 388 402",
+    "M 388 402 C 406 394 408 374 394 368 C 380 362 368 376 372 388 C 375 396 382 400 388 402",
+    "M 266 448 C 252 402 242 360 238 320 C 234 280 248 250 272 236",
+    "M 272 236 C 302 218 342 226 348 256 C 354 286 330 306 304 300 C 278 294 258 306 250 330",
+    "M 238 320 C 276 312 322 328 352 350 C 368 362 380 380 388 402"
+  ];
+  gravel.forEach(function (d) {
+    s += '<path d="' + d + '" stroke="#151310" stroke-width="15" fill="none" stroke-linecap="round"/>';
+    s += '<path d="' + d + '" stroke="#a68a5c" stroke-width="11" fill="none" stroke-linecap="round"/>';
+    s += '<path d="' + d + '" stroke="url(#grave)" stroke-width="11" fill="none" stroke-linecap="round"/>';
+  });
+  s += '<text x="104" y="452" fill="#e2d6bb" font-size="9" font-weight="700" transform="rotate(-4 104 452)" letter-spacing=".5">WAMPUM RD</text>';
+  s += '<text x="140" y="556" fill="#e2d6bb" font-size="9" font-weight="700" transform="rotate(-32 140 556)" letter-spacing=".5">MUSTANG LN</text>';
+  s += '<text x="300" y="440" fill="#e2d6bb" font-size="9" font-weight="700" transform="rotate(-17 300 440)" letter-spacing=".5">TOMAHAWK TRL</text>';
+  s += '<text x="180" y="306" fill="#e2d6bb" font-size="8.5" font-weight="700" transform="rotate(-82 180 306)" letter-spacing=".5">COCHISE CT</text>';
+  s += '<text x="292" y="324" fill="#c9bda4" font-size="8" font-weight="700" transform="rotate(14 292 324)">COCHISE CT</text>';
+  /* pond */
+  s += '<ellipse cx="300" cy="266" rx="26" ry="16" fill="url(#water)" stroke="#4b7f7c" stroke-width="1.5"/>';
+  s += '<text x="300" y="269" fill="#a9d3cd" font-size="6.5" text-anchor="middle" letter-spacing="1">POND</text>';
+  /* lots */
+  lots.forEach(function (l) {
+    s += '<rect x="' + l[0] + '" y="' + l[1] + '" width="' + l[2] + '" height="' + l[3] + '" fill="#3a3324" stroke="#6d5f42" stroke-width=".8" rx="1"/>';
+    s += '<text x="' + (l[0] + l[2] / 2) + '" y="' + (l[1] + l[3] - 2) + '" fill="#9d8f70" font-size="4.6" text-anchor="middle">' + l[4] + '</text>';
+  });
+  /* your lot 180 */
+  s += '<rect x="360" y="380" width="30" height="14" fill="#4a1a18" stroke="#c1121f" stroke-width="1.2" rx="1"/>';
+  s += '<text x="375" y="390" fill="#ffb3b6" font-size="5" text-anchor="middle">180</text>';
+  /* trees */
+  [[70, 380], [88, 360], [340, 340], [356, 330], [120, 520], [100, 500], [320, 520], [340, 500], [180, 250], [200, 226]].forEach(function (t) {
+    s += '<circle cx="' + t[0] + '" cy="' + t[1] + '" r="5" fill="#2f4428" opacity=".9"/>';
+  });
+  /* nodes */
+  function node(id, x, y, lab, sub, anchor, dx, dy) {
+    var here = S.loc === id;
+    var g = '<g onclick="goTo(\'' + id + '\')" style="cursor:pointer" tabindex="0" role="button" aria-label="' + lab + '">';
+    if (here) g += '<circle cx="' + x + '" cy="' + y + '" r="13" fill="none" stroke="#c1121f" stroke-width="1.6" opacity=".9"><animate attributeName="r" values="9;19;9" dur="2.2s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0;.9" dur="2.2s" repeatCount="indefinite"/></circle>';
+    g += '<circle cx="' + x + '" cy="' + y + '" r="6" fill="' + (here ? '#c1121f' : '#e7ddc7') + '" stroke="#0d0b08" stroke-width="1.6"/>';
+    g += '<text x="' + (x + dx) + '" y="' + (y + dy) + '" fill="#f1e7d1" font-size="7.5" font-weight="700" text-anchor="' + anchor + '" style="paint-order:stroke;stroke:#0a0806;stroke-width:2.6px">' + lab + '</text>';
+    g += '<text x="' + (x + dx) + '" y="' + (y + dy + 8) + '" fill="#a3947a" font-size="6" text-anchor="' + anchor + '" style="paint-order:stroke;stroke:#0a0806;stroke-width:2.4px">' + sub + '</text>';
+    return g + '</g>';
+  }
+  s += node("garage", 375, 394, "180 TOMAHAWK", "your garage", "end", -9, -16);
+  s += node("pond", 300, 266, "The Pond", "Cochise Ct", "start", 14, -4);
+  s += node("office", 238, 320, "Office", "Cochise Ct", "start", 10, 14);
+  s += node("bonfire", 210, 505, "Bonfire Pit", "center of the park", "start", 10, 4);
+  s += node("laundry", 150, 470, "Laundry Shed", "Wampum Rd", "end", -9, 14);
+  s += node("game", 104, 512, "The Game", "behind the laundry", "start", -4, 13);
+  s += node("gate", 52, 470, "Boone Gate", "park entrance", "start", 12, 14);
+  /* compass + title */
+  s += '<g transform="translate(386,596)"><circle r="13" fill="none" stroke="#5a4f3a"/><path d="M0 -10 L4 2 L0 0 L-4 2 Z" fill="#c1121f"/><text y="22" fill="#8d8168" font-size="6" text-anchor="middle">N</text></g>';
+  s += '<text x="20" y="30" fill="#7d8767" font-size="9" letter-spacing="3" font-weight="700">SUN N FUN ESTATES</text>';
+  s += '<text x="20" y="41" fill="#5f5749" font-size="6" letter-spacing="1.5">RINEYVILLE, KENTUCKY · EST. 1974</text>';
+  return s + '</svg>';
+}
+function openMap() {
+  if (S.over) return;
+  var status = '<div class="status-grid">' +
+    '<div class="stat ' + (hasDebtProof() ? "good" : "bad") + '"><span>Debt</span><b>' + debtLabel() + '</b></div>' +
+    '<div class="stat ' + (hasClue("pondphone") ? "good" : (S.flags.phoneHint ? "bad" : "")) + '"><span>Phone</span><b>' + (hasClue("pondphone") ? "Recovered" : (S.flags.phoneHint ? "In the pond" : "No lead")) + '</b></div>' +
+    '<div class="stat"><span>Evidence</span><b>' + S.clues.length + ' / ' + CLUE_ORDER.length + '</b></div>' +
+    '</div>';
+  var list = "";
+  Object.keys(LOCS).forEach(function (id) {
+    list += '<button class="loc-btn' + (id === S.loc ? ' here' : '') + '" onclick="goTo(\'' + id + '\')">' + LOCS[id].name +
+      '<small>' + (id === S.loc ? "you are here" : LOCS[id].addr) + '</small></button>';
+  });
+  var html = '<div class="sheet"><div class="wrap">' +
+    '<div class="sheet-head"><h3>Sun N Fun Estates</h3><button class="x" onclick="closeSheet()">×</button></div>' +
+    status +
+    '<div class="map-paper">' + mapSVG() + '</div>' +
+    '<div class="map-key"><span><i style="background:#8b918d"></i>Boone Rd (paved)</span><span><i style="background:#a68a5c"></i>Gravel</span><span><i style="background:#2f6b6e"></i>Pond</span><span><i style="background:#c1121f"></i>180 Tomahawk</span></div>' +
+    '<div class="loc-list">' + list + '</div>' +
+    '</div></div>';
+  el("body").innerHTML = html;
+  el("head").innerHTML = headHTML(LOCS[S.loc]);
+  setFig(null);
+  if (!S.seenMap) { S.seenMap = true; toast("<b>THE PARK.</b> 180 Tomahawk Trl is your lot. The pond is up Cochise Ct."); }
+  save();
+}
+function goTo(id) {
+  if (S.over) return;
+  spend(4);
+  if (S.over) return;
+  if (id !== S.loc) S.loc = id;
+  renderLoc(id);
+}
+function closeSheet() { renderLoc(S.loc); }
+
+/* --------------------------------------------------------------- FILE ----- */
+function openFile() {
+  if (S.over) return;
+  var html = '<div class="sheet"><div class="wrap">' +
+    '<div class="sheet-head"><h3>Case file — ' + S.clues.length + ' of ' + CLUE_ORDER.length + '</h3><button class="x" onclick="closeSheet()">×</button></div>';
+  if (!S.clues.length) html += '<p class="empty">Nothing yet. Search the garage. Search the pond. The park is a body and every building is a wound.</p>';
+  CLUE_ORDER.forEach(function (id) {
+    if (!hasClue(id)) return;
+    html += '<div class="clue"><b>' + CLUES[id].name + '</b><p>' + clueText(id) + '</p></div>';
+  });
+  if (hasClue("pondphone")) {
+    html += '<button class="btn ' + (S.flags.sawPhotos ? "ghost" : "blood") + ' wide" style="margin-bottom:.6rem" onclick="openGallery()">' + (S.flags.sawPhotos ? "Re-read the pond photos" : "Open the pond phone &mdash; 3 photos") + '</button>';
+  }
+  if (S.notes.length) {
+    html += '<div class="sheet-head" style="margin-top:1rem"><h3>Testimony</h3></div>';
+    S.notes.forEach(function (n) { html += '<div class="note">' + n + '</div>'; });
+  }
+  html += '<div class="sheet-head" style="margin-top:1rem"><h3>People</h3></div>';
+  var people = ["bunny", "razor", "marlene", "dwayne", "tanya", "earl", "preacher", "mushroom"];
+  if (S.flags.sawAbel) people.push("abel");
+  people.forEach(function (cid) {
+    var c = CAST[cid];
+    var asked = (c.lore || []).filter(function (l, i) { return S.lore[cid + ":" + i]; });
+    html += '<div class="dossier"><img src="' + c.img + '" alt="">' +
+      '<div><h4>' + c.name + '</h4><div class="sub">' + c.real + ' · ' + c.age + ' · ' + (c.facts || "") + '</div>' +
+      '<p>' + (asked.length ? asked.map(function (l) { return l.a.replace(/<[^>]+>/g, ""); }).join(" ") : "They haven't told you anything yet. Talk to them. Ask the questions under the ones you came to ask.") + '</p></div></div>';
+  });
+  html += '<div class="center" style="margin-top:.8rem"><button class="btn ghost" onclick="closeSheet()">Back to the park</button></div></div></div>';
+  el("body").innerHTML = html;
+  el("head").innerHTML = headHTML(LOCS[S.loc]);
+  setFig(null);
+}
+
+/* ------------------------------------------------------------- ACCUSE ----- */
+function openAccuse() {
+  if (S.over) return;
+  var html = '<div class="sheet dark"><div class="wrap">' +
+    '<div class="sheet-head"><h3>Name the snitch</h3><button class="x" onclick="closeSheet()">×</button></div>' +
+    '<p class="empty">Bunny and Razor aren\'t on the list. They\'re the court. Pick one. If you\'re wrong, the axe comes out. If you\'re right but empty-handed, Bunny sends you back out into the dark.</p>';
+  SUSPECTS.forEach(function (id) {
+    var c = CAST[id];
+    html += '<button class="accuse-btn" onclick="confirmAccuse(\'' + id + '\')"><div class="nm">' + c.name + '</div><div class="ds">' + c.accuseLine + '</div></button>';
+  });
+  html += '<div class="center"><button class="btn ghost" onclick="closeSheet()">Not yet — keep looking</button></div></div></div>';
+  el("body").innerHTML = html;
+  setFig(null);
+}
+function confirmAccuse(id) {
+  if (S.over) return;
+  var c = CAST[id], proof = hasDebtProof(), enough = S.clues.length >= NEED_CLUES;
+  var html = '<div class="sheet dark"><div class="wrap">' +
+    '<div class="sheet-head"><h3>You\'re naming ' + c.name + '</h3><button class="x" onclick="openAccuse()">×</button></div>' +
+    '<div class="verdict"><b>Your evidence</b><br>' +
+      'Clues: <b>' + S.clues.length + ' of ' + CLUE_ORDER.length + '</b> (Bunny wants ' + NEED_CLUES + ')<br>' +
+      'Debt proof: <b>' + (proof ? (S.flags.paidDebt && !hasClue("ledger") && !hasClue("confession") ? "YES — paid in full, marker in hand" : "YES — the $400 was invented") : "NO — you haven't proved the debt") + '</b><br>' +
+      (hasClue("pondphone") ? "The pond phone is in your pocket.<br>" : "You never found the phone in the pond.<br>") +
+    (enough && proof ? "Bunny will listen. Probably." : "Bunny will not listen. Probably.") + '</div>' +
+    '<div class="center"><button class="btn blood" onclick="resolveAccuse(\'' + id + '\')">Say the name out loud</button>' +
+    '<button class="btn ghost" onclick="openAccuse()">Keep looking</button></div></div></div>';
+  el("body").innerHTML = html;
+}
+function resolveAccuse(id) {
+  if (S.over) return;
+  var right = (id === S.snitch), proof = hasDebtProof(), enough = S.clues.length >= NEED_CLUES;
+  if (right && proof && enough) {
+    S.flags.named1 = id;
+    playCine(WIN_SHOTS, function () { openSecondAccusation(); });
+    return;
+  }
+  if (right && (!proof || !enough)) {
+    var html = '<div class="dlg"><div class="spk">The Bunny Man</div>' +
+      '<div class="say"><em>BUNNY:</em> Right name. Wrong weight. Come back with the marker and ' + NEED_CLUES + ' pieces of this park in your hands — or don\'t come back at all.</div>' +
+      '<button class="btn blood wide" onclick="renderLoc(\'' + S.loc + '\')">Back into the park</button></div>';
+    el("body").innerHTML = html;
     susp(10);
     return;
   }
-  endGame("wrong");
+  playCine(WRONG_SHOTS, function () { endGame("wrong"); });
 }
 
-/* ============================================================================
-   ENDINGS
-   ============================================================================ */
+/* ----------------------------------------------------- MONEY, PHASE, DOG --- */
+function phaseName() {
+  if (S.minutes >= 330) return "PRE-DAWN";
+  if (S.minutes >= 270) return "LATE NIGHT";
+  return "NIGHT";
+}
+function earn(n) { S.cash += n; updateHUD(); }
+function dogFollowing() { return !!(S.dog && S.dog.following && S.dog.alive); }
+
+/* ------------------------------------------------------------ THE BONES --- */
+var TBL = { bet: 20, pick: "under", busy: false, d: [4, 3], log: "", rolls: 0, wins: 0 };
+var PIPS = { 1: [4], 2: [0, 8], 3: [0, 4, 8], 4: [0, 2, 6, 8], 5: [0, 2, 4, 6, 8], 6: [0, 2, 3, 5, 6, 8] };
+function dieHTML(v) {
+  var on = PIPS[v] || [], s = '<div class="die">';
+  for (var i = 0; i < 9; i++) s += '<span class="pip' + (on.indexOf(i) >= 0 ? "" : " off") + '"></span>';
+  return s + '</div>';
+}
+function diceHTML() { return '<div class="dice" id="dice">' + dieHTML(TBL.d[0]) + dieHTML(TBL.d[1]) + '</div>'; }
+function pickBtn(k, label) {
+  return '<button class="chipbet' + (TBL.pick === k ? " on" : "") + '" onclick="setPick(\'' + k + '\')">' + label + '</button>';
+}
+function setBet(b) { if (TBL.busy) return; TBL.bet = b; tableHTML(); }
+function setPick(k) { if (TBL.busy) return; TBL.pick = k; tableHTML(); }
+function openTable() {
+  if (S.over) return;
+  if (!TBL.log) TBL.log = "The Preacher sets the bowl down and does not bother hiding the torn paper under it.<br><br><em>&ldquo;Bones,&rdquo;</em> he says. <em>&ldquo;Under seven, over seven, seven, or snake eyes. Whatever you're carrying, put it on the felt.&rdquo;</em>";
+  tableHTML();
+}
+function tableHTML() {
+  var bets = [10, 20, 50, 100];
+  var html = '<div class="sheet dark"><div class="wrap">' +
+    '<div class="sheet-head"><h3>The bones table</h3><button class="x" onclick="renderLoc(\'game\')">&times;</button></div>' +
+    '<div class="status-grid">' +
+      '<div class="stat"><span>Cash</span><b>$' + S.cash + '</b></div>' +
+      '<div class="stat"><span>On the felt</span><b>$' + TBL.bet + '</b></div>' +
+      '<div class="stat ' + (TBL.wins > 0 ? "good" : "") + '"><span>Net won</span><b>$' + TBL.wins + '</b></div>' +
+    '</div>' +
+    diceHTML() +
+    '<div class="bet-row">' + bets.map(function (b) {
+      return '<button class="chipbet' + (TBL.bet === b ? " on" : "") + '" onclick="setBet(' + b + ')">$' + b + '</button>';
+    }).join("") + '</div>' +
+    '<div class="bet-row">' + pickBtn("under", "UNDER 7 · 1:1") + pickBtn("over", "OVER 7 · 1:1") + pickBtn("seven", "SEVEN · 5:1") + pickBtn("snakes", "SNAKE EYES · 30:1") + '</div>' +
+    '<div class="tbl-log">' + TBL.log + '</div>' +
+    '<div class="center">' +
+      '<button class="btn blood" ' + (TBL.busy ? "disabled" : 'onclick="rollBones()"') + '>Roll the bones</button>' +
+      '<button class="btn ghost" onclick="renderLoc(\'game\')">Leave the table</button>' +
+    '</div>' +
+    '<p class="mini-note">Lose enough and the Preacher starts talking. Win enough and he stops.</p>' +
+    '</div></div>';
+  el("body").innerHTML = html;
+  el("head").innerHTML = headHTML(LOCS.game);
+  setFig("preacher");
+  save();
+}
+function rollBones() {
+  if (S.over || TBL.busy) return;
+  if (S.cash < TBL.bet) { toast("<b>NO MONEY.</b> The Preacher doesn't take promises. Not from you."); return; }
+  TBL.busy = true;
+  S.cash -= TBL.bet;
+  TBL.rolls++;
+  TBL.log = "The bowl goes down. The dice go round.";
+  TBL.d = [1 + Math.floor(Math.random() * 6), 1 + Math.floor(Math.random() * 6)];
+  tableHTML();
+  updateHUD();
+  var spins = 0;
+  var iv = setInterval(function () {
+    TBL.d = [1 + Math.floor(Math.random() * 6), 1 + Math.floor(Math.random() * 6)];
+    var box = document.getElementById("dice");
+    if (box) box.innerHTML = dieHTML(TBL.d[0]) + dieHTML(TBL.d[1]);
+    if (!box || ++spins >= 12) { clearInterval(iv); settleRoll(); }
+  }, 70);
+}
+function settleRoll() {
+  var t = TBL.d[0] + TBL.d[1], win = 0, pick = TBL.pick;
+  if (pick === "under" && t < 7) win = TBL.bet * 2;
+  else if (pick === "over" && t > 7) win = TBL.bet * 2;
+  else if (pick === "seven" && t === 7) win = TBL.bet * 6;
+  else if (pick === "snakes" && t === 2) win = TBL.bet * 31;
+  if (!win && S.flags.sharpDice && Math.random() < .4) {
+    S.cash += TBL.bet;
+    TBL.log = "You watch his wrist and pull your money back a half-second before the bowl lifts. The Preacher's mouth goes tight. <em>&ldquo;House rules,&rdquo;</em> he says, and he does not mean yours.";
+    TBL.busy = false; updateHUD(); tableHTML(); return;
+  }
+  if (win) {
+    S.cash += win;
+    TBL.wins += win - TBL.bet;
+    TBL.log = t === 2
+      ? "Snake eyes. The Preacher does not smile. He counts out " + win + " dollars like it's coming out of his own chest."
+      : "The dice come up <b>" + t + "</b>. He counts it out slow. <em>&ldquo;Beginner,&rdquo;</em> he says, like it's an insult.";
+    if (TBL.wins >= 300 && !hasClue("iou")) {
+      addClue("iou");
+      TBL.log += " Then he slides a paper across the felt with two fingers. <em>&ldquo;You earned a look at it,&rdquo;</em> he says. <em>&ldquo;Now tell me that signature is yours.&rdquo;</em>";
+    }
+  } else {
+    TBL.log = "The dice come up <b>" + t + "</b>. Your money goes into the bowl with everybody else's.";
+    if (TBL.rolls >= 4 && !hasClue("loadeddice") && !S.flags.sharpDice) TBL.log += " Something about his wrist does not match the sound of the dice.";
+  }
+  TBL.busy = false;
+  updateHUD();
+  tableHTML();
+}
+
+/* ------------------------------------------------------- PHONE GALLERY ----- */
+function openGallery() {
+  if (S.over || !hasClue("pondphone")) return;
+  var html = '<div class="sheet dark"><div class="wrap">' +
+    '<div class="sheet-head"><h3>The pond phone &middot; gallery</h3><button class="x" onclick="closeSheet()">&times;</button></div>' +
+    '<p class="empty">Three photos survive the water. The rest of the gallery is a grey smear.</p>' +
+    '<div class="photos">' +
+      '<div class="photo"><div class="frame">&#127769;</div><p>Kessa at the bonfire, back when the fire was still a party. She&rsquo;s laughing at somebody off-frame and holding two bottles like she&rsquo;s won something.</p></div>' +
+      '<div class="photo"><div class="frame">&#128420;</div><p>Kessa with her back to the camera. A man&rsquo;s hand on her hip &mdash; the skin shining like it&rsquo;s been varnished. The tree line behind them is the tree line past the pond.</p></div>' +
+      '<div class="photo"><div class="frame">&#128193;</div><p>Mikey, alive, holding up a folder and grinning like he just won the lottery. The office trailer is behind him. The folder has a county seal on the corner.</p></div>' +
+    '</div>' +
+    (S.flags.sawPhotos
+      ? '<p class="mini-note">You have been through the timestamps once already. They have not changed.</p>'
+      : '<button class="btn blood wide" onclick="viewPhotos()">Check the timestamps</button>') +
+    '<button class="btn ghost wide" onclick="closeSheet()">Put the phone away</button>' +
+    '</div></div>';
+  el("body").innerHTML = html;
+  el("head").innerHTML = headHTML(LOCS[S.loc]);
+  setFig(null);
+  save();
+}
+function viewPhotos() {
+  if (S.over) return;
+  S.flags.sawPhotos = true;
+  S.flags.sawPhotoAbel = true;
+  addClue("photos");
+  note("The phone photos: Kessa at the fire. Kessa with a burned hand on her hip. Mikey holding the county folder, alive.");
+  if (S.over) return;
+  var html = '<div class="sheet dark"><div class="wrap">' +
+    '<div class="sheet-head"><h3>The timestamps</h3><button class="x" onclick="closeSheet()">&times;</button></div>' +
+    '<div class="tbl-log">All three were taken within nine minutes of each other, the night Mikey disappeared. The last one is stamped <b>3:07 AM</b>.<br><br>That is five minutes before somebody phoned the sheriff from the office phone. Mikey is still grinning in the frame. He does not know yet.<br><br>And the hand on Kessa&rsquo;s hip is not a young hand. It is scarred, and it is holding her like it has held her before.</div>' +
+    '<button class="btn blood wide" onclick="renderLoc(\'' + S.loc + '\')">Put it away. Keep walking.</button>' +
+    '</div></div>';
+  el("body").innerHTML = html;
+  save();
+}
+
+/* ------------------------------------------------------ SECOND ACCUSATION -- */
+function openSecondAccusation() {
+  if (S.over) return;
+  var ev = ABEL_CLUES.filter(hasClue).length;
+  var html = '<div class="sheet dark"><div class="wrap">' +
+    '<div class="sheet-head"><h3>One more name</h3><button class="x" onclick="closeSheet()">&times;</button></div>' +
+    '<p class="empty">Bunny is holding the phone. He isn&rsquo;t looking at it.<br><br><em>&ldquo;The call was one thing,&rdquo;</em> he says. <em>&ldquo;Who put the boy in the water?&rdquo;</em></p>' +
+    '<div class="verdict"><b>Proof against the man in the trees</b><br>' + ev + ' of 4 pieces (Bunny wants two)<br>' +
+    (S.flags.sawPhotos ? "You have seen the photos.<br>" : "You never opened the gallery.<br>") +
+    (ev >= 2 ? "This will hold." : "This is a hunch, and hunches bleed.") + '</div>';
+  SUSPECTS.concat(["abel"]).forEach(function (id) {
+    var c = CAST[id];
+    html += '<button class="accuse-btn" onclick="resolveAbel(\'' + id + '\')"><div class="nm">' + c.name + '</div><div class="ds">' + c.note + '</div></button>';
+  });
+  html += '<div class="center"><button class="btn ghost" onclick="closeSheet()">Not yet</button></div></div></div>';
+  el("body").innerHTML = html;
+  setFig(null);
+}
+function resolveAbel(id) {
+  if (S.over) return;
+  var ev = ABEL_CLUES.filter(hasClue).length;
+  if (id === "abel" && ev >= 2) { playCine(TRUTH_SHOTS, function () { endGame("truth"); }); return; }
+  if (id === "abel") {
+    el("body").innerHTML = '<div class="dlg"><div class="spk">The Bunny Man</div>' +
+      '<div class="say"><em>BUNNY:</em> Right man. Wrong weight. A name with no paper behind it is just a rumor, and I don&rsquo;t kill men on rumors.<br><br>Bring me two pieces. The phone. The handprint. The note. Something I can hold.</div>' +
+      '<button class="btn blood wide" onclick="renderLoc(\'' + S.loc + '\')">Back into the park</button></div>';
+    susp(10);
+    return;
+  }
+  playCine(HALF_SHOTS, function () { endGame("half"); });
+}
+
+/* ---------------------------------------------------------- POND BASE ----- */
+var BASE = null, LANES = 5, zSeq = 1;
+var STRUCT = {
+  bar: { name: "Barricade", wood: 2, scrap: 0, sym: "&#9646;" },
+  trap: { name: "Spike pit", wood: 1, scrap: 2, sym: "&#10035;" },
+  lamp: { name: "Floodlight", wood: 0, scrap: 3, sym: "&#9788;" }
+};
+var BASE_PLAN = {
+  1: { count: 10, gap: 1.9, speed: 4.6, run: 0 },
+  2: { count: 14, gap: 1.55, speed: 5.4, run: .3 },
+  3: { count: 18, gap: 1.3, speed: 6.0, run: .5 }
+};
+function laneTop(l) { return 10 + l * 20; }
+function openBase() {
+  if (S.over) return;
+  if (!S.flags.deadWake) { toast("<b>NOT YET.</b> The water is still. Something has to wake it first."); return; }
+  spend(5);
+  if (S.over) return;
+  BASE = { cycle: 1, phase: "day", core: 100, ammo: 16, kills: 0, zombies: [], queue: [], structs: [null, null, null, null, null], sel: 0, t: 0, timer: null, dogCool: 0, lampCool: 0, dogX: 24, dogLane: 2, log: "The water is low and the bank is soft. Something down there has been building without you." };
+  setBg(IMG.pondNight);
+  renderBase();
+  save();
+}
+function leaveBase() {
+  if (BASE && BASE.timer) clearInterval(BASE.timer);
+  BASE = null;
+  renderLoc("pond");
+}
+function selLane(i) { if (!BASE) return; BASE.sel = i; renderBase(); }
+function buildStruct(k) {
+  if (!BASE || BASE.phase !== "day") return;
+  var st = STRUCT[k];
+  if (BASE.structs[BASE.sel]) { toast("<b>OCCUPIED.</b> That lane already has something in it."); return; }
+  if (S.mats.wood < st.wood || S.mats.scrap < st.scrap) { toast("<b>NOT ENOUGH.</b> Search the park for materials."); return; }
+  S.mats.wood -= st.wood; S.mats.scrap -= st.scrap;
+  BASE.structs[BASE.sel] = k;
+  updateHUD(); renderBase(); save();
+  sting(false);
+}
+function scavenge() {
+  if (!BASE || BASE.phase !== "day") return;
+  BASE.scav = (BASE.scav || 0) + 1;
+  if (BASE.scav > 3) { BASE.log = "The bank is picked clean. There is nothing out here but mud and the smell."; renderBase(); return; }
+  S.mats.wood += 3; S.mats.scrap += 2;
+  BASE.log = "You drag a pallet out of the weeds and strip the nails. The bank gives up three wood and two scrap.";
+  updateHUD(); renderBase(); save();
+}
+function baseHUD() {
+  var b = BASE;
+  return '<div class="base-hud">' +
+    '<div class="stat ' + (b.core > 50 ? "good" : "bad") + '"><span>Base</span><b>' + Math.max(0, Math.round(b.core)) + '%</b></div>' +
+    '<div class="stat"><span>Ammo</span><b>' + b.ammo + '</b></div>' +
+    '<div class="stat"><span>Kills</span><b>' + b.kills + '</b></div>' +
+    '<div class="stat"><span>Wood / Scrap</span><b>' + S.mats.wood + ' / ' + S.mats.scrap + '</b></div>' +
+    '</div>';
+}
+function renderBase() {
+  if (!BASE) return;
+  var b = BASE, night = b.phase === "night", field = "";
+  for (var l = 0; l < LANES; l++) field += '<div class="base-lane" style="top:' + (l * 20) + '%;height:20%"></div>';
+  field += '<div class="base-pond"></div>';
+  b.zombies.forEach(function (z) {
+    field += '<div class="zomb' + (z.kind === "run" ? " run" : "") + '" style="left:' + z.x.toFixed(1) + '%;top:' + laneTop(z.lane) + '%" onclick="shootZombie(' + z.id + ')">' + (z.hp > 1 ? "&#10022;" : "") + '</div>';
+  });
+  b.structs.forEach(function (k, l) {
+    if (k) field += '<div class="struct" style="left:36%;top:' + laneTop(l) + '%">' + STRUCT[k].sym + '</div>';
+  });
+  if (dogFollowing()) field += '<div class="dog-dot" style="left:' + b.dogX + '%;top:' + laneTop(b.dogLane) + '%">&#128021;</div>';
+  var lanes = "", build = "";
+  for (var i = 0; i < LANES; i++) {
+    lanes += '<button class="chipbet' + (b.sel === i ? " on" : "") + '" onclick="selLane(' + i + ')">Lane ' + (i + 1) + (b.structs[i] ? " &middot; " + STRUCT[b.structs[i]].name : "") + '</button>';
+  }
+  Object.keys(STRUCT).forEach(function (k) {
+    var st = STRUCT[k], ok = !night && !b.structs[b.sel] && S.mats.wood >= st.wood && S.mats.scrap >= st.scrap;
+    build += '<button class="chipbet" ' + (ok ? 'onclick="buildStruct(\'' + k + '\')"' : "disabled") + '>' + st.name + ' &middot; ' + (st.wood ? st.wood + "w " : "") + (st.scrap ? st.scrap + "s" : "") + '</button>';
+  });
+  el("body").innerHTML = '<div class="sheet dark"><div class="wrap">' +
+    '<div class="sheet-head"><h3>The Pond &mdash; ' + (night ? "NIGHT " + b.cycle : "DAY " + b.cycle) + '</h3><button class="x" onclick="leaveBase()">&times;</button></div>' +
+    '<div class="phase-bar' + (night ? " night" : "") + '"><span>' + (night ? "Nightfall &mdash; they are coming up the bank" : "Daybreak &mdash; build while the light holds") + '</span><b>' + (night ? "WAVE " + b.cycle + " / 3" : "PREP") + '</b></div>' +
+    baseHUD() +
+    '<div class="base-field">' + field + '</div>' +
+    '<p class="mini-note" style="text-align:left">' + b.log + '</p>' +
+    '<div class="bet-row" style="margin-top:.5rem">' + lanes + '</div>' +
+    (night ? "" : '<div class="bet-row">' + build + '</div>') +
+    '<div class="center">' +
+      (night
+        ? '<button class="btn ghost" onclick="leaveBase()">Run for the tree line</button>'
+        : '<button class="btn blood" onclick="startNight()">Let the sun go down</button><button class="btn ghost" onclick="scavenge()">Scavenge the bank</button>') +
+    '</div>' +
+    '<p class="mini-note">Click the drowned to put them down &mdash; one round each, and you reload by daylight. ' + (dogFollowing() ? "Mushroom is with you and takes one every few seconds." : "If Mushroom were here he would be tearing into them.") + '</p>' +
+    '</div></div>';
+  el("head").innerHTML = headHTML(LOCS.pond);
+  setFig(null);
+}
+function startNight() {
+  if (!BASE || BASE.phase !== "day") return;
+  var b = BASE, plan = BASE_PLAN[b.cycle];
+  b.phase = "night"; b.t = 0; b.zombies = []; b.queue = [];
+  for (var i = 0; i < plan.count; i++) {
+    b.queue.push({ at: 1.4 + i * plan.gap, lane: Math.floor(Math.random() * LANES), kind: Math.random() < plan.run ? "run" : "slow" });
+  }
+  b.queue.sort(function (x, y) { return x.at - y.at; });
+  b.log = "The water goes flat, and then it isn&rsquo;t flat any more. Something comes up the bank on all fours and keeps coming.";
+  b.timer = setInterval(baseTick, 100);
+  sting(true);
+  renderBase();
+}
+function baseTick() {
+  if (!BASE || BASE.phase !== "night") return;
+  var b = BASE, dt = 0.1, plan = BASE_PLAN[b.cycle];
+  b.t += dt;
+  while (b.queue.length && b.queue[0].at <= b.t) {
+    var q = b.queue.shift();
+    b.zombies.push({ id: zSeq++, x: 3, lane: q.lane, hp: q.kind === "run" ? 2 : 1, kind: q.kind });
+  }
+  for (var i = b.zombies.length - 1; i >= 0; i--) {
+    var z = b.zombies[i];
+    z.x += plan.speed * (b.structs[z.lane] === "bar" ? .38 : 1) * (z.kind === "run" ? 1.35 : 1) * dt;
+    if (b.structs[z.lane] === "trap" && z.x > 30) {
+      b.structs[z.lane] = null;
+      b.zombies.splice(i, 1); b.kills++;
+      b.log = "The spike pit takes one and folds shut on it. You will have to dig it out tomorrow.";
+      continue;
+    }
+    if (z.x >= 90) {
+      b.zombies.splice(i, 1);
+      b.core -= (z.kind === "run" ? 16 : 11);
+      sting(false);
+      if (b.core <= 0) { baseLose(); return; }
+    }
+  }
+  b.lampCool += dt;
+  if (b.lampCool >= 1.6) {
+    b.lampCool = 0;
+    for (var L = 0; L < LANES; L++) {
+      if (b.structs[L] !== "lamp") continue;
+      for (var j = b.zombies.length - 1; j >= 0; j--) {
+        if (b.zombies[j].lane !== L) continue;
+        b.zombies[j].hp -= 1;
+        if (b.zombies[j].hp <= 0) { b.zombies.splice(j, 1); b.kills++; }
+        break;
+      }
+    }
+  }
+  if (dogFollowing()) {
+    b.dogCool += dt;
+    if (b.dogCool >= 3 && b.zombies.length) {
+      b.dogCool = 0;
+      var best = 0;
+      for (var k = 1; k < b.zombies.length; k++) if (b.zombies[k].x > b.zombies[best].x) best = k;
+      b.dogLane = b.zombies[best].lane;
+      b.dogX = Math.max(20, Math.min(86, b.zombies[best].x - 4));
+      b.zombies.splice(best, 1); b.kills++;
+    }
+  }
+  if (!b.queue.length && !b.zombies.length) { nightOver(); return; }
+  renderBase();
+}
+function shootZombie(id) {
+  if (!BASE || BASE.phase !== "night") return;
+  var b = BASE, idx = -1;
+  for (var i = 0; i < b.zombies.length; i++) if (b.zombies[i].id === id) { idx = i; break; }
+  if (idx < 0) return;
+  if (b.ammo <= 0) { toast("<b>CLICK.</b> Empty. You reload by daylight."); return; }
+  b.ammo--;
+  b.zombies[idx].hp -= 1;
+  if (b.zombies[idx].hp <= 0) { b.zombies.splice(idx, 1); b.kills++; sting(false); }
+  renderBase();
+}
+function nightOver() {
+  var b = BASE;
+  clearInterval(b.timer); b.timer = null;
+  if (b.cycle >= 3) { baseWin(); return; }
+  b.cycle++; b.phase = "day"; b.ammo += 8;
+  S.mats.wood += 4; S.mats.scrap += 3;
+  b.log = "The water goes still. Grey light on the bank. You have a few hours to build with before it comes back.";
+  updateHUD(); renderBase(); save();
+  toast("<b>YOU HELD THE NIGHT.</b> Day " + b.cycle + ". Build while the light holds.");
+}
+function baseWin() {
+  BASE = null;
+  S.flags.baseSurvived = true;
+  S.flags.sawAbel = true;
+  addClue("hatch");
+  addClue("abelhand");
+  earn(150);
+  note("Three nights at the pond. What the water gave up: a welded hatch, a 2003 wristband, and a scarred hand's print in the silt.");
+  spend(15);
+  if (S.over) return;
+  playCine(DRAIN_SHOTS, function () { renderLoc("pond"); });
+}
+function baseLose() {
+  if (BASE && BASE.timer) clearInterval(BASE.timer);
+  BASE = null;
+  endGame("zombies");
+}
+
+/* ------------------------------------------------------------ ENDINGS ----- */
 function endGame(kind) {
+  if (S.over && kind !== "dawn") return;
   S.over = true;
-  var title = "", body = "", cls = "";
-  if (kind === "win") {
-    title = "YOU WALK OUT";
+  clearSave();
+  setFig(null);
+  var title = "", body = "", cls = "lose";
+  var truth = "The snitch was <span class='who'>" + CAST[S.snitch].name + "</span>. The phone in the pond: " + PHONE_MARKS[S.snitch];
+  if (kind === "truth") {
     cls = "win";
-    body = "Bunny stands. <span class='who'>\u201CWalk.\u201D</span><br><br>" +
-      "The debt was a lie. The snitch was <span class='who'>" + CAST[S.snitch].name + "</span>. " +
-      "You walk out the Boone Rd gate at dawn, and Sun N Fun lets you go — this time.";
+    title = "THE WHOLE TRUTH";
+    body = "You put it all on the garage floor: the razored ledger page, the office call log, the marker with two names on it, the phone with <span class='who'>" + CAST[S.snitch].name + "</span>'s mark in the case.<br><br>" +
+      "The buyer out of Louisville wanted this park. Marlene signed the lots one widow at a time. Mikey found the papers and made the mistake of being nineteen and honest. " + CAST[S.snitch].name + " made one phone call and the rest of the park did the rest.<br><br>" +
+      "And the boy in the water? That was <span class='who'>Abel</span>. Your cousin, who burned in 2003 and didn't die, who came out of the trees for the papers and for Kessa and for a park that would sell its own dead. She signed the marker. She told him Mikey had seen the folder. You were the alibi and the fool and the man who woke up in a garage with somebody else's blood under his nails.<br><br>" +
+      "Bunny listens with the mask off. Under it he is just a tired man with a dead brother and a hand that shakes.<br><br><span class='who'>BUNNY:</span> “Go home. Pack. Be gone by sunup.”<br><br>Mushroom walks out beside you. Behind you, somebody is already pouring gasoline on the office trailer. You do not turn around.";
+  } else if (kind === "win") {
+    cls = "win";
+    title = "YOU WALK OUT";
+    body = "Bunny stands.<br><br><span class='who'>BUNNY:</span> “Walk.”<br><br>" + truth + "<br><br>You go out the Boone Gate at dawn with the phone in your pocket and the park behind you. Sun N Fun lets you go — this time.<br><br>You never find out who was in the water with Mikey. You try not to think about it. You fail, most nights.";
   } else if (kind === "wrong") {
     title = "WRONG NAME";
+    body = "Bunny shakes his head. <span class='who'>“That\'s not the one.”</span><br><br>Razor stands. The stone stops.<br><br>" + truth + "<br><br>The axe doesn\'t.<br><br>The park keeps its secrets, and your body, and the sound of the garage door coming down.";
+  } else if (kind === "half") {
     cls = "lose";
-    body = "Bunny shakes his head. <span class='who'>\u201CThat's not the one.\u201D</span><br><br>" +
-      "Razor stands. The stone stops. The axe doesn't.<br><br>The park keeps its secrets.";
-  } else {
+    title = "HALF THE TRUTH";
+    body = "You named the caller and Bunny believed you. The gate came open.<br><br>" + truth + "<br><br>But you never said the other name. <span class='who'>Abel</span>. Your own blood, buried in an empty box in 2003, standing in the tree line with a burned hand and your girlfriend's lipstick on his collar.<br><br>You walk out at dawn with a dog at your heel, alive and hollow. The park lets you go. It does not let you forget.<br><br>Somewhere behind you, the water closes over something new.";
+  } else if (kind === "zombies") {
+    title = "THE POND KEEPS YOU";
+    body = "The barricade goes. Then the light. Then the bank.<br><br>They come up out of the water slow and patient, the way the pond has always been patient, and they take the base apart with their hands. Mikey is somewhere in the front of them. You would know that walk anywhere.<br><br>" + truth + "<br><br>By dawn the pond is flat and black again, and there is one more set of heel marks going in.";
+  } else if (kind === "suspicion") {
     title = "THE WHISPERS WON";
-    cls = "lose";
-    body = "Too many eyes, too many words. Bunny nods. Razor stands.<br><br>The park keeps its secrets.";
+    body = "Too many eyes. Too many words. By the time you reach the gate, the whole park is standing in the dark behind you, and none of them are blinking.<br><br>" + truth + "<br><br>Razor is almost gentle about it. Almost.";
+  } else {
+    title = "DAWN";
+    body = "The sky goes grey over Boone Road. Bunny looks at the light, then at you, then at Razor.<br><br><span class='who'>BUNNY:</span> “Court\'s closed.”<br><br>" + truth + "<br><br>The garage door comes down. The park goes back to sleep.";
   }
-  el("game-body").innerHTML =
-    '<div class="end-title ' + cls + '">' + title + '</div>' +
-    '<div class="end-body">' + body + '</div>' +
-    '<div class="center"><button class="btn btn-spin" onclick="location.reload()">Play again — new snitch</button></div>';
-  setActiveHud(null);
-  window.scrollTo(0, 0);
+  var stats = '<div class="status-grid">' +
+    '<div class="stat"><span>Evidence</span><b>' + S.clues.length + ' / ' + CLUE_ORDER.length + '</b></div>' +
+    '<div class="stat"><span>Suspicion</span><b>' + S.susp + ' / 100</b></div>' +
+    '<div class="stat ' + (hasDebtProof() ? "good" : "bad") + '"><span>Debt</span><b>' + debtLabel() + '</b></div>' +
+    '</div>';
+  el("body").innerHTML = '<div class="sheet dark"><div class="wrap">' +
+    '<div class="big-title ' + cls + '">' + title + '</div>' +
+    '<div class="end-body">' + body + '</div>' + stats +
+    '<div class="center"><button class="btn blood" onclick="restartGame()">Play again — new snitch</button>' +
+    '<a class="btn ghost" href="/games.html">Games hub</a></div>' +
+    '<p class="mini-note" style="margin-top:1rem">Sun N Fun Estates · 111 Tomahawk Trl · Rineyville, KY · everything here is fiction except the roads.</p>' +
+    '</div></div>';
+  el("head").innerHTML = '';
+  el("bg").classList.add("dim");
+  el("vig").className = "vig";
+  sting(true);
+  fx("blood");
 }
+function restartGame() {
+  clearSave();
+  S = fresh();
+  TBL.busy = false; TBL.rolls = 0; TBL.wins = 0; TBL.bet = 20; TBL.pick = "under";
+  TBL.log = "";
+  S.started = true;
+  S.sound = !muted;
+  el("bg").classList.remove("dim");
+  showScreen("game");
+  updateHUD();
+  renderLoc("garage");
+  toast("<b>NEW CASE.</b> Somebody new talked to the cops.");
+}
+
+/* ----------------------------------------------------------- CINEMATIC ---- */
+var CINE = { shots: [], i: 0, line: 0, done: null, typing: false, timer: null, active: false };
+function playCine(shots, done) {
+  el("toast").classList.remove("show");
+  CINE = { shots: shots, i: 0, line: 0, done: done, typing: false, timer: null, active: true };
+  el("cine").classList.remove("hidden");
+  showShot();
+}
+function showShot() {
+  var sh = CINE.shots[CINE.i];
+  if (!sh) { endCine(); return; }
+  var bg = el("cine-bg"), fig = el("cine-fig");
+  bg.style.backgroundImage = "url('" + sh.img + "')";
+  if (sh.fig) { fig.src = CAST[sh.fig].img; fig.classList.add("show"); }
+  else { fig.classList.remove("show"); fig.removeAttribute("src"); }
+  el("cine-lines").innerHTML = "";
+  CINE.line = 0;
+  if (sh.fx) { fx(sh.fx); }
+  nextLine();
+}
+function nextLine() {
+  var sh = CINE.shots[CINE.i];
+  if (!sh) { endCine(); return; }
+  var box = el("cine-lines");
+  var arr = box.querySelectorAll(".cline");
+  for (var i = 0; i < arr.length; i++) arr[i].classList.remove("on");
+  if (CINE.line >= sh.lines.length) { CINE.i++; showShot(); return; }
+  var l = sh.lines[CINE.line];
+  var d = document.createElement("div");
+  d.className = "cline on" + (l.cls ? " " + l.cls : "");
+  var who = l.who ? '<span class="who">' + l.who + ':</span> ' : "";
+  d.innerHTML = who + '<span class="txt"></span>';
+  box.appendChild(d);
+  box.scrollTop = box.scrollHeight;
+  var target = d.querySelector(".txt");
+  typeText(target, l.text, function () {
+    CINE.line++;
+    setTimeout(function () { if (CINE.active) nextLine(); }, 1100);
+  });
+}
+function typeText(node, text, cb) {
+  var i = 0;
+  CINE.typing = true;
+  node.textContent = "";
+  clearInterval(CINE.timer);
+  CINE.timer = setInterval(function () {
+    i += 2;
+    node.textContent = text.slice(0, i);
+    if (i >= text.length) {
+      clearInterval(CINE.timer);
+      CINE.typing = false;
+      cb();
+    }
+  }, 18);
+}
+function advanceCine() {
+  if (!CINE.active) return;
+  if (CINE.typing) {
+    clearInterval(CINE.timer);
+    CINE.typing = false;
+    var sh = CINE.shots[CINE.i];
+    var l = sh.lines[CINE.line] || { text: "" };
+    var box = el("cine-lines");
+    var last = box.querySelectorAll(".cline");
+    var node = last[last.length - 1].querySelector(".txt");
+    node.textContent = l.text;
+    CINE.line++;
+    setTimeout(function () { if (CINE.active) nextLine(); }, 250);
+    return;
+  }
+  nextLine();
+}
+function skipCine() { endCine(); }
+function endCine() {
+  CINE.active = false;
+  clearInterval(CINE.timer);
+  el("cine").classList.add("hidden");
+  var d = CINE.done; CINE.done = null;
+  if (d) d();
+}
+
+/* ------------------------------------------------------------ CINEMATICS -- */
+var INTRO_SHOTS = [
+  { img: IMG.garage, fx: null, lines: [
+    { text: "Your head is a struck bell. Concrete under your cheek. Cold coming up through it like the floor is drinking you." },
+    { text: "Your wrists are raw where the tape was. There's blood under your nails, and it isn't yours." },
+    { text: "The garage is at 180 Tomahawk Trl. You know that the way you know your own name: without checking." },
+    { text: "The blood on the floor has been dragged toward the side door. Something was carried out of here. Something that bled.", cls: "gore" }
+  ] },
+  { img: IMG.garage, fig: "bunny", lines: [
+    { who: "BUNNY", text: "You slept through a raid, friend. Cops took Mikey at three. Three cruisers. Somebody pointed." },
+    { text: "The mask has a crack through the left eye. Something dark has dried in the crack." },
+    { who: "BUNNY", text: "Two things. The debt. And the name. Sort both and you walk out that gate." }
+  ] },
+  { img: IMG.garage, fig: "razor", fx: "flash", lines: [
+    { text: "Behind him, a man sits on a stool with a hatchet across his knees. The whetstone goes shhk. Shhk. He does not look up." },
+    { who: "RAZOR", text: "Shhk. Shhk." },
+    { who: "BUNNY", text: "Get one wrong, and Razor gets to work. Dawn's at six. Don't make me come find you." }
+  ] },
+  { img: IMG.garage, lines: [
+    { text: "The last thing you remember is Kessa's hand flat on your chest in the dark of the trailer. <em>It's covered,</em> she said. <em>Somebody covered the bet.</em>" },
+    { text: "You have sixty dollars in your boot, a dog waiting at the gate for a boy who is not coming back, and her signature somewhere in this park with your name printed over it.", cls: "gore" }
+  ] }
+];
+
+var POND_SHOTS = [
+  { img: IMG.pond, fx: "flash", lines: [
+    { text: "You wade in. The cold takes your breath. The bottom is soft and gives under your heel, and then it gives more than mud should." },
+    { text: "Your hand closes on something that is not a phone. Hair. A handful of it.", cls: "gore" }
+  ] },
+  { img: IMG.pond, fig: null, fx: "blood", lines: [
+    { text: "You pull. Mikey comes up out of the black water slow, like the pond is reluctant to give him back.", cls: "gore" },
+    { text: "His throat is open from ear to ear. His eyes are gone. Something in the water has been at them.", cls: "gore" },
+    { text: "His right hand is clenched around a phone. You have to break two fingers to get it out.", cls: "gore" },
+    { who: "YOU", text: "...I'm sorry. I'm sorry. I'm sorry." }
+  ] }
+];
+
+var WIN_SHOTS = [
+  { img: IMG.garage, fig: "bunny", lines: [
+    { text: "You lay it out on the concrete: the ledger, the call log, the phone. Bunny looks at it for a long time." },
+    { who: "BUNNY", text: "That's a name. That's a weight. All right, friend. All right." }
+  ] },
+  { img: IMG.gate, lines: [
+    { text: "The chain comes off the Boone Gate. The road beyond is grey and empty and it does not care about you at all." },
+    { text: "You walk. Behind you, the park is quiet. Too quiet for a place with that much blood in it." }
+  ] }
+];
+
+var TRUTH_SHOTS = [
+  { img: IMG.pondNight, lines: [
+    { text: "You put it all down on the concrete: the razored page, the call log, the marker, the phone, the tooth from the drain." },
+    { text: "The buyer out of Louisville. The lots signed a widow at a time. Mikey, nineteen and honest, holding papers he should never have found." }
+  ] },
+  { img: IMG.office, lines: [
+    { who: "YOU", text: "Kessa signed the marker. Four hundred dollars with my name printed on it and hers underneath." },
+    { text: "Bunny turns the phone over. The photos come up one at a time, and in the last one a burned hand is flat on her hip." },
+    { who: "BUNNY", text: "...How long since you saw your cousin?" }
+  ] },
+  { img: IMG.pondNight, fig: "abel", fx: "flash", lines: [
+    { text: "The hatch under the pond is open. Eleven years of mail. A child's shoe. A wristband gone grey." },
+    { who: "ABEL", text: "You always did look at me like I was a photograph." },
+    { text: "He comes out of the tree line with one hand in his coat and the other held up flat, scarred, patient. The scar is the same shape as the print in the silt.", cls: "gore" },
+    { who: "ABEL", text: "Mikey saw the papers. She told me he saw them. I only meant to take them off him. He ran at the water and the water was deeper than he thought." },
+    { text: "Nobody in the park moves. Razor's stone has stopped. Bunny takes the mask off, and his face is wet.", cls: "gore" }
+  ] },
+  { img: IMG.gate, fx: "blood", lines: [
+    { text: "You walk out the Boone Gate at dawn with a dog at your heel and nothing left in your pockets." },
+    { text: "Behind you the office trailer goes up like it did in 2003. Somebody is finally keeping the promise the county never did.", cls: "gore" }
+  ] }
+];
+
+var HALF_SHOTS = [
+  { img: IMG.garage, fig: "bunny", lines: [
+    { text: "Bunny looks at the name you gave him for a long time. Then he nods, because this park runs on names the same way it runs on blood." },
+    { who: "BUNNY", text: "That's close enough to true. Get out of my park." }
+  ] },
+  { img: IMG.gate, lines: [
+    { text: "The chain comes off the gate. You walk out at dawn with the phone in your pocket and a dog behind you." },
+    { text: "You never say the other name out loud. Abel. Your own blood, buried in '03, standing in the tree line with a burned hand. You will think about it in every quiet room for the rest of your life.", cls: "gore" }
+  ] }
+];
+
+var DRAIN_SHOTS = [
+  { img: IMG.pondNight, fx: "blood", lines: [
+    { text: "Three nights. The dead came up the bank in ones and twos and then in a crowd, and you put them back down, and Mushroom dragged one off the barricade by the ankle." },
+    { text: "On the fourth morning the water is gone. The pond drains into a seam in the mud, and the seam is a hatch." }
+  ] },
+  { img: IMG.pondNight, fig: "abel", lines: [
+    { text: "A hatch welded shut from underneath. Inside: a 2003 county fair wristband, a child's shoe, and eleven years of mail. Every envelope addressed to A. Rennick." },
+    { text: "In the silt beside it, pressed deep: a handprint. Not a glove. Scar tissue printed like a signature." },
+    { who: "ABEL", text: "...You never could leave a thing alone." },
+    { text: "He is standing at the tree line with his hands in his coat, and he has been there long enough for the fog to settle on his shoulders.", cls: "gore" }
+  ] }
+];
+
+var WRONG_SHOTS = [
+  { img: IMG.garage, fig: "razor", fx: "flash", lines: [
+    { text: "Bunny shakes his head. Razor stands. The stone stops." },
+    { who: "BUNNY", text: "That's not the one." },
+    { text: "The axe comes up. You have time to see the edge, and the edge is very clean, and you understand, finally, what the whetstone was for.", cls: "gore" }
+  ] },
+  { img: IMG.garage, fx: "blood", lines: [
+    { text: "The garage door comes down. The park keeps its secrets.", cls: "gore" }
+  ] }
+];
+
+/* --------------------------------------------------------------- FLOW ----- */
+function startNewCase() {
+  clearSave();
+  S = fresh();
+  TBL.busy = false; TBL.rolls = 0; TBL.wins = 0; TBL.bet = 20; TBL.pick = "under";
+  TBL.log = "";
+  S.started = true;
+  S.sound = !muted;
+  audioInit();
+  if (AC && AC.state === "suspended") AC.resume();
+  if (AC && master) master.gain.value = muted ? 0 : .5;
+  showScreen("game");
+  setBg(IMG.garage);
+  updateHUD();
+  el("head").innerHTML = headHTML(LOCS.garage);
+  el("body").innerHTML = "";
+  playCine(INTRO_SHOTS, function () {
+    renderLoc("garage");
+    toast("<b>3:15 AM.</b> Dawn is at six. Find the debt, find the name.");
+  });
+}
+function resumeCase() {
+  var d = loadSave();
+  if (!d) { toast("<b>NO CASE SAVED.</b> Start a new one."); return; }
+  S = fresh();
+  for (var k in d) if (Object.prototype.hasOwnProperty.call(d, k)) S[k] = d[k];
+  S.over = false; S.started = true;
+  muted = !S.sound;
+  if (AC && master) master.gain.value = muted ? 0 : .5;
+  showScreen("game");
+  el("bg").classList.remove("dim");
+  updateHUD();
+  renderLoc(S.loc || "garage");
+  toast("<b>CASE RESUMED.</b> " + clockText() + " · " + S.clues.length + " of " + CLUE_ORDER.length + " clues.");
+}
+
+/* --------------------------------------------------------- INTERACTIONS --- */
+el("cine").addEventListener("click", function (e) {
+  if (e.target && e.target.tagName === "BUTTON") return;
+  advanceCine();
+});
+document.addEventListener("keydown", function (e) {
+  if (e.target && /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+  if (CINE.active) {
+    if (e.key === " " || e.key === "Enter" || e.key === "ArrowRight") { e.preventDefault(); advanceCine(); }
+    if (e.key === "Escape") skipCine();
+    return;
+  }
+  if (!el("game").classList.contains("on") || S.over) return;
+  var k = e.key.toLowerCase();
+  if (k === "m") openMap();
+  else if (k === "c") openFile();
+  else if (k === "a") openAccuse();
+  else if (e.key === "Escape") closeSheet();
+});
+
+/* --------------------------------------------------------------- BOOT ----- */
+(function boot() {
+  muted = !S.sound;
+  var saved = loadSave();
+  if (saved) {
+    el("menu-save").classList.remove("hidden");
+    el("menu-save").innerHTML = "A case is open: " + saved.clues.length + " of " + CLUE_ORDER.length + " clues, suspicion " + saved.susp + ".";
+    el("btn-continue").classList.remove("hidden");
+    el("btn-start").textContent = "Start a new case";
+  }
+  setBg(IMG.garage);
+  var b = el("snd-btn"); if (b) b.textContent = muted ? "×" : "♪";
+  var l = el("snd-label"); if (l) l.textContent = "Sound: " + (muted ? "off" : "on");
+})();
 </script>
 </body>
 </html>
