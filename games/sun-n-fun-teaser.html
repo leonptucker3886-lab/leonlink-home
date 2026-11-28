@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0b0908">
+<title>Sun N Fun — Chapter Zero: The Phone (Interactive Comic) | LeonLink</title>
+<meta name="description" content="An interactive comic teaser from Sun N Fun Estates, Rineyville, Kentucky. You wake up with no phone, walk the park, and the badge comes anyway. Chapter One: Coming Soon.">
+<link rel="canonical" href="https://www.leonlink.net/games/sun-n-fun-teaser.html">
+<meta property="og:title" content="Sun N Fun — Chapter Zero: The Phone">
+<meta property="og:description" content="You wake up in a garage with no phone. Everybody in this park knows something. Nobody's telling. An interactive comic. Chapter One: Coming Soon.">
+<meta property="og:image" content="https://www.leonlink.net/img/sun-n-fun/teaser-pond.jpg">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{
+  --ink:#15100e; --paper:#e8ddc1; --paper2:#d9cca9; --cream:#f4ecd6;
+  --red:#a5141c; --amber:#e08a2c; --bone:#ece4d2;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:#0b0908;color:var(--bone);overflow:hidden;
+  font-family:Georgia,"Times New Roman",serif;-webkit-font-smoothing:antialiased;
+  overscroll-behavior:none;
+}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+  background:
+    radial-gradient(ellipse at 50% 0%,rgba(224,138,44,.12),transparent 55%),
+    radial-gradient(ellipse at 50% 100%,rgba(165,20,28,.12),transparent 60%),
+    #0b0908}
+button{font-family:inherit;color:inherit}
+.wrap{position:relative;z-index:1;height:100%;display:flex;flex-direction:column}
+
+/* ---------- top bar ---------- */
+.bar{display:flex;align-items:center;gap:.6rem;padding:calc(.45rem + env(safe-area-inset-top)) .7rem .45rem;border-bottom:1px solid rgba(236,228,210,.12);background:rgba(8,6,5,.85);backdrop-filter:blur(6px);z-index:6}
+.bar .mark{font-size:.55rem;letter-spacing:.28em;text-transform:uppercase;color:#b4a486;white-space:nowrap;line-height:1.5}
+.bar .mark b{display:block;color:#f0e4c9;font-size:.68rem;letter-spacing:.16em;font-family:"Times New Roman",Georgia,serif}
+.track{flex:1;height:4px;background:#241d16;border:1px solid #3a2f24;overflow:hidden;min-width:56px}
+.track i{display:block;height:100%;width:0;background:linear-gradient(90deg,#7d8767,var(--amber) 60%,var(--red));transition:width .4s}
+.pageno{font-size:.55rem;letter-spacing:.16em;color:#a3947a;white-space:nowrap;font-variant-numeric:tabular-nums}
+.icon{width:32px;height:32px;display:grid;place-items:center;background:#16120d;border:1px solid #3f3527;color:#cfc2a6;cursor:pointer;border-radius:2px;font-size:.72rem}
+.icon:hover{border-color:var(--amber);color:#fff}
+
+/* ---------- book ---------- */
+#book{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;display:flex;align-items:flex-start;justify-content:center;padding:.7rem .65rem 5.4rem}
+.page{
+  width:100%;max-width:560px;background:var(--paper);color:var(--ink);
+  border:3px solid #000;box-shadow:0 26px 70px rgba(0,0,0,.8),0 0 0 1px rgba(0,0,0,.6);
+  padding:12px 12px 14px;position:relative;animation:pageIn .45s ease;
+  background-image:radial-gradient(#000 0.5px,transparent 0.6px);background-size:6px 6px;
+}
+@keyframes pageIn{from{opacity:0;transform:translateY(18px) rotate(-.4deg)}to{opacity:1;transform:none}}
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:.6rem;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:11px}
+.page-head h2{font-family:"Times New Roman",Georgia,serif;font-size:clamp(1rem,4.6vw,1.35rem);letter-spacing:.06em;text-transform:uppercase;line-height:1;color:var(--ink)}
+.page-head .k{font-size:.5rem;letter-spacing:.22em;text-transform:uppercase;color:#6b5a3c}
+.page-head .n{font-family:"Courier New",monospace;font-size:.62rem;font-weight:700;color:var(--ink);border:2px solid var(--ink);padding:1px 5px;background:var(--cream)}
+
+/* ---------- panels ---------- */
+.panel{position:relative;overflow:hidden;background:#000;border:3px solid #000;margin-bottom:10px;
+  box-shadow:4px 4px 0 rgba(21,16,14,.85);will-change:transform,opacity;
+  transition:opacity .42s ease,transform .42s cubic-bezier(.2,.7,.3,1);transform-origin:50% 40%}
+.panel.off{pointer-events:none;box-shadow:none;border-style:dashed;border-color:rgba(21,16,14,.3);background:#e6dab9;transition:none}
+.panel.off > *{opacity:0!important}
+.panel.off:after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(21,16,14,.22) .9px,transparent 1px);background-size:5px 5px}
+.panel.off:before{content:"\25BC";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;font-family:"Courier New",monospace;font-size:13px;color:rgba(21,16,14,.38)}
+.panel > *{transition:opacity .38s ease}
+.panel img{display:block;width:100%;height:100%;object-fit:cover;filter:contrast(1.1) saturate(.92) sepia(.06)}
+.h-wide{height:206px}
+.h-mid{height:242px}
+.h-tall{height:282px}
+.h-slim{height:176px}
+@media (max-width:380px){.h-wide{height:186px}.h-mid{height:222px}.h-tall{height:258px}.h-slim{height:160px}}
+.panel .halftone{position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;opacity:.16;
+  background-image:radial-gradient(#000 .9px,transparent 1px);background-size:4px 4px}
+.panel .vig{position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 40px rgba(0,0,0,.62)}
+.rot-l{transform:rotate(-.5deg)}
+.rot-r{transform:rotate(.5deg)}
+
+/* caption + balloons */
+.cap{position:absolute;left:8px;top:8px;max-width:84%;background:var(--cream);border:2px solid #000;padding:4px 7px;
+  font-family:"Courier New",monospace;font-weight:700;font-size:11px;line-height:1.32;letter-spacing:.01em;color:#1a1410;
+  box-shadow:3px 3px 0 #000;text-transform:uppercase}
+.cap.bottom{top:auto;bottom:8px}
+.cap.right{left:auto;right:8px}
+.bub{position:absolute;background:#fff;border:2px solid #000;border-radius:15px;padding:6px 10px;max-width:70%;
+  font-size:12.5px;line-height:1.3;color:#141010;box-shadow:3px 3px 0 rgba(0,0,0,.9)}
+.bub .who{display:block;font-family:Arial,sans-serif;font-weight:900;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:2px}
+.bub:after{content:"";position:absolute;bottom:-12px;left:16px;border:8px solid transparent;border-top-color:#000}
+.bub:before{content:"";position:absolute;bottom:-8px;left:18px;border:6px solid transparent;border-top-color:#fff;z-index:2}
+.bub.tl{left:8px;top:8px}.bub.tr{right:8px;top:8px}.bub.bl{left:8px;bottom:12px}.bub.br{right:8px;bottom:12px}
+.bub.tl:after,.bub.tr:after{bottom:auto;top:-12px;left:16px;border-top-color:transparent;border-bottom-color:#000}
+.bub.tl:before,.bub.tr:before{bottom:auto;top:-8px;left:18px;border-top-color:transparent;border-bottom-color:#fff}
+.bub.tr:after{left:auto;right:16px}.bub.tr:before{left:auto;right:18px}
+.sfx{position:absolute;font-family:Impact,"Arial Black","Haettenschweiler",sans-serif;letter-spacing:.02em;
+  color:#ffd24a;-webkit-text-stroke:2px #000;text-shadow:4px 4px 0 var(--red);transform:rotate(-7deg);line-height:.9;text-transform:uppercase}
+.sfx.s1{font-size:38px;left:12px;bottom:16px}
+.sfx.s2{font-size:26px;right:10px;top:12px;transform:rotate(5deg)}
+
+/* cover */
+.cover{padding:0;overflow:hidden;background:#000;border:3px solid #000}
+.cover .art{position:relative;height:min(74vh,620px);min-height:420px}
+.cover .art img{width:100%;height:100%;object-fit:cover;filter:contrast(1.06) saturate(.95) brightness(.72)}
+.cover .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,.1) 30%,rgba(0,0,0,.92))}
+.cover .lock{position:absolute;left:0;right:0;bottom:0;padding:14px 14px 18px;color:var(--cream)}
+.cover .over{font-size:.55rem;letter-spacing:.34em;text-transform:uppercase;color:#e0c9a2;margin-bottom:6px}
+.cover h1{font-family:"Times New Roman",Georgia,serif;font-weight:900;text-transform:uppercase;line-height:.86;letter-spacing:.02em;
+  font-size:clamp(2.4rem,13vw,4.4rem);text-shadow:0 4px 0 #000,0 0 40px rgba(224,138,44,.4)}
+.cover h1 em{font-style:normal;color:var(--amber)}
+.cover .sub{margin-top:9px;display:inline-block;background:var(--cream);color:#161010;border:2px solid #000;box-shadow:3px 3px 0 var(--red);
+  font-family:"Courier New",monospace;font-weight:700;font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;padding:3px 7px}
+.cover .tap{margin-top:14px;font-family:"Courier New",monospace;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:#fff;animation:pulse 2.4s infinite}
+@keyframes pulse{0%,100%{opacity:.45}50%{opacity:1}}
+.cover .addr{position:absolute;top:12px;left:12px;font-size:.5rem;letter-spacing:.24em;text-transform:uppercase;color:#e7d7b8;background:rgba(0,0,0,.5);padding:2px 5px;border:1px solid rgba(255,255,255,.25)}
+
+/* map panel */
+.lotmap{position:relative;background:#e3d6b2;border:3px solid #000;box-shadow:4px 4px 0 rgba(21,16,14,.85);margin-bottom:10px;padding:8px}
+.lotmap svg{display:block;width:100%;height:auto}
+.lotbtns{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
+.lotbtns button{background:#f4ecd6;border:2px solid #000;padding:3px 7px;font-family:"Courier New",monospace;font-weight:700;
+  font-size:10.5px;text-transform:uppercase;letter-spacing:.02em;cursor:pointer;box-shadow:2px 2px 0 #000;color:#141010}
+.lotbtns button:hover{background:#ffd9a1}
+.lotbtns button.on{background:var(--amber);color:#000}
+.lotline{margin-top:7px;background:#fff;border:2px solid #000;padding:6px 8px;font-family:"Courier New",monospace;font-weight:700;
+  font-size:11px;line-height:1.35;color:#141010;min-height:44px;box-shadow:2px 2px 0 #000}
+.lotline b{color:var(--red)}
+
+/* end card */
+.end{padding:0;background:#080605;color:var(--bone)}
+.end .strip{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;background:#000;border-bottom:3px solid #000}
+.end .strip figure{position:relative;margin:0;height:120px;overflow:hidden}
+.end .strip img{width:100%;height:100%;object-fit:cover;filter:grayscale(.2) contrast(1.15) brightness(.62)}
+.end .strip figcaption{position:absolute;left:4px;bottom:3px;font-family:"Courier New",monospace;font-size:8px;letter-spacing:.06em;color:#e8ddc1;text-shadow:0 1px 4px #000}
+.end .body{padding:20px 16px 22px;text-align:center;background:radial-gradient(ellipse at 50% 0%,rgba(165,20,28,.22),transparent 60%),#0a0807}
+.end .soon{font-family:Impact,"Arial Black",sans-serif;font-size:clamp(2.2rem,12vw,3.7rem);line-height:.9;letter-spacing:.03em;
+  color:#f5e9cf;text-shadow:0 0 40px rgba(224,138,44,.35),4px 4px 0 var(--red);text-transform:uppercase}
+.end .soon span{display:block;font-size:.36em;letter-spacing:.4em;color:var(--amber);text-shadow:none;margin-top:8px;font-family:"Courier New",monospace}
+.end h3{font-family:"Times New Roman",Georgia,serif;font-size:1.02rem;line-height:1.35;color:#e8ddc1;margin:16px auto 8px;max-width:34ch;letter-spacing:.02em}
+.end p{font-size:.84rem;line-height:1.65;color:#b8ab95;max-width:40ch;margin:0 auto 14px}
+.end .acts{display:grid;gap:8px;max-width:320px;margin:0 auto}
+.end .acts a,.end .acts button{display:flex;align-items:center;justify-content:center;min-height:46px;padding:.7rem 1rem;border:2px solid #000;
+  background:var(--cream);color:#141010;font-family:"Courier New",monospace;font-weight:700;font-size:.72rem;letter-spacing:.1em;
+  text-transform:uppercase;text-decoration:none;box-shadow:3px 3px 0 var(--red);cursor:pointer}
+.end .acts a:hover,.end .acts button:hover{background:#fff7e4;transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--red)}
+.end .acts .ghost{background:transparent;color:#dccfb6;border-color:#4a3f2c;box-shadow:none}
+.end .fine{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:#6f6555;margin-top:16px;line-height:1.8}
+.end .fine a{color:#9a8b70}
+
+/* footer */
+.foot{position:fixed;left:0;right:0;bottom:0;z-index:6;display:flex;align-items:center;justify-content:space-between;gap:.7rem;
+  padding:.55rem .8rem calc(.55rem + env(safe-area-inset-bottom));background:linear-gradient(0deg,rgba(6,5,4,.97),rgba(6,5,4,.55));
+  border-top:1px solid rgba(236,228,210,.08)}
+.foot .hint{font-family:"Courier New",monospace;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:#a3947a;animation:pulse 2.6s infinite}
+.foot .nav{display:flex;gap:.35rem}
+.foot button{min-width:38px;height:32px;padding:0 .6rem;background:#16120d;border:1px solid #3f3527;color:#cfc2a6;
+  font-family:"Courier New",monospace;font-size:.58rem;letter-spacing:.12em;cursor:pointer;text-transform:uppercase}
+.foot button:hover{border-color:var(--amber);color:#fff}
+.foot button[disabled]{opacity:.3;cursor:default}
+
+/* toast */
+#toast{position:fixed;left:50%;bottom:4.4rem;transform:translate(-50%,10px);z-index:40;background:var(--cream);color:#141010;
+  border:2px solid #000;box-shadow:3px 3px 0 var(--red);padding:7px 12px;font-family:"Courier New",monospace;font-weight:700;
+  font-size:.7rem;letter-spacing:.06em;opacity:0;pointer-events:none;transition:.3s;text-align:center;max-width:86vw}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (min-width:720px){
+  #book{padding-top:1.1rem}
+  .page{padding:16px 16px 18px}
+  .h-wide{height:250px}.h-mid{height:300px}.h-tall{height:340px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <div class="mark"><b>Sun N Fun</b>Chapter Zero</div>
+    <div class="track"><i id="prog"></i></div>
+    <div class="pageno" id="pageno">1 / 10</div>
+    <button class="icon" id="snd" onclick="toggleSound()" title="Sound">&#9834;</button>
+  </header>
+
+  <main id="book" aria-live="polite"></main>
+
+  <footer class="foot">
+    <span class="hint" id="hint">Tap to turn the page</span>
+    <div class="nav">
+      <button onclick="prevPage()" id="back" title="Back">&#8249; Back</button>
+      <button onclick="advance()" title="Next">Next &#8250;</button>
+    </div>
+  </footer>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ==========================================================================
+   SUN N FUN — CHAPTER ZERO: THE PHONE
+   An interactive comic teaser. Tap / click / space to reveal panels, then
+   to turn the page. One file, no dependencies.
+   ========================================================================== */
+var A = "../img/sun-n-fun/";
+var PAGES = [
+  { type: "cover" },
+  {
+    kicker: "Page One", title: "The Last Good Night",
+    panels: [
+      { img: A + "party.jpg", cls: "h-wide", cap: "Sun N Fun Estates. Rineyville, Kentucky. Eleven trailers, one pond, and a road the county gave up on in 1998." },
+      { img: A + "marcus.jpg", cls: "h-mid rot-l", bub: { who: "Marcus", text: "Twelve cans. Twelve. I'll give you a head start and still beat you.", pos: "bl" } },
+      { img: A + "courtney.jpg", cls: "h-mid rot-r", cap: "You did not beat him. You finished, though. Courtney says that counts.", bub: { who: "Courtney", text: "It counts.", pos: "br" } }
+    ]
+  },
+  {
+    kicker: "Page Two", title: "Everybody Knows Everybody",
+    panels: [
+      { img: A + "courtney.jpg", cls: "h-slim rot-r", bub: { who: "Courtney", text: "I drew you a map at two in the morning. You asked me nine times.", pos: "bl" } },
+      { img: A + "clyde.jpg", cls: "h-mid rot-l", cap: "Clyde stood by the fence all night with a cup he never drank out of, watching the road like the road owed him money." },
+      { img: A + "ali.jpg", cls: "h-slim rot-r", bub: { who: "Ali", text: "I'm not staying.", pos: "br" }, cap: "She stayed.", capPos: "top" }
+    ]
+  },
+  {
+    kicker: "Page Three", title: "11:40 AM",
+    panels: [
+      { img: A + "garage-wake.jpg", cls: "h-wide", cap: "The garage smells like a warm cooler and a bad decision." },
+      { img: A + "leon.jpg", cls: "h-tall rot-l",
+        bub: { who: "Leon", text: "You had it last.", pos: "bl" },
+        bub2: { who: "Bunny Man", text: "I had it last in 2019.", pos: "tr" },
+        sfx: "Nobody said gun." }
+    ]
+  },
+  {
+    kicker: "Page Four", title: "A Guy",
+    panels: [
+      { img: A + "bunny-man.jpg", cls: "h-tall rot-r", bub: { who: "Bunny Man", text: "I counted your fingers while you slept. You've got all of them. Good.", pos: "bl" },
+        cap: "Some people wake up with fewer.", capPos: "top" },
+      { img: A + "leon.jpg", cls: "h-mid rot-l", bub: { who: "Leon", text: "Out. Both of you. I've got somebody coming over.", pos: "br" },
+        cap: "A guy. What guy? A guy, man.", capPos: "top" }
+    ]
+  },
+  {
+    kicker: "Page Five", title: "The Map",
+    panels: [
+      { img: A + "road.jpg", cls: "h-wide", cap: "The roads are terrible. Everything is close. Nothing is on the way." },
+      { map: true }
+    ]
+  },
+  {
+    kicker: "Page Six", title: "Forty Dollars",
+    panels: [
+      { img: A + "april.jpg", cls: "h-mid rot-r", bub: { who: "April", text: "Have not seen it.", pos: "bl" },
+        cap: "Behind her, face down on the windowsill, a phone is charging." },
+      { img: A + "teaser-phone.jpg", cls: "h-mid rot-l", cap: "She paid forty dollars for it at two in the morning. She wanted it as a wifi hotspot. It is cracked. She was going to give it back on Friday." }
+    ]
+  },
+  {
+    kicker: "Page Seven", title: "Dusk",
+    panels: [
+      { img: A + "pond-dusk.jpg", cls: "h-wide", cap: "The meeting is at the pond at dusk. Half these people do not speak to each other. Tonight they will stand in the same mud." },
+      { img: A + "cops.jpg", cls: "h-mid rot-l", sfx: "Badge.", cap: "No siren. That is the thing you will remember.", capPos: "top" }
+    ]
+  },
+  {
+    kicker: "Page Eight", title: "Pickup",
+    panels: [
+      { img: A + "teaser-cops.jpg", cls: "h-wide", bub: { who: "The man", text: "I did not call nobody.", pos: "bl" },
+        cap: "DumNummy. You have never met him. He keeps saying it into the gravel." },
+      { img: A + "courtney.jpg", cls: "h-mid rot-l", bub: { who: "Courtney", text: "We have got problems. All of us. But we keep the badges out of it.", pos: "bl" },
+        cap: "She pulls you behind the pump house and does not let go of your shirt." }
+    ]
+  },
+  {
+    kicker: "Page Nine", title: "Nobody Leaves",
+    horror: true,
+    panels: [
+      { img: A + "teaser-mask.jpg", cls: "h-mid rot-r", cap: "Somebody called the badge. Somebody in this park.", capPos: "top" },
+      { img: A + "teaser-pond.jpg", cls: "h-wide rot-l", cap: "Nobody leaves until the meeting at the pond. Not you. Not Leon. Not me." },
+      { img: A + "bunny-man.jpg", cls: "h-slim rot-r", bub: { who: "Bunny Man", text: "Your phone was ringing. It rang like it knew something.", pos: "br" },
+        cap: "At 4:12 in the morning, your phone sent a text: he is in the garage." }
+    ]
+  },
+  { type: "end" }
+];
+
+var st = { page: 0, shown: 0, sound: true };
+var AC = null, master = null, muted = false;
+
+/* ---------- audio ---------- */
+function audioInit() {
+  if (AC) return;
+  try {
+    var C = window.AudioContext || window.webkitAudioContext;
+    if (!C) return;
+    AC = new C();
+    master = AC.createGain();
+    master.gain.value = muted ? 0 : .4;
+    master.connect(AC.destination);
+  } catch (e) { AC = null; }
+}
+function tone(f, dur, when, opts) {
+  if (!AC || !master) return;
+  opts = opts || {};
+  var o = AC.createOscillator(), g = AC.createGain();
+  o.type = opts.type || "sine";
+  o.frequency.setValueAtTime(f, when);
+  if (opts.to) o.frequency.exponentialRampToValueAtTime(Math.max(20, opts.to), when + dur);
+  g.gain.setValueAtTime(.0001, when);
+  g.gain.exponentialRampToValueAtTime(opts.vol == null ? .12 : opts.vol, when + .012);
+  g.gain.exponentialRampToValueAtTime(.0001, when + dur);
+  o.connect(g); g.connect(master); o.start(when); o.stop(when + dur + .03);
+}
+function noise(dur, when, freq, q, vol, type) {
+  if (!AC || !master) return;
+  var n = Math.max(8, Math.floor(AC.sampleRate * dur));
+  var b = AC.createBuffer(1, n, AC.sampleRate), d = b.getChannelData(0);
+  for (var i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 2);
+  var s = AC.createBufferSource(); s.buffer = b;
+  var f = AC.createBiquadFilter(); f.type = type || "bandpass"; f.frequency.value = freq; f.Q.value = q == null ? 1 : q;
+  var g = AC.createGain(); g.gain.value = vol == null ? .12 : vol;
+  s.connect(f); f.connect(g); g.connect(master); s.start(when);
+}
+function cue(id) {
+  if (!AC || muted) return;
+  var t = AC.currentTime;
+  try {
+    if (id === "tick") tone(1100, .05, t, { type: "triangle", vol: .035, to: 900 });
+    else if (id === "page") { noise(.16, t, 2600, .7, .045, "highpass"); tone(280, .1, t, { vol: .03, to: 170 }); }
+    else if (id === "boom") { tone(62, 1.1, t, { vol: .22, to: 28 }); noise(1.2, t, 260, .6, .1, "lowpass"); }
+    else if (id === "hit") { noise(.5, t, 900, .8, .1, "lowpass"); tone(110, .3, t, { vol: .1, to: 60 }); }
+  } catch (e) {}
+}
+function toggleSound() {
+  audioInit();
+  muted = !muted;
+  if (master) master.gain.value = muted ? 0 : .4;
+  st.sound = !muted;
+  document.getElementById("snd").textContent = muted ? "\u00d7" : "\u266a";
+  try { localStorage.setItem("snf:teaser:snd", muted ? "off" : "on"); } catch (e) {}
+}
+
+/* ---------- render ---------- */
+function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
+
+function panelHTML(p, i) {
+  if (p.map) return '<div class="panel off lotmap" data-p="' + i + '">' + mapSVG() +
+    '<div class="lotbtns">' +
+    '<button onclick="lotPick(\'courtney\',this)">Courtney</button>' +
+    '<button onclick="lotPick(\'marcus\',this)">Marcus</button>' +
+    '<button onclick="lotPick(\'april\',this)">April</button>' +
+    '<button onclick="lotPick(\'leon\',this)">Leon</button>' +
+    '<button onclick="lotPick(\'ali\',this)">Ali</button>' +
+    '<button onclick="lotPick(\'clyde\',this)">Clyde</button>' +
+    '<button onclick="lotPick(\'pond\',this)">The pond</button>' +
+    '</div><div class="lotline" id="lotline">Tap a name. This is the whole park.</div></div>';
+  var h = '<div class="panel off ' + (p.cls || "h-mid") + '" data-p="' + i + '">' +
+    '<img src="' + p.img + '" alt="" loading="' + (i === 0 ? "eager" : "lazy") + '">' +
+    '<div class="halftone"></div><div class="vig"></div>';
+  if (p.cap) h += '<div class="cap' + (p.capPos === "bottom" ? " bottom" : "") + '">' + esc(p.cap) + '</div>';
+  if (p.bub) h += bubble(p.bub);
+  if (p.bub2) h += bubble(p.bub2);
+  if (p.sfx) h += '<div class="sfx ' + (p.sfx.length > 12 ? "s2" : "s1") + '">' + esc(p.sfx) + '</div>';
+  return h + '</div>';
+}
+function bubble(b) {
+  return '<div class="bub ' + (b.pos || "bl") + '"><span class="who">' + esc(b.who) + '</span>' + esc(b.text) + '</div>';
+}
+
+function render() {
+  var page = PAGES[st.page], book = document.getElementById("book"), html = "";
+  if (page.type === "cover") {
+    html = '<div class="page cover">' +
+      '<div class="art"><img src="' + A + 'party.jpg" alt="The crew at Sun N Fun at night">' +
+      '<div class="shade"></div>' +
+      '<div class="addr">Rineyville, Kentucky &middot; Est. 1974</div>' +
+      '<div class="lock"><div class="over">A LeonLink story</div>' +
+      '<h1>Sun <em>N</em><br>Fun</h1>' +
+      '<div class="sub">Chapter Zero &middot; The Phone</div>' +
+      '<div class="tap">Tap to begin</div></div></div></div>';
+  } else if (page.type === "end") {
+    html = '<div class="page end">' +
+      '<div class="strip">' +
+      '<figure><img src="' + A + 'teaser-mask.jpg" alt=""><figcaption>the garage</figcaption></figure>' +
+      '<figure><img src="' + A + 'teaser-cops.jpg" alt=""><figcaption>the pickup</figcaption></figure>' +
+      '<figure><img src="' + A + 'teaser-pond.jpg" alt=""><figcaption>the meeting</figcaption></figure>' +
+      '</div><div class="body">' +
+      '<div class="soon">Coming<br>Soon<span>Chapter One</span></div>' +
+      '<h3>The Meeting at the Pond</h3>' +
+      '<p>Eleven trailers. Forty people. One of them made the call. DumNummy is in a cell in Hardin County for a phone call he did not make, and nobody in Sun N Fun is going home until somebody says a name.</p>' +
+      '<p>You still have the phone. You still have not told anyone what is on it.</p>' +
+      '<div class="acts">' +
+      '<a href="sun-n-fun.html">Play Chapter Zero now</a>' +
+      '<button onclick="shareIt()">Share this comic</button>' +
+      '<button class="ghost" onclick="restart()">Read it again</button>' +
+      '</div>' +
+      '<p class="fine">Contains drinking, language, and small-town menace.<br>Everything here is fiction except the roads. <a href="/games.html">More games</a></p>' +
+      '</div></div>';
+  } else {
+    html = '<div class="page">' +
+      '<div class="page-head"><div><div class="k">' + esc(page.kicker) + '</div><h2>' + esc(page.title) + '</h2></div>' +
+      '<div class="n">' + st.page + '</div></div>' +
+      page.panels.map(panelHTML).join("") +
+      '</div>';
+  }
+  book.innerHTML = html;
+  book.scrollTop = 0;
+  st.shown = 0;
+  updateBar();
+  if (page.type === "cover") { st.shown = 1; hint("Tap to begin"); }
+  else if (page.type === "end") { st.shown = 1; cue("boom"); hint("That is all of it. For now."); }
+  else { revealNext(); hint("Tap for the next panel"); }
+}
+
+function revealNext() {
+  var page = PAGES[st.page], panels = document.querySelectorAll(".panel");
+  if (!panels.length) return;
+  var idx = st.shown;
+  if (idx >= panels.length) return;
+  st.shown++;
+  var p = panels[idx];
+  p.classList.remove("off");
+  cue("tick");
+  if (st.shown >= panels.length) hint("Tap to turn the page");
+  setTimeout(function () {
+    try { p.scrollIntoView({ block: "nearest", behavior: "smooth" }); } catch (e) {}
+  }, 60);
+  updateBar();
+}
+function updateBar() {
+  var total = PAGES.length;
+  document.getElementById("prog").style.width = ((st.page + 1) / total * 100) + "%";
+  document.getElementById("pageno").textContent = (st.page + 1) + " / " + total;
+  document.getElementById("back").disabled = st.page === 0;
+}
+function hint(t) { document.getElementById("hint").textContent = t; }
+
+/* ---------- navigation ---------- */
+function advance() {
+  var page = PAGES[st.page];
+  if (page.type === "cover") { nextPage(); return; }
+  if (page.type === "end") { return; }
+  if (st.shown < page.panels.length) { revealNext(); return; }
+  nextPage();
+}
+function nextPage() {
+  if (st.page >= PAGES.length - 1) return;
+  st.page++;
+  cue("page");
+  render();
+}
+function prevPage() {
+  if (st.page <= 0) return;
+  st.page--;
+  cue("page");
+  render();
+}
+function restart() {
+  st.page = 0;
+  render();
+  cue("page");
+}
+function goToPage(n) { if (n >= 0 && n < PAGES.length) { st.page = n; render(); } }
+
+/* ---------- tap / keys ---------- */
+var downX = 0, downY = 0, moved = false, downT = 0;
+var book = document.getElementById("book");
+book.addEventListener("pointerdown", function (e) {
+  downX = e.clientX; downY = e.clientY; moved = false; downT = Date.now();
+  audioInit();
+});
+book.addEventListener("pointermove", function (e) {
+  if (Math.abs(e.clientX - downX) > 10 || Math.abs(e.clientY - downY) > 14) moved = true;
+});
+book.addEventListener("pointerup", function (e) {
+  if (Date.now() - downT > 700) return;
+  if (moved) return;
+  if (e.target.closest("button, a")) return;
+  advance();
+});
+document.addEventListener("keydown", function (e) {
+  if (e.key === " " || e.key === "Enter" || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); advance(); }
+  else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); prevPage(); }
+  else if (e.key === "r") restart();
+});
+
+/* ---------- the map ---------- */
+function mapSVG() {
+  var s = '<svg viewBox="0 0 440 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Map of Sun N Fun Estates">';
+  s += '<rect width="440" height="330" fill="#e6d8b2"/>';
+  s += '<rect x="8" y="8" width="424" height="314" fill="none" stroke="#8a7449" stroke-width="1.2"/>';
+  /* roads */
+  s += '<path d="M 46 -4 C 44 90, 52 220, 40 336" stroke="#b6a37a" stroke-width="16" fill="none"/>';
+  s += '<path d="M 46 -4 C 44 90, 52 220, 40 336" stroke="#6d5a38" stroke-width="1" fill="none"/>';
+  s += '<path d="M 44 236 C 120 248, 220 226, 300 222 C 356 219, 404 236, 428 262" stroke="#8a7449" stroke-width="7" fill="none"/>';
+  s += '<path d="M 48 92 C 130 78, 210 100, 292 92 C 350 86, 392 70, 420 54" stroke="#8a7449" stroke-width="7" fill="none"/>';
+  s += '<path d="M 300 222 C 284 180, 296 140, 330 122 C 364 104, 392 140, 382 182 C 374 216, 338 230, 300 222" stroke="#8a7449" stroke-width="6" fill="none"/>';
+  s += '<text x="20" y="160" fill="#4a3a24" font-size="8" font-weight="700" transform="rotate(-88 20 160)" font-family="Georgia,serif" letter-spacing="1.4">BOONE RD</text>';
+  s += '<text x="104" y="230" fill="#4a3a24" font-size="8" font-weight="700" font-family="Georgia,serif" transform="rotate(4 104 230)">WAMPUM</text>';
+  s += '<text x="120" y="86" fill="#4a3a24" font-size="8" font-weight="700" font-family="Georgia,serif" transform="rotate(-3 120 86)">TOMAHAWK TRL</text>';
+  s += '<text x="330" y="196" fill="#4a3a24" font-size="7" font-weight="700" font-family="Georgia,serif" transform="rotate(-58 330 196)">COCHISE</text>';
+  /* pond */
+  s += '<ellipse cx="356" cy="286" rx="42" ry="24" fill="#4d6a63" stroke="#33493f" stroke-width="1.6"/>';
+  s += '<text x="356" y="289" fill="#dbe6d8" font-size="8" text-anchor="middle" font-family="Georgia,serif" letter-spacing="1">POND</text>';
+  /* trees */
+  [[70,40],[96,120],[150,300],[250,290],[404,290],[64,196],[210,44]].forEach(function (t) {
+    s += '<g stroke="#5d6b46" stroke-width="1" fill="none" opacity=".7"><path d="M' + t[0] + ' ' + (t[1] + 6) + ' l0 -6"/><path d="M' + (t[0] - 4) + ' ' + t[1] + ' l4 -6 l4 6"/></g>';
+  });
+  function dot(x, y, id, lab, anchor, dx, dy) {
+    return '<g onclick="lotPick(\'' + id + '\',null)" style="cursor:pointer">' +
+      '<circle cx="' + x + '" cy="' + y + '" r="5" fill="#a5141c" stroke="#e8ddc1" stroke-width="1.6"/>' +
+      '<text x="' + (x + dx) + '" y="' + (y + dy) + '" fill="#2b2115" font-size="8" font-weight="700" text-anchor="' + anchor + '" font-family="Georgia,serif" style="paint-order:stroke;stroke:#e6d8b2;stroke-width:3px">' + lab + '</text></g>';
+  }
+  s += dot(232, 92, "leon", "LEON'S GARAGE", "start", 9, -6);
+  s += dot(420, 54, "clyde", "WOODS", "end", -8, -8);
+  s += dot(140, 236, "courtney", "COURTNEY", "middle", 0, 18);
+  s += dot(300, 222, "marcus", "MARCUS", "middle", 0, 18);
+  s += dot(346, 132, "april", "APRIL", "middle", 0, -10);
+  s += dot(120, 92, "ali", "ALI", "middle", 0, 18);
+  s += dot(60, 292, "pond", "", "middle", 0, 0);
+  s += '<text x="116" y="316" fill="#5b4a30" font-size="6.5" font-style="italic" font-family="Georgia,serif">the dip</text>';
+  return s + '</svg>';
+}
+var LOT_LINES = {
+  courtney: "<b>Courtney</b> \u2014 Wampum Road, blue trim. Drew the map at two in the morning. The only person in this park glad to see you.",
+  marcus: "<b>Marcus</b> \u2014 first lot on Cochise. Axe in the block, knife on the tailgate, sword on the porch. Nobody asks anymore.",
+  april: "<b>April</b> \u2014 last lot before the trees. Door shut, curtains shut. Your phone is on her windowsill, face down, charging.",
+  leon: "<b>Leon</b> \u2014 owns the garage on Tomahawk. You sleep in it. He has not had a phone since 2019 and says it was the best year of his life.",
+  ali: "<b>Ali</b> \u2014 back of Tomahawk. Four-wheeler. Watches everything and says about a third of it.",
+  clyde: "<b>Clyde</b> \u2014 past the fence, in the trees. A shelf of things people lose. He does not like you and will not say why.",
+  pond: "<b>The pond</b> \u2014 the meeting place. Dusk. Chairs out, wood stacked, nobody sitting down."
+};
+function lotPick(id, btn) {
+  audioInit(); cue("tick");
+  var line = document.getElementById("lotline");
+  if (line) line.innerHTML = LOT_LINES[id] || "";
+  var btns = document.querySelectorAll(".lotbtns button");
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove("on");
+  if (btn) btn.classList.add("on");
+}
+
+/* ---------- share ---------- */
+function toast(t) {
+  var el = document.getElementById("toast");
+  el.textContent = t;
+  el.classList.add("on");
+  clearTimeout(toast._t);
+  toast._t = setTimeout(function () { el.classList.remove("on"); }, 2600);
+}
+function shareIt() {
+  var url = location.href.split("#")[0];
+  var data = { title: "Sun N Fun \u2014 Chapter Zero: The Phone", text: "You wake up in a garage with no phone. An interactive comic from Sun N Fun Estates.", url: url };
+  if (navigator.share) {
+    navigator.share(data).catch(function () {});
+    return;
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(function () { toast("Link copied"); }, function () { window.prompt("Copy this link", url); });
+    return;
+  }
+  window.prompt("Copy this link", url);
+}
+
+/* ---------- boot ---------- */
+try {
+  if (localStorage.getItem("snf:teaser:snd") === "off") { muted = true; st.sound = false; }
+} catch (e) {}
+document.getElementById("snd").textContent = muted ? "\u00d7" : "\u266a";
+render();
+</script>
+</body>
+</html>
